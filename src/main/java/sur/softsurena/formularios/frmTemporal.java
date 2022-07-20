@@ -1,97 +1,27 @@
 package sur.softsurena.formularios;
 
 import java.awt.Color;
-import java.util.Date;
-import java.util.List;
+import java.math.BigDecimal;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import static sur.softsurena.datos.delete.DeleteMetodos.borrarFactura;
+import static sur.softsurena.datos.insert.InsertMetodos.agregarDetalleFactura;
+import static sur.softsurena.datos.insert.InsertMetodos.agregarFacturaNombre;
 import sur.softsurena.entidades.DefaultTableCellHeaderRenderer;
 import sur.softsurena.entidades.Factura;
+import sur.softsurena.entidades.HeaderFactura;
 
 public class frmTemporal extends java.awt.Dialog {
 
-    private String nombreCliente, idCliente, idUsuario;
-    private Integer factura;
-    private boolean aceptar, credicto;
-    private int idTurno;
+    private String nombreCliente, userName;
+    private Integer idFactura, idCliente, idTurno;
     private DefaultTableModel miTabla;
-    private List<Factura> facturas;
+    private Factura facturas;
     private final DefaultTableCellRenderer tcr;
-
-    public List<Factura> getFacturas() {
-        return facturas;
-    }
-
-    public void setFacturas(List<Factura> facturas) {
-        this.facturas = facturas;
-    }
-
-    public DefaultTableModel getMiTabla() {
-        return miTabla;
-    }
-
-    public void setMiTabla(DefaultTableModel miTabla) {
-        this.miTabla = miTabla;
-    }
-
-    public boolean isCredicto() {
-        return credicto;
-    }
-
-    public void setCredicto(boolean credicto) {
-        this.credicto = credicto;
-    }
-
-    public int getIdTurno() {
-        return idTurno;
-    }
-    public void setIdTurno(int idTurno) {
-        this.idTurno = idTurno;
-    }
-
-    public String getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(String idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
-    public Integer getFactura() {
-        return factura;
-    }
-
-    public void setFactura(Integer factura) {
-        this.factura = factura;
-    }
-
-    public String getIdCliente() {
-        return idCliente;
-    }
-
-    public void setIdCliente(String idCliente) {
-        this.idCliente = idCliente;
-    }
-
-    public boolean isAceptar() {
-        return aceptar;
-    }
-
-    public void setAceptar(boolean aceptar) {
-        this.aceptar = aceptar;
-    }
-
-    public String getNombreCliente() {
-        return nombreCliente;
-    }
-
-    public void setNombreCliente(String nombreCliente) {
-        this.nombreCliente = nombreCliente;
-    }
 
     public frmTemporal(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -99,6 +29,7 @@ public class frmTemporal extends java.awt.Dialog {
         initComponents();
         tcr = new DefaultTableCellHeaderRenderer();
     }
+    
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -260,56 +191,51 @@ public class frmTemporal extends java.awt.Dialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     private void btnGrabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrabarActionPerformed
-        //Encabezado de Factura
-        if (!agregarFacturaNombre(getFactura(),
-                getIdCliente(), new Date(), getIdUsuario(),
-                isCredicto() ? 1 : 0, 0, 0, getIdTurno(), "t",
-                getNombreCliente())) {
-            JOptionPane.showMessageDialog(this, "Esta compra no se ha registrado...");
+        HeaderFactura hf = HeaderFactura.builder().
+                idCliente(idCliente).
+                idTurno(idTurno).
+                estado('t').
+                userName(userName).
+                nombreTemp(nombreCliente)
+                .build();
+                
+        Factura f = Factura.builder().id(idFactura).headerFactura(hf).build();
+        
+        if (agregarFacturaNombre(f) < 1) {
+            JOptionPane.showMessageDialog(this, 
+                    "Esta compra no se ha registrado...");
             return;
         } else {
-            for (int i = 0; i < getFacturas().size(); i++) {
-                if (!agregarDetalleFactura(
-                        getFacturas().get(i).getIdFactura(),
-                        i + 1,
-                        getFacturas().get(i).getIdProducto(),
-                        getFacturas().get(i).getPrecio(),
-                        getFacturas().get(i).getCantidad())) {
-                    borrarFactura(getFactura());
-                    JOptionPane.showMessageDialog(this, "Esta compra no se ha registrado...");
+            for (int i = 0; i < facturas.getDetalleFactura().size(); i++) {
+                
+                if (agregarDetalleFactura(f) < -1) {
+                    borrarFactura(idFactura);
+                    JOptionPane.showMessageDialog(this, 
+                            "Esta compra no se ha registrado...");
                     return;
                 }
             }
         }
-        setAceptar(true);
         setVisible(false);
     }//GEN-LAST:event_btnGrabarActionPerformed
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        setAceptar(false);
         setVisible(false);
     }//GEN-LAST:event_btnCancelarActionPerformed
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        tblDetalle.setModel(getMiTabla());
-        tblDetalle.setRowSelectionInterval(getMiTabla().getRowCount() - 1, getMiTabla().getRowCount() - 1);
+        tblDetalle.setModel(miTabla);
+        tblDetalle.setRowSelectionInterval(miTabla.getRowCount() - 1, miTabla.getRowCount() - 1);
         repararRegistro2();
         totales();
-        txtCliente.setText(getNombreCliente());
+        txtCliente.setText(nombreCliente);
     }//GEN-LAST:event_formWindowOpened
     public void repararRegistro2() {
         TableColumn miTableColumn;
-        for (int i = 0; i < 2; i++) {
-            miTableColumn = tblDetalle.getColumnModel().getColumn(i);
-            if (i == 0) {
-                miTableColumn.setPreferredWidth(80); // la tercera columna sera la mas grande
-            }
-            if (i == 1) {
-                miTableColumn.setPreferredWidth(200); // la tercera columna sera la mas grande
-            }
-            if (i == 2) {
-                miTableColumn.setPreferredWidth(15); // la tercera columna sera la mas grande
-            }
-        }
+        int[] columWidth = {80, 200, 15};
         
+        for (int i = 0; i < columWidth.length; i++) {
+            miTableColumn = tblDetalle.getColumnModel().getColumn(i);
+            miTableColumn.setPreferredWidth(columWidth[i]);
+        }
         
         tcr.setHorizontalAlignment(SwingConstants.RIGHT);
         tcr.setFont(new java.awt.Font("Tahoma", 50, 80));
@@ -319,15 +245,18 @@ public class frmTemporal extends java.awt.Dialog {
 
     private void totales() {
         int num = tblDetalle.getRowCount();
-        double sumCan = 0;
-        double sumVal = 0;
+        BigDecimal sumCan = BigDecimal.ZERO;
+        BigDecimal sumVal = BigDecimal.ZERO;
+        
         for (int i = 0; i < num; i++) {
-            sumCan += Utilidades.objectToDouble(tblDetalle.getValueAt(i, 0));
-            sumVal += Utilidades.objectToDouble(tblDetalle.getValueAt(i, 2));
+            sumCan = sumCan.add(new BigDecimal(tblDetalle.getValueAt(i, 0).toString()));
+            sumVal = sumVal.add(new BigDecimal(tblDetalle.getValueAt(i, 2).toString()));
         }
-        txtTotalCantidad.setText("" + Utilidades.priceWithDecimal(sumCan));
-        txtTotalValor.setText("RD$" + Utilidades.priceWithDecimal(sumVal));
+        
+        txtTotalCantidad.setText("" + sumCan);
+        txtTotalValor.setText("RD$" + sumVal);
     }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGrabar;

@@ -43,20 +43,25 @@
             <version>1.0.2</version>
         </dependency>
         <dependency>
-            <groupId>unknown.binary</groupId>
-            <artifactId>RojeruSan.lib-SNAPSHOT</artifactId>
-            <version>SNAPSHOT</version>
-        </dependency>
-        <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <version>5.8.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>unknown.binary</groupId>
+            <artifactId>RojeruSan.lib-SNAPSHOT</artifactId>
+            <version>SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>sur.softsurena</groupId>
             <artifactId>RojeruSan.lib.full_v1.0</artifactId>
             <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>sur.softsurena</groupId>
+            <artifactId>RSMaterialComponents</artifactId>
+            <version>3.0</version>
         </dependency>
     </dependencies>
 </project>

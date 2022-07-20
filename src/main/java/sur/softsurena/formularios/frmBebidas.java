@@ -1025,12 +1025,11 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
 
                         JOptionPane.showMessageDialog(this,
                                 "Ocurrio un error Temporal Detallle");
-
+                        
                         return;
                     }
                 }
             }
-
         } else {
             HeaderFactura hf = HeaderFactura.builder().
                     idCliente(((Cliente) cmbCliente.getSelectedItem()).getId()).
@@ -1042,16 +1041,16 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
             Factura f = Factura.builder().
                     id(idFactura).headerFactura(hf).build();
 
-            if (!agregarFacturaNombre(f)) {
+            if (agregarFacturaNombre(f) < 1) {
                 JOptionPane.showMessageDialog(this, "Esta compra no se ha registrado...");
             } else {
                 for (int i = 0; i < facturas.getDetalleFactura().size(); i++) {
-                    if (!agregarDetalleFactura(
+                    if (agregarDetalleFactura(
                             facturas.getId(),
                             i + 1,
                             facturas.getDetalleFactura().get(i).getIdProducto(),
                             facturas.getDetalleFactura().get(i).getPrecio(),
-                            facturas.getDetalleFactura().get(i).getCantidad())) {
+                            facturas.getDetalleFactura().get(i).getCantidad()) < 1) {
                         JOptionPane.showMessageDialog(this, "Esta compra no se ha registrado...");
                         return;
                     }
@@ -1078,7 +1077,7 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
         setTemporal(false);
         facturas.getDetalleFactura().clear();
         nombreCliente = "";
-        idClienteTemporal = "00000000000";
+        idClienteTemporal = 0;
     }//GEN-LAST:event_btnGrabarActionPerformed
 
     private void txtCriterioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCriterioActionPerformed
@@ -1197,7 +1196,7 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
             }
             boolean dime = true;
             for (int i = 0; i < num; i++) {
-                if (facturas.getDetalleFactura().get(i).getId().equals(txtCriterio.getText().trim())) {
+                if (facturas.getId().equals(txtCriterio.getText().trim())) {
                     tblDetalle.setRowSelectionInterval(i, i);
                     dime = false;
                     txtCriterio.setText("");
@@ -1299,9 +1298,9 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
 
         if (cmbCliente.getSelectedIndex() > 0) {
             nombreCliente = ((Opcion) cmbCliente.getSelectedItem()).getDescripcion();
-            idClienteTemporal = ((Opcion) cmbCliente.getSelectedItem()).getValor();
+            idClienteTemporal = ((Persona) cmbCliente.getSelectedItem()).getId();
         } else {
-            idClienteTemporal = "00000000000";
+            idClienteTemporal = 0;
             if ("".equals(nombreCliente)) {
                 nombreCliente = JOptionPane.showInputDialog(this, "Inserte Nombre Cliente: ",
                         "Inserte nombre del Cliente...",
@@ -1708,12 +1707,12 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
     }
 
     private void categoriaR() {
-        String sql = "SELECT r.IDCATEGORIA, r.DESCRIPCION, r.IMAGEPATH "
+        String sql = "SELECT r.ID, r.DESCRIPCION, r.IMAGEN_TEXTO "
                 + "FROM GET_CATEGORIA_ACTIVAS r";
 
         if (cbTodos.isSelected()) {
-            sql = "SELECT r.IDCATEGORIA, r.DESCRIPCION, r.IMAGEPATH "
-                    + "FROM TABLA_CATEGORIA r";
+            sql = "SELECT r.ID, r.DESCRIPCION, r.IMAGEN_TEXTO "
+                    + "FROM V_CATEGORIAS r";
         }
 
         ResultSet rs = getConsulta(sql);
@@ -1901,7 +1900,7 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
     private void nueva() {
         mnuMovimientosNuevaFactura.doClick();
         nombreCliente = "";
-        idClienteTemporal = "00000000000";
+        idClienteTemporal = 0;
         facturas.getDetalleFactura().clear();
     }
 

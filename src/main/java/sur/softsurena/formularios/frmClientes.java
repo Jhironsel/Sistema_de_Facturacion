@@ -51,14 +51,6 @@ public final class frmClientes extends javax.swing.JInternalFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jScrollPane4 = new javax.swing.JScrollPane();
         jPanel4 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel6 = new javax.swing.JPanel();
-        btnNuevo = new javax.swing.JButton();
-        btnModificar = new javax.swing.JButton();
-        btnGuardar = new javax.swing.JButton();
-        btnCancelar = new javax.swing.JButton();
-        btnBorrar = new javax.swing.JButton();
-        btnBuscar = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jpClientes = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -110,6 +102,14 @@ public final class frmClientes extends javax.swing.JInternalFrame {
         jPanel8 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         btnHistorial = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        btnNuevo = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        btnBorrar = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -135,109 +135,6 @@ public final class frmClientes extends javax.swing.JInternalFrame {
             public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
             }
         });
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Botones de Acción"));
-        jPanel2.setMaximumSize(new java.awt.Dimension(787, 81));
-        jPanel2.setMinimumSize(new java.awt.Dimension(787, 81));
-
-        jPanel6.setLayout(new java.awt.GridLayout(1, 0, 4, 0));
-
-        btnNuevo.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        btnNuevo.setForeground(new java.awt.Color(1, 1, 1));
-        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Documento nuevo 32 x 32.png"))); // NOI18N
-        btnNuevo.setMnemonic('n');
-        btnNuevo.setText("Nuevo");
-        btnNuevo.setToolTipText("Crear un nuevo Registro");
-        btnNuevo.setMaximumSize(new java.awt.Dimension(104, 44));
-        btnNuevo.setMinimumSize(new java.awt.Dimension(104, 44));
-        btnNuevo.setPreferredSize(new java.awt.Dimension(104, 44));
-        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNuevoActionPerformed(evt);
-            }
-        });
-        jPanel6.add(btnNuevo);
-
-        btnModificar.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        btnModificar.setForeground(new java.awt.Color(1, 1, 1));
-        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Editar Documento 32 x 32.png"))); // NOI18N
-        btnModificar.setMnemonic('m');
-        btnModificar.setText("Modificar");
-        btnModificar.setToolTipText("Modificar Registro Actual");
-        btnModificar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnModificarActionPerformed(evt);
-            }
-        });
-        jPanel6.add(btnModificar);
-
-        btnGuardar.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        btnGuardar.setForeground(new java.awt.Color(1, 1, 1));
-        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Guardar 32 x 32.png"))); // NOI18N
-        btnGuardar.setMnemonic('g');
-        btnGuardar.setText("Guardar");
-        btnGuardar.setToolTipText("Guardar Registro Actual");
-        btnGuardar.setEnabled(false);
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
-            }
-        });
-        jPanel6.add(btnGuardar);
-
-        btnCancelar.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        btnCancelar.setForeground(new java.awt.Color(1, 1, 1));
-        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Cancelar 32 x 32.png"))); // NOI18N
-        btnCancelar.setMnemonic('c');
-        btnCancelar.setText("Cancelar");
-        btnCancelar.setToolTipText("Cancela la Operacion del Registro");
-        btnCancelar.setEnabled(false);
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
-            }
-        });
-        jPanel6.add(btnCancelar);
-
-        btnBorrar.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        btnBorrar.setForeground(new java.awt.Color(1, 1, 1));
-        btnBorrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Borrar 32 x 32.png"))); // NOI18N
-        btnBorrar.setMnemonic('b');
-        btnBorrar.setText("Borrar");
-        btnBorrar.setToolTipText("Borrar Registro Actual");
-        btnBorrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBorrarActionPerformed(evt);
-            }
-        });
-        jPanel6.add(btnBorrar);
-
-        btnBuscar.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        btnBuscar.setForeground(new java.awt.Color(1, 1, 1));
-        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Buscar2 32 x 32.png"))); // NOI18N
-        btnBuscar.setMnemonic('r');
-        btnBuscar.setText("Buscar");
-        btnBuscar.setToolTipText("Buscar el Registro");
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
-            }
-        });
-        jPanel6.add(btnBuscar);
-
-        org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel6, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel2Layout.createSequentialGroup()
-                .add(0, 0, 0)
-                .add(jPanel6, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(0, 0, 0))
-        );
 
         jScrollPane3.setAutoscrolls(true);
         jScrollPane3.setDoubleBuffered(true);
@@ -359,7 +256,7 @@ public final class frmClientes extends javax.swing.JInternalFrame {
             .add(jpClientesLayout.createSequentialGroup()
                 .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
+                .add(jScrollPane3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 508, Short.MAX_VALUE)
                 .add(0, 0, 0))
         );
 
@@ -636,7 +533,7 @@ public final class frmClientes extends javax.swing.JInternalFrame {
                 .add(jLabel5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(txtDireccion, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(297, Short.MAX_VALUE))
+                .addContainerGap(128, Short.MAX_VALUE))
         );
 
         jPanel3Layout.linkSize(new java.awt.Component[] {jcbDistritoMunicipal, jcbMunicipios, jcbProvincias, txtDireccion}, org.jdesktop.layout.GroupLayout.VERTICAL);
@@ -666,7 +563,7 @@ public final class frmClientes extends javax.swing.JInternalFrame {
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 69, Short.MAX_VALUE)
+            .add(0, 39, Short.MAX_VALUE)
         );
 
         org.jdesktop.layout.GroupLayout jPanel5Layout = new org.jdesktop.layout.GroupLayout(jPanel5);
@@ -684,7 +581,8 @@ public final class frmClientes extends javax.swing.JInternalFrame {
             .add(jPanel5Layout.createSequentialGroup()
                 .add(jPanel8, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(0, 0, 0)
-                .add(jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE))
+                .add(jScrollPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 200, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(0, 0, 0))
         );
 
         jTabbedPane2.addTab("Contactos", jPanel5);
@@ -802,10 +700,10 @@ public final class frmClientes extends javax.swing.JInternalFrame {
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jcbEstadoCivil, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jTabbedPane2)
+                .add(jTabbedPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 299, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(0, 0, 0)
                 .add(jPanel9, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel1Layout.linkSize(new java.awt.Component[] {cbActivo, jLabel14, txtApellidos, txtCedula, txtPNombre}, org.jdesktop.layout.GroupLayout.VERTICAL);
@@ -820,19 +718,122 @@ public final class frmClientes extends javax.swing.JInternalFrame {
         jpMantenimientoLayout.setHorizontalGroup(
             jpMantenimientoLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jpMantenimientoLayout.createSequentialGroup()
-                .addContainerGap(140, Short.MAX_VALUE)
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(140, Short.MAX_VALUE))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jpMantenimientoLayout.setVerticalGroup(
             jpMantenimientoLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jpMantenimientoLayout.createSequentialGroup()
-                .addContainerGap(63, Short.MAX_VALUE)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jpMantenimientoLayout.createSequentialGroup()
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Mantenimiento", jpMantenimiento);
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Botones de Acción"));
+        jPanel2.setMaximumSize(new java.awt.Dimension(787, 81));
+        jPanel2.setMinimumSize(new java.awt.Dimension(787, 81));
+
+        jPanel6.setLayout(new java.awt.GridLayout(1, 0, 4, 0));
+
+        btnNuevo.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        btnNuevo.setForeground(new java.awt.Color(1, 1, 1));
+        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Documento nuevo 32 x 32.png"))); // NOI18N
+        btnNuevo.setMnemonic('n');
+        btnNuevo.setText("Nuevo");
+        btnNuevo.setToolTipText("Crear un nuevo Registro");
+        btnNuevo.setMaximumSize(new java.awt.Dimension(104, 44));
+        btnNuevo.setMinimumSize(new java.awt.Dimension(104, 44));
+        btnNuevo.setPreferredSize(new java.awt.Dimension(104, 44));
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
+        jPanel6.add(btnNuevo);
+
+        btnModificar.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        btnModificar.setForeground(new java.awt.Color(1, 1, 1));
+        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Editar Documento 32 x 32.png"))); // NOI18N
+        btnModificar.setMnemonic('m');
+        btnModificar.setText("Modificar");
+        btnModificar.setToolTipText("Modificar Registro Actual");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
+        jPanel6.add(btnModificar);
+
+        btnGuardar.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        btnGuardar.setForeground(new java.awt.Color(1, 1, 1));
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Guardar 32 x 32.png"))); // NOI18N
+        btnGuardar.setMnemonic('g');
+        btnGuardar.setText("Guardar");
+        btnGuardar.setToolTipText("Guardar Registro Actual");
+        btnGuardar.setEnabled(false);
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+        jPanel6.add(btnGuardar);
+
+        btnCancelar.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        btnCancelar.setForeground(new java.awt.Color(1, 1, 1));
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Cancelar 32 x 32.png"))); // NOI18N
+        btnCancelar.setMnemonic('c');
+        btnCancelar.setText("Cancelar");
+        btnCancelar.setToolTipText("Cancela la Operacion del Registro");
+        btnCancelar.setEnabled(false);
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+        jPanel6.add(btnCancelar);
+
+        btnBorrar.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        btnBorrar.setForeground(new java.awt.Color(1, 1, 1));
+        btnBorrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Borrar 32 x 32.png"))); // NOI18N
+        btnBorrar.setMnemonic('b');
+        btnBorrar.setText("Borrar");
+        btnBorrar.setToolTipText("Borrar Registro Actual");
+        btnBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrarActionPerformed(evt);
+            }
+        });
+        jPanel6.add(btnBorrar);
+
+        btnBuscar.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        btnBuscar.setForeground(new java.awt.Color(1, 1, 1));
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Buscar2 32 x 32.png"))); // NOI18N
+        btnBuscar.setMnemonic('r');
+        btnBuscar.setText("Buscar");
+        btnBuscar.setToolTipText("Buscar el Registro");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+        jPanel6.add(btnBuscar);
+
+        org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel6, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel2Layout.createSequentialGroup()
+                .add(0, 0, 0)
+                .add(jPanel6, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(0, 0, 0))
+        );
 
         org.jdesktop.layout.GroupLayout jPanel4Layout = new org.jdesktop.layout.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -841,7 +842,7 @@ public final class frmClientes extends javax.swing.JInternalFrame {
             .add(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jTabbedPane1)
+                    .add(jTabbedPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 787, Short.MAX_VALUE)
                     .add(jPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -849,7 +850,7 @@ public final class frmClientes extends javax.swing.JInternalFrame {
             jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jTabbedPane1)
+                .add(jTabbedPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 608, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -861,7 +862,7 @@ public final class frmClientes extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jScrollPane4)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jScrollPane4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 784, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)

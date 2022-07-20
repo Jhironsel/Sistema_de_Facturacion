@@ -12,7 +12,8 @@ public class frmAutorizacion extends javax.swing.JDialog {
 
     public void setAceptar(String idUsuario, String clave) {
         
-        this.aceptar = Conexion.getInstance().validarUsuarioPro(idUsuario, clave, "none");
+        this.aceptar = Conexion.getInstance().
+                validarUsuarioPro(idUsuario, clave, "none");
     }
     
     public frmAutorizacion(java.awt.Frame parent, boolean modal ) {
