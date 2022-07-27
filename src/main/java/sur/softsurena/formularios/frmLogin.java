@@ -1,12 +1,12 @@
 package sur.softsurena.formularios;
 
-import java.awt.Color;
-import java.awt.Image;
+import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.Date;
 import java.util.Scanner;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -25,36 +25,43 @@ public final class frmLogin extends javax.swing.JFrame {
 
     public frmLogin() {
         initComponents();
-        
-        Imagenes imagen = new Imagenes();
+
+        Imagenes imagen = new Imagenes("Panel de Control 128 x 128.png");
         jlLogoSistema.setIcon(
-                imagen.getICono(
-                        "sur/softsurena/imagenes/Panel de Control 128 x 128.png"));
-        
+                imagen.getICono());
+
         btnParametros.setVisible(false);//Boton parametros Invisible
-        
+        jpDatos.setPreferredSize(new Dimension(jpDatos.getWidth(), 136));
+        jpDatos.setMaximumSize(new Dimension(jpDatos.getWidth(), 136));
+        jpDatos.setMinimumSize(new Dimension(jpDatos.getWidth(), 136));
+
+        imagen = new Imagenes("FondoLogin 626 x 386.jpg");
+        lamina.setImagen(imagen.getICono());
+
         this.setLocationRelativeTo(null);
     }
 
-    @Override
-    public Image getIconImage() {
-        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/icon.png"));
-        return retValue;
-    }
+//    @Override
+//    public Image getIconImage() {
+//        Image retValue = Toolkit.getDefaultToolkit().getImage(
+//                ClassLoader.getSystemResource("images/icon.png"));
+//        return retValue;
+//    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txtUsuario = new javax.swing.JTextField();
-        txtClave = new javax.swing.JPasswordField();
-        btnAceptar = new javax.swing.JButton();
-        btnCancelar = new javax.swing.JButton();
-        btnParametros = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jlLogoSistema = new javax.swing.JLabel();
+        lamina = new RSMaterialComponent.RSPanelMaterialImage();
         JLSystema = new javax.swing.JLabel();
+        jlLogoSistema = new javax.swing.JLabel();
+        jpDatos = new javax.swing.JPanel();
+        txtUsuario = new RSMaterialComponent.RSTextFieldIconOne();
+        txtClave = new RSMaterialComponent.RSPasswordIconOne();
+        jPanel1 = new javax.swing.JPanel();
+        btnCancelar = new RSMaterialComponent.RSButtonMaterialIconOne();
+        btnAceptar = new RSMaterialComponent.RSButtonMaterialIconOne();
+        btnParametros = new RSMaterialComponent.RSButtonMaterialIconOne();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Login de Sistema Comercial");
@@ -70,8 +77,25 @@ public final class frmLogin extends javax.swing.JFrame {
             }
         });
 
-        txtUsuario.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        txtUsuario.setForeground(new java.awt.Color(1, 1, 1));
+        JLSystema.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
+        JLSystema.setForeground(new java.awt.Color(255, 255, 255));
+        JLSystema.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jlLogoSistema.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jlLogoSistema.setForeground(new java.awt.Color(1, 1, 1));
+        jlLogoSistema.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlLogoSistema.setMaximumSize(new java.awt.Dimension(128, 128));
+        jlLogoSistema.setMinimumSize(new java.awt.Dimension(128, 128));
+        jlLogoSistema.setPreferredSize(new java.awt.Dimension(128, 128));
+
+        jpDatos.setBackground(new java.awt.Color(255, 153, 255));
+        jpDatos.setOpaque(false);
+        jpDatos.setLayout(new java.awt.GridLayout(4, 1, 5, 5));
+
+        txtUsuario.setMaximumSize(new java.awt.Dimension(216, 40));
+        txtUsuario.setMinimumSize(new java.awt.Dimension(216, 40));
+        txtUsuario.setPlaceholder("Ingrese usuario");
+        txtUsuario.setPreferredSize(new java.awt.Dimension(216, 40));
         txtUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtUsuarioActionPerformed(evt);
@@ -82,264 +106,117 @@ public final class frmLogin extends javax.swing.JFrame {
                 txtUsuarioKeyPressed(evt);
             }
         });
+        jpDatos.add(txtUsuario);
 
-        txtClave.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        txtClave.setForeground(new java.awt.Color(1, 1, 1));
+        txtClave.setMaximumSize(new java.awt.Dimension(216, 40));
+        txtClave.setMinimumSize(new java.awt.Dimension(216, 40));
+        txtClave.setPlaceholder("Ingrese contraseña");
+        txtClave.setPreferredSize(new java.awt.Dimension(216, 40));
         txtClave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtClaveActionPerformed(evt);
             }
         });
+        jpDatos.add(txtClave);
 
-        btnAceptar.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        btnAceptar.setForeground(new java.awt.Color(1, 1, 1));
-        btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Aceptar 32 x 32.png"))); // NOI18N
-        btnAceptar.setMnemonic('a');
-        btnAceptar.setText("Aceptar");
-        btnAceptar.setToolTipText("");
-        btnAceptar.setPreferredSize(new java.awt.Dimension(123, 44));
-        btnAceptar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnAceptarMouseExited(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnAceptarMouseEntered(evt);
-            }
-        });
-        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAceptarActionPerformed(evt);
-            }
-        });
+        jPanel1.setMaximumSize(new java.awt.Dimension(216, 40));
+        jPanel1.setMinimumSize(new java.awt.Dimension(216, 40));
+        jPanel1.setOpaque(false);
+        jPanel1.setLayout(new java.awt.GridLayout(1, 2, 5, 0));
 
-        btnCancelar.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        btnCancelar.setForeground(new java.awt.Color(1, 1, 1));
-        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Cancelar 32 x 32.png"))); // NOI18N
-        btnCancelar.setMnemonic('c');
+        btnCancelar.setBackground(new java.awt.Color(204, 0, 51));
         btnCancelar.setText("Cancelar");
-        btnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnCancelarMouseExited(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnCancelarMouseEntered(evt);
-            }
-        });
+        btnCancelar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CANCEL);
+        btnCancelar.setMaximumSize(new java.awt.Dimension(216, 40));
+        btnCancelar.setMinimumSize(new java.awt.Dimension(216, 40));
+        btnCancelar.setPreferredSize(new java.awt.Dimension(216, 40));
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
             }
         });
+        jPanel1.add(btnCancelar);
 
-        btnParametros.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        btnParametros.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Parametros 32 x 32.png"))); // NOI18N
-        btnParametros.setMnemonic(';');
-        btnParametros.setText("Opcion de Conexion");
-        btnParametros.setToolTipText("Para uso de conexion a la base de Datos Remotamente");
+        btnAceptar.setText("Aceptar");
+        btnAceptar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CHECK);
+        btnAceptar.setMaximumSize(new java.awt.Dimension(216, 40));
+        btnAceptar.setMinimumSize(new java.awt.Dimension(216, 40));
+        btnAceptar.setPreferredSize(new java.awt.Dimension(216, 40));
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnAceptar);
+
+        jpDatos.add(jPanel1);
+
+        btnParametros.setBackground(new java.awt.Color(0, 204, 51));
+        btnParametros.setText("Opcion de conexion");
+        btnParametros.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DASHBOARD);
+        btnParametros.setMaximumSize(new java.awt.Dimension(216, 40));
+        btnParametros.setMinimumSize(new java.awt.Dimension(216, 40));
+        btnParametros.setPreferredSize(new java.awt.Dimension(216, 40));
         btnParametros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnParametrosActionPerformed(evt);
             }
         });
+        jpDatos.add(btnParametros);
 
-        jLabel1.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(1, 1, 1));
-        jLabel1.setText("Usuario:");
-
-        jLabel2.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(1, 1, 1));
-        jLabel2.setText("Clave:");
-
-        jlLogoSistema.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jlLogoSistema.setForeground(new java.awt.Color(1, 1, 1));
-        jlLogoSistema.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlLogoSistema.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Panel de Control 128 x 128.png"))); // NOI18N
-
-        JLSystema.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
-        JLSystema.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        javax.swing.GroupLayout laminaLayout = new javax.swing.GroupLayout(lamina);
+        lamina.setLayout(laminaLayout);
+        laminaLayout.setHorizontalGroup(
+            laminaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(laminaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(laminaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(JLSystema, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, laminaLayout.createSequentialGroup()
+                        .addComponent(jpDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jlLogoSistema, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        laminaLayout.setVerticalGroup(
+            laminaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(laminaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(JLSystema, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(laminaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlLogoSistema, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jpDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(JLSystema, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtClave)
-                            .addComponent(txtUsuario)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnCancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnParametros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jlLogoSistema, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(lamina, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(JLSystema, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(3, 3, 3)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtClave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnParametros))
-                    .addComponent(jlLogoSistema, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(3, 3, 3))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(lamina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
-
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnAceptar, btnCancelar});
-
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txtClave, txtUsuario});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        try {
-            if (getCnn() != null) {
-                Conexion.cerrarConexion();
-            }
-        } catch (Exception e) {
 
-        }
-        System.exit(0);
-    }//GEN-LAST:event_btnCancelarActionPerformed
-    private void txtClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtClaveActionPerformed
-        btnAceptarActionPerformed(null);
-    }//GEN-LAST:event_txtClaveActionPerformed
-    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        if (txtUsuario.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Nombre del Usuario Vacio");
-            txtUsuario.requestFocusInWindow();
-            return;
-        }
-        if (txtClave.getPassword().length == 0) {
-            JOptionPane.showMessageDialog(this, "Inserte una clave");
-            txtClave.requestFocusInWindow();
-            return;
-        }//Fin de validaciones de campos
-        
-        /*Socket s = new Socket("www.google.com.do", 80);
-        if (s.isConnected()) {
-        Para verificar si estamos en Internet (Poner Codigo de Abajo 
-        Aqui en dado Caso
-        }*/
-
-        try {
-            if (!existeIdMaquina(idMaquina)) {
-                //Ver si la maquina esta Registrada si no esta Entra
-                int num = JOptionPane.showConfirmDialog(this,
-                        "Este equipo no esta Autorizado! \nDesea Registrar?",
-                        "No Autorizado", JOptionPane.YES_NO_OPTION);
-                if (num == 0) {
-                    registro();
-                    return;
-                } else {
-                    return;
-                }
-            }
-        } catch (Exception e) {
-            registro();
-            return;
-        }
-
-        //Comprobación de los dias restante de la licencia.
-        int dia = periodoMaquina();
-        if (dia < 1) {
-            JOptionPane.showMessageDialog(this, "Licencia expirada...");
-            int resp = JOptionPane.showConfirmDialog(this,
-                    "Desea registrar el producto",
-                    "Auto Registros",
-                    JOptionPane.YES_NO_OPTION);
-            if (resp == 0) {
-                registro();
-            }
-            return;
-        }
-
-        if (dia > 1 && dia < 10) {
-            JOptionPane.showMessageDialog(this,
-                    "Tiempo de version de prueba se acaba en " + dia + " dias.");
-        }
-
-        if (!Conexion.getInstance(txtUsuario.getText(),
-                new String(txtClave.getPassword()), "None").isConnected()) {
-            JOptionPane.showMessageDialog(rootPane, "Usuario o Clave Incorrecto 🤔");
-            txtUsuario.setText("");
-            txtClave.setText("");
-            txtUsuario.requestFocusInWindow();
-            return;
-        }
-
-        if (principal == null) {
-            principal = new frmPrincipal();
-        }
-
-        principal.setPerfil(getPerfil(txtUsuario.getText()));
-        principal.setIdUsuario(txtUsuario.getText());
-        principal.setClave(new String(txtClave.getPassword()));
-        principal.menus();
-        principal.cerrarFormularios();
-        principal.setVisible(true);
-        principal.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        dispose();
-    }//GEN-LAST:event_btnAceptarActionPerformed
-    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
-        txtClave.requestFocusInWindow();
-    }//GEN-LAST:event_txtUsuarioActionPerformed
-    private void btnAceptarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseEntered
-        btnAceptar.setForeground(Color.BLUE);
-    }//GEN-LAST:event_btnAceptarMouseEntered
-    private void btnAceptarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseExited
-        btnAceptar.setForeground(Color.BLACK);
-    }//GEN-LAST:event_btnAceptarMouseExited
-    private void btnCancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseEntered
-        btnCancelar.setForeground(Color.blue);
-    }//GEN-LAST:event_btnCancelarMouseEntered
-    private void btnCancelarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseExited
-        btnCancelar.setForeground(Color.BLACK);
-    }//GEN-LAST:event_btnCancelarMouseExited
-    private void btnParametrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnParametrosActionPerformed
-        frmParametros miParametros = new frmParametros();
-        miParametros.setLocationRelativeTo(null);
-        miParametros.setVisible(true);
-    }//GEN-LAST:event_btnParametrosActionPerformed
-    private void txtUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_CONTROL) {
-            txtUsuarioKeyPress = true;
-        } else if (txtUsuarioKeyPress && evt.getKeyCode() == KeyEvent.VK_UP) {
-            if (btnParametros.isVisible()) {
-                btnParametros.setVisible(false);
-            } else {
-                btnParametros.setVisible(true);
-            }
-            txtUsuarioKeyPress = false;
-        }//Habilitar y Deshabilitar el boton del Parametros en el formulario Login
-    }//GEN-LAST:event_txtUsuarioKeyPressed
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         String sistema = System.getProperty("os.name");
-        JLSystema.setText("Usted Se encuentra en OS: " + sistema);
+        JLSystema.setText("Usted se encuentra en el SO: " + sistema);
+
         Process p;
+
         if (sistema.equals("Linux")) {
             try {
+                /*Buscando nuevas alternativas sin root*/
+ /*ls /dev/disk/by-uuid/ : Podemos ontener el valor del primer resultado.*/
+ /*lsblk -o name,uuid: Otro que podemos filtrar por el disco duro.*/
                 p = Runtime.getRuntime().exec("lsblk -o UUID /dev/sda1");
             } catch (IOException ex) {
                 //Instalar Logger
@@ -357,6 +234,7 @@ public final class frmLogin extends javax.swing.JFrame {
             Scanner sc;
             if (sistema.equals("Windows 7")) {
                 try {
+                    /*Aun funciona 25 de julio 2022*/
                     p = Runtime.getRuntime().exec("C:\\Windows\\System32\\wbem\\wmic csproduct get uuid");
                     sc = new Scanner(p.getInputStream());
                     p.getOutputStream().close();
@@ -384,6 +262,127 @@ public final class frmLogin extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         btnCancelarActionPerformed(null);
     }//GEN-LAST:event_formWindowClosing
+
+    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
+        txtClave.requestFocusInWindow();
+    }//GEN-LAST:event_txtUsuarioActionPerformed
+
+    private void txtUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_CONTROL) {
+            txtUsuarioKeyPress = true;
+        } else if (txtUsuarioKeyPress && evt.getKeyCode() == KeyEvent.VK_UP) {
+            if (btnParametros.isVisible()) {
+                btnParametros.setVisible(false);
+            } else {
+                btnParametros.setVisible(true);
+            }
+            txtUsuarioKeyPress = false;
+        }//Habilitar y Deshabilitar el boton del Parametros en el formulario Login
+    }//GEN-LAST:event_txtUsuarioKeyPressed
+
+    private void txtClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtClaveActionPerformed
+        btnAceptarActionPerformed(null);
+    }//GEN-LAST:event_txtClaveActionPerformed
+
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        if (txtUsuario.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nombre del Usuario Vacio");
+            txtUsuario.requestFocusInWindow();
+            return;
+        }
+        if (txtClave.getPassword().length == 0) {
+            JOptionPane.showMessageDialog(this, "Inserte una clave");
+            txtClave.requestFocusInWindow();
+            return;
+        }//Fin de validaciones de campos
+        
+        /*Socket s = new Socket("www.google.com.do", 80);
+        if (s.isConnected()) {
+        Para verificar si estamos en Internet (Poner Codigo de Abajo 
+        Aqui en dado Caso
+        }*/
+        
+        Conexion conexion = Conexion.getInstance(txtUsuario.getText(),
+                new String(txtClave.getPassword()), "None");
+        
+        if (!conexion.isConnected()) {
+            txtUsuario.setText("");
+            txtClave.setText("");
+            txtUsuario.requestFocusInWindow();
+            return;
+        }
+        
+        
+        //Buscar cuales son los roles del usuario.
+        
+        
+        
+        //Reconectarse con el rol seleccionado por el usuario. 
+        
+        
+        if (!existeIdMaquina(idMaquina)) {
+            //Ver si la maquina esta Registrada si no esta Entra
+            int num = JOptionPane.showConfirmDialog(this,
+                    "Este equipo no esta Autorizado! \nDesea Registrar?",
+                    "No Autorizado", JOptionPane.YES_NO_OPTION);
+            if (num == 0) {
+                registro();
+                return;
+            } else {
+                return;
+            }
+        }
+
+        //Comprobación de los dias restante de la licencia.
+        int dia = periodoMaquina();
+        if (dia < 1) {
+            JOptionPane.showMessageDialog(this, "Licencia expirada...");
+            int resp = JOptionPane.showConfirmDialog(this,
+                    "Desea registrar el producto",
+                    "Auto Registros",
+                    JOptionPane.YES_NO_OPTION);
+            if (resp == 0) {
+                registro();
+            }
+            return;
+        }
+
+        if (dia > 1 && dia < 10) {
+            JOptionPane.showMessageDialog(this,
+                    "Tiempo de version de prueba se acaba en " + dia + " dias.");
+        }
+
+        
+
+        if (principal == null) {
+            principal = new frmPrincipal();
+        }
+
+        principal.setIdUsuario(txtUsuario.getText());
+        principal.setClave(new String(txtClave.getPassword()));
+        principal.cerrarFormularios();
+        principal.setVisible(true);
+        principal.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        dispose();
+    }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        try {
+            if (getCnn() != null) {
+                Conexion.cerrarConexion();
+            }
+        } catch (Exception e) {
+
+        }
+        System.exit(0);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnParametrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnParametrosActionPerformed
+        frmParametros miParametros = new frmParametros();
+        miParametros.setLocationRelativeTo(null);
+        miParametros.setVisible(true);
+    }//GEN-LAST:event_btnParametrosActionPerformed
+
     private void registro() {
         //Implementar logistica para registrar producto en linea
         frmRegistros miRegistros = new frmRegistros(this, true, idMaquina);
@@ -392,18 +391,22 @@ public final class frmLogin extends javax.swing.JFrame {
         if (miRegistros.txtIdMaquina.getText().equalsIgnoreCase("cancelado")) {
             return;
         }
-        
-        new String(miRegistros.txtClaveServidor.getPassword());
-        
-        getMDatos(miRegistros.getClave3().trim());
 
-        setLicencia(miRegistros.getFecha(),
+        String claveServidor = new String(miRegistros.txtClaveServidor.getPassword());
+
+        Conexion.getInstance("None", "SYSDBA", claveServidor);
+
+        if (setLicencia(new Date(miRegistros.dchFecha.getDate().getTime()),
                 miRegistros.txtIdMaquina.getText().trim(),
                 new String(miRegistros.txtClave1.getPassword()).trim(),
-                new String(miRegistros.txtClave2.getPassword()).trim()); //Instalar Logger
-        JOptionPane.showMessageDialog(this, "Maquina Registradas");
+                new String(miRegistros.txtClave2.getPassword()).trim())) {
+            JOptionPane.showMessageDialog(this, "Maquina Registradas");
+        }
+        
+        miRegistros.dispose();
+
     }
-    
+
     public static void main(String args[]) {
 //        try {
 //            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -424,16 +427,17 @@ public final class frmLogin extends javax.swing.JFrame {
             }
         });
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JLSystema;
-    private javax.swing.JButton btnAceptar;
-    private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnParametros;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnAceptar;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnCancelar;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnParametros;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel jlLogoSistema;
-    private javax.swing.JPasswordField txtClave;
-    private javax.swing.JTextField txtUsuario;
+    private javax.swing.JPanel jpDatos;
+    private RSMaterialComponent.RSPanelMaterialImage lamina;
+    private RSMaterialComponent.RSPasswordIconOne txtClave;
+    private RSMaterialComponent.RSTextFieldIconOne txtUsuario;
     // End of variables declaration//GEN-END:variables
 }

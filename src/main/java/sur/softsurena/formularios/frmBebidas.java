@@ -17,8 +17,10 @@ import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import javax.swing.Icon;
@@ -31,12 +33,16 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import static sur.softsurena.datos.delete.DeleteMetodos.borrarFactura;
+import static sur.softsurena.datos.insert.InsertMetodos.agregarDetalleFactura;
 import static sur.softsurena.datos.insert.InsertMetodos.agregarFacturaNombre;
 import static sur.softsurena.datos.select.SelectMetodos.existeProducto;
+import static sur.softsurena.datos.select.SelectMetodos.getCategoriaActivas;
+import static sur.softsurena.datos.select.SelectMetodos.getCategorias;
 import static sur.softsurena.datos.select.SelectMetodos.getClientesCombo;
 import static sur.softsurena.datos.update.UpdateMetodos.modificarFactura;
 import sur.softsurena.entidades.Cliente;
 import sur.softsurena.entidades.DefaultTableCellHeaderRenderer;
+import sur.softsurena.entidades.DetalleFactura;
 import sur.softsurena.entidades.Factura;
 import sur.softsurena.entidades.HeaderFactura;
 import sur.softsurena.entidades.Opcion;
@@ -52,7 +58,7 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
     private String nombreCliente = "";
 
     private final String titulos[] = {"Cantidad", "Descripcion", "Montos"};
-    
+
     private double valorCredito = 0;
     private JButton btn, boton;
     private ActionEvent e1;
@@ -62,7 +68,7 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
     private final Object[] registro = new Object[3];
     private final Properties propiedad;
     private final DefaultTableCellRenderer tcr;
-    
+
     private final Thread h1;
     private Thread ct;
 
@@ -1025,7 +1031,7 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
 
                         JOptionPane.showMessageDialog(this,
                                 "Ocurrio un error Temporal Detallle");
-                        
+
                         return;
                     }
                 }
@@ -1037,20 +1043,19 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
                     efectivo(new BigDecimal(miEfe.txtEfectivo.getValue().toString())).
                     cambio(new BigDecimal(miEfe.txtDevuelta.getValue().toString())).
                     credito(rbtCredito.isSelected()).build();
+            DetalleFactura objDF = null;
+            List<DetalleFactura> df = new ArrayList<DetalleFactura>();
+
+            df.add(objDF);
 
             Factura f = Factura.builder().
-                    id(idFactura).headerFactura(hf).build();
+                    id(idFactura).headerFactura(hf).detalleFactura(df).build();
 
             if (agregarFacturaNombre(f) < 1) {
                 JOptionPane.showMessageDialog(this, "Esta compra no se ha registrado...");
             } else {
                 for (int i = 0; i < facturas.getDetalleFactura().size(); i++) {
-                    if (agregarDetalleFactura(
-                            facturas.getId(),
-                            i + 1,
-                            facturas.getDetalleFactura().get(i).getIdProducto(),
-                            facturas.getDetalleFactura().get(i).getPrecio(),
-                            facturas.getDetalleFactura().get(i).getCantidad()) < 1) {
+                    if (agregarDetalleFactura(f) < 1) {
                         JOptionPane.showMessageDialog(this, "Esta compra no se ha registrado...");
                         return;
                     }
@@ -1316,22 +1321,22 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
 
         frmTemporal miTemporal = new frmTemporal(null, true);
 
-        miTemporal.setFactura(Integer.parseInt(txtIdFactura.getText()));
-        miTemporal.setMiTabla(miTabla);
-        miTemporal.setFacturas(facturas);
-        miTemporal.setCredicto(rbtCredito.isSelected());
-        miTemporal.setIdTurno(getTurno());
-        miTemporal.setIdCliente(idClienteTemporal);
-        miTemporal.setNombreCliente(nombreCliente);
-        miTemporal.setIdUsuario(getIdUsuario());
-        miTemporal.setAceptar(false);
-
-        miTemporal.setLocationRelativeTo(null);
-        miTemporal.setVisible(true);
-
-        if (miTemporal.isAceptar()) {
-            nueva();
-        }
+//        miTemporal.setFactura(Integer.parseInt(txtIdFactura.getText()));
+//        miTemporal.setMiTabla(miTabla);
+//        miTemporal.setFacturas(facturas);
+//        miTemporal.setCredicto(rbtCredito.isSelected());
+//        miTemporal.setIdTurno(getTurno());
+//        miTemporal.setIdCliente(idClienteTemporal);
+//        miTemporal.setNombreCliente(nombreCliente);
+//        miTemporal.setIdUsuario(getIdUsuario());
+//        miTemporal.setAceptar(false);
+//
+//        miTemporal.setLocationRelativeTo(null);
+//        miTemporal.setVisible(true);
+//
+//        if (miTemporal.isAceptar()) {
+//            nueva();
+//        }
     }//GEN-LAST:event_btnEsperaActionPerformed
 
     private void btnBuscarEsperaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarEsperaActionPerformed
@@ -1507,7 +1512,7 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
         if (!cmbCliente.isEnabled()) {
             return;
         }
-        estadoCliente();
+        //estadoCliente();
     }//GEN-LAST:event_cmbClienteActionPerformed
 
     private void btnDevolucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolucionActionPerformed
@@ -1613,6 +1618,8 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
             return;
         }//Fin de la inclusion....
 
+        ResultSet rs = getConsulta(sql);
+        
         String sql = "select Descripcion, IdProducto, imagePath, Precio "
                 + "from TABLA_PRODUCTOS "
                 + "where idCategoria = " + btn.getToolTipText() + " and "
@@ -1625,7 +1632,6 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
                     + "where idCategoria = " + btn.getToolTipText();
         }
 
-        ResultSet rs = getConsulta(sql);
 
         jpProductos.removeAll();
         jpProductos.repaint();
@@ -1707,15 +1713,12 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
     }
 
     private void categoriaR() {
-        String sql = "SELECT r.ID, r.DESCRIPCION, r.IMAGEN_TEXTO "
-                + "FROM GET_CATEGORIA_ACTIVAS r";
+        ResultSet rs = getCategoriaActivas();
 
         if (cbTodos.isSelected()) {
-            sql = "SELECT r.ID, r.DESCRIPCION, r.IMAGEN_TEXTO "
-                    + "FROM V_CATEGORIAS r";
+            rs = getCategorias();
         }
 
-        ResultSet rs = getConsulta(sql);
         jpCategoria.removeAll();
         jpCategoria.repaint();
 //        jpCategoria.setLayout(new FlowLayout());
@@ -1766,62 +1769,61 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
         }
     }
 
-
-    private void estadoCliente() {
-        //Obtenemos el ID de la persona
-        int idPersona = 0;
-        try {
-            idPersona = ((Persona) cmbCliente.getSelectedItem()).getId();
-        } catch (Exception ex) {
-            idPersona = 0;
-        }
-
-        //Consultamos en la base de datos por el id de la persona.
-        ResultSet rs = getClientesPorDeudaCredito(idPersona);
-
-        int resp = JOptionPane.NO_OPTION;
-
-        try {
-            rs.next();
-            JlCantidad1.setText("Limt Cred.:$"
-                    + Utilidades.priceWithDecimal(rs.getDouble("credito")));
-            JlCantidad2.setText("Deud Actu.:$"
-                    + Utilidades.priceWithDecimal(rs.getDouble("deudaActual")));
-            valorCredito = rs.getDouble("credito");
-            if (idPersona != 0 && rbtCredito.isSelected()) {
-                resp = JOptionPane.showConfirmDialog(this, "Cliente: " + rs.getString("nombres")
-                        + "\nSu credito es de: " + "RD$" + rs.getString("credito")
-                        + "\nDesea Continuar?",
-                        "Credito insuficiente", JOptionPane.YES_NO_OPTION);
-            }
-        } catch (SQLException ex) {
-
-            //Instalar Logger
-        }
-
-        switch (resp) {
-            case JOptionPane.OK_OPTION:
-
-                frmAutorizacion miAut = new frmAutorizacion(null, true);
-                miAut.setLocationRelativeTo(null);
-                miAut.setVisible(true);
-
-//Si la Autenticacion falla emitimos un mensaje de Usuario no valido.
-                if (!miAut.isAceptado()) {
-                    JOptionPane.showMessageDialog(this, "Usuario no valido");
-                    rbtContadoActionPerformed(null);
-                }
-
-                break;
-
-            case JOptionPane.NO_OPTION:
-                rbtContado.setSelected(true);
-                rbtContadoActionPerformed(null);
-                rbtContado.validate();
-                rbtContado.revalidate();
-                break;
-        }
-    }
+//    private void estadoCliente() {
+//        //Obtenemos el ID de la persona
+//        int idPersona = 0;
+//        try {
+//            idPersona = ((Persona) cmbCliente.getSelectedItem()).getId();
+//        } catch (Exception ex) {
+//            idPersona = 0;
+//        }
+//
+//        //Consultamos en la base de datos por el id de la persona.
+//        ResultSet rs = getClientesPorDeudaCredito(idPersona);
+//
+//        int resp = JOptionPane.NO_OPTION;
+//
+//        try {
+//            rs.next();
+//            JlCantidad1.setText("Limt Cred.:$"
+//                    + Utilidades.priceWithDecimal(rs.getDouble("credito")));
+//            JlCantidad2.setText("Deud Actu.:$"
+//                    + Utilidades.priceWithDecimal(rs.getDouble("deudaActual")));
+//            valorCredito = rs.getDouble("credito");
+//            if (idPersona != 0 && rbtCredito.isSelected()) {
+//                resp = JOptionPane.showConfirmDialog(this, "Cliente: " + rs.getString("nombres")
+//                        + "\nSu credito es de: " + "RD$" + rs.getString("credito")
+//                        + "\nDesea Continuar?",
+//                        "Credito insuficiente", JOptionPane.YES_NO_OPTION);
+//            }
+//        } catch (SQLException ex) {
+//
+//            //Instalar Logger
+//        }
+//
+//        switch (resp) {
+//            case JOptionPane.OK_OPTION:
+//
+//                frmAutorizacion miAut = new frmAutorizacion(null, true);
+//                miAut.setLocationRelativeTo(null);
+//                miAut.setVisible(true);
+//
+////Si la Autenticacion falla emitimos un mensaje de Usuario no valido.
+//                if (!miAut.isAceptado()) {
+//                    JOptionPane.showMessageDialog(this, "Usuario no valido");
+//                    rbtContadoActionPerformed(null);
+//                }
+//
+//                break;
+//
+//            case JOptionPane.NO_OPTION:
+//                rbtContado.setSelected(true);
+//                rbtContadoActionPerformed(null);
+//                rbtContado.validate();
+//                rbtContado.revalidate();
+//                break;
+//        }
+//    }
 
     private void getClientes() {
         cmbCliente.removeAllItems();

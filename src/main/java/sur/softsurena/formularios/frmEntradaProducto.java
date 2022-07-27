@@ -393,8 +393,8 @@ public class frmEntradaProducto extends javax.swing.JDialog {
                 rootPaneCheckingEnabled, 
                 usuario, 
                 usuario);
-                numero, txtFactura.getText(), txtIDProductos.getText(), valor,
-                getUsuario()
+//                numero, txtFactura.getText(), txtIDProductos.getText(), valor,
+//                getUsuario()
         if (!agregarProductoEntrada(e)) {
             JOptionPane.showMessageDialog(this, "No se pudo registrar producto");
             return;

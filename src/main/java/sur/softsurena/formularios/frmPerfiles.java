@@ -561,12 +561,7 @@ public class frmPerfiles extends javax.swing.JDialog {
         cmbPerfil.setSelectedIndex(getPosItem());
         llenarCheck();
     }//GEN-LAST:event_formWindowOpened
-    private String dime(boolean valor) {
-        if (valor) {
-            return "s";
-        }
-        return "n";
-    }
+    
 
     private void llenarCombo() {
         cmbPerfil.removeAllItems();
