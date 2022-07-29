@@ -1,5 +1,6 @@
 package sur.softsurena.formularios;
 
+import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
@@ -26,17 +27,12 @@ public final class frmLogin extends javax.swing.JFrame {
     public frmLogin() {
         initComponents();
 
-        Imagenes imagen = new Imagenes("Panel de Control 128 x 128.png");
-        jlLogoSistema.setIcon(
-                imagen.getICono());
+        Imagenes imagen = new Imagenes();
+        jlLogoSistema.setIcon(imagen.getIcono("Panel de Control 128 x 128.png"));
+        lamina.setImagen(imagen.getIcono("FondoLogin 626 x 386.jpg"));
 
         btnParametros.setVisible(false);//Boton parametros Invisible
-        jpDatos.setPreferredSize(new Dimension(jpDatos.getWidth(), 136));
-        jpDatos.setMaximumSize(new Dimension(jpDatos.getWidth(), 136));
-        jpDatos.setMinimumSize(new Dimension(jpDatos.getWidth(), 136));
-
-        imagen = new Imagenes("FondoLogin 626 x 386.jpg");
-        lamina.setImagen(imagen.getICono());
+        
 
         this.setLocationRelativeTo(null);
     }
@@ -408,22 +404,31 @@ public final class frmLogin extends javax.swing.JFrame {
     }
 
     public static void main(String args[]) {
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-//            //Instalar Logger
-//        }
+        try {
+            
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                System.out.println("Look And Feel: "+info.getName());
+            }
+            
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("GTK+".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            //Instalar Logger
+        }
+
+        
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new frmLogin().setVisible(true);
-                new frmLogin().setLocationRelativeTo(null);
+                FlatLightLaf.setup();
+                frmLogin frmLogin = new frmLogin();
+                frmLogin.setVisible(true);
+                frmLogin.setLocationRelativeTo(null);
             }
         });
     }

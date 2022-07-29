@@ -1,5 +1,6 @@
 package sur.softsurena.formularios;
 
+import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.beans.PropertyVetoException;
@@ -122,10 +123,10 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jmCerrarTurno = new javax.swing.JMenuItem();
         jSeparator11 = new javax.swing.JPopupMenu.Separator();
         jmDeuda = new javax.swing.JMenuItem();
-        jScrollPane3 = new javax.swing.JScrollPane();
+        jsEstatus = new javax.swing.JScrollPane();
         pEstatus = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jlImagen = new javax.swing.JLabel();
+        jlLogoEmpresa = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         txtGanancia = new javax.swing.JFormattedTextField();
         txtCosto = new javax.swing.JFormattedTextField();
@@ -137,8 +138,8 @@ public final class frmPrincipal extends javax.swing.JFrame {
                 return false; //Las celdas no son editables.
             }
         };
-        btnEncabezado = new javax.swing.JButton();
-        btnEncabezado1 = new javax.swing.JButton();
+        btnEstablecerEncabezado = new javax.swing.JButton();
+        btnSeleccionarImpresora = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jlMovimientoES = new javax.swing.JLabel();
         jlGrafica = new javax.swing.JLabel();
@@ -148,7 +149,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jlRestaurar = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         dpnEscritorio = new DesktopConFondo();
-        jLabel10 = new javax.swing.JLabel();
+        jlFlechaIzquierda = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         mnuArchivos = new javax.swing.JMenu();
         mnuArchivosCliente = new javax.swing.JMenuItem();
@@ -157,6 +158,8 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         mnuArchivosCambioClave = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jSeparator12 = new javax.swing.JPopupMenu.Separator();
         mnuArchivosCambioUsuario = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         mnuArchivosSalir = new javax.swing.JMenuItem();
@@ -338,7 +341,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jScrollPane3.setPreferredSize(new java.awt.Dimension(270, 560));
+        jsEstatus.setPreferredSize(new java.awt.Dimension(270, 560));
 
         pEstatus.setMinimumSize(new java.awt.Dimension(20, 20));
         pEstatus.setPreferredSize(new java.awt.Dimension(250, 660));
@@ -347,14 +350,14 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Datos actuales de la empresa");
 
-        jlImagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlImagen.setToolTipText("Doble click para cambiar el logo");
-        jlImagen.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Seleccione Logo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Ubuntu", 0, 14))); // NOI18N
-        jlImagen.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jlImagen.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jlImagen.addMouseListener(new java.awt.event.MouseAdapter() {
+        jlLogoEmpresa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlLogoEmpresa.setToolTipText("Doble click para cambiar el logo");
+        jlLogoEmpresa.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Seleccione Logo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Ubuntu", 0, 14))); // NOI18N
+        jlLogoEmpresa.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jlLogoEmpresa.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jlLogoEmpresa.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jlImagenMouseClicked(evt);
+                jlLogoEmpresaMouseClicked(evt);
             }
         });
 
@@ -404,17 +407,17 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jtCajero.setPreferredSize(new java.awt.Dimension(267, 77));
         jScrollPane1.setViewportView(jtCajero);
 
-        btnEncabezado.setText("Encabezado de Factura");
-        btnEncabezado.addActionListener(new java.awt.event.ActionListener() {
+        btnEstablecerEncabezado.setText("Encabezado de Factura");
+        btnEstablecerEncabezado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEncabezadoActionPerformed(evt);
+                btnEstablecerEncabezadoActionPerformed(evt);
             }
         });
 
-        btnEncabezado1.setText("Impresora del Sistema");
-        btnEncabezado1.addActionListener(new java.awt.event.ActionListener() {
+        btnSeleccionarImpresora.setText("Impresora del Sistema");
+        btnSeleccionarImpresora.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEncabezado1ActionPerformed(evt);
+                btnSeleccionarImpresoraActionPerformed(evt);
             }
         });
 
@@ -423,11 +426,12 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jlMovimientoES.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         jlMovimientoES.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlMovimientoES.setToolTipText("Reporte e impresion de Entrada y Salida");
+        jlMovimientoES.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jlMovimientoES.setDoubleBuffered(true);
         jlMovimientoES.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jlMovimientoES.setMaximumSize(new java.awt.Dimension(80, 40));
-        jlMovimientoES.setMinimumSize(new java.awt.Dimension(80, 40));
-        jlMovimientoES.setPreferredSize(new java.awt.Dimension(80, 30));
+        jlMovimientoES.setMaximumSize(new java.awt.Dimension(80, 45));
+        jlMovimientoES.setMinimumSize(new java.awt.Dimension(80, 45));
+        jlMovimientoES.setPreferredSize(new java.awt.Dimension(80, 38));
         jlMovimientoES.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jlMovimientoES.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -445,12 +449,12 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jlGrafica.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         jlGrafica.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlGrafica.setToolTipText("Obtener la IP Publica del Equipo cuando esta conectada a Internet");
-        jlGrafica.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jlGrafica.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jlGrafica.setDoubleBuffered(true);
         jlGrafica.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jlGrafica.setMaximumSize(new java.awt.Dimension(80, 40));
-        jlGrafica.setMinimumSize(new java.awt.Dimension(80, 40));
-        jlGrafica.setPreferredSize(new java.awt.Dimension(80, 30));
+        jlGrafica.setMaximumSize(new java.awt.Dimension(80, 45));
+        jlGrafica.setMinimumSize(new java.awt.Dimension(80, 45));
+        jlGrafica.setPreferredSize(new java.awt.Dimension(80, 38));
         jlGrafica.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jlGrafica.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -468,12 +472,12 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jlGetIP.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         jlGetIP.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlGetIP.setToolTipText("Obtener la IP Publica del Equipo cuando esta conectada a Internet");
-        jlGetIP.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jlGetIP.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jlGetIP.setDoubleBuffered(true);
         jlGetIP.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jlGetIP.setMaximumSize(new java.awt.Dimension(80, 40));
-        jlGetIP.setMinimumSize(new java.awt.Dimension(80, 40));
-        jlGetIP.setPreferredSize(new java.awt.Dimension(80, 30));
+        jlGetIP.setMaximumSize(new java.awt.Dimension(80, 45));
+        jlGetIP.setMinimumSize(new java.awt.Dimension(80, 45));
+        jlGetIP.setPreferredSize(new java.awt.Dimension(80, 38));
         jlGetIP.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jlGetIP.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -491,12 +495,12 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jlRestauracion.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         jlRestauracion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlRestauracion.setToolTipText("Restaurar una base de datos anterior...");
-        jlRestauracion.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jlRestauracion.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jlRestauracion.setDoubleBuffered(true);
         jlRestauracion.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jlRestauracion.setMaximumSize(new java.awt.Dimension(80, 40));
-        jlRestauracion.setMinimumSize(new java.awt.Dimension(80, 40));
-        jlRestauracion.setPreferredSize(new java.awt.Dimension(80, 30));
+        jlRestauracion.setMaximumSize(new java.awt.Dimension(80, 45));
+        jlRestauracion.setMinimumSize(new java.awt.Dimension(80, 45));
+        jlRestauracion.setPreferredSize(new java.awt.Dimension(80, 38));
         jlRestauracion.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jlRestauracion.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -514,11 +518,12 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jlRespaldar.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         jlRespaldar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlRespaldar.setToolTipText("Hacer un Respaldo de la Base de Datos...");
+        jlRespaldar.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jlRespaldar.setDoubleBuffered(true);
         jlRespaldar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jlRespaldar.setMaximumSize(new java.awt.Dimension(80, 40));
-        jlRespaldar.setMinimumSize(new java.awt.Dimension(80, 40));
-        jlRespaldar.setPreferredSize(new java.awt.Dimension(80, 30));
+        jlRespaldar.setMaximumSize(new java.awt.Dimension(80, 45));
+        jlRespaldar.setMinimumSize(new java.awt.Dimension(80, 45));
+        jlRespaldar.setPreferredSize(new java.awt.Dimension(80, 38));
         jlRespaldar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jlRespaldar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -536,11 +541,12 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jlRestaurar.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         jlRestaurar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlRestaurar.setToolTipText("Retaurar la Base de Datos desde un Respaldo");
+        jlRestaurar.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jlRestaurar.setDoubleBuffered(true);
         jlRestaurar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jlRestaurar.setMaximumSize(new java.awt.Dimension(80, 40));
-        jlRestaurar.setMinimumSize(new java.awt.Dimension(80, 40));
-        jlRestaurar.setPreferredSize(new java.awt.Dimension(80, 30));
+        jlRestaurar.setMaximumSize(new java.awt.Dimension(80, 45));
+        jlRestaurar.setMinimumSize(new java.awt.Dimension(80, 45));
+        jlRestaurar.setPreferredSize(new java.awt.Dimension(80, 38));
         jlRestaurar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jlRestaurar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -559,50 +565,52 @@ public final class frmPrincipal extends javax.swing.JFrame {
         pEstatus.setLayout(pEstatusLayout);
         pEstatusLayout.setHorizontalGroup(
             pEstatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(pEstatusLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(12, 12, 12)
                 .addGroup(pEstatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jlImagen, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jlLogoEmpresa, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnEncabezado, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
-                    .addComponent(btnEncabezado1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEstablecerEncabezado, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
+                    .addComponent(btnSeleccionarImpresora, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(12, 12, 12))
         );
         pEstatusLayout.setVerticalGroup(
             pEstatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pEstatusLayout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jlImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jlLogoEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(btnEstablecerEncabezado, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEncabezado, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEncabezado1)
+                .addComponent(btnSeleccionarImpresora)
                 .addGap(0, 0, 0))
         );
 
-        jScrollPane3.setViewportView(pEstatus);
+        pEstatusLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnEstablecerEncabezado, btnSeleccionarImpresora});
+
+        jsEstatus.setViewportView(pEstatus);
 
         dpnEscritorio.setBackground(new java.awt.Color(0, 102, 102));
         dpnEscritorio.setComponentPopupMenu(jPopupMenu1);
         dpnEscritorio.setPreferredSize(new java.awt.Dimension(510, 531));
 
-        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
+        jlFlechaIzquierda.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel10MouseClicked(evt);
+                jlFlechaIzquierdaMouseClicked(evt);
             }
         });
-        dpnEscritorio.add(jLabel10);
-        jLabel10.setBounds(0, 250, 40, 40);
+        dpnEscritorio.add(jlFlechaIzquierda);
+        jlFlechaIzquierda.setBounds(0, 250, 40, 40);
 
         jScrollPane4.setViewportView(dpnEscritorio);
 
@@ -658,6 +666,10 @@ public final class frmPrincipal extends javax.swing.JFrame {
         });
         mnuArchivos.add(mnuArchivosCambioClave);
         mnuArchivos.add(jSeparator3);
+
+        jMenuItem1.setText("jMenuItem1");
+        mnuArchivos.add(jMenuItem1);
+        mnuArchivos.add(jSeparator12);
 
         mnuArchivosCambioUsuario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F6, 0));
         mnuArchivosCambioUsuario.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
@@ -802,14 +814,14 @@ public final class frmPrincipal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE))
+                .addComponent(jsEstatus, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE)
-            .addComponent(jScrollPane4)
+            .addComponent(jsEstatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE)
         );
 
         pack();
@@ -976,7 +988,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_formWindowClosing
-    private void jlImagenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlImagenMouseClicked
+    private void jlLogoEmpresaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlLogoEmpresaMouseClicked
         if (evt.getClickCount() == 1) {
             return;
         }
@@ -1009,10 +1021,10 @@ public final class frmPrincipal extends javax.swing.JFrame {
             icon = new ImageIcon(imagen.getImage().getScaledInstance(180, 120,
                     Image.SCALE_DEFAULT));
             imagen.getImage().flush();
-            jlImagen.setIcon(icon);
-            jlImagen.validate();
+            jlLogoEmpresa.setIcon(icon);
+            jlLogoEmpresa.validate();
         }
-    }//GEN-LAST:event_jlImagenMouseClicked
+    }//GEN-LAST:event_jlLogoEmpresaMouseClicked
     private void jlGetIPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlGetIPMouseClicked
 //        EventQueue.invokeLater(() -> {
 //            new UnlockJFrame().setVisible(true);
@@ -1145,7 +1157,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuMovimientosDeudasActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-//        ((DesktopConFondo) dpnEscritorio).setImagen("/images/Fondo.jpg");
+        ((DesktopConFondo) dpnEscritorio).setImagen("/sur/softsurena/imagenes/Fondo 1024 x 723.jpg");
     }//GEN-LAST:event_formWindowOpened
     private void jlGraficaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlGraficaMouseClicked
         if (miGraficos == null) {
@@ -1213,11 +1225,12 @@ public final class frmPrincipal extends javax.swing.JFrame {
         mnuMovimientosDeudasActionPerformed(evt);
     }//GEN-LAST:event_jmDeudaActionPerformed
 
-    private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
+    private void jlFlechaIzquierdaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlFlechaIzquierdaMouseClicked
+        jsEstatus.setVisible(!jsEstatus.isVisible());
+        pack();
+    }//GEN-LAST:event_jlFlechaIzquierdaMouseClicked
 
-    }//GEN-LAST:event_jLabel10MouseClicked
-
-    private void btnEncabezadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncabezadoActionPerformed
+    private void btnEstablecerEncabezadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstablecerEncabezadoActionPerformed
 //        mensaje();
         frmEncabezado encabezado2 = new frmEncabezado(null, true, encabezado);
         encabezado2.setLocationRelativeTo(null);
@@ -1230,13 +1243,13 @@ public final class frmPrincipal extends javax.swing.JFrame {
                             encabezado2.txtTelefonosEmpresa.getText()));
         }
 
-    }//GEN-LAST:event_btnEncabezadoActionPerformed
+    }//GEN-LAST:event_btnEstablecerEncabezadoActionPerformed
 
-    private void btnEncabezado1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncabezado1ActionPerformed
+    private void btnSeleccionarImpresoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImpresoraActionPerformed
         frmImpresoras miImpresora = new frmImpresoras(null, true);
         miImpresora.setLocationRelativeTo(null);
         miImpresora.setVisible(true);
-    }//GEN-LAST:event_btnEncabezado1ActionPerformed
+    }//GEN-LAST:event_btnSeleccionarImpresoraActionPerformed
 
     private void jmUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmUsuariosActionPerformed
         mnuArchivosUsuarioActionPerformed(evt);
@@ -1496,26 +1509,26 @@ public final class frmPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu Archivos;
     private javax.swing.JMenu Movimientos;
-    private javax.swing.JButton btnEncabezado;
-    private javax.swing.JButton btnEncabezado1;
+    private javax.swing.JButton btnEstablecerEncabezado;
+    private javax.swing.JButton btnSeleccionarImpresora;
     public static javax.swing.JDesktopPane dpnEscritorio;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel9;
     public static javax.swing.JLabel jLabelImpresion;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     public static javax.swing.JPanel jPanelImpresion;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator10;
     private javax.swing.JPopupMenu.Separator jSeparator11;
+    private javax.swing.JPopupMenu.Separator jSeparator12;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
@@ -1524,9 +1537,10 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator7;
     private javax.swing.JPopupMenu.Separator jSeparator8;
     private javax.swing.JPopupMenu.Separator jSeparator9;
+    private javax.swing.JLabel jlFlechaIzquierda;
     private javax.swing.JLabel jlGetIP;
     private javax.swing.JLabel jlGrafica;
-    private javax.swing.JLabel jlImagen;
+    private javax.swing.JLabel jlLogoEmpresa;
     private javax.swing.JLabel jlMovimientoES;
     private javax.swing.JLabel jlRespaldar;
     private javax.swing.JLabel jlRestauracion;
@@ -1544,6 +1558,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmSalir;
     private javax.swing.JMenuItem jmUsuarios;
     public static javax.swing.JProgressBar jprImpresion;
+    private javax.swing.JScrollPane jsEstatus;
     private javax.swing.JTable jtCajero;
     private javax.swing.JMenu mnuArchivos;
     private javax.swing.JMenuItem mnuArchivosCambioClave;
@@ -1575,6 +1590,23 @@ public final class frmPrincipal extends javax.swing.JFrame {
         mnuMovimientos.setIcon(icono.getIcono("Movimiento 32 x 32.png"));
         mnuAyuda.setIcon(icono.getIcono("Ayuda 32 x 32.png"));
         
+        //Menu Archivos
+        mnuArchivosCliente.setIcon(icono.getIcono("Clientes 32 x 32.png"));
+        mnuArchivosProductos.setIcon(icono.getIcono("Productos 32 x 32.png"));
+        mnuArchivosUsuario.setIcon(icono.getIcono("Usuario 32 x 32.png"));
+        mnuArchivosCambioClave.setIcon(icono.getIcono("Cambiar Contraseña 32 x 32.png"));
+        mnuArchivosCambioUsuario.setIcon(icono.getIcono("Cambio de Usuario 32 x 32.png"));
+        mnuArchivosSalir.setIcon(icono.getIcono("Salir 32 x 32.png"));
+        
+        //Menu Movimiento
+        mnuMovimientosNuevaFactura.setIcon(icono.getIcono("Factura 32 x 32.png"));
+        mnuMovimientosReporteFactura.setIcon(icono.getIcono("Reportar Factura 32 x 32.png"));
+        mnuMovimientosInventario.setIcon(icono.getIcono("Inventario 32 x 32.png"));
+        mnuMovimientosAbrirTurno.setIcon(icono.getIcono("Turno 32 x 32.png"));
+        mnuMovimientosCerrarTurno.setIcon(icono.getIcono("Cancelar 32 x 32.png"));
+        mnuMovimientosDeudas.setIcon(icono.getIcono("Money 32 x 32.png"));
+        
+        
         //Iconos de subMenus
         Archivos.setIcon(icono.getIcono("Archivos 32 x 32.png"));
         jmClientes.setIcon(icono.getIcono("Clientes 32 x 32.png"));
@@ -1583,5 +1615,21 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jmCambioClave.setIcon(icono.getIcono("Cambiar Contraseña 32 x 32.png"));
         jmCambioUsuario.setIcon(icono.getIcono("Cambio de Usuario 32 x 32.png"));
         jmSalir.setIcon(icono.getIcono("Salir 32 x 32.png"));
+        
+        //Barra lateral izquierda
+        jlMovimientoES.setIcon(icono.getIcono("Movimiento 32 x 32.png"));
+        jlGetIP.setIcon(icono.getIcono("Ip 32 x 32.png"));
+        jlGrafica.setIcon(icono.getIcono("Grafico 32 x 32.png"));
+        jlRespaldar.setIcon(icono.getIcono("RespaldarBD 32 x 32.png"));
+        jlRestauracion.setIcon(icono.getIcono("RestaurarBD 32 x 32.png"));
+        jlRestaurar.setIcon(icono.getIcono("RestaurarBD 32 x 32.png"));
+        
+        //
+        jlLogoEmpresa.setIcon(icono.getIcono("Sin_imagen 64 x 64.png"));
+        
+        btnEstablecerEncabezado.setIcon(icono.getIcono("Factura 32 x 32.png"));
+        btnSeleccionarImpresora.setIcon(icono.getIcono("Impresora 32 x 32.png"));
+        
+        jlFlechaIzquierda.setIcon(icono.getIcono("Flecha Izquierda 32 x 32.png"));
     }
 }
