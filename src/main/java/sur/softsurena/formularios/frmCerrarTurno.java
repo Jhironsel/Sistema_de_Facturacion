@@ -202,7 +202,8 @@ public class frmCerrarTurno extends java.awt.Dialog {
         Opcion miOpcion = new Opcion("0", "Seleccione un Usuario");
         jcbUsuarios.removeAllItems();
         jcbUsuarios.addItem(miOpcion);
-        ResultSet rs = getUsuariosActivo();
+//        ResultSet rs = getUsuariosActivo();
+        ResultSet rs = null;
         try {
             while (rs.next()) {
                 miOpcion = new Opcion(

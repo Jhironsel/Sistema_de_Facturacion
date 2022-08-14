@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -40,18 +42,20 @@ import static sur.softsurena.datos.select.SelectMetodos.getCategoriaActivas;
 import static sur.softsurena.datos.select.SelectMetodos.getCategorias;
 import static sur.softsurena.datos.select.SelectMetodos.getClientesCombo;
 import static sur.softsurena.datos.update.UpdateMetodos.modificarFactura;
-import sur.softsurena.entidades.Cliente;
+import sur.softsurena.entidades.Clientes;
 import sur.softsurena.entidades.DefaultTableCellHeaderRenderer;
 import sur.softsurena.entidades.DetalleFactura;
-import sur.softsurena.entidades.Factura;
+import sur.softsurena.entidades.Facturas;
 import sur.softsurena.entidades.HeaderFactura;
 import sur.softsurena.entidades.Opcion;
-import sur.softsurena.entidades.Persona;
+import sur.softsurena.entidades.Personas;
 import static sur.softsurena.formularios.frmPrincipal.mnuMovimientosNuevaFactura;
 import sur.softsurena.hilos.hiloImpresionFactura;
 import sur.softsurena.utilidades.Utilidades;
 
 public final class frmBebidas extends javax.swing.JInternalFrame implements Runnable, ActionListener {
+
+    private static final Logger LOG = Logger.getLogger(frmBebidas.class.getName());
 
     private Integer idUsuario, idCliente, turno, idClienteTemporal;
 
@@ -60,16 +64,25 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
     private final String titulos[] = {"Cantidad", "Descripcion", "Montos"};
 
     private double valorCredito = 0;
+
     private JButton btn, boton;
+
     private ActionEvent e1;
+
     private boolean temporal;
-    private Factura facturas;
+
+    private Facturas facturas;
+
     private DefaultTableModel miTabla = new DefaultTableModel(null, titulos);
+
     private final Object[] registro = new Object[3];
+
     private final Properties propiedad;
+
     private final DefaultTableCellRenderer tcr;
 
     private final Thread h1;
+
     private Thread ct;
 
     private Properties getPropiedad() {
@@ -80,9 +93,9 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
         try {
             getPropiedad().load(new FileReader("sur/softsurena/properties/propiedades.properties"));
         } catch (FileNotFoundException ex) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         } catch (IOException ex) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }
 
@@ -947,7 +960,7 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
                             "/Propeties/propiedades.properties").getFile()),
                     "Comentario");
         } catch (IOException ex) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }//GEN-LAST:event_cbTodosActionPerformed
     private void btnGrabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrabarActionPerformed
@@ -1013,32 +1026,32 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
                     estado(estado).
                     nombreTemp(nombreCliente)
                     .build();
-            Factura f = Factura.builder().id(idFactura).headerFactura(hf).build();
+            Facturas f = Facturas.builder().id(idFactura).headerFactura(hf).build();
 
             if (!modificarFactura(f)) {
                 JOptionPane.showMessageDialog(this, "Ocurrio un error factura Temporal");
                 return;
             } else {
                 for (int i = 1; i <= facturas.getDetalleFactura().size(); i++) {
-                    if (!agregarOrInsertarDetalleFactura(
-                            facturas.getId(),
-                            i,
-                            facturas.getDetalleFactura().get(i).getIdProducto(),
-                            facturas.getDetalleFactura().get(i).getPrecio(),
-                            facturas.getDetalleFactura().get(i).getCantidad())) {
-
-                        borrarFactura(idFactura);
-
-                        JOptionPane.showMessageDialog(this,
-                                "Ocurrio un error Temporal Detallle");
-
-                        return;
-                    }
+//                    if (!agregarOrInsertarDetalleFactura(
+//                            facturas.getId(),
+//                            i,
+//                            facturas.getDetalleFactura().get(i).getIdProducto(),
+//                            facturas.getDetalleFactura().get(i).getPrecio(),
+//                            facturas.getDetalleFactura().get(i).getCantidad())) {
+//
+//                        borrarFactura(idFactura);
+//
+//                        JOptionPane.showMessageDialog(this,
+//                                "Ocurrio un error Temporal Detallle");
+//
+//                        return;
+//                    }
                 }
             }
         } else {
             HeaderFactura hf = HeaderFactura.builder().
-                    idCliente(((Cliente) cmbCliente.getSelectedItem()).getId()).
+                    idCliente(((Clientes) cmbCliente.getSelectedItem()).getId()).
                     idTurno(getTurno()).
                     efectivo(new BigDecimal(miEfe.txtEfectivo.getValue().toString())).
                     cambio(new BigDecimal(miEfe.txtDevuelta.getValue().toString())).
@@ -1048,7 +1061,7 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
 
             df.add(objDF);
 
-            Factura f = Factura.builder().
+            Facturas f = Facturas.builder().
                     id(idFactura).headerFactura(hf).detalleFactura(df).build();
 
             if (agregarFacturaNombre(f) < 1) {
@@ -1063,7 +1076,7 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
             }
         }
 
-        txtIdFactura.setText("" + getNumFac(getIdUsuario(), getTurno()));
+//        txtIdFactura.setText("" + getNumFac(getIdUsuario(), getTurno()));
 
         Map parametros = new HashMap();
 
@@ -1125,7 +1138,8 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
                 sql = "where Descripcion CONTAINING '" + txtCriterio.getText().trim() + "'";
             }
 
-            ResultSet rs = getConsulta(sql);
+//            ResultSet rs = getConsulta(sql);
+            ResultSet rs = null;
 
             jpProductos.removeAll();
             jpProductos.repaint();
@@ -1179,7 +1193,7 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
                     boton.requestFocusInWindow();
                 }
             } catch (SQLException ex) {
-                //Instalar Logger
+                LOG.log(Level.SEVERE, ex.getMessage(), ex);
             }
         }
 
@@ -1284,7 +1298,7 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
             totales();
 
         } catch (HeadlessException ex) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }
 
@@ -1303,7 +1317,7 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
 
         if (cmbCliente.getSelectedIndex() > 0) {
             nombreCliente = ((Opcion) cmbCliente.getSelectedItem()).getDescripcion();
-            idClienteTemporal = ((Persona) cmbCliente.getSelectedItem()).getId();
+            idClienteTemporal = ((Personas) cmbCliente.getSelectedItem()).getId();
         } else {
             idClienteTemporal = 0;
             if ("".equals(nombreCliente)) {
@@ -1369,21 +1383,23 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
                     + "where d.IDFACTURA = " + miTempo.getFactura() + " "
                     + "order by 2";
 
-            ResultSet rs = getConsulta(sql);
+//            ResultSet rs = getConsulta(sql);
+            ResultSet rs = null;
 
             try {
                 while (rs.next()) {
-                    facturas.add(
-                            rs.getInt("idLinea") - 1,
-                            new Factura(
-                                    Integer.parseInt(miTempo.getFactura()),
-                                    rs.getShort("idLinea"),
-                                    rs.getString("idProducto"),
-                                    rs.getString("descripcion"),
-                                    rs.getDouble("precio"),
-                                    rs.getDouble("cantidad")
-                            )
-                    );
+//                    facturas.(
+//                            rs.getInt("idLinea") - 1,
+//                            new Factura(
+//                                    Integer.parseInt(miTempo.getFactura()),
+//                                    rs.getShort("idLinea"),
+//                                    rs.getString("idProducto"),
+//                                    rs.getString("descripcion"),
+//                                    rs.getDouble("precio"),
+//                                    rs.getDouble("cantidad")
+//                            )
+//                            null
+//                    );
 
                     registro[0] = rs.getDouble("cantidad");
                     registro[1] = rs.getString("descripcion");
@@ -1396,7 +1412,7 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
                     tblDetalle.setRowSelectionInterval(rs.getInt("idLinea") - 1, rs.getInt("idLinea") - 1);
                 }
             } catch (SQLException ex) {
-                //Instalar Logger
+                LOG.log(Level.SEVERE, ex.getMessage(), ex);
             }
 
             precio();//Precio porque acaba de ser creada
@@ -1405,14 +1421,14 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
                     + "FROM FACTURA r "
                     + "where r.IDFACTURA = " + miTempo.getFactura() + " ";
 
-            rs = getConsulta(sql);
+//            rs = getConsulta(sql);
 
             try {
                 rs.next();
-                setIdCliente(rs.getString(1));
+                setIdCliente(rs.getInt(1));
                 nombreCliente = rs.getString(2);
             } catch (SQLException ex) {
-                //Instalar Logger
+                LOG.log(Level.SEVERE, ex.getMessage(), ex);
             }
 
             for (int i = 0; i <= cmbCliente.getItemCount() + 1; i++) {
@@ -1426,18 +1442,28 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
     }//GEN-LAST:event_btnBuscarEsperaActionPerformed
     private void cbTodosProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTodosProductosActionPerformed
         jpProductos = new javax.swing.JPanel();
+        
         jpProductos.setAutoscrolls(true);
+        
         jpProductos.setBackground(new java.awt.Color(255, 102, 51));
+        
         jpProductos.setBorder(javax.swing.BorderFactory.createTitledBorder(null,
                 "Productos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
                 javax.swing.border.TitledBorder.DEFAULT_POSITION,
-                new java.awt.Font("Ubuntu", 0, 14))); // NOI18N
+                new java.awt.Font("Ubuntu", 0, 14)));
+        
         jpProductos.setMaximumSize(new java.awt.Dimension(350, 1500));
+        
         jpProductos.setMinimumSize(new java.awt.Dimension(350, 1500));
+        
         jpProductos.setPreferredSize(new java.awt.Dimension(350, 1500));
+        
         java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout();
+        
         flowLayout1.setAlignOnBaseline(true);
+        
         jpProductos.setLayout(flowLayout1);
+        
         jScrollPane4.setViewportView(jpProductos);
 
         actionPerformed(e1);
@@ -1489,7 +1515,7 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
         getClientes();
-        txtIdFactura.setText("" + getNumFac(getIdUsuario(), getTurno()));
+//        txtIdFactura.setText("" + getNumFac(getIdUsuario(), getTurno()));
         setTemporal(false);
         repararRegistro();
         totales();
@@ -1571,28 +1597,33 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
             } while (!bandera);//Fin del cuadro texto pidiendo la cantidad
 
             //Para obtener el precio                                                --IdProducto
-            String sql = "select Precio from TABLA_PRODUCTOS where idProducto like '" + btn.getToolTipText() + "'";
+            String sql 
+                    = "select Precio from "
+                    + "TABLA_PRODUCTOS "
+                    + "where idProducto like '" + btn.getToolTipText() + "'";
 
-            ResultSet rs = getConsulta(sql);
+//            ResultSet rs = getConsulta(sql);
+            ResultSet rs = null;
 
             try {
                 rs.next();
                 precio = rs.getDouble("Precio");
             } catch (SQLException ex) {
-                //Instalar Logger
+                LOG.log(Level.SEVERE, ex.getMessage(), ex);
             }//Fin de obtener el precio del producto
 
-            facturas.add(
-                    tblDetalle.getRowCount(),
-                    new Factura(
-                            Integer.parseInt(txtIdFactura.getText()),//IdFactura
-                            (short) tblDetalle.getRowCount(),//IdLinea
-                            btn.getToolTipText(),//IdProducto
-                            btn.getText(),//Descripcion del producto
-                            precio,//Precio del producto
-                            cantidad
-                    )
-            );//Cantidad
+//            facturas.add(
+//                    tblDetalle.getRowCount(),
+//                    new Factura(
+//                            Integer.parseInt(txtIdFactura.getText()),//IdFactura
+//                            (short) tblDetalle.getRowCount(),//IdLinea
+//                            btn.getToolTipText(),//IdProducto
+//                            btn.getText(),//Descripcion del producto
+//                            precio,//Precio del producto
+//                            cantidad
+//                    )
+//                    null
+//            );//Cantidad
 
             txtPrecio.setValue(precio);
 
@@ -1618,7 +1649,8 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
             return;
         }//Fin de la inclusion....
 
-        ResultSet rs = getConsulta(sql);
+//        ResultSet rs = getConsulta(sql);
+        ResultSet rs = null;
         
         String sql = "select Descripcion, IdProducto, imagePath, Precio "
                 + "from TABLA_PRODUCTOS "
@@ -1685,7 +1717,7 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
             }
             //jpProductos.setPreferredSize(new Dimension(jpProductos.getSize().width, 1500));
         } catch (SQLException ex) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }//Fin de actionPerformed
 
@@ -1765,7 +1797,7 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
 
             }
         } catch (SQLException ex) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }
 
@@ -1798,7 +1830,7 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
 //            }
 //        } catch (SQLException ex) {
 //
-//            //Instalar Logger
+//            LOG.log(Level.SEVERE, ex.getMessage(), ex);
 //        }
 //
 //        switch (resp) {
@@ -1829,7 +1861,7 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
         cmbCliente.removeAllItems();
         cmbCliente.repaint();
 
-        Persona p = Persona.builder().
+        Personas p = Personas.builder().
                 id(0).
                 pNombre("Seleccione un cliente").
                 sNombre("").
@@ -1842,7 +1874,7 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
             ResultSet rs = getClientesCombo();
 
             while (rs.next()) {
-                p = Persona.builder().
+                p = Personas.builder().
                         id(rs.getInt("id")).
                         pNombre(rs.getString("pNombre")).
                         sNombre(rs.getString("sNombre")).
@@ -1853,7 +1885,7 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
             }//fin
             cmbCliente.setSelectedIndex(0);
         } catch (SQLException ex) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
 
         if (isTemporal()) {
@@ -1874,7 +1906,7 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
                 modelo.removeRow(0);
             }
         } catch (Exception ex) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
         cmbCliente.setSelectedIndex(0);
     }

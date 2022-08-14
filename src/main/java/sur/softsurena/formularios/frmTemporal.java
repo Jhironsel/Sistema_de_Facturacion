@@ -11,7 +11,7 @@ import static sur.softsurena.datos.delete.DeleteMetodos.borrarFactura;
 import static sur.softsurena.datos.insert.InsertMetodos.agregarDetalleFactura;
 import static sur.softsurena.datos.insert.InsertMetodos.agregarFacturaNombre;
 import sur.softsurena.entidades.DefaultTableCellHeaderRenderer;
-import sur.softsurena.entidades.Factura;
+import sur.softsurena.entidades.Facturas;
 import sur.softsurena.entidades.HeaderFactura;
 
 public class frmTemporal extends java.awt.Dialog {
@@ -19,7 +19,7 @@ public class frmTemporal extends java.awt.Dialog {
     private String nombreCliente, userName;
     private Integer idFactura, idCliente, idTurno;
     private DefaultTableModel miTabla;
-    private Factura facturas;
+    private Facturas facturas;
     private final DefaultTableCellRenderer tcr;
 
     public frmTemporal(java.awt.Frame parent, boolean modal) {
@@ -155,7 +155,7 @@ public class frmTemporal extends java.awt.Dialog {
                 nombreTemp(nombreCliente)
                 .build();
                 
-        Factura f = Factura.builder().id(idFactura).headerFactura(hf).build();
+        Facturas f = Facturas.builder().id(idFactura).headerFactura(hf).build();
         
         if (agregarFacturaNombre(f) < 1) {
             JOptionPane.showMessageDialog(this, 

@@ -1,7 +1,6 @@
 package sur.softsurena.formularios;
 
 import java.awt.Color;
-import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -11,7 +10,11 @@ import java.net.URISyntaxException;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import rojeru_san.RSMTextFull;
+import sur.softsurena.entidades.Servidor;
 
 public class frmParametros extends javax.swing.JFrame {
 
@@ -21,20 +24,20 @@ public class frmParametros extends javax.swing.JFrame {
     public frmParametros() {
         initComponents();
         propiedades = new Properties();
-        
+
         try {
             f = new File(getClass().getResource(
                     "/sur/softsurena/properties/propiedades.properties").toURI());
             propiedades.load(new FileReader(f));
-            
+
         } catch (URISyntaxException ex) {
-            Logger.getLogger(frmParametros.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(frmParametros.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         } catch (FileNotFoundException ex) {
-            //Instalar Logger
+            Logger.getLogger(frmParametros.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         } catch (IOException ex) {
-            //Instalar Logger
+            Logger.getLogger(frmParametros.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         }
-        
+
         cargarParamentos("todo");
     }
 
@@ -45,10 +48,6 @@ public class frmParametros extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel3 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        txtValor2 = new javax.swing.JTextField();
-        txtValor3 = new javax.swing.JTextField();
-        txtValor4 = new javax.swing.JTextField();
-        txtValor1 = new javax.swing.JTextField();
         txtPuerto = new javax.swing.JTextField();
         txthost = new javax.swing.JTextField();
         chBPuerto = new javax.swing.JCheckBox();
@@ -57,6 +56,12 @@ public class frmParametros extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         btnCancelar = new RSMaterialComponent.RSButtonMaterialIconOne();
         btnAceptar = new RSMaterialComponent.RSButtonMaterialIconOne();
+        txtPathBaseDatos = new RSMaterialComponent.RSTextFieldMaterialIcon();
+        btnBuscarDB = new RSMaterialComponent.RSButtonMaterialIconOne();
+        txtValor1 = new rojeru_san.RSMTextFull();
+        txtValor2 = new rojeru_san.RSMTextFull();
+        txtValor3 = new rojeru_san.RSMTextFull();
+        txtValor4 = new rojeru_san.RSMTextFull();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Parametros del Sistema");
@@ -67,54 +72,6 @@ public class frmParametros extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(204, 255, 204));
         jPanel2.setLayout(new java.awt.GridLayout(1, 4, 20, 0));
-
-        txtValor2.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        txtValor2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtValor2.setEnabled(false);
-        txtValor2.setMinimumSize(new java.awt.Dimension(100, 25));
-        txtValor2.setPreferredSize(new java.awt.Dimension(100, 25));
-        txtValor2.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtValor2KeyTyped(evt);
-            }
-        });
-        jPanel2.add(txtValor2);
-
-        txtValor3.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        txtValor3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtValor3.setEnabled(false);
-        txtValor3.setMinimumSize(new java.awt.Dimension(100, 25));
-        txtValor3.setPreferredSize(new java.awt.Dimension(100, 25));
-        txtValor3.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtValor3KeyTyped(evt);
-            }
-        });
-        jPanel2.add(txtValor3);
-
-        txtValor4.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        txtValor4.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtValor4.setEnabled(false);
-        txtValor4.setMinimumSize(new java.awt.Dimension(100, 25));
-        txtValor4.setPreferredSize(new java.awt.Dimension(100, 25));
-        txtValor4.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtValor4KeyTyped(evt);
-            }
-        });
-        jPanel2.add(txtValor4);
-
-        txtValor1.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        txtValor1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtValor1.setEnabled(false);
-        txtValor1.setMinimumSize(new java.awt.Dimension(100, 25));
-        txtValor1.setPreferredSize(new java.awt.Dimension(100, 25));
-        txtValor1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtValor1KeyTyped(evt);
-            }
-        });
-        jPanel2.add(txtValor1);
 
         txtPuerto.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
         txtPuerto.setToolTipText("");
@@ -171,7 +128,7 @@ public class frmParametros extends javax.swing.JFrame {
         jPanel1.setMaximumSize(new java.awt.Dimension(216, 40));
         jPanel1.setMinimumSize(new java.awt.Dimension(216, 40));
         jPanel1.setOpaque(false);
-        jPanel1.setLayout(new java.awt.GridLayout(2, 1, 5, 5));
+        jPanel1.setLayout(new java.awt.GridLayout(1, 2, 5, 5));
 
         btnCancelar.setBackground(new java.awt.Color(204, 0, 51));
         btnCancelar.setText("Cancelar");
@@ -198,23 +155,91 @@ public class frmParametros extends javax.swing.JFrame {
         });
         jPanel1.add(btnAceptar);
 
+        txtPathBaseDatos.setForeground(new java.awt.Color(187, 187, 187));
+        txtPathBaseDatos.setToolTipText("Ingrese la ruta de la base de datos para poderse conectar al servidor.");
+        txtPathBaseDatos.setColorIcon(new java.awt.Color(187, 187, 187));
+        txtPathBaseDatos.setColorMaterial(new java.awt.Color(187, 187, 187));
+        txtPathBaseDatos.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DATA_USAGE);
+        txtPathBaseDatos.setPhColor(new java.awt.Color(187, 187, 187));
+        txtPathBaseDatos.setPlaceholder("Ruta de la base de datos");
+
+        btnBuscarDB.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
+        btnBuscarDB.setMaximumSize(new java.awt.Dimension(216, 40));
+        btnBuscarDB.setMinimumSize(new java.awt.Dimension(216, 40));
+        btnBuscarDB.setPreferredSize(new java.awt.Dimension(216, 40));
+        btnBuscarDB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarDBActionPerformed(evt);
+            }
+        });
+
+        txtValor1.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
+        txtValor1.setPlaceholder("0 - 255");
+        txtValor1.setSoloNumeros(true);
+        txtValor1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtValor1KeyReleased(evt);
+            }
+        });
+
+        txtValor2.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
+        txtValor2.setPlaceholder("0 - 255");
+        txtValor2.setSoloNumeros(true);
+        txtValor2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtValor2KeyReleased(evt);
+            }
+        });
+
+        txtValor3.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
+        txtValor3.setPlaceholder("0 - 255");
+        txtValor3.setSoloNumeros(true);
+        txtValor3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtValor3KeyReleased(evt);
+            }
+        });
+
+        txtValor4.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
+        txtValor4.setPlaceholder("0 - 255");
+        txtValor4.setSoloNumeros(true);
+        txtValor4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtValor4KeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txthost)
-                    .addComponent(rbtnNombreServidor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(rbtnProtocoloIPV4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(txtPuerto)
-                    .addComponent(chBPuerto, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE))
-                .addGap(12, 12, 12))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(rbtnNombreServidor, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txthost, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(chBPuerto))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(rbtnProtocoloIPV4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addComponent(txtValor1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtValor2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtValor3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtValor4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addComponent(txtPathBaseDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnBuscarDB, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtPuerto, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -230,16 +255,27 @@ public class frmParametros extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtPuerto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rbtnProtocoloIPV4)
+                .addGap(0, 0, 0)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtValor1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtValor2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtValor3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtValor4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(rbtnProtocoloIPV4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12))
+                    .addComponent(txtPathBaseDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarDB, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txtPuerto, txthost});
+
+        jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnBuscarDB, txtPathBaseDatos});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -272,67 +308,7 @@ public class frmParametros extends javax.swing.JFrame {
         valoresEstados(true);
         txthost.setText("");
     }//GEN-LAST:event_rbtnProtocoloIPV4ActionPerformed
-    private void txtValor4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValor4KeyTyped
-        int k = (int) evt.getKeyChar();
-        if (k >= 97 && k <= 122 || k >= 65 && k <= 90) {
-            evt.setKeyChar((char) KeyEvent.VK_CLEAR);
-            JOptionPane.showMessageDialog(null, "No puede ingresar letras!!!", "Ventana Error Datos", JOptionPane.ERROR_MESSAGE);
-        }
-        if (k == 241 || k == 209) {
-            evt.setKeyChar((char) KeyEvent.VK_CLEAR);
-            JOptionPane.showMessageDialog(null, "No puede ingresar letras!!!", "Ventana Error Datos", JOptionPane.ERROR_MESSAGE);
-        }
-        if (k == 10) {
-            txtValor4.transferFocus();
-        }
-    }//GEN-LAST:event_txtValor4KeyTyped
-    private void txtValor3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValor3KeyTyped
-        int k = (int) evt.getKeyChar();
-        if (k >= 97 && k <= 122 || k >= 65 && k <= 90) {
-            evt.setKeyChar((char) KeyEvent.VK_CLEAR);
-            JOptionPane.showMessageDialog(null, "No puede ingresar letras!!!", "Ventana Error Datos", JOptionPane.ERROR_MESSAGE);
-        }
-        if (k == 241 || k == 209) {
-            evt.setKeyChar((char) KeyEvent.VK_CLEAR);
-            JOptionPane.showMessageDialog(null, "No puede ingresar letras!!!",
-                    "Ventana Error Datos", JOptionPane.ERROR_MESSAGE);
-        }
-        if (k == 10) {
-            txtValor3.transferFocus();
-        }
-    }//GEN-LAST:event_txtValor3KeyTyped
-    private void txtValor2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValor2KeyTyped
-        int k = (int) evt.getKeyChar();
-        if (k >= 97 && k <= 122 || k >= 65 && k <= 90) {
-            evt.setKeyChar((char) KeyEvent.VK_CLEAR);
-            JOptionPane.showMessageDialog(null, "No puede ingresar letras!!!",
-                    "Ventana Error Datos", JOptionPane.ERROR_MESSAGE);
-        }
-        if (k == 241 || k == 209) {
-            evt.setKeyChar((char) KeyEvent.VK_CLEAR);
-            JOptionPane.showMessageDialog(null, "No puede ingresar letras!!!",
-                    "Ventana Error Datos", JOptionPane.ERROR_MESSAGE);
-        }
-        if (k == 10) {
-            txtValor2.transferFocus();
-        }
-    }//GEN-LAST:event_txtValor2KeyTyped
-    private void txtValor1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValor1KeyTyped
-        int k = (int) evt.getKeyChar();
-        if (k >= 97 && k <= 122 || k >= 65 && k <= 90) {
-            evt.setKeyChar((char) KeyEvent.VK_CLEAR);
-            JOptionPane.showMessageDialog(null, "No puede ingresar letras!!!",
-                    "Ventana Error Datos", JOptionPane.ERROR_MESSAGE);
-        }
-        if (k == 241 || k == 209) {
-            evt.setKeyChar((char) KeyEvent.VK_CLEAR);
-            JOptionPane.showMessageDialog(null, "No puede ingresar letras!!!",
-                    "Ventana Error Datos", JOptionPane.ERROR_MESSAGE);
-        }
-        if (k == 10) {
-            txtValor1.transferFocus();
-        }
-    }//GEN-LAST:event_txtValor1KeyTyped
+
     private void txtPuertoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPuertoKeyReleased
         char caracter = evt.getKeyChar();
         if (caracter < '0' || (caracter > '9')) {
@@ -439,32 +415,98 @@ public class frmParametros extends javax.swing.JFrame {
         escribirParametros();
         dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void btnBuscarDBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarDBActionPerformed
+        JFileChooser jfc = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Base de datos Firebird", "FDB", "fdb");
+        jfc.setFileFilter(filter);
+
+        int returnVal = jfc.showOpenDialog(null);
+
+        if (returnVal == JFileChooser.CANCEL_OPTION) {
+            return;
+        }
+
+        txtPathBaseDatos.setText(jfc.getSelectedFile().getAbsolutePath());
+    }//GEN-LAST:event_btnBuscarDBActionPerformed
+
+    private void txtValor1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValor1KeyReleased
+        validarNumeros(txtValor1);
+    }//GEN-LAST:event_txtValor1KeyReleased
+
+    private void txtValor2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValor2KeyReleased
+        validarNumeros(txtValor2);
+    }//GEN-LAST:event_txtValor2KeyReleased
+
+    private void txtValor3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValor3KeyReleased
+        validarNumeros(txtValor3);
+    }//GEN-LAST:event_txtValor3KeyReleased
+
+    private void txtValor4KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValor4KeyReleased
+        validarNumeros(txtValor4);
+    }//GEN-LAST:event_txtValor4KeyReleased
+    
+    private void validarNumeros(RSMTextFull campo){
+        if (!campo.getText().isBlank() || !campo.getText().isEmpty()) {
+            int numero = Integer.parseInt(campo.getText());
+            if (numero < 0 || numero > 255 || campo.getText().isEmpty()) {
+                campo.setBordeColorFocus(Color.RED);
+                campo.setBordeColorNoFocus(Color.RED);
+            } else {
+                campo.setBordeColorFocus(new Color(0,112,192));
+                campo.setBordeColorNoFocus(new Color(0,112,192));
+            }
+        }
+    }
+    
     private void valoresEstados(boolean estado) {
         txtValor1.setEnabled(estado);
         txtValor2.setEnabled(estado);
         txtValor3.setEnabled(estado);
         txtValor4.setEnabled(estado);
+
         txthost.setEnabled(!estado);
-        if(estado){
+
+        if (estado) {
             txtValor1.requestFocusInWindow();
-        }else{
+        } else {
             txthost.requestFocusInWindow();
         }
     }
 
-    private void cargarParamentos(String zona) {
+    public Servidor cargarParamentos(String zona) {
+        Servidor s = Servidor.builder().
+                conServidor(Boolean.valueOf(propiedades.getProperty("NombreActivo", "false"))).
+                uriServidor(propiedades.getProperty("Nombre_del_Servidor", "")).
+                conPuerto(Boolean.valueOf(propiedades.getProperty("Con_Puerto", "false"))).
+                puerto(propiedades.getProperty("Puerto_del_Servidor", "3050")).
+                conIpServidor(Boolean.valueOf(propiedades.getProperty("ProtocoloActivo", "false"))).
+                ipServidor1(propiedades.getProperty("Ip_Servidor1", "127")).
+                ipServidor2(propiedades.getProperty("Ip_Servidor2", "0")).
+                ipServidor3(propiedades.getProperty("Ip_Servidor3", "0")).
+                ipServidor4(propiedades.getProperty("Ip_Servidor4", "1")).
+                pathBaseDatos(propiedades.getProperty("PathBaseDatos", "/"))
+                .build();
+        
+        if (zona.equals("todo") || zona.equals("nombre")) {
+            if (s.getConServidor()) {
+                txthost.setText(s.getUriServidor());
+                rbtnNombreServidor.doClick();
+            }
+        }
+        
         if (zona.equals("todo") || zona.equals("puerto")) {
-            if (Boolean.valueOf(propiedades.getProperty("Con_Puerto", "false"))) {
+            if (s.getConPuerto()) {
                 if (zona.equals("todo")) {
-                    txtPuerto.setText(propiedades.getProperty("Puerto_del_Servidor", ""));
+                    txtPuerto.setText(s.getPuerto());
                     chBPuerto.doClick();
                 }
 
                 if (zona.equals("puerto")) {
                     if (chBPuerto.isSelected()) {
                         txtPuerto.setEnabled(true);
-                        if(Boolean.valueOf(propiedades.getProperty("Con_Puerto", "false"))){
-                            txtPuerto.setText(propiedades.getProperty("Puerto_del_Servidor", ""));
+                        if (s.getConPuerto()) {
+                            txtPuerto.setText(s.getPuerto());
                         }
                         txtPuerto.requestFocusInWindow();
                     } else {
@@ -484,21 +526,21 @@ public class frmParametros extends javax.swing.JFrame {
         }
 
         if (zona.equals("todo") || zona.equals("ipv4")) {
-            if (Boolean.valueOf(propiedades.getProperty("ProtocoloActivo", "false"))) {
-                txtValor1.setText(propiedades.getProperty("Ip_Servidor1", ""));
-                txtValor2.setText(propiedades.getProperty("Ip_Servidor2", ""));
-                txtValor3.setText(propiedades.getProperty("Ip_Servidor3", ""));
-                txtValor4.setText(propiedades.getProperty("Ip_Servidor4", ""));
+            if (s.getConIpServidor()) {
+                txtValor1.setText(s.getIpServidor1());
+                txtValor2.setText(s.getIpServidor2());
+                txtValor3.setText(s.getIpServidor3());
+                txtValor4.setText(s.getIpServidor4());
                 rbtnProtocoloIPV4.doClick();
             }
         }
 
-        if (zona.equals("todo") || zona.equals("nombre")) {
-            if (Boolean.valueOf(propiedades.getProperty("NombreActivo", "false"))) {
-                txthost.setText(propiedades.getProperty("Nombre_del_Servidor", ""));
-                rbtnNombreServidor.doClick();
-            }
+
+        if (zona.equals("todo") || zona.equals("PathBaseDatos")) {
+            txtPathBaseDatos.setText(s.getPathBaseDatos());
         }
+        
+        return s;
     }
 
     private void escribirParametros() {
@@ -511,20 +553,21 @@ public class frmParametros extends javax.swing.JFrame {
         propiedades.setProperty("Nombre_del_Servidor", txthost.getText());
         propiedades.setProperty("Puerto_del_Servidor", txtPuerto.getText());
         propiedades.setProperty("Con_Puerto", "" + chBPuerto.isSelected());
+        propiedades.setProperty("PathBaseDatos", txtPathBaseDatos.getText());
 
         try {
-            
-            
+
             propiedades.store(
                     new FileWriter(f),
                     "Parametros del Servidor");
         } catch (IOException ex) {
-            Logger.getLogger(frmParametros.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+            Logger.getLogger(frmParametros.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+        }
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private RSMaterialComponent.RSButtonMaterialIconOne btnAceptar;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnBuscarDB;
     private RSMaterialComponent.RSButtonMaterialIconOne btnCancelar;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JCheckBox chBPuerto;
@@ -533,11 +576,12 @@ public class frmParametros extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JRadioButton rbtnNombreServidor;
     private javax.swing.JRadioButton rbtnProtocoloIPV4;
+    private RSMaterialComponent.RSTextFieldMaterialIcon txtPathBaseDatos;
     private javax.swing.JTextField txtPuerto;
-    private javax.swing.JTextField txtValor1;
-    private javax.swing.JTextField txtValor2;
-    private javax.swing.JTextField txtValor3;
-    private javax.swing.JTextField txtValor4;
+    private rojeru_san.RSMTextFull txtValor1;
+    private rojeru_san.RSMTextFull txtValor2;
+    private rojeru_san.RSMTextFull txtValor3;
+    private rojeru_san.RSMTextFull txtValor4;
     private javax.swing.JTextField txthost;
     // End of variables declaration//GEN-END:variables
 }

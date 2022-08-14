@@ -1,5 +1,6 @@
 package sur.softsurena.formularios;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -8,10 +9,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
+import sur.softsurena.hilos.hiloImpresionFactura;
+import sur.softsurena.utilidades.Utilidades;
 
 public class frmCobrosClientes extends javax.swing.JDialog {
 
-    private Datos misDatos;
     private int idTurno;
     private String nombreCajero;
 
@@ -31,9 +33,6 @@ public class frmCobrosClientes extends javax.swing.JDialog {
         this.idTurno = idTurno;
     }
 
-    public void setDatos(Datos misDatos) {
-        this.misDatos = misDatos;
-    }
 
     public frmCobrosClientes(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -402,25 +401,26 @@ public class frmCobrosClientes extends javax.swing.JDialog {
             return;
         }
 
-        float Monto = Utilidades.controlDouble(txtMonto.getValue());
-        float montoTotal = Utilidades.controlDouble(txtDeuda.getValue());
-        float montoDeuda = Utilidades.controlDouble(txtMontoDeuda.getValue());
+        BigDecimal Monto = new BigDecimal(txtMonto.getValue().toString());
+        BigDecimal montoTotal = new BigDecimal(txtDeuda.getValue().toString());
+        BigDecimal montoDeuda = new BigDecimal(txtMontoDeuda.getValue().toString());
 
-        if (Monto == 0) {
+        if (Monto.compareTo(BigDecimal.ZERO) == 0) {
             JOptionPane.showMessageDialog(rootPane, "Debe Ingresar un Valor Para Realizar Pago...");
             txtMonto.setValue(0.0);
             txtMonto.requestFocusInWindow();
             return;
         }
-        if (Monto > montoTotal) {
+        if (Monto.compareTo(montoTotal) == 1 ) {
             JOptionPane.showMessageDialog(rootPane, "No se permite Monto a pagar MAYOR QUE '>' Deuda del Cliente");
             return;
         }
-        if (Monto <= 0) {
+        if (Monto.compareTo(BigDecimal.ZERO) <= 0) {
             JOptionPane.showMessageDialog(rootPane, "No se permite monto NEGATIVO");
             return;
         }
-        if (Monto > montoDeuda && montoDeuda > 0) {
+        if (Monto.compareTo(montoDeuda) > 0 && 
+                montoDeuda.compareTo(BigDecimal.ZERO) > 0) {
             JOptionPane.showMessageDialog(rootPane, "No se permite monto MAYOR a la DEUDA");
             return;
         }
@@ -432,7 +432,7 @@ public class frmCobrosClientes extends javax.swing.JDialog {
             return;
         }
         //idFactura idTurno, double montoPago
-        misDatos.pagarCredito(Utilidades.controlDouble(txtCredito.getValue()),
+        pagarCredito(Utilidades.controlDouble(txtCredito.getValue()),
                 montoTotal,
                 ((Opcion) cmbCliente.getItemAt(cmbCliente.getSelectedIndex())).getValor(),
                 Monto,
@@ -449,7 +449,7 @@ public class frmCobrosClientes extends javax.swing.JDialog {
         parametros.put("idCliente", ((Opcion) cmbCliente.getItemAt(cmbCliente.getSelectedIndex())).getValor());
         parametros.put("nombreCliente", ((Opcion) cmbCliente.getItemAt(cmbCliente.getSelectedIndex())).getDescripcion());
         parametros.put("montoFactura", Utilidades.objectToDouble(tblFacturas.getValueAt(tblFacturas.getSelectedRow(), 1)));
-        hiloImpresionFactura miHilo = new hiloImpresionFactura(misDatos,
+        hiloImpresionFactura miHilo = new hiloImpresionFactura(
                 true, //Mostrar Reporte
                 false, //Con Copia
                 System.getProperty("user.dir") + "/Reportes/cobroFactura.jasper", 
@@ -481,7 +481,7 @@ public class frmCobrosClientes extends javax.swing.JDialog {
     private void cmbClienteItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbClienteItemStateChanged
         try {
             llenarTabla(((Opcion) cmbCliente.getItemAt(cmbCliente.getSelectedIndex())).getValor());
-            ResultSet rs = misDatos.getConsulta(
+            ResultSet rs = getConsulta(
                     "SELECT r.CREDITO, r.DEUDAACTUAL "
                     + "FROM TABLA_CLIENTES r "
                     + "WHERE r.IDCLIENTE LIKE '" + ((Opcion) cmbCliente.getItemAt(cmbCliente.getSelectedIndex())).getValor() + "'");
@@ -548,7 +548,8 @@ public class frmCobrosClientes extends javax.swing.JDialog {
                     + "where r.IDCLIENTE like '" + idCliente + "' and r.ESTADO in('c', 'a') "
                     + "GROUP BY r.IDFACTURA, r.FECHA, r.ESTADO";
 
-            ResultSet rs = misDatos.getConsulta(sql);
+//            ResultSet rs = getConsulta(sql);
+            ResultSet rs = null;
             Object registro[] = new Object[4];
             while (rs.next()) {
                 registro[0] = rs.getString("idFactura");
@@ -576,7 +577,8 @@ public class frmCobrosClientes extends javax.swing.JDialog {
             String sql = "SELECT r.IDPAGODEUDA, r.FECHA, r.HORA, r.MONTOPAGO "
                     + "FROM TABLA_PAGODEUDA r "
                     + "where r.IDFACTURA = " + idFactura + "";
-            ResultSet rs = misDatos.getConsulta(sql);
+//            ResultSet rs = getConsulta(sql);
+            ResultSet rs = null;
             Object registro[] = new Object[4];
             int i = 1;
             while (rs.next()) {

@@ -15,7 +15,7 @@ import static sur.softsurena.datos.select.SelectMetodos.existeCategoria;
 import static sur.softsurena.datos.select.SelectMetodos.existeCategoriaProductos;
 import static sur.softsurena.datos.select.SelectMetodos.getCategorias;
 import static sur.softsurena.datos.update.UpdateMetodos.modificarCategoria;
-import sur.softsurena.entidades.Categoria;
+import sur.softsurena.entidades.Categorias;
 import sur.softsurena.utilidades.Utilidades;
 
 public class frmCategorias extends javax.swing.JDialog {
@@ -204,9 +204,9 @@ public class frmCategorias extends javax.swing.JDialog {
         }
         
         nuevo = false;
-        idCategoria = ((Categoria) cbCategoria.getSelectedItem()).getId();
-        nombreCategoria = ((Categoria) cbCategoria.getSelectedItem()).getDescripcion();
-        ruta = ((Categoria) cbCategoria.getSelectedItem()).getPathImage().toString();
+        idCategoria = ((Categorias) cbCategoria.getSelectedItem()).getId();
+        nombreCategoria = ((Categorias) cbCategoria.getSelectedItem()).getDescripcion();
+        ruta = ((Categorias) cbCategoria.getSelectedItem()).getPathImage().toString();
 
         frmDialogoCategoria miCategoria = new frmDialogoCategoria(null, true, nombreCategoria);
         miCategoria.setLocationRelativeTo(null);
@@ -240,7 +240,7 @@ public class frmCategorias extends javax.swing.JDialog {
         }
         int rta = JOptionPane.showConfirmDialog(this,
             "Esta Seguro de Eliminar la Categoria {"
-            + (((Categoria) cbCategoria.getSelectedItem()).getDescripcion())
+            + (((Categorias) cbCategoria.getSelectedItem()).getDescripcion())
             + "} del Sistema? \n\n Este proceso tratara "
             + "de eliminarlo si no ocurre es porque existen"
             + "\nproducto asociado a dicha categoria",
@@ -248,12 +248,12 @@ public class frmCategorias extends javax.swing.JDialog {
         if (rta == 1) {
             return;
         }
-        if (existeCategoriaProductos(((Categoria) cbCategoria.getSelectedItem()).getId())) {
+        if (existeCategoriaProductos(((Categorias) cbCategoria.getSelectedItem()).getId())) {
             JOptionPane.showMessageDialog(this, "No se permite eliminar categoria porque existe producto Asociados");
             return;
         }
         String msg;
-        msg = borrarCategoria(((Categoria) cbCategoria.getSelectedItem()).getId());
+        msg = borrarCategoria(((Categorias) cbCategoria.getSelectedItem()).getId());
         JOptionPane.showMessageDialog(rootPane, msg);
         if(cbCategoria.getItemCount() != 0){
             cbCategoria.setSelectedIndex(0);
@@ -265,7 +265,7 @@ public class frmCategorias extends javax.swing.JDialog {
         String laImagen;
 
         try {
-            laImagen = ((Categoria) cbCategoria.getSelectedItem()).getPathImage().toString();
+            laImagen = ((Categorias) cbCategoria.getSelectedItem()).getPathImage().toString();
         } catch (Exception ex) {
             laImagen = "";
         }
@@ -294,12 +294,12 @@ public class frmCategorias extends javax.swing.JDialog {
     private void guardar() {
         if (nuevo) {
             //Creamos la categoria y la encapsulamos en la clase Categoria
-            Categoria categoria = Categoria.builder().
+            Categorias categoria = Categorias.builder().
                     descripcion(nombreCategoria.trim()).
                     pathImage(new File(ruta)).build();
             
             //Ejecutamos la consulta siguiente para insertar la categoria.
-            String msj = agregarCategoria(categoria);
+            String msj = agregarCategoria(categoria).getMensaje();
             
             //Si recibimos un mensaje de error del metodo anterior ejecutamos lo
             //siguiente.
@@ -320,7 +320,7 @@ public class frmCategorias extends javax.swing.JDialog {
             
         } else {
             //Creamos el objeto categoria que tendra' los atributos.
-            Categoria categoria = Categoria.builder().
+            Categorias categoria = Categorias.builder().
                     id(idCategoria).
                     descripcion(nombreCategoria.trim()).
                     pathImage(new File(ruta)).build();
@@ -361,7 +361,7 @@ public class frmCategorias extends javax.swing.JDialog {
         
         try {
             while (rs.next()) {
-                Categoria miCat = Categoria.builder().
+                Categorias miCat = Categorias.builder().
                         id(rs.getInt("ID")).
                         descripcion(rs.getString("DESCRIPCION")).
                         image_texto(rs.getString("IMAGEN_TEXTO")).build();

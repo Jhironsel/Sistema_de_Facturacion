@@ -1,25 +1,31 @@
 package sur.softsurena.formularios;
 
 import com.formdev.flatlaf.FlatLightLaf;
-import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import sur.softsurena.FirebirdEventos.FirebirdEventos;
 import sur.softsurena.conexion.Conexion;
 import static sur.softsurena.conexion.Conexion.getCnn;
 import static sur.softsurena.datos.procedure.ProcedureMetodos.setLicencia;
+import static sur.softsurena.datos.select.SelectMetodos.comprobandoRol;
 import static sur.softsurena.datos.select.SelectMetodos.existeIdMaquina;
 import static sur.softsurena.datos.select.SelectMetodos.periodoMaquina;
 import sur.softsurena.metodos.Imagenes;
 
 public final class frmLogin extends javax.swing.JFrame {
 
+    private static final Logger LOG = Logger.getLogger(frmLogin.class.getName());
     private String idMaquina = "";
     private boolean txtUsuarioKeyPress = true;
     private frmPrincipal principal;
@@ -32,7 +38,6 @@ public final class frmLogin extends javax.swing.JFrame {
         lamina.setImagen(imagen.getIcono("FondoLogin 626 x 386.jpg"));
 
         btnParametros.setVisible(false);//Boton parametros Invisible
-        
 
         this.setLocationRelativeTo(null);
     }
@@ -43,7 +48,6 @@ public final class frmLogin extends javax.swing.JFrame {
 //                ClassLoader.getSystemResource("images/icon.png"));
 //        return retValue;
 //    }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -281,41 +285,99 @@ public final class frmLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_txtClaveActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        //Variables para almacenar los roles
+        ArrayList<String> roles = new ArrayList<String>();
+
+        //Validación de campos del login. 
         if (txtUsuario.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nombre del Usuario Vacio");
             txtUsuario.requestFocusInWindow();
             return;
         }
+
         if (txtClave.getPassword().length == 0) {
             JOptionPane.showMessageDialog(this, "Inserte una clave");
             txtClave.requestFocusInWindow();
             return;
         }//Fin de validaciones de campos
+
+        //Cargar los valores de la conexion desde el properties
+        frmParametros p = new frmParametros();
+        String dominio="localhost", puerto="3050";
         
-        /*Socket s = new Socket("www.google.com.do", 80);
-        if (s.isConnected()) {
-        Para verificar si estamos en Internet (Poner Codigo de Abajo 
-        Aqui en dado Caso
-        }*/
+        if(p.cargarParamentos("").getConIpServidor()){
+            dominio = p.cargarParamentos("").getIpServidor1()+"."+
+                    p.cargarParamentos("").getIpServidor2()+"."+
+                    p.cargarParamentos("").getIpServidor3()+"."+
+                    p.cargarParamentos("").getIpServidor4();
+        }
         
-        Conexion conexion = Conexion.getInstance(txtUsuario.getText(),
-                new String(txtClave.getPassword()), "None");
+        if(p.cargarParamentos("").getConServidor()){
+            dominio = p.cargarParamentos("").getUriServidor();
+        }
         
-        if (!conexion.isConnected()) {
+        if(p.cargarParamentos("").getConPuerto()){
+            puerto = p.cargarParamentos("").getPuerto();
+        }
+        
+        Conexion conexion = Conexion.getInstance(
+                txtUsuario.getText(),
+                new String(txtClave.getPassword()), 
+                "None", 
+                p.cargarParamentos("").getPathBaseDatos(), 
+                dominio, 
+                puerto);
+        
+        FirebirdEventos f = new FirebirdEventos();
+        
+        if(!conexion.verificar()){ 
+            LOG.log(Level.SEVERE, "No tiene conexión a la base de datos.");
             txtUsuario.setText("");
             txtClave.setText("");
             txtUsuario.requestFocusInWindow();
             return;
         }
         
+        if(!f.registro(
+                txtUsuario.getText().trim(), 
+                new String(txtClave.getPassword()), 
+                dominio, 
+                p.cargarParamentos("").getPathBaseDatos(), 
+                Integer.parseInt(puerto))){
+            LOG.log(Level.SEVERE, "No puede registrar los eventos de la base de datos.");
+        }
         
-        //Buscar cuales son los roles del usuario.
+        roles = comprobandoRol(txtUsuario.getText().trim());
+
+        if(txtUsuario.getText().trim().equalsIgnoreCase("sysdba")){
+            roles.add("ADMINISTRADOR");
+        }
+        
+
+        if (roles == null) {
+            Conexion.cerrarConexion();
+            Conexion.setCnn(null);
+            JOptionPane.showMessageDialog(this, "El usuario no cuenta con rol en el sistema");
+            return;
+        }
+
+        JComboBox<String> comboBox = new JComboBox(roles.toArray());
+
+        if (roles.size() > 1) {
+            JOptionPane.showMessageDialog(null, comboBox, "Seleccione un rol",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+
+        String rol = comboBox.getSelectedItem().toString();
+
+       
+        if (rol.equalsIgnoreCase("ADMINISTRADOR")) {
+            rol = "RDB$ADMIN";
+        }
         
         
-        
+
         //Reconectarse con el rol seleccionado por el usuario. 
-        
-        
         if (!existeIdMaquina(idMaquina)) {
             //Ver si la maquina esta Registrada si no esta Entra
             int num = JOptionPane.showConfirmDialog(this,
@@ -348,8 +410,10 @@ public final class frmLogin extends javax.swing.JFrame {
                     "Tiempo de version de prueba se acaba en " + dia + " dias.");
         }
 
+        //Blanquear la pass
+        txtClave.setText("");
         
-
+        //Si el formulario principal no está instanciado lo hacemos. 
         if (principal == null) {
             principal = new frmPrincipal();
         }
@@ -359,6 +423,7 @@ public final class frmLogin extends javax.swing.JFrame {
         principal.cerrarFormularios();
         principal.setVisible(true);
         principal.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        
         dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
@@ -390,7 +455,7 @@ public final class frmLogin extends javax.swing.JFrame {
 
         String claveServidor = new String(miRegistros.txtClaveServidor.getPassword());
 
-        Conexion.getInstance("None", "SYSDBA", claveServidor);
+        Conexion.getInstance("None", "SYSDBA", claveServidor, "", "", "");
 
         if (setLicencia(new Date(miRegistros.dchFecha.getDate().getTime()),
                 miRegistros.txtIdMaquina.getText().trim(),
@@ -398,18 +463,18 @@ public final class frmLogin extends javax.swing.JFrame {
                 new String(miRegistros.txtClave2.getPassword()).trim())) {
             JOptionPane.showMessageDialog(this, "Maquina Registradas");
         }
-        
+
         miRegistros.dispose();
 
     }
 
     public static void main(String args[]) {
         try {
-            
+
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                System.out.println("Look And Feel: "+info.getName());
+                System.out.println("Look And Feel: " + info.getName());
             }
-            
+
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("GTK+".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
@@ -417,10 +482,8 @@ public final class frmLogin extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
-
-        
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override

@@ -18,17 +18,12 @@ public class frmBusquedaCliente extends javax.swing.JDialog {
     public frmBusquedaCliente(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        //Agrupamos los botones para que sean excluyentes
-        bgrTipoBusqueda.add(rbtID);
-        bgrTipoBusqueda.add(rbtNombes);
-        bgrTipoBusqueda.add(rbtApellidos);
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        bgrTipoBusqueda = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblTabla = new JTable(){
             @Override
@@ -178,7 +173,7 @@ public class frmBusquedaCliente extends javax.swing.JDialog {
 
         
 
-        ResultSet rs = ;
+        ResultSet rs = null;
 
         Object registro[] = new Object[3];
         try {
@@ -197,7 +192,6 @@ public class frmBusquedaCliente extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup bgrTipoBusqueda;
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JScrollPane jScrollPane1;

@@ -21,6 +21,30 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
+    <!--    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.3.0</version>  ESCOGE LA ÚLTIMA VERSIÓN 
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>"sur.softsurena.formularios.frmLogin"</mainClass>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>-->
     <dependencies>
         <dependency>
             <groupId>sur.softsurena</groupId>
@@ -54,6 +78,11 @@
             <version>SNAPSHOT</version>
         </dependency>
         <dependency>
+            <groupId>unknown.binary</groupId>
+            <artifactId>RojeruSan.lib.full_v1.0-1.0</artifactId>
+            <version>SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>sur.softsurena</groupId>
             <artifactId>RojeruSan.lib.full_v1.0</artifactId>
             <version>1.0</version>
@@ -73,5 +102,12 @@
             <artifactId>flatlaf</artifactId>
             <version>2.4</version>
         </dependency>
+        <dependency>
+            <groupId>org.firebirdsql.jdbc</groupId>
+            <artifactId>jaybird</artifactId>
+            <version>4.0.6.java11</version>
+        </dependency>
+
     </dependencies>
+    
 </project>

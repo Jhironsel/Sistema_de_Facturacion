@@ -1,11 +1,8 @@
 package sur.softsurena.formularios;
 
-import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.beans.PropertyVetoException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +15,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -31,11 +27,9 @@ import static sur.softsurena.datos.select.SelectMetodos.usuarioTurnoActivo;
 import static sur.softsurena.datos.update.UpdateMetodos.modificarOpcionMensaje;
 import sur.softsurena.entidades.DesktopConFondo;
 import sur.softsurena.entidades.Encabezado;
-import sur.softsurena.entidades.Perfiles;
 import sur.softsurena.hilos.hiloIp;
 import sur.softsurena.hilos.hiloRestaurar;
 import sur.softsurena.metodos.Imagenes;
-import sur.softsurena.utilidades.Utilidades;
 
 public final class frmPrincipal extends javax.swing.JFrame {
 
@@ -364,21 +358,21 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jPanel2.setLayout(new java.awt.GridLayout(3, 1, 0, 5));
 
         txtGanancia.setEditable(false);
-        txtGanancia.setBorder(javax.swing.BorderFactory.createTitledBorder("Ganancias"));
+        txtGanancia.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ganancias", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("DejaVu Sans", 0, 12))); // NOI18N
         txtGanancia.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("¤#,##0.00"))));
         txtGanancia.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtGanancia.setToolTipText("");
         jPanel2.add(txtGanancia);
 
         txtCosto.setEditable(false);
-        txtCosto.setBorder(javax.swing.BorderFactory.createTitledBorder("Costo del Inventario"));
+        txtCosto.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Costo del Inventario", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("DejaVu Sans", 0, 12))); // NOI18N
         txtCosto.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("¤#,##0.00"))));
         txtCosto.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtCosto.setToolTipText("");
         jPanel2.add(txtCosto);
 
         txtVenta.setEditable(false);
-        txtVenta.setBorder(javax.swing.BorderFactory.createTitledBorder("Proyección de venta"));
+        txtVenta.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Proyección de venta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("DejaVu Sans", 0, 12))); // NOI18N
         txtVenta.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("¤#,##0.00"))));
         txtVenta.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtVenta.setToolTipText("");
@@ -387,6 +381,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jScrollPane1.setMinimumSize(new java.awt.Dimension(267, 70));
         jScrollPane1.setPreferredSize(new java.awt.Dimension(267, 77));
 
+        jtCajero.setFont(new java.awt.Font("DejaVu Sans", 0, 12)); // NOI18N
         jtCajero.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
