@@ -53,9 +53,9 @@ import static sur.softsurena.formularios.frmPrincipal.mnuMovimientosNuevaFactura
 import sur.softsurena.hilos.hiloImpresionFactura;
 import sur.softsurena.utilidades.Utilidades;
 
-public final class frmBebidas extends javax.swing.JInternalFrame implements Runnable, ActionListener {
+public final class frmFacturas extends javax.swing.JInternalFrame implements Runnable, ActionListener {
 
-    private static final Logger LOG = Logger.getLogger(frmBebidas.class.getName());
+    private static final Logger LOG = Logger.getLogger(frmFacturas.class.getName());
 
     private Integer idUsuario, idCliente, turno, idClienteTemporal;
 
@@ -131,7 +131,7 @@ public final class frmBebidas extends javax.swing.JInternalFrame implements Runn
         this.idUsuario = idUsuario;
     }
 
-    public frmBebidas() {
+    public frmFacturas() {
         initComponents();
         tcr = new DefaultTableCellHeaderRenderer();
 

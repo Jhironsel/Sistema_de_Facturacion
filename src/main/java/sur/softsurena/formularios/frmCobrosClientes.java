@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
+import sur.softsurena.entidades.Personas;
 import sur.softsurena.hilos.hiloImpresionFactura;
 import sur.softsurena.utilidades.Utilidades;
 
@@ -313,7 +314,7 @@ public class frmCobrosClientes extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(cmbCliente, 0, 370, Short.MAX_VALUE)
+                .addComponent(cmbCliente, 0, 651, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnBuscarCliente))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -374,9 +375,13 @@ public class frmCobrosClientes extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
-            Opcion opc = new Opcion("NA", "Seleccione un Cliente...");
-            cmbCliente.addItem(opc);
-            ResultSet rsCli = misDatos.getConsulta(
+            Personas p = Personas.builder().
+                    id(-1).
+                    pNombre("Seleccione un Cliente...").
+                    sNombre("").
+                    apellidos("").build();
+            cmbCliente.addItem(p);
+            ResultSet rsCli = getConsulta(
                     "SELECT r.IDCLIENTE, (r.NOMBRES||' '||r.APELLIDOS) as nombre "
                     + "FROM TABLA_CLIENTES r "
                     + "WHERE r.DEUDAACTUAL > 0");
@@ -460,7 +465,6 @@ public class frmCobrosClientes extends javax.swing.JDialog {
     }//GEN-LAST:event_btnPagarActionPerformed
     private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
         frmBusquedaCliente miBusqueda = new frmBusquedaCliente(null, true);
-        miBusqueda.setDatos(misDatos);
         miBusqueda.setLocationRelativeTo(null);
         miBusqueda.setVisible(true);
 

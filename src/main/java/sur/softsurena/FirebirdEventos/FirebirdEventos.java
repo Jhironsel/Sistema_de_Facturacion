@@ -40,14 +40,7 @@ public class FirebirdEventos extends FBEventManager{
                         + event.getEventName() + "] occured "
                         + event.getEventCount() + " time(s)");
             });
-            
-            addEventListener("addProducto", new EventListener() {
-                @Override
-                public void eventOccurred(DatabaseEvent event) {
-                    LOG.info("Trabaja");
-                }
-            });
-            
+                        
         } catch (SQLException ex) {
             LOG.log(Level.SEVERE, ex.getMessage(), ex);
             return false;

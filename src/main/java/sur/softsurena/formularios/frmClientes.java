@@ -17,11 +17,16 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import static sur.softsurena.datos.delete.DeleteMetodos.borrarCliente;
 import static sur.softsurena.datos.insert.InsertMetodos.agregarCliente;
+import sur.softsurena.datos.select.SelectMetodos;
 import static sur.softsurena.datos.select.SelectMetodos.existeCliente;
 import static sur.softsurena.datos.select.SelectMetodos.getClientes;
 import static sur.softsurena.datos.update.UpdateMetodos.modificarCliente;
 import sur.softsurena.entidades.Celda_CheckBox;
 import sur.softsurena.entidades.Clientes;
+import sur.softsurena.entidades.Direcciones;
+import sur.softsurena.entidades.Generales;
+import sur.softsurena.entidades.Municipios;
+import sur.softsurena.entidades.Provincias;
 import sur.softsurena.entidades.Render_CheckBox;
 import static sur.softsurena.formularios.frmPrincipal.dpnEscritorio;
 import sur.softsurena.utilidades.Utilidades;
@@ -362,12 +367,30 @@ public final class frmClientes extends javax.swing.JInternalFrame {
         jTabbedPane2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jcbProvincias.setForeground(new java.awt.Color(37, 45, 223));
-        jcbProvincias.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione provincia" }));
+        jcbProvincias.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Ingrese Provincia" }));
         jcbProvincias.setColorFondo(new java.awt.Color(255, 255, 255));
+        jcbProvincias.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                jcbProvinciasPopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+        });
 
         jcbMunicipios.setForeground(new java.awt.Color(37, 45, 223));
-        jcbMunicipios.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione municipio" }));
+        jcbMunicipios.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Ingrese Municipio" }));
         jcbMunicipios.setColorFondo(new java.awt.Color(255, 255, 255));
+        jcbMunicipios.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                jcbMunicipiosPopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+        });
 
         jcbDistritoMunicipal.setForeground(new java.awt.Color(37, 45, 223));
         jcbDistritoMunicipal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione distrito" }));
@@ -845,6 +868,7 @@ public final class frmClientes extends javax.swing.JInternalFrame {
     private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
         llenarTabla();
         btnCancelarActionPerformed(null);
+        Direcciones.llenarProvincias(jcbProvincias);
     }//GEN-LAST:event_formInternalFrameActivated
     private void txtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaActionPerformed
         txtPNombre.requestFocusInWindow();
@@ -985,14 +1009,17 @@ public final class frmClientes extends javax.swing.JInternalFrame {
 
         }
 
+        Generales g = Generales.builder().
+                cedula(txtCedula.getValue().toString()).build();
+        Direcciones d = Direcciones.builder().
+                direccion(txtDireccion.getText()).build();
         //Creamos el Objeto Cliente y los agregamos a Datos
-        Clientes miCliente = Clientes.builder().
-                cedula(txtCedula.getValue().toString()).
+        Clientes miCliente = Clientes.builder().generales(g).
                 pNombre(txtPNombre.getText()).
                 sNombre(txtSNombre.getText()).
                 apellidos(txtApellidos.getText()).
-                direccion(txtDireccion.getText()).
-                fecha_Nacimiento(new java.sql.Date(dchFechaNacimiento.getDate().getTime())).
+                direcion(d).
+                fecha_nacimiento(new java.sql.Date(dchFechaNacimiento.getDate().getTime())).
                 estado(cbActivo.isSelected()).build();
 
         String msg, accion = "editar";
@@ -1054,7 +1081,7 @@ public final class frmClientes extends javax.swing.JInternalFrame {
 
         String msg = borrarCliente(
                 ((Clientes) tblClientes.getValueAt(
-                        tblClientes.getSelectedRow(), 0)).getId()).getMensaje();
+                        tblClientes.getSelectedRow(), 0)).getId_persona()).getMensaje();
         
         if (!msg.equals("error")) {
             JOptionPane.showMessageDialog(this, msg);
@@ -1109,6 +1136,18 @@ public final class frmClientes extends javax.swing.JInternalFrame {
 
         miDetalle.setVisible(true);
     }//GEN-LAST:event_btnHistorialActionPerformed
+
+    private void jcbProvinciasPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jcbProvinciasPopupMenuWillBecomeInvisible
+        Direcciones.llenarMunicipios(
+                ((Provincias) jcbProvincias.getSelectedItem()).getId(), 
+                jcbMunicipios);
+    }//GEN-LAST:event_jcbProvinciasPopupMenuWillBecomeInvisible
+
+    private void jcbMunicipiosPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jcbMunicipiosPopupMenuWillBecomeInvisible
+        Direcciones.llenarDistritoMunicipal(
+                ((Municipios) jcbMunicipios.getSelectedItem()).getId(), 
+                jcbDistritoMunicipal);
+    }//GEN-LAST:event_jcbMunicipiosPopupMenuWillBecomeInvisible
     private void cancelar() {
         btnNuevo.setEnabled(true);
         btnModificar.setEnabled(true);
@@ -1164,9 +1203,12 @@ public final class frmClientes extends javax.swing.JInternalFrame {
             ResultSet rs = getClientes();
             DefaultTableModel miTabla = new DefaultTableModel(null, titulos);
             while (rs.next()) {
-                Clientes p = Clientes.builder().
-                        id(rs.getInt("id")).
+                Generales g = Generales.builder().
                         cedula(rs.getString("cedula")).build();
+                
+                Clientes p = Clientes.builder().
+                        id_persona(rs.getInt("id")).
+                        generales(g).build();
                 registro[0] = p;
                 registro[1] = rs.getString("persona").equalsIgnoreCase("j") ? "Juridica":"Fisica";
                 registro[2] = rs.getString("pnombre");
@@ -1366,11 +1408,11 @@ public final class frmClientes extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTabbedPane jTabbedPane3;
-    private RSMaterialComponent.RSComboBox jcbDistritoMunicipal;
+    private static RSMaterialComponent.RSComboBox jcbDistritoMunicipal;
     private javax.swing.JComboBox<String> jcbEstadoCivil;
-    private RSMaterialComponent.RSComboBox jcbMunicipios;
+    private static RSMaterialComponent.RSComboBox jcbMunicipios;
     private javax.swing.JComboBox<String> jcbPersona;
-    private RSMaterialComponent.RSComboBox jcbProvincias;
+    private static RSMaterialComponent.RSComboBox jcbProvincias;
     private javax.swing.JPanel jpClientes;
     private javax.swing.JPanel jpMantenimiento;
     private javax.swing.JScrollPane jspClientes;
@@ -1392,7 +1434,4 @@ public final class frmClientes extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtPNombre;
     private javax.swing.JTextField txtSNombre;
     // End of variables declaration//GEN-END:variables
-
-    
-
 }

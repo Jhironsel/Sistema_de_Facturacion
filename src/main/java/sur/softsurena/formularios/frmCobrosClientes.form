@@ -36,7 +36,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="jPanel3" max="32767" attributes="0"/>
           <Group type="102" alignment="1" attributes="0">
-              <Component id="cmbCliente" pref="370" max="32767" attributes="0"/>
+              <Component id="cmbCliente" pref="651" max="32767" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="btnBuscarCliente" min="-2" max="-2" attributes="0"/>
           </Group>

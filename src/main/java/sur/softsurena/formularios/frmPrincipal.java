@@ -43,7 +43,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private frmUsuarios usuario;
 
     //Movimientos
-    private frmBebidas bebida;
+    private frmFacturas bebida;
     private frmReporteFacturas reporte;
     private frmDeudas deudas;
 
@@ -899,7 +899,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
             return;
         }
         if (bebida == null) {
-            bebida = new frmBebidas();
+            bebida = new frmFacturas();
             dpnEscritorio.add(bebida);
             bebidaR();
         } else {

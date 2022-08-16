@@ -681,13 +681,20 @@
                                         </Property>
                                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                                           <StringArray count="1">
-                                            <StringItem index="0" value="Seleccione provincia"/>
+                                            <StringItem index="0" value="Ingrese Provincia"/>
                                           </StringArray>
                                         </Property>
                                         <Property name="colorFondo" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                                         </Property>
                                       </Properties>
+                                      <Events>
+                                        <EventHandler event="popupMenuWillBecomeInvisible" listener="javax.swing.event.PopupMenuListener" parameters="javax.swing.event.PopupMenuEvent" handler="jcbProvinciasPopupMenuWillBecomeInvisible"/>
+                                      </Events>
+                                      <AuxValues>
+                                        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
+                                        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
+                                      </AuxValues>
                                     </Component>
                                     <Component class="RSMaterialComponent.RSComboBox" name="jcbMunicipios">
                                       <Properties>
@@ -696,13 +703,19 @@
                                         </Property>
                                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                                           <StringArray count="1">
-                                            <StringItem index="0" value="Seleccione municipio"/>
+                                            <StringItem index="0" value="Ingrese Municipio"/>
                                           </StringArray>
                                         </Property>
                                         <Property name="colorFondo" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                                         </Property>
                                       </Properties>
+                                      <Events>
+                                        <EventHandler event="popupMenuWillBecomeInvisible" listener="javax.swing.event.PopupMenuListener" parameters="javax.swing.event.PopupMenuEvent" handler="jcbMunicipiosPopupMenuWillBecomeInvisible"/>
+                                      </Events>
+                                      <AuxValues>
+                                        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
+                                      </AuxValues>
                                     </Component>
                                     <Component class="RSMaterialComponent.RSComboBox" name="jcbDistritoMunicipal">
                                       <Properties>
@@ -718,6 +731,9 @@
                                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                                         </Property>
                                       </Properties>
+                                      <AuxValues>
+                                        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
+                                      </AuxValues>
                                     </Component>
                                     <Component class="RSMaterialComponent.RSTextFieldMaterialIcon" name="txtDireccion">
                                       <Properties>
