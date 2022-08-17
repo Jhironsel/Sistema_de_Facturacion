@@ -36,7 +36,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private int perfil, returnVal = JFileChooser.CANCEL_OPTION;
     private String clave, idUsuario, usuarioMaster, source;
     private Imagenes icono;
-
+    
     //Archivos
     private frmClientes cliente;
     private frmProductos productos;
@@ -80,11 +80,11 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
     public frmPrincipal() {
         initComponents();
+        
         jPanelImpresion.setVisible(false);
+        
         icono = new Imagenes();
         cargarIconos();
-        
-        
     }
 
     @SuppressWarnings("unchecked")
@@ -143,8 +143,8 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jlRestaurar = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         dpnEscritorio = new DesktopConFondo();
-        jlFlechaIzquierda = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
+        mnuOcultarPanel = new javax.swing.JMenu();
         mnuArchivos = new javax.swing.JMenu();
         mnuArchivosCliente = new javax.swing.JMenuItem();
         mnuArchivosProductos = new javax.swing.JMenuItem();
@@ -598,18 +598,16 @@ public final class frmPrincipal extends javax.swing.JFrame {
         dpnEscritorio.setBackground(new java.awt.Color(0, 102, 102));
         dpnEscritorio.setComponentPopupMenu(jPopupMenu1);
         dpnEscritorio.setPreferredSize(new java.awt.Dimension(510, 531));
-
-        jlFlechaIzquierda.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jlFlechaIzquierdaMouseClicked(evt);
-            }
-        });
-        dpnEscritorio.add(jlFlechaIzquierda);
-        jlFlechaIzquierda.setBounds(0, 250, 40, 40);
-
         jScrollPane4.setViewportView(dpnEscritorio);
 
         jMenuBar1.setMinimumSize(new java.awt.Dimension(0, 0));
+
+        mnuOcultarPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mnuOcultarPanelMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(mnuOcultarPanel);
 
         mnuArchivos.setBackground(new java.awt.Color(0, 0, 0));
         mnuArchivos.setText("Archivos");
@@ -824,14 +822,17 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private void mnuArchivosClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuArchivosClienteActionPerformed
         if (cliente == null) {
             cliente = new frmClientes();
-            dpnEscritorio.add(cliente);
         }
+        
+        dpnEscritorio.add(cliente);
+        
         try {
             cliente.setMaximum(false);
             cliente.setMaximum(true);
         } catch (PropertyVetoException ex) {
             //Instalar Logger
         }
+        
         cliente.btnCancelar.doClick();
         cliente.setVisible(true);
 
@@ -864,7 +865,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         } catch (PropertyVetoException ex) {
             //Instalar Logger
         }
-        usuario.btnCancelar.doClick();
+        
         usuario.setVisible(true);
 
     }//GEN-LAST:event_mnuArchivosUsuarioActionPerformed
@@ -1220,11 +1221,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
         mnuMovimientosDeudasActionPerformed(evt);
     }//GEN-LAST:event_jmDeudaActionPerformed
 
-    private void jlFlechaIzquierdaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlFlechaIzquierdaMouseClicked
-        jsEstatus.setVisible(!jsEstatus.isVisible());
-        pack();
-    }//GEN-LAST:event_jlFlechaIzquierdaMouseClicked
-
     private void btnEstablecerEncabezadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstablecerEncabezadoActionPerformed
 //        mensaje();
         frmEncabezado encabezado2 = new frmEncabezado(null, true, encabezado);
@@ -1249,6 +1245,18 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private void jmUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmUsuariosActionPerformed
         mnuArchivosUsuarioActionPerformed(evt);
     }//GEN-LAST:event_jmUsuariosActionPerformed
+
+    private void mnuOcultarPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuOcultarPanelMouseClicked
+        jsEstatus.setVisible(!jsEstatus.isVisible());
+        
+        if(jsEstatus.isVisible()){
+            mnuOcultarPanel.setIcon(icono.getIcono("Flecha Izquierda 32 x 32.png"));
+        }else{
+            mnuOcultarPanel.setIcon(icono.getIcono("Flecha Derecha 32 x 32.png"));
+        }
+        
+        pack();
+    }//GEN-LAST:event_mnuOcultarPanelMouseClicked
     private void imprimirReporte(Date fecha) {
         try {
             String miFile = "sur.softsurena.reportes.repSistemaDeBebida.jasper";
@@ -1311,7 +1319,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
 //        //mensaje();
 //
 //    }
-
 //    private void panorama() {
 //        ResultSet rs = getConsulta(
 //                "SELECT cast(r.VENTA as numeric(15,2)) as VENTA, "
@@ -1325,7 +1332,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
 //            //Instalar Logger
 //        }
 //    }
-
 //    private void cajeros() {
 //        //Saber cuales cajeros estan Activo....
 //        String titulos[] = {"Cajero Activo"};
@@ -1347,7 +1353,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
 //            //Instalar Logger
 //        }
 //    }
-
 //    private void mensaje() {
 //        ResultSet rs = getConsulta(
 //                "SELECT r.Ruta as mensaje, o.RUTA as nombreEmpresa, "
@@ -1373,7 +1378,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
 //            //Instalar Logger
 //        }
 //    }///--------------Hasta Aqui.......
-
 //    public void menus() {
 //        Perfiles miPerfil = getAcceso(getPerfil());
 //        mnuArchivos.setEnabled(dime(miPerfil.getArchivos()));
@@ -1432,7 +1436,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
 //        }
 //        jMenuBar1.add(jPanelImpresion);
 //    }
-
     //Movimientos
     private void bebidaR() {
         try {
@@ -1532,7 +1535,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator7;
     private javax.swing.JPopupMenu.Separator jSeparator8;
     private javax.swing.JPopupMenu.Separator jSeparator9;
-    private javax.swing.JLabel jlFlechaIzquierda;
     private javax.swing.JLabel jlGetIP;
     private javax.swing.JLabel jlGrafica;
     private javax.swing.JLabel jlLogoEmpresa;
@@ -1573,6 +1575,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuMovimientosInventario;
     public static javax.swing.JMenuItem mnuMovimientosNuevaFactura;
     private javax.swing.JMenuItem mnuMovimientosReporteFactura;
+    private javax.swing.JMenu mnuOcultarPanel;
     private javax.swing.JPanel pEstatus;
     private javax.swing.JFormattedTextField txtCosto;
     private javax.swing.JFormattedTextField txtGanancia;
@@ -1584,7 +1587,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         mnuArchivos.setIcon(icono.getIcono("Archivos 32 x 32.png"));
         mnuMovimientos.setIcon(icono.getIcono("Movimiento 32 x 32.png"));
         mnuAyuda.setIcon(icono.getIcono("Ayuda 32 x 32.png"));
-        
+
         //Menu Archivos
         mnuArchivosCliente.setIcon(icono.getIcono("Clientes 32 x 32.png"));
         mnuArchivosProductos.setIcon(icono.getIcono("Productos 32 x 32.png"));
@@ -1592,7 +1595,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         mnuArchivosCambioClave.setIcon(icono.getIcono("Cambiar Contraseña 32 x 32.png"));
         mnuArchivosCambioUsuario.setIcon(icono.getIcono("Cambio de Usuario 32 x 32.png"));
         mnuArchivosSalir.setIcon(icono.getIcono("Salir 32 x 32.png"));
-        
+
         //Menu Movimiento
         mnuMovimientosNuevaFactura.setIcon(icono.getIcono("Factura 32 x 32.png"));
         mnuMovimientosReporteFactura.setIcon(icono.getIcono("Reportar Factura 32 x 32.png"));
@@ -1600,8 +1603,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         mnuMovimientosAbrirTurno.setIcon(icono.getIcono("Turno 32 x 32.png"));
         mnuMovimientosCerrarTurno.setIcon(icono.getIcono("Cancelar 32 x 32.png"));
         mnuMovimientosDeudas.setIcon(icono.getIcono("Money 32 x 32.png"));
-        
-        
+
         //Iconos de subMenus
         Archivos.setIcon(icono.getIcono("Archivos 32 x 32.png"));
         jmClientes.setIcon(icono.getIcono("Clientes 32 x 32.png"));
@@ -1610,7 +1612,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jmCambioClave.setIcon(icono.getIcono("Cambiar Contraseña 32 x 32.png"));
         jmCambioUsuario.setIcon(icono.getIcono("Cambio de Usuario 32 x 32.png"));
         jmSalir.setIcon(icono.getIcono("Salir 32 x 32.png"));
-        
+
         //Barra lateral izquierda
         jlMovimientoES.setIcon(icono.getIcono("Movimiento 32 x 32.png"));
         jlGetIP.setIcon(icono.getIcono("Ip 32 x 32.png"));
@@ -1618,13 +1620,14 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jlRespaldar.setIcon(icono.getIcono("RespaldarBD 32 x 32.png"));
         jlRestauracion.setIcon(icono.getIcono("RestaurarBD 32 x 32.png"));
         jlRestaurar.setIcon(icono.getIcono("RestaurarBD 32 x 32.png"));
-        
+
         //
         jlLogoEmpresa.setIcon(icono.getIcono("Sin_imagen 64 x 64.png"));
-        
+
         btnEstablecerEncabezado.setIcon(icono.getIcono("Factura 32 x 32.png"));
         btnSeleccionarImpresora.setIcon(icono.getIcono("Impresora 32 x 32.png"));
+
         
-        jlFlechaIzquierda.setIcon(icono.getIcono("Flecha Izquierda 32 x 32.png"));
+        mnuOcultarPanel.setIcon(icono.getIcono("Flecha Izquierda 32 x 32.png"));
     }
 }
