@@ -298,10 +298,6 @@ public class frmBusquedaTresValoresPersona extends javax.swing.JDialog {
         txtTodo.requestFocusInWindow();
     }//GEN-LAST:event_jrbApellidosActionPerformed
 
-    public static void main(String[] args) {
-        new frmBusquedaTresValoresPersona(null, true).setVisible(true);
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;

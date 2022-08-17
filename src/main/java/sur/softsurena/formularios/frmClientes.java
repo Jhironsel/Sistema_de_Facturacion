@@ -972,7 +972,7 @@ public final class frmClientes extends javax.swing.JInternalFrame {
         if (nuevo) {
             msg = agregarCliente(miCliente, null, null).getMensaje();
         } else {
-            msg = modificarCliente(miCliente, null);
+            msg = modificarCliente(miCliente, null).getMensaje();
         }
 
         JOptionPane.showMessageDialog(this, msg);

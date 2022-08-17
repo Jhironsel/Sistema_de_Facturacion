@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.firebirdsql.event.DatabaseEvent;
-import org.firebirdsql.event.EventListener;
 import org.firebirdsql.event.FBEventManager;
 
 public class FirebirdEventos extends FBEventManager{
