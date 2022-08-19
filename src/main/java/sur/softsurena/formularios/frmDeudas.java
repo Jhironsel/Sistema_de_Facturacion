@@ -14,9 +14,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import static sur.softsurena.datos.procedure.ProcedureMetodos.insertDeudas;
 import static sur.softsurena.datos.select.SelectMetodos.existeCliente;
+import static sur.softsurena.datos.select.SelectMetodos.modificarDeuda;
 import sur.softsurena.entidades.DefaultTableCellHeaderRenderer;
 import sur.softsurena.entidades.Deudas;
-import static sur.softsurena.formularios.frmPrincipal.mnuArchivosCliente;
+//import static sur.softsurena.formularios.frmPrincipal.mnuArchivosCliente;
 import sur.softsurena.utilidades.Utilidades;
 
 public class frmDeudas extends javax.swing.JInternalFrame {
@@ -825,8 +826,10 @@ public class frmDeudas extends javax.swing.JInternalFrame {
         }
 
         //Creamos el Objeto Cliente y los agregamos a Datos
-        Deudas miDeuda = new Deudas(idCliente, getIdUsuario(),
-                txtConcepto.getText(), monto);
+        Deudas miDeuda = Deudas.builder().id_persona(-1).build();
+                
+//                new Deudas(idCliente, getIdUsuario(),
+//                txtConcepto.getText(), monto);
 
         String accion = "editar";
         if (nuevo) {
@@ -1017,10 +1020,13 @@ public class frmDeudas extends javax.swing.JInternalFrame {
         if (existeCliente(idCliente)) {
             
             nuevo();
-            ResultSet rs = getConsulta(
-                    "SELECT r.NOMBRES, r.APELLIDOS "
-                    + "FROM TABLA_CLIENTES r "
-                    + "WHERE r.IDCLIENTE like '" + idCliente + "'");
+            
+//            getConsulta(
+//                    "SELECT r.NOMBRES, r.APELLIDOS "
+//                    + "FROM TABLA_CLIENTES r "
+//                    + "WHERE r.IDCLIENTE like '" + idCliente + "'");
+            
+            ResultSet rs = null;
 
             try {
                 rs.next();
@@ -1029,6 +1035,7 @@ public class frmDeudas extends javax.swing.JInternalFrame {
             } catch (SQLException ex) {
                 //Instalar Logger
             }
+            
             btnGetCliente.setEnabled(false);
             txtIDCliente.setEditable(false);
             txtNombres.setEditable(false);
@@ -1046,7 +1053,7 @@ public class frmDeudas extends javax.swing.JInternalFrame {
             nuevo = true;
             if (resp == JOptionPane.OK_OPTION) {
                 
-                mnuArchivosCliente.doClick();
+//                mnuArchivosCliente.doClick();
             } else {
                 
                 btnCancelarActionPerformed(evt);
@@ -1117,7 +1124,6 @@ public class frmDeudas extends javax.swing.JInternalFrame {
 
         
         frmAutorizacion miAut = new frmAutorizacion(null, true);
-        miAut.setDatos(getDatos());
         miAut.setLocationRelativeTo(null);
         miAut.setVisible(true);
 
@@ -1224,15 +1230,17 @@ public class frmDeudas extends javax.swing.JInternalFrame {
             estado = "WHERE r.ESTADO like 'p' GROUP BY r.estado";
         }
 
-        ResultSet rs = getConsulta(
-                "SELECT SUM(r.MONTO), case r.ESTADO "
-                + "when 'i' then 'Inicial:' "
-                + "when 'a' then 'Abonado:' "
-                + "when 'p' then 'Pagado:' "
-                + "when 'n' then 'Nulado:' "
-                + "end "
-                + "FROM GET_SUMA_DEUDA r "
-                + estado);
+//        getConsulta(
+//                "SELECT SUM(r.MONTO), case r.ESTADO "
+//                + "when 'i' then 'Inicial:' "
+//                + "when 'a' then 'Abonado:' "
+//                + "when 'p' then 'Pagado:' "
+//                + "when 'n' then 'Nulado:' "
+//                + "end "
+//                + "FROM GET_SUMA_DEUDA r "
+//                + estado);
+        
+        ResultSet rs = null;
 
         try {
             while (rs.next()) {
@@ -1328,20 +1336,22 @@ public class frmDeudas extends javax.swing.JInternalFrame {
             "Concepto", "Monto", "Fecha", "Estado"};
         Object registro[] = new Object[8];
 
+//        getConsulta(
+//                    "SELECT r.IDDEUDAS, IIF(r.IDCLIENTE = '0', '000-0000000-0', "
+//                            + "r.IDCLIENTE) as IDCLIENTE, c.NOMBRES, c.APELLIDOS, "
+//                    + "r.CONCEPTO, r.MONTO, r.FECHA, "
+//                    + "        (IIF(r.ESTADO = 'i', 'Inicial', "
+//                    + "         IIF(r.ESTADO = 'p', 'Pagada', "
+//                    + "         IIF(r.ESTADO = 'a', 'Abonada', "
+//                    + "         IIF(r.ESTADO = 'n','Nula','No Definida'))))) as ESTADO "
+//                    + "FROM TABLA_DEUDAS r "
+//                    + "LEFT JOIN TABLA_CLIENTES c"
+//                    + "    ON c.IDCLIENTE LIKE r.IDCLIENTE "
+//                    + estados()
+//                    + "ORDER by 1");
+        
         try {
-            ResultSet rs = getConsulta(
-                    "SELECT r.IDDEUDAS, IIF(r.IDCLIENTE = '0', '000-0000000-0', "
-                            + "r.IDCLIENTE) as IDCLIENTE, c.NOMBRES, c.APELLIDOS, "
-                    + "r.CONCEPTO, r.MONTO, r.FECHA, "
-                    + "        (IIF(r.ESTADO = 'i', 'Inicial', "
-                    + "         IIF(r.ESTADO = 'p', 'Pagada', "
-                    + "         IIF(r.ESTADO = 'a', 'Abonada', "
-                    + "         IIF(r.ESTADO = 'n','Nula','No Definida'))))) as ESTADO "
-                    + "FROM TABLA_DEUDAS r "
-                    + "LEFT JOIN TABLA_CLIENTES c"
-                    + "    ON c.IDCLIENTE LIKE r.IDCLIENTE "
-                    + estados()
-                    + "ORDER by 1");
+            ResultSet rs = null;
             miTabla = new DefaultTableModel(null, titulos);
 
             while (rs.next()) {
@@ -1437,19 +1447,19 @@ public class frmDeudas extends javax.swing.JInternalFrame {
             case "b":
                 cliAct--;
                 if (cliAct == -1) {
-                    cliAct = getDatos().numeroDeudas(estados()) - 1;
+//                    cliAct = getDatos().numeroDeudas(estados()) - 1;
                 }
                 mostrarRegistro();
                 break;
             case "c":
                 cliAct++;
-                if (cliAct == getDatos().numeroDeudas(estados())) {
-                    cliAct = 0;
-                }
+//                if (cliAct == numeroDeudas(estados())) {
+//                    cliAct = 0;
+//                }
                 mostrarRegistro();
                 break;
             case "d":
-                cliAct = getDatos().numeroDeudas(estados()) - 1;
+//                cliAct = getDatos().numeroDeudas(estados()) - 1;
                 mostrarRegistro();
                 break;
         }

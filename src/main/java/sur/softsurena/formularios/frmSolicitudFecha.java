@@ -1,25 +1,14 @@
-package formulario;
+package sur.softsurena.formularios;
 
-import clases.Datos;
-import clases.Opcion;
-import clases.Utilidades;
 import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import sur.softsurena.entidades.Usuario;
+import sur.softsurena.utilidades.Utilidades;
 
 public class frmSolicitudFecha extends javax.swing.JDialog {
-
-    private Datos datos;
-
-    public Datos getDatos() {
-        return datos;
-    }
-
-    public void setDatos(Datos datos) {
-        this.datos = datos;
-    }
 
     public frmSolicitudFecha(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -353,14 +342,25 @@ public class frmSolicitudFecha extends javax.swing.JDialog {
                 + "FROM TABLA_USUARIOS r "
                 + "WHERE r.ESTADO = 1 AND r.BORRADO LIKE 'n'";
 
-        Opcion miOpcion = new Opcion("N/A", "Seleccione un usuario");
-        jcbUsuarios.addItem(miOpcion);
-        ResultSet rs = getDatos().getConsulta(sql);
+        Usuario user = Usuario.builder().
+                user_name("").
+                pNombre("").
+                sNombre("").
+                apellidos("").build();
+        
+        jcbUsuarios.addItem(user);
+        
+        ResultSet rs = null;
 
         try {
             while (rs.next()) {
-                miOpcion = new Opcion(rs.getString("idUsuario"), rs.getString("Nombre"));
-                jcbUsuarios.addItem(miOpcion);
+                user = Usuario.builder().
+                user_name("").
+                pNombre("").
+                sNombre("").
+                apellidos("").build();
+                
+                jcbUsuarios.addItem(user);
             }
         } catch (SQLException ex) {
             //Instalar Logger

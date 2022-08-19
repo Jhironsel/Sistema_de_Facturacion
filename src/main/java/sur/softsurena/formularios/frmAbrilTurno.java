@@ -183,7 +183,11 @@ public class frmAbrilTurno extends java.awt.Dialog {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        Usuario usuario = Usuario.builder().userName("N/A").pNombre("Seleccione un Usuario").sNombre("").apellidos("").build();
+        Usuario usuario = Usuario.builder().
+                user_name("N/A").
+                pNombre("Seleccione un Usuario").
+                sNombre("").
+                apellidos("").build();
         jcbUsuarios.removeAllItems();
         jcbUsuarios.addItem(usuario);
         ResultSet rs = getUsuarios("all");
@@ -192,7 +196,7 @@ public class frmAbrilTurno extends java.awt.Dialog {
                 
                 if(rs.getBoolean("O_ESTADO_ACTIVO")){
                     usuario = Usuario.builder().
-                            userName(rs.getString("O_USER_NAME")).
+                            user_name(rs.getString("O_USER_NAME")).
                             pNombre(rs.getString("O_PRIMER_NOMBRE")).
                             sNombre(rs.getString("p.O_SEGUNDO_NOMBRE")).
                             apellidos(rs.getString("O_APELLIDOS")).build();

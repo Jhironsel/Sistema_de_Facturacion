@@ -4,8 +4,12 @@ import java.awt.Dimension;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import static sur.softsurena.datos.select.SelectMetodos.getClientes;
+import static sur.softsurena.datos.select.SelectMetodos.getFacturas;
+import sur.softsurena.entidades.Clientes;
+import sur.softsurena.entidades.Facturas;
+import sur.softsurena.entidades.HeaderFactura;
 import sur.softsurena.entidades.Opcion;
-import sur.softsurena.entidades.Reporte;
 import sur.softsurena.utilidades.Utilidades;
 
 public class frmReporteFacturas extends javax.swing.JInternalFrame {
@@ -341,7 +345,7 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame {
             //Adicionamos el fitro a la Consulta....
             sql = sql + filtro;
 
-            Reporte.reporteFacturas(archivo, getConsulta(sql));
+//            Reporte.reporteFacturas(archivo, getConsulta(sql));
             
             JOptionPane.showMessageDialog(null, "Reporte Generado...");
             dispose();
@@ -355,29 +359,34 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame {
         try {
             
             //Cargamos Clientes
-            Opcion opc;
-            opc = new Opcion("NA", "Seleccione un Cliente...");
-            cmbCliente.addItem(opc);
+            Clientes cli = Clientes.builder().
+                    id_persona(-1).
+                    pNombre("Seleccione un cliente").
+                    sNombre("").
+                    apellidos("").build();
+            
+            cmbCliente.addItem(cli);
+            
             ResultSet rsCli = getClientes();
+            
             while (rsCli.next()) {
-                opc = new Opcion(
-                        rsCli.getString("idCliente"),
-                        rsCli.getString("nombres") + " "
-                        + rsCli.getString("apellidos"));
-                cmbCliente.addItem(opc);
+                cli = Clientes.builder().
+                    id_persona(rsCli.getInt("ID")).
+                    pNombre(rsCli.getString("PNOMBRE")).
+                    sNombre(rsCli.getString("SNOMBRE")).
+                    apellidos(rsCli.getString("APELLIDOS")).build();;
+                cmbCliente.addItem(cli);
             }
 
             //Cargamos Facturas
-            opc = new Opcion("NA", "Seleccione una Factura...");
-            cmbFacturaInicial.addItem(opc);
-            cmbFacturaFinal.addItem(opc);
+            Facturas fac = Facturas.builder().id(-1).build();
+            cmbFacturaInicial.addItem(cli);
+            cmbFacturaFinal.addItem(cli);
             ResultSet rsFac = getFacturas();
             while (rsFac.next()) {
-                opc = new Opcion(
-                        rsFac.getString("idFactura"),
-                        rsFac.getString("idFactura"));
-                cmbFacturaInicial.addItem(opc);
-                cmbFacturaFinal.addItem(opc);
+                fac = Facturas.builder().id(rsFac.getInt("ID")).build();
+                cmbFacturaInicial.addItem(fac);
+                cmbFacturaFinal.addItem(fac);
             }
 
         } catch (SQLException ex) {

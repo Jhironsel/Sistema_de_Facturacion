@@ -182,12 +182,13 @@ public class frmMovimientoEntradaSalida extends javax.swing.JInternalFrame {
             jtFechas.removeAll();
             miTabla = new DefaultTableModel(null, titulos);
 
-            ResultSet rs = getConsulta(
-                    "SELECT r.FECHAENTRADA, IIF(r.OP = '+', 'Entrada', 'Salida') as operacion, r.IDUSUARIO "
-                  + "FROM TABLA_ENTRADAS_PRUDUCTOS r "
-                  + "WHERE EXTRACT(MONTH FROM r.FECHAENTRADA) = " + mes + " "
-                  + "and EXTRACT(YEAR FROM r.FECHAENTRADA) = " + year + " "
-                  + "GROUP BY r.FECHAENTRADA,  r.OP, r.IDUSUARIO");
+//            "SELECT r.FECHAENTRADA, IIF(r.OP = '+', 'Entrada', 'Salida') as operacion, r.IDUSUARIO "
+//                  + "FROM TABLA_ENTRADAS_PRUDUCTOS r "
+//                  + "WHERE EXTRACT(MONTH FROM r.FECHAENTRADA) = " + mes + " "
+//                  + "and EXTRACT(YEAR FROM r.FECHAENTRADA) = " + year + " "
+//                  + "GROUP BY r.FECHAENTRADA,  r.OP, r.IDUSUARIO"
+            
+            ResultSet rs = null;
                         
             SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
             while (rs.next()) {

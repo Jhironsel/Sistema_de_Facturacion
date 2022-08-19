@@ -46,6 +46,7 @@ import sur.softsurena.entidades.Clientes;
 import sur.softsurena.entidades.DefaultTableCellHeaderRenderer;
 import sur.softsurena.entidades.DetalleFactura;
 import sur.softsurena.entidades.Facturas;
+import sur.softsurena.entidades.Generales;
 import sur.softsurena.entidades.HeaderFactura;
 import sur.softsurena.entidades.Opcion;
 import sur.softsurena.entidades.Personas;
@@ -1051,7 +1052,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
             }
         } else {
             HeaderFactura hf = HeaderFactura.builder().
-                    idCliente(((Clientes) cmbCliente.getSelectedItem()).getId()).
+                    idCliente(((Clientes) cmbCliente.getSelectedItem()).getId_persona()).
                     idTurno(getTurno()).
                     efectivo(new BigDecimal(miEfe.txtEfectivo.getValue().toString())).
                     cambio(new BigDecimal(miEfe.txtDevuelta.getValue().toString())).
@@ -1077,7 +1078,6 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
         }
 
 //        txtIdFactura.setText("" + getNumFac(getIdUsuario(), getTurno()));
-
         Map parametros = new HashMap();
 
         parametros.put("idFactura", idFactura);
@@ -1317,7 +1317,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
 
         if (cmbCliente.getSelectedIndex() > 0) {
             nombreCliente = ((Opcion) cmbCliente.getSelectedItem()).getDescripcion();
-            idClienteTemporal = ((Personas) cmbCliente.getSelectedItem()).getId();
+            idClienteTemporal = ((Personas) cmbCliente.getSelectedItem()).getId_persona();
         } else {
             idClienteTemporal = 0;
             if ("".equals(nombreCliente)) {
@@ -1422,7 +1422,6 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
                     + "where r.IDFACTURA = " + miTempo.getFactura() + " ";
 
 //            rs = getConsulta(sql);
-
             try {
                 rs.next();
                 setIdCliente(rs.getInt(1));
@@ -1442,28 +1441,28 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
     }//GEN-LAST:event_btnBuscarEsperaActionPerformed
     private void cbTodosProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTodosProductosActionPerformed
         jpProductos = new javax.swing.JPanel();
-        
+
         jpProductos.setAutoscrolls(true);
-        
+
         jpProductos.setBackground(new java.awt.Color(255, 102, 51));
-        
+
         jpProductos.setBorder(javax.swing.BorderFactory.createTitledBorder(null,
                 "Productos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
                 javax.swing.border.TitledBorder.DEFAULT_POSITION,
                 new java.awt.Font("Ubuntu", 0, 14)));
-        
+
         jpProductos.setMaximumSize(new java.awt.Dimension(350, 1500));
-        
+
         jpProductos.setMinimumSize(new java.awt.Dimension(350, 1500));
-        
+
         jpProductos.setPreferredSize(new java.awt.Dimension(350, 1500));
-        
+
         java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout();
-        
+
         flowLayout1.setAlignOnBaseline(true);
-        
+
         jpProductos.setLayout(flowLayout1);
-        
+
         jScrollPane4.setViewportView(jpProductos);
 
         actionPerformed(e1);
@@ -1597,7 +1596,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
             } while (!bandera);//Fin del cuadro texto pidiendo la cantidad
 
             //Para obtener el precio                                                --IdProducto
-            String sql 
+            String sql
                     = "select Precio from "
                     + "TABLA_PRODUCTOS "
                     + "where idProducto like '" + btn.getToolTipText() + "'";
@@ -1624,7 +1623,6 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
 //                    )
 //                    null
 //            );//Cantidad
-
             txtPrecio.setValue(precio);
 
             registro[0] = cantidad;
@@ -1651,7 +1649,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
 
 //        ResultSet rs = getConsulta(sql);
         ResultSet rs = null;
-        
+
         String sql = "select Descripcion, IdProducto, imagePath, Precio "
                 + "from TABLA_PRODUCTOS "
                 + "where idCategoria = " + btn.getToolTipText() + " and "
@@ -1663,7 +1661,6 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
                     + "from TABLA_PRODUCTOS "
                     + "where idCategoria = " + btn.getToolTipText();
         }
-
 
         jpProductos.removeAll();
         jpProductos.repaint();
@@ -1856,17 +1853,17 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
 //                break;
 //        }
 //    }
-
     private void getClientes() {
         cmbCliente.removeAllItems();
         cmbCliente.repaint();
 
-        Personas p = Personas.builder().
-                id(0).
+        Generales g = Generales.builder().
+                cedula("000-0000000-0").build();
+        Clientes p = Clientes.builder().
+                id_persona(0).
                 pNombre("Seleccione un cliente").
                 sNombre("").
-                apellidos("").
-                cedula("000-0000000-0").build();
+                apellidos("").build();
 
         cmbCliente.addItem(p);
 
@@ -1874,12 +1871,15 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
             ResultSet rs = getClientesCombo();
 
             while (rs.next()) {
-                p = Personas.builder().
-                        id(rs.getInt("id")).
+                g = Generales.builder().
+                cedula(rs.getString("cedula")).build();
+                
+                p = Clientes.builder().
+                        id_persona(rs.getInt("id")).
                         pNombre(rs.getString("pNombre")).
                         sNombre(rs.getString("sNombre")).
                         apellidos(rs.getString("apellidos")).
-                        cedula(rs.getString("cedula")).build();
+                        generales(g).build();
 
                 cmbCliente.addItem(p);
             }//fin

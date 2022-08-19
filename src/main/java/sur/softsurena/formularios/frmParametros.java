@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import rojeru_san.RSMTextFull;
 import sur.softsurena.entidades.Servidor;
-//888
+
 public class frmParametros extends javax.swing.JFrame {
 
     private final Properties propiedades;

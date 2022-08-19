@@ -16,12 +16,13 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import sur.softsurena.FirebirdEventos.FirebirdEventos;
 import sur.softsurena.conexion.Conexion;
+import sur.softsurena.metodos.Imagenes;
+import sur.softsurena.formularios.*;
 import static sur.softsurena.conexion.Conexion.getCnn;
 import static sur.softsurena.datos.procedure.ProcedureMetodos.setLicencia;
 import static sur.softsurena.datos.select.SelectMetodos.comprobandoRol;
 import static sur.softsurena.datos.select.SelectMetodos.existeIdMaquina;
 import static sur.softsurena.datos.select.SelectMetodos.periodoMaquina;
-import sur.softsurena.metodos.Imagenes;
 
 public final class frmLogin extends javax.swing.JFrame {
 
@@ -29,13 +30,10 @@ public final class frmLogin extends javax.swing.JFrame {
     private String idMaquina = "";
     private boolean txtUsuarioKeyPress = true;
     private frmPrincipal principal;
-
     public frmLogin() {
         initComponents();
 
-        Imagenes imagen = new Imagenes();
-        jlLogoSistema.setIcon(imagen.getIcono("Panel de Control 128 x 128.png"));
-        lamina.setImagen(imagen.getIcono("FondoLogin 626 x 386.jpg"));
+        cargarIconos();
 
         btnParametros.setVisible(false);//Boton parametros Invisible
 
@@ -502,4 +500,10 @@ public final class frmLogin extends javax.swing.JFrame {
     private RSMaterialComponent.RSPasswordIconOne txtClave;
     private RSMaterialComponent.RSTextFieldIconOne txtUsuario;
     // End of variables declaration//GEN-END:variables
+
+    private void cargarIconos() {
+        Imagenes imagen = new Imagenes();
+        jlLogoSistema.setIcon(imagen.getIcono("Panel de Control 128 x 128.png"));
+        lamina.setImagen(imagen.getIcono("FondoLogin 626 x 386.jpg"));
+    }
 }

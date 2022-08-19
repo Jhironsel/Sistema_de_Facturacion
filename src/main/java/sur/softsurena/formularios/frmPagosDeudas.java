@@ -36,8 +36,10 @@ public class frmPagosDeudas extends javax.swing.JDialog {
 
         txtIdDeuda.setText("" + idDeuda);
 
-        ResultSet rs = getConsulta("SELECT SUM(r.MONTO) "
-                + "FROM TABLA_PAGO_DEUDAS_EXTERNA r WHERE r.IDDEUDA = " + idDeuda);
+//        "SELECT SUM(r.MONTO) "
+//                + "FROM TABLA_PAGO_DEUDAS_EXTERNA r WHERE r.IDDEUDA = " + idDeuda
+        
+        ResultSet rs = null;
 
         try {
             rs.next();
@@ -96,11 +98,11 @@ public class frmPagosDeudas extends javax.swing.JDialog {
         btnAceptar.setPreferredSize(new java.awt.Dimension(123, 44));
         btnAceptar.setSelected(true);
         btnAceptar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnAceptarMouseExited(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnAceptarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnAceptarMouseExited(evt);
             }
         });
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
@@ -267,10 +269,10 @@ public class frmPagosDeudas extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -329,13 +331,14 @@ public class frmPagosDeudas extends javax.swing.JDialog {
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(dchFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
-                .addGap(0, 0, 0)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(txtMontoPagado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
+                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnSalir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAceptar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(txtMontoPagado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnAceptar, btnSalir});
@@ -379,10 +382,12 @@ public class frmPagosDeudas extends javax.swing.JDialog {
         String titulos[] = {"Codigo Pago", "Fecha", "Hora", "Monto"};
         Object registro[] = new Object[4];
         try {
-            ResultSet rs = getConsulta(
-                    "SELECT r.CODIGO, r.MONTO, r.FECHA, r.HORA "
-                    + "FROM TABLA_PAGO_DEUDAS_EXTERNA r "
-                    + "WHERE r.IDDEUDA = " + idDeuda);
+            
+//            "SELECT r.CODIGO, r.MONTO, r.FECHA, r.HORA "
+//                    + "FROM TABLA_PAGO_DEUDAS_EXTERNA r "
+//                    + "WHERE r.IDDEUDA = " + idDeuda
+            
+            ResultSet rs = null;
 
             miTabla = new DefaultTableModel(null, titulos);
             int i=1;

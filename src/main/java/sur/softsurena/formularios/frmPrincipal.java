@@ -848,7 +848,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         } catch (PropertyVetoException ex) {
             //Instalar Logger
         }
-        productos.setUsuario(getIdUsuario());
+        
         productos.btnCancelar.doClick();
         productos.setVisible(true);
 
@@ -1257,6 +1257,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         
         pack();
     }//GEN-LAST:event_mnuOcultarPanelMouseClicked
+    
     private void imprimirReporte(Date fecha) {
         try {
             String miFile = "sur.softsurena.reportes.repSistemaDeBebida.jasper";

@@ -427,7 +427,7 @@ public class frmPerfiles extends javax.swing.JDialog {
         if (resp == 1) {
             return;
         } else {
-            JOptionPane.showMessageDialog(this, borrarPerfil(((Opcion) cmbPerfil.getSelectedItem()).getValor()));
+//            JOptionPane.showMessageDialog(this, borrarPerfil(((Opcion) cmbPerfil.getSelectedItem()).getValor()));
         }
         this.setVisible(false);
     }//GEN-LAST:event_btnBorrarActionPerformed
@@ -471,29 +471,30 @@ public class frmPerfiles extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnEditarActionPerformed
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        Perfil miPerfil = new Perfil(
-                dime(cbArchivos.isSelected()),
-                dime(cbArchivosClientes.isSelected()),
-                dime(cbArchivosProductos.isSelected()),
-                dime(cbArchivosUsuarios.isSelected()),
-                dime(cbArchivosCambioClave.isSelected()),
-                dime(cbArchivosCambioUsuario.isSelected()),
-                dime(cbArchivosSalir.isSelected()),
-                dime(cbMovimientos.isSelected()),
-                dime(cbMovimientosNuevaFactura.isSelected()),
-                dime(cbMovimientosReporteFactura.isSelected()),
-                dime(cbMovimientosInventario.isSelected()),
-                dime(cbMovimientosAbrirTurno.isSelected()),
-                dime(cbMovimientosCerrarTurno.isSelected()),
-                dime(cbMovimientosDeuda.isSelected()));
+//        Perfil miPerfil = new Perfil(
+//                dime(cbArchivos.isSelected()),
+//                dime(cbArchivosClientes.isSelected()),
+//                dime(cbArchivosProductos.isSelected()),
+//                dime(cbArchivosUsuarios.isSelected()),
+//                dime(cbArchivosCambioClave.isSelected()),
+//                dime(cbArchivosCambioUsuario.isSelected()),
+//                dime(cbArchivosSalir.isSelected()),
+//                dime(cbMovimientos.isSelected()),
+//                dime(cbMovimientosNuevaFactura.isSelected()),
+//                dime(cbMovimientosReporteFactura.isSelected()),
+//                dime(cbMovimientosInventario.isSelected()),
+//                dime(cbMovimientosAbrirTurno.isSelected()),
+//                dime(cbMovimientosCerrarTurno.isSelected()),
+//                dime(cbMovimientosDeuda.isSelected()));
 
         if (crear) {
-            agregarPerfil(descripcion);
-            int idPerfil = getNumPerfil();
+//            agregarPerfil(descripcion);
+//            int idPerfil = getNumPerfil();
 
-            ResultSet rs = getConsulta(
-                    "SELECT COALESCE(MAX(r.IDACCESO) + 1, 1) "
-                  + "FROM Tabla_ACCESO2 r");
+//            getConsulta(
+//                    "SELECT COALESCE(MAX(r.IDACCESO) + 1, 1) "
+//                  + "FROM Tabla_ACCESO2 r")
+            ResultSet rs = null;
 
             try {
                 rs.next();
@@ -502,17 +503,20 @@ public class frmPerfiles extends javax.swing.JDialog {
                 //Instalar Logger
             }
 
-            String msj = agregarOrModificarAcesso(idAcesso, idPerfil, miPerfil);
+//            agregarOrModificarAcesso(idAcesso, idPerfil, miPerfil)
+            String msj = null;
 
             JOptionPane.showMessageDialog(this, msj);
 
             if (msj.equals("Error al Insertar Acesso...")) {
-                borrarT_Perfil(idPerfil);
+//                borrarT_Perfil(idPerfil);
             }
             crear = false;
         } else {
-            ResultSet rs = getConsulta(
-                    "SELECT r.IDACCESO FROM Tabla_ACCESO2 r WHERE r.IDPERFIL = " + idAcesso);
+//            getConsulta(
+//                    "SELECT r.IDACCESO FROM Tabla_ACCESO2 r WHERE r.IDPERFIL = " + idAcesso)
+            
+            ResultSet rs = null;
             Integer num = 1;
             try {
                 rs.next();
@@ -521,9 +525,9 @@ public class frmPerfiles extends javax.swing.JDialog {
                 //Instalar Logger
             }
 
-            JOptionPane.showMessageDialog(this,
-                    agregarOrModificarAcesso(num, idAcesso, miPerfil) + "\n"
-                    + modificarT_Perfil(idAcesso, descripcion));
+//            JOptionPane.showMessageDialog(this,
+//                    agregarOrModificarAcesso(num, idAcesso, miPerfil) + "\n"
+//                    + modificarT_Perfil(idAcesso, descripcion));
         }
 
         llenarCombo();
@@ -565,9 +569,10 @@ public class frmPerfiles extends javax.swing.JDialog {
 
     private void llenarCombo() {
         cmbPerfil.removeAllItems();
-        ResultSet rs = getConsulta("SELECT r.IDPERFIL, r.DESCRIPCION "
-                + "FROM Tabla_T_PERFIL r "
-                + "order by 1");
+//        "SELECT r.IDPERFIL, r.DESCRIPCION "
+//                + "FROM Tabla_T_PERFIL r "
+//                + "order by 1"
+        ResultSet rs = null;
         try {
             while (rs.next()) {
                 opc = new Opcion(rs.getString("IdPerfil"), rs.getString("descripcion"));
@@ -579,8 +584,9 @@ public class frmPerfiles extends javax.swing.JDialog {
     }
 
     private void llenarCheck() {
-        ResultSet rsCheck = getConsulta("select * from Tabla_ACCESO2 where idPerfil = "
-                + ((Opcion) cmbPerfil.getSelectedItem()).getValor() + "");
+//        getConsulta("select * from Tabla_ACCESO2 where idPerfil = "
+//                + ((Opcion) cmbPerfil.getSelectedItem()).getValor())
+        ResultSet rsCheck = null;
         try {
             rsCheck.next();
             cbArchivos.setSelected(permiso(rsCheck.getString("ARCHIVOS")));

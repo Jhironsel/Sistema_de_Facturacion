@@ -1,4 +1,4 @@
-package formulario;
+package sur.softsurena.formularios;
 public class frmSelectorArchivo extends javax.swing.JDialog {
     private String archivo = "";    
     

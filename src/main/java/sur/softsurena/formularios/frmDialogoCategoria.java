@@ -1,4 +1,4 @@
-package sur.softsurena.formulariosComunes;
+package sur.softsurena.formularios;
 
 public class frmDialogoCategoria extends java.awt.Dialog {
     private boolean aceptar;

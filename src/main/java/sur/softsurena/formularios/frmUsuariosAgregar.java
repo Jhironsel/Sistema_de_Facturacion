@@ -26,11 +26,11 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         
-        txtIDUsuario.setText(u.getIdUsuario());
-        txtPNombre.setText(u.getNombres());
+        txtIDUsuario.setText(u.getUser_name());
+        txtPNombre.setText(u.getPNombre());
         txtApellidos.setText(u.getApellidos());
         
-        cbAutoriza.setSelected(u.getDelega());
+        cbAutoriza.setSelected(u.getAdministrador());
         cbAutorizaActionPerformed(null);
         
         cbEstado.setSelected(u.getEstado());
@@ -261,7 +261,7 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
 
     private void btnAdministradorPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministradorPerfilActionPerformed
         frmPerfiles miPerfil = new frmPerfiles(null, true);
-        miPerfil.setRol(cmbRol.getSelectedItem().toString().trim());
+//        miPerfil.setRol(cmbRol.getSelectedItem().toString().trim());
         miPerfil.setLocationRelativeTo(this);
         miPerfil.setVisible(true);
     }//GEN-LAST:event_btnAdministradorPerfilActionPerformed
@@ -407,7 +407,7 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
 
         //Creamos el Objeto Usuario y los agregamos a Datos
         Usuario miUsuario = Usuario.builder().
-                userName(txtIDUsuario.getText()).
+                user_name(txtIDUsuario.getText()).
                 pNombre(txtPNombre.getText()).
                 sNombre(txtSNombre.getText()).
                 apellidos(txtApellidos.getText()).
@@ -427,10 +427,10 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
             }
         }
 
-        String msj = (nuevo ? agregarUsuario(miUsuario)
-                : modificarUsuario(miUsuario, revokeRol));
-
-        JOptionPane.showMessageDialog(this, msj);
+//        String msj = (nuevo ? agregarUsuario(miUsuario)
+//                : modificarUsuario(miUsuario, revokeRol));
+//
+//        JOptionPane.showMessageDialog(this, msj);
         
         dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed

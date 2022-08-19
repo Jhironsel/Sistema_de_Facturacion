@@ -213,15 +213,15 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         }
 
         try {
-            msg = borrarUsuario(tblTabla.getValueAt(tblTabla.getSelectedRow(), 0).
-                    toString().trim(), rol);
+//            msg = borrarUsuario(tblTabla.getValueAt(tblTabla.getSelectedRow(), 0).
+//                    toString().trim(), rol);
         } catch (Exception ex) {
             msg = "Usuario no fue eliminado porque existen \n"
                     + "registros en el sistema";
             //Instalar Logger
         }
 
-        JOptionPane.showMessageDialog(rootPane, msg);
+//        JOptionPane.showMessageDialog(rootPane, msg);
         //Actualizamos los cambios en la Tabla
         llenarTabla();
     }//GEN-LAST:event_btnBorrarActionPerformed
@@ -234,22 +234,22 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             return;
         }
 
-        if (!Datos.existeUsuario(usuario)) {
-            JOptionPane.showMessageDialog(rootPane, "El Usuario No Existe");
-            return;
-        }
+//        if (!existeUsuario(usuario)) {
+//            JOptionPane.showMessageDialog(rootPane, "El Usuario No Existe");
+//            return;
+//        }
         //Detalle de Factura
         int num = tblTabla.getRowCount();
         for (int i = 0; i < num; i++) {
-            if (Utilidades.objectToString(tblTabla.getValueAt(i, 0)).equalsIgnoreCase(usuario)) {
+            if (tblTabla.getValueAt(i, 0).toString().equalsIgnoreCase(usuario)) {
                 tblTabla.setRowSelectionInterval(i, i);
                 break;
             }
-            if (Utilidades.objectToString(tblTabla.getValueAt(i, 1)).equalsIgnoreCase(usuario)) {
+            if (tblTabla.getValueAt(i, 1).toString().equalsIgnoreCase(usuario)) {
                 tblTabla.setRowSelectionInterval(i, i);
                 break;
             }
-            if (Utilidades.objectToString(tblTabla.getValueAt(i, 2)).equalsIgnoreCase(usuario)) {
+            if (tblTabla.getValueAt(i, 2).toString().equalsIgnoreCase(usuario)) {
                 tblTabla.setRowSelectionInterval(i, i);
                 break;
             }
@@ -269,18 +269,18 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             return;
         }
 
-        frmUsuariosAgregar u = new frmUsuariosAgregar(null, true,
-                new Usuario(
-                        tblTabla.getValueAt(tblTabla.getSelectedRow(), 0).toString().trim(),
-                        tblTabla.getValueAt(tblTabla.getSelectedRow(), 1).toString().trim(),
-                        tblTabla.getValueAt(tblTabla.getSelectedRow(), 2).toString().trim(),
-                        null,
-                        tblTabla.getValueAt(tblTabla.getSelectedRow(), 3).toString().trim(),
-                        (Boolean) tblTabla.getValueAt(tblTabla.getSelectedRow(), 5),
-                        (Boolean) tblTabla.getValueAt(tblTabla.getSelectedRow(), 4)
-                ));
-        u.setLocationRelativeTo(this);
-        u.setVisible(true);
+//        frmUsuariosAgregar u = new frmUsuariosAgregar(null, true,
+//                new Usuario(
+//                        tblTabla.getValueAt(tblTabla.getSelectedRow(), 0).toString().trim(),
+//                        tblTabla.getValueAt(tblTabla.getSelectedRow(), 1).toString().trim(),
+//                        tblTabla.getValueAt(tblTabla.getSelectedRow(), 2).toString().trim(),
+//                        null,
+//                        tblTabla.getValueAt(tblTabla.getSelectedRow(), 3).toString().trim(),
+//                        (Boolean) tblTabla.getValueAt(tblTabla.getSelectedRow(), 5),
+//                        (Boolean) tblTabla.getValueAt(tblTabla.getSelectedRow(), 4)
+//                ));
+//        u.setLocationRelativeTo(this);
+//        u.setVisible(true);
         llenarTabla();
     }//GEN-LAST:event_btnModificarActionPerformed
 
@@ -306,8 +306,8 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
                     }
                 }
             };
-
-            ResultSet rs = Datos.getUsuarios();
+//Datos.getUsuarios()
+            ResultSet rs = null ;
 
             while (rs.next()) {
                 registro[0] = rs.getString("IDUSUARIO").trim();

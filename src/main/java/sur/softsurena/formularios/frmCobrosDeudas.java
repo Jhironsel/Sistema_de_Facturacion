@@ -1,21 +1,23 @@
 package sur.softsurena.formularios;
 
-import clases.Datos;
-import clases.Opcion;
-import clases.Utilidades;
-import hilos.hiloImpresionFactura;
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
+import sur.softsurena.entidades.Clientes;
+import sur.softsurena.hilos.hiloImpresionFactura;
+import sur.softsurena.utilidades.Utilidades;
 
 public class frmCobrosDeudas extends javax.swing.JDialog {
 
-    private Datos misDatos;
+    private static final Logger LOG = Logger.getLogger(frmCobrosDeudas.class.getName());
     private int idTurno;
     private String nombreCajero;
 
@@ -33,10 +35,6 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
 
     public void setIdTurno(int idTurno) {
         this.idTurno = idTurno;
-    }
-
-    public void setDatos(Datos misDatos) {
-        this.misDatos = misDatos;
     }
 
     public frmCobrosDeudas(java.awt.Frame parent, boolean modal) {
@@ -360,23 +358,32 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
-            Opcion opc = new Opcion("NA", "Seleccione un Cliente...");
+            Clientes opc = Clientes.builder().
+                    id_persona(-1).
+                    pNombre("Seleccione un cliente").
+                    sNombre("").
+                    apellidos("").build();
             cmbCliente.addItem(opc);
-            ResultSet rsCli = misDatos.getConsulta(
-                    "SELECT r.IDCLIENTE, (c.NOMBRES||' '||c.APELLIDOS) as nombres "
-                    + "FROM TABLA_DEUDAS r "
-                    + "LEFT JOIN TABLA_CLIENTES c"
-                    + "    ON c.IDCLIENTE LIKE r.IDCLIENTE "
-                    + "WHERE r.ESTADO IN('i', 'a') "
-                    + "GROUP BY r.IDCLIENTE, c.NOMBRES, c.APELLIDOS ");
+            ResultSet rsCli = null;
+//                    getConsulta(
+//                    "SELECT r.IDCLIENTE, (c.NOMBRES||' '||c.APELLIDOS) as nombres "
+//                    + "FROM TABLA_DEUDAS r "
+//                    + "LEFT JOIN TABLA_CLIENTES c"
+//                    + "    ON c.IDCLIENTE LIKE r.IDCLIENTE "
+//                    + "WHERE r.ESTADO IN('i', 'a') "
+//                    + "GROUP BY r.IDCLIENTE, c.NOMBRES, c.APELLIDOS ");
+
             while (rsCli.next()) {
-                opc = new Opcion(
-                        rsCli.getString("idCliente"),
-                        rsCli.getString("nombres"));
+                opc = Clientes.builder().
+                        id_persona(rsCli.getInt("id")).
+                        pNombre(rsCli.getString("PNOMBRE")).
+                        sNombre(rsCli.getString("SNOMBRE")).
+                        apellidos(rsCli.getString("apellidos")).build();
+
                 cmbCliente.addItem(opc);
             }
         } catch (SQLException ex) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }//GEN-LAST:event_formWindowOpened
 
@@ -391,18 +398,18 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
             return;
         }
 
-        float monto = Utilidades.controlDouble(txtMonto.getValue());//Lo que se inserta en ese momento
-        float montoSaldo = Utilidades.controlDouble(txtSaldo.getValue());//La suma de todas las deudas
+        BigDecimal monto = new BigDecimal(txtMonto.getValue().toString());//Lo que se inserta en ese momento
+        BigDecimal montoSaldo = new BigDecimal(txtSaldo.getValue().toString());//La suma de todas las deudas
         //float montoDeuda = Utilidades.controlDouble(txtMontoDeuda.getValue());//Total de lo que debe...
 
-        if (monto <= 0) {
+        if (monto.compareTo(BigDecimal.ZERO) <= 0) {
             JOptionPane.showMessageDialog(rootPane, "Debe ingresar un valor mayor a cero(0)");
             txtMonto.setValue(0.0);
             txtMonto.requestFocusInWindow();
             return;
         }
 
-        if (monto > montoSaldo) {
+        if (monto.compareTo(montoSaldo) > 1) {
             JOptionPane.showMessageDialog(rootPane, "Monto excede el saldo");
             txtMonto.setValue(0.0);
             txtMonto.requestFocusInWindow();
@@ -418,23 +425,17 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
             return;
         }
 
-        try {
-            misDatos.PagoDeuda(Utilidades.objectToInt(
-                    tblDeudas.getValueAt(
-                            tblDeudas.getSelectedRow(), 0)),
-                    getIdTurno(), monto);
-            JOptionPane.showMessageDialog(rootPane, "Pago realizado con Exito...");
-        } catch (SQLException ex) {
-            //Instalar Logger
-            JOptionPane.showMessageDialog(this, ex.getLocalizedMessage());
-        }
+//        PagoDeuda(
+//                Utilidades.objectToInt(tblDeudas.getValueAt(tblDeudas.getSelectedRow(), 0)),
+//                getIdTurno(), 
+//                monto);
+        JOptionPane.showMessageDialog(rootPane, "Pago realizado con Exito...");
 
         //imprimirPago();
         dispose();
     }//GEN-LAST:event_btnPagarActionPerformed
     private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
         frmBusquedaCliente miBusqueda = new frmBusquedaCliente(null, true);
-        miBusqueda.setDatos(misDatos);
         miBusqueda.setLocationRelativeTo(null);
         miBusqueda.setVisible(true);
 
@@ -443,7 +444,7 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
             return;
         }
         for (int i = 0; i < cmbCliente.getItemCount(); i++) {
-            if (((Opcion) cmbCliente.getItemAt(i)).getValor().equals(rta)) {
+            if (((Clientes) cmbCliente.getItemAt(i)).getGenerales().getCedula().equals(rta)) {
                 cmbCliente.setSelectedIndex(i);
                 return;
             }
@@ -453,7 +454,7 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
     private void cmbClienteItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbClienteItemStateChanged
-        llenarTabla(((Opcion) cmbCliente.getItemAt(cmbCliente.getSelectedIndex())).getValor());
+        llenarTabla(((Clientes) cmbCliente.getItemAt(cmbCliente.getSelectedIndex())).getId_persona());
 
         txtMonto.setValue(0.0);
         txtDeuda.setValue(0.0);
@@ -509,19 +510,18 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
         parametros.put("idFactura", Utilidades.objectToInt(tblDeudas.getValueAt(tblDeudas.getSelectedRow(), 0)));
         parametros.put("montoFactura", Utilidades.objectToDouble(tblDeudas.getValueAt(tblDeudas.getSelectedRow(), 1)));
         parametros.put("idTurno", "" + getIdTurno());
-        parametros.put("idCliente", ((Opcion) cmbCliente.getItemAt(cmbCliente.getSelectedIndex())).getValor());
-        parametros.put("nombreCliente", ((Opcion) cmbCliente.getItemAt(cmbCliente.getSelectedIndex())).getDescripcion());
-        
+        parametros.put("idCliente", ((Clientes) cmbCliente.getItemAt(cmbCliente.getSelectedIndex())).getId_persona());
+        parametros.put("nombreCliente", ((Clientes) cmbCliente.getItemAt(cmbCliente.getSelectedIndex())).toString());
+
         hiloImpresionFactura impresionFactura = new hiloImpresionFactura(
-                misDatos,
-                true, 
-                false,  
-                System.getProperty("user.dir") + "/Reportes/cobroFactura.jasper", 
+                true,
+                false,
+                System.getProperty("user.dir") + "/Reportes/cobroFactura.jasper",
                 parametros);
         impresionFactura.start();
     }
 
-    private void llenarTabla(String idCliente) {
+    private void llenarTabla(int idCliente) {
         try {
             String titulos[] = {"Cod. Deuda", "Concepto", "Monto", "Fecha", "Estado"};
 
@@ -530,7 +530,7 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
                     + "FROM TABLA_DEUDAS r "
                     + "WHERE r.IDCLIENTE LIKE '" + idCliente + "' AND r.ESTADO NOT IN('n', 'p')";
 
-            ResultSet rs = misDatos.getConsulta(sql);
+            ResultSet rs = null;
             Object registro[] = new Object[5];
             while (rs.next()) {
                 registro[0] = rs.getInt("IDDEUDAS");
@@ -550,7 +550,7 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
             }
             tblDeudas.setModel(miTabla);
         } catch (SQLException ex) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }
 
@@ -559,14 +559,19 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
             String titulos[] = {"No° Pago", "Fecha", "Hora", "Monto Pagado"};
 
             DefaultTableModel miTabla = new DefaultTableModel(null, titulos);
+            
             String sql = "SELECT r.CODIGO, r.FECHA, r.HORA, r.MONTO "
                     + "FROM TABLA_PAGO_DEUDAS_EXTERNA r "
                     + "WHERE r.IDDEUDA = " + idDeuda;
-            ResultSet rs = misDatos.getConsulta(sql);
+            
+            ResultSet rs = null;
+            
             Object registro[] = new Object[4];
+            
             int i = 1;
+            
             while (rs.next()) {
-                registro[0] = i+") Cod.:"+rs.getString("CODIGO");
+                registro[0] = i + ") Cod.:" + rs.getString("CODIGO");
                 registro[1] = rs.getString("Fecha");
                 registro[2] = rs.getString("Hora");
                 registro[3] = "RD$ " + rs.getString("MONTO");
@@ -575,7 +580,7 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
             }
             tblPago.setModel(miTabla);
         } catch (SQLException ex) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
         txtMonto.requestFocusInWindow();
     }

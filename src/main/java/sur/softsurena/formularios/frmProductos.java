@@ -24,13 +24,14 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import static sur.softsurena.conexion.Conexion.getCnn;
+import static sur.softsurena.datos.delete.DeleteMetodos.borrarProductoPorCodigo;
 import static sur.softsurena.datos.insert.InsertMetodos.agregarProducto;
 import static sur.softsurena.datos.select.SelectMetodos.existeProducto;
 import static sur.softsurena.datos.select.SelectMetodos.getProductos;
 import static sur.softsurena.datos.update.UpdateMetodos.modificarProducto;
+import sur.softsurena.entidades.Categorias;
 import sur.softsurena.entidades.Celda_CheckBox;
 import sur.softsurena.entidades.DefaultTableCellHeaderRenderer;
-import sur.softsurena.entidades.Opcion;
 import sur.softsurena.entidades.Producto;
 import sur.softsurena.entidades.Render_CheckBox;
 import sur.softsurena.utilidades.Utilidades;
@@ -40,23 +41,13 @@ public class frmProductos extends javax.swing.JInternalFrame {
     private int returnVal = JFileChooser.CANCEL_OPTION;
     private boolean nuevo = false, cambio = false;
     private DefaultTableModel miTabla;
-    private String path, ext, usuario, source, dest;
+    private String path, ext, source, dest;
     private JFileChooser file = new JFileChooser();
     private final Object registro[] = new Object[11];
-    private final JTextFieldDateEditor editor;
-    private final JButton button;
     private final DefaultTableCellRenderer tcr;
-    
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
 
     public frmProductos() {
-        
+
         initComponents();
         tcr = new DefaultTableCellHeaderRenderer();
         txtCosto.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -83,10 +74,10 @@ public class frmProductos extends javax.swing.JInternalFrame {
                 });
             }
         });
-        editor = (JTextFieldDateEditor) dchFechaVencimiento.getDateEditor();
-        button = (JButton) dchFechaVencimiento.getCalendarButton();
-        editor.setEditable(false);
-        button.setEnabled(false);
+//        editor = (JTextFieldDateEditor) dchFechaVencimiento.getDateEditor();
+//        button = (JButton) dchFechaVencimiento.getCalendarButton();
+//        editor.setEditable(false);
+//        button.setEnabled(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -118,16 +109,14 @@ public class frmProductos extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        txtIDProductos = new javax.swing.JTextField();
+        txtCodigoBarra = new javax.swing.JTextField();
         txtDescripcion = new javax.swing.JTextField();
         cbCategoria = new javax.swing.JComboBox();
         jPanel8 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
         txtCosto = new javax.swing.JFormattedTextField();
         txtPrecio = new javax.swing.JFormattedTextField();
-        dchFechaVencimiento = new com.toedter.calendar.JDateChooser();
         jPanel9 = new javax.swing.JPanel();
         cbActivo = new javax.swing.JCheckBox();
         cbImpuesto = new javax.swing.JCheckBox();
@@ -334,11 +323,11 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalle del Producto"));
 
-        jLabel7.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("DejaVu Sans", 0, 12)); // NOI18N
         jLabel7.setText("* Campos Obligatorios");
         jLabel7.setToolTipText("");
 
-        jLabel5.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("DejaVu Sans", 0, 12)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel5.setText("Notas :");
 
@@ -367,38 +356,38 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
         jPanel7.setLayout(new java.awt.GridLayout(2, 3, 5, 0));
 
-        jLabel1.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("DejaVu Sans", 0, 12)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel1.setText("*ID producto :");
+        jLabel1.setText("*Codigo de barra:");
         jPanel7.add(jLabel1);
 
-        jLabel2.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("DejaVu Sans", 0, 12)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel2.setText("*Descripcion :");
         jPanel7.add(jLabel2);
 
-        jLabel12.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        jLabel12.setFont(new java.awt.Font("DejaVu Sans", 0, 12)); // NOI18N
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel12.setText("*Categoria :");
         jPanel7.add(jLabel12);
 
-        txtIDProductos.setEditable(false);
-        txtIDProductos.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        txtIDProductos.setForeground(java.awt.SystemColor.textText);
-        txtIDProductos.addActionListener(new java.awt.event.ActionListener() {
+        txtCodigoBarra.setEditable(false);
+        txtCodigoBarra.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        txtCodigoBarra.setForeground(java.awt.SystemColor.textText);
+        txtCodigoBarra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIDProductosActionPerformed(evt);
+                txtCodigoBarraActionPerformed(evt);
             }
         });
-        txtIDProductos.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtIDProductosKeyTyped(evt);
-            }
+        txtCodigoBarra.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtIDProductosKeyReleased(evt);
+                txtCodigoBarraKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodigoBarraKeyTyped(evt);
             }
         });
-        jPanel7.add(txtIDProductos);
+        jPanel7.add(txtCodigoBarra);
 
         txtDescripcion.setEditable(false);
         txtDescripcion.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
@@ -435,20 +424,15 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
         jPanel8.setLayout(new java.awt.GridLayout(2, 3, 5, 0));
 
-        jLabel6.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("DejaVu Sans", 0, 12)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel6.setText("*Costo :");
         jPanel8.add(jLabel6);
 
-        jLabel3.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("DejaVu Sans", 0, 12)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel3.setText("*Precio :");
         jPanel8.add(jLabel3);
-
-        jLabel10.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel10.setText("Fecha de Vencimiento:");
-        jPanel8.add(jLabel10);
 
         txtCosto.setEditable(false);
         txtCosto.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("¤#,##0.00"))));
@@ -482,12 +466,9 @@ public class frmProductos extends javax.swing.JInternalFrame {
         });
         jPanel8.add(txtPrecio);
 
-        dchFechaVencimiento.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jPanel8.add(dchFechaVencimiento);
-
         jPanel9.setLayout(new java.awt.GridLayout(2, 1, 5, 0));
 
-        cbActivo.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        cbActivo.setFont(new java.awt.Font("DejaVu Sans", 0, 12)); // NOI18N
         cbActivo.setForeground(new java.awt.Color(0, 0, 0));
         cbActivo.setText("Activo");
         cbActivo.addActionListener(new java.awt.event.ActionListener() {
@@ -497,9 +478,10 @@ public class frmProductos extends javax.swing.JInternalFrame {
         });
         jPanel9.add(cbActivo);
 
-        cbImpuesto.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        cbImpuesto.setFont(new java.awt.Font("DejaVu Sans", 0, 12)); // NOI18N
         cbImpuesto.setForeground(new java.awt.Color(0, 0, 0));
         cbImpuesto.setText("Sin Impuesto");
+        cbImpuesto.setToolTipText("No se esta' implementando...");
         cbImpuesto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbImpuestoActionPerformed(evt);
@@ -519,35 +501,37 @@ public class frmProductos extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel7))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE))
                         .addGap(3, 3, 3)
                         .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(56, 56, 56)))
                 .addGap(3, 3, 3)
-                .addComponent(jlImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jlImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
                 .addGap(0, 0, 0))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jlImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jlImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel7))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
                         .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel7))
+                                .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane2))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)))))
+                                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addGap(0, 0, 0))
         );
 
@@ -659,6 +643,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         jPanel6.setLayout(flowLayout1);
 
         buttonGroup1.add(chbFecha);
+        chbFecha.setFont(new java.awt.Font("DejaVu Sans", 0, 12)); // NOI18N
         chbFecha.setText("Fecha Vencimiento");
         chbFecha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -668,6 +653,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         jPanel6.add(chbFecha);
 
         buttonGroup1.add(chbNota);
+        chbNota.setFont(new java.awt.Font("DejaVu Sans", 0, 12)); // NOI18N
         chbNota.setText("Nota");
         chbNota.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -677,6 +663,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         jPanel6.add(chbNota);
 
         buttonGroup1.add(chbCategoria);
+        chbCategoria.setFont(new java.awt.Font("DejaVu Sans", 0, 12)); // NOI18N
         chbCategoria.setText("Categoria");
         chbCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -686,6 +673,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         jPanel6.add(chbCategoria);
 
         buttonGroup1.add(chbImpuesto);
+        chbImpuesto.setFont(new java.awt.Font("DejaVu Sans", 0, 12)); // NOI18N
         chbImpuesto.setText("Impuesto");
         chbImpuesto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -695,6 +683,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         jPanel6.add(chbImpuesto);
 
         buttonGroup1.add(chbSolo6);
+        chbSolo6.setFont(new java.awt.Font("DejaVu Sans", 0, 12)); // NOI18N
         chbSolo6.setSelected(true);
         chbSolo6.setText("Solo 6");
         chbSolo6.addActionListener(new java.awt.event.ActionListener() {
@@ -753,7 +742,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
 
@@ -787,14 +776,14 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private void txtIDProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDProductosActionPerformed
+    private void txtCodigoBarraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoBarraActionPerformed
         txtDescripcion.requestFocusInWindow();
-    }//GEN-LAST:event_txtIDProductosActionPerformed
-    private void txtIDProductosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIDProductosKeyReleased
-        String replaceAll = txtIDProductos.getText().replaceAll(" ", "");
+    }//GEN-LAST:event_txtCodigoBarraActionPerformed
+    private void txtCodigoBarraKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoBarraKeyReleased
+        String replaceAll = txtCodigoBarra.getText().replaceAll(" ", "");
         replaceAll = replaceAll.toUpperCase();
-        txtIDProductos.setText(replaceAll);
-    }//GEN-LAST:event_txtIDProductosKeyReleased
+        txtCodigoBarra.setText(replaceAll);
+    }//GEN-LAST:event_txtCodigoBarraKeyReleased
     private void btnPrimeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrimeroActionPerformed
         if (!tblTabla.isEnabled() || tblTabla.getRowCount() == 0) {
             return;
@@ -806,7 +795,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         if (!tblTabla.isEnabled() || tblTabla.getRowCount() == 0) {
             return;
         }
-        tblTabla.setRowSelectionInterval(tblTabla.getSelectedRow(), 
+        tblTabla.setRowSelectionInterval(tblTabla.getSelectedRow(),
                 tblTabla.getSelectedRow());
         mostrarRegistro();
     }//GEN-LAST:event_btnUltimoActionPerformed
@@ -814,7 +803,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         if (!tblTabla.isEnabled() || tblTabla.getRowCount() == 0) {
             return;
         }
-        tblTabla.setRowSelectionInterval(tblTabla.getSelectedRow(), 
+        tblTabla.setRowSelectionInterval(tblTabla.getSelectedRow(),
                 tblTabla.getSelectedRow());
         mostrarRegistro();
     }//GEN-LAST:event_btnAnteriorActionPerformed
@@ -823,14 +812,15 @@ public class frmProductos extends javax.swing.JInternalFrame {
         if (!tblTabla.isEnabled() || tblTabla.getRowCount() == 0) {
             return;
         }
-        
-        tblTabla.setRowSelectionInterval(tblTabla.getSelectedRow(), 
+
+        tblTabla.setRowSelectionInterval(tblTabla.getSelectedRow(),
                 tblTabla.getSelectedRow());
         mostrarRegistro();
     }//GEN-LAST:event_btnSiguienteActionPerformed
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         if (cbCategoria.getItemCount() == 0) {
-            ResultSet rs = getConsulta("SELECT COUNT(*) FROM TABLA_CATEGORIA");
+//            getConsulta("SELECT COUNT(*) FROM TABLA_CATEGORIA")
+            ResultSet rs = null;
             try {
                 rs.next();
                 if (rs.getInt(1) == 0) {
@@ -863,10 +853,8 @@ public class frmProductos extends javax.swing.JInternalFrame {
         //Caja de Texto Habilitado
         txtCosto.setEditable(true);
         txtDescripcion.setEditable(true);
-        txtIDProductos.setEditable(true);
+        txtCodigoBarra.setEditable(true);
         txtNotas.setEditable(true);
-        editor.setEditable(true);
-        button.setEnabled(true);
         txtPrecio.setEditable(true);
 
         //Caja de Perfil Habilitado
@@ -892,21 +880,20 @@ public class frmProductos extends javax.swing.JInternalFrame {
         txtCosto.setValue(0);
         txtPrecio.setValue(0);
         txtDescripcion.setText("");
-        txtIDProductos.setText("");
+        txtCodigoBarra.setText("");
         txtNotas.setText("");
 
-        dchFechaVencimiento.setDate(new Date());
         cbCategoria.setSelectedIndex(-1);
 
         //Activamos el Flag de registro Nuevo
         nuevo = true;
-        txtIDProductos.requestFocusInWindow();
+        txtCodigoBarra.requestFocusInWindow();
     }//GEN-LAST:event_btnNuevoActionPerformed
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         //Validaciones
-        if (txtIDProductos.getText().equals("")) {
+        if (txtCodigoBarra.getText().equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Debe Digitar un ID");
-            txtIDProductos.requestFocusInWindow();
+            txtCodigoBarra.requestFocusInWindow();
             return;
         }
         if (txtDescripcion.getText().equals("")) {
@@ -940,46 +927,27 @@ public class frmProductos extends javax.swing.JInternalFrame {
             return;
         }
 
-        float costo = Float.parseFloat(txtCosto.getValue().toString());
-        float precio = Float.parseFloat(txtPrecio.getValue().toString());
-
-        if (costo >= precio) {
-            JOptionPane.showMessageDialog(rootPane, "Precio es Menor que el Costo...");
-            txtPrecio.requestFocusInWindow();
-            return;
-        }
-
         // si es nuevo validamos que el Producto no exista
         if (nuevo) {
-            if (existeProducto(txtIDProductos.getText())) {
+            if (existeProducto(txtCodigoBarra.getText())) {
                 JOptionPane.showMessageDialog(rootPane, "Producto ID Ya existe...");
-                txtIDProductos.setText("");
-                txtIDProductos.requestFocusInWindow();
+                txtCodigoBarra.setText("");
+                txtCodigoBarra.requestFocusInWindow();
                 return;
             }
-        }
-
-        int estado = 0;
-        if (cbActivo.isSelected()) {
-            estado = 1;
-        }
-
-        String Imp = "0";
-        if (cbImpuesto.isSelected()) {
-            Imp = "1";
         }
 
         String miFile = System.getProperty("user.dir")
                 + "/images/Sin_imagen 64 x 64.png";
 
         if (cambio) {
-            miFile = System.getProperty("user.dir") + path + "/" + txtIDProductos.getText().concat(
+            miFile = System.getProperty("user.dir") + path + "/" + txtCodigoBarra.getText().concat(
                     "                                                 ").
                     substring(0, 35) + "." + ext;
         } else {
             String sql = "select imagepath from tabla_productos where idProducto"
-                    + " like '" + txtIDProductos.getText() + "'";
-            ResultSet rs = getConsulta(sql);
+                    + " like '" + txtCodigoBarra.getText() + "'";
+            ResultSet rs = null;
             try {
                 while (rs.next()) {
                     miFile = rs.getString("imagepath");
@@ -990,19 +958,12 @@ public class frmProductos extends javax.swing.JInternalFrame {
         }
         cambio = false;
 
-        Producto miProducto = new Producto(
-                txtIDProductos.getText(),
-                txtDescripcion.getText(),
-                costo,
-                precio,
-                txtNotas.getText(),
-                0,
-                dchFechaVencimiento.getDate(),
-                estado,
-                Imp,
-                Integer.parseInt(((Opcion) cbCategoria.getSelectedItem()).getValor()),
-                miFile
-        );
+        Producto p = Producto.builder().
+                idCategoria(((Categorias) cbCategoria.getSelectedItem()).getId()).
+                codigo(txtCodigoBarra.getText()).
+                descripcion(txtDescripcion.getText()).
+                estado(cbActivo.isSelected()).
+                nota(txtNotas.getText()).build();
 
         String msg = "", accion = "editar";
         if (nuevo) {
@@ -1016,11 +977,10 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
         int resp = JOptionPane.showConfirmDialog(this,
                 "<html><b><big>Se va a " + accion + " el Producto: </big></b><big>" + txtDescripcion.getText() + "</big></html>"
-                + "\n<html><b><big>Codigo no: </big></b><big>" + txtIDProductos.getText() + "</big></html>"
+                + "\n<html><b><big>Codigo no: </big></b><big>" + txtCodigoBarra.getText() + "</big></html>"
                 + "\n<html><b><big>Costo: </big></b><big>" + txtCosto.getText() + "</big></html>"
                 + "\n<html><b><big>Precio: </big></b><big>" + txtPrecio.getText() + "</big></html>"
-                + "\n<html><b><big>Categoria: </big></b><big>" + ((Opcion) cbCategoria.getSelectedItem()).getDescripcion() + "</big></html>"
-                + "\n<html><b><big>Fecha Vencimiento: </big></b><big>" + Utilidades.formatDate(dchFechaVencimiento.getDate(), "dd/MM/yyyy") + "</big></html>"
+                + "\n<html><b><big>Categoria: </big></b><big>" + ((Categorias) cbCategoria.getSelectedItem()).getDescripcion() + "</big></html>"
                 + "\n<html><b><big>Estado: </big></b><big>" + (cbActivo.isSelected() ? "Activo" : "Inactivo") + "</big></html>"
                 + "\n<html><b><big>Impuesto al Articulo: </big></b><big>" + (cbImpuesto.isSelected() ? "Con Impuesto" : "Sin Impuesto") + "</big></html>"
                 + "\n<html><b><big>Notas: </big></b><big>" + msg + "</big></html>"
@@ -1033,9 +993,9 @@ public class frmProductos extends javax.swing.JInternalFrame {
         }
 
         if (nuevo) {
-            msg = agregarProducto(miProducto);
+            msg = agregarProducto(p).getMensaje();
         } else {
-            msg = modificarProducto(miProducto);
+            msg = modificarProducto(p);
         }
 
         JOptionPane.showMessageDialog(rootPane, msg);
@@ -1073,7 +1033,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         cancelar();
     }//GEN-LAST:event_btnGuardarActionPerformed
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        if (txtIDProductos.getText().equals("")) {
+        if (txtCodigoBarra.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un producto");
             return;
         }
@@ -1096,8 +1056,6 @@ public class frmProductos extends javax.swing.JInternalFrame {
         txtNotas.setEditable(true);
         txtPrecio.setEditable(true);
         cbCategoria.setEnabled(true);
-        editor.setEditable(true);
-        button.setEnabled(true);
 
         //Caja de Perfil Habilitado
         cbActivo.setEnabled(true);
@@ -1109,7 +1067,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         txtDescripcion.requestFocusInWindow();
     }//GEN-LAST:event_btnModificarActionPerformed
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
-        if (txtIDProductos.getText().equals("")) {
+        if (txtCodigoBarra.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un producto");
             return;
         }
@@ -1122,14 +1080,14 @@ public class frmProductos extends javax.swing.JInternalFrame {
         }
         String msg;
         try {
-            msg = borrarProducto(txtIDProductos.getText());
+            msg = borrarProductoPorCodigo(txtCodigoBarra.getText());
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "No se puede eliminar el producto porque ya ha sido facturado"
                     + "\n!!Te recomendamos cambiar el ESTADO del producto...");
             return;
         }
         JOptionPane.showMessageDialog(rootPane, msg);
-        
+
         //Actualizamos los cambios en la Tabla
         llenarTabla();
         mostrarRegistro();
@@ -1153,7 +1111,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
             int num = tblTabla.getRowCount();
             for (int i = 0; i < num; i++) {
                 if (tblTabla.getValueAt(i, 0).toString().equals(producto)) {
-                    tblTabla.setRowSelectionInterval(tblTabla.getSelectedRow(), 
+                    tblTabla.setRowSelectionInterval(tblTabla.getSelectedRow(),
                             tblTabla.getSelectedRow());
                     break;
                 }
@@ -1230,10 +1188,11 @@ public class frmProductos extends javax.swing.JInternalFrame {
             return;
         }
         cambio = true;
-        path = System.getProperty("user.dir") + "/imagesProductos/" + ((Opcion) cbCategoria.getSelectedItem()).getDescripcion() + "/";
+        path = System.getProperty("user.dir") + "/imagesProductos/" + 
+                ((Categorias) cbCategoria.getSelectedItem()).getDescripcion() + "/";
 
         dest = System.getProperty("user.dir") + path + "/"
-                + txtIDProductos.getText().
+                + txtCodigoBarra.getText().
                         concat("                                         ").
                         substring(0, 35) + "." + getExtension(source);
 
@@ -1245,18 +1204,18 @@ public class frmProductos extends javax.swing.JInternalFrame {
         jlImagen.setIcon(icon);
         jlImagen.validate();
     }//GEN-LAST:event_jlImagenMouseClicked
-    private void txtIDProductosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIDProductosKeyTyped
-        if (txtIDProductos.getText().length() >= 35) {
+    private void txtCodigoBarraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoBarraKeyTyped
+        if (txtCodigoBarra.getText().length() >= 35) {
             evt.consume();
             JOptionPane.showMessageDialog(this, "Este codigo debe ser menor a 35 caracteres!!!");
         }
-    }//GEN-LAST:event_txtIDProductosKeyTyped
+    }//GEN-LAST:event_txtCodigoBarraKeyTyped
     private void btnImprimirListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirListaActionPerformed
         if (tblTabla.getRowCount() == 0) {
             JOptionPane.showMessageDialog(this, "No hay producto registrado");
             return;
         }
-        
+
         try {
             String miFile = System.getProperty("user.dir")
                     + "/Reportes/Productos.jasper";
@@ -1278,9 +1237,8 @@ public class frmProductos extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "No hay producto registrado");
             return;
         }
-        
+
         frmEntradaProducto miEntrada = new frmEntradaProducto(null, true);
-        miEntrada.setUsuario(getUsuario());
         miEntrada.setLocationRelativeTo(null);
         miEntrada.setVisible(true);
         cancelar();
@@ -1291,15 +1249,12 @@ public class frmProductos extends javax.swing.JInternalFrame {
             return;
         }
         frmSalidaProducto miSalida = new frmSalidaProducto(null, true);
-        miSalida.setDatos(misDatos);
-        miSalida.setUsuario(getUsuario());
         miSalida.setLocationRelativeTo(null);
         miSalida.setVisible(true);
         cancelar();
     }//GEN-LAST:event_btnSalidaProductoActionPerformed
     private void btnAdmCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdmCategoriasActionPerformed
         frmCategorias miCategoria = new frmCategorias(null, true);
-        miCategoria.setDatos(misDatos);
         miCategoria.setLocationRelativeTo(null);
         miCategoria.setVisible(true);
         cancelar();
@@ -1340,7 +1295,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cbCategoriaActionPerformed
 
     private void txtPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioActionPerformed
-        editor.requestFocusInWindow();
+
     }//GEN-LAST:event_txtPrecioActionPerformed
 
     private void cbCategoriaPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cbCategoriaPopupMenuWillBecomeInvisible
@@ -1350,10 +1305,8 @@ public class frmProductos extends javax.swing.JInternalFrame {
                     cbCategoria.setSelectedIndex(-1);
                     break;
                 }
-                if (Utilidades.objectToString(
-                        tblTabla.getValueAt(
-                                tblTabla.getSelectedRow(), 9)).equals(
-                        ((Opcion) cbCategoria.getItemAt(i)).getDescripcion())) {
+                if (tblTabla.getValueAt(tblTabla.getSelectedRow(), 9).
+                        toString().equals(((Categorias) cbCategoria.getItemAt(i)).getDescripcion())) {
                     cbCategoria.setSelectedIndex(i);
                     break;
                 }
@@ -1422,11 +1375,9 @@ public class frmProductos extends javax.swing.JInternalFrame {
         //Caja de Texto Deshabitar
         txtCosto.setEditable(false);
         txtDescripcion.setEditable(false);
-        txtIDProductos.setEditable(false);
+        txtCodigoBarra.setEditable(false);
         txtNotas.setEditable(false);
         txtPrecio.setEditable(false);
-        editor.setEditable(false);
-        button.setEnabled(false);
 
         file = new JFileChooser();
         source = null;
@@ -1436,7 +1387,6 @@ public class frmProductos extends javax.swing.JInternalFrame {
         path = null;
         ext = null;
 
-        proAct = 0;
         llenarTabla();
         mostrarRegistro();
         reOrdenar(0);
@@ -1453,8 +1403,8 @@ public class frmProductos extends javax.swing.JInternalFrame {
             while (rs.next()) {
                 registro[0] = rs.getString("idProducto");
                 registro[1] = rs.getString("descripcion");
-                registro[2] = "RD$ "+Utilidades.priceWithDecimal(rs.getDouble("COSTO"));
-                registro[3] = "RD$ "+Utilidades.priceWithDecimal(rs.getDouble("PRECIO"));
+                registro[2] = "RD$ " + Utilidades.priceWithDecimal(rs.getDouble("COSTO"));
+                registro[3] = "RD$ " + Utilidades.priceWithDecimal(rs.getDouble("PRECIO"));
                 registro[4] = Utilidades.priceWithDecimal(rs.getDouble("ENTRADA"));
                 registro[5] = rs.getBoolean("estado");
                 registro[6] = rs.getString("nota");
@@ -1476,17 +1426,16 @@ public class frmProductos extends javax.swing.JInternalFrame {
         if (tblTabla.getRowCount() < 1) {
             txtCosto.setValue(0);
             txtDescripcion.setText("");
-            txtIDProductos.setText("");
+            txtCodigoBarra.setText("");
             txtNotas.setText("");
             txtPrecio.setValue(0);
             cbActivo.setSelected(false);
             cbImpuesto.setSelected(false);
-            dchFechaVencimiento.setDate(null);
             cbCategoria.setSelectedIndex(-1);
             return;
         }
 
-        txtIDProductos.setText(tblTabla.getValueAt(
+        txtCodigoBarra.setText(tblTabla.getValueAt(
                 tblTabla.getSelectedRow(), 0).toString());
         txtDescripcion.setText(tblTabla.getValueAt(
                 tblTabla.getSelectedRow(), 1).toString());
@@ -1496,8 +1445,6 @@ public class frmProductos extends javax.swing.JInternalFrame {
                 tblTabla.getSelectedRow(), 3)));
         txtNotas.setText(tblTabla.getValueAt(
                 tblTabla.getSelectedRow(), 6).toString());
-        dchFechaVencimiento.setDate((Date) tblTabla.getValueAt(
-                tblTabla.getSelectedRow(), 7));
         cbActivo.setSelected((boolean) tblTabla.getValueAt(
                 tblTabla.getSelectedRow(), 5));
         cbImpuesto.setSelected((boolean) tblTabla.getValueAt(
@@ -1505,8 +1452,8 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
         String sql = "select p.IDCATEGORIA, p.IMAGEPATH "
                 + "from GET_PRODUCTOS p "
-                + "where idProducto like '" + txtIDProductos.getText() + "'";
-        ResultSet rs = getConsulta(sql);
+                + "where idProducto like '" + txtCodigoBarra.getText() + "'";
+        ResultSet rs = null;
         try {
             while (rs.next()) {
                 ImageIcon imagen = new ImageIcon(rs.getString("imagepath"));
@@ -1521,7 +1468,8 @@ public class frmProductos extends javax.swing.JInternalFrame {
                 jlImagen.validate();
 
                 for (int i = 0; i < cbCategoria.getItemCount(); i++) {
-                    if (((Opcion) cbCategoria.getItemAt(i)).getValor().equals(rs.getString("idCategoria"))) {
+                    if (((Categorias) cbCategoria.getItemAt(i)).getId().equals(
+                            rs.getInt("idCategoria"))) {
                         cbCategoria.setSelectedIndex(i);
                         break;
                     }
@@ -1623,7 +1571,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
             }
         }
         //Para Alinear el Texto de la Table a la Derecha...
-        
+
         tcr.setHorizontalAlignment(SwingConstants.RIGHT);
 
         tblTabla.getColumnModel().getColumn(2).setCellRenderer(tcr);
@@ -1635,21 +1583,26 @@ public class frmProductos extends javax.swing.JInternalFrame {
         tblTabla.getColumnModel().getColumn(8).setCellEditor(new Celda_CheckBox());
         tblTabla.getColumnModel().getColumn(8).setCellRenderer(new Render_CheckBox());
 
-        tblTabla.setRowSelectionInterval(tblTabla.getSelectedRow(), 
+        tblTabla.setRowSelectionInterval(tblTabla.getSelectedRow(),
                 tblTabla.getSelectedRow());
     }
 
     private void updateCategoria() {
         //Llenando combo Box
-        String sql = "SELECT ID, DESCRIPCION FROM V_CATEGORIAS r";
-        ResultSet rs = getConsulta(sql);
+        String sql = "";
+        ResultSet rs = null;
         cbCategoria.removeAllItems();
-        Opcion op;
+        Categorias categorias= Categorias.builder().
+                        id(-1).
+                        descripcion("Seleccione categoria").build();
+                cbCategoria.addItem(categorias);;
         try {
             int i = 0;
             while (rs.next()) {
-                op = new Opcion(rs.getString("idCategoria"), rs.getString("Descripcion"), "" + i);
-                cbCategoria.addItem(op);
+                categorias = Categorias.builder().
+                        id(rs.getInt("ID")).
+                        descripcion(rs.getString("Descripcion")).build();
+                cbCategoria.addItem(categorias);
                 i++;
             }
         } catch (SQLException ex) {
@@ -1681,9 +1634,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
     private javax.swing.JCheckBox chbImpuesto;
     private javax.swing.JCheckBox chbNota;
     private javax.swing.JCheckBox chbSolo6;
-    private com.toedter.calendar.JDateChooser dchFechaVencimiento;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -1706,9 +1657,9 @@ public class frmProductos extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel jlImagen;
     private javax.swing.JTable tblTabla;
+    private javax.swing.JTextField txtCodigoBarra;
     private javax.swing.JFormattedTextField txtCosto;
     private javax.swing.JTextField txtDescripcion;
-    private javax.swing.JTextField txtIDProductos;
     private javax.swing.JTextArea txtNotas;
     private javax.swing.JFormattedTextField txtPrecio;
     // End of variables declaration//GEN-END:variables

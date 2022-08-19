@@ -13,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import sur.softsurena.entidades.DefaultTableCellHeaderRenderer;
 import sur.softsurena.hilos.hiloImpresionFactura;
+import sur.softsurena.utilidades.Utilidades;
 
 public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
 
@@ -354,7 +355,7 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
                     + "INNER JOIN detalleFactura ON factura.idFactura = detalleFactura.idFactura\n"
                     + "WHERE factura.idFactura ='" + idFactura + "'";
             
-            ResultSet rs = getConsulta(sql);
+            ResultSet rs = null;
             String registro[] = new String[5];
             double suma = 0;
             while (rs.next()) {
@@ -404,13 +405,12 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
             return;
         }
         frmSolicitudFecha miFecha = new frmSolicitudFecha(null, true);
-        miFecha.setDatos(getDatos());
         miFecha.setLocationRelativeTo(null);
         miFecha.setVisible(true);
         tblFactura.repaint();
         ajusteDetalle();
-        String idCliente = Utilidades.objectToString(tblClientes.getValueAt(
-                tblClientes.getSelectedRow(), 0));
+        String idCliente = tblClientes.getValueAt(
+                tblClientes.getSelectedRow(), 0).toString();
 
         String sql = "SELECT f.idFactura, f.estado , f.fecha, f.USUARIO, "
                 + "COALESCE(SUM(d.precio * d.cantidad), 0.00) AS Valor "
@@ -436,6 +436,7 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
                     + "GROUP BY f.idFactura, f.estado , f.fecha, f.USUARIO "
                     + "order by 1";
         }
+        
         try {
             DefaultTableModel modelo = (DefaultTableModel) tblFactura.getModel();
             int filas = tblFactura.getRowCount();
@@ -443,7 +444,7 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
                 modelo.removeRow(0);
             }
 
-            ResultSet rs = getConsulta(sql);
+            ResultSet rs = null;
             String registro[] = new String[4];
 
             while (rs.next()) {
@@ -551,7 +552,7 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
             }
         }
         //llenar Tabla con el Query        
-        ResultSet rs = getDatos().getConsulta(sql);
+        ResultSet rs = null;
 
         try {
             while (rs.next()) {

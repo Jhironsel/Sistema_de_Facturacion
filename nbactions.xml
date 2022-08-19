@@ -15,6 +15,7 @@
             <exec.appArgs></exec.appArgs>
             <exec.mainClass>sur.softsurena.formularios.frmLogin</exec.mainClass>
             <exec.executable>java</exec.executable>
+            <exec.workingdir>/home/jhironsel/NetBeansProjects/Proyectos Serios/SistemaBebida1</exec.workingdir>
         </properties>
     </action>
     <action>
@@ -33,6 +34,7 @@
                 <exec.mainClass>${packageClassName}</exec.mainClass>
                 <exec.executable>java</exec.executable>
                 <jpda.listen>true</jpda.listen>
+                <exec.workingdir>/home/jhironsel/NetBeansProjects/Proyectos Serios/SistemaBebida1</exec.workingdir>
             </properties>
         </action>
     <action>
@@ -50,6 +52,7 @@
                 <exec.mainClass>${packageClassName}</exec.mainClass>
                 <exec.executable>java</exec.executable>
                 <exec.appArgs></exec.appArgs>
+                <exec.workingdir>/home/jhironsel/NetBeansProjects/Proyectos Serios/SistemaBebida1</exec.workingdir>
             </properties>
         </action>
 </actions>

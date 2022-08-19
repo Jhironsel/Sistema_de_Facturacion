@@ -1,9 +1,5 @@
-package formulario.productos;
+package sur.softsurena.formularios;
 
-import clases.Categoria;
-import clases.Datos;
-import clases.EntradaProducto;
-import formulario.frmBusquedaProducto;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -259,27 +255,27 @@ public class frmSalidaProducto extends javax.swing.JDialog {
             return;
         }
 
-        if (!Datos.agregarProductoEntrada(
-                new EntradaProducto(
-                        Integer.valueOf(txtOperacion.getText().trim()),
-                        ((Categoria) miBusqueda.getRespuesta()).getIdProducto(),
-                        null,
-                        0,
-                        "N/A",
-                        txtConcepto.getText().trim(),
-                        new BigDecimal(txtSalida.getText()),
-                        null,
-                        null,
-                        '-',
-                        BigDecimal.ZERO,
-                        BigDecimal.ZERO,
-                        false,
-                        BigDecimal.ZERO)
-        )) {
-            JOptionPane.showMessageDialog(this,
-                    "No se pudo registrar producto");
-            return;
-        }
+//        if (!agregarProductoEntrada(
+//                new EntradaProducto(
+//                        Integer.valueOf(txtOperacion.getText().trim()),
+//                        ((Categoria) miBusqueda.getRespuesta()).getIdProducto(),
+//                        null,
+//                        0,
+//                        "N/A",
+//                        txtConcepto.getText().trim(),
+//                        new BigDecimal(txtSalida.getText()),
+//                        null,
+//                        null,
+//                        '-',
+//                        BigDecimal.ZERO,
+//                        BigDecimal.ZERO,
+//                        false,
+//                        BigDecimal.ZERO)
+//        )) {
+//            JOptionPane.showMessageDialog(this,
+//                    "No se pudo registrar producto");
+//            return;
+//        }
 
 //        Map<String, Object> parametros = new HashMap<>();
 //        parametros.put("operacion", Integer.parseInt(txtOperacion.getText()));
@@ -306,7 +302,7 @@ public class frmSalidaProducto extends javax.swing.JDialog {
     }//GEN-LAST:event_txtConceptoKeyReleased
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        txtOperacion.setText("" + (Datos.idMaximoRegistro() + 1));
+//        txtOperacion.setText("" + (Datos.idMaximoRegistro() + 1));
         txtCodigo.requestFocusInWindow();
     }//GEN-LAST:event_formWindowOpened
 
@@ -320,7 +316,7 @@ public class frmSalidaProducto extends javax.swing.JDialog {
             limpiar();
             return;
         }
-        txtCodigo.setText(((Categoria) miBusqueda.getRespuesta()).getDescripcion());
+//        txtCodigo.setText(((Categoria) miBusqueda.getRespuesta()).getDescripcion());
         txtCodigoActionPerformed(evt);
     }//GEN-LAST:event_btnBuscarProductoActionPerformed
 
@@ -333,8 +329,9 @@ public class frmSalidaProducto extends javax.swing.JDialog {
             btnBuscarProducto.doClick();
             return;
         }
-
-        ResultSet rs = Datos.getProductoById(null, txtCodigo.getText().trim());
+        
+//        Datos.getProductoById(null, txtCodigo.getText().trim())
+        ResultSet rs = null;
         BufferedImage img = null;
         try {
             if (!rs.next()) {

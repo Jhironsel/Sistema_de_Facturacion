@@ -9,7 +9,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
-import sur.softsurena.entidades.Personas;
+import sur.softsurena.datos.select.SelectMetodos;
+import sur.softsurena.entidades.Clientes;
 import sur.softsurena.hilos.hiloImpresionFactura;
 import sur.softsurena.utilidades.Utilidades;
 
@@ -375,21 +376,20 @@ public class frmCobrosClientes extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
-            Personas p = Personas.builder().
-                    id(-1).
+            Clientes c = Clientes.builder().
+                    id_persona(-1).
                     pNombre("Seleccione un Cliente...").
                     sNombre("").
                     apellidos("").build();
-            cmbCliente.addItem(p);
-            ResultSet rsCli = getConsulta(
-                    "SELECT r.IDCLIENTE, (r.NOMBRES||' '||r.APELLIDOS) as nombre "
-                    + "FROM TABLA_CLIENTES r "
-                    + "WHERE r.DEUDAACTUAL > 0");
+            cmbCliente.addItem(c);
+            ResultSet rsCli = SelectMetodos.getClientes();
             while (rsCli.next()) {
-                opc = new Opcion(
-                        rsCli.getString("idCliente"),
-                        rsCli.getString("nombre"));
-                cmbCliente.addItem(opc);
+                c = Clientes.builder().
+                    id_persona(rsCli.getInt("ID")).
+                    pNombre(rsCli.getString("PNOMBRE")).
+                    sNombre(rsCli.getString("SNOMBRE")).
+                    apellidos(rsCli.getString("APELLIDOS")).build();
+                cmbCliente.addItem(c);
             }
         } catch (SQLException ex) {
             //Instalar Logger
@@ -437,12 +437,13 @@ public class frmCobrosClientes extends javax.swing.JDialog {
             return;
         }
         //idFactura idTurno, double montoPago
-        pagarCredito(Utilidades.controlDouble(txtCredito.getValue()),
-                montoTotal,
-                ((Opcion) cmbCliente.getItemAt(cmbCliente.getSelectedIndex())).getValor(),
-                Monto,
-                Utilidades.objectToInt(tblFacturas.getValueAt(tblFacturas.getSelectedRow(), 0)),
-                getIdTurno());
+//        pagarCredito(
+//                Utilidades.controlDouble(txtCredito.getValue()),
+//                ((Clientes) cmbCliente.getItemAt(cmbCliente.getSelectedIndex())).getId_persona(),
+//                montoTotal,
+//                Monto,
+//                Utilidades.objectToInt(tblFacturas.getValueAt(tblFacturas.getSelectedRow(), 0)),
+//                getIdTurno());
 
         //Constancia de pago de Factura....
         JOptionPane.showMessageDialog(rootPane, "Pago realizado con Exito...");
@@ -451,8 +452,8 @@ public class frmCobrosClientes extends javax.swing.JDialog {
         parametros.put("nombreCajero", getNombreCajero());
         parametros.put("idFactura", Utilidades.objectToInt(tblFacturas.getValueAt(tblFacturas.getSelectedRow(), 0)));
         parametros.put("idTurno", "" + getIdTurno());
-        parametros.put("idCliente", ((Opcion) cmbCliente.getItemAt(cmbCliente.getSelectedIndex())).getValor());
-        parametros.put("nombreCliente", ((Opcion) cmbCliente.getItemAt(cmbCliente.getSelectedIndex())).getDescripcion());
+        parametros.put("idCliente", ((Clientes) cmbCliente.getItemAt(cmbCliente.getSelectedIndex())).getId_persona());
+        parametros.put("nombreCliente", ((Clientes) cmbCliente.getItemAt(cmbCliente.getSelectedIndex())).toString());
         parametros.put("montoFactura", Utilidades.objectToDouble(tblFacturas.getValueAt(tblFacturas.getSelectedRow(), 1)));
         hiloImpresionFactura miHilo = new hiloImpresionFactura(
                 true, //Mostrar Reporte
@@ -473,7 +474,7 @@ public class frmCobrosClientes extends javax.swing.JDialog {
             return;
         }
         for (int i = 0; i < cmbCliente.getItemCount(); i++) {
-            if (((Opcion) cmbCliente.getItemAt(i)).getValor().equals(rta)) {
+            if (((Clientes) cmbCliente.getItemAt(i)).getGenerales().getCedula().equals(rta)) {
                 cmbCliente.setSelectedIndex(i);
                 return;
             }
@@ -483,20 +484,20 @@ public class frmCobrosClientes extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
     private void cmbClienteItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbClienteItemStateChanged
-        try {
-            llenarTabla(((Opcion) cmbCliente.getItemAt(cmbCliente.getSelectedIndex())).getValor());
-            ResultSet rs = getConsulta(
-                    "SELECT r.CREDITO, r.DEUDAACTUAL "
-                    + "FROM TABLA_CLIENTES r "
-                    + "WHERE r.IDCLIENTE LIKE '" + ((Opcion) cmbCliente.getItemAt(cmbCliente.getSelectedIndex())).getValor() + "'");
-            if (cmbCliente.getSelectedIndex() > 0) {
-                rs.next();
-                txtDeuda.setValue(rs.getDouble("deudaActual"));
-                txtCredito.setValue(rs.getDouble("credito"));
-            }
-        } catch (SQLException ex) {
-            //Instalar Logger
-        }
+//        try {
+//            llenarTabla(((Clientes) cmbCliente.getItemAt(cmbCliente.getSelectedIndex())).getGenerales().getCedula());
+//            ResultSet rs = getConsulta(
+//                    "SELECT r.CREDITO, r.DEUDAACTUAL "
+//                    + "FROM TABLA_CLIENTES r "
+//                    + "WHERE r.IDCLIENTE LIKE '" + ((Clientes) cmbCliente.getItemAt(cmbCliente.getSelectedIndex())).getGenerales().getCedula() + "'");
+//            if (cmbCliente.getSelectedIndex() > 0) {
+//                rs.next();
+//                txtDeuda.setValue(rs.getDouble("deudaActual"));
+//                txtCredito.setValue(rs.getDouble("credito"));
+//            }
+//        } catch (SQLException ex) {
+//            //Instalar Logger
+//        }
     }//GEN-LAST:event_cmbClienteItemStateChanged
     private void cmbClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbClienteActionPerformed
         txtMonto.grabFocus();

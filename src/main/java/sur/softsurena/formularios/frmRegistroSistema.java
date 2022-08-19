@@ -1,13 +1,12 @@
 package sur.softsurena.formularios;
 
 import java.awt.Color;
+import sur.softsurena.entidades.Personas;
 
 public class frmRegistroSistema extends javax.swing.JFrame {
     public frmRegistroSistema() {
         initComponents();
-        jcbSexo.addItem(new Categoria("N/A", "Seleccione el sexo"));
-        jcbSexo.addItem(new Categoria("m", "Masculino"));
-        jcbSexo.addItem(new Categoria("f", "Femenino"));
+        Personas.llenarSexo(jcbSexo);
     }
 
     @SuppressWarnings("unchecked")
@@ -23,7 +22,7 @@ public class frmRegistroSistema extends javax.swing.JFrame {
         txtCedula_F = new javax.swing.JFormattedTextField();
         txtTelefono_F = new javax.swing.JFormattedTextField();
         txtMovil_F = new javax.swing.JFormattedTextField();
-        jcbSexo = new javax.swing.JComboBox<>();
+        jcbSexo = new javax.swing.JComboBox();
         jPanel2 = new javax.swing.JPanel();
         txtNombres1 = new javax.swing.JTextField();
         txtCedula_F1 = new javax.swing.JFormattedTextField();
@@ -309,7 +308,7 @@ public class frmRegistroSistema extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JComboBox<Categoria> jcbSexo;
+    private javax.swing.JComboBox jcbSexo;
     private javax.swing.JTextField txtApellidos;
     private javax.swing.JFormattedTextField txtCedula_F;
     private javax.swing.JFormattedTextField txtCedula_F1;
