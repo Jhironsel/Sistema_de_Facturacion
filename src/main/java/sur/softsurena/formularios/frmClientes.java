@@ -38,8 +38,13 @@ public final class frmClientes extends javax.swing.JInternalFrame {
     private static final Logger LOG = Logger.getLogger(frmClientes.class.getName());
     private boolean nuevo = false;
     private final JTextFieldDateEditor editor;
+    private DefaultTableModel miTabla, miTablaTel;
 //    private final JButton button;
     private frmDetalleFacturaClientes miDetalle;
+    
+    private String titulosTel[] = {"Numero", "Tipo", "Fecha"};;
+    private Object registroTel[]= new Object[titulosTel.length];
+        
 
     public frmClientes() {
         initComponents();
@@ -60,12 +65,18 @@ public final class frmClientes extends javax.swing.JInternalFrame {
 //        editor.setEditable(false);
 //        button.setEnabled(false);
         jtpUnico.setEnabledAt(jtpUnico.indexOfComponent(jspMantenimiento), false);
+        
+        
+        
+        miTablaTel = new DefaultTableModel(null, titulosTel);
+        tblTelefonos.setModel(miTablaTel);
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jScrollPane4 = new javax.swing.JScrollPane();
         jPanel4 = new javax.swing.JPanel();
         jtpUnico = new javax.swing.JTabbedPane();
@@ -108,6 +119,8 @@ public final class frmClientes extends javax.swing.JInternalFrame {
         txtTelelfonoMovil = new javax.swing.JFormattedTextField();
         btnAgregarTelefonoMovil = new RSMaterialComponent.RSButtonMaterialIconOne();
         btnBorrarTelefonoMovil = new RSMaterialComponent.RSButtonMaterialIconOne();
+        jrbMovil = new javax.swing.JRadioButton();
+        jrbResidencial = new javax.swing.JRadioButton();
         jPanel11 = new javax.swing.JPanel();
         jScrollPane7 = new javax.swing.JScrollPane();
         tblCorreos = new javax.swing.JTable();
@@ -448,7 +461,7 @@ public final class frmClientes extends javax.swing.JInternalFrame {
         ));
         jScrollPane2.setViewportView(tblTelefonos);
 
-        txtTelelfonoMovil.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 45, 223), 2, true), "Telefono o movil"));
+        txtTelelfonoMovil.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 45, 223), 2, true), "Número"));
         try {
             txtTelelfonoMovil.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("+1(###) ###-####")));
         } catch (java.text.ParseException ex) {
@@ -456,8 +469,20 @@ public final class frmClientes extends javax.swing.JInternalFrame {
         }
 
         btnAgregarTelefonoMovil.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.PLUS_ONE);
+        btnAgregarTelefonoMovil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarTelefonoMovilActionPerformed(evt);
+            }
+        });
 
         btnBorrarTelefonoMovil.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DELETE);
+
+        buttonGroup1.add(jrbMovil);
+        jrbMovil.setSelected(true);
+        jrbMovil.setText("Movil");
+
+        buttonGroup1.add(jrbResidencial);
+        jrbResidencial.setText("Residencial");
 
         org.jdesktop.layout.GroupLayout jPanel8Layout = new org.jdesktop.layout.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -465,22 +490,31 @@ public final class frmClientes extends javax.swing.JInternalFrame {
             jPanel8Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(txtTelelfonoMovil, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 199, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(txtTelelfonoMovil, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 212, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(btnAgregarTelefonoMovil, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 40, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(jPanel8Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                    .add(jrbResidencial, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .add(jrbMovil, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(btnBorrarTelefonoMovil, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 40, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(451, Short.MAX_VALUE))
+                .add(btnAgregarTelefonoMovil, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 100, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(btnBorrarTelefonoMovil, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 100, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel8Layout.createSequentialGroup()
-                .add(6, 6, 6)
-                .add(jPanel8Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.CENTER)
-                    .add(txtTelelfonoMovil, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(btnAgregarTelefonoMovil, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(btnBorrarTelefonoMovil, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .add(3, 3, 3)
+                .add(jPanel8Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jPanel8Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.CENTER)
+                        .add(txtTelelfonoMovil, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(btnAgregarTelefonoMovil, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(btnBorrarTelefonoMovil, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(jPanel8Layout.createSequentialGroup()
+                        .add(jrbMovil)
+                        .add(0, 0, 0)
+                        .add(jrbResidencial)))
+                .add(3, 3, 3))
         );
 
         jPanel8Layout.linkSize(new java.awt.Component[] {btnAgregarTelefonoMovil, btnBorrarTelefonoMovil, txtTelelfonoMovil}, org.jdesktop.layout.GroupLayout.VERTICAL);
@@ -498,7 +532,7 @@ public final class frmClientes extends javax.swing.JInternalFrame {
                 .add(0, 0, 0)
                 .add(jPanel8, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(0, 0, 0)
-                .add(jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
+                .add(jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
                 .add(0, 0, 0))
         );
 
@@ -1076,6 +1110,10 @@ public final class frmClientes extends javax.swing.JInternalFrame {
                 jcbDistritoMunicipal);
     }//GEN-LAST:event_jcbMunicipiosPopupMenuWillBecomeInvisible
 
+    private void btnAgregarTelefonoMovilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarTelefonoMovilActionPerformed
+        agregarTelefono();
+    }//GEN-LAST:event_btnAgregarTelefonoMovilActionPerformed
+
     private KeyListener limitarCaracteres(final int limite, final JFormattedTextField txt) {
 
         KeyListener keyListener = new KeyListener() {
@@ -1101,6 +1139,31 @@ public final class frmClientes extends javax.swing.JInternalFrame {
         };
         return keyListener;
     }
+    
+    private void agregarTelefono(){
+        if(txtTelelfonoMovil.getValue() == null){
+            JOptionPane.showInternalMessageDialog(this, 
+                        "Debe digitar numero telefonico.", 
+                        "Validacción de contacto.", JOptionPane.INFORMATION_MESSAGE);
+            txtTelelfonoMovil.requestFocusInWindow();
+            return;
+        }
+        
+        if(!jrbMovil.isSelected()){
+            if(!jrbResidencial.isSelected()){
+                JOptionPane.showInternalMessageDialog(this, 
+                        "Debes de seleccionar un tipo de conctato, movil o telefono.", 
+                        "Validacción de contacto.", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+        }
+        registroTel[0] = txtTelelfonoMovil.getValue();
+        registroTel[1] = jrbMovil.isSelected() ? "Movil":"Telefono";
+        
+        miTablaTel.addRow(registroTel);
+        tblTelefonos.setModel(miTablaTel);
+        txtTelelfonoMovil.setValue(null);
+    }
 
     private void llenarTabla() {
         String titulos[] = {"Cedulas", "Persona", "Primer Nombre", "Segundo Nombre",
@@ -1110,7 +1173,7 @@ public final class frmClientes extends javax.swing.JInternalFrame {
 
         try {
             ResultSet rs = getClientes();
-            DefaultTableModel miTabla = new DefaultTableModel(null, titulos);
+            miTabla = new DefaultTableModel(null, titulos);
             while (rs.next()) {
                 Generales g = Generales.builder().
                         cedula(rs.getString("cedula")).build();
@@ -1286,6 +1349,7 @@ public final class frmClientes extends javax.swing.JInternalFrame {
     private RSMaterialComponent.RSButtonMaterialIconOne btnImprimirInforme;
     private RSMaterialComponent.RSButtonMaterialIconOne btnModificar;
     private RSMaterialComponent.RSButtonMaterialIconOne btnNuevo;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JCheckBox cbActivo;
     private com.toedter.calendar.JDateChooser dchFechaNacimiento;
     private javax.swing.JPanel jPanel1;
@@ -1313,6 +1377,8 @@ public final class frmClientes extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> jcbSexo;
     private javax.swing.JPanel jpClientes;
     private javax.swing.JPanel jpMantenimiento;
+    private javax.swing.JRadioButton jrbMovil;
+    private javax.swing.JRadioButton jrbResidencial;
     private javax.swing.JScrollPane jspClientes;
     private javax.swing.JScrollPane jspMantenimiento;
     public static javax.swing.JTabbedPane jtpUnico;
