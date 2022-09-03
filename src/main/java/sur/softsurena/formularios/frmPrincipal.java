@@ -117,6 +117,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jmCerrarTurno = new javax.swing.JMenuItem();
         jSeparator11 = new javax.swing.JPopupMenu.Separator();
         jmDeuda = new javax.swing.JMenuItem();
+        btnOcultarPanel = new javax.swing.JButton();
         jsEstatus = new javax.swing.JScrollPane();
         pEstatus = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -144,7 +145,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         dpnEscritorio = new DesktopConFondo();
         jMenuBar1 = new javax.swing.JMenuBar();
-        mnuOcultarPanel = new javax.swing.JMenu();
         mnuArchivos = new javax.swing.JMenu();
         mnuArchivosCliente = new javax.swing.JMenuItem();
         mnuArchivosProductos = new javax.swing.JMenuItem();
@@ -320,6 +320,12 @@ public final class frmPrincipal extends javax.swing.JFrame {
         Movimientos.add(jmDeuda);
 
         jPopupMenu1.add(Movimientos);
+
+        btnOcultarPanel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOcultarPanelActionPerformed(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Ventana principal del sistema");
@@ -602,13 +608,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.setMinimumSize(new java.awt.Dimension(0, 0));
 
-        mnuOcultarPanel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                mnuOcultarPanelMouseClicked(evt);
-            }
-        });
-        jMenuBar1.add(mnuOcultarPanel);
-
         mnuArchivos.setBackground(new java.awt.Color(0, 0, 0));
         mnuArchivos.setText("Archivos");
         mnuArchivos.setDoubleBuffered(true);
@@ -686,6 +685,8 @@ public final class frmPrincipal extends javax.swing.JFrame {
             }
         });
         mnuArchivos.add(mnuArchivosSalir);
+
+        jMenuBar1.add(btnOcultarPanel);
 
         jMenuBar1.add(mnuArchivos);
 
@@ -809,12 +810,12 @@ public final class frmPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jsEstatus, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jsEstatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)
         );
 
         pack();
@@ -1246,17 +1247,17 @@ public final class frmPrincipal extends javax.swing.JFrame {
         mnuArchivosUsuarioActionPerformed(evt);
     }//GEN-LAST:event_jmUsuariosActionPerformed
 
-    private void mnuOcultarPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuOcultarPanelMouseClicked
+    private void btnOcultarPanelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOcultarPanelActionPerformed
         jsEstatus.setVisible(!jsEstatus.isVisible());
         
         if(jsEstatus.isVisible()){
-            mnuOcultarPanel.setIcon(icono.getIcono("Flecha Izquierda 32 x 32.png"));
+            btnOcultarPanel.setIcon(icono.getIcono("Flecha Izquierda 32 x 32.png"));
         }else{
-            mnuOcultarPanel.setIcon(icono.getIcono("Flecha Derecha 32 x 32.png"));
+            btnOcultarPanel.setIcon(icono.getIcono("Flecha Derecha 32 x 32.png"));
         }
         
         pack();
-    }//GEN-LAST:event_mnuOcultarPanelMouseClicked
+    }//GEN-LAST:event_btnOcultarPanelActionPerformed
     
     private void imprimirReporte(Date fecha) {
         try {
@@ -1509,6 +1510,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu Archivos;
     private javax.swing.JMenu Movimientos;
     private javax.swing.JButton btnEstablecerEncabezado;
+    private javax.swing.JButton btnOcultarPanel;
     private javax.swing.JButton btnSeleccionarImpresora;
     public static javax.swing.JDesktopPane dpnEscritorio;
     private javax.swing.Box.Filler filler1;
@@ -1576,7 +1578,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuMovimientosInventario;
     public static javax.swing.JMenuItem mnuMovimientosNuevaFactura;
     private javax.swing.JMenuItem mnuMovimientosReporteFactura;
-    private javax.swing.JMenu mnuOcultarPanel;
     private javax.swing.JPanel pEstatus;
     private javax.swing.JFormattedTextField txtCosto;
     private javax.swing.JFormattedTextField txtGanancia;
@@ -1628,7 +1629,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
         btnEstablecerEncabezado.setIcon(icono.getIcono("Factura 32 x 32.png"));
         btnSeleccionarImpresora.setIcon(icono.getIcono("Impresora 32 x 32.png"));
 
-        
-        mnuOcultarPanel.setIcon(icono.getIcono("Flecha Izquierda 32 x 32.png"));
+        btnOcultarPanel.setIcon(icono.getIcono("Flecha Izquierda 32 x 32.png"));
     }
 }

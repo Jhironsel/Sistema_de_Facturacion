@@ -86,6 +86,7 @@ public final class frmLogin extends javax.swing.JFrame {
 
         txtUsuario.setMaximumSize(new java.awt.Dimension(216, 40));
         txtUsuario.setMinimumSize(new java.awt.Dimension(216, 40));
+        txtUsuario.setName("txtUsuario"); // NOI18N
         txtUsuario.setPlaceholder("Ingrese usuario");
         txtUsuario.setPreferredSize(new java.awt.Dimension(216, 40));
         txtUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -102,6 +103,7 @@ public final class frmLogin extends javax.swing.JFrame {
 
         txtClave.setMaximumSize(new java.awt.Dimension(216, 40));
         txtClave.setMinimumSize(new java.awt.Dimension(216, 40));
+        txtClave.setName("txtClave"); // NOI18N
         txtClave.setPlaceholder("Ingrese contraseña");
         txtClave.setPreferredSize(new java.awt.Dimension(216, 40));
         txtClave.addActionListener(new java.awt.event.ActionListener() {
@@ -121,6 +123,7 @@ public final class frmLogin extends javax.swing.JFrame {
         btnCancelar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CANCEL);
         btnCancelar.setMaximumSize(new java.awt.Dimension(216, 40));
         btnCancelar.setMinimumSize(new java.awt.Dimension(216, 40));
+        btnCancelar.setName("btnCancelar"); // NOI18N
         btnCancelar.setPreferredSize(new java.awt.Dimension(216, 40));
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -133,6 +136,7 @@ public final class frmLogin extends javax.swing.JFrame {
         btnAceptar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CHECK);
         btnAceptar.setMaximumSize(new java.awt.Dimension(216, 40));
         btnAceptar.setMinimumSize(new java.awt.Dimension(216, 40));
+        btnAceptar.setName("btnAceptar"); // NOI18N
         btnAceptar.setPreferredSize(new java.awt.Dimension(216, 40));
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -148,6 +152,7 @@ public final class frmLogin extends javax.swing.JFrame {
         btnParametros.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DASHBOARD);
         btnParametros.setMaximumSize(new java.awt.Dimension(216, 40));
         btnParametros.setMinimumSize(new java.awt.Dimension(216, 40));
+        btnParametros.setName("btnParametros"); // NOI18N
         btnParametros.setPreferredSize(new java.awt.Dimension(216, 40));
         btnParametros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

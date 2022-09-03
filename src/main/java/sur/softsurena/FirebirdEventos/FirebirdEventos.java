@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.firebirdsql.event.DatabaseEvent;
 import org.firebirdsql.event.FBEventManager;
+import sur.softsurena.formularios.frmClientes;
 
 public class FirebirdEventos extends FBEventManager{
 
@@ -38,6 +39,14 @@ public class FirebirdEventos extends FBEventManager{
                 LOG.info("Event ["
                         + event.getEventName() + "] occured "
                         + event.getEventCount() + " time(s)");
+                frmClientes.llenarTablaClientes();
+            });
+            
+            addEventListener("del_client", (DatabaseEvent event) -> {
+                LOG.info("Event ["
+                        + event.getEventName() + "] occured "
+                        + event.getEventCount() + " time(s)");
+                frmClientes.llenarTablaClientes();
             });
                         
         } catch (SQLException ex) {
