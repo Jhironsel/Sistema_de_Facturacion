@@ -382,7 +382,7 @@ public class frmCobrosClientes extends javax.swing.JDialog {
                     sNombre("").
                     apellidos("").build();
             cmbCliente.addItem(c);
-            ResultSet rsCli = SelectMetodos.getClientes();
+            ResultSet rsCli = SelectMetodos.getClientesTablaSB();
             while (rsCli.next()) {
                 c = Clientes.builder().
                     id_persona(rsCli.getInt("ID")).

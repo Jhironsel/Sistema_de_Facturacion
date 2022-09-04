@@ -1006,9 +1006,9 @@ public class frmDeudas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtMontoActionPerformed
 
     private void btnGetClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGetClienteActionPerformed
-        String idCliente = txtIDCliente.getText().replace("-", "").trim();
+        String cedula = txtIDCliente.getValue().toString();
 
-        if (idCliente.isEmpty()) {
+        if (cedula.isEmpty() || cedula.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Inserte una cedula Valida, 000-0000000-0");
             txtIDCliente.setValue("");
             txtIDCliente.requestFocusInWindow();
@@ -1017,7 +1017,7 @@ public class frmDeudas extends javax.swing.JInternalFrame {
 
         
 
-        if (existeCliente(idCliente)) {
+        if (existeCliente(cedula)) {
             
             nuevo();
             

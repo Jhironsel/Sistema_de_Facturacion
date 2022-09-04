@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import static sur.softsurena.datos.select.SelectMetodos.existeUsuario;
-import static sur.softsurena.datos.select.SelectMetodos.getRoles;
 import sur.softsurena.entidades.Usuario;
 
 public class frmUsuariosAgregar extends javax.swing.JDialog {
@@ -444,7 +443,8 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
     }//GEN-LAST:event_txtSNombreActionPerformed
 
     private void llenarCombo() {
-        ResultSet rs = getRoles();
+//        ResultSet rs = getRoles();
+        ResultSet rs = null;
         cmbRol.removeAllItems();
         cmbRol.addItem("Seleccionar un rol");
         try {

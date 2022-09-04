@@ -4,13 +4,14 @@ import java.awt.Dimension;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
-import static sur.softsurena.datos.select.SelectMetodos.getClientes;
 import static sur.softsurena.datos.select.SelectMetodos.getFacturas;
 import sur.softsurena.entidades.Clientes;
 import sur.softsurena.entidades.Facturas;
 import sur.softsurena.entidades.HeaderFactura;
 import sur.softsurena.entidades.Opcion;
 import sur.softsurena.utilidades.Utilidades;
+import static sur.softsurena.datos.select.SelectMetodos.getClientesTablaSB;
+import static sur.softsurena.datos.select.SelectMetodos.getClientes;
 
 public class frmReporteFacturas extends javax.swing.JInternalFrame {
     
@@ -367,7 +368,7 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame {
             
             cmbCliente.addItem(cli);
             
-            ResultSet rsCli = getClientes();
+            ResultSet rsCli = getClientesTablaSB();
             
             while (rsCli.next()) {
                 cli = Clientes.builder().
