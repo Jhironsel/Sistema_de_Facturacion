@@ -17,7 +17,6 @@ import javax.swing.JOptionPane;
 import sur.softsurena.FirebirdEventos.FirebirdEventos;
 import sur.softsurena.conexion.Conexion;
 import sur.softsurena.metodos.Imagenes;
-import sur.softsurena.formularios.*;
 import static sur.softsurena.conexion.Conexion.getCnn;
 import static sur.softsurena.datos.procedure.ProcedureMetodos.setLicencia;
 import static sur.softsurena.datos.select.SelectMetodos.comprobandoRol;
@@ -30,6 +29,7 @@ public final class frmLogin extends javax.swing.JFrame {
     private String idMaquina = "";
     private boolean txtUsuarioKeyPress = true;
     private frmPrincipal principal;
+
     public frmLogin() {
         initComponents();
 
@@ -300,60 +300,46 @@ public final class frmLogin extends javax.swing.JFrame {
 
         //Cargar los valores de la conexion desde el properties
         frmParametros p = new frmParametros();
-        String dominio="localhost", puerto="3050";
-        
-        if(p.cargarParamentos("").getConIpServidor()){
-            dominio = p.cargarParamentos("").getIpServidor1()+"."+
-                    p.cargarParamentos("").getIpServidor2()+"."+
-                    p.cargarParamentos("").getIpServidor3()+"."+
-                    p.cargarParamentos("").getIpServidor4();
+        String dominio = "localhost", puerto = "3050";
+
+        if (p.cargarParamentos("").getConIpServidor()) {
+            dominio = p.cargarParamentos("").getIpServidor1() + "."
+                    + p.cargarParamentos("").getIpServidor2() + "."
+                    + p.cargarParamentos("").getIpServidor3() + "."
+                    + p.cargarParamentos("").getIpServidor4();
         }
-        
-        if(p.cargarParamentos("").getConServidor()){
+
+        if (p.cargarParamentos("").getConServidor()) {
             dominio = p.cargarParamentos("").getUriServidor();
         }
-        
-        if(p.cargarParamentos("").getConPuerto()){
+
+        if (p.cargarParamentos("").getConPuerto()) {
             puerto = p.cargarParamentos("").getPuerto();
         }
-        
+
         Conexion conexion = Conexion.getInstance(
                 txtUsuario.getText(),
-                new String(txtClave.getPassword()), 
-                "None", 
-                p.cargarParamentos("").getPathBaseDatos(), 
-                dominio, 
+                new String(txtClave.getPassword()),
+                "None",
+                p.cargarParamentos("").getPathBaseDatos(),
+                dominio,
                 puerto);
-        
-        FirebirdEventos f = new FirebirdEventos();
-        
-        if(!conexion.verificar()){ 
-            LOG.log(Level.SEVERE, "No tiene conexión a la base de datos.");
+
+        if (conexion.verificar()) {
             txtUsuario.setText("");
             txtClave.setText("");
             txtUsuario.requestFocusInWindow();
             return;
         }
-        
-        if(!f.registro(
-                txtUsuario.getText().trim(), 
-                new String(txtClave.getPassword()), 
-                dominio, 
-                p.cargarParamentos("").getPathBaseDatos(), 
-                Integer.parseInt(puerto))){
-            LOG.log(Level.SEVERE, "No puede registrar los eventos de la base de datos.");
-        }
-        
+
         roles = comprobandoRol(txtUsuario.getText().trim());
 
-        if(txtUsuario.getText().trim().equalsIgnoreCase("sysdba")){
+        if (txtUsuario.getText().trim().equalsIgnoreCase("sysdba")) {
             roles.add("ADMINISTRADOR");
         }
-        
 
         if (roles == null) {
-            Conexion.cerrarConexion();
-            Conexion.setCnn(null);
+            cerrarConexion();
             JOptionPane.showMessageDialog(this, "El usuario no cuenta con rol en el sistema");
             return;
         }
@@ -361,18 +347,43 @@ public final class frmLogin extends javax.swing.JFrame {
         JComboBox<String> comboBox = new JComboBox(roles.toArray());
 
         if (roles.size() > 1) {
-            JOptionPane.showMessageDialog(null, comboBox, "Seleccione un rol",
-                    JOptionPane.INFORMATION_MESSAGE);
+            int resp = JOptionPane.showConfirmDialog(null, comboBox, "Seleccione un rol",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (resp == JOptionPane.NO_OPTION) {
+                return;
+            }
         }
 
         String rol = comboBox.getSelectedItem().toString();
 
-       
+        cerrarConexion();
+
+        conexion = Conexion.getInstance(
+                txtUsuario.getText(),
+                new String(txtClave.getPassword()),
+                rol,
+                p.cargarParamentos("").getPathBaseDatos(),
+                dominio,
+                puerto);
+        
+        if(conexion.verificar()){
+            return;
+        }
+
+        FirebirdEventos f = new FirebirdEventos();
+        
+        if(!f.registro(txtUsuario.getText(), new String(txtClave.getPassword()),
+                dominio, p.cargarParamentos("").getPathBaseDatos(), Integer.parseInt(puerto))){
+            JOptionPane.showMessageDialog(null, 
+                    "Error a registrar los eventos...",
+                    "Validación de procesos", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         if (rol.equalsIgnoreCase("ADMINISTRADOR")) {
             rol = "RDB$ADMIN";
         }
-        
-        
 
         //Reconectarse con el rol seleccionado por el usuario. 
         if (!existeIdMaquina(idMaquina)) {
@@ -409,7 +420,7 @@ public final class frmLogin extends javax.swing.JFrame {
 
         //Blanquear la pass
         txtClave.setText("");
-        
+
         //Si el formulario principal no está instanciado lo hacemos. 
         if (principal == null) {
             principal = new frmPrincipal();
@@ -420,14 +431,18 @@ public final class frmLogin extends javax.swing.JFrame {
         principal.cerrarFormularios();
         principal.setVisible(true);
         principal.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        
+
         dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
+    private void cerrarConexion() {
+        Conexion.cerrarConexion();
+        Conexion.setCnn(null);
+    }
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         try {
             if (getCnn() != null) {
-                Conexion.cerrarConexion();
+                cerrarConexion();
             }
         } catch (Exception e) {
 

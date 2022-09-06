@@ -150,9 +150,9 @@ public final class frmPrincipal extends javax.swing.JFrame {
         mnuArchivosProductos = new javax.swing.JMenuItem();
         mnuArchivosUsuario = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
-        mnuArchivosCambioClave = new javax.swing.JMenuItem();
+        mnuCambioClave = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        mnuArchivosAdministracionPrivilegios = new javax.swing.JMenuItem();
         jSeparator12 = new javax.swing.JPopupMenu.Separator();
         mnuArchivosCambioUsuario = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
@@ -615,8 +615,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         mnuArchivos.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
 
         mnuArchivosCliente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
-        mnuArchivosCliente.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        mnuArchivosCliente.setForeground(new java.awt.Color(1, 1, 1));
+        mnuArchivosCliente.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
         mnuArchivosCliente.setMnemonic('C');
         mnuArchivosCliente.setText("Clientes ...");
         mnuArchivosCliente.addActionListener(new java.awt.event.ActionListener() {
@@ -627,8 +626,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         mnuArchivos.add(mnuArchivosCliente);
 
         mnuArchivosProductos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, 0));
-        mnuArchivosProductos.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        mnuArchivosProductos.setForeground(new java.awt.Color(1, 1, 1));
+        mnuArchivosProductos.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
         mnuArchivosProductos.setMnemonic('P');
         mnuArchivosProductos.setText("Productos ...");
         mnuArchivosProductos.addActionListener(new java.awt.event.ActionListener() {
@@ -639,8 +637,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         mnuArchivos.add(mnuArchivosProductos);
 
         mnuArchivosUsuario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, 0));
-        mnuArchivosUsuario.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        mnuArchivosUsuario.setForeground(new java.awt.Color(1, 1, 1));
+        mnuArchivosUsuario.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
         mnuArchivosUsuario.setMnemonic('U');
         mnuArchivosUsuario.setText("Usuarios ...");
         mnuArchivosUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -651,26 +648,26 @@ public final class frmPrincipal extends javax.swing.JFrame {
         mnuArchivos.add(mnuArchivosUsuario);
         mnuArchivos.add(jSeparator1);
 
-        mnuArchivosCambioClave.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
-        mnuArchivosCambioClave.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        mnuArchivosCambioClave.setForeground(new java.awt.Color(1, 1, 1));
-        mnuArchivosCambioClave.setMnemonic('m');
-        mnuArchivosCambioClave.setText("Cambio de Clave ...");
-        mnuArchivosCambioClave.addActionListener(new java.awt.event.ActionListener() {
+        mnuCambioClave.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
+        mnuCambioClave.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
+        mnuCambioClave.setMnemonic('m');
+        mnuCambioClave.setText("Cambio de Clave ...");
+        mnuCambioClave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuArchivosCambioClaveActionPerformed(evt);
+                mnuCambioClaveActionPerformed(evt);
             }
         });
-        mnuArchivos.add(mnuArchivosCambioClave);
+        mnuArchivos.add(mnuCambioClave);
         mnuArchivos.add(jSeparator3);
 
-        jMenuItem1.setText("jMenuItem1");
-        mnuArchivos.add(jMenuItem1);
+        mnuArchivosAdministracionPrivilegios.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        mnuArchivosAdministracionPrivilegios.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
+        mnuArchivosAdministracionPrivilegios.setText("Administración de Privilegios...");
+        mnuArchivos.add(mnuArchivosAdministracionPrivilegios);
         mnuArchivos.add(jSeparator12);
 
         mnuArchivosCambioUsuario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F6, 0));
-        mnuArchivosCambioUsuario.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        mnuArchivosCambioUsuario.setForeground(new java.awt.Color(1, 1, 1));
+        mnuArchivosCambioUsuario.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
         mnuArchivosCambioUsuario.setMnemonic('b');
         mnuArchivosCambioUsuario.setText("Cambio de Usuario ...");
         mnuArchivosCambioUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -682,8 +679,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         mnuArchivos.add(jSeparator2);
 
         mnuArchivosSalir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        mnuArchivosSalir.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        mnuArchivosSalir.setForeground(new java.awt.Color(1, 1, 1));
+        mnuArchivosSalir.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
         mnuArchivosSalir.setText("Salir");
         mnuArchivosSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -701,8 +697,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         mnuMovimientos.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
 
         mnuMovimientosNuevaFactura.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F7, 0));
-        mnuMovimientosNuevaFactura.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        mnuMovimientosNuevaFactura.setForeground(new java.awt.Color(1, 1, 1));
+        mnuMovimientosNuevaFactura.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
         mnuMovimientosNuevaFactura.setText("Nueva Factura...");
         mnuMovimientosNuevaFactura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -713,8 +708,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         mnuMovimientos.add(jSeparator5);
 
         mnuMovimientosReporteFactura.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F8, 0));
-        mnuMovimientosReporteFactura.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        mnuMovimientosReporteFactura.setForeground(new java.awt.Color(1, 1, 1));
+        mnuMovimientosReporteFactura.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
         mnuMovimientosReporteFactura.setText("Reporte de Facturas...");
         mnuMovimientosReporteFactura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -724,8 +718,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         mnuMovimientos.add(mnuMovimientosReporteFactura);
 
         mnuMovimientosInventario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F9, 0));
-        mnuMovimientosInventario.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        mnuMovimientosInventario.setForeground(new java.awt.Color(1, 1, 1));
+        mnuMovimientosInventario.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
         mnuMovimientosInventario.setText("Inventario...");
         mnuMovimientosInventario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -736,8 +729,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         mnuMovimientos.add(jSeparator4);
 
         mnuMovimientosAbrirTurno.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F10, 0));
-        mnuMovimientosAbrirTurno.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        mnuMovimientosAbrirTurno.setForeground(new java.awt.Color(1, 1, 1));
+        mnuMovimientosAbrirTurno.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
         mnuMovimientosAbrirTurno.setText("Abrir turno...");
         mnuMovimientosAbrirTurno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -747,8 +739,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         mnuMovimientos.add(mnuMovimientosAbrirTurno);
 
         mnuMovimientosCerrarTurno.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F11, 0));
-        mnuMovimientosCerrarTurno.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        mnuMovimientosCerrarTurno.setForeground(new java.awt.Color(1, 1, 1));
+        mnuMovimientosCerrarTurno.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
         mnuMovimientosCerrarTurno.setText("Cerrar turno...");
         mnuMovimientosCerrarTurno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -759,8 +750,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         mnuMovimientos.add(jSeparator6);
 
         mnuMovimientosDeudas.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F12, 0));
-        mnuMovimientosDeudas.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        mnuMovimientosDeudas.setForeground(new java.awt.Color(1, 1, 1));
+        mnuMovimientosDeudas.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
         mnuMovimientosDeudas.setText("Deuda");
         mnuMovimientosDeudas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -776,8 +766,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         mnuAyuda.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
 
         mnuAyudaAcercaDe.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        mnuAyudaAcercaDe.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        mnuAyudaAcercaDe.setForeground(new java.awt.Color(1, 1, 1));
+        mnuAyudaAcercaDe.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
         mnuAyudaAcercaDe.setText("Acerca de...");
         mnuAyudaAcercaDe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -787,8 +776,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         mnuAyuda.add(mnuAyudaAcercaDe);
 
         mnuAyudaAyuda.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
-        mnuAyudaAyuda.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        mnuAyudaAyuda.setForeground(new java.awt.Color(1, 1, 1));
+        mnuAyudaAyuda.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
         mnuAyudaAyuda.setText("Ayuda...");
         mnuAyudaAyuda.setToolTipText("");
         mnuAyudaAyuda.addActionListener(new java.awt.event.ActionListener() {
@@ -879,7 +867,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         usuario.setVisible(true);
 
     }//GEN-LAST:event_mnuArchivosUsuarioActionPerformed
-    private void mnuArchivosCambioClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuArchivosCambioClaveActionPerformed
+    private void mnuCambioClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCambioClaveActionPerformed
 
         if (cambio == null) {
             cambio = new frmCambioClave(this, true);
@@ -890,7 +878,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         cambio.setLocationRelativeTo(this);
         cambio.setVisible(true);
 
-    }//GEN-LAST:event_mnuArchivosCambioClaveActionPerformed
+    }//GEN-LAST:event_mnuCambioClaveActionPerformed
     private void mnuArchivosCambioUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuArchivosCambioUsuarioActionPerformed
 
         dispose();
@@ -1196,7 +1184,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmProductosActionPerformed
 
     private void jmCambioClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmCambioClaveActionPerformed
-        mnuArchivosCambioClaveActionPerformed(evt);
+        mnuCambioClaveActionPerformed(evt);
     }//GEN-LAST:event_jmCambioClaveActionPerformed
 
     private void jmCambioUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmCambioUsuarioActionPerformed
@@ -1528,7 +1516,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     public static javax.swing.JLabel jLabelImpresion;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     public static javax.swing.JPanel jPanelImpresion;
@@ -1570,7 +1557,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jsEstatus;
     private javax.swing.JTable jtCajero;
     private javax.swing.JMenu mnuArchivos;
-    private javax.swing.JMenuItem mnuArchivosCambioClave;
+    private javax.swing.JMenuItem mnuArchivosAdministracionPrivilegios;
     private javax.swing.JMenuItem mnuArchivosCambioUsuario;
     private javax.swing.JMenuItem mnuArchivosCliente;
     private javax.swing.JMenuItem mnuArchivosProductos;
@@ -1579,6 +1566,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu mnuAyuda;
     private javax.swing.JMenuItem mnuAyudaAcercaDe;
     private javax.swing.JMenuItem mnuAyudaAyuda;
+    private javax.swing.JMenuItem mnuCambioClave;
     private javax.swing.JMenu mnuLicencia;
     private javax.swing.JMenu mnuMovimientos;
     private javax.swing.JMenuItem mnuMovimientosAbrirTurno;
@@ -1603,7 +1591,8 @@ public final class frmPrincipal extends javax.swing.JFrame {
         mnuArchivosCliente.setIcon(icono.getIcono("Clientes 32 x 32.png"));
         mnuArchivosProductos.setIcon(icono.getIcono("Productos 32 x 32.png"));
         mnuArchivosUsuario.setIcon(icono.getIcono("Usuario 32 x 32.png"));
-        mnuArchivosCambioClave.setIcon(icono.getIcono("Cambiar Contraseña 32 x 32.png"));
+        mnuCambioClave.setIcon(icono.getIcono("Cambiar Contraseña 32 x 32.png"));
+        mnuArchivosAdministracionPrivilegios.setIcon(icono.getIcono("Privilegios 32 x 32.png"));
         mnuArchivosCambioUsuario.setIcon(icono.getIcono("Cambio de Usuario 32 x 32.png"));
         mnuArchivosSalir.setIcon(icono.getIcono("Salir 32 x 32.png"));
 

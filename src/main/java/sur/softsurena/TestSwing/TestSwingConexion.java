@@ -17,7 +17,7 @@ public class TestSwingConexion {
 //        TestingUtils.assertSuccessfulReplay(new File("testCliente.stt"));
         
         Tester tester = new Tester();
-        //tester.loadFromFile(new File("testCliente.stt"));
+        tester.loadFromFile(new File("testCliente.stt"));
 
         TestEditor testEditor = new TestEditor(tester);
 

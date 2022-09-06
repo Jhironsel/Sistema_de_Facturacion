@@ -434,8 +434,8 @@
                           <Properties>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                                <LineBorder roundedCorners="true">
-                                  <Color PropertyName="color" blue="ee" green="ee" red="ee" type="rgb"/>
+                                <LineBorder>
+                                  <Color PropertyName="color" blue="df" green="2d" red="25" type="rgb"/>
                                 </LineBorder>
                               </Border>
                             </Property>
@@ -446,12 +446,16 @@
                             <DimensionLayout dim="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="1" attributes="0">
-                                      <EmptySpace max="32767" attributes="0"/>
+                                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jtpDireccionContactos" alignment="0" min="-2" pref="762" max="-2" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="txtCedula" linkSize="10" alignment="0" min="-2" pref="250" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <Component id="txtCedula" min="-2" pref="197" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="btnCedulaValidad" pref="0" max="32767" attributes="0"/>
+                                                  </Group>
                                                   <Component id="txtPNombre" linkSize="10" min="-2" pref="250" max="-2" attributes="0"/>
                                                   <Component id="dchFechaNacimiento" linkSize="10" alignment="0" min="-2" pref="250" max="-2" attributes="0"/>
                                               </Group>
@@ -469,18 +473,19 @@
                                               </Group>
                                           </Group>
                                       </Group>
-                                      <EmptySpace max="32767" attributes="0"/>
+                                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
                             <DimensionLayout dim="1">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <EmptySpace max="32767" attributes="0"/>
+                                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="2" attributes="0">
                                           <Component id="jcbPersona" linkSize="11" alignment="2" min="-2" max="-2" attributes="0"/>
                                           <Component id="txtCedula" linkSize="11" alignment="2" min="-2" pref="34" max="-2" attributes="0"/>
                                           <Component id="cbActivo" linkSize="11" alignment="2" min="-2" pref="52" max="-2" attributes="0"/>
+                                          <Component id="btnCedulaValidad" linkSize="11" alignment="0" min="-2" pref="53" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="-2" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="2" attributes="0">
@@ -496,7 +501,7 @@
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jtpDireccionContactos" max="32767" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
+                                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -825,53 +830,32 @@
                                   <Layout>
                                     <DimensionLayout dim="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
                                               <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="jPanel3" max="32767" attributes="0"/>
+                                                  <Component id="jPanel2" pref="740" max="32767" attributes="0"/>
                                                   <Component id="jScrollPane8" max="32767" attributes="0"/>
-                                                  <Group type="102" alignment="0" attributes="0">
-                                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                                          <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
-                                                          <Component id="txtDireccion" alignment="0" max="32767" attributes="0"/>
-                                                      </Group>
-                                                      <EmptySpace max="-2" attributes="0"/>
-                                                      <Component id="jPanel6" max="32767" attributes="0"/>
-                                                  </Group>
                                               </Group>
-                                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                     </DimensionLayout>
                                     <DimensionLayout dim="1">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
-                                              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
                                               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="txtDireccion" linkSize="12" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jPanel6" linkSize="12" alignment="0" min="-2" pref="42" max="-2" attributes="0"/>
-                                              </Group>
+                                              <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jScrollPane8" pref="179" max="32767" attributes="0"/>
+                                              <Component id="jScrollPane8" pref="184" max="32767" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                     </DimensionLayout>
                                   </Layout>
                                   <SubComponents>
-                                    <Component class="RSMaterialComponent.RSTextFieldMaterialIcon" name="txtDireccion">
-                                      <Properties>
-                                        <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
-                                          <Value id="ADD_LOCATION"/>
-                                        </Property>
-                                        <Property name="name" type="java.lang.String" value="txtDireccion" noResource="true"/>
-                                        <Property name="placeholder" type="java.lang.String" value="Ingrese la direccion residencial"/>
-                                      </Properties>
-                                      <Events>
-                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtDireccionActionPerformed"/>
-                                      </Events>
-                                    </Component>
                                     <Container class="javax.swing.JScrollPane" name="jScrollPane8">
                                       <AuxValues>
                                         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
@@ -935,61 +919,12 @@
                                     </Container>
                                     <Container class="javax.swing.JPanel" name="jPanel2">
 
-                                      <Layout>
-                                        <DimensionLayout dim="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" attributes="0">
-                                                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                                                  <Component id="jcbProvincias" linkSize="6" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                  <Component id="jcbMunicipios" linkSize="6" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                  <Component id="jcbDistritoMunicipal" linkSize="6" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                          </Group>
-                                        </DimensionLayout>
-                                        <DimensionLayout dim="1">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" attributes="0">
-                                                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="jcbDistritoMunicipal" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                                                          <Component id="jcbProvincias" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                          <Component id="jcbMunicipios" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                      </Group>
-                                                  </Group>
-                                                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                                              </Group>
-                                          </Group>
-                                        </DimensionLayout>
+                                      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
+                                        <Property name="columns" type="int" value="3"/>
+                                        <Property name="horizontalGap" type="int" value="6"/>
+                                        <Property name="rows" type="int" value="1"/>
                                       </Layout>
                                       <SubComponents>
-                                        <Component class="RSMaterialComponent.RSComboBox" name="jcbMunicipios">
-                                          <Properties>
-                                            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                                              <Color blue="df" green="2d" red="25" type="rgb"/>
-                                            </Property>
-                                            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                                              <StringArray count="1">
-                                                <StringItem index="0" value="Ingrese Municipio"/>
-                                              </StringArray>
-                                            </Property>
-                                            <Property name="colorFondo" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                                              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                                            </Property>
-                                            <Property name="name" type="java.lang.String" value="jcbMunicipios" noResource="true"/>
-                                            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                                              <ComponentRef name="jcbDistritoMunicipal"/>
-                                            </Property>
-                                          </Properties>
-                                          <Events>
-                                            <EventHandler event="popupMenuWillBecomeInvisible" listener="javax.swing.event.PopupMenuListener" parameters="javax.swing.event.PopupMenuEvent" handler="jcbMunicipiosPopupMenuWillBecomeInvisible"/>
-                                          </Events>
-                                          <AuxValues>
-                                            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
-                                          </AuxValues>
-                                        </Component>
                                         <Component class="RSMaterialComponent.RSComboBox" name="jcbProvincias">
                                           <Properties>
                                             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -1013,6 +948,31 @@
                                           </Events>
                                           <AuxValues>
                                             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
+                                            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
+                                          </AuxValues>
+                                        </Component>
+                                        <Component class="RSMaterialComponent.RSComboBox" name="jcbMunicipios">
+                                          <Properties>
+                                            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                              <Color blue="df" green="2d" red="25" type="rgb"/>
+                                            </Property>
+                                            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                                              <StringArray count="1">
+                                                <StringItem index="0" value="Ingrese Municipio"/>
+                                              </StringArray>
+                                            </Property>
+                                            <Property name="colorFondo" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                                            </Property>
+                                            <Property name="name" type="java.lang.String" value="jcbMunicipios" noResource="true"/>
+                                            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+                                              <ComponentRef name="jcbDistritoMunicipal"/>
+                                            </Property>
+                                          </Properties>
+                                          <Events>
+                                            <EventHandler event="popupMenuWillBecomeInvisible" listener="javax.swing.event.PopupMenuListener" parameters="javax.swing.event.PopupMenuEvent" handler="jcbMunicipiosPopupMenuWillBecomeInvisible"/>
+                                          </Events>
+                                          <AuxValues>
                                             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
                                           </AuxValues>
                                         </Component>
@@ -1043,16 +1003,16 @@
                                         </Component>
                                       </SubComponents>
                                     </Container>
-                                    <Container class="javax.swing.JPanel" name="jPanel6">
+                                    <Container class="javax.swing.JPanel" name="jPanel3">
 
                                       <Layout>
                                         <DimensionLayout dim="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" attributes="0">
                                                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                                                  <Component id="btnAgregarDirecciones" min="-2" pref="52" max="-2" attributes="0"/>
+                                                  <Component id="txtDireccion" max="32767" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="btnEliminarDirrecion" min="-2" pref="53" max="-2" attributes="0"/>
+                                                  <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
@@ -1062,33 +1022,86 @@
                                               <Group type="102" attributes="0">
                                                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                                   <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="btnEliminarDirrecion" alignment="1" min="-2" pref="42" max="-2" attributes="0"/>
-                                                      <Component id="btnAgregarDirecciones" alignment="1" min="-2" pref="42" max="-2" attributes="0"/>
+                                                      <Component id="txtDireccion" linkSize="12" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="jPanel6" linkSize="12" alignment="0" min="-2" max="-2" attributes="0"/>
                                                   </Group>
-                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                         </DimensionLayout>
                                       </Layout>
                                       <SubComponents>
-                                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnEliminarDirrecion">
+                                        <Container class="javax.swing.JPanel" name="jPanel6">
+
+                                          <Layout>
+                                            <DimensionLayout dim="0">
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Group type="102" attributes="0">
+                                                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                                                      <Component id="btnAgregarDirecciones" linkSize="16" min="-2" pref="40" max="-2" attributes="0"/>
+                                                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                                                      <Component id="btnEliminarDirrecion" linkSize="16" min="-2" pref="36" max="-2" attributes="0"/>
+                                                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                                                      <Component id="btnEliminarDirrecion1" linkSize="16" min="-2" pref="36" max="-2" attributes="0"/>
+                                                  </Group>
+                                              </Group>
+                                            </DimensionLayout>
+                                            <DimensionLayout dim="1">
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <Group type="103" groupAlignment="1" attributes="0">
+                                                          <Component id="btnEliminarDirrecion1" linkSize="18" min="-2" pref="42" max="-2" attributes="0"/>
+                                                          <Component id="btnEliminarDirrecion" linkSize="18" alignment="1" min="-2" pref="42" max="-2" attributes="0"/>
+                                                          <Component id="btnAgregarDirecciones" linkSize="18" alignment="1" min="-2" pref="42" max="-2" attributes="0"/>
+                                                      </Group>
+                                                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                                                  </Group>
+                                              </Group>
+                                            </DimensionLayout>
+                                          </Layout>
+                                          <SubComponents>
+                                            <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnEliminarDirrecion">
+                                              <Properties>
+                                                <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                                  <Value id="DELETE"/>
+                                                </Property>
+                                              </Properties>
+                                              <Events>
+                                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarDirrecionActionPerformed"/>
+                                              </Events>
+                                            </Component>
+                                            <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnAgregarDirecciones">
+                                              <Properties>
+                                                <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                                  <Value id="PLUS_ONE"/>
+                                                </Property>
+                                              </Properties>
+                                              <Events>
+                                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarDireccionesActionPerformed"/>
+                                              </Events>
+                                            </Component>
+                                            <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnEliminarDirrecion1">
+                                              <Properties>
+                                                <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                                  <Value id="UNDO"/>
+                                                </Property>
+                                              </Properties>
+                                              <Events>
+                                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarDirrecion1ActionPerformed"/>
+                                              </Events>
+                                            </Component>
+                                          </SubComponents>
+                                        </Container>
+                                        <Component class="RSMaterialComponent.RSTextFieldMaterialIcon" name="txtDireccion">
                                           <Properties>
                                             <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
-                                              <Value id="DELETE"/>
+                                              <Value id="ADD_LOCATION"/>
                                             </Property>
+                                            <Property name="name" type="java.lang.String" value="txtDireccion" noResource="true"/>
+                                            <Property name="placeholder" type="java.lang.String" value="Ingrese la direccion residencial"/>
                                           </Properties>
                                           <Events>
-                                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarDirrecionActionPerformed"/>
-                                          </Events>
-                                        </Component>
-                                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnAgregarDirecciones">
-                                          <Properties>
-                                            <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
-                                              <Value id="PLUS_ONE"/>
-                                            </Property>
-                                          </Properties>
-                                          <Events>
-                                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarDireccionesActionPerformed"/>
+                                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtDireccionActionPerformed"/>
                                           </Events>
                                         </Component>
                                       </SubComponents>
@@ -1151,7 +1164,7 @@
                                                       <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
                                                       <Component id="jPanel8" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
-                                                      <Component id="jScrollPane2" pref="196" max="32767" attributes="0"/>
+                                                      <Component id="jScrollPane2" pref="207" max="32767" attributes="0"/>
                                                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
@@ -1197,9 +1210,11 @@
                                                               <Component id="jrbMovil" max="32767" attributes="0"/>
                                                           </Group>
                                                           <EmptySpace max="-2" attributes="0"/>
-                                                          <Component id="btnAgregarTelefonoMovil" min="-2" pref="48" max="-2" attributes="0"/>
+                                                          <Component id="btnAgregarTelefonoMovil" linkSize="13" min="-2" pref="48" max="-2" attributes="0"/>
                                                           <EmptySpace max="-2" attributes="0"/>
-                                                          <Component id="btnBorrarTelefonoMovil" min="-2" pref="48" max="-2" attributes="0"/>
+                                                          <Component id="btnBorrarTelefonoMovil" linkSize="13" min="-2" pref="48" max="-2" attributes="0"/>
+                                                          <EmptySpace max="-2" attributes="0"/>
+                                                          <Component id="btnEliminarDirrecion2" linkSize="13" min="-2" pref="36" max="-2" attributes="0"/>
                                                           <EmptySpace max="32767" attributes="0"/>
                                                       </Group>
                                                   </Group>
@@ -1213,6 +1228,7 @@
                                                                   <Component id="txtTelelfonoMovil" linkSize="7" alignment="2" min="-2" max="-2" attributes="0"/>
                                                                   <Component id="btnAgregarTelefonoMovil" linkSize="7" alignment="2" min="-2" max="-2" attributes="0"/>
                                                                   <Component id="btnBorrarTelefonoMovil" linkSize="7" alignment="2" min="-2" max="-2" attributes="0"/>
+                                                                  <Component id="btnEliminarDirrecion2" linkSize="7" alignment="2" min="-2" pref="42" max="-2" attributes="0"/>
                                                               </Group>
                                                               <Group type="102" alignment="0" attributes="0">
                                                                   <Component id="jrbMovil" min="-2" max="-2" attributes="0"/>
@@ -1289,6 +1305,16 @@
                                                     <Property name="name" type="java.lang.String" value="jrbTelefonoResidencial" noResource="true"/>
                                                   </Properties>
                                                 </Component>
+                                                <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnEliminarDirrecion2">
+                                                  <Properties>
+                                                    <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                                      <Value id="UNDO"/>
+                                                    </Property>
+                                                  </Properties>
+                                                  <Events>
+                                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarDirrecion2ActionPerformed"/>
+                                                  </Events>
+                                                </Component>
                                               </SubComponents>
                                             </Container>
                                           </SubComponents>
@@ -1315,7 +1341,7 @@
                                                       <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                                                       <Component id="jPanel12" min="-2" pref="45" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
-                                                      <Component id="jScrollPane7" pref="196" max="32767" attributes="0"/>
+                                                      <Component id="jScrollPane7" pref="207" max="32767" attributes="0"/>
                                                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
@@ -1356,26 +1382,28 @@
                                                           <EmptySpace max="-2" attributes="0"/>
                                                           <Component id="txtCorreo" min="-2" pref="310" max="-2" attributes="0"/>
                                                           <EmptySpace max="-2" attributes="0"/>
-                                                          <Component id="btnAgregarCorreo" min="-2" pref="52" max="-2" attributes="0"/>
+                                                          <Component id="btnAgregarCorreo" linkSize="17" min="-2" pref="42" max="-2" attributes="0"/>
                                                           <EmptySpace max="-2" attributes="0"/>
-                                                          <Component id="btnEliminarCorreo" min="-2" pref="53" max="-2" attributes="0"/>
+                                                          <Component id="btnEliminarCorreo" linkSize="17" min="-2" pref="42" max="-2" attributes="0"/>
+                                                          <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                                                          <Component id="btnEliminarDirrecion3" linkSize="17" min="-2" pref="42" max="-2" attributes="0"/>
                                                           <EmptySpace max="32767" attributes="0"/>
                                                       </Group>
                                                   </Group>
                                                 </DimensionLayout>
                                                 <DimensionLayout dim="1">
                                                   <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Group type="102" alignment="1" attributes="0">
-                                                          <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                                                          <Group type="103" groupAlignment="1" attributes="0">
-                                                              <Component id="btnEliminarCorreo" max="32767" attributes="0"/>
-                                                              <Component id="btnAgregarCorreo" max="32767" attributes="0"/>
-                                                              <Group type="102" alignment="0" attributes="0">
-                                                                  <Component id="txtCorreo" min="-2" max="-2" attributes="0"/>
-                                                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                                      <Group type="102" attributes="0">
+                                                          <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
+                                                          <Group type="103" groupAlignment="0" attributes="0">
+                                                              <Group type="103" groupAlignment="2" attributes="0">
+                                                                  <Component id="btnAgregarCorreo" linkSize="15" alignment="2" min="-2" pref="42" max="-2" attributes="0"/>
+                                                                  <Component id="btnEliminarCorreo" linkSize="15" alignment="2" min="-2" pref="42" max="-2" attributes="0"/>
+                                                                  <Component id="btnEliminarDirrecion3" linkSize="15" alignment="2" min="-2" pref="42" max="-2" attributes="0"/>
                                                               </Group>
+                                                              <Component id="txtCorreo" alignment="0" min="-2" max="-2" attributes="0"/>
                                                           </Group>
-                                                          <EmptySpace max="-2" attributes="0"/>
+                                                          <EmptySpace max="32767" attributes="0"/>
                                                       </Group>
                                                   </Group>
                                                 </DimensionLayout>
@@ -1415,6 +1443,16 @@
                                                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCorreoActionPerformed"/>
                                                   </Events>
                                                 </Component>
+                                                <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnEliminarDirrecion3">
+                                                  <Properties>
+                                                    <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                                      <Value id="UNDO"/>
+                                                    </Property>
+                                                  </Properties>
+                                                  <Events>
+                                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarDirrecion3ActionPerformed"/>
+                                                  </Events>
+                                                </Component>
                                               </SubComponents>
                                             </Container>
                                           </SubComponents>
@@ -1425,6 +1463,23 @@
                                 </Container>
                               </SubComponents>
                             </Container>
+                            <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnCedulaValidad">
+                              <Properties>
+                                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                  <Color blue="4b" green="ff" red="0" type="rgb"/>
+                                </Property>
+                                <Property name="toolTipText" type="java.lang.String" value="Verifica la cedula del cliente."/>
+                                <Property name="horizontalAlignment" type="int" value="0"/>
+                                <Property name="horizontalTextPosition" type="int" value="0"/>
+                                <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                  <Value id="VERIFIED_USER"/>
+                                </Property>
+                                <Property name="name" type="java.lang.String" value="btnCedulaValidad" noResource="true"/>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCedulaValidadActionPerformed"/>
+                              </Events>
+                            </Component>
                           </SubComponents>
                         </Container>
                       </SubComponents>
