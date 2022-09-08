@@ -532,7 +532,6 @@ public final class frmClientes extends javax.swing.JInternalFrame {
         jPanel2.setLayout(new java.awt.GridLayout(1, 3, 6, 0));
 
         jcbProvincias.setForeground(new java.awt.Color(37, 45, 223));
-        jcbProvincias.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Ingrese Provincia" }));
         jcbProvincias.setColorFondo(new java.awt.Color(255, 255, 255));
         jcbProvincias.setName("jcbProvincia"); // NOI18N
         jcbProvincias.setNextFocusableComponent(jcbMunicipios);
@@ -548,7 +547,6 @@ public final class frmClientes extends javax.swing.JInternalFrame {
         jPanel2.add(jcbProvincias);
 
         jcbMunicipios.setForeground(new java.awt.Color(37, 45, 223));
-        jcbMunicipios.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Ingrese Municipio" }));
         jcbMunicipios.setColorFondo(new java.awt.Color(255, 255, 255));
         jcbMunicipios.setName("jcbMunicipios"); // NOI18N
         jcbMunicipios.setNextFocusableComponent(jcbDistritoMunicipal);
@@ -564,7 +562,6 @@ public final class frmClientes extends javax.swing.JInternalFrame {
         jPanel2.add(jcbMunicipios);
 
         jcbDistritoMunicipal.setForeground(new java.awt.Color(37, 45, 223));
-        jcbDistritoMunicipal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione distrito" }));
         jcbDistritoMunicipal.setColorFondo(new java.awt.Color(255, 255, 255));
         jcbDistritoMunicipal.setName("jcbDistritoMunicipal"); // NOI18N
         jcbDistritoMunicipal.setNextFocusableComponent(btnAgregarTelefonoMovil);
@@ -946,7 +943,7 @@ public final class frmClientes extends javax.swing.JInternalFrame {
                             .add(jPanel1Layout.createSequentialGroup()
                                 .add(txtCedula, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 197, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(btnCedulaValidad, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                                .add(btnCedulaValidad, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE))
                             .add(txtPNombre, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 250, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                             .add(dchFechaNacimiento, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 250, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
@@ -1150,8 +1147,6 @@ public final class frmClientes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtApellidosActionPerformed
     private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
         llenarTablaClientes();
-//        reOrdenar();
-//        reOrdenarDireccion();
         Direcciones.llenarProvincias(jcbProvincias);
         Personas.llenarPersona(jcbPersona);
         Personas.llenarSexo(jcbSexo);
@@ -1198,9 +1193,13 @@ public final class frmClientes extends javax.swing.JInternalFrame {
         if (validarRegistro()) {
             return;
         }
+        
         nuevo = false;
+        
         cambioBoton(true);
+        
         mostrarRegistro();
+        
         repararColumnaTable(tblCorreos);
         repararColumnaTable(tblDireccion);
         repararColumnaTable(tblTelefonos);
@@ -1270,21 +1269,29 @@ public final class frmClientes extends javax.swing.JInternalFrame {
 
         for (int i = 0; i < tblDireccion.getRowCount(); i++) {
             d[i] = Direcciones.builder().
-                    id_provincia(((Provincias) tblDireccion.getValueAt(i, 0)).getId()).
-                    id_municipio(((Municipios) tblDireccion.getValueAt(i, 1)).getId()).
-                    id_distrito_municipal(((Distritos_municipales) tblDireccion.getValueAt(i, 2)).getId()).
+                    id_provincia(
+                            ((Provincias) tblDireccion.getValueAt(i, 0)).getId()).
+                    id_municipio(
+                            ((Municipios) tblDireccion.getValueAt(i, 1)).getId()).
+                    id_distrito_municipal(
+                            ((Distritos_municipales) tblDireccion.getValueAt(i, 2)).getId()).
                     direccion(tblDireccion.getValueAt(i, 3).toString()).build();
         }
 
         Clientes miCliente = Clientes.builder().
+                id_persona( tblClientes.getSelectedRow()>= 0 ? 
+                        ((Clientes) tblClientes.getValueAt(
+                                tblClientes.getSelectedRow(), 0)).getId_persona() : 0).
                 generales(g).
                 direccion(d).
-                persona(((TipoPersona) jcbPersona.getSelectedItem()).getAbreviatura()).
+                persona(((TipoPersona) 
+                        jcbPersona.getSelectedItem()).getAbreviatura()).
                 sexo(((Sexo) jcbSexo.getSelectedItem()).getAbreviatura()).
                 pNombre(txtPNombre.getText()).
                 sNombre(txtSNombre.getText()).
                 apellidos(txtApellidos.getText()).
-                fecha_nacimiento(new java.sql.Date(dchFechaNacimiento.getDate().getTime())).
+                fecha_nacimiento(new java.sql.Date(
+                        dchFechaNacimiento.getDate().getTime())).
                 estado(cbActivo.isSelected()).build();
 
         String msg, accion = "editar";
@@ -1327,7 +1334,7 @@ public final class frmClientes extends javax.swing.JInternalFrame {
         if (nuevo) {
             msg = agregarCliente(miCliente, ct, ce).getMensaje();
         } else {
-            msg = modificarCliente(miCliente, null).getMensaje();
+            msg = modificarCliente(miCliente, ct, ce).getMensaje();
         }
 
         JOptionPane.showMessageDialog(null, msg);
@@ -1421,6 +1428,7 @@ public final class frmClientes extends javax.swing.JInternalFrame {
 
     private void jcbMunicipiosPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jcbMunicipiosPopupMenuWillBecomeInvisible
         Direcciones.llenarDistritoMunicipal(
+                jcbMunicipios.getSelectedIndex() <= 0 ? 0 :
                 ((Municipios) jcbMunicipios.getSelectedItem()).getId(),
                 jcbDistritoMunicipal);
     }//GEN-LAST:event_jcbMunicipiosPopupMenuWillBecomeInvisible
@@ -1435,10 +1443,8 @@ public final class frmClientes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jcbPersonaPopupMenuWillBecomeInvisible
 
     private void jcbEstadoCivilPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jcbEstadoCivilPopupMenuWillBecomeInvisible
-        LOG.log(Level.INFO, "Entra al metodo");
-        jcbSexo.requestFocusInWindow();
+        jcbSexo.requestFocus();
         jcbSexo.showPopup();
-        LOG.log(Level.INFO, "Terminó...");
     }//GEN-LAST:event_jcbEstadoCivilPopupMenuWillBecomeInvisible
 
     private void btnAgregarCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCorreoActionPerformed
@@ -1475,6 +1481,7 @@ public final class frmClientes extends javax.swing.JInternalFrame {
 
     private void jcbProvinciasPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jcbProvinciasPopupMenuWillBecomeInvisible
         Direcciones.llenarMunicipios(
+                jcbProvincias.getSelectedIndex() <= 0 ? 0 :
                 ((Provincias) jcbProvincias.getSelectedItem()).getId(),
                 jcbMunicipios);
     }//GEN-LAST:event_jcbProvinciasPopupMenuWillBecomeInvisible
@@ -1914,10 +1921,59 @@ public final class frmClientes extends javax.swing.JInternalFrame {
                     privilegio(Privilegios.PRIVILEGIO_UPDATE).
                     nombre_relacion("V_GENERALES").
                     nombre_campo("CEDULA").build();
-
             txtCedula.setEditable(privilegioCampo(p));
+            
+            p = Privilegios.builder().
+                    privilegio(Privilegios.PRIVILEGIO_UPDATE).
+                    nombre_relacion("V_PERSONAS").
+                    nombre_campo("PNOMBRE").build();
             txtPNombre.setEditable(privilegioCampo(p));
+            
+            p = Privilegios.builder().
+                    privilegio(Privilegios.PRIVILEGIO_UPDATE).
+                    nombre_relacion("V_PERSONAS").
+                    nombre_campo("PNOMBRE").build();
+            txtSNombre.setEditable(privilegioCampo(p));
+            
+            p = Privilegios.builder().
+                    privilegio(Privilegios.PRIVILEGIO_UPDATE).
+                    nombre_relacion("V_PERSONAS").
+                    nombre_campo("APELLIDOS").build();
+            txtApellidos.setEditable(privilegioCampo(p));
+            
+            p = Privilegios.builder().
+                    privilegio(Privilegios.PRIVILEGIO_UPDATE).
+                    nombre_relacion("V_PERSONAS").
+                    nombre_campo("FECHA_NACIMIENTO").build();
+            dchFechaNacimiento.setEnabled(privilegioCampo(p));
+            
+            p = Privilegios.builder().
+                    privilegio(Privilegios.PRIVILEGIO_UPDATE).
+                    nombre_relacion("V_PERSONAS").
+                    nombre_campo("PERSONA").build();
+            jcbPersona.setEnabled(privilegioCampo(p));
+            
+            p = Privilegios.builder().
+                    privilegio(Privilegios.PRIVILEGIO_UPDATE).
+                    nombre_relacion("V_GENERALES").
+                    nombre_campo("ESTADO_CIVIL").build();
+            jcbEstadoCivil.setEnabled(privilegioCampo(p));
+            
+            p = Privilegios.builder().
+                    privilegio(Privilegios.PRIVILEGIO_UPDATE).
+                    nombre_relacion("V_PERSONAS").
+                    nombre_campo("SEXO").build();
+            jcbSexo.setEnabled(privilegioCampo(p));
+            
+            
+            p = Privilegios.builder().
+                    privilegio(Privilegios.PRIVILEGIO_UPDATE).
+                    nombre_relacion("V_PERSONAS").
+                    nombre_campo("ESTADO").build();
+            cbActivo.setEnabled(privilegioCampo(p));
+            
             txtPNombre.requestFocus();
+            
         }
         nuevasTablasDirTelCor();
 

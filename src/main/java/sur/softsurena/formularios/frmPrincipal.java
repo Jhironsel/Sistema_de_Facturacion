@@ -3,12 +3,13 @@ package sur.softsurena.formularios;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.beans.PropertyVetoException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -22,21 +23,23 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import static sur.softsurena.conexion.Conexion.getCnn;
+import static sur.softsurena.datos.select.SelectMetodos.getLogo;
+import static sur.softsurena.datos.select.SelectMetodos.getUsuarioActual;
 import static sur.softsurena.datos.select.SelectMetodos.idTurnoActivo;
 import static sur.softsurena.datos.select.SelectMetodos.usuarioTurnoActivo;
 import static sur.softsurena.datos.update.UpdateMetodos.modificarOpcionMensaje;
+import sur.softsurena.datos.updateInsert.UpdateInsertMetodos;
 import sur.softsurena.entidades.DesktopConFondo;
 import sur.softsurena.entidades.Encabezado;
 import sur.softsurena.hilos.hiloIp;
 import sur.softsurena.hilos.hiloRestaurar;
 import sur.softsurena.metodos.Imagenes;
+import sur.softsurena.utilidades.Utilidades;
 
 public final class frmPrincipal extends javax.swing.JFrame {
 
-    private int perfil, returnVal = JFileChooser.CANCEL_OPTION;
-    private String clave, idUsuario, usuarioMaster, source;
     private Imagenes icono;
-    
+
     //Archivos
     private frmClientes cliente;
     private frmProductos productos;
@@ -58,33 +61,36 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private frmCerrarTurno miTurnoACerra;
     private Encabezado encabezado;
 
-    public void setIdUsuario(String idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
-    private String getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setClave(String clave) {
-        this.clave = clave;
-    }
-
-    public void setPerfil(int perfil) {
-        this.perfil = perfil;
-    }
-
-    private int getPerfil() {
-        return perfil;
-    }
 
     public frmPrincipal() {
         initComponents();
-        
+
+        ResultSet u = getUsuarioActual();
+        String rol;
+        try {
+            u.next();
+            jlUser.setText(u.getString(1));
+
+            rol = u.getString(2);
+            if (rol.equalsIgnoreCase("RDB$ADMIN")) {
+                rol = "ADMINISTRADOR";
+            }
+
+            jlRole.setText(rol);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        jMenuBar1.add(filler3);
+        jMenuBar1.add(jlUser);
+        jMenuBar1.add(jlRole);
+
         jPanelImpresion.setVisible(false);
-        
+
         icono = new Imagenes();
         cargarIconos();
+        
+        cargarLogo();
     }
 
     @SuppressWarnings("unchecked")
@@ -94,6 +100,8 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 32767));
         jLabel9 = new javax.swing.JLabel();
+        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
+        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         jPanelImpresion = new javax.swing.JPanel();
         jLabelImpresion = new javax.swing.JLabel();
         jprImpresion = new javax.swing.JProgressBar();
@@ -118,6 +126,8 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jSeparator11 = new javax.swing.JPopupMenu.Separator();
         jmDeuda = new javax.swing.JMenuItem();
         btnOcultarPanel = new javax.swing.JButton();
+        jlUser = new RSMaterialComponent.RSLabelTextIcon();
+        jlRole = new RSMaterialComponent.RSLabelTextIcon();
         jsEstatus = new javax.swing.JScrollPane();
         pEstatus = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -326,6 +336,13 @@ public final class frmPrincipal extends javax.swing.JFrame {
                 btnOcultarPanelActionPerformed(evt);
             }
         });
+
+        jlUser.setText("rSLabelTextIcon1");
+        jlUser.setSizeIcon(32.0F);
+
+        jlRole.setText("sdfsdf");
+        jlRole.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.WORK);
+        jlRole.setSizeIcon(32.0F);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Ventana principal del sistema");
@@ -566,16 +583,16 @@ public final class frmPrincipal extends javax.swing.JFrame {
         pEstatus.setLayout(pEstatusLayout);
         pEstatusLayout.setHorizontalGroup(
             pEstatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pEstatusLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pEstatusLayout.createSequentialGroup()
                 .addGap(12, 12, 12)
-                .addGroup(pEstatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jlLogoEmpresa, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnEstablecerEncabezado, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
-                    .addComponent(btnSeleccionarImpresora, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pEstatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jlLogoEmpresa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEstablecerEncabezado, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
+                    .addComponent(btnSeleccionarImpresora, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(12, 12, 12))
         );
         pEstatusLayout.setVerticalGroup(
@@ -587,7 +604,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
@@ -821,16 +838,16 @@ public final class frmPrincipal extends javax.swing.JFrame {
         if (cliente == null) {
             cliente = new frmClientes();
         }
-        
+
         dpnEscritorio.add(cliente);
-        
+
         try {
             cliente.setMaximum(false);
             cliente.setMaximum(true);
         } catch (PropertyVetoException ex) {
             //Instalar Logger
         }
-        
+
         cliente.btnCancelar.doClick();
         cliente.setVisible(true);
 
@@ -846,7 +863,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         } catch (PropertyVetoException ex) {
             //Instalar Logger
         }
-        
+
         productos.btnCancelar.doClick();
         productos.setVisible(true);
 
@@ -863,7 +880,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         } catch (PropertyVetoException ex) {
             //Instalar Logger
         }
-        
+
         usuario.setVisible(true);
 
     }//GEN-LAST:event_mnuArchivosUsuarioActionPerformed
@@ -873,8 +890,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
             cambio = new frmCambioClave(this, true);
         }
         cambio.limpiar();
-        cambio.setClave(clave);
-        cambio.setUsuario(getIdUsuario());
         cambio.setLocationRelativeTo(this);
         cambio.setVisible(true);
 
@@ -892,7 +907,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuArchivosSalirActionPerformed
     private void mnuMovimientosNuevaFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMovimientosNuevaFacturaActionPerformed
 
-        if (!usuarioTurnoActivo(getIdUsuario())) {
+        if (!usuarioTurnoActivo("CURRENT_USER")) {
 
             JOptionPane.showMessageDialog(this, "Usuario no cuenta con Turno para Facturar...!");
             return;
@@ -987,35 +1002,30 @@ public final class frmPrincipal extends javax.swing.JFrame {
             return;
         }
         int resp = JOptionPane.showConfirmDialog(this,
-                "Desea cambiar el logo de la empresa?", "Confirmacion!!!",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (resp == 1) {
+                "Desea cambiar el logo de la empresa?", 
+                "Confirmacion!!!",
+                JOptionPane.YES_NO_OPTION, 
+                JOptionPane.QUESTION_MESSAGE);
+        
+        if (resp == JOptionPane.NO_OPTION) {
             return;
         }
 
         JFileChooser file = new JFileChooser();
+        
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Imagenes",
                 "jpg", "png", "PNG", "JPG");
+        
         file.setFileFilter(filter);
-        returnVal = file.showOpenDialog(this);
+        
+        resp = file.showOpenDialog(null);
 
-        source = file.getSelectedFile().getAbsolutePath();
 
-        String dest = System.getProperty("user.dir") + "/logo.png";
-        ImageIcon imagen;
-        Icon icon;
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-//            Utilidades.copyFileUsingFileChannels(source, dest);
-//            try {
-//                setLogo(dest);
-//            } catch (SQLException ex) {
-//                //Instalar Logger
-//            }
-            imagen = new ImageIcon(dest);
-            icon = new ImageIcon(imagen.getImage().getScaledInstance(180, 120,
-                    Image.SCALE_DEFAULT));
-            imagen.getImage().flush();
-            jlLogoEmpresa.setIcon(icon);
+        if (resp == JFileChooser.APPROVE_OPTION) {
+            
+            UpdateInsertMetodos.insertLogo(file.getSelectedFile());
+            
+            cargarLogo();
             jlLogoEmpresa.validate();
         }
     }//GEN-LAST:event_jlLogoEmpresaMouseClicked
@@ -1060,8 +1070,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
             return;
         }//Elegir el backup de la base de datos a restaurar...
 
-        usuarioMaster = null;
-        usuarioMaster = JOptionPane.showInputDialog(this,
+        String usuarioMaster = JOptionPane.showInputDialog(this,
                 "Inserte el nombre de Usuario: ", "Usuario...",
                 JOptionPane.INFORMATION_MESSAGE);
 
@@ -1246,16 +1255,16 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
     private void btnOcultarPanelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOcultarPanelActionPerformed
         jsEstatus.setVisible(!jsEstatus.isVisible());
-        
-        if(jsEstatus.isVisible()){
+
+        if (jsEstatus.isVisible()) {
             btnOcultarPanel.setIcon(icono.getIcono("Flecha Izquierda 32 x 32.png"));
-        }else{
+        } else {
             btnOcultarPanel.setIcon(icono.getIcono("Flecha Derecha 32 x 32.png"));
         }
-        
+
         pack();
     }//GEN-LAST:event_btnOcultarPanelActionPerformed
-    
+
     private void imprimirReporte(Date fecha) {
         try {
             String miFile = "sur.softsurena.reportes.repSistemaDeBebida.jasper";
@@ -1435,6 +1444,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 //        }
 //        jMenuBar1.add(jPanelImpresion);
 //    }
+    
     //Movimientos
     private void bebidaR() {
         try {
@@ -1444,7 +1454,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
             //Instalar Logger
         }
 //        bebida.setIdUsuario(getIdUsuario());
-        bebida.setTurno(idTurnoActivo(getIdUsuario()));
+        bebida.setTurno(idTurnoActivo("CURRENT_USER"));
         bebida.setVisible(true);
         bebida.txtCriterio.requestFocusInWindow();
     }
@@ -1453,7 +1463,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
         try {
             deudas.setMaximum(false); //Instalar Logger
             deudas.setMaximum(true);
-            deudas.setIdUsuario(getIdUsuario());
             deudas.setVisible(true);
         } catch (PropertyVetoException ex) {
             Logger.getLogger(frmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
@@ -1503,84 +1512,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         }
         System.gc();
     }
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu Archivos;
-    private javax.swing.JMenu Movimientos;
-    private javax.swing.JButton btnEstablecerEncabezado;
-    private javax.swing.JButton btnOcultarPanel;
-    private javax.swing.JButton btnSeleccionarImpresora;
-    public static javax.swing.JDesktopPane dpnEscritorio;
-    private javax.swing.Box.Filler filler1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel9;
-    public static javax.swing.JLabel jLabelImpresion;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    public static javax.swing.JPanel jPanelImpresion;
-    private javax.swing.JPopupMenu jPopupMenu1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JPopupMenu.Separator jSeparator10;
-    private javax.swing.JPopupMenu.Separator jSeparator11;
-    private javax.swing.JPopupMenu.Separator jSeparator12;
-    private javax.swing.JPopupMenu.Separator jSeparator2;
-    private javax.swing.JPopupMenu.Separator jSeparator3;
-    private javax.swing.JPopupMenu.Separator jSeparator4;
-    private javax.swing.JPopupMenu.Separator jSeparator5;
-    private javax.swing.JPopupMenu.Separator jSeparator6;
-    private javax.swing.JPopupMenu.Separator jSeparator7;
-    private javax.swing.JPopupMenu.Separator jSeparator8;
-    private javax.swing.JPopupMenu.Separator jSeparator9;
-    private javax.swing.JLabel jlGetIP;
-    private javax.swing.JLabel jlGrafica;
-    private javax.swing.JLabel jlLogoEmpresa;
-    private javax.swing.JLabel jlMovimientoES;
-    private javax.swing.JLabel jlRespaldar;
-    private javax.swing.JLabel jlRestauracion;
-    private javax.swing.JLabel jlRestaurar;
-    private javax.swing.JMenuItem jmAbrirTurno;
-    private javax.swing.JMenuItem jmCambioClave;
-    private javax.swing.JMenuItem jmCambioUsuario;
-    private javax.swing.JMenuItem jmCerrarTurno;
-    private javax.swing.JMenuItem jmClientes;
-    private javax.swing.JMenuItem jmDeuda;
-    private javax.swing.JMenuItem jmInventario;
-    private javax.swing.JMenuItem jmNuevaFactura;
-    private javax.swing.JMenuItem jmProductos;
-    private javax.swing.JMenuItem jmReporteFactura;
-    private javax.swing.JMenuItem jmSalir;
-    private javax.swing.JMenuItem jmUsuarios;
-    public static javax.swing.JProgressBar jprImpresion;
-    private javax.swing.JScrollPane jsEstatus;
-    private javax.swing.JTable jtCajero;
-    private javax.swing.JMenu mnuArchivos;
-    private javax.swing.JMenuItem mnuArchivosAdministracionPrivilegios;
-    private javax.swing.JMenuItem mnuArchivosCambioUsuario;
-    private javax.swing.JMenuItem mnuArchivosCliente;
-    private javax.swing.JMenuItem mnuArchivosProductos;
-    private javax.swing.JMenuItem mnuArchivosSalir;
-    private javax.swing.JMenuItem mnuArchivosUsuario;
-    private javax.swing.JMenu mnuAyuda;
-    private javax.swing.JMenuItem mnuAyudaAcercaDe;
-    private javax.swing.JMenuItem mnuAyudaAyuda;
-    private javax.swing.JMenuItem mnuCambioClave;
-    private javax.swing.JMenu mnuLicencia;
-    private javax.swing.JMenu mnuMovimientos;
-    private javax.swing.JMenuItem mnuMovimientosAbrirTurno;
-    private javax.swing.JMenuItem mnuMovimientosCerrarTurno;
-    private javax.swing.JMenuItem mnuMovimientosDeudas;
-    private javax.swing.JMenuItem mnuMovimientosInventario;
-    public static javax.swing.JMenuItem mnuMovimientosNuevaFactura;
-    private javax.swing.JMenuItem mnuMovimientosReporteFactura;
-    private javax.swing.JPanel pEstatus;
-    private javax.swing.JFormattedTextField txtCosto;
-    private javax.swing.JFormattedTextField txtGanancia;
-    private javax.swing.JFormattedTextField txtVenta;
-    // End of variables declaration//GEN-END:variables
-
+    
     private void cargarIconos() {
         //Iconos de menus de opciones.
         mnuArchivos.setIcon(icono.getIcono("Archivos 32 x 32.png"));
@@ -1629,4 +1561,94 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
         btnOcultarPanel.setIcon(icono.getIcono("Flecha Izquierda 32 x 32.png"));
     }
+    private void cargarLogo() {
+        
+        ImageIcon img = new ImageIcon(
+                Utilidades.imagenDecode64(getLogo())
+                        .getImage()
+                        .getScaledInstance(330, 155, Image.SCALE_AREA_AVERAGING));
+        
+        jlLogoEmpresa.setIcon(img);
+    }
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu Archivos;
+    private javax.swing.JMenu Movimientos;
+    private javax.swing.JButton btnEstablecerEncabezado;
+    private javax.swing.JButton btnOcultarPanel;
+    private javax.swing.JButton btnSeleccionarImpresora;
+    public static javax.swing.JDesktopPane dpnEscritorio;
+    private javax.swing.Box.Filler filler1;
+    private javax.swing.Box.Filler filler2;
+    private javax.swing.Box.Filler filler3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel9;
+    public static javax.swing.JLabel jLabelImpresion;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    public static javax.swing.JPanel jPanelImpresion;
+    private javax.swing.JPopupMenu jPopupMenu1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator10;
+    private javax.swing.JPopupMenu.Separator jSeparator11;
+    private javax.swing.JPopupMenu.Separator jSeparator12;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JPopupMenu.Separator jSeparator4;
+    private javax.swing.JPopupMenu.Separator jSeparator5;
+    private javax.swing.JPopupMenu.Separator jSeparator6;
+    private javax.swing.JPopupMenu.Separator jSeparator7;
+    private javax.swing.JPopupMenu.Separator jSeparator8;
+    private javax.swing.JPopupMenu.Separator jSeparator9;
+    private javax.swing.JLabel jlGetIP;
+    private javax.swing.JLabel jlGrafica;
+    private javax.swing.JLabel jlLogoEmpresa;
+    private javax.swing.JLabel jlMovimientoES;
+    private javax.swing.JLabel jlRespaldar;
+    private javax.swing.JLabel jlRestauracion;
+    private javax.swing.JLabel jlRestaurar;
+    private RSMaterialComponent.RSLabelTextIcon jlRole;
+    private RSMaterialComponent.RSLabelTextIcon jlUser;
+    private javax.swing.JMenuItem jmAbrirTurno;
+    private javax.swing.JMenuItem jmCambioClave;
+    private javax.swing.JMenuItem jmCambioUsuario;
+    private javax.swing.JMenuItem jmCerrarTurno;
+    private javax.swing.JMenuItem jmClientes;
+    private javax.swing.JMenuItem jmDeuda;
+    private javax.swing.JMenuItem jmInventario;
+    private javax.swing.JMenuItem jmNuevaFactura;
+    private javax.swing.JMenuItem jmProductos;
+    private javax.swing.JMenuItem jmReporteFactura;
+    private javax.swing.JMenuItem jmSalir;
+    private javax.swing.JMenuItem jmUsuarios;
+    public static javax.swing.JProgressBar jprImpresion;
+    private javax.swing.JScrollPane jsEstatus;
+    private javax.swing.JTable jtCajero;
+    private javax.swing.JMenu mnuArchivos;
+    private javax.swing.JMenuItem mnuArchivosAdministracionPrivilegios;
+    private javax.swing.JMenuItem mnuArchivosCambioUsuario;
+    private javax.swing.JMenuItem mnuArchivosCliente;
+    private javax.swing.JMenuItem mnuArchivosProductos;
+    private javax.swing.JMenuItem mnuArchivosSalir;
+    private javax.swing.JMenuItem mnuArchivosUsuario;
+    private javax.swing.JMenu mnuAyuda;
+    private javax.swing.JMenuItem mnuAyudaAcercaDe;
+    private javax.swing.JMenuItem mnuAyudaAyuda;
+    private javax.swing.JMenuItem mnuCambioClave;
+    private javax.swing.JMenu mnuLicencia;
+    private javax.swing.JMenu mnuMovimientos;
+    private javax.swing.JMenuItem mnuMovimientosAbrirTurno;
+    private javax.swing.JMenuItem mnuMovimientosCerrarTurno;
+    private javax.swing.JMenuItem mnuMovimientosDeudas;
+    private javax.swing.JMenuItem mnuMovimientosInventario;
+    public static javax.swing.JMenuItem mnuMovimientosNuevaFactura;
+    private javax.swing.JMenuItem mnuMovimientosReporteFactura;
+    private javax.swing.JPanel pEstatus;
+    private javax.swing.JFormattedTextField txtCosto;
+    private javax.swing.JFormattedTextField txtGanancia;
+    private javax.swing.JFormattedTextField txtVenta;
+    // End of variables declaration//GEN-END:variables
 }

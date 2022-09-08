@@ -358,6 +358,11 @@ public final class frmLogin extends javax.swing.JFrame {
         String rol = comboBox.getSelectedItem().toString();
 
         cerrarConexion();
+        
+        if (rol.equalsIgnoreCase("ADMINISTRADOR")) {
+            rol = "RDB$ADMIN";
+        }
+        
 
         conexion = Conexion.getInstance(
                 txtUsuario.getText(),
@@ -379,10 +384,6 @@ public final class frmLogin extends javax.swing.JFrame {
                     "Error a registrar los eventos...",
                     "Validación de procesos", JOptionPane.ERROR_MESSAGE);
             return;
-        }
-
-        if (rol.equalsIgnoreCase("ADMINISTRADOR")) {
-            rol = "RDB$ADMIN";
         }
 
         //Reconectarse con el rol seleccionado por el usuario. 
@@ -426,8 +427,6 @@ public final class frmLogin extends javax.swing.JFrame {
             principal = new frmPrincipal();
         }
 
-        principal.setIdUsuario(txtUsuario.getText());
-        principal.setClave(new String(txtClave.getPassword()));
         principal.cerrarFormularios();
         principal.setVisible(true);
         principal.setExtendedState(JFrame.MAXIMIZED_BOTH);

@@ -7,17 +7,6 @@ import sur.softsurena.metodos.Imagenes;
 
 public class frmCambioClave extends javax.swing.JDialog {
 
-    private String clave;
-    private String usuario;
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
-
-    public void setClave(String clave) {
-        this.clave = clave;
-    }
-
     public frmCambioClave(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -286,13 +275,6 @@ public class frmCambioClave extends javax.swing.JDialog {
             return;
         }
 
-        if (!actual.equals(clave)) {
-            JOptionPane.showMessageDialog(rootPane,
-                    "La clave no corresponde a la clave del Usuario ingresado");
-            txtActual.setText("");
-            txtActual.requestFocusInWindow();
-            return;
-        }
         if (!nueva.equals(confirmacion)) {
             JOptionPane.showMessageDialog(rootPane,
                     "La Clave y la confirmacion no Coinciden...");
@@ -304,7 +286,7 @@ public class frmCambioClave extends javax.swing.JDialog {
         }
 
         //Cambiamos la Clave
-        cambioClave(usuario, nueva);
+        cambioClave(nueva);
         JOptionPane.showMessageDialog(rootPane,
                 "Clave Cambiada...");
         this.dispose();

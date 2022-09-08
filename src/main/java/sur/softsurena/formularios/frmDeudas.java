@@ -25,17 +25,8 @@ public class frmDeudas extends javax.swing.JInternalFrame {
     private int cliAct = 0;
     private boolean nuevo;
     private DefaultTableModel miTabla;
-    private String idUsuario;
     private final JButton button;
     private final DefaultTableCellRenderer tcr;
-
-    public String getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(String idUsuario) {
-        this.idUsuario = idUsuario;
-    }
 
     public frmDeudas() {
         
