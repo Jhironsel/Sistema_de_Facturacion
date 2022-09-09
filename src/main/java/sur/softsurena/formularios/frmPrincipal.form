@@ -725,8 +725,8 @@
                 <Property name="toolTipText" type="java.lang.String" value="Doble click para cambiar el logo"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                    <TitledBorder title="Seleccione Logo">
-                      <Font PropertyName="font" name="Ubuntu" size="14" style="0"/>
+                    <TitledBorder title="Logo de la empresa">
+                      <Font PropertyName="font" name="FreeSans" size="12" style="0"/>
                     </TitledBorder>
                   </Border>
                 </Property>
@@ -751,7 +751,7 @@
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                         <TitledBorder title="Ganancias">
-                          <Font PropertyName="font" name="DejaVu Sans" size="12" style="0"/>
+                          <Font PropertyName="font" name="FreeSans" size="12" style="0"/>
                         </TitledBorder>
                       </Border>
                     </Property>
@@ -768,7 +768,7 @@
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                         <TitledBorder title="Costo del Inventario">
-                          <Font PropertyName="font" name="DejaVu Sans" size="12" style="0"/>
+                          <Font PropertyName="font" name="FreeSans" size="12" style="0"/>
                         </TitledBorder>
                       </Border>
                     </Property>
@@ -785,7 +785,7 @@
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                         <TitledBorder title="Proyecci&#xf3;n de venta">
-                          <Font PropertyName="font" name="DejaVu Sans" size="12" style="0"/>
+                          <Font PropertyName="font" name="FreeSans" size="12" style="0"/>
                         </TitledBorder>
                       </Border>
                     </Property>

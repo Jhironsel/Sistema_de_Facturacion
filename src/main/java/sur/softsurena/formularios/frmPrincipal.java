@@ -61,7 +61,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private frmCerrarTurno miTurnoACerra;
     private Encabezado encabezado;
 
-
     public frmPrincipal() {
         initComponents();
 
@@ -89,7 +88,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
         icono = new Imagenes();
         cargarIconos();
-        
+
         cargarLogo();
     }
 
@@ -369,7 +368,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
         jlLogoEmpresa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlLogoEmpresa.setToolTipText("Doble click para cambiar el logo");
-        jlLogoEmpresa.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Seleccione Logo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Ubuntu", 0, 14))); // NOI18N
+        jlLogoEmpresa.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Logo de la empresa", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("FreeSans", 0, 12))); // NOI18N
         jlLogoEmpresa.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jlLogoEmpresa.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jlLogoEmpresa.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -381,21 +380,21 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jPanel2.setLayout(new java.awt.GridLayout(3, 1, 0, 5));
 
         txtGanancia.setEditable(false);
-        txtGanancia.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ganancias", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("DejaVu Sans", 0, 12))); // NOI18N
+        txtGanancia.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ganancias", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("FreeSans", 0, 12))); // NOI18N
         txtGanancia.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("¤#,##0.00"))));
         txtGanancia.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtGanancia.setToolTipText("");
         jPanel2.add(txtGanancia);
 
         txtCosto.setEditable(false);
-        txtCosto.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Costo del Inventario", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("DejaVu Sans", 0, 12))); // NOI18N
+        txtCosto.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Costo del Inventario", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("FreeSans", 0, 12))); // NOI18N
         txtCosto.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("¤#,##0.00"))));
         txtCosto.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtCosto.setToolTipText("");
         jPanel2.add(txtCosto);
 
         txtVenta.setEditable(false);
-        txtVenta.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Proyección de venta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("DejaVu Sans", 0, 12))); // NOI18N
+        txtVenta.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Proyección de venta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("FreeSans", 0, 12))); // NOI18N
         txtVenta.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("¤#,##0.00"))));
         txtVenta.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtVenta.setToolTipText("");
@@ -839,18 +838,21 @@ public final class frmPrincipal extends javax.swing.JFrame {
             cliente = new frmClientes();
         }
 
-        dpnEscritorio.add(cliente);
+        if (cliente != null) {
+            if (!dpnEscritorio.isAncestorOf(cliente)) {
+                dpnEscritorio.add(cliente);
+            }
 
-        try {
-            cliente.setMaximum(false);
-            cliente.setMaximum(true);
-        } catch (PropertyVetoException ex) {
-            //Instalar Logger
+            try {
+                cliente.setMaximum(false);
+                cliente.setMaximum(true);
+            } catch (PropertyVetoException ex) {
+                //Instalar Logger
+            }
+
+            cliente.btnCancelar.doClick();
+            cliente.setVisible(true);
         }
-
-        cliente.btnCancelar.doClick();
-        cliente.setVisible(true);
-
     }//GEN-LAST:event_mnuArchivosClienteActionPerformed
     private void mnuArchivosProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuArchivosProductosActionPerformed
         if (productos == null) {
@@ -1002,29 +1004,28 @@ public final class frmPrincipal extends javax.swing.JFrame {
             return;
         }
         int resp = JOptionPane.showConfirmDialog(this,
-                "Desea cambiar el logo de la empresa?", 
+                "Desea cambiar el logo de la empresa?",
                 "Confirmacion!!!",
-                JOptionPane.YES_NO_OPTION, 
+                JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE);
-        
+
         if (resp == JOptionPane.NO_OPTION) {
             return;
         }
 
         JFileChooser file = new JFileChooser();
-        
+
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Imagenes",
                 "jpg", "png", "PNG", "JPG");
-        
+
         file.setFileFilter(filter);
-        
+
         resp = file.showOpenDialog(null);
 
-
         if (resp == JFileChooser.APPROVE_OPTION) {
-            
+
             UpdateInsertMetodos.insertLogo(file.getSelectedFile());
-            
+
             cargarLogo();
             jlLogoEmpresa.validate();
         }
@@ -1444,7 +1445,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
 //        }
 //        jMenuBar1.add(jPanelImpresion);
 //    }
-    
     //Movimientos
     private void bebidaR() {
         try {
@@ -1512,7 +1512,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         }
         System.gc();
     }
-    
+
     private void cargarIconos() {
         //Iconos de menus de opciones.
         mnuArchivos.setIcon(icono.getIcono("Archivos 32 x 32.png"));
@@ -1561,13 +1561,14 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
         btnOcultarPanel.setIcon(icono.getIcono("Flecha Izquierda 32 x 32.png"));
     }
+
     private void cargarLogo() {
-        
+
         ImageIcon img = new ImageIcon(
                 Utilidades.imagenDecode64(getLogo())
                         .getImage()
                         .getScaledInstance(330, 155, Image.SCALE_AREA_AVERAGING));
-        
+
         jlLogoEmpresa.setIcon(img);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

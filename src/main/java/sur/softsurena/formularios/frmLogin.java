@@ -59,6 +59,7 @@ public final class frmLogin extends javax.swing.JFrame {
         setTitle("Login de Sistema Comercial");
         setFocusTraversalPolicyProvider(true);
         setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png"));
+        setUndecorated(true);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {

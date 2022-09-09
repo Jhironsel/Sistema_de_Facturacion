@@ -1,6 +1,8 @@
 package sur.softsurena.formularios;
 
 import java.awt.Color;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import static sur.softsurena.datos.alter.AlterMetodos.cambioClave;
 import sur.softsurena.metodos.Imagenes;
@@ -20,60 +22,62 @@ public class frmCambioClave extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jlFoto = new javax.swing.JLabel();
-        txtActual = new RSMaterialComponent.RSPasswordIconOne();
         txtNueva = new RSMaterialComponent.RSPasswordIconOne();
         txtConfirmacion = new RSMaterialComponent.RSPasswordIconOne();
         btnCancelar = new RSMaterialComponent.RSButtonMaterialIconOne();
         btnAceptar = new RSMaterialComponent.RSButtonMaterialIconOne();
         panel1 = new necesario.Panel();
-        start1 = new necesario.LabelIcon();
-        start2 = new necesario.LabelIcon();
-        start3 = new necesario.LabelIcon();
-        start4 = new necesario.LabelIcon();
-        start5 = new necesario.LabelIcon();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        start1 = new necesario.LabelIcon();
+        start2 = new necesario.LabelIcon();
+        start3 = new necesario.LabelIcon();
+        start4 = new necesario.LabelIcon();
+        start5 = new necesario.LabelIcon();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cambio de Clave");
+        setUndecorated(true);
         setResizable(false);
 
         jlFoto.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jlFoto.setDoubleBuffered(true);
 
-        txtActual.setColorIcon(new java.awt.Color(255, 0, 0));
-        txtActual.setPlaceholder("Ingrese contraseña actual");
-        txtActual.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtActualActionPerformed(evt);
+        txtNueva.setDoubleBuffered(true);
+        txtNueva.setPlaceholder("Ingrese nueva contraseña");
+        txtNueva.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtNuevaCaretUpdate(evt);
             }
         });
-
-        txtNueva.setPlaceholder("Ingrese nueva contraseña");
         txtNueva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNuevaActionPerformed(evt);
             }
         });
-        txtNueva.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtNuevaKeyReleased(evt);
-            }
-        });
 
         txtConfirmacion.setColorIcon(new java.awt.Color(102, 255, 0));
+        txtConfirmacion.setDoubleBuffered(true);
         txtConfirmacion.setPlaceholder("Confirme clave anterior");
         txtConfirmacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtConfirmacionActionPerformed(evt);
             }
         });
+        txtConfirmacion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtConfirmacionKeyReleased(evt);
+            }
+        });
 
         btnCancelar.setBackground(new java.awt.Color(204, 0, 51));
         btnCancelar.setText("Cancelar");
+        btnCancelar.setDoubleBuffered(true);
         btnCancelar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CANCEL);
         btnCancelar.setThemeTooltip(necesario.Global.THEMETOOLTIP.LIGHT);
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -83,6 +87,7 @@ public class frmCambioClave extends javax.swing.JDialog {
         });
 
         btnAceptar.setText("Aceptar");
+        btnAceptar.setDoubleBuffered(true);
         btnAceptar.setEnabled(false);
         btnAceptar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CHECK);
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
@@ -92,34 +97,51 @@ public class frmCambioClave extends javax.swing.JDialog {
         });
 
         panel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Medidor de contraseñas"));
-        panel1.setOpaque(false);
-
-        start1.setForeground(new java.awt.Color(255, 255, 0));
-        start1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
-
-        start2.setForeground(new java.awt.Color(255, 255, 0));
-        start2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
-
-        start3.setForeground(new java.awt.Color(255, 255, 0));
-        start3.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
-
-        start4.setForeground(new java.awt.Color(255, 255, 0));
-        start4.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
-
-        start5.setForeground(new java.awt.Color(255, 255, 0));
-        start5.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
 
         jLabel1.setText("1) Debe contener minusculas");
+        jLabel1.setDoubleBuffered(true);
 
         jLabel2.setText("2) Debe contener mayusculas");
+        jLabel2.setDoubleBuffered(true);
 
         jLabel3.setText("3) Debe contener numeros");
+        jLabel3.setDoubleBuffered(true);
 
         jLabel4.setText("4) Debe contener minimo 10");
+        jLabel4.setDoubleBuffered(true);
 
         jLabel5.setText("5) Debe contener caracter");
+        jLabel5.setDoubleBuffered(true);
 
         jLabel6.setText("especial");
+        jLabel6.setDoubleBuffered(true);
+
+        jPanel2.setLayout(new java.awt.GridLayout(1, 5, 10, 0));
+
+        start1.setDoubleBuffered(true);
+        start1.setFont(new java.awt.Font("FreeSans", 0, 12)); // NOI18N
+        start1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
+        jPanel2.add(start1);
+
+        start2.setDoubleBuffered(true);
+        start2.setFont(new java.awt.Font("FreeSans", 0, 12)); // NOI18N
+        start2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
+        jPanel2.add(start2);
+
+        start3.setDoubleBuffered(true);
+        start3.setFont(new java.awt.Font("FreeSans", 0, 12)); // NOI18N
+        start3.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
+        jPanel2.add(start3);
+
+        start4.setDoubleBuffered(true);
+        start4.setFont(new java.awt.Font("FreeSans", 0, 12)); // NOI18N
+        start4.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
+        jPanel2.add(start4);
+
+        start5.setDoubleBuffered(true);
+        start5.setFont(new java.awt.Font("FreeSans", 0, 12)); // NOI18N
+        start5.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
+        jPanel2.add(start5);
 
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
         panel1.setLayout(panel1Layout);
@@ -128,38 +150,27 @@ public class frmCambioClave extends javax.swing.JDialog {
             .addGroup(panel1Layout.createSequentialGroup()
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel1Layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panel1Layout.createSequentialGroup()
-                                .addComponent(start1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(start2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(start3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(start4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(start5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)))
-                    .addGroup(panel1Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addContainerGap()
+                                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5)))
+                            .addGroup(panel1Layout.createSequentialGroup()
+                                .addGap(40, 40, 40)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         panel1Layout.setVerticalGroup(
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(start5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(start4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(start3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(start2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(start1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -172,7 +183,7 @@ public class frmCambioClave extends javax.swing.JDialog {
                 .addComponent(jLabel5)
                 .addGap(0, 0, 0)
                 .addComponent(jLabel6)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -180,38 +191,34 @@ public class frmCambioClave extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtConfirmacion, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
-                        .addComponent(txtNueva, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtActual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(6, 6, 6)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtConfirmacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtNueva, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jlFoto, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
                     .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtActual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtNueva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtConfirmacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jlFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -220,31 +227,25 @@ public class frmCambioClave extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 1, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 2, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtActualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtActualActionPerformed
-        txtNueva.requestFocusInWindow();
-    }//GEN-LAST:event_txtActualActionPerformed
 
     private void txtNuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNuevaActionPerformed
         txtConfirmacion.requestFocusInWindow();
     }//GEN-LAST:event_txtNuevaActionPerformed
 
     private void txtConfirmacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtConfirmacionActionPerformed
-        btnAceptarActionPerformed(evt);
+        btnAceptar.doClick();
     }//GEN-LAST:event_txtConfirmacionActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -252,16 +253,9 @@ public class frmCambioClave extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        String actual = new String(txtActual.getPassword());
         String nueva = new String(txtNueva.getPassword());
         String confirmacion = new String(txtConfirmacion.getPassword());
-
-        if (actual.equals("")) {
-            JOptionPane.showMessageDialog(rootPane,
-                    "Debe de Ingresar Clave Actual...");
-            txtActual.requestFocusInWindow();
-            return;
-        }
+        
         if (nueva.equals("")) {
             JOptionPane.showMessageDialog(rootPane,
                     "Debe ingresar Clave Nueva...");
@@ -278,10 +272,8 @@ public class frmCambioClave extends javax.swing.JDialog {
         if (!nueva.equals(confirmacion)) {
             JOptionPane.showMessageDialog(rootPane,
                     "La Clave y la confirmacion no Coinciden...");
-            txtActual.setText("");
             txtConfirmacion.setText("");
             txtNueva.setText("");
-            txtActual.requestFocusInWindow();
             return;
         }
 
@@ -292,89 +284,108 @@ public class frmCambioClave extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
-    private int[] condiciones = {0, 0, 0, 0, 0};
-    private void txtNuevaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNuevaKeyReleased
+
+    private void txtNuevaCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtNuevaCaretUpdate
         /*Si el tamaño del campo es cero se colocan todas las estrellas vacias*/
-        if (txtNueva.getPassword().length == 0) {
+        if (txtNueva.getPassword().length <= 1) {
             start1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
             start2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
             start3.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
             start4.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
             start5.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
-            return;
         }
 
-        for (char c : txtNueva.getPassword()) {
+        if (txtNueva.getPassword().length > 2 && txtNueva.getPassword().length < 4) {
+            start1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_HALF);
+            start2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
+            start3.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
+            start4.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
+            start5.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
+        }
 
-            if (c > 48 && c < 57) {
-                if(condiciones[0] == 0){
-                    condiciones[0] = 10;
-                }
-                if(condiciones[0] == 10){
-                    condiciones[0] = 20;
-                }
-            }
+        if (txtNueva.getPassword().length > 4 && txtNueva.getPassword().length < 6) {
+            start1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR);
+            start2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_HALF);
+            start3.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
+            start4.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
+            start5.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
+        }
 
-            if (c > 65 && c < 90) {
-                if(condiciones[1] == 0){
-                    condiciones[1] = 10;
-                }
-                if(condiciones[1] == 10){
-                    condiciones[1] = 20;
-                }
-            }
+        if (txtNueva.getPassword().length > 6 && txtNueva.getPassword().length < 8) {
+            start1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR);
+            start2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR);
+            start3.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
+            start4.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
+            start5.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
+        }
 
-            if (c > 97 && c < 122) {
-                if(condiciones[2] == 0){
-                    condiciones[2] = 10;
-                }
-                if(condiciones[2] == 10){
-                    condiciones[2] = 20;
-                }
-            }
+        if (txtNueva.getPassword().length == 8) {
+            start1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR);
+            start2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR);
+            start3.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_HALF);
+            start4.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
+            start5.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
 
-            if (txtNueva.getPassword().length > 9) {
-                if(condiciones[3] == 0){
-                    condiciones[3] = 10;
-                }
-                if(condiciones[3] == 10){
-                    condiciones[3] = 20;
-                }
-            }
+        }
 
-            if (c > 32 || c < 48
-                    || c > 57 || c < 65
-                    || c > 90 || c < 97
-                    || c > 122 || c < 126) {
-                if(condiciones[4] == 0){
-                    condiciones[4] = 10;
-                }
-                if(condiciones[4] == 10){
-                    condiciones[4] = 20;
-                }else{
-                    condiciones[4] = 0;
-                }
+        for (char c : txtNueva.getPassword()) {//Digitos 1-9
+            if (c > 48 && c < 57 && txtNueva.getPassword().length > 8) {
+                start1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR);
+                start2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR);
+                start3.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR);
+                start4.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
+                start5.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
             }
         }
-        
-        
 
-        start1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR);
-        start2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR);
-        start3.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR);
-        start4.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR);
-        start5.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR);
-    }//GEN-LAST:event_txtNuevaKeyReleased
+        for (char c : txtNueva.getPassword()) {//Mayusculas
+            if (c > 65 && c < 90 && txtNueva.getPassword().length > 8) {
+                start1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR);
+                start2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR);
+                start3.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR);
+                start4.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_HALF);
+                start5.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
+            }
+        }
+
+        for (char c : txtNueva.getPassword()) {//Minusculas
+            if (c > 97 && c < 122 && txtNueva.getPassword().length > 8) {
+                start1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR);
+                start2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR);
+                start3.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR);
+                start4.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR);
+                start5.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
+            }
+        }
+
+        String regex = "^(?=.*\\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\\w\\d\\s:])([^\\s]){8,16}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(String.valueOf(txtNueva.getPassword()));
+
+        if (matcher.find()) {
+            start1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR);
+            start2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR);
+            start3.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR);
+            start4.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR);
+            start5.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR);
+        }
+
+        update(this.getGraphics());
+    }//GEN-LAST:event_txtNuevaCaretUpdate
+
+    private void txtConfirmacionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtConfirmacionKeyReleased
+        if(txtConfirmacion.getPassword().length == txtNueva.getPassword().length){
+            btnAceptar.setEnabled(true);
+        }else{
+            btnAceptar.setEnabled(false);
+        }
+    }//GEN-LAST:event_txtConfirmacionKeyReleased
     public void limpiar() {
-        txtActual.setText("");
         txtConfirmacion.setText("");
         txtNueva.setText("");
-        txtActual.requestFocusInWindow();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private RSMaterialComponent.RSButtonMaterialIconOne btnAceptar;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnAceptar1;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnAceptar2;
     private RSMaterialComponent.RSButtonMaterialIconOne btnCancelar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -383,6 +394,7 @@ public class frmCambioClave extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel jlFoto;
     private necesario.Panel panel1;
     private necesario.LabelIcon start1;
@@ -390,7 +402,6 @@ public class frmCambioClave extends javax.swing.JDialog {
     private necesario.LabelIcon start3;
     private necesario.LabelIcon start4;
     private necesario.LabelIcon start5;
-    private RSMaterialComponent.RSPasswordIconOne txtActual;
     private RSMaterialComponent.RSPasswordIconOne txtConfirmacion;
     private RSMaterialComponent.RSPasswordIconOne txtNueva;
     // End of variables declaration//GEN-END:variables

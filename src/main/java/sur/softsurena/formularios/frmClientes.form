@@ -33,10 +33,6 @@
           <ComponentRef name="jcbPersona"/>
         </Property>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCedula2ActionPerformed"/>
-        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCedula2KeyReleased"/>
-      </Events>
     </Component>
   </NonVisualComponents>
   <Properties>
@@ -906,7 +902,6 @@
                                             </Property>
                                             <Property name="columnSelectionAllowed" type="boolean" value="true"/>
                                             <Property name="name" type="java.lang.String" value="tblDireccion" noResource="true"/>
-                                            <Property name="showVerticalLines" type="boolean" value="false"/>
                                             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                                               <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
                                             </Property>
@@ -1080,9 +1075,6 @@
                                                   <Value id="UNDO"/>
                                                 </Property>
                                               </Properties>
-                                              <Events>
-                                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarDirrecion1ActionPerformed"/>
-                                              </Events>
                                             </Component>
                                           </SubComponents>
                                         </Container>
@@ -1305,9 +1297,6 @@
                                                       <Value id="UNDO"/>
                                                     </Property>
                                                   </Properties>
-                                                  <Events>
-                                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarDirrecion2ActionPerformed"/>
-                                                  </Events>
                                                 </Component>
                                               </SubComponents>
                                             </Container>
@@ -1443,9 +1432,6 @@
                                                       <Value id="UNDO"/>
                                                     </Property>
                                                   </Properties>
-                                                  <Events>
-                                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarDirrecion3ActionPerformed"/>
-                                                  </Events>
                                                 </Component>
                                               </SubComponents>
                                             </Container>

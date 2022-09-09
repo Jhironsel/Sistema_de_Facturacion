@@ -27,7 +27,7 @@ public class Rapido {
 
         testEditor.open();
 
-        tester.replayAll();
+        //tester.replayAll();
 
         
     }
