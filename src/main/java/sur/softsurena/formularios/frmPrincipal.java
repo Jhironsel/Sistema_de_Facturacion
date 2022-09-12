@@ -44,6 +44,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private frmClientes cliente;
     private frmProductos productos;
     private frmUsuarios usuario;
+    private frmPriviledios privilegios;
 
     //Movimientos
     private frmFacturas bebida;
@@ -679,6 +680,11 @@ public final class frmPrincipal extends javax.swing.JFrame {
         mnuArchivosAdministracionPrivilegios.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         mnuArchivosAdministracionPrivilegios.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
         mnuArchivosAdministracionPrivilegios.setText("Administración de Privilegios...");
+        mnuArchivosAdministracionPrivilegios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuArchivosAdministracionPrivilegiosActionPerformed(evt);
+            }
+        });
         mnuArchivos.add(mnuArchivosAdministracionPrivilegios);
         mnuArchivos.add(jSeparator12);
 
@@ -1266,6 +1272,28 @@ public final class frmPrincipal extends javax.swing.JFrame {
         pack();
     }//GEN-LAST:event_btnOcultarPanelActionPerformed
 
+    private void mnuArchivosAdministracionPrivilegiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuArchivosAdministracionPrivilegiosActionPerformed
+        if (privilegios == null) {
+            privilegios = new frmPriviledios();
+        }
+
+        if (privilegios != null) {
+            if (!dpnEscritorio.isAncestorOf(privilegios)) {
+                dpnEscritorio.add(privilegios);
+            }
+
+            try {
+                privilegios.setMaximum(false);
+                privilegios.setMaximum(true);
+            } catch (PropertyVetoException ex) {
+                //Instalar Logger
+            }
+
+            privilegios.setVisible(true);
+        }
+        
+    }//GEN-LAST:event_mnuArchivosAdministracionPrivilegiosActionPerformed
+
     private void imprimirReporte(Date fecha) {
         try {
             String miFile = "sur.softsurena.reportes.repSistemaDeBebida.jasper";
@@ -1453,7 +1481,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         } catch (PropertyVetoException ex) {
             //Instalar Logger
         }
-//        bebida.setIdUsuario(getIdUsuario());
+        
         bebida.setTurno(idTurnoActivo("CURRENT_USER"));
         bebida.setVisible(true);
         bebida.txtCriterio.requestFocusInWindow();

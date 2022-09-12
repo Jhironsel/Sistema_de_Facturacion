@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import javax.swing.JOptionPane;
-import sur.softsurena.entidades.Usuario;
+import sur.softsurena.entidades.Usuarios;
 import sur.softsurena.utilidades.Utilidades;
 
 public class frmSolicitudFecha extends javax.swing.JDialog {
@@ -342,7 +342,7 @@ public class frmSolicitudFecha extends javax.swing.JDialog {
                 + "FROM TABLA_USUARIOS r "
                 + "WHERE r.ESTADO = 1 AND r.BORRADO LIKE 'n'";
 
-        Usuario user = Usuario.builder().
+        Usuarios user = Usuarios.builder().
                 user_name("").
                 pNombre("").
                 sNombre("").
@@ -354,7 +354,7 @@ public class frmSolicitudFecha extends javax.swing.JDialog {
 
         try {
             while (rs.next()) {
-                user = Usuario.builder().
+                user = Usuarios.builder().
                 user_name("").
                 pNombre("").
                 sNombre("").

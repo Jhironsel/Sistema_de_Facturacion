@@ -404,6 +404,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Administraci&#xf3;n de Privilegios..."/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuArchivosAdministracionPrivilegiosActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator12">
             </MenuItem>

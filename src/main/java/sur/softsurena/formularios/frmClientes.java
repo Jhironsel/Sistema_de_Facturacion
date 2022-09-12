@@ -63,6 +63,7 @@ public final class frmClientes extends javax.swing.JInternalFrame {
     private Object registroDireccion[] = new Object[titulosDireccion.length];
     private Privilegios p;
 
+    
     public frmClientes() {
         //Ver el formulario
         p = Privilegios.builder().
@@ -91,13 +92,14 @@ public final class frmClientes extends javax.swing.JInternalFrame {
         boolean contactoTel = privilegioTabla(p);
         
         if(!(generales && personas && direcciones && contactoEmail && contactoTel)){
+            String mensaje = "No cuenta con permisos para ver la información de este módulo.";
             JOptionPane.showInternalMessageDialog(
                     this, 
-                    "No cuenta con permisos para ver la información de este módulo.", 
+                    mensaje, 
                     "Validación de proceso", 
                     JOptionPane.WARNING_MESSAGE);
-            throw new ExceptionInInitializerError("No puede visualizar la información de este módulo.");
-        }
+            throw new ExceptionInInitializerError(mensaje);
+        }//---------FIN
         
         initComponents();
 
@@ -121,7 +123,10 @@ public final class frmClientes extends javax.swing.JInternalFrame {
         });
 
         //Mantenimiento oculto por defecto. 
-        jtpUnico.setEnabledAt(jtpUnico.indexOfComponent(jspMantenimiento), false);
+        jtpUnico.setEnabledAt(
+                jtpUnico.indexOfComponent(
+                        jspMantenimiento), 
+                false);
 
         nuevasTablasDirTelCor();
         
@@ -181,7 +186,7 @@ public final class frmClientes extends javax.swing.JInternalFrame {
         contactoTel = privilegioTabla(p);
         
         btnBorrar.setEnabled(generales && personas && direcciones && 
-                contactoEmail && contactoTel);
+                contactoEmail && contactoTel);//-------------FIN
         
         //------------Actualizar registros
         
@@ -211,9 +216,7 @@ public final class frmClientes extends javax.swing.JInternalFrame {
         contactoTel = privilegioTabla(p);
         
         btnModificar.setEnabled(generales && personas && direcciones && 
-                contactoEmail && contactoTel);
-        
-        
+                contactoEmail && contactoTel);//------FIN
     }
 
     @SuppressWarnings("unchecked")
@@ -1266,14 +1269,14 @@ public final class frmClientes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtApellidosKeyReleased
 
     private void txtCedulaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaKeyReleased
-        char caracter = evt.getKeyChar();
-
-        if (caracter == '-') {
-            return;
-        }
-        if (caracter < '0' || (caracter > '9')) {
-            evt.consume();  // ignorar el evento de teclado
-        }
+//        char caracter = evt.getKeyChar();
+//
+//        if (caracter == '-') {
+//            return;
+//        }
+//        if (caracter < '0' || (caracter > '9')) {
+//            evt.consume();  // ignorar el evento de teclado
+//        }
     }//GEN-LAST:event_txtCedulaKeyReleased
 
     private void txtSNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSNombreActionPerformed
@@ -1308,29 +1311,34 @@ public final class frmClientes extends javax.swing.JInternalFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         if (txtCedula.getValue().toString().isBlank()
                 || txtCedula.getValue().toString().isEmpty()) {
-            JOptionPane.showMessageDialog(null,
+            JOptionPane.showMessageDialog(
+                    null,
                     "Debe digitar la cedula del cliente");
-            txtCedula.requestFocusInWindow();
+            txtCedula.requestFocus();
             return;
         }
+        
         if (txtPNombre.getText().isBlank() || txtPNombre.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null,
                     "Debe digitar un nombre...");
             txtPNombre.requestFocusInWindow();
             return;
         }
+        
         if (txtApellidos.getText().isBlank() || txtApellidos.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null,
                     "Debe digitar un apellido...");
             txtApellidos.requestFocusInWindow();
             return;
         }
+        
         if (tblDireccion.getRowCount() < 1) {
             JOptionPane.showMessageDialog(null,
                     "Debe digitar una direccion del cliente.");
             txtDireccion.requestFocus();
             return;
         }
+        
         if (dchFechaNacimiento.getDate() == null) {
             JOptionPane.showMessageDialog(null,
                     "Debe indicar una fecha de nacimiento.");
@@ -1349,21 +1357,34 @@ public final class frmClientes extends javax.swing.JInternalFrame {
         if (nuevo) {
 
             if (existeCliente(txtCedula.getValue().toString())) {
-                JOptionPane.showMessageDialog(null, "Cliente Ya existe...");
+                //Preguntar si desea carga la data desde la base de datos.
+                JOptionPane.showMessageDialog(
+                        null, 
+                        "Cliente Ya existe...");
+                
+                //Carga la informacion del cliente que se trata de registrar
                 return;
             }
 
         } else if (!existeCliente(txtCedula.getValue().toString())) {
 
-            JOptionPane.showMessageDialog(null, "Cliente NO existe...");
-            txtCedula.requestFocusInWindow();
-            return;
+            int resp = JOptionPane.showConfirmDialog(
+                    null, 
+                    "Desea editar la cedula de cliente.",
+                    "Validación de procesos",
+                    JOptionPane.YES_NO_OPTION);
+            
+            if(resp == JOptionPane.NO_OPTION) return;
+            
 
         }
 
         Generales g = Generales.builder().
                 cedula(txtCedula.getValue().toString()).
-                estado_civil(((EstadoCivil) jcbEstadoCivil.getSelectedItem()).getAbreviatura()).build();
+                estado_civil(
+                        ((EstadoCivil) 
+                                jcbEstadoCivil.getSelectedItem())
+                                .getAbreviatura()).build();
 
         Direcciones[] d = new Direcciones[tblDireccion.getRowCount()];
 
@@ -1484,15 +1505,20 @@ public final class frmClientes extends javax.swing.JInternalFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         txtCedula2.setValue(null);
 
-        int resp = JOptionPane.showInternalConfirmDialog(this,
-                txtCedula2, "Buscar cliente por su cedula", JOptionPane.YES_NO_OPTION);
+        int resp = JOptionPane.showInternalConfirmDialog(
+                this,
+                txtCedula2, 
+                "Buscar cliente por su cedula", 
+                JOptionPane.YES_NO_OPTION);
 
         if (resp == JOptionPane.NO_OPTION) {
             return;
         }
-
+        
         if (!existeCliente(txtCedula2.getText())) {
-            JOptionPane.showMessageDialog(null, "El Cliente No Existe");
+            JOptionPane.showMessageDialog(
+                    null, 
+                    "El Cliente No Existe");
             return;
         }
 
@@ -2049,11 +2075,12 @@ public final class frmClientes extends javax.swing.JInternalFrame {
                     nombre_relacion("V_PERSONAS").
                     nombre_campo("ESTADO").build();
             cbActivo.setEnabled(privilegioCampo(p) || privilegioTabla(p));
+            
+            txtPNombre.requestFocus();
         }
         
         nuevasTablasDirTelCor();
         
-        txtPNombre.requestFocus();
     }
 
     private void nuevasTablasDirTelCor() {

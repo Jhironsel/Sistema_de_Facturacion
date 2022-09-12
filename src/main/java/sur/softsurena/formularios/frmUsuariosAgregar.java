@@ -3,8 +3,9 @@ package sur.softsurena.formularios;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
-import static sur.softsurena.datos.select.SelectMetodos.existeUsuario;
-import sur.softsurena.entidades.Usuario;
+import static sur.softsurena.datos.select.SelectMetodos.getRoles;
+import sur.softsurena.entidades.Usuarios;
+import static sur.softsurena.datos.select.SelectMetodos.existeUsuarioByUserName;
 
 public class frmUsuariosAgregar extends javax.swing.JDialog {
 
@@ -21,7 +22,7 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
 
     /*Este constructor es utilizado para cuando se vá a modificar un usuario,
     en el se inicianlizan todos los campos de formulario*/
-    public frmUsuariosAgregar(java.awt.Frame parent, boolean modal, Usuario u) {
+    public frmUsuariosAgregar(java.awt.Frame parent, boolean modal, Usuarios u) {
         super(parent, modal);
         initComponents();
         
@@ -382,7 +383,7 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
             return;
         }
 
-        if (existeUsuario(txtIDUsuario.getText()) && nuevo) {
+        if (existeUsuarioByUserName(txtIDUsuario.getText()) && nuevo) {
             int r = JOptionPane.showConfirmDialog(this,
                     "Usuario ya existe. \n\nDesea recuperar el usuario?",
                     "Proceso de verificación",
@@ -405,7 +406,7 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
         }
 
         //Creamos el Objeto Usuario y los agregamos a Datos
-        Usuario miUsuario = Usuario.builder().
+        Usuarios miUsuario = Usuarios.builder().
                 user_name(txtIDUsuario.getText()).
                 pNombre(txtPNombre.getText()).
                 sNombre(txtSNombre.getText()).
@@ -443,8 +444,7 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
     }//GEN-LAST:event_txtSNombreActionPerformed
 
     private void llenarCombo() {
-//        ResultSet rs = getRoles();
-        ResultSet rs = null;
+        ResultSet rs = getRoles();
         cmbRol.removeAllItems();
         cmbRol.addItem("Seleccionar un rol");
         try {

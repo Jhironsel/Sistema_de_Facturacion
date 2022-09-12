@@ -8,7 +8,7 @@ import static sur.softsurena.datos.procedure.ProcedureMetodos.habilitarTurno;
 import static sur.softsurena.datos.select.SelectMetodos.getUsuarios;
 import static sur.softsurena.datos.select.SelectMetodos.usuarioTurnoActivo;
 import sur.softsurena.entidades.Opcion;
-import sur.softsurena.entidades.Usuario;
+import sur.softsurena.entidades.Usuarios;
 
 public class frmAbrilTurno extends java.awt.Dialog {
 
@@ -183,7 +183,7 @@ public class frmAbrilTurno extends java.awt.Dialog {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        Usuario usuario = Usuario.builder().
+        Usuarios usuario = Usuarios.builder().
                 user_name("N/A").
                 pNombre("Seleccione un Usuario").
                 sNombre("").
@@ -195,7 +195,7 @@ public class frmAbrilTurno extends java.awt.Dialog {
             while (rs.next()) {
                 
                 if(rs.getBoolean("O_ESTADO_ACTIVO")){
-                    usuario = Usuario.builder().
+                    usuario = Usuarios.builder().
                             user_name(rs.getString("O_USER_NAME")).
                             pNombre(rs.getString("O_PRIMER_NOMBRE")).
                             sNombre(rs.getString("p.O_SEGUNDO_NOMBRE")).

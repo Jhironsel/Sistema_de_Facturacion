@@ -48,6 +48,15 @@ public class FirebirdEventos extends FBEventManager{
                         + event.getEventCount() + " time(s)");
                 frmClientes.llenarTablaClientes();
             });
+            
+            addEventListener("upd_cient", (DatabaseEvent event) -> {
+                LOG.info("Event ["
+                        + event.getEventName() + "] occured "
+                        + event.getEventCount() + " time(s)");
+                frmClientes.llenarTablaClientes();
+            });
+            
+            
                         
         } catch (SQLException ex) {
             LOG.log(Level.SEVERE, ex.getMessage(), ex);

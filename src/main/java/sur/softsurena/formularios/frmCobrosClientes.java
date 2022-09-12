@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
-import sur.softsurena.datos.select.SelectMetodos;
+import static sur.softsurena.datos.select.SelectMetodos.*;
 import sur.softsurena.entidades.Clientes;
 import sur.softsurena.hilos.hiloImpresionFactura;
 import sur.softsurena.utilidades.Utilidades;
@@ -382,7 +382,7 @@ public class frmCobrosClientes extends javax.swing.JDialog {
                     sNombre("").
                     apellidos("").build();
             cmbCliente.addItem(c);
-            ResultSet rsCli = SelectMetodos.getClientesTablaSB();
+            ResultSet rsCli = getClientesTablaSB();
             while (rsCli.next()) {
                 c = Clientes.builder().
                     id_persona(rsCli.getInt("ID")).

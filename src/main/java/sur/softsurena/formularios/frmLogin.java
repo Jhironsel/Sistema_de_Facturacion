@@ -55,11 +55,10 @@ public final class frmLogin extends javax.swing.JFrame {
         btnAceptar = new RSMaterialComponent.RSButtonMaterialIconOne();
         btnParametros = new RSMaterialComponent.RSButtonMaterialIconOne();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login de Sistema Comercial");
         setFocusTraversalPolicyProvider(true);
         setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png"));
-        setUndecorated(true);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
