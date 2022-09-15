@@ -37,6 +37,23 @@ public class frmPriviledios extends javax.swing.JInternalFrame {
         jpDefRoles = new javax.swing.JPanel();
 
         setTitle("Mantenimiento de Usuarios, Roles y Permisos");
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
+            }
+        });
 
         jtpPrivilegios.setTabPlacement(javax.swing.JTabbedPane.LEFT);
 
@@ -312,18 +329,24 @@ public class frmPriviledios extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+        llenarTabla();
+    }//GEN-LAST:event_formInternalFrameOpened
+
     private void llenarTabla() {
         tblTabla.removeAll();
         try {
-            String titulos[] = {"ID Usuario", "Nombres", "Apellidos", "Perfil",
-                "Delega", "Estado"};
+            String titulos[] = {"Nombre usuario", "Primer Nombre", 
+                "Segundo Nombre", "Apellidos", "Descripción", "Administrador", 
+                "Estado"};
 
-            Object registro[] = new Object[6];
+            Object registro[] = new Object[titulos.length];
 
-            DefaultTableModel miTabla = new DefaultTableModel(null, titulos) {
+            DefaultTableModel miTabla = new DefaultTableModel(null, 
+                    titulos) {
                 @Override
                 public Class<?> getColumnClass(int column) {
-                    if (column == 5 || column == 4) {
+                    if (column == 5 || column == 6) {
                         return Boolean.class;
                     } else {
                         return String.class;
@@ -334,14 +357,14 @@ public class frmPriviledios extends javax.swing.JInternalFrame {
             ResultSet rs = getUsuarios() ;
 
             while (rs.next()) {
-                registro[0] = rs.getString("IDUSUARIO").trim();
-                registro[1] = rs.getString("NOMBREUNO").trim();
-                registro[2] = rs.getString("APELLIDOS").trim();
-                registro[3] = rs.getString("ROL").trim().equalsIgnoreCase("RDB$ADMIN")
-                        ? "ADMINISTRADOR" : rs.getString("ROL").trim();
-                registro[4] = rs.getBoolean("AUTORIZADO");
-                registro[5] = rs.getBoolean("ESTADO");
-
+                registro[0] = rs.getString("USER_NAME");
+                registro[1] = rs.getString("PNOMBRE");
+                registro[2] = rs.getString("SNOMBRE");
+                registro[3] = rs.getString("APELLIDOS");
+                registro[4] = rs.getString("DESCRIPCION");
+                registro[5] = rs.getBoolean("ADMINISTRADOR");
+                registro[6] = rs.getBoolean("ESTADO");
+                
                 miTabla.addRow(registro);
             }
             tblTabla.setModel(miTabla);

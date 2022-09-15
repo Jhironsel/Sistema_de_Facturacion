@@ -334,10 +334,6 @@ public final class frmLogin extends javax.swing.JFrame {
 
         roles = comprobandoRol(txtUsuario.getText().trim());
 
-        if (txtUsuario.getText().trim().equalsIgnoreCase("sysdba")) {
-            roles.add("ADMINISTRADOR");
-        }
-
         if (roles == null) {
             cerrarConexion();
             JOptionPane.showMessageDialog(this, "El usuario no cuenta con rol en el sistema");
@@ -345,9 +341,13 @@ public final class frmLogin extends javax.swing.JFrame {
         }
 
         JComboBox<String> comboBox = new JComboBox(roles.toArray());
+        comboBox.setName("jcbRoles");
 
         if (roles.size() > 1) {
-            int resp = JOptionPane.showConfirmDialog(null, comboBox, "Seleccione un rol",
+            int resp = JOptionPane.showConfirmDialog(
+                    null, 
+                    comboBox, 
+                    "Seleccione un rol",
                     JOptionPane.YES_NO_OPTION);
 
             if (resp == JOptionPane.NO_OPTION) {
