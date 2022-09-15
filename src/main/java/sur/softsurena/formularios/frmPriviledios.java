@@ -1,13 +1,22 @@
 package sur.softsurena.formularios;
 
+import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import static sur.softsurena.datos.select.SelectMetodos.getUsuarios;
+import sur.softsurena.entidades.Usuarios;
+import static sur.softsurena.utilidades.Utilidades.repararColumnaTable;
 
 public class frmPriviledios extends javax.swing.JInternalFrame {
+
+    private DefaultTableModel miTabla;
+    private static final Logger LOG = Logger.getLogger(frmPriviledios.class.getName());
 
     public frmPriviledios() {
         initComponents();
@@ -25,7 +34,20 @@ public class frmPriviledios extends javax.swing.JInternalFrame {
             public boolean isCellEditable(int rowIndex, int colIndex) { 
                 return false; //Las celdas no son editables. 
             }
+
+            @Override
+            public String getToolTipText(MouseEvent e) {
+                String tip = null;
+                java.awt.Point p = e.getPoint();
+                int rowIndex = rowAtPoint(p);
+                int colIndex = columnAtPoint(p);
+                int realColumnIndex = convertColumnIndexToModel(colIndex);
+                TableModel model = getModel();
+                tip = ((Usuarios) model.getValueAt(rowIndex, 0)).getDescripcion();
+                return tip;
+            }
         };
+        ;
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -36,6 +58,10 @@ public class frmPriviledios extends javax.swing.JInternalFrame {
         jpMantRoles = new javax.swing.JPanel();
         jpDefRoles = new javax.swing.JPanel();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
         setTitle("Mantenimiento de Usuarios, Roles y Permisos");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
@@ -234,31 +260,32 @@ public class frmPriviledios extends javax.swing.JInternalFrame {
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         if (tblTabla.getSelectedRow() == -1) {
             JOptionPane.showInternalMessageDialog(
-                    null, 
+                    null,
                     "Debes seleccionar un usuario.");
             return;
         }
 
         //        frmUsuariosAgregar u = new frmUsuariosAgregar(null, true,
-            //                new Usuario(
-                //                        tblTabla.getValueAt(tblTabla.getSelectedRow(), 0).toString().trim(),
-                //                        tblTabla.getValueAt(tblTabla.getSelectedRow(), 1).toString().trim(),
-                //                        tblTabla.getValueAt(tblTabla.getSelectedRow(), 2).toString().trim(),
-                //                        null,
-                //                        tblTabla.getValueAt(tblTabla.getSelectedRow(), 3).toString().trim(),
-                //                        (Boolean) tblTabla.getValueAt(tblTabla.getSelectedRow(), 5),
-                //                        (Boolean) tblTabla.getValueAt(tblTabla.getSelectedRow(), 4)
-                //                ));
+        //                new Usuario(
+        //                        tblTabla.getValueAt(tblTabla.getSelectedRow(), 0).toString().trim(),
+        //                        tblTabla.getValueAt(tblTabla.getSelectedRow(), 1).toString().trim(),
+        //                        tblTabla.getValueAt(tblTabla.getSelectedRow(), 2).toString().trim(),
+        //                        null,
+        //                        tblTabla.getValueAt(tblTabla.getSelectedRow(), 3).toString().trim(),
+        //                        (Boolean) tblTabla.getValueAt(tblTabla.getSelectedRow(), 5),
+        //                        (Boolean) tblTabla.getValueAt(tblTabla.getSelectedRow(), 4)
+        //                ));
         //        u.setLocationRelativeTo(this);
         //        u.setVisible(true);
         llenarTabla();
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
-        int rta = JOptionPane.showConfirmDialog(this,
-            "Esta seguro de eliminar Usuario",
-            "Confirmacion!!!",
-            JOptionPane.YES_NO_OPTION);
+        int rta = JOptionPane.showConfirmDialog(
+                this,
+                "Esta seguro de eliminar Usuario",
+                "Confirmacion!!!",
+                JOptionPane.YES_NO_OPTION);
 
         if (rta == JOptionPane.NO_OPTION) {
             return;
@@ -287,11 +314,11 @@ public class frmPriviledios extends javax.swing.JInternalFrame {
 
         try {
             //            msg = borrarUsuario(tblTabla.getValueAt(tblTabla.getSelectedRow(), 0).
-                //                    toString().trim(), rol);
+            //                    toString().trim(), rol);
         } catch (Exception ex) {
             msg = "Usuario no fue eliminado porque existen \n"
-            + "registros en el sistema";
-            //Instalar Logger
+                    + "registros en el sistema";
+            LOG.log(Level.SEVERE, "Error al borrar usuarios del sistema.", ex);
         }
 
         //        JOptionPane.showMessageDialog(rootPane, msg);
@@ -301,16 +328,16 @@ public class frmPriviledios extends javax.swing.JInternalFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         String usuario = JOptionPane.showInputDialog(
-            "Ingrese el Codigo de Usuario");
+                "Ingrese el Codigo de Usuario");
 
         if (usuario == null || usuario.equals("")) {
             return;
         }
 
         //        if (!existeUsuario(usuario)) {
-            //            JOptionPane.showMessageDialog(rootPane, "El Usuario No Existe");
-            //            return;
-            //        }
+        //            JOptionPane.showMessageDialog(rootPane, "El Usuario No Existe");
+        //            return;
+        //        }
         //Detalle de Factura
         int num = tblTabla.getRowCount();
         for (int i = 0; i < num; i++) {
@@ -336,41 +363,46 @@ public class frmPriviledios extends javax.swing.JInternalFrame {
     private void llenarTabla() {
         tblTabla.removeAll();
         try {
-            String titulos[] = {"Nombre usuario", "Primer Nombre", 
-                "Segundo Nombre", "Apellidos", "Descripción", "Administrador", 
-                "Estado"};
+            String titulos[] = {"Nombre usuario", "Primer Nombre",
+                "Segundo Nombre", "Apellidos", "Administrador", "Estado"};
 
             Object registro[] = new Object[titulos.length];
 
-            DefaultTableModel miTabla = new DefaultTableModel(null, 
+            miTabla = new DefaultTableModel(null,
                     titulos) {
                 @Override
                 public Class<?> getColumnClass(int column) {
-                    if (column == 5 || column == 6) {
+                    if (column == 5 || column == 4) {
                         return Boolean.class;
                     } else {
                         return String.class;
                     }
                 }
+                
+                
             };
-            
-            ResultSet rs = getUsuarios() ;
+
+            ResultSet rs = getUsuarios();
 
             while (rs.next()) {
-                registro[0] = rs.getString("USER_NAME");
+                Usuarios u = Usuarios.builder().
+                        user_name(rs.getString("USER_NAME")).
+                        descripcion(rs.getString("DESCRIPCION"))
+                        .build();
+                registro[0] = u;
                 registro[1] = rs.getString("PNOMBRE");
                 registro[2] = rs.getString("SNOMBRE");
                 registro[3] = rs.getString("APELLIDOS");
-                registro[4] = rs.getString("DESCRIPCION");
-                registro[5] = rs.getBoolean("ADMINISTRADOR");
-                registro[6] = rs.getBoolean("ESTADO");
-                
+                registro[4] = rs.getBoolean("ADMINISTRADOR");
+                registro[5] = rs.getBoolean("ESTADO");
                 miTabla.addRow(registro);
             }
             tblTabla.setModel(miTabla);
         } catch (SQLException ex) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, "Error al construir la tabla de usuarios", ex);
         }
+        
+        repararColumnaTable(tblTabla);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

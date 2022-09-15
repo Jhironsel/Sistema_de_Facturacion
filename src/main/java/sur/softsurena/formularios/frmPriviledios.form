@@ -2,6 +2,10 @@
 
 <Form version="1.6" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
   <Properties>
+    <Property name="closable" type="boolean" value="true"/>
+    <Property name="iconifiable" type="boolean" value="true"/>
+    <Property name="maximizable" type="boolean" value="true"/>
+    <Property name="resizable" type="boolean" value="true"/>
     <Property name="title" type="java.lang.String" value="Mantenimiento de Usuarios, Roles y Permisos"/>
   </Properties>
   <SyntheticProperties>
@@ -106,7 +110,7 @@
                     </Property>
                   </Properties>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JTable(){&#xd;&#xa;@Override&#xd;&#xa;public boolean isCellEditable(int rowIndex, int colIndex) { &#xd;&#xa;return false; //Las celdas no son editables. &#xd;&#xa;}&#xd;&#xa;};"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JTable(){&#xd;&#xa;@Override&#xd;&#xa;public boolean isCellEditable(int rowIndex, int colIndex) { &#xd;&#xa;    return false; //Las celdas no son editables. &#xd;&#xa;}&#xd;&#xa;&#xd;&#xa;@Override&#xd;&#xa;public String getToolTipText(MouseEvent e) {&#xd;&#xa;    String tip = null;&#xd;&#xa;    java.awt.Point p = e.getPoint();&#xd;&#xa;    int rowIndex = rowAtPoint(p);&#xd;&#xa;    int colIndex = columnAtPoint(p);&#xd;&#xa;    int realColumnIndex = convertColumnIndexToModel(colIndex);&#xd;&#xa;    TableModel model = getModel();&#xd;&#xa;    tip = ((Usuarios) model.getValueAt(rowIndex, 0)).getDescripcion();&#xd;&#xa;    return tip;&#xd;&#xa;}&#xd;&#xa;};&#xd;&#xa;"/>
                   </AuxValues>
                 </Component>
               </SubComponents>

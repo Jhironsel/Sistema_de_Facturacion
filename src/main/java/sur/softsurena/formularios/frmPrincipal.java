@@ -43,7 +43,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
     //Archivos
     private frmClientes cliente;
     private frmProductos productos;
-    private frmUsuarios usuario;
     private frmPriviledios privilegios;
 
     //Movimientos
@@ -109,7 +108,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
         Archivos = new javax.swing.JMenu();
         jmClientes = new javax.swing.JMenuItem();
         jmProductos = new javax.swing.JMenuItem();
-        jmUsuarios = new javax.swing.JMenuItem();
         jSeparator7 = new javax.swing.JPopupMenu.Separator();
         jmCambioClave = new javax.swing.JMenuItem();
         jmCambioUsuario = new javax.swing.JMenuItem();
@@ -158,7 +156,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
         mnuArchivos = new javax.swing.JMenu();
         mnuArchivosCliente = new javax.swing.JMenuItem();
         mnuArchivosProductos = new javax.swing.JMenuItem();
-        mnuArchivosUsuario = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         mnuCambioClave = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
@@ -228,15 +225,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
             }
         });
         Archivos.add(jmProductos);
-
-        jmUsuarios.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        jmUsuarios.setText("Usuarios");
-        jmUsuarios.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmUsuariosActionPerformed(evt);
-            }
-        });
-        Archivos.add(jmUsuarios);
         Archivos.add(jSeparator7);
 
         jmCambioClave.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
@@ -652,17 +640,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
             }
         });
         mnuArchivos.add(mnuArchivosProductos);
-
-        mnuArchivosUsuario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, 0));
-        mnuArchivosUsuario.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
-        mnuArchivosUsuario.setMnemonic('U');
-        mnuArchivosUsuario.setText("Usuarios ...");
-        mnuArchivosUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuArchivosUsuarioActionPerformed(evt);
-            }
-        });
-        mnuArchivos.add(mnuArchivosUsuario);
         mnuArchivos.add(jSeparator1);
 
         mnuCambioClave.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
@@ -876,22 +853,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
         productos.setVisible(true);
 
     }//GEN-LAST:event_mnuArchivosProductosActionPerformed
-    private void mnuArchivosUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuArchivosUsuarioActionPerformed
-
-        if (usuario == null) {
-            usuario = new frmUsuarios();
-            dpnEscritorio.add(usuario);
-        }
-        try {
-            usuario.setMaximum(false);
-            usuario.setMaximum(true);
-        } catch (PropertyVetoException ex) {
-            //Instalar Logger
-        }
-
-        usuario.setVisible(true);
-
-    }//GEN-LAST:event_mnuArchivosUsuarioActionPerformed
     private void mnuCambioClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCambioClaveActionPerformed
 
         if (cambio == null) {
@@ -1255,11 +1216,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
         miImpresora.setLocationRelativeTo(null);
         miImpresora.setVisible(true);
     }//GEN-LAST:event_btnSeleccionarImpresoraActionPerformed
-
-    private void jmUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmUsuariosActionPerformed
-        mnuArchivosUsuarioActionPerformed(evt);
-    }//GEN-LAST:event_jmUsuariosActionPerformed
-
     private void btnOcultarPanelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOcultarPanelActionPerformed
         jsEstatus.setVisible(!jsEstatus.isVisible());
 
@@ -1507,10 +1463,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
             dpnEscritorio.getDesktopManager().closeFrame(productos);
             productos = null;
         }
-        if (usuario != null) {
-            dpnEscritorio.getDesktopManager().closeFrame(usuario);
-            usuario = null;
-        }
         if (cambio != null) {
             cambio = null;
         }
@@ -1550,7 +1502,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
         //Menu Archivos
         mnuArchivosCliente.setIcon(icono.getIcono("Clientes 32 x 32.png"));
         mnuArchivosProductos.setIcon(icono.getIcono("Productos 32 x 32.png"));
-        mnuArchivosUsuario.setIcon(icono.getIcono("Usuario 32 x 32.png"));
         mnuCambioClave.setIcon(icono.getIcono("Cambiar Contraseña 32 x 32.png"));
         mnuArchivosAdministracionPrivilegios.setIcon(icono.getIcono("Privilegios 32 x 32.png"));
         mnuArchivosCambioUsuario.setIcon(icono.getIcono("Cambio de Usuario 32 x 32.png"));
@@ -1568,7 +1519,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
         Archivos.setIcon(icono.getIcono("Archivos 32 x 32.png"));
         jmClientes.setIcon(icono.getIcono("Clientes 32 x 32.png"));
         jmProductos.setIcon(icono.getIcono("Productos 32 x 32.png"));
-        jmUsuarios.setIcon(icono.getIcono("Usuario 32 x 32.png"));
         jmCambioClave.setIcon(icono.getIcono("Cambiar Contraseña 32 x 32.png"));
         jmCambioUsuario.setIcon(icono.getIcono("Cambio de Usuario 32 x 32.png"));
         jmSalir.setIcon(icono.getIcono("Salir 32 x 32.png"));
@@ -1652,7 +1602,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmProductos;
     private javax.swing.JMenuItem jmReporteFactura;
     private javax.swing.JMenuItem jmSalir;
-    private javax.swing.JMenuItem jmUsuarios;
     public static javax.swing.JProgressBar jprImpresion;
     private javax.swing.JScrollPane jsEstatus;
     private javax.swing.JTable jtCajero;
@@ -1662,7 +1611,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuArchivosCliente;
     private javax.swing.JMenuItem mnuArchivosProductos;
     private javax.swing.JMenuItem mnuArchivosSalir;
-    private javax.swing.JMenuItem mnuArchivosUsuario;
     private javax.swing.JMenu mnuAyuda;
     private javax.swing.JMenuItem mnuAyudaAcercaDe;
     private javax.swing.JMenuItem mnuAyudaAyuda;

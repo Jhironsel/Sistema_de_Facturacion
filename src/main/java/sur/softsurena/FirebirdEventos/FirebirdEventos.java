@@ -35,21 +35,21 @@ public class FirebirdEventos extends FBEventManager{
                                 + event.getEventCount() + " time(s)");
             });
 
-            addEventListener("new_client", (DatabaseEvent event) -> {
+            addEventListener("ins_persona", (DatabaseEvent event) -> {
                 LOG.info("Event ["
                         + event.getEventName() + "] occured "
                         + event.getEventCount() + " time(s)");
                 frmClientes.llenarTablaClientes();
             });
             
-            addEventListener("del_client", (DatabaseEvent event) -> {
+            addEventListener("del_persona", (DatabaseEvent event) -> {
                 LOG.info("Event ["
                         + event.getEventName() + "] occured "
                         + event.getEventCount() + " time(s)");
                 frmClientes.llenarTablaClientes();
             });
             
-            addEventListener("upd_cient", (DatabaseEvent event) -> {
+            addEventListener("upd_persona", (DatabaseEvent event) -> {
                 LOG.info("Event ["
                         + event.getEventName() + "] occured "
                         + event.getEventCount() + " time(s)");
