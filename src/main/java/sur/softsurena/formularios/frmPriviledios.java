@@ -264,19 +264,20 @@ public class frmPriviledios extends javax.swing.JInternalFrame {
                     "Debes seleccionar un usuario.");
             return;
         }
-
-        //        frmUsuariosAgregar u = new frmUsuariosAgregar(null, true,
-        //                new Usuario(
-        //                        tblTabla.getValueAt(tblTabla.getSelectedRow(), 0).toString().trim(),
-        //                        tblTabla.getValueAt(tblTabla.getSelectedRow(), 1).toString().trim(),
-        //                        tblTabla.getValueAt(tblTabla.getSelectedRow(), 2).toString().trim(),
-        //                        null,
-        //                        tblTabla.getValueAt(tblTabla.getSelectedRow(), 3).toString().trim(),
-        //                        (Boolean) tblTabla.getValueAt(tblTabla.getSelectedRow(), 5),
-        //                        (Boolean) tblTabla.getValueAt(tblTabla.getSelectedRow(), 4)
-        //                ));
-        //        u.setLocationRelativeTo(this);
-        //        u.setVisible(true);
+        
+        Usuarios u = Usuarios.builder().
+                user_name(tblTabla.getValueAt(tblTabla.getSelectedRow(), 0).toString().trim()).
+                pNombre(tblTabla.getValueAt(tblTabla.getSelectedRow(), 1).toString().trim()).
+                sNombre(tblTabla.getValueAt(tblTabla.getSelectedRow(), 2).toString().trim()).
+                apellidos(tblTabla.getValueAt(tblTabla.getSelectedRow(), 3).toString().trim()).
+                administrador(((Boolean) tblTabla.getValueAt(tblTabla.getSelectedRow(), 4))).
+                estado((((Boolean) tblTabla.getValueAt(tblTabla.getSelectedRow(), 5)))).
+                descripcion(((Usuarios) tblTabla.getValueAt(tblTabla.getSelectedRow(), 0)).getDescripcion()).
+                build();
+        
+        frmUsuariosAgregar user = new frmUsuariosAgregar(null, true, u);
+        user.setLocationRelativeTo(this);
+        user.setVisible(true);
         llenarTabla();
     }//GEN-LAST:event_btnModificarActionPerformed
 
@@ -378,8 +379,7 @@ public class frmPriviledios extends javax.swing.JInternalFrame {
                         return String.class;
                     }
                 }
-                
-                
+
             };
 
             ResultSet rs = getUsuarios();
@@ -401,7 +401,7 @@ public class frmPriviledios extends javax.swing.JInternalFrame {
         } catch (SQLException ex) {
             LOG.log(Level.SEVERE, "Error al construir la tabla de usuarios", ex);
         }
-        
+
         repararColumnaTable(tblTabla);
     }
 

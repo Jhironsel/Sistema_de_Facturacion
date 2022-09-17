@@ -88,5 +88,10 @@
             <artifactId>swing-testing-toolkit</artifactId>
             <version>1.8.2</version>
         </dependency>
+        <dependency>
+            <groupId>unknown.binary</groupId>
+            <artifactId>RojeruSan.lib-1.0</artifactId>
+            <version>SNAPSHOT</version>
+        </dependency>
     </dependencies>    
 </project>
