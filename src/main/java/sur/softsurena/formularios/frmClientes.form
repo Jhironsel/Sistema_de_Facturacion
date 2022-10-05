@@ -418,9 +418,9 @@
                         <DimensionLayout dim="1">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace max="32767" attributes="0"/>
+                                  <EmptySpace pref="12" max="32767" attributes="0"/>
                                   <Component id="jPanel1" max="32767" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
+                                  <EmptySpace pref="12" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -464,7 +464,7 @@
                                               <EmptySpace min="-2" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Component id="txtApellidos" linkSize="10" min="-2" pref="250" max="-2" attributes="0"/>
-                                                  <Component id="cbActivo" linkSize="10" min="-2" pref="250" max="-2" attributes="0"/>
+                                                  <Component id="cbEstado" linkSize="10" min="-2" pref="250" max="-2" attributes="0"/>
                                                   <Component id="jcbSexo" linkSize="10" min="-2" pref="250" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
@@ -480,7 +480,7 @@
                                       <Group type="103" groupAlignment="2" attributes="0">
                                           <Component id="jcbPersona" linkSize="11" alignment="2" min="-2" max="-2" attributes="0"/>
                                           <Component id="txtCedula" linkSize="11" alignment="2" min="-2" pref="34" max="-2" attributes="0"/>
-                                          <Component id="cbActivo" linkSize="11" alignment="2" min="-2" pref="52" max="-2" attributes="0"/>
+                                          <Component id="cbEstado" linkSize="11" alignment="2" min="-2" pref="52" max="-2" attributes="0"/>
                                           <Component id="btnCedulaValidad" linkSize="11" alignment="0" min="-2" pref="53" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -578,7 +578,7 @@
                                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
                               </AuxValues>
                             </Component>
-                            <Component class="javax.swing.JCheckBox" name="cbActivo">
+                            <Component class="javax.swing.JCheckBox" name="cbEstado">
                               <Properties>
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                                   <Font name="Ubuntu" size="14" style="0"/>
@@ -602,14 +602,14 @@
                                 <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                                   <Dimension value="[0, 0]"/>
                                 </Property>
-                                <Property name="name" type="java.lang.String" value="cbActivo" noResource="true"/>
+                                <Property name="name" type="java.lang.String" value="cbEstado" noResource="true"/>
                                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                                   <Dimension value="[0, 25]"/>
                                 </Property>
                                 <Property name="verticalAlignment" type="int" value="3"/>
                               </Properties>
                               <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbActivoActionPerformed"/>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbEstadoActionPerformed"/>
                               </Events>
                             </Component>
                             <Component class="javax.swing.JTextField" name="txtPNombre">
@@ -1031,7 +1031,7 @@
                                                       <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                                                       <Component id="btnEliminarDirrecion" linkSize="16" min="-2" pref="36" max="-2" attributes="0"/>
                                                       <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                                                      <Component id="btnEliminarDirrecion1" linkSize="16" min="-2" pref="36" max="-2" attributes="0"/>
+                                                      <Component id="btnDeshacerDirrecion" linkSize="16" min="-2" pref="36" max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
                                             </DimensionLayout>
@@ -1039,7 +1039,7 @@
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Group type="102" alignment="0" attributes="0">
                                                       <Group type="103" groupAlignment="1" attributes="0">
-                                                          <Component id="btnEliminarDirrecion1" linkSize="18" min="-2" pref="42" max="-2" attributes="0"/>
+                                                          <Component id="btnDeshacerDirrecion" linkSize="18" min="-2" pref="42" max="-2" attributes="0"/>
                                                           <Component id="btnEliminarDirrecion" linkSize="18" alignment="1" min="-2" pref="42" max="-2" attributes="0"/>
                                                           <Component id="btnAgregarDirecciones" linkSize="18" alignment="1" min="-2" pref="42" max="-2" attributes="0"/>
                                                       </Group>
@@ -1054,6 +1054,7 @@
                                                 <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                                                   <Value id="DELETE"/>
                                                 </Property>
+                                                <Property name="name" type="java.lang.String" value="btnEliminarDirrecion" noResource="true"/>
                                               </Properties>
                                               <Events>
                                                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarDirrecionActionPerformed"/>
@@ -1064,17 +1065,22 @@
                                                 <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                                                   <Value id="PLUS_ONE"/>
                                                 </Property>
+                                                <Property name="name" type="java.lang.String" value="btnAgregarDirecciones" noResource="true"/>
                                               </Properties>
                                               <Events>
                                                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarDireccionesActionPerformed"/>
                                               </Events>
                                             </Component>
-                                            <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnEliminarDirrecion1">
+                                            <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnDeshacerDirrecion">
                                               <Properties>
                                                 <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                                                   <Value id="UNDO"/>
                                                 </Property>
+                                                <Property name="name" type="java.lang.String" value="btnDeshacerDirrecion" noResource="true"/>
                                               </Properties>
+                                              <Events>
+                                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeshacerDirrecionActionPerformed"/>
+                                              </Events>
                                             </Component>
                                           </SubComponents>
                                         </Container>

@@ -265,6 +265,7 @@ public class frmPriviledios extends javax.swing.JInternalFrame {
             return;
         }
         
+        
         Usuarios u = Usuarios.builder().
                 user_name(tblTabla.getValueAt(tblTabla.getSelectedRow(), 0).toString().trim()).
                 pNombre(tblTabla.getValueAt(tblTabla.getSelectedRow(), 1).toString().trim()).
@@ -390,9 +391,9 @@ public class frmPriviledios extends javax.swing.JInternalFrame {
                         descripcion(rs.getString("DESCRIPCION"))
                         .build();
                 registro[0] = u;
-                registro[1] = rs.getString("PNOMBRE");
-                registro[2] = rs.getString("SNOMBRE");
-                registro[3] = rs.getString("APELLIDOS");
+                registro[1] = rs.getString("PNOMBRE") == null ? "":rs.getString("PNOMBRE");
+                registro[2] = rs.getString("SNOMBRE") == null ? "":rs.getString("SNOMBRE");
+                registro[3] = rs.getString("APELLIDOS") == null ? "":rs.getString("APELLIDOS");
                 registro[4] = rs.getBoolean("ADMINISTRADOR");
                 registro[5] = rs.getBoolean("ESTADO");
                 miTabla.addRow(registro);

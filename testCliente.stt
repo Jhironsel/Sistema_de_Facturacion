@@ -165,7 +165,7 @@
       </componentFinder>
       <disabled>false</disabled>
       <propertyName>Text</propertyName>
-      <propertyValueExpected>/home/jhironsel/docker/firebird4/data/BaseDatosSoftSurena4.FDB</propertyValueExpected>
+      <propertyValueExpected>/home/jhironsel/BaseDatos/BaseDeDatos.fdb</propertyValueExpected>
       <regularExpressionExpected>false</regularExpressionExpected>
     </xy.ui.testing.action.component.property.CheckComponentPropertyAction>
     <xy.ui.testing.action.component.FocusAction>
@@ -226,7 +226,7 @@
         <windowIndex>0</windowIndex>
       </componentFinder>
       <disabled>false</disabled>
-      <newPropertyValue>Seguridad(4321)</newPropertyValue>
+      <newPropertyValue>Seguridad4321</newPropertyValue>
       <propertyName>Text</propertyName>
     </xy.ui.testing.action.component.property.ChangeComponentPropertyAction>
     <xy.ui.testing.action.component.ClickAction>
@@ -236,6 +236,40 @@
         <visibleString>Aceptar</visibleString>
         <visibleStringInTree>false</visibleStringInTree>
         <windowIndex>0</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <doubleClick>false</doubleClick>
+      <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <poupTrigger>false</poupTrigger>
+    </xy.ui.testing.action.component.ClickAction>
+    <xy.ui.testing.action.component.specific.SelectComboBoxItemAction>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentName>jcbRoles</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>1</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <knownOptions>
+        <string>ADMINISTRADOR</string>
+        <string>RRR_CAJERO</string>
+        <string>RRR_DOCTOR</string>
+        <string>RRR_GERENTE</string>
+        <string>RRR_PADRE</string>
+        <string>RRR_RRHH</string>
+        <string>RRR_SECRETARIA</string>
+        <string>RRR_SOFTSURENA</string>
+        <string>RRR_VENDEDOR</string>
+      </knownOptions>
+      <optionListChecked>true</optionListChecked>
+      <optionToSelect>ADMINISTRADOR</optionToSelect>
+      <selectionMode>BY_LABEL_TEXT</selectionMode>
+    </xy.ui.testing.action.component.specific.SelectComboBoxItemAction>
+    <xy.ui.testing.action.component.ClickAction>
+      <button>LEFT_BUTTON</button>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentName>OptionPane.button</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>1</windowIndex>
       </componentFinder>
       <disabled>false</disabled>
       <doubleClick>false</doubleClick>
@@ -614,8 +648,8 @@
     </xy.ui.testing.action.component.property.ChangeComponentPropertyAction>
     <xy.ui.testing.action.component.ClickAction>
       <button>LEFT_BUTTON</button>
-      <componentFinder class="xy.ui.testing.finder.ClassBasedComponentFinder">
-        <componentClassName>RSMaterialComponent.RSButtonMaterialIconOne</componentClassName>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentName>btnAgregarDirecciones</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
       </componentFinder>

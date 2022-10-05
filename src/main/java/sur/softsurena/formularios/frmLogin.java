@@ -333,7 +333,6 @@ public final class frmLogin extends javax.swing.JFrame {
         }
 
         roles = comprobandoRol(txtUsuario.getText().trim());
-
         if (roles == null) {
             cerrarConexion();
             JOptionPane.showMessageDialog(this, "El usuario no cuenta con rol en el sistema");
