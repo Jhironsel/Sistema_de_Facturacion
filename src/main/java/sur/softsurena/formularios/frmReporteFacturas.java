@@ -7,11 +7,10 @@ import javax.swing.JOptionPane;
 import static sur.softsurena.datos.select.SelectMetodos.getFacturas;
 import sur.softsurena.entidades.Clientes;
 import sur.softsurena.entidades.Facturas;
-import sur.softsurena.entidades.HeaderFactura;
 import sur.softsurena.entidades.Opcion;
 import sur.softsurena.utilidades.Utilidades;
 import static sur.softsurena.datos.select.SelectMetodos.getClientesTablaSB;
-import static sur.softsurena.datos.select.SelectMetodos.getClientes;
+import static sur.softsurena.datos.select.SelectMetodos.getClientesTablaSBCombo;
 
 public class frmReporteFacturas extends javax.swing.JInternalFrame {
     
@@ -368,16 +367,7 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame {
             
             cmbCliente.addItem(cli);
             
-            ResultSet rsCli = getClientesTablaSB();
-            
-            while (rsCli.next()) {
-                cli = Clientes.builder().
-                    id_persona(rsCli.getInt("ID")).
-                    pNombre(rsCli.getString("PNOMBRE")).
-                    sNombre(rsCli.getString("SNOMBRE")).
-                    apellidos(rsCli.getString("APELLIDOS")).build();;
-                cmbCliente.addItem(cli);
-            }
+            getClientesTablaSBCombo(cmbCliente);
 
             //Cargamos Facturas
             Facturas fac = Facturas.builder().id(-1).build();

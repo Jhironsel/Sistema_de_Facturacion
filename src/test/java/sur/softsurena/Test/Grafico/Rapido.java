@@ -1,4 +1,4 @@
-package sur.softsurena.TestSwing;
+package sur.softsurena.Test.Grafico;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,9 +6,9 @@ import xy.ui.testing.Tester;
 import xy.ui.testing.editor.TestEditor;
 import xy.ui.testing.util.TestingUtils;
 
-public class TestSwingConexion {
+public class Rapido {
 
-    private TestSwingConexion() {
+    private Rapido() {
     }
 
     public static void main(String[] args) throws IOException, Exception {
@@ -17,7 +17,7 @@ public class TestSwingConexion {
 //        TestingUtils.assertSuccessfulReplay(new File("testCliente.stt"));
         
         Tester tester = new Tester();
-        tester.loadFromFile(new File("testCliente.stt"));
+        tester.loadFromFile(new File("rapido.stt"));
 
         TestEditor testEditor = new TestEditor(tester);
 

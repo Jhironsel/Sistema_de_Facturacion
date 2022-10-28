@@ -165,7 +165,7 @@
       </componentFinder>
       <disabled>false</disabled>
       <propertyName>Text</propertyName>
-      <propertyValueExpected>/home/jhironsel/BaseDatos/BaseDeDatos.fdb</propertyValueExpected>
+      <propertyValueExpected>/home/jhironsel/BaseDatos/BaseDeDatos3.fdb</propertyValueExpected>
       <regularExpressionExpected>false</regularExpressionExpected>
     </xy.ui.testing.action.component.property.CheckComponentPropertyAction>
     <xy.ui.testing.action.component.FocusAction>
@@ -991,5 +991,101 @@
         <string>07/04/1984</string>
       </visibleStrings>
     </xy.ui.testing.action.component.CheckVisibleStringsAction>
+    <xy.ui.testing.action.component.ClickAction>
+      <button>LEFT_BUTTON</button>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentName>tblClientes</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>0</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <doubleClick>false</doubleClick>
+      <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <poupTrigger>false</poupTrigger>
+    </xy.ui.testing.action.component.ClickAction>
+    <xy.ui.testing.action.component.ClickAction>
+      <button>LEFT_BUTTON</button>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentName>btnModificar</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>0</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <doubleClick>false</doubleClick>
+      <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <poupTrigger>false</poupTrigger>
+    </xy.ui.testing.action.component.ClickAction>
+    <xy.ui.testing.action.component.ClickAction>
+      <button>LEFT_BUTTON</button>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentName>txtSNombre</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>0</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <doubleClick>false</doubleClick>
+      <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <poupTrigger>false</poupTrigger>
+    </xy.ui.testing.action.component.ClickAction>
+    <xy.ui.testing.action.component.SendKeysAction>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentName>txtSNombre</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>0</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <keyboardInteractions>
+        <xy.ui.testing.action.component.SendKeysAction_-WriteText>
+          <text>Jhadiel</text>
+        </xy.ui.testing.action.component.SendKeysAction_-WriteText>
+      </keyboardInteractions>
+      <requestToFocusOnTheComponent>true</requestToFocusOnTheComponent>
+    </xy.ui.testing.action.component.SendKeysAction>
+    <xy.ui.testing.action.component.ClickAction>
+      <button>LEFT_BUTTON</button>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentName>btnGuardar</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>0</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <doubleClick>false</doubleClick>
+      <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <poupTrigger>false</poupTrigger>
+    </xy.ui.testing.action.component.ClickAction>
+    <xy.ui.testing.action.component.CheckVisibleStringsAction>
+      <completenessChecked>true</completenessChecked>
+      <componentFinder class="xy.ui.testing.finder.DisplayedStringComponentFinder">
+        <componentClassName>javax.swing.JOptionPane</componentClassName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <visibleString>&lt;html&gt;&lt;b&gt;&lt;big&gt;Se va a editar el Cliente: &lt;/big&gt;&lt;/b&gt;&lt;big&gt;JHIRONSEL Jhadiel DIAZ ALMONTE&lt;/big&gt;&lt;/html&gt;</visibleString>
+        <visibleStringInTree>true</visibleStringInTree>
+        <windowIndex>1</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <negated>false</negated>
+      <orderChecked>true</orderChecked>
+      <visibleStrings>
+        <string>&lt;html&gt;&lt;b&gt;&lt;big&gt;Se va a editar el Cliente: &lt;/big&gt;&lt;/b&gt;&lt;big&gt;JHIRONSEL Jhadiel DIAZ ALMONTE&lt;/big&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;b&gt;&lt;big&gt;Cedula no.: &lt;/big&gt;&lt;/b&gt;&lt;big&gt;012-0089344-2&lt;/big&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;b&gt;&lt;big&gt;Fecha Nacimiento: &lt;/big&gt;&lt;/b&gt;&lt;big&gt;07-04-1984&lt;/big&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;b&gt;&lt;big&gt;Estado del Cliente: &lt;/big&gt;&lt;/b&gt;&lt;big&gt;Activo&lt;/big&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;b&gt;&lt;big&gt;Desea continuar? &lt;/big&gt;&lt;/b&gt;&lt;/html&gt;</string>
+        <string>Sí</string>
+        <string>No</string>
+      </visibleStrings>
+    </xy.ui.testing.action.component.CheckVisibleStringsAction>
+    <xy.ui.testing.action.component.ClickAction>
+      <button>LEFT_BUTTON</button>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentName>OptionPane.button</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>1</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <doubleClick>false</doubleClick>
+      <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <poupTrigger>false</poupTrigger>
+    </xy.ui.testing.action.component.ClickAction>
   </testActions>
 </xy.ui.testing.Tester>

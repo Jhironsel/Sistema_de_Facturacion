@@ -31,6 +31,7 @@ import static sur.softsurena.datos.update.UpdateMetodos.modificarOpcionMensaje;
 import sur.softsurena.datos.updateInsert.UpdateInsertMetodos;
 import sur.softsurena.entidades.DesktopConFondo;
 import sur.softsurena.entidades.Encabezado;
+import sur.softsurena.entidades.Usuarios;
 import sur.softsurena.hilos.hiloIp;
 import sur.softsurena.hilos.hiloRestaurar;
 import sur.softsurena.metodos.Imagenes;
@@ -39,6 +40,7 @@ import sur.softsurena.utilidades.Utilidades;
 public final class frmPrincipal extends javax.swing.JFrame {
 
     private Imagenes icono;
+    private static final Logger LOG = Logger.getLogger(frmPrincipal.class.getName());
 
     //Archivos
     private frmClientes cliente;
@@ -64,21 +66,15 @@ public final class frmPrincipal extends javax.swing.JFrame {
     public frmPrincipal() {
         initComponents();
 
-        ResultSet u = getUsuarioActual();
-        String rol;
-        try {
-            u.next();
-            jlUser.setText(u.getString(1));
+        Usuarios u = getUsuarioActual();
+        jlUser.setText(u.getUser_name());
 
-            rol = u.getString(2);
-            if (rol.equalsIgnoreCase("RDB$ADMIN")) {
-                rol = "ADMINISTRADOR";
-            }
-
-            jlRole.setText(rol);
-        } catch (SQLException ex) {
-            Logger.getLogger(frmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        String rol = u.getRol();
+        if (rol.equalsIgnoreCase("RDB$ADMIN")) {
+            rol = "ADMINISTRADOR";
         }
+
+        jlRole.setText(rol);
 
         jMenuBar1.add(filler3);
         jMenuBar1.add(jlUser);
@@ -1247,7 +1243,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
             privilegios.setVisible(true);
         }
-        
+
     }//GEN-LAST:event_mnuArchivosAdministracionPrivilegiosActionPerformed
 
     private void imprimirReporte(Date fecha) {
@@ -1437,7 +1433,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         } catch (PropertyVetoException ex) {
             //Instalar Logger
         }
-        
+
         bebida.setTurno(idTurnoActivo("CURRENT_USER"));
         bebida.setVisible(true);
         bebida.txtCriterio.requestFocusInWindow();
@@ -1449,7 +1445,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
             deudas.setMaximum(true);
             deudas.setVisible(true);
         } catch (PropertyVetoException ex) {
-            Logger.getLogger(frmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }
 

@@ -375,25 +375,14 @@ public class frmCobrosClientes extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        try {
+        
             Clientes c = Clientes.builder().
                     id_persona(-1).
                     pNombre("Seleccione un Cliente...").
                     sNombre("").
                     apellidos("").build();
             cmbCliente.addItem(c);
-            ResultSet rsCli = getClientesTablaSB();
-            while (rsCli.next()) {
-                c = Clientes.builder().
-                    id_persona(rsCli.getInt("ID")).
-                    pNombre(rsCli.getString("PNOMBRE")).
-                    sNombre(rsCli.getString("SNOMBRE")).
-                    apellidos(rsCli.getString("APELLIDOS")).build();
-                cmbCliente.addItem(c);
-            }
-        } catch (SQLException ex) {
-            //Instalar Logger
-        }
+            getClientesTablaSBCombo(cmbCliente);
     }//GEN-LAST:event_formWindowOpened
     private void btnPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarActionPerformed
         if (cmbCliente.getSelectedIndex() <= 0) {
