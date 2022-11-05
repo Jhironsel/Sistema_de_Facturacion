@@ -3,8 +3,6 @@ package sur.softsurena.formularios;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.beans.PropertyVetoException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +32,9 @@ import sur.softsurena.entidades.Encabezado;
 import sur.softsurena.entidades.Usuarios;
 import sur.softsurena.hilos.hiloIp;
 import sur.softsurena.hilos.hiloRestaurar;
+import sur.softsurena.jfilechooser.ImageFileView;
+import sur.softsurena.jfilechooser.ImageFilter;
+import sur.softsurena.jfilechooser.ImagePreview;
 import sur.softsurena.metodos.Imagenes;
 import sur.softsurena.utilidades.Utilidades;
 
@@ -966,6 +967,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         if (evt.getClickCount() == 1) {
             return;
         }
+
         int resp = JOptionPane.showConfirmDialog(this,
                 "Desea cambiar el logo de la empresa?",
                 "Confirmacion!!!",
@@ -977,6 +979,10 @@ public final class frmPrincipal extends javax.swing.JFrame {
         }
 
         JFileChooser file = new JFileChooser();
+
+        file.addChoosableFileFilter(new ImageFilter());
+        file.setFileView(new ImageFileView());
+        file.setAccessory(new ImagePreview(file));
 
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Imagenes",
                 "jpg", "png", "PNG", "JPG");

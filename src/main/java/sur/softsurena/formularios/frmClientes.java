@@ -19,7 +19,6 @@ import sur.softsurena.datos.select.SelectMetodos;
 import static sur.softsurena.datos.select.SelectMetodos.existeCliente;
 import static sur.softsurena.datos.select.SelectMetodos.getClienteByID;
 import static sur.softsurena.datos.update.UpdateMetodos.modificarCliente;
-import sur.softsurena.entidades.Celda_CheckBox;
 import sur.softsurena.entidades.Clientes;
 import sur.softsurena.entidades.ContactosEmail;
 import sur.softsurena.entidades.ContactosTel;
@@ -30,7 +29,6 @@ import sur.softsurena.entidades.Generales;
 import sur.softsurena.entidades.Municipios;
 import sur.softsurena.entidades.Personas;
 import sur.softsurena.entidades.Provincias;
-import sur.softsurena.entidades.Render_CheckBox;
 import sur.softsurena.entidades.Sexo;
 import sur.softsurena.entidades.TipoPersona;
 import sur.softsurena.entidades.ValidarCorreoTel;
@@ -44,6 +42,7 @@ import static sur.softsurena.datos.select.SelectMetodos.getTelefonoByID;
 import static sur.softsurena.datos.select.SelectMetodos.privilegioCampo;
 import static sur.softsurena.datos.select.SelectMetodos.privilegioTabla;
 import sur.softsurena.entidades.Privilegios;
+import static sur.softsurena.utilidades.Utilidades.columnasCheckBox;
 
 public final class frmClientes extends javax.swing.JInternalFrame {
 
@@ -230,8 +229,8 @@ public final class frmClientes extends javax.swing.JInternalFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         tblClientes = new JTable(){
             @Override
-            public boolean isCellEditable(int rowIndex, int colIndex) { 
-                return false; //Las celdas no son editables. 
+            public boolean isCellEditable(int rowIndex, int colIndex) {
+                return false; //Las celdas no son editables.
             }
         };
         jPanel15 = new javax.swing.JPanel();
@@ -365,22 +364,8 @@ public final class frmClientes extends javax.swing.JInternalFrame {
 
         tblClientes.setAutoCreateRowSorter(true);
         tblClientes.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        tblClientes.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"
-            }
-        ));
         tblClientes.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-        tblClientes.setMaximumSize(null);
-        tblClientes.setMinimumSize(null);
         tblClientes.setName("tblClientes"); // NOI18N
-        tblClientes.setPreferredSize(null);
         tblClientes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tblClientes.setShowGrid(false);
         tblClientes.setShowHorizontalLines(true);
@@ -1494,12 +1479,15 @@ public final class frmClientes extends javax.swing.JInternalFrame {
 
         int rta = JOptionPane.showConfirmDialog(this,
                 "¿Esta Seguro de Eliminar Registro del Cliente?",
-                "Eliminar Cliente", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                "Eliminar Cliente", 
+                JOptionPane.YES_NO_OPTION, 
+                JOptionPane.QUESTION_MESSAGE);
 
         if (rta == JOptionPane.NO_OPTION) {
             return;
         }
 
+        //Para eliminar un registro de un cliente obtenemos el ID y su estado
         String msg = borrarCliente(
                 ((Clientes) tblClientes.getValueAt(
                         tblClientes.getSelectedRow(), 0)).getId_persona(),
@@ -1644,6 +1632,27 @@ public final class frmClientes extends javax.swing.JInternalFrame {
     private void btnCedulaValidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCedulaValidadActionPerformed
         //Si se va a insertar un nuevo registro la cedula no debe existir. 
         //Si existe mostrar mensaje de que el cliente esta registrado
+        if(nuevo){
+            if(existeCliente(txtCedula.getValue().toString())){
+                JOptionPane.showInternalMessageDialog(this, 
+                        "Esta cedula está registrada", 
+                        "Proceso de validación", 
+                        JOptionPane.INFORMATION_MESSAGE);
+                txtCedula.setValue(null);
+            }
+        }else{
+            if(existeCliente(txtCedula.getValue().toString())){
+                int resp = JOptionPane.showInternalConfirmDialog(this, 
+                        "Esta cedula no está registrada, desea continuar", 
+                        "Proceso de validación", 
+                        JOptionPane.INFORMATION_MESSAGE);
+                
+                if(resp == JOptionPane.NO_OPTION){
+                    txtCedula.setValue(null);
+                }
+            }
+        }
+        
 
         //Si se va a actualizar un registro, la cedula debe de existir en la 
         //Base de datos. 
@@ -1824,31 +1833,38 @@ public final class frmClientes extends javax.swing.JInternalFrame {
 //        tcr.setHorizontalAlignment(SwingConstants.RIGHT);
 //        tblClientes.getColumnModel().getColumn(3).setCellRenderer(tcr);
 //        tblClientes.getColumnModel().getColumn(4).setCellRenderer(tcr);
-        tblClientes.getColumnModel().getColumn(8).setCellEditor(new Celda_CheckBox());
-        tblClientes.getColumnModel().getColumn(8).setCellRenderer(new Render_CheckBox());
-
+        
+        int[] indices = {8};
+        columnasCheckBox(tblClientes, indices);
         repararColumnaTable(tblClientes);
     }
 
     private boolean validarRegistro() {
+        //Si la tabla de registro de los cliente está vacia devolvemos true
         if (tblClientes.getRowCount() <= 0) {
             JOptionPane.showInternalMessageDialog(null,
                     "Debe contar con clientes en registros, Ingrese nuevos clientes.",
                     "Proceso de validación.", JOptionPane.INFORMATION_MESSAGE);
             return true;
         }
+        
+        //Si no existe un registro seleccionado devolvemos true.
         if (tblClientes.getSelectedRow() < 0) {
             JOptionPane.showInternalMessageDialog(null,
                     "Debe de seleccionar un cliente",
                     "Proceso de validación.", JOptionPane.INFORMATION_MESSAGE);
             return true;
         }
+        
+        //Verificamos que el registro no sea de un cliente generico, de serlo devolvemos true. 
         if (((Personas) tblClientes.getValueAt(tblClientes.getSelectedRow(), 0)).getId_persona() == 0) {
             JOptionPane.showInternalMessageDialog(null,
                     "Cliente GENERICO no puede ser modificado",
                     "Proceso de validación.", JOptionPane.INFORMATION_MESSAGE);
             return true;
         }
+        
+        //Si todo esta bien enviamos un false.
         return false;
     }
 
