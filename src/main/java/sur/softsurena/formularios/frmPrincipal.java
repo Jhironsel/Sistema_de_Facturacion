@@ -25,7 +25,6 @@ import static sur.softsurena.datos.select.SelectMetodos.getLogo;
 import static sur.softsurena.datos.select.SelectMetodos.getUsuarioActual;
 import static sur.softsurena.datos.select.SelectMetodos.idTurnoActivo;
 import static sur.softsurena.datos.select.SelectMetodos.usuarioTurnoActivo;
-import static sur.softsurena.datos.update.UpdateMetodos.modificarOpcionMensaje;
 import sur.softsurena.datos.updateInsert.UpdateInsertMetodos;
 import sur.softsurena.entidades.DesktopConFondo;
 import sur.softsurena.entidades.Encabezado;
@@ -62,8 +61,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private frmFechaReporte fechaReporte;
     private frmAbrilTurno miTurno;
     private frmCerrarTurno miTurnoACerra;
-    private Encabezado encabezado;
-
+    
     public frmPrincipal() {
         initComponents();
 
@@ -869,7 +867,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_mnuArchivosCambioUsuarioActionPerformed
     private void mnuArchivosSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuArchivosSalirActionPerformed
-        mnuArchivosCambioUsuarioActionPerformed(null);
+        System.exit(0);
     }//GEN-LAST:event_mnuArchivosSalirActionPerformed
     private void mnuMovimientosNuevaFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMovimientosNuevaFacturaActionPerformed
 
@@ -1200,16 +1198,9 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
     private void btnEstablecerEncabezadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstablecerEncabezadoActionPerformed
 //        mensaje();
-        frmEncabezado encabezado2 = new frmEncabezado(null, true, encabezado);
+        frmEncabezado encabezado2 = new frmEncabezado(null, true);
         encabezado2.setLocationRelativeTo(null);
         encabezado2.setVisible(true);
-        if (encabezado2.isGuardado()) {
-            JOptionPane.showMessageDialog(this,
-                    modificarOpcionMensaje(encabezado2.txtMensaje.getText(),
-                            encabezado2.txtNombreEmpresa.getText(),
-                            encabezado2.txtDireccionEmpresa.getText(),
-                            encabezado2.txtTelefonosEmpresa.getText()));
-        }
 
     }//GEN-LAST:event_btnEstablecerEncabezadoActionPerformed
 

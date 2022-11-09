@@ -428,7 +428,7 @@ public final class frmClientes extends javax.swing.JInternalFrame {
             .add(jpClientesLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(jpClientesLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, jScrollPane3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 850, Short.MAX_VALUE)
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, jScrollPane3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 869, Short.MAX_VALUE)
                     .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel15, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -436,7 +436,7 @@ public final class frmClientes extends javax.swing.JInternalFrame {
             jpClientesLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jpClientesLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(jScrollPane3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
+                .add(jScrollPane3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel15, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(15, 15, 15))
@@ -780,7 +780,7 @@ public final class frmClientes extends javax.swing.JInternalFrame {
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane8, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                .add(jScrollPane8, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -894,7 +894,7 @@ public final class frmClientes extends javax.swing.JInternalFrame {
                 .add(0, 0, 0)
                 .add(jPanel8, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(0, 0, 0)
-                .add(jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
+                .add(jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
                 .add(0, 0, 0))
         );
 
@@ -987,7 +987,7 @@ public final class frmClientes extends javax.swing.JInternalFrame {
                 .add(3, 3, 3)
                 .add(jPanel12, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 45, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane7, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
+                .add(jScrollPane7, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
                 .add(0, 0, 0))
         );
 
@@ -1033,13 +1033,13 @@ public final class frmClientes extends javax.swing.JInternalFrame {
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jtpDireccionContactos, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 762, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jPanel1Layout.createSequentialGroup()
-                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(txtPNombre, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 250, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(dchFechaNacimiento, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 250, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                             .add(jPanel1Layout.createSequentialGroup()
                                 .add(txtCedula, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 197, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(btnCedulaValidad, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE))
-                            .add(txtPNombre, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 250, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                            .add(dchFechaNacimiento, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 250, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                .add(btnCedulaValidad, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 48, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(txtSNombre, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 250, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -1097,9 +1097,9 @@ public final class frmClientes extends javax.swing.JInternalFrame {
         jpMantenimientoLayout.setVerticalGroup(
             jpMantenimientoLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jpMantenimientoLayout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
+                .addContainerGap(22, Short.MAX_VALUE)
                 .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         jspMantenimiento.setViewportView(jpMantenimiento);
@@ -1197,14 +1197,14 @@ public final class frmClientes extends javax.swing.JInternalFrame {
                 .add(0, 0, 0)
                 .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jtpUnico)
-                    .add(jPanel13, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 866, Short.MAX_VALUE))
+                    .add(jPanel13, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 885, Short.MAX_VALUE))
                 .add(0, 0, 0))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel4Layout.createSequentialGroup()
                 .add(0, 0, 0)
-                .add(jtpUnico, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE)
+                .add(jtpUnico, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 656, Short.MAX_VALUE)
                 .add(0, 0, 0)
                 .add(jPanel13, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(0, 0, 0))
@@ -1218,14 +1218,13 @@ public final class frmClientes extends javax.swing.JInternalFrame {
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jScrollPane4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 844, Short.MAX_VALUE)
-                .addContainerGap())
+                .add(jScrollPane4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 887, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jScrollPane4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE))
+                .add(jScrollPane4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 738, Short.MAX_VALUE))
         );
 
         pack();
@@ -1275,7 +1274,7 @@ public final class frmClientes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtSNombreKeyReleased
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        nuevo = true;
+        nuevo = true;//Se va a ingresar un nuevo registro al sistema
         cambioBoton(true);
     }//GEN-LAST:event_btnNuevoActionPerformed
 
@@ -1295,14 +1294,21 @@ public final class frmClientes extends javax.swing.JInternalFrame {
         repararColumnaTable(tblTelefonos);
     }//GEN-LAST:event_btnModificarActionPerformed
 
+    /**
+     * Proceso de validación.
+     *
+     * 1) Se valida que la cedula del cliente no esté vacia.
+     *
+     * 2) Primer, segundo nombre y apellidos no puede estar vació.
+     *
+     * 3) Debe Existir un dirección registrada.
+     *
+     * 4) Debe Proporcionarse una fecha de nacimiento.
+     *
+     * 5) La fecha de nacimiento no puede ser mayor a la actual.
+     */
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        /**
-         * Proceso de validación. 1) Se valida que la cedula del cliente no esté
-         * vacia. 2) Primer, segundo nombre y apellidos no puede estar vació. 3)
-         * Debe Existir un dirección registrada. 4) Debe Proporcionarse una
-         * fecha de nacimiento. 5) La fecha de nacimiento no puede ser mayor a
-         * la actual.
-         */
+
         if (txtCedula.getValue().toString().isBlank()
                 || txtCedula.getValue().toString().isEmpty()) {//1
             JOptionPane.showMessageDialog(
@@ -1479,8 +1485,8 @@ public final class frmClientes extends javax.swing.JInternalFrame {
 
         int rta = JOptionPane.showConfirmDialog(this,
                 "¿Esta Seguro de Eliminar Registro del Cliente?",
-                "Eliminar Cliente", 
-                JOptionPane.YES_NO_OPTION, 
+                "Eliminar Cliente",
+                JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE);
 
         if (rta == JOptionPane.NO_OPTION) {
@@ -1632,27 +1638,26 @@ public final class frmClientes extends javax.swing.JInternalFrame {
     private void btnCedulaValidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCedulaValidadActionPerformed
         //Si se va a insertar un nuevo registro la cedula no debe existir. 
         //Si existe mostrar mensaje de que el cliente esta registrado
-        if(nuevo){
-            if(existeCliente(txtCedula.getValue().toString())){
-                JOptionPane.showInternalMessageDialog(this, 
-                        "Esta cedula está registrada", 
-                        "Proceso de validación", 
+        if (nuevo) {
+            if (existeCliente(txtCedula.getValue().toString())) {
+                JOptionPane.showInternalMessageDialog(this,
+                        "Esta cedula está registrada",
+                        "Proceso de validación",
                         JOptionPane.INFORMATION_MESSAGE);
                 txtCedula.setValue(null);
             }
-        }else{
-            if(existeCliente(txtCedula.getValue().toString())){
-                int resp = JOptionPane.showInternalConfirmDialog(this, 
-                        "Esta cedula no está registrada, desea continuar", 
-                        "Proceso de validación", 
+        } else {
+            if (existeCliente(txtCedula.getValue().toString())) {
+                int resp = JOptionPane.showInternalConfirmDialog(this,
+                        "Esta cedula no está registrada, desea continuar",
+                        "Proceso de validación",
                         JOptionPane.INFORMATION_MESSAGE);
-                
-                if(resp == JOptionPane.NO_OPTION){
+
+                if (resp == JOptionPane.NO_OPTION) {
                     txtCedula.setValue(null);
                 }
             }
         }
-        
 
         //Si se va a actualizar un registro, la cedula debe de existir en la 
         //Base de datos. 
@@ -1730,7 +1735,6 @@ public final class frmClientes extends javax.swing.JInternalFrame {
             return;
         }
 
-        
         registroTel[0] = txtTelelfonoMovil.getValue();
         registroTel[1] = jrbMovil.isSelected() ? "Movil" : "Telefono";
 
@@ -1738,7 +1742,7 @@ public final class frmClientes extends javax.swing.JInternalFrame {
         tblTelefonos.setModel(dtmTelefono);
 
         registroTel = new Object[titulosTel.length];
-        
+
         txtTelelfonoMovil.setValue(null);
         txtTelelfonoMovil.requestFocus();
     }
@@ -1833,7 +1837,6 @@ public final class frmClientes extends javax.swing.JInternalFrame {
 //        tcr.setHorizontalAlignment(SwingConstants.RIGHT);
 //        tblClientes.getColumnModel().getColumn(3).setCellRenderer(tcr);
 //        tblClientes.getColumnModel().getColumn(4).setCellRenderer(tcr);
-        
         int[] indices = {8};
         columnasCheckBox(tblClientes, indices);
         repararColumnaTable(tblClientes);
@@ -1847,7 +1850,7 @@ public final class frmClientes extends javax.swing.JInternalFrame {
                     "Proceso de validación.", JOptionPane.INFORMATION_MESSAGE);
             return true;
         }
-        
+
         //Si no existe un registro seleccionado devolvemos true.
         if (tblClientes.getSelectedRow() < 0) {
             JOptionPane.showInternalMessageDialog(null,
@@ -1855,15 +1858,16 @@ public final class frmClientes extends javax.swing.JInternalFrame {
                     "Proceso de validación.", JOptionPane.INFORMATION_MESSAGE);
             return true;
         }
-        
-        //Verificamos que el registro no sea de un cliente generico, de serlo devolvemos true. 
+
+        //Verificamos que el registro no sea de un cliente generico, de serlo lo 
+        // devolvemos true. 
         if (((Personas) tblClientes.getValueAt(tblClientes.getSelectedRow(), 0)).getId_persona() == 0) {
             JOptionPane.showInternalMessageDialog(null,
                     "Cliente GENERICO no puede ser modificado",
                     "Proceso de validación.", JOptionPane.INFORMATION_MESSAGE);
             return true;
         }
-        
+
         //Si todo esta bien enviamos un false.
         return false;
     }
@@ -1875,7 +1879,7 @@ public final class frmClientes extends javax.swing.JInternalFrame {
         //Obteniendo el objeto cliente.
         Clientes cliente = getClienteByID(idCliente);
         txtPNombre.requestFocus();
-        
+
         //Llenar los compos basicos.
         txtCedula.setValue(cliente.getGenerales().getCedula());
         txtPNombre.setText(cliente.getPNombre());
@@ -1916,20 +1920,37 @@ public final class frmClientes extends javax.swing.JInternalFrame {
             }
         }
         //Datos basicos listos. 
-        
+
         //Obteniendo direcciones.
-        
         tblDireccion.setModel(getDireccionByID(idCliente));
-        
+
         //Obteniendo los telefonos.
         tblTelefonos.setModel(getTelefonoByID(idCliente));
-        
+
         //Obteniendo los correos.
         tblCorreos.setModel(getCorreoByID(idCliente));
 
         registroCorreo = new Object[titulosCorreo.length];
     }
 
+    /**
+     * Este metodo debe cambiar el comportamiento de la ventana al pulsar sobre
+     * nuevo o editar.
+     *
+     * @param activo Este flag es utilizado cuando se va a ingresar o modificar
+     * registros a la base de datos.
+     * <b>Si su valor es verdadero:</b>
+     * 1) Los botones de nuevo, editar, borrar y buscar deben inhabilitarse. 2)
+     * Los botones de guardar y cancelar pasan habilitarse.
+     *
+     * <b>Si su valor es falso:</b>
+     * Lo contrario de cuando su valor es verdadero. 1) Los botones de nuevo,
+     * editar, borrar y buscar deben habilitarse. 2) Los botones de guardar y
+     * cancelar pasan inhabilitarse.
+     *
+     * Al presionar nuevo o editar debe cambiarse en la vista clientes a
+     * Mantenimiento.
+     */
     private void cambioBoton(boolean activo) {
         jtpUnico.setEnabledAt(jtpUnico.indexOfComponent(jspClientes), !activo);
         jtpUnico.setEnabledAt(jtpUnico.indexOfComponent(jspMantenimiento), activo);
@@ -1942,13 +1963,13 @@ public final class frmClientes extends javax.swing.JInternalFrame {
 
         jtpDireccionContactos.setSelectedComponent(jpDireccion);
 
-        //Botones Para Deshabilitar:
+        //Botones nuevo, modificar, borrar y buscar
         btnNuevo.setEnabled(!activo);
         btnModificar.setEnabled(!activo);
         btnBorrar.setEnabled(!activo);
         btnBuscar.setEnabled(!activo);
 
-        //Caja de Texto Habilitado
+        //Botones de guardar y cancelar
         btnGuardar.setEnabled(activo);
         btnCancelar.setEnabled(activo);
 

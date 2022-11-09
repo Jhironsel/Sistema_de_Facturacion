@@ -36,7 +36,7 @@ import static sur.softsurena.utilidades.Utilidades.repararColumnaTable;
 public class frmProductos extends javax.swing.JInternalFrame {
 
     private int returnVal = JFileChooser.CANCEL_OPTION;
-    private boolean nuevo = false, cambio = false;
+    private Boolean nuevo = null, cambio = false;
     private DefaultTableModel miTabla;
     private String path, ext, source, dest;
     private JFileChooser file = new JFileChooser();
@@ -1182,11 +1182,9 @@ public class frmProductos extends javax.swing.JInternalFrame {
         btnCancelar.setEnabled(false);
 
         //Caja de Texto Deshabitar
-        //txtCosto.setEditable(false);
         txtDescripcion.setEditable(false);
         txtCodigoBarra.setEditable(false);
         txtNotas.setEditable(false);
-        //txtPrecio.setEditable(false);
 
         file = new JFileChooser();
         source = null;
@@ -1195,6 +1193,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         returnVal = JFileChooser.CANCEL_OPTION;
         path = null;
         ext = null;
+        nuevo = null;
 
         llenarTabla();
         mostrarRegistro();
