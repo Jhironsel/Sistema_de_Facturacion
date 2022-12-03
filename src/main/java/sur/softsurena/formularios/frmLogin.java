@@ -282,8 +282,6 @@ public final class frmLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_txtClaveActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        //Variables para almacenar los roles
-        ArrayList<String> roles = new ArrayList<String>();
 
         //Validación de campos del login. 
         if (txtUsuario.getText().isEmpty()) {
@@ -331,8 +329,10 @@ public final class frmLogin extends javax.swing.JFrame {
             txtUsuario.requestFocusInWindow();
             return;
         }
-
-        roles = comprobandoRol(txtUsuario.getText().trim());
+        
+        //Variables para almacenar los roles
+        ArrayList<String> roles = comprobandoRol(txtUsuario.getText().trim());
+        
         if (roles == null) {
             cerrarConexion();
             JOptionPane.showMessageDialog(this, "El usuario no cuenta con rol en el sistema");

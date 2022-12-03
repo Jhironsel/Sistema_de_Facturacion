@@ -199,7 +199,7 @@ public class frmCerrarTurno extends java.awt.Dialog {
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        Opcion miOpcion = new Opcion("0", "Seleccione un Usuario");
+        Opcion miOpcion = new Opcion("0", "Seleccione un usuario");
         jcbUsuarios.removeAllItems();
         jcbUsuarios.addItem(miOpcion);
 //        ResultSet rs = getUsuariosActivo();

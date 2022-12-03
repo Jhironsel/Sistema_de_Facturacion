@@ -1,9 +1,9 @@
 package sur.softsurena.formularios;
 
-import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -11,6 +11,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import sur.softsurena.entidades.Clientes;
 import sur.softsurena.entidades.DefaultTableCellHeaderRenderer;
 import sur.softsurena.hilos.hiloImpresionFactura;
 import sur.softsurena.utilidades.Utilidades;
@@ -41,8 +42,8 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
             }
         };
         jPanel3 = new javax.swing.JPanel();
-        btnSalir = new javax.swing.JButton();
-        btnAceptar = new javax.swing.JButton();
+        btnSalir = new RSMaterialComponent.RSButtonMaterialIconOne();
+        btnImprimir = new RSMaterialComponent.RSButtonMaterialIconOne();
         jLabel4 = new javax.swing.JLabel();
         txtTotal = new javax.swing.JFormattedTextField();
         jPanel6 = new javax.swing.JPanel();
@@ -69,26 +70,25 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
         };
 
         setClosable(true);
-        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
         setTitle("Detalle de los Clientes");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
-            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
-                formInternalFrameOpened(evt);
-            }
-            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
             }
-            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
             }
-            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
             }
-            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
             }
         });
 
@@ -111,15 +111,9 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
 
         jPanel3.setLayout(new java.awt.GridLayout(1, 4, 8, 0));
 
-        btnSalir.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        btnSalir.setForeground(new java.awt.Color(1, 1, 1));
-        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Salir 32 x 32.png"))); // NOI18N
-        btnSalir.setMnemonic('a');
         btnSalir.setText("Salir");
-        btnSalir.setToolTipText("");
-        btnSalir.setBorder(null);
-        btnSalir.setPreferredSize(new java.awt.Dimension(123, 44));
-        btnSalir.setSelected(true);
+        btnSalir.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnSalir.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.EXIT_TO_APP);
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalirActionPerformed(evt);
@@ -127,29 +121,15 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
         });
         jPanel3.add(btnSalir);
 
-        btnAceptar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        btnAceptar.setForeground(new java.awt.Color(1, 1, 1));
-        btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Impresora.png"))); // NOI18N
-        btnAceptar.setMnemonic('a');
-        btnAceptar.setText("Imprimir");
-        btnAceptar.setToolTipText("");
-        btnAceptar.setBorder(null);
-        btnAceptar.setPreferredSize(new java.awt.Dimension(123, 44));
-        btnAceptar.setSelected(true);
-        btnAceptar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnAceptarMouseExited(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnAceptarMouseEntered(evt);
-            }
-        });
-        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+        btnImprimir.setText("Imprimir");
+        btnImprimir.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnImprimir.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.PRINT);
+        btnImprimir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAceptarActionPerformed(evt);
+                btnImprimirActionPerformed(evt);
             }
         });
-        jPanel3.add(btnAceptar);
+        jPanel3.add(btnImprimir);
 
         jLabel4.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -167,8 +147,8 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -292,7 +272,7 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 402, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(0, 0, 0))
@@ -315,7 +295,7 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
-                .addComponent(jScrollPane4)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
@@ -333,31 +313,32 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
 
     private void tblFacturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblFacturaMouseClicked
         try {
-            String idFactura = tblFactura.getValueAt(
-                    tblFactura.getSelectedRow(), 0).toString();
-            
+            String idFactura = tblFactura.getValueAt(tblFactura.getSelectedRow(), 0).toString();
 
             DefaultTableModel modelo = (DefaultTableModel) tblDetalleFactura.getModel();
-            
+
             int filas = tblDetalleFactura.getRowCount();
-            
+
             for (int i = 0; filas > i; i++) {
                 modelo.removeRow(0);
             }
 
-            String sql = "SELECT factura.idFactura, factura.idCliente, nombres||' '||apellidos AS nombreFull, \n"
-                    + "        fecha, idLinea, (select p.Descripcion \n"
-                    + "                            from PRODUCTOS p \n"
-                    + "                            where p.idProducto = DETALLEFACTURA.IDPRODUCTO ) as Descripcion, \n"
-                    + "        idProducto, precio, cantidad, precio * cantidad AS Valor \n"
+            String sql = "SELECT factura.idFactura, factura.idCliente, nombres||' '||apellidos AS nombreFull, "
+                    + "        fecha, idLinea, (select p.Descripcion "
+                    + "                            from PRODUCTOS p "
+                    + "                            where p.idProducto = DETALLEFACTURA.IDPRODUCTO ) as Descripcion, "
+                    + "        idProducto, precio, cantidad, precio * cantidad AS Valor "
                     + "FROM factura \n"
-                    + "INNER JOIN cliente ON factura.idCliente = cliente.idCliente \n"
-                    + "INNER JOIN detalleFactura ON factura.idFactura = detalleFactura.idFactura\n"
+                    + "INNER JOIN cliente ON factura.idCliente = cliente.idCliente "
+                    + "INNER JOIN detalleFactura ON factura.idFactura = detalleFactura.idFactura "
                     + "WHERE factura.idFactura ='" + idFactura + "'";
-            
+
             ResultSet rs = null;
+
             String registro[] = new String[5];
+
             double suma = 0;
+
             while (rs.next()) {
                 registro[0] = rs.getString("idProducto");
                 registro[1] = rs.getString("descripcion");
@@ -377,8 +358,9 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
         } catch (SQLException ex) {
             //Instalar Logger
         }
+
         if (evt.getClickCount() == 2) {
-            btnAceptarActionPerformed(null);
+            btnImprimirActionPerformed(null);
         }
     }//GEN-LAST:event_tblFacturaMouseClicked
 
@@ -404,13 +386,16 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
         if (evt.getClickCount() == 1) {
             return;
         }
+
         frmSolicitudFecha miFecha = new frmSolicitudFecha(null, true);
         miFecha.setLocationRelativeTo(null);
         miFecha.setVisible(true);
+
         tblFactura.repaint();
+
         ajusteDetalle();
-        String idCliente = tblClientes.getValueAt(
-                tblClientes.getSelectedRow(), 0).toString();
+
+        String idCliente = tblClientes.getValueAt(tblClientes.getSelectedRow(), 0).toString();
 
         String sql = "SELECT f.idFactura, f.estado , f.fecha, f.USUARIO, "
                 + "COALESCE(SUM(d.precio * d.cantidad), 0.00) AS Valor "
@@ -436,7 +421,7 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
                     + "GROUP BY f.idFactura, f.estado , f.fecha, f.USUARIO "
                     + "order by 1";
         }
-        
+
         try {
             DefaultTableModel modelo = (DefaultTableModel) tblFactura.getModel();
             int filas = tblFactura.getRowCount();
@@ -464,10 +449,10 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
                 if (estado.equals("t")) {
                     estado = "Temporal";
                 }
-                if(estado.equals("x")){
+                if (estado.equals("x")) {
                     estado = "Asignada: " + rs.getString("Usuario");
                 }
-                
+
                 registro[3] = estado;
 
                 miTabla2.addRow(registro);
@@ -478,15 +463,19 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_tblClientesMouseClicked
 
-    private void btnAceptarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseExited
-        btnAceptar.setForeground(Color.BLACK);
-    }//GEN-LAST:event_btnAceptarMouseExited
+    private void txtCriterioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCriterioKeyReleased
+        tablaClientes();
+    }//GEN-LAST:event_txtCriterioKeyReleased
 
-    private void btnAceptarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseEntered
-        btnAceptar.setForeground(Color.BLUE);
-    }//GEN-LAST:event_btnAceptarMouseEntered
+    private void rbtIdFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtIdFacturaActionPerformed
+        rbtIDActionPerformed(evt);
+    }//GEN-LAST:event_rbtIdFacturaActionPerformed
 
-    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
         if (tblDetalleFactura.getRowCount() == 0) {
             JOptionPane.showMessageDialog(this, "No ha seleccionado Factura");
             return;
@@ -501,22 +490,15 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
                 System.getProperty("user.dir") + "/Reportes/factura(copia).jasper",
                 parametros);
         impresionFactura.start();
-    }//GEN-LAST:event_btnAceptarActionPerformed
-    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        this.setVisible(false);
-    }//GEN-LAST:event_btnSalirActionPerformed
-
-    private void txtCriterioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCriterioKeyReleased
-        tablaClientes();
-    }//GEN-LAST:event_txtCriterioKeyReleased
-
-    private void rbtIdFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtIdFacturaActionPerformed
-        rbtIDActionPerformed(evt);
-    }//GEN-LAST:event_rbtIdFacturaActionPerformed
+    }//GEN-LAST:event_btnImprimirActionPerformed
     void tablaClientes() {
-        String titulos[] = {"ID Cliente", "Nombres y Apellidos", "Credito", "Deuda Actual"};
-        String registro[] = new String[4];
+        String titulos[] = {"Nombres y Apellidos", "Cedula"};
+
+        Object registro[] = new Object[titulos.length];
+
         miTabla = new DefaultTableModel(null, titulos);
+
+        List<Clientes> clientesList = null;
 
         String sql = "";
         if (txtCriterio.getText().equals("")) {
@@ -552,44 +534,23 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
             }
         }
         //llenar Tabla con el Query        
-        ResultSet rs = null;
 
-        try {
-            while (rs.next()) {
-                registro[0] = rs.getString("idCliente");
-                registro[1] = rs.getString("nombres") + " " + rs.getString("apellidos");
-                registro[2] = "$ " + Utilidades.priceWithDecimal(Double.parseDouble(Utilidades.priceWithDecimal(rs.getDouble("credito"))));
-                registro[3] = "$ " + Utilidades.priceWithDecimal(Double.parseDouble(Utilidades.priceWithDecimal(rs.getDouble("deudaActual"))));
-                miTabla.addRow(registro);
-            }
-            tblClientes.setModel(miTabla);
-        } catch (SQLException ex) {
-            //Instalar Logger
-        }
+        clientesList.forEach(c ->{
+            registro[0] = c;
+            registro[1] = c.getGenerales().getCedula();
+            miTabla.addRow(registro);
+        });
+        
+        tblClientes.setModel(miTabla);
 
         //**************************Para Alinear el Texto de la Table a la Derecha...
-        tcr.setHorizontalAlignment(SwingConstants.RIGHT);
-        tblClientes.getColumnModel().getColumn(2).setCellRenderer(tcr);
-        tblClientes.getColumnModel().getColumn(3).setCellRenderer(tcr);
+//        tcr.setHorizontalAlignment(SwingConstants.RIGHT);
+//        tblClientes.getColumnModel().getColumn(2).setCellRenderer(tcr);
+//        tblClientes.getColumnModel().getColumn(3).setCellRenderer(tcr);
         /////////////////////////////////////////////////////////////////Finn
 
         /*Ancho de Columnas de Clientes*/
-        for (int i = 0; i <= 3; i++) {
-            miTableColumn = tblClientes.getColumnModel().getColumn(i);
-            if (i == 0) {
-                miTableColumn.setPreferredWidth(210);
-                //JTable tabla = new JTable(modelo.isCellEditable(proAct, WIDTH));
-            }
-            if (i == 1) {
-                miTableColumn.setPreferredWidth(500);
-            }
-            if (i == 2) {
-                miTableColumn.setPreferredWidth(170);
-            }
-            if (i == 3) {
-                miTableColumn.setPreferredWidth(190);
-            }
-        }/////FIN---------------------------------------------------------------
+        Utilidades.repararColumnaTable(tblClientes);
 
         ajusteFactura();
         ajusteDetalle();
@@ -642,8 +603,8 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup bgrTipoBusqueda;
-    private javax.swing.JButton btnAceptar;
-    private javax.swing.JButton btnSalir;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnImprimir;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnSalir;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;

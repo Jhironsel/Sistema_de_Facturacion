@@ -1,14 +1,13 @@
 package sur.softsurena.formularios;
 
 import java.awt.event.MouseEvent;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import static sur.softsurena.datos.select.SelectMetodos.getUsuario;
 import static sur.softsurena.datos.select.SelectMetodos.getUsuarios;
 import sur.softsurena.entidades.Usuarios;
 import static sur.softsurena.utilidades.Utilidades.repararColumnaTable;
@@ -26,6 +25,13 @@ public class frmPriviledios extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        btnNuevo = new RSMaterialComponent.RSButtonMaterialIconOne();
+        btnModificar = new RSMaterialComponent.RSButtonMaterialIconOne();
+        btnBorrar = new RSMaterialComponent.RSButtonMaterialIconOne();
+        btnBuscar = new RSMaterialComponent.RSButtonMaterialIconOne();
         jtpPrivilegios = new javax.swing.JTabbedPane();
         jpMantUsuarios = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -48,13 +54,6 @@ public class frmPriviledios extends javax.swing.JInternalFrame {
             }
         };
         ;
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
-        btnNuevo = new javax.swing.JButton();
-        btnModificar = new javax.swing.JButton();
-        btnBorrar = new javax.swing.JButton();
-        btnBuscar = new javax.swing.JButton();
         jpMantRoles = new javax.swing.JPanel();
         jpDefRoles = new javax.swing.JPanel();
 
@@ -81,7 +80,68 @@ public class frmPriviledios extends javax.swing.JInternalFrame {
             }
         });
 
-        jtpPrivilegios.setTabPlacement(javax.swing.JTabbedPane.LEFT);
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Botones"));
+
+        jPanel4.setLayout(new java.awt.GridLayout(1, 0, 4, 0));
+
+        btnNuevo.setText("Nuevo");
+        btnNuevo.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD);
+        btnNuevo.setPreferredSize(new java.awt.Dimension(100, 40));
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnNuevo);
+
+        btnModificar.setText("Editar");
+        btnModificar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.EDIT);
+        btnModificar.setPreferredSize(new java.awt.Dimension(100, 40));
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnModificar);
+
+        btnBorrar.setText("Borrar");
+        btnBorrar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DELETE);
+        btnBorrar.setPreferredSize(new java.awt.Dimension(100, 40));
+        btnBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrarActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnBorrar);
+
+        btnBuscar.setText("Buscar");
+        btnBuscar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.FIND_IN_PAGE);
+        btnBuscar.setPreferredSize(new java.awt.Dimension(100, 40));
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnBuscar);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        jScrollPane1.setViewportView(jPanel2);
+
+        jtpPrivilegios.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
 
         tblTabla.setAutoCreateRowSorter(true);
         tblTabla.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
@@ -109,145 +169,72 @@ public class frmPriviledios extends javax.swing.JInternalFrame {
         tblTabla.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane4.setViewportView(tblTabla);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Botones"));
-
-        jPanel4.setLayout(new java.awt.GridLayout(1, 0, 4, 0));
-
-        btnNuevo.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        btnNuevo.setMnemonic('n');
-        btnNuevo.setText("Nuevo");
-        btnNuevo.setToolTipText("Crear un nuevo Registro");
-        btnNuevo.setMaximumSize(null);
-        btnNuevo.setMinimumSize(null);
-        btnNuevo.setPreferredSize(null);
-        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNuevoActionPerformed(evt);
-            }
-        });
-        jPanel4.add(btnNuevo);
-
-        btnModificar.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        btnModificar.setMnemonic('e');
-        btnModificar.setText("Editar");
-        btnModificar.setToolTipText("Modificar Registro Actual");
-        btnModificar.setMaximumSize(null);
-        btnModificar.setMinimumSize(null);
-        btnModificar.setPreferredSize(null);
-        btnModificar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnModificarActionPerformed(evt);
-            }
-        });
-        jPanel4.add(btnModificar);
-
-        btnBorrar.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        btnBorrar.setMnemonic('b');
-        btnBorrar.setText("Borrar");
-        btnBorrar.setToolTipText("Borrar Registro Actual");
-        btnBorrar.setMaximumSize(null);
-        btnBorrar.setMinimumSize(null);
-        btnBorrar.setPreferredSize(null);
-        btnBorrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBorrarActionPerformed(evt);
-            }
-        });
-        jPanel4.add(btnBorrar);
-
-        btnBuscar.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        btnBuscar.setMnemonic('r');
-        btnBuscar.setText("Buscar");
-        btnBuscar.setToolTipText("Buscar el Registro");
-        btnBuscar.setMaximumSize(null);
-        btnBuscar.setMinimumSize(null);
-        btnBuscar.setPreferredSize(null);
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
-            }
-        });
-        jPanel4.add(btnBuscar);
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        jScrollPane1.setViewportView(jPanel2);
-
         javax.swing.GroupLayout jpMantUsuariosLayout = new javax.swing.GroupLayout(jpMantUsuarios);
         jpMantUsuarios.setLayout(jpMantUsuariosLayout);
         jpMantUsuariosLayout.setHorizontalGroup(
             jpMantUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpMantUsuariosLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addGroup(jpMantUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 610, Short.MAX_VALUE))
+                .addComponent(jScrollPane4)
                 .addGap(0, 0, 0))
         );
         jpMantUsuariosLayout.setVerticalGroup(
             jpMantUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpMantUsuariosLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE)
-                .addGap(0, 0, 0)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane4)
                 .addGap(0, 0, 0))
         );
 
-        jtpPrivilegios.addTab("<html><center><b>Mantenimiento<br>de<br>Usuarios</b><center></html>", null, jpMantUsuarios, "Permite definir los roles del sistema que agrupan a un conjuto de usuarios.");
+        jtpPrivilegios.addTab("<html><center><b>Mantenimiento<br>Usuarios</b><center></html>", null, jpMantUsuarios, "Permite definir los roles del sistema que agrupan a un conjuto de usuarios.");
 
         javax.swing.GroupLayout jpMantRolesLayout = new javax.swing.GroupLayout(jpMantRoles);
         jpMantRoles.setLayout(jpMantRolesLayout);
         jpMantRolesLayout.setHorizontalGroup(
             jpMantRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 610, Short.MAX_VALUE)
+            .addGap(0, 784, Short.MAX_VALUE)
         );
         jpMantRolesLayout.setVerticalGroup(
             jpMantRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 554, Short.MAX_VALUE)
+            .addGap(0, 439, Short.MAX_VALUE)
         );
 
-        jtpPrivilegios.addTab("<html><center><b>Mantenimiento<br>de<br>Roles</b><center></html>", null, jpMantRoles, "Permite definir los roles del sistema que agrupan a un conjuto de usuarios.");
+        jtpPrivilegios.addTab("<html><center><b>Mantenimiento<br>Roles</b><center></html>", null, jpMantRoles, "Permite definir los roles del sistema que agrupan a un conjuto de usuarios.");
 
         javax.swing.GroupLayout jpDefRolesLayout = new javax.swing.GroupLayout(jpDefRoles);
         jpDefRoles.setLayout(jpDefRolesLayout);
         jpDefRolesLayout.setHorizontalGroup(
             jpDefRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 610, Short.MAX_VALUE)
+            .addGap(0, 784, Short.MAX_VALUE)
         );
         jpDefRolesLayout.setVerticalGroup(
             jpDefRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 554, Short.MAX_VALUE)
+            .addGap(0, 439, Short.MAX_VALUE)
         );
 
-        jtpPrivilegios.addTab("<html><center><b>Mantenimiento<br>de<br>Roles</b><center></html>", null, jpDefRoles, "Permite definir los roles del sistema que agrupan a un conjuto de usuarios.");
+        jtpPrivilegios.addTab("<html><center><b>Asignación<br>Roles</b><center></html>", null, jpDefRoles, "Permite definir los roles del sistema que agrupan a un conjuto de usuarios.");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jtpPrivilegios)
+            .addComponent(jScrollPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jtpPrivilegios)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jtpPrivilegios)
+                .addGap(0, 0, 0)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+        llenarTabla();
+    }//GEN-LAST:event_formInternalFrameOpened
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         //Botones Para Deshabilitar:
@@ -264,19 +251,9 @@ public class frmPriviledios extends javax.swing.JInternalFrame {
                     "Debes seleccionar un usuario.");
             return;
         }
-        
-        
-        Usuarios u = Usuarios.builder().
-                user_name(tblTabla.getValueAt(tblTabla.getSelectedRow(), 0).toString().trim()).
-                pNombre(tblTabla.getValueAt(tblTabla.getSelectedRow(), 1).toString().trim()).
-                sNombre(tblTabla.getValueAt(tblTabla.getSelectedRow(), 2).toString().trim()).
-                apellidos(tblTabla.getValueAt(tblTabla.getSelectedRow(), 3).toString().trim()).
-                administrador(((Boolean) tblTabla.getValueAt(tblTabla.getSelectedRow(), 4))).
-                estado((((Boolean) tblTabla.getValueAt(tblTabla.getSelectedRow(), 5)))).
-                descripcion(((Usuarios) tblTabla.getValueAt(tblTabla.getSelectedRow(), 0)).getDescripcion()).
-                build();
-        
-        frmUsuariosAgregar user = new frmUsuariosAgregar(null, true, u);
+
+        frmUsuariosAgregar user = new frmUsuariosAgregar(null, true, 
+                getUsuario(tblTabla.getValueAt(tblTabla.getSelectedRow(), 0).toString().trim()));
         user.setLocationRelativeTo(this);
         user.setVisible(true);
         llenarTabla();
@@ -358,59 +335,50 @@ public class frmPriviledios extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
-        llenarTabla();
-    }//GEN-LAST:event_formInternalFrameOpened
-
     private void llenarTabla() {
         tblTabla.removeAll();
-        try {
-            String titulos[] = {"Nombre usuario", "Primer Nombre",
-                "Segundo Nombre", "Apellidos", "Administrador", "Estado"};
+        String titulos[] = {"Nombre usuario", "Primer Nombre",
+            "Segundo Nombre", "Apellidos", "Administrador", "Estado"};
 
-            Object registro[] = new Object[titulos.length];
+        Object registro[] = new Object[titulos.length];
 
-            miTabla = new DefaultTableModel(null,
-                    titulos) {
-                @Override
-                public Class<?> getColumnClass(int column) {
-                    if (column == 5 || column == 4) {
-                        return Boolean.class;
-                    } else {
-                        return String.class;
-                    }
+        miTabla = new DefaultTableModel(null, titulos) {
+            @Override
+            public Class<?> getColumnClass(int column) {
+                if (column == 5 || column == 4) {
+                    return Boolean.class;
+                } else {
+                    return String.class;
                 }
-
-            };
-
-            ResultSet rs = getUsuarios();
-
-            while (rs.next()) {
-                Usuarios u = Usuarios.builder().
-                        user_name(rs.getString("USER_NAME")).
-                        descripcion(rs.getString("DESCRIPCION"))
-                        .build();
-                registro[0] = u;
-                registro[1] = rs.getString("PNOMBRE") == null ? "":rs.getString("PNOMBRE");
-                registro[2] = rs.getString("SNOMBRE") == null ? "":rs.getString("SNOMBRE");
-                registro[3] = rs.getString("APELLIDOS") == null ? "":rs.getString("APELLIDOS");
-                registro[4] = rs.getBoolean("ADMINISTRADOR");
-                registro[5] = rs.getBoolean("ESTADO");
-                miTabla.addRow(registro);
             }
-            tblTabla.setModel(miTabla);
-        } catch (SQLException ex) {
-            LOG.log(Level.SEVERE, "Error al construir la tabla de usuarios", ex);
-        }
+
+        };
+        
+        getUsuarios().stream().forEach(usuario -> {
+            final Usuarios u = Usuarios.builder().
+                    user_name(usuario.getUser_name()).
+                    descripcion(usuario.getDescripcion())
+                    .build();
+            registro[0] = u;
+            registro[1] = usuario.getPNombre();
+            registro[2] = usuario.getSNombre();
+            registro[3] = usuario.getApellidos();
+            registro[4] = usuario.getAdministrador();
+            registro[5] = usuario.getEstado();
+            miTabla.addRow(registro);
+        });
+
+        
+        tblTabla.setModel(miTabla);
 
         repararColumnaTable(tblTabla);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBorrar;
-    private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnModificar;
-    private javax.swing.JButton btnNuevo;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnBorrar;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnBuscar;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnModificar;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnNuevo;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;

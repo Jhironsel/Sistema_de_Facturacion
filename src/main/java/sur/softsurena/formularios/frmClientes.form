@@ -94,12 +94,12 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jtpUnico" max="32767" attributes="0"/>
-                          <Component id="jPanel13" pref="885" max="32767" attributes="0"/>
+                          <Component id="jPanel13" pref="873" max="32767" attributes="0"/>
+                          <Component id="jtpUnico" pref="873" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -158,9 +158,9 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="jScrollPane3" alignment="0" pref="869" max="32767" attributes="0"/>
-                                      <Component id="jPanel15" alignment="0" max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jPanel15" max="32767" attributes="0"/>
+                                      <Component id="jScrollPane3" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
@@ -170,7 +170,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jScrollPane3" pref="563" max="32767" attributes="0"/>
+                                  <Component id="jScrollPane3" pref="309" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jPanel15" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -190,15 +190,6 @@
                             </Property>
                             <Property name="autoscrolls" type="boolean" value="true"/>
                             <Property name="doubleBuffered" type="boolean" value="true"/>
-                            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[2000, 0]"/>
-                            </Property>
-                            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[800, 0]"/>
-                            </Property>
-                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[800, 415]"/>
-                            </Property>
                           </Properties>
 
                           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
@@ -303,7 +294,7 @@
                                       <Component id="btnImprimirInforme" min="-2" pref="230" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="btnHistorial" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
+                                      <EmptySpace pref="425" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -520,6 +511,7 @@
                                 </Property>
                               </AccessibilityProperties>
                               <Events>
+                                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtCedulaFocusLost"/>
                                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCedulaActionPerformed"/>
                               </Events>
                             </Component>
@@ -624,7 +616,6 @@
                               </AccessibilityProperties>
                               <Events>
                                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPNombreActionPerformed"/>
-                                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtPNombreKeyReleased"/>
                               </Events>
                             </Component>
                             <Component class="javax.swing.JTextField" name="txtSNombre">
@@ -659,7 +650,6 @@
                               </Properties>
                               <Events>
                                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtSNombreActionPerformed"/>
-                                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtSNombreKeyReleased"/>
                               </Events>
                             </Component>
                             <Component class="javax.swing.JTextField" name="txtApellidos">
@@ -700,7 +690,6 @@
                               </AccessibilityProperties>
                               <Events>
                                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtApellidosActionPerformed"/>
-                                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtApellidosKeyReleased"/>
                               </Events>
                             </Component>
                             <Component class="com.toedter.calendar.JDateChooser" name="dchFechaNacimiento">
@@ -846,39 +835,10 @@
                                               </Table>
                                             </Property>
                                             <Property name="autoResizeMode" type="int" value="0"/>
-                                            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
-                                              <TableColumnModel selectionModel="1">
-                                                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                                                  <Title/>
-                                                  <Editor/>
-                                                  <Renderer/>
-                                                </Column>
-                                                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                                                  <Title/>
-                                                  <Editor/>
-                                                  <Renderer/>
-                                                </Column>
-                                                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                                                  <Title/>
-                                                  <Editor/>
-                                                  <Renderer/>
-                                                </Column>
-                                                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                                                  <Title/>
-                                                  <Editor/>
-                                                  <Renderer/>
-                                                </Column>
-                                                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                                                  <Title/>
-                                                  <Editor/>
-                                                  <Renderer/>
-                                                </Column>
-                                              </TableColumnModel>
-                                            </Property>
-                                            <Property name="columnSelectionAllowed" type="boolean" value="true"/>
                                             <Property name="name" type="java.lang.String" value="tblDireccion" noResource="true"/>
+                                            <Property name="selectionMode" type="int" value="1"/>
                                             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
-                                              <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
+                                              <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                                             </Property>
                                           </Properties>
                                           <AuxValues>
@@ -1559,9 +1519,6 @@
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarActionPerformed"/>
                       </Events>
-                      <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-                      </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>

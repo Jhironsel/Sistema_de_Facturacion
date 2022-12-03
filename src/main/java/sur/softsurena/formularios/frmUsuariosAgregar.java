@@ -1,11 +1,7 @@
 package sur.softsurena.formularios;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import javax.swing.JOptionPane;
-import sur.softsurena.datos.procedure.ProcedureMetodos;
 import static sur.softsurena.datos.procedure.ProcedureMetodos.agregarModificarUsuario;
-import static sur.softsurena.datos.select.SelectMetodos.getRoles;
 import sur.softsurena.entidades.Usuarios;
 import static sur.softsurena.datos.select.SelectMetodos.existeUsuarioByUserName;
 
@@ -32,11 +28,12 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
         txtSNombre.setText(u.getSNombre());
         txtApellidos.setText(u.getApellidos());
 
-        cbAdministrador.setSelected(u.getAdministrador());
-        cbAdministradorActionPerformed(null);
 
         cbEstado.setSelected(u.getEstado());
         cbEstadoActionPerformed(null);
+        
+        cbAdministrador.setSelected(u.getAdministrador());
+        cbAdministradorActionPerformed(null);
 
         txtDescripcion.setText(u.getDescripcion());
 
@@ -44,6 +41,11 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
         nuevo = false;
 
         txtIDUsuario.setEditable(false);
+        
+        //Cargar las Tags
+        
+        
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -408,8 +410,10 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
     }//GEN-LAST:event_txtSNombreActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        /*Validando la informacion que el usuario trata de ingresar a la base de
-        datos.*/
+        /*
+            Validando la informacion que el usuario trata de ingresar o 
+        actualizara la base de datos.
+        */
         if (txtIDUsuario.getText().equals("")) {
             JOptionPane.showMessageDialog(
                     null,
@@ -426,10 +430,6 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
             return;
         }
         
-        if(txtSNombre.getText().isBlank() || txtSNombre.getText().isEmpty()){
-            txtSNombre.setText("");
-        }
-
         if (txtApellidos.getText().equals("")) {
             JOptionPane.showMessageDialog(
                     null,
@@ -438,8 +438,10 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
             return;
         }
 
-        /*Se extraen las contraseñas de los campos para verificar sean iguales y 
-        sean segura tambien.*/
+        /*
+            Se extraen las contraseñas de los campos para verificar sean iguales y 
+        sean segura tambien.
+        */
         String clave1 = new String(txtClave1.getPassword()),
                 clave2 = new String(txtClave2.getPassword());
 
@@ -471,8 +473,10 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
             }
         }
 
-        /*Preparando el mensaje que verá el usuario para aceptar la información 
-        que se ingresará a la base de datos.*/
+        /*
+            Preparando el mensaje que verá el usuario para aceptar la información 
+        que se ingresará a la base de datos.
+        */
         String mensaje = "<html><big>"
                 + "<b>Se va a agregar el Usuario: </b>" + txtIDUsuario.getText() + "<br>"
                 + "<b>Con Nombre y Apellido: </b>" + txtPNombre.getText() + " " + txtApellidos.getText() + "<br>"
@@ -483,8 +487,10 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
 
         int resp = JOptionPane.showConfirmDialog(
                 null,
-                mensaje, "Confirmacion de Usuario",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                mensaje, 
+                "Confirmacion de Usuario",
+                JOptionPane.YES_NO_OPTION, 
+                JOptionPane.QUESTION_MESSAGE);
 
         if (resp == JOptionPane.NO_OPTION) {
             return;

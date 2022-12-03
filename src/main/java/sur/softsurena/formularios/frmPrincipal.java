@@ -61,7 +61,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private frmFechaReporte fechaReporte;
     private frmAbrilTurno miTurno;
     private frmCerrarTurno miTurnoACerra;
-    
+
     public frmPrincipal() {
         initComponents();
 
@@ -816,27 +816,28 @@ public final class frmPrincipal extends javax.swing.JFrame {
             cliente = new frmClientes();
         }
 
-        if (cliente != null) {
-            if (!dpnEscritorio.isAncestorOf(cliente)) {
-                dpnEscritorio.add(cliente);
-            }
-
-            try {
-                cliente.setMaximum(false);
-                cliente.setMaximum(true);
-            } catch (PropertyVetoException ex) {
-                //Instalar Logger
-            }
-
-            cliente.btnCancelar.doClick();
-            cliente.setVisible(true);
+        if (!dpnEscritorio.isAncestorOf(cliente)) {
+            dpnEscritorio.add(cliente);
         }
+
+        try {
+            cliente.setMaximum(false);
+            cliente.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            //Instalar Logger
+        }
+
+        cliente.setVisible(true);
     }//GEN-LAST:event_mnuArchivosClienteActionPerformed
     private void mnuArchivosProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuArchivosProductosActionPerformed
         if (productos == null) {
             productos = new frmProductos();
+        }
+        
+        if (!dpnEscritorio.isAncestorOf(productos)) {
             dpnEscritorio.add(productos);
         }
+        
         try {
             productos.setMaximum(false);
             productos.setMaximum(true);
@@ -844,7 +845,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
             //Instalar Logger
         }
 
-        productos.btnCancelar.doClick();
+        //productos.btnCancelar.doClick();
         productos.setVisible(true);
 
     }//GEN-LAST:event_mnuArchivosProductosActionPerformed

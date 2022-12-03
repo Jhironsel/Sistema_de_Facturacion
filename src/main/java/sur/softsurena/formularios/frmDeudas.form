@@ -44,12 +44,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jScrollPane6" alignment="1" pref="840" max="32767" attributes="0"/>
+          <Component id="jScrollPane6" alignment="1" pref="951" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jScrollPane6" alignment="1" pref="469" max="32767" attributes="0"/>
+          <Component id="jScrollPane6" alignment="1" pref="599" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -119,7 +119,7 @@
                           <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Component id="txtIDCliente" pref="80" max="32767" attributes="0"/>
+                                  <Component id="txtCedula" pref="80" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="btnGetCliente" min="-2" max="-2" attributes="0"/>
                               </Group>
@@ -149,7 +149,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="2" attributes="0">
                               <Component id="jLabel1" linkSize="1" alignment="2" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtIDCliente" linkSize="1" alignment="2" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtCedula" linkSize="1" alignment="2" min="-2" max="-2" attributes="0"/>
                               <Component id="btnGetCliente" linkSize="1" alignment="2" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel5" linkSize="1" alignment="2" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -237,7 +237,7 @@
                     <Property name="verifyInputWhenFocusTarget" type="boolean" value="false"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JFormattedTextField" name="txtIDCliente">
+                <Component class="javax.swing.JFormattedTextField" name="txtCedula">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
@@ -255,8 +255,8 @@
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtIDClienteActionPerformed"/>
-                    <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtIDClienteKeyReleased"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCedulaActionPerformed"/>
+                    <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCedulaKeyReleased"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel2">
@@ -867,7 +867,7 @@
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="jScrollPane1" pref="81" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" pref="193" max="32767" attributes="0"/>
                           <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
                       </Group>
                   </Group>

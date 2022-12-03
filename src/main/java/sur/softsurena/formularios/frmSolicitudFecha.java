@@ -32,13 +32,13 @@ public class frmSolicitudFecha extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jcEstados = new javax.swing.JComboBox<>();
         cbEstados = new javax.swing.JCheckBox();
-        btnCancelar = new javax.swing.JButton();
-        btnAceptar = new javax.swing.JButton();
         cbFechaFacturasDia = new javax.swing.JCheckBox();
         jdDia = new com.toedter.calendar.JDateChooser();
         cbSinFecha = new javax.swing.JCheckBox();
         cbFechaRango = new javax.swing.JCheckBox();
         jdDiaRango = new com.toedter.calendar.JDateChooser();
+        btnCancelar = new RSMaterialComponent.RSButtonMaterialIconOne();
+        btnCancelar1 = new RSMaterialComponent.RSButtonMaterialIconOne();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Filtrando Busquedas");
@@ -104,52 +104,6 @@ public class frmSolicitudFecha extends javax.swing.JDialog {
             }
         });
 
-        btnCancelar.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        btnCancelar.setForeground(new java.awt.Color(1, 1, 1));
-        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Cancelar 32 x 32.png"))); // NOI18N
-        btnCancelar.setMnemonic('c');
-        btnCancelar.setText("Cancelar");
-        btnCancelar.setBorder(null);
-        btnCancelar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnCancelar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnCancelarMouseExited(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnCancelarMouseEntered(evt);
-            }
-        });
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
-            }
-        });
-
-        btnAceptar.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        btnAceptar.setForeground(new java.awt.Color(1, 1, 1));
-        btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Aceptar 32 x 32.png"))); // NOI18N
-        btnAceptar.setMnemonic('a');
-        btnAceptar.setText("Aceptar");
-        btnAceptar.setToolTipText("");
-        btnAceptar.setBorder(null);
-        btnAceptar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnAceptar.setPreferredSize(new java.awt.Dimension(123, 44));
-        btnAceptar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnAceptar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnAceptarMouseExited(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnAceptarMouseEntered(evt);
-            }
-        });
-        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAceptarActionPerformed(evt);
-            }
-        });
-
         buttonGroup1.add(cbFechaFacturasDia);
         cbFechaFacturasDia.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         cbFechaFacturasDia.setText("Fecha dia de Facturas");
@@ -183,47 +137,63 @@ public class frmSolicitudFecha extends javax.swing.JDialog {
         jdDiaRango.setEnabled(false);
         jdDiaRango.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
 
+        btnCancelar.setText("Cancelar");
+        btnCancelar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnCancelar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CANCEL);
+        btnCancelar.setName("btnCancelar"); // NOI18N
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        btnCancelar1.setText("Aceptar");
+        btnCancelar1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnCancelar1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CANCEL);
+        btnCancelar1.setName("btnCancelar"); // NOI18N
+        btnCancelar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelar1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbEstados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jcEstados, 0, 404, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbEstados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jcEstados, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jsInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jsFin, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(cbIntervalosFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jdDia, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jcbUsuarios, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbCajeros, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jmMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(40, 40, 40)
-                                .addComponent(jyAnno, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(cbFechaFacturasDia)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(cbFechaFacturas)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cbSinFecha))
-                            .addComponent(jdDiaRango, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbFechaRango))))
+                        .addComponent(jsInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jsFin, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbIntervalosFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jdDia, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jcbUsuarios, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbCajeros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jmMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)
+                        .addComponent(jyAnno, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbFechaFacturasDia)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(cbFechaFacturas)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbSinFecha))
+                    .addComponent(jdDiaRango, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbFechaRango))
                 .addGap(6, 6, 6))
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnAceptar, btnCancelar});
-
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -259,83 +229,15 @@ public class frmSolicitudFecha extends javax.swing.JDialog {
                 .addComponent(cbEstados)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jcEstados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(btnCancelar)
-                    .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnAceptar, btnCancelar});
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnCancelarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseExited
-        btnCancelar.setForeground(Color.BLACK);
-    }//GEN-LAST:event_btnCancelarMouseExited
-
-    private void btnCancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseEntered
-        btnCancelar.setForeground(Color.blue);
-    }//GEN-LAST:event_btnCancelarMouseEntered
-
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_btnCancelarActionPerformed
-
-    private void btnAceptarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseExited
-        btnAceptar.setForeground(Color.BLACK);
-    }//GEN-LAST:event_btnAceptarMouseExited
-
-    private void btnAceptarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseEntered
-        btnAceptar.setForeground(Color.BLUE);
-    }//GEN-LAST:event_btnAceptarMouseEntered
-
-    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        if (cbCajeros.isSelected()) {
-            if (jcbUsuarios.getSelectedIndex() == 0) {
-                JOptionPane.showMessageDialog(this,
-                        "Debe seleccionar un usuario",
-                        "Problema de Usuario!!!", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-        }
-        
-        if (cbFechaFacturasDia.isSelected()) {
-            if (jdDia.getDate()== null) {
-                JOptionPane.showMessageDialog(this,
-                        "Digiste una fecha",
-                        "Problema de Fecha!!!", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            if (jdDia.getDate().after(new Date())) {
-                JOptionPane.showMessageDialog(this,
-                        "Fecha futura, incorrecta!!!",
-                        "Problema de Fecha!!!", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-        }
-        
-        if (cbIntervalosFactura.isSelected()) {
-            if (Utilidades.objectToInt(jsInicio.getValue())
-                    > Utilidades.objectToInt(jsFin.getValue())) {
-                JOptionPane.showMessageDialog(this,
-                        "Intervalo de factura, incorrecto!!!",
-                        "Problema de intervalos!!!", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-        }
-        
-        if(cbEstados.isSelected()){
-            if(jcEstados.getSelectedIndex() == 0){
-                JOptionPane.showMessageDialog(this,
-                        "Debe seleccionar un estado",
-                        "Problema de estado!!!", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-        }
-        
-    }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         String sql = "SELECT r.IDUSUARIO, (r.NOMBRES||' '||r.APELLIDOS) AS Nombre "
@@ -432,10 +334,59 @@ public class frmSolicitudFecha extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_cbFechaRangoActionPerformed
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnCancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelar1ActionPerformed
+        if (cbCajeros.isSelected()) {
+            if (jcbUsuarios.getSelectedIndex() == 0) {
+                JOptionPane.showMessageDialog(this,
+                        "Debe seleccionar un usuario",
+                        "Problema de Usuario!!!", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+        
+        if (cbFechaFacturasDia.isSelected()) {
+            if (jdDia.getDate()== null) {
+                JOptionPane.showMessageDialog(this,
+                        "Digiste una fecha",
+                        "Problema de Fecha!!!", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (jdDia.getDate().after(new Date())) {
+                JOptionPane.showMessageDialog(this,
+                        "Fecha futura, incorrecta!!!",
+                        "Problema de Fecha!!!", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+        
+        if (cbIntervalosFactura.isSelected()) {
+            if (Utilidades.objectToInt(jsInicio.getValue())
+                    > Utilidades.objectToInt(jsFin.getValue())) {
+                JOptionPane.showMessageDialog(this,
+                        "Intervalo de factura, incorrecto!!!",
+                        "Problema de intervalos!!!", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+        
+        if(cbEstados.isSelected()){
+            if(jcEstados.getSelectedIndex() == 0){
+                JOptionPane.showMessageDialog(this,
+                        "Debe seleccionar un estado",
+                        "Problema de estado!!!", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+    }//GEN-LAST:event_btnCancelar1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAceptar;
-    private javax.swing.JButton btnCancelar;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnCancelar;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnCancelar1;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JCheckBox cbCajeros;
     private javax.swing.JCheckBox cbEstados;

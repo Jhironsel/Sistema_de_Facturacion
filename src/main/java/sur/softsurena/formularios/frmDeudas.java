@@ -17,7 +17,6 @@ import static sur.softsurena.datos.select.SelectMetodos.existeCliente;
 import static sur.softsurena.datos.select.SelectMetodos.modificarDeuda;
 import sur.softsurena.entidades.DefaultTableCellHeaderRenderer;
 import sur.softsurena.entidades.Deudas;
-//import static sur.softsurena.formularios.frmPrincipal.mnuArchivosCliente;
 import sur.softsurena.utilidades.Utilidades;
 
 public class frmDeudas extends javax.swing.JInternalFrame {
@@ -61,7 +60,7 @@ public class frmDeudas extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         txtApellidos = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        txtIDCliente = new javax.swing.JFormattedTextField();
+        txtCedula = new javax.swing.JFormattedTextField();
         jLabel2 = new javax.swing.JLabel();
         txtNombres = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -118,21 +117,21 @@ public class frmDeudas extends javax.swing.JInternalFrame {
         setMinimumSize(new java.awt.Dimension(42, 42));
         setPreferredSize(new java.awt.Dimension(800, 600));
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
-            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
-                formInternalFrameOpened(evt);
-            }
-            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
-            }
-            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
-            }
-            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
-            }
-            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
-            }
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
                 formInternalFrameActivated(evt);
             }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
             public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
             }
         });
 
@@ -171,26 +170,26 @@ public class frmDeudas extends javax.swing.JInternalFrame {
         jLabel1.setRequestFocusEnabled(false);
         jLabel1.setVerifyInputWhenFocusTarget(false);
 
-        txtIDCliente.setEditable(false);
+        txtCedula.setEditable(false);
         try {
-            txtIDCliente.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###-#######-#")));
+            txtCedula.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###-#######-#")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        txtIDCliente.setToolTipText("Cedula del Cliente");
-        txtIDCliente.setDoubleBuffered(true);
-        txtIDCliente.setFocusLostBehavior(javax.swing.JFormattedTextField.COMMIT);
-        txtIDCliente.setFocusTraversalPolicyProvider(true);
-        txtIDCliente.setFont(new java.awt.Font("Ubuntu Mono", 1, 16)); // NOI18N
-        txtIDCliente.setPreferredSize(new java.awt.Dimension(52, 21));
-        txtIDCliente.addActionListener(new java.awt.event.ActionListener() {
+        txtCedula.setToolTipText("Cedula del Cliente");
+        txtCedula.setDoubleBuffered(true);
+        txtCedula.setFocusLostBehavior(javax.swing.JFormattedTextField.COMMIT);
+        txtCedula.setFocusTraversalPolicyProvider(true);
+        txtCedula.setFont(new java.awt.Font("Ubuntu Mono", 1, 16)); // NOI18N
+        txtCedula.setPreferredSize(new java.awt.Dimension(52, 21));
+        txtCedula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIDClienteActionPerformed(evt);
+                txtCedulaActionPerformed(evt);
             }
         });
-        txtIDCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtCedula.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtIDClienteKeyReleased(evt);
+                txtCedulaKeyReleased(evt);
             }
         });
 
@@ -296,7 +295,7 @@ public class frmDeudas extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, Short.MAX_VALUE)
                         .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -304,7 +303,7 @@ public class frmDeudas extends javax.swing.JInternalFrame {
                 .addGap(6, 6, 6)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(txtIDCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtCedula, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnGetCliente))
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -330,7 +329,7 @@ public class frmDeudas extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtIDCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGetCliente)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -352,15 +351,13 @@ public class frmDeudas extends javax.swing.JInternalFrame {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(dchFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jScrollPane5)
-                        .addGap(0, 0, 0))))
+                    .addComponent(jScrollPane5)))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnGetCliente, dchFecha, jLabel1, jLabel11, jLabel2, jLabel3, jLabel5, jLabel9, txtApellidos, txtIDCliente, txtMonto, txtNombres});
+        jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnGetCliente, dchFecha, jLabel1, jLabel11, jLabel2, jLabel3, jLabel5, jLabel9, txtApellidos, txtCedula, txtMonto, txtNombres});
 
         dchFecha.getAccessibleContext().setAccessibleParent(this);
 
@@ -658,7 +655,7 @@ public class frmDeudas extends javax.swing.JInternalFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
 
@@ -695,11 +692,11 @@ public class frmDeudas extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 840, Short.MAX_VALUE)
+            .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 951, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
+            .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 599, Short.MAX_VALUE)
         );
 
         pack();
@@ -723,22 +720,22 @@ public class frmDeudas extends javax.swing.JInternalFrame {
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         tblClientes.setEnabled(false);//Deshabilitamos la tabla de cliente
-        txtIDCliente.setEditable(true);//Campo de la cedula editable
+        txtCedula.setEditable(true);//Campo de la cedula editable
         btnGetCliente.setEnabled(true);//Se habitan el boton de obtener datos del cliente
         btnCancelar.setEnabled(true);//Deshabitamos el boton cancelar
         btnModificar.setEnabled(false);//Deshabitamos el boton modificar
-        txtIDCliente.grabFocus();//Garantizar el focus
-        txtIDCliente.requestFocusInWindow();//Peticion del focus
-        txtIDCliente.setValue("");//Iniciamos el valor del focus
+        txtCedula.grabFocus();//Garantizar el focus
+        txtCedula.requestFocusInWindow();//Peticion del focus
+        txtCedula.setValue("");//Iniciamos el valor del focus
         nuevo = true;//Buscamos un nuevo registros de dueda...
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         if (btnCancelar.isEnabled()) {
-            txtIDCliente.requestFocusInWindow();
+            txtCedula.requestFocusInWindow();
             return;
         }
-        String idCliente = txtIDCliente.getText().replace("-", "").trim();
+        String idCliente = txtCedula.getText().replace("-", "").trim();
         if (idCliente.isEmpty()) {
             
             JOptionPane.showMessageDialog(this, "Debe seleccionar cliente...");
@@ -772,11 +769,11 @@ public class frmDeudas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        String idCliente = txtIDCliente.getText().replace("-", "").trim();
+        String idCliente = txtCedula.getText().replace("-", "").trim();
         if (idCliente.isEmpty()) {
             JOptionPane.showMessageDialog(this,
                     "Debe Digitar un ID de Cliente...");
-            txtIDCliente.requestFocusInWindow();
+            txtCedula.requestFocusInWindow();
             return;
         }
 
@@ -844,7 +841,7 @@ public class frmDeudas extends javax.swing.JInternalFrame {
                 + txtNombres.getText() + " " + txtApellidos.getText()
                 + "</big></html>"
                 + "\n<html><b><big>Cedula no.: </big></b><big>"
-                + txtIDCliente.getValue() + "</big></html>"
+                + txtCedula.getValue() + "</big></html>"
                 + "\n<html><b><big>Monto de deuda es: </big></b><big>"
                 + txtMonto.getText() + "</big></html>"
                 + "\n<html><b><big>Por Concepto de: </big></b><big>"
@@ -889,14 +886,14 @@ public class frmDeudas extends javax.swing.JInternalFrame {
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
         if (btnCancelar.isEnabled()) {
-            txtIDCliente.requestFocusInWindow();
+            txtCedula.requestFocusInWindow();
             return;
         }
         if (tblClientes.getRowCount() == 0) {
             
             return;
         }
-        String idCliente = txtIDCliente.getText().replace("-", "").trim();
+        String idCliente = txtCedula.getText().replace("-", "").trim();
 
         
 
@@ -921,7 +918,7 @@ public class frmDeudas extends javax.swing.JInternalFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         if (btnCancelar.isEnabled()) {
-            txtIDCliente.requestFocusInWindow();
+            txtCedula.requestFocusInWindow();
             return;
         }
         if (tblClientes.getRowCount() == 0) {
@@ -957,11 +954,11 @@ public class frmDeudas extends javax.swing.JInternalFrame {
         mostrarRegistro();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-    private void txtIDClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDClienteActionPerformed
+    private void txtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaActionPerformed
         btnGetClienteActionPerformed(evt);
-    }//GEN-LAST:event_txtIDClienteActionPerformed
+    }//GEN-LAST:event_txtCedulaActionPerformed
 
-    private void txtIDClienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIDClienteKeyReleased
+    private void txtCedulaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaKeyReleased
         char caracter = evt.getKeyChar();
 
         if (caracter == '-') {
@@ -970,7 +967,7 @@ public class frmDeudas extends javax.swing.JInternalFrame {
         if (caracter < '0' || (caracter > '9')) {
             evt.consume();  // ignorar el evento de teclado
         }
-    }//GEN-LAST:event_txtIDClienteKeyReleased
+    }//GEN-LAST:event_txtCedulaKeyReleased
 
     private void txtNombresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombresActionPerformed
         txtApellidos.requestFocusInWindow();
@@ -997,18 +994,27 @@ public class frmDeudas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtMontoActionPerformed
 
     private void btnGetClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGetClienteActionPerformed
-        String cedula = txtIDCliente.getValue().toString();
+        /*
+            Obtenemos la cedula del cliente de la caja de texto o jTextField.
+        */
+        String cedula = txtCedula.getValue().toString();
 
-        if (cedula.isEmpty() || cedula.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Inserte una cedula Valida, 000-0000000-0");
-            txtIDCliente.setValue("");
-            txtIDCliente.requestFocusInWindow();
+        /*
+            Validamos el campo para saber si está vacio o está en blanco.
+        */
+        if (cedula.isEmpty() || cedula.isBlank()) {
+            JOptionPane.showMessageDialog(this, 
+                    "Inserte una cedula Valida, formato: 000-0000000-0");
+            txtCedula.setValue("");
+            txtCedula.requestFocusInWindow();
             return;
         }
 
         
-
-        if (existeCliente(cedula)) {
+        /*
+            Validamos si el cliente existe en la base de datos.
+        */
+        if (existeCliente(cedula) != -1) {
             
             nuevo();
             
@@ -1028,9 +1034,11 @@ public class frmDeudas extends javax.swing.JInternalFrame {
             }
             
             btnGetCliente.setEnabled(false);
-            txtIDCliente.setEditable(false);
+            
+            txtCedula.setEditable(false);
             txtNombres.setEditable(false);
             txtApellidos.setEditable(false);
+            
             txtMonto.requestFocusInWindow();
         } else {
             //Cliente no existe
@@ -1054,7 +1062,7 @@ public class frmDeudas extends javax.swing.JInternalFrame {
 
     private void tblClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClientesMouseClicked
         if (btnCancelar.isEnabled()) {
-            txtIDCliente.requestFocusInWindow();
+            txtCedula.requestFocusInWindow();
             return;
         }
         cliAct = tblClientes.getSelectedRow();
@@ -1109,7 +1117,7 @@ public class frmDeudas extends javax.swing.JInternalFrame {
         }
 
         if (btnCancelar.isEnabled()) {
-            txtIDCliente.requestFocusInWindow();
+            txtCedula.requestFocusInWindow();
             return;
         }
 
@@ -1146,7 +1154,7 @@ public class frmDeudas extends javax.swing.JInternalFrame {
 
         frmPagosDeudas miPagos = new frmPagosDeudas(null, true,
                 Utilidades.objectToInt(tblClientes.getValueAt(cliAct, 0)),
-                txtIDCliente.getText().trim(), txtNombres,
+                txtCedula.getText().trim(), txtNombres,
                 txtApellidos, dchFecha, txtMonto.getValue());
         miPagos.setLocationRelativeTo(null);
         miPagos.setVisible(true);
@@ -1170,7 +1178,7 @@ public class frmDeudas extends javax.swing.JInternalFrame {
             return;
         }
         if (btnCancelar.isEnabled()) {
-            txtIDCliente.requestFocusInWindow();
+            txtCedula.requestFocusInWindow();
             return;
         }
 
@@ -1246,12 +1254,12 @@ public class frmDeudas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnGetTotalActionPerformed
 
     private void mostrarRegistro() {
-        txtIDCliente.setValue("");
+        txtCedula.setValue("");
         if (tblClientes.getRowCount() == 0) {
             return;
         }
         
-        txtIDCliente.setText(tblClientes.getValueAt(cliAct, 1).toString());
+        txtCedula.setText(tblClientes.getValueAt(cliAct, 1).toString());
         txtNombres.setText(tblClientes.getValueAt(cliAct, 2).toString());
         txtApellidos.setText(tblClientes.getValueAt(cliAct, 3).toString());
         txtConcepto.setText(tblClientes.getValueAt(cliAct, 4).toString());
@@ -1259,7 +1267,7 @@ public class frmDeudas extends javax.swing.JInternalFrame {
         dchFecha.setDate(Utilidades.objectToDate(tblClientes.getValueAt(cliAct, 6)));
 
         tblClientes.setRowSelectionInterval(cliAct, cliAct);
-        txtIDCliente.setEditable(false);
+        txtCedula.setEditable(false);
     }
 
     private void cancelar() {
@@ -1278,7 +1286,7 @@ public class frmDeudas extends javax.swing.JInternalFrame {
         btnCancelar.setEnabled(false);
         btnGetCliente.setEnabled(false);
 
-        txtIDCliente.setEditable(false);
+        txtCedula.setEditable(false);
         txtNombres.setEditable(false);
         txtApellidos.setEditable(false);
         txtMonto.setEditable(false);
@@ -1289,7 +1297,7 @@ public class frmDeudas extends javax.swing.JInternalFrame {
 
     private void reset(char idCliente) {
         if (idCliente == 's') {
-            txtIDCliente.setValue("");
+            txtCedula.setValue("");
         }
 
         txtNombres.setText("");
@@ -1310,10 +1318,10 @@ public class frmDeudas extends javax.swing.JInternalFrame {
         btnBorrar.setEnabled(false);
         btnBuscar.setEnabled(false);
 
-        //Caja de Texto Habilitado
         btnGuardar.setEnabled(true);
         btnCancelar.setEnabled(true);
 
+        //Caja de Texto Habilitado
         txtNombres.setEditable(true);
         txtApellidos.setEditable(true);
         txtMonto.setEditable(true);
@@ -1325,7 +1333,7 @@ public class frmDeudas extends javax.swing.JInternalFrame {
     private void llenarTabla() {
         String titulos[] = {"Numero", "Cedula Cliente", "Nombres", "Apellidos",
             "Concepto", "Monto", "Fecha", "Estado"};
-        Object registro[] = new Object[8];
+        Object registro[] = new Object[titulos.length];
 
 //        getConsulta(
 //                    "SELECT r.IDDEUDAS, IIF(r.IDCLIENTE = '0', '000-0000000-0', "
@@ -1423,13 +1431,14 @@ public class frmDeudas extends javax.swing.JInternalFrame {
 
     private void direccion(String direccion) {
         if (!tblClientes.isEnabled()) {
-            txtIDCliente.requestFocusInWindow();
+            txtCedula.requestFocusInWindow();
             return;
         }
 
         if (tblClientes.getRowCount() == 0) {
             return;
         }
+        
         switch (direccion) {
             case "a":
                 cliAct = 0;
@@ -1500,8 +1509,8 @@ public class frmDeudas extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTable tblClientes;
     private javax.swing.JTextField txtApellidos;
+    private javax.swing.JFormattedTextField txtCedula;
     private javax.swing.JTextArea txtConcepto;
-    private javax.swing.JFormattedTextField txtIDCliente;
     private javax.swing.JFormattedTextField txtMonto;
     private javax.swing.JTextField txtNombres;
     // End of variables declaration//GEN-END:variables
