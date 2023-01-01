@@ -7,9 +7,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import static sur.softsurena.datos.select.SelectMetodos.getUsuario;
-import static sur.softsurena.datos.select.SelectMetodos.getUsuarios;
 import sur.softsurena.entidades.Usuarios;
+import static sur.softsurena.entidades.Usuarios.getUsuario;
+import static sur.softsurena.entidades.Usuarios.getUsuarios;
 import static sur.softsurena.utilidades.Utilidades.repararColumnaTable;
 
 public class frmPriviledios extends javax.swing.JInternalFrame {
@@ -253,7 +253,9 @@ public class frmPriviledios extends javax.swing.JInternalFrame {
         }
 
         frmUsuariosAgregar user = new frmUsuariosAgregar(null, true, 
-                getUsuario(tblTabla.getValueAt(tblTabla.getSelectedRow(), 0).toString().trim()));
+                getUsuario(tblTabla.getValueAt(
+                        tblTabla.getSelectedRow(), 0).toString().trim()));
+        
         user.setLocationRelativeTo(this);
         user.setVisible(true);
         llenarTabla();

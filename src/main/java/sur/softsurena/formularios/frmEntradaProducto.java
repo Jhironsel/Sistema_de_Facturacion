@@ -14,7 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import rojerusan.RSTableMetro;
-import sur.softsurena.entidades.Producto;
+import sur.softsurena.entidades.Productos;
 
 public class frmEntradaProducto extends javax.swing.JDialog {
 
@@ -462,7 +462,7 @@ public class frmEntradaProducto extends javax.swing.JDialog {
             }
         }
 
-        Producto p = Producto.builder().id(-1).descripcion("").build();
+        Productos p = Productos.builder().id(-1).descripcion("").build();
         registro[0] = miBusqueda.getRespuesta();//p
         registro[1] = txtDescripcionProducto.getText();
         registro[2] = entrada;

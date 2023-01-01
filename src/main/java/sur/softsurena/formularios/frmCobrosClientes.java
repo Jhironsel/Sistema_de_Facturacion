@@ -9,8 +9,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
-import static sur.softsurena.datos.select.SelectMetodos.*;
 import sur.softsurena.entidades.Clientes;
+import static sur.softsurena.entidades.Clientes.getClientesTablaSBCombo;
 import sur.softsurena.hilos.hiloImpresionFactura;
 import sur.softsurena.utilidades.Utilidades;
 

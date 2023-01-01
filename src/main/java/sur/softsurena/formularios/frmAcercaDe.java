@@ -6,9 +6,13 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import sur.softsurena.metodos.Imagenes;
 
 public class frmAcercaDe extends javax.swing.JDialog {
+
+    private static final Logger LOG = Logger.getLogger(frmAcercaDe.class.getName());
 
     public frmAcercaDe(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -123,10 +127,10 @@ public class frmAcercaDe extends javax.swing.JDialog {
             try {
                 Desktop.getDesktop().browse(url.toURI());
             } catch (IOException | URISyntaxException e) {
-                //Instalar Logger
+                LOG.log(Level.SEVERE, e.getMessage(), e);
             }
         } catch (MalformedURLException e1) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, e1.getMessage(), e1);
         }
     }//GEN-LAST:event_jlLogoMouseClicked
 

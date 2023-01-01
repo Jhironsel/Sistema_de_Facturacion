@@ -1,9 +1,9 @@
 package sur.softsurena.formularios;
 
 import javax.swing.JOptionPane;
-import static sur.softsurena.datos.procedure.ProcedureMetodos.agregarModificarUsuario;
 import sur.softsurena.entidades.Usuarios;
-import static sur.softsurena.datos.select.SelectMetodos.existeUsuarioByUserName;
+import static sur.softsurena.entidades.Usuarios.*;
+import static sur.softsurena.entidades.Usuarios.existeUsuarioByUserName;
 
 public class frmUsuariosAgregar extends javax.swing.JDialog {
 

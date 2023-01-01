@@ -2,31 +2,32 @@ package sur.softsurena.formularios;
 
 import java.awt.Image;
 import java.io.File;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import static sur.softsurena.datos.delete.DeleteMetodos.borrarCategoria;
-import static sur.softsurena.datos.insert.InsertMetodos.agregarCategoria;
-import static sur.softsurena.datos.select.SelectMetodos.existeCategoria;
-import static sur.softsurena.datos.select.SelectMetodos.existeCategoriaProductos;
-import static sur.softsurena.datos.select.SelectMetodos.getCategorias;
-import static sur.softsurena.datos.update.UpdateMetodos.modificarCategoria;
 import sur.softsurena.entidades.Categorias;
+import static sur.softsurena.entidades.Categorias.agregarCategoria;
+import static sur.softsurena.entidades.Categorias.borrarCategoria;
+import static sur.softsurena.entidades.Categorias.existeCategoria;
+import static sur.softsurena.entidades.Categorias.getCategorias;
+import static sur.softsurena.entidades.Categorias.modificarCategoria;
+import static sur.softsurena.entidades.Productos.existeCategoriaProductos;
 import sur.softsurena.utilidades.Utilidades;
 
 public class frmCategorias extends javax.swing.JDialog {
+
+    private static final Logger LOG = Logger.getLogger(frmCategorias.class.getName());
+
     private Integer idCategoria;
     private boolean nuevo = false;
     private int respuestaFileChooser = JFileChooser.CANCEL_OPTION;
     private String ruta = "", nombreCategoria = "", source, dest;
-    
 
-    
-    
     public frmCategorias(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -150,43 +151,41 @@ public class frmCategorias extends javax.swing.JDialog {
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         //Activamos el Flag de registro Nuevo
         nuevo = true;
-        
+
         limpiarJLImagen();
-        
+
         //Pedimos el nombre de la categoria a crear.
         nombreCategoria = JOptionPane.showInputDialog(
                 this,
-                "Cual es el nombre de Categoria?", 
+                "Cual es el nombre de Categoria?",
                 "Crear nombre de Categoria",
                 JOptionPane.QUESTION_MESSAGE
         );
-        
+
         //Si nombre de la categoria esta' nula o vacia nos devolvemos. 
         if (nombreCategoria == null || nombreCategoria.trim().isEmpty()) {
             return;
         }
-        
+
         //La convertimos a Mayuscula.
         nombreCategoria = nombreCategoria.toUpperCase();
-        
-        
-        
+
         //Consultamos la base de datos para saber si ese nombre de categoria existe.
         if (existeCategoria(nombreCategoria)) {
             JOptionPane.showMessageDialog(
-                    this, 
+                    this,
                     "Este nombre de Categoria ya existe en el sitema");
             return;
         }
 
         //Avisamos al usuario que le toca elegir la imagen de la categoria.
         JOptionPane.showMessageDialog(this,
-            "Siguiente paso es para elejir una imagen para la Categoria "
-            + nombreCategoria);
-        
+                "Siguiente paso es para elejir una imagen para la Categoria "
+                + nombreCategoria);
+
         if (buscarImagen()) {
             guardar();
-        }else{
+        } else {
             limpiarJLImagen();
         }
     }//GEN-LAST:event_btnNuevoActionPerformed
@@ -198,11 +197,11 @@ public class frmCategorias extends javax.swing.JDialog {
     }
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        if(cbCategoria.getItemCount() == 0){
+        if (cbCategoria.getItemCount() == 0) {
             JOptionPane.showMessageDialog(this, "Debe de crear una categoria...!!!");
             return;
         }
-        
+
         nuevo = false;
         idCategoria = ((Categorias) cbCategoria.getSelectedItem()).getId();
         nombreCategoria = ((Categorias) cbCategoria.getSelectedItem()).getDescripcion();
@@ -221,12 +220,12 @@ public class frmCategorias extends javax.swing.JDialog {
             nombreCategoria = miCategoria.getNombreCategoria().toUpperCase();
             if (buscarImagen()) {
                 guardar();
-            }else{
+            } else {
                 int resp = JOptionPane.showConfirmDialog(this,
-                    "Desea solo guardar el nombre?",
-                    "Confirmacion de Categoria",
-                    JOptionPane.YES_NO_OPTION);
-                if(resp == 0){
+                        "Desea solo guardar el nombre?",
+                        "Confirmacion de Categoria",
+                        JOptionPane.YES_NO_OPTION);
+                if (resp == 0) {
                     guardar();
                 }
             }
@@ -239,12 +238,12 @@ public class frmCategorias extends javax.swing.JDialog {
             return;
         }
         int rta = JOptionPane.showConfirmDialog(this,
-            "Esta Seguro de Eliminar la Categoria {"
-            + (((Categorias) cbCategoria.getSelectedItem()).getDescripcion())
-            + "} del Sistema? \n\n Este proceso tratara "
-            + "de eliminarlo si no ocurre es porque existen"
-            + "\nproducto asociado a dicha categoria",
-            "Confirmacion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                "Esta Seguro de Eliminar la Categoria {"
+                + (((Categorias) cbCategoria.getSelectedItem()).getDescripcion())
+                + "} del Sistema? \n\n Este proceso tratara "
+                + "de eliminarlo si no ocurre es porque existen"
+                + "\nproducto asociado a dicha categoria",
+                "Confirmacion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (rta == 1) {
             return;
         }
@@ -255,7 +254,7 @@ public class frmCategorias extends javax.swing.JDialog {
         String msg;
         msg = borrarCategoria(((Categorias) cbCategoria.getSelectedItem()).getId());
         JOptionPane.showMessageDialog(rootPane, msg);
-        if(cbCategoria.getItemCount() != 0){
+        if (cbCategoria.getItemCount() != 0) {
             cbCategoria.setSelectedIndex(0);
         }
         actualizarCombo();
@@ -273,70 +272,70 @@ public class frmCategorias extends javax.swing.JDialog {
         try {
             ImageIcon imagen = new ImageIcon(laImagen);
             //Tamaño de icono Comprobar...
-            if (imagen.getIconHeight() == -1) {                
-                imagen = new ImageIcon(System.getProperty("user.dir") + 
-                        "/images/Sin_imagen 64 x 64.png");
+            if (imagen.getIconHeight() == -1) {
+                imagen = new ImageIcon(System.getProperty("user.dir")
+                        + "/images/Sin_imagen 64 x 64.png");
             }
             Icon icon = new ImageIcon(imagen.getImage().getScaledInstance(72, 72,
-                Image.SCALE_DEFAULT));
-        imagen.getImage().flush();
-        jlImagen.setIcon(icon);
-        jlImagen.validate();
+                    Image.SCALE_DEFAULT));
+            imagen.getImage().flush();
+            jlImagen.setIcon(icon);
+            jlImagen.validate();
         } catch (Exception e) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, e.getMessage(), e);
         }
     }//GEN-LAST:event_cbCategoriaItemStateChanged
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         actualizarCombo();
     }//GEN-LAST:event_formWindowOpened
-    
+
     private void guardar() {
         if (nuevo) {
             //Creamos la categoria y la encapsulamos en la clase Categoria
             Categorias categoria = Categorias.builder().
                     descripcion(nombreCategoria.trim()).
                     pathImage(new File(ruta)).build();
-            
+
             //Ejecutamos la consulta siguiente para insertar la categoria.
             String msj = agregarCategoria(categoria).getMensaje();
-            
+
             //Si recibimos un mensaje de error del metodo anterior ejecutamos lo
             //siguiente.
             if (msj.equals("Error al insertar categoria.")) {
-                JOptionPane.showMessageDialog(this, 
-                    msj, 
-                    "Proceso de creacion Categoria.", 
-                    JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this,
+                        msj,
+                        "Proceso de creacion Categoria.",
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            
+
             //Si el condicional anterior no se ejecutó entonces mostramos al 
             //usuario que se inserto el registro.
-            JOptionPane.showMessageDialog(this, 
-                    msj, 
-                    "Proceso de creacion Categoria.", 
+            JOptionPane.showMessageDialog(this,
+                    msj,
+                    "Proceso de creacion Categoria.",
                     JOptionPane.INFORMATION_MESSAGE);
-            
+
         } else {
             //Creamos el objeto categoria que tendra' los atributos.
             Categorias categoria = Categorias.builder().
                     id(idCategoria).
                     descripcion(nombreCategoria.trim()).
                     pathImage(new File(ruta)).build();
-            
+
             String msj = modificarCategoria(categoria);
-            
+
             JOptionPane.showMessageDialog(this, msj);
-            
+
             if (msj.equals("Error al Modificar Categoria...")) {
                 return;
             }
-            
+
         }
-        
+
         dest = ruta;
-        
+
         if (respuestaFileChooser == JFileChooser.APPROVE_OPTION) {
             Utilidades.copyFileUsingFileChannels(source, dest);
             ImageIcon imagen = new ImageIcon(ruta);
@@ -346,44 +345,40 @@ public class frmCategorias extends javax.swing.JDialog {
             jlImagen.setIcon(icon);
             jlImagen.validate();
         }
-        
+
         respuestaFileChooser = JFileChooser.CANCEL_OPTION;
         ruta = "";
-        
+
         actualizarCombo();
     }
-    
-    private void actualizarCombo() {
-        
-        ResultSet rs = getCategorias();
-        
-        cbCategoria.removeAllItems();
-        
-        try {
-            while (rs.next()) {
-                Categorias miCat = Categorias.builder().
-                        id(rs.getInt("ID")).
-                        descripcion(rs.getString("DESCRIPCION")).
-                        image_texto(rs.getString("IMAGEN_TEXTO")).build();
-                cbCategoria.addItem(miCat);
-            }
-        } catch (SQLException ex) {
-            //Instalar Logger
-        }
-    }
 
+    private void actualizarCombo() {
+
+        List<Categorias> categoriasList = getCategorias();
+
+        cbCategoria.removeAllItems();
+
+        categoriasList.stream().forEach(x -> {
+            Categorias miCat = Categorias.builder().
+                    id(x.getId()).
+                    descripcion(x.getDescripcion()).
+                    image_texto(x.getImage_texto()).build();
+            cbCategoria.addItem(miCat);
+        });
+
+    }
 
     private boolean buscarImagen() {
         //Creamos un JFileChooser para buscar una imagen en el sistema.
         JFileChooser jfileChooser = new JFileChooser();
-        
+
         //Preparamos el tipo de extension que se van a filtrar en el JFileChooser.
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Imagenes",
                 "jpg", "png", "PNG", "JPG");
-        
+
         //Colocamos el filtro a jFileChooser.
         jfileChooser.setFileFilter(filter);
-        
+
         //Abrimos la ventana para conocer la opcion elegida por el usuario.
         respuestaFileChooser = jfileChooser.showOpenDialog(this);
 
@@ -396,20 +391,20 @@ public class frmCategorias extends javax.swing.JDialog {
         dest = "/imagesCategorias/";
 
         ImageIcon imagen = new ImageIcon(source);
-        
+
         //Tamaño de icono
-        Icon icon = new ImageIcon(imagen.getImage().getScaledInstance(72, 72, 
+        Icon icon = new ImageIcon(imagen.getImage().getScaledInstance(72, 72,
                 Image.SCALE_DEFAULT));
-        
+
         imagen.getImage().flush();
-        
+
         jlImagen.setIcon(icon);
         jlImagen.validate();
-        
+
         return true;
     }
-    
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBorrar;
     private javax.swing.JButton btnModificar;

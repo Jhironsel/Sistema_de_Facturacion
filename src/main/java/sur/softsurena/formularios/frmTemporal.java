@@ -7,11 +7,11 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import static sur.softsurena.datos.delete.DeleteMetodos.borrarFactura;
-import static sur.softsurena.datos.insert.InsertMetodos.agregarDetalleFactura;
-import static sur.softsurena.datos.insert.InsertMetodos.agregarFacturaNombre;
 import sur.softsurena.entidades.DefaultTableCellHeaderRenderer;
+import static sur.softsurena.entidades.DetalleFactura.agregarDetalleFactura;
 import sur.softsurena.entidades.Facturas;
+import static sur.softsurena.entidades.Facturas.agregarFacturaNombre;
+import static sur.softsurena.entidades.Facturas.borrarFactura;
 import sur.softsurena.entidades.HeaderFactura;
 
 public class frmTemporal extends java.awt.Dialog {

@@ -5,14 +5,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import static sur.softsurena.datos.procedure.ProcedureMetodos.cerrarTurno;
-import static sur.softsurena.datos.select.SelectMetodos.idTurnoActivo;
-import static sur.softsurena.datos.select.SelectMetodos.usuarioTurnoActivo;
 import sur.softsurena.entidades.Opcion;
+import static sur.softsurena.entidades.Turnos.cerrarTurno;
+import static sur.softsurena.entidades.Turnos.idTurnoActivo;
+import static sur.softsurena.entidades.Turnos.usuarioTurnoActivo;
 import sur.softsurena.hilos.hiloImpresionFactura;
 
 public class frmCerrarTurno extends java.awt.Dialog {
+
+    private static final Logger LOG = Logger.getLogger(frmCerrarTurno.class.getName());
 
     private int idTurno;
     private boolean aceptar;
@@ -44,9 +48,9 @@ public class frmCerrarTurno extends java.awt.Dialog {
         gradientPreviewPanel1 = new org.jdesktop.swingx.color.GradientPreviewPanel();
         jcbUsuarios = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
-        btnAceptar = new javax.swing.JButton();
-        btnCancelar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        btnAceptar = new RSMaterialComponent.RSButtonMaterialIconOne();
+        btnCancelar = new RSMaterialComponent.RSButtonMaterialIconOne();
 
         setResizable(false);
         setTitle("Cerrar Turno de Cajero");
@@ -56,55 +60,40 @@ public class frmCerrarTurno extends java.awt.Dialog {
             }
         });
 
-        jcbUsuarios.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        gradientPreviewPanel1.setOpaque(false);
+        gradientPreviewPanel1.setRadial(true);
+        gradientPreviewPanel1.setReflected(true);
+        gradientPreviewPanel1.setRepeated(true);
+        gradientPreviewPanel1.setReversed(true);
+
+        jcbUsuarios.setFont(new java.awt.Font("FreeMono", 1, 14)); // NOI18N
 
         jLabel1.setText("Cajeros:");
 
-        btnAceptar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        btnAceptar.setForeground(new java.awt.Color(1, 1, 1));
-        btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Aceptar 32 x 32.png"))); // NOI18N
-        btnAceptar.setMnemonic('a');
+        jLabel2.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Cerrar Turno");
+
         btnAceptar.setText("Aceptar");
         btnAceptar.setToolTipText("");
-        btnAceptar.setBorder(null);
-        btnAceptar.setPreferredSize(new java.awt.Dimension(123, 44));
-        btnAceptar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnAceptarMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnAceptarMouseExited(evt);
-            }
-        });
+        btnAceptar.setEffectButton(RSMaterialComponent.RSButtonMaterialIconOne.EFFECTBUTTON.RAISED);
+        btnAceptar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CHECK);
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAceptarActionPerformed(evt);
             }
         });
 
-        btnCancelar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        btnCancelar.setForeground(new java.awt.Color(1, 1, 1));
-        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Cancelar 32 x 32.png"))); // NOI18N
-        btnCancelar.setMnemonic('c');
+        btnCancelar.setBackground(new java.awt.Color(255, 0, 0));
         btnCancelar.setText("Cancelar");
-        btnCancelar.setBorder(null);
-        btnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnCancelarMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnCancelarMouseExited(evt);
-            }
-        });
+        btnCancelar.setToolTipText("");
+        btnCancelar.setEffectButton(RSMaterialComponent.RSButtonMaterialIconOne.EFFECTBUTTON.RAISED);
+        btnCancelar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CANCEL);
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
             }
         });
-
-        jLabel2.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Cerrar Turno");
 
         javax.swing.GroupLayout gradientPreviewPanel1Layout = new javax.swing.GroupLayout(gradientPreviewPanel1);
         gradientPreviewPanel1.setLayout(gradientPreviewPanel1Layout);
@@ -119,15 +108,12 @@ public class frmCerrarTurno extends java.awt.Dialog {
                     .addComponent(jcbUsuarios, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, gradientPreviewPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 157, Short.MAX_VALUE)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
-
-        gradientPreviewPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnAceptar, btnCancelar});
-
         gradientPreviewPanel1Layout.setVerticalGroup(
             gradientPreviewPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(gradientPreviewPanel1Layout.createSequentialGroup()
@@ -136,15 +122,13 @@ public class frmCerrarTurno extends java.awt.Dialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jcbUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(gradientPreviewPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAceptar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jcbUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(gradientPreviewPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
-
-        gradientPreviewPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnAceptar, btnCancelar});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -154,17 +138,38 @@ public class frmCerrarTurno extends java.awt.Dialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(gradientPreviewPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(gradientPreviewPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private void btnAceptarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseEntered
-        btnAceptar.setForeground(Color.BLUE);
-    }//GEN-LAST:event_btnAceptarMouseEntered
-    private void btnAceptarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseExited
-        btnAceptar.setForeground(Color.BLACK);
-    }//GEN-LAST:event_btnAceptarMouseExited
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        Opcion miOpcion = new Opcion("0", "Seleccione un usuario");
+        jcbUsuarios.removeAllItems();
+        jcbUsuarios.addItem(miOpcion);
+//        ResultSet rs = getUsuariosActivo();
+        ResultSet rs = null;
+        try {
+            while (rs.next()) {
+                miOpcion = new Opcion(
+                        rs.getString("idUsuario"),
+                        rs.getString("Nombres") + " " + rs.getString("Apellidos")
+                );
+                jcbUsuarios.addItem(miOpcion);
+
+            }
+        } catch (SQLException ex) {
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
+        }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        setAceptar(false);
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         String idUsuario = ((Opcion) jcbUsuarios.getSelectedItem()).getValor();
         if (idUsuario.equals("0")) {
@@ -188,35 +193,6 @@ public class frmCerrarTurno extends java.awt.Dialog {
         setAceptar(true);
         this.dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
-    private void btnCancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseEntered
-        btnCancelar.setForeground(Color.blue);
-    }//GEN-LAST:event_btnCancelarMouseEntered
-    private void btnCancelarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseExited
-        btnCancelar.setForeground(Color.BLACK);
-    }//GEN-LAST:event_btnCancelarMouseExited
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        setAceptar(false);
-        this.dispose();
-    }//GEN-LAST:event_btnCancelarActionPerformed
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        Opcion miOpcion = new Opcion("0", "Seleccione un usuario");
-        jcbUsuarios.removeAllItems();
-        jcbUsuarios.addItem(miOpcion);
-//        ResultSet rs = getUsuariosActivo();
-        ResultSet rs = null;
-        try {
-            while (rs.next()) {
-                miOpcion = new Opcion(
-                        rs.getString("idUsuario"),
-                        rs.getString("Nombres") + " " + rs.getString("Apellidos")
-                );
-                jcbUsuarios.addItem(miOpcion);
-
-            }
-        } catch (SQLException ex) {
-            //Instalar Logger
-        }
-    }//GEN-LAST:event_formWindowOpened
     private void imprimirReporte(String nombreUsuario) {
         Map parametros = new HashMap();
         parametros.put("idTurno", getIdTurno());
@@ -229,8 +205,8 @@ public class frmCerrarTurno extends java.awt.Dialog {
         miHilo.start();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAceptar;
-    private javax.swing.JButton btnCancelar;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnAceptar;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnCancelar;
     private org.jdesktop.swingx.color.GradientPreviewPanel gradientPreviewPanel1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

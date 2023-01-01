@@ -21,14 +21,13 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import static sur.softsurena.conexion.Conexion.getCnn;
-import static sur.softsurena.datos.select.SelectMetodos.getLogo;
-import static sur.softsurena.datos.select.SelectMetodos.getUsuarioActual;
-import static sur.softsurena.datos.select.SelectMetodos.idTurnoActivo;
-import static sur.softsurena.datos.select.SelectMetodos.usuarioTurnoActivo;
-import sur.softsurena.datos.updateInsert.UpdateInsertMetodos;
 import sur.softsurena.entidades.DesktopConFondo;
-import sur.softsurena.entidades.Encabezado;
+import static sur.softsurena.entidades.E_S_SYS.getLogo;
+import static sur.softsurena.entidades.E_S_SYS.insertLogo;
+import static sur.softsurena.entidades.Turnos.idTurnoActivo;
+import static sur.softsurena.entidades.Turnos.usuarioTurnoActivo;
 import sur.softsurena.entidades.Usuarios;
+import static sur.softsurena.entidades.Usuarios.getUsuarioActual;
 import sur.softsurena.hilos.hiloIp;
 import sur.softsurena.hilos.hiloRestaurar;
 import sur.softsurena.jfilechooser.ImageFileView;
@@ -992,7 +991,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
         if (resp == JFileChooser.APPROVE_OPTION) {
 
-            UpdateInsertMetodos.insertLogo(file.getSelectedFile());
+            insertLogo(file.getSelectedFile());
 
             cargarLogo();
             jlLogoEmpresa.validate();

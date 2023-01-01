@@ -16,12 +16,11 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import sur.softsurena.FirebirdEventos.FirebirdEventos;
 import sur.softsurena.conexion.Conexion;
+import static sur.softsurena.entidades.BaseDeDatos.existeIdMaquina;
+import static sur.softsurena.entidades.BaseDeDatos.periodoMaquina;
+import static sur.softsurena.entidades.BaseDeDatos.setLicencia;
+import static sur.softsurena.entidades.Usuarios.comprobandoRol;
 import sur.softsurena.metodos.Imagenes;
-import static sur.softsurena.conexion.Conexion.getCnn;
-import static sur.softsurena.datos.procedure.ProcedureMetodos.setLicencia;
-import static sur.softsurena.datos.select.SelectMetodos.comprobandoRol;
-import static sur.softsurena.datos.select.SelectMetodos.existeIdMaquina;
-import static sur.softsurena.datos.select.SelectMetodos.periodoMaquina;
 
 public final class frmLogin extends javax.swing.JFrame {
 
@@ -334,7 +333,6 @@ public final class frmLogin extends javax.swing.JFrame {
         ArrayList<String> roles = comprobandoRol(txtUsuario.getText().trim());
         
         if (roles == null) {
-            cerrarConexion();
             JOptionPane.showMessageDialog(this, "El usuario no cuenta con rol en el sistema");
             return;
         }
@@ -355,8 +353,6 @@ public final class frmLogin extends javax.swing.JFrame {
         }
 
         String rol = comboBox.getSelectedItem().toString();
-
-        cerrarConexion();
         
         if (rol.equalsIgnoreCase("ADMINISTRADOR")) {
             rol = "RDB$ADMIN";
@@ -433,18 +429,7 @@ public final class frmLogin extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
-    private void cerrarConexion() {
-        Conexion.cerrarConexion();
-        Conexion.setCnn(null);
-    }
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        try {
-            if (getCnn() != null) {
-                cerrarConexion();
-            }
-        } catch (Exception e) {
-
-        }
         System.exit(0);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -504,6 +489,20 @@ public final class frmLogin extends javax.swing.JFrame {
                 frmLogin.setLocationRelativeTo(null);
             }
         });
+        String sql
+                = "SELECT t.id, trim( "
+                + "          case lunes when 1 then 'Lunes ' else trim('') end || "
+                + "          case martes when 1 then 'Martes ' else trim('') end || "
+                + "          case miercoles when 1 then 'Miercoles ' else trim('') end || "
+                + "          case jueves when 1 then 'Jueves ' else trim('') end ||  "
+                + "          case viernes when 1 then 'Viernes ' else trim('') end || "
+                + "          case sabados when 1 then 'Sabados ' else trim('') end|| "
+                + "          case domingos when 1 then 'Domingos ' else trim('') end) || ' De ' || "
+                + "          subString(t.Hora_Inicio FROM 1 for 8) ||' Hasta '|| "
+                + "             subString(t.Hora_Final FROM 1 for 8) AS HORARIO "
+                + "FROM V_TANDAS t "
+                + "WHERE t.edad_minima <= ? and t.edad_maxima >= ?";
+        System.out.println(sql);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

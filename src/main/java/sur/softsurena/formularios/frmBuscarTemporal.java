@@ -5,18 +5,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import static sur.softsurena.datos.select.SelectMetodos.getTemporales;
 import sur.softsurena.entidades.DefaultTableCellHeaderRenderer;
+import static sur.softsurena.entidades.Temporales.getTemporales;
 import sur.softsurena.hilos.hiloImpresionFactura;
 
 public final class frmBuscarTemporal extends java.awt.Dialog {
 
+    private static final Logger LOG = Logger.getLogger(frmBuscarTemporal.class.getName());
+    
     private DefaultTableModel miTabla;
     private boolean aceptar;
     private String factura;
@@ -247,7 +251,7 @@ public final class frmBuscarTemporal extends java.awt.Dialog {
             tblDetalle.getColumnModel().getColumn(5).setCellRenderer(tcr);
 
         } catch (SQLException ex) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
         
         //Ordenando las columnas

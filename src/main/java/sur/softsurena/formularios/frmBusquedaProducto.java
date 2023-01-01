@@ -2,10 +2,14 @@ package sur.softsurena.formularios;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
-import sur.softsurena.datos.select.SelectMetodos;
+import static sur.softsurena.entidades.Productos.buscarProducto;
 
 public class frmBusquedaProducto extends javax.swing.JDialog {
+
+    private static final Logger LOG = Logger.getLogger(frmBusquedaProducto.class.getName());
 
     private DefaultTableModel miTabla;
     private String respuesta = "";
@@ -169,7 +173,7 @@ public class frmBusquedaProducto extends javax.swing.JDialog {
             return;
         } 
 
-        ResultSet rs = SelectMetodos.buscarProducto(txtCriterio.getText());
+        ResultSet rs = buscarProducto(txtCriterio.getText());
 
         try {
             while (rs.next()) {
@@ -180,7 +184,7 @@ public class frmBusquedaProducto extends javax.swing.JDialog {
             }
             tblTabla.setModel(miTabla);
         } catch (SQLException ex) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
 
         if (tblTabla.getRowCount() > 1) {
@@ -193,7 +197,7 @@ public class frmBusquedaProducto extends javax.swing.JDialog {
         try {
             rs.close();
         } catch (SQLException ex) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

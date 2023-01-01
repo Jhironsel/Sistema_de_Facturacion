@@ -1,21 +1,18 @@
 package sur.softsurena.formularios;
 
 import java.awt.Dimension;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import javax.swing.JOptionPane;
-import static sur.softsurena.datos.select.SelectMetodos.getFacturas;
 import sur.softsurena.entidades.Clientes;
+import static sur.softsurena.entidades.Clientes.getClientesTablaSBCombo;
 import sur.softsurena.entidades.Facturas;
+import static sur.softsurena.entidades.Facturas.getFacturas;
 import sur.softsurena.entidades.Opcion;
 import sur.softsurena.utilidades.Utilidades;
-import static sur.softsurena.datos.select.SelectMetodos.getClientesTablaSB;
-import static sur.softsurena.datos.select.SelectMetodos.getClientesTablaSBCombo;
 
 public class frmReporteFacturas extends javax.swing.JInternalFrame {
-    
+
     public frmReporteFacturas() {
-        
+
         initComponents();
         bgrTipo.add(rbtTodo);
         bgrTipo.add(rbtSeleccion);
@@ -23,10 +20,12 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame {
         bgrFiltro.add(rbtFactura);
         bgrFiltro.add(rbtCliente);
     }
+
     public void centralizar() {
         Dimension d = this.getDesktopPane().getSize();
         this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -51,29 +50,30 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame {
         cmbFacturaFinal = new javax.swing.JComboBox();
         jLabel7 = new javax.swing.JLabel();
         cmbCliente = new javax.swing.JComboBox();
-        btnGenerar = new javax.swing.JButton();
+        btnGenerar = new RSMaterialComponent.RSButtonMaterialIconOne();
 
         setClosable(true);
         setIconifiable(true);
         setTitle("Reporte de Facturas");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
-            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
-                formInternalFrameOpened(evt);
-            }
-            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
             }
-            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
-            }
-            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
-            }
-            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
             }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
+            }
         });
 
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel1.setText("Archivo: ");
 
         txtArchivo.setText("Reporte");
@@ -130,12 +130,16 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Fecha Inicial: ");
 
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("Fecha Final: ");
 
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel4.setText("Factura Inicial: ");
 
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel5.setText("Factura Final: ");
 
         dchFechaFinal.setEnabled(false);
@@ -146,13 +150,15 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame {
 
         cmbFacturaFinal.setEnabled(false);
 
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel7.setText("Cliente: ");
+        jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
         cmbCliente.setEnabled(false);
 
-        btnGenerar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Reportar Factura 32 x 32.png"))); // NOI18N
-        btnGenerar.setMnemonic('g');
-        btnGenerar.setText("General Reporte");
+        btnGenerar.setText("Generar reporte");
+        btnGenerar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnGenerar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.PUBLISH);
         btnGenerar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGenerarActionPerformed(evt);
@@ -166,50 +172,52 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(dchFechaFinal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cmbFacturaInicial, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cmbFacturaFinal, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cmbCliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(dchFechaInicial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(btnGenerar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnSeleccionArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGap(0, 0, 0)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmbFacturaInicial, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cmbFacturaFinal, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cmbCliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(dchFechaFinal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(dchFechaInicial, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(btnGenerar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(4, 4, 4)
-                                .addComponent(txtArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnSeleccionArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(rbtTodo)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(rbtSeleccion))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(rbtFecha)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(rbtFactura)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(rbtCliente)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(0, 0, 0))
+                                .addComponent(rbtFecha, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(rbtTodo, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addGap(18, 18, 18)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(rbtSeleccion)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(rbtFactura)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(rbtCliente))))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, 0)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                    .addComponent(btnSeleccionArchivo)
                     .addComponent(txtArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSeleccionArchivo))
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rbtTodo)
@@ -240,8 +248,8 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame {
                     .addComponent(jLabel7)
                     .addComponent(cmbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnGenerar)
-                .addGap(0, 0, 0))
+                .addComponent(btnGenerar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -266,6 +274,43 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame {
     private void rbtClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtClienteActionPerformed
         habilitarCampos();
     }//GEN-LAST:event_rbtClienteActionPerformed
+
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+
+        //Cargamos Clientes
+        Clientes cli = Clientes.builder().
+                id_persona(-1).
+                pNombre("Seleccione un cliente").
+                sNombre("").
+                apellidos("").build();
+
+        cmbCliente.addItem(cli);
+
+        getClientesTablaSBCombo(cmbCliente);
+
+        //Cargamos Facturas
+        Facturas fac = Facturas.builder().id(-1).build();
+
+        cmbFacturaInicial.addItem(cli);
+
+        cmbFacturaFinal.addItem(cli);
+
+        getFacturas().stream().forEach(x -> {
+            cmbFacturaInicial.addItem(fac);
+            cmbFacturaFinal.addItem(fac);
+        });
+
+    }//GEN-LAST:event_formInternalFrameOpened
+
+    private void btnSeleccionArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionArchivoActionPerformed
+        frmSelectorArchivo miArchivo = new frmSelectorArchivo(null, closable);
+        miArchivo.setLocationRelativeTo(null);
+        miArchivo.setVisible(true);
+        String archivo = miArchivo.getArchivo();
+        if (!archivo.equals("")) {
+            txtArchivo.setText(archivo);
+        }
+    }//GEN-LAST:event_btnSeleccionArchivoActionPerformed
 
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
         if (txtArchivo.getText().equals("")) {
@@ -310,8 +355,8 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame {
                         cmbFacturaFinal.requestFocusInWindow();
                         return;
                     }
-                    
-                    if(cmbFacturaInicial.getSelectedIndex() > cmbFacturaFinal.getSelectedIndex()){
+
+                    if (cmbFacturaInicial.getSelectedIndex() > cmbFacturaFinal.getSelectedIndex()) {
                         JOptionPane.showMessageDialog(null, "Factura Inicial Maryor que la Final");
                         cmbFacturaInicial.requestFocusInWindow();
                         return;
@@ -346,54 +391,12 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame {
             sql = sql + filtro;
 
 //            Reporte.reporteFacturas(archivo, getConsulta(sql));
-            
             JOptionPane.showMessageDialog(null, "Reporte Generado...");
             dispose();
         } catch (Exception ex) {
             //Instalar Logger
         }
-        
     }//GEN-LAST:event_btnGenerarActionPerformed
-
-    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
-        try {
-            
-            //Cargamos Clientes
-            Clientes cli = Clientes.builder().
-                    id_persona(-1).
-                    pNombre("Seleccione un cliente").
-                    sNombre("").
-                    apellidos("").build();
-            
-            cmbCliente.addItem(cli);
-            
-            getClientesTablaSBCombo(cmbCliente);
-
-            //Cargamos Facturas
-            Facturas fac = Facturas.builder().id(-1).build();
-            cmbFacturaInicial.addItem(cli);
-            cmbFacturaFinal.addItem(cli);
-            ResultSet rsFac = getFacturas();
-            while (rsFac.next()) {
-                fac = Facturas.builder().id(rsFac.getInt("ID")).build();
-                cmbFacturaInicial.addItem(fac);
-                cmbFacturaFinal.addItem(fac);
-            }
-
-        } catch (SQLException ex) {
-            //Instalar Logger
-        }
-    }//GEN-LAST:event_formInternalFrameOpened
-
-    private void btnSeleccionArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionArchivoActionPerformed
-        frmSelectorArchivo miArchivo = new frmSelectorArchivo(null, closable);
-        miArchivo.setLocationRelativeTo(null);
-        miArchivo.setVisible(true);
-        String archivo = miArchivo.getArchivo();
-        if (!archivo.equals("")) {
-            txtArchivo.setText(archivo);
-        }
-    }//GEN-LAST:event_btnSeleccionArchivoActionPerformed
     private void habilitarCampos() {
         if (rbtTodo.isSelected()) {
             rbtFecha.setEnabled(false);
@@ -439,7 +442,7 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame {
 
                 cmbFacturaInicial.setEnabled(false);
                 cmbFacturaFinal.setEnabled(false);
-                
+
             }
 
         }
@@ -447,7 +450,7 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup bgrFiltro;
     private javax.swing.ButtonGroup bgrTipo;
-    private javax.swing.JButton btnGenerar;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnGenerar;
     private javax.swing.JButton btnSeleccionArchivo;
     private javax.swing.JComboBox cmbCliente;
     private javax.swing.JComboBox cmbFacturaFinal;

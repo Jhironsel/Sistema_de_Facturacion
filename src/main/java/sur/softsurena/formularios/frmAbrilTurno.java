@@ -2,11 +2,10 @@ package sur.softsurena.formularios;
 
 import java.util.List;
 import javax.swing.JOptionPane;
-import static sur.softsurena.datos.procedure.ProcedureMetodos.habilitarTurno;
-import static sur.softsurena.datos.select.SelectMetodos.getUsuarios;
-import static sur.softsurena.datos.select.SelectMetodos.usuarioTurnoActivo;
-import sur.softsurena.entidades.Opcion;
+import static sur.softsurena.entidades.Turnos.habilitarTurno;
+import static sur.softsurena.entidades.Turnos.usuarioTurnoActivo;
 import sur.softsurena.entidades.Usuarios;
+import static sur.softsurena.entidades.Usuarios.getUsuarios;
 
 public class frmAbrilTurno extends java.awt.Dialog {
 
@@ -142,20 +141,28 @@ public class frmAbrilTurno extends java.awt.Dialog {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        String idUsuario = ((Opcion) jcbUsuarios.getSelectedItem()).getValor();
-        if (idUsuario.equals("0")) {
+        //Se captura el nombre de usuario que se le va asignar el turno.
+        String userName = ((Usuarios) jcbUsuarios.getSelectedItem()).getUser_name();
+        
+        //Si el objeto idUsuario es igual a N/A, retornar y mandar mensaje de error.
+        if (userName.equals("N/A")) {
             JOptionPane.showMessageDialog(this, "Debe Seleccionar un Usuario");
             return;
         }
-        if(usuarioTurnoActivo(idUsuario)){
+        
+        //Verificamos si el usuario tiene turno abierto
+        if(usuarioTurnoActivo(userName)){
             JOptionPane.showMessageDialog(this, "Usuario con Turno Abierto...");
             return;
         }
-        if (habilitarTurno(idUsuario)) {
+        
+        //Si el usuario no tiene turno abierto, procedemos habilitar turno.
+        if (habilitarTurno(userName)) {
             JOptionPane.showMessageDialog(this, "Turno Habilitado");
         } else {
             JOptionPane.showMessageDialog(this, "Problema para habilitar el Turno");
         }
+        
         
         setAceptar(true);
         this.dispose();

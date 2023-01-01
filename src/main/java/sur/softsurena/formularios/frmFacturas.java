@@ -34,24 +34,25 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import static sur.softsurena.datos.delete.DeleteMetodos.borrarFactura;
-import static sur.softsurena.datos.insert.InsertMetodos.agregarDetalleFactura;
-import static sur.softsurena.datos.insert.InsertMetodos.agregarFacturaNombre;
-import static sur.softsurena.datos.select.SelectMetodos.existeProducto;
-import static sur.softsurena.datos.select.SelectMetodos.getCategoriaActivas;
-import static sur.softsurena.datos.select.SelectMetodos.getCategorias;
-import static sur.softsurena.datos.select.SelectMetodos.getClientesCombo;
-import static sur.softsurena.datos.update.UpdateMetodos.modificarFactura;
+import sur.softsurena.entidades.Categorias;
+import static sur.softsurena.entidades.Categorias.getCategoriaActivas;
+import static sur.softsurena.entidades.Categorias.getCategorias;
 import sur.softsurena.entidades.Clientes;
+import static sur.softsurena.entidades.Clientes.getClientesCombo;
 import sur.softsurena.entidades.DefaultTableCellHeaderRenderer;
 import sur.softsurena.entidades.DetalleFactura;
+import static sur.softsurena.entidades.DetalleFactura.agregarDetalleFactura;
 import sur.softsurena.entidades.Facturas;
+import static sur.softsurena.entidades.Facturas.agregarFacturaNombre;
+import static sur.softsurena.entidades.Facturas.modificarFactura;
 import sur.softsurena.entidades.Generales;
 import sur.softsurena.entidades.HeaderFactura;
 import sur.softsurena.entidades.Opcion;
 import sur.softsurena.entidades.Personas;
+import static sur.softsurena.entidades.Productos.existeProducto;
 import static sur.softsurena.formularios.frmPrincipal.mnuMovimientosNuevaFactura;
 import sur.softsurena.hilos.hiloImpresionFactura;
+import sur.softsurena.metodos.Imagenes;
 import sur.softsurena.utilidades.Utilidades;
 
 public final class frmFacturas extends javax.swing.JInternalFrame implements Runnable, ActionListener {
@@ -85,6 +86,8 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
     private final Thread h1;
 
     private Thread ct;
+
+    private ArrayList<DetalleFactura> detalleFacturaList;
 
     private Properties getPropiedad() {
         return propiedad;
@@ -1051,19 +1054,22 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
                 }
             }
         } else {
+
             HeaderFactura hf = HeaderFactura.builder().
                     idCliente(((Clientes) cmbCliente.getSelectedItem()).getId_persona()).
                     idTurno(getTurno()).
                     efectivo(new BigDecimal(miEfe.txtEfectivo.getValue().toString())).
                     cambio(new BigDecimal(miEfe.txtDevuelta.getValue().toString())).
                     credito(rbtCredito.isSelected()).build();
-            DetalleFactura objDF = null;
-            List<DetalleFactura> df = new ArrayList<DetalleFactura>();
 
-            df.add(objDF);
+            DetalleFactura objDF = null;
+
+            detalleFacturaList = new ArrayList<DetalleFactura>();
+
+            detalleFacturaList.add(objDF);
 
             Facturas f = Facturas.builder().
-                    id(idFactura).headerFactura(hf).detalleFactura(df).build();
+                    id(idFactura).headerFactura(hf).detalleFactura(detalleFacturaList).build();
 
             if (agregarFacturaNombre(f) < 1) {
                 JOptionPane.showMessageDialog(this, "Esta compra no se ha registrado...");
@@ -1742,60 +1748,53 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
     }
 
     private void categoriaR() {
-        ResultSet rs = getCategoriaActivas();
+        List<Categorias> categoriasList = getCategoriaActivas();
 
         if (cbTodos.isSelected()) {
-            rs = getCategorias();
+            categoriasList = getCategorias();
         }
 
         jpCategoria.removeAll();
         jpCategoria.repaint();
 //        jpCategoria.setLayout(new FlowLayout());
 
-        try {
-            while (rs.next()) {
-                boton = new JButton(rs.getString("Descripcion"));
-                boton.setToolTipText(rs.getString("idCategoria"));
-                boton.setMnemonic('c');
+        categoriasList.stream().forEach(x -> {
+            boton = new JButton(x.getDescripcion());
+            boton.setToolTipText(x.getId()+"");
+            boton.setMnemonic('c');
+            
+            ImageIcon imagen =  Utilidades.imagenDecode64(x.getImage_texto());
 
-                String im = rs.getString("imagepath");
-
-                ImageIcon imagen;
-
-                imagen = new ImageIcon(im);
-
-                if (imagen.getIconHeight() == -1 || im.isEmpty()) {
-                    imagen = new ImageIcon(System.getProperty("user.dir")
-                            + "/images/Sin_imagen 64 x 64.png");
-                }
-
-                Icon icon = new ImageIcon(imagen.getImage().getScaledInstance(72, 72,
-                        Image.SCALE_DEFAULT));
-                imagen.getImage().flush();
-                boton.setIcon(icon);
-                boton.validate();
-
-                boton.setIconTextGap(2);
-                boton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-                boton.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-                boton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-                boton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-                boton.addActionListener(this);
-
-                int ancho = 120, alto = 95;
-                boton.setPreferredSize(new java.awt.Dimension(ancho, alto));
-                boton.setMinimumSize(new java.awt.Dimension(ancho, alto));
-                boton.setMaximumSize(new java.awt.Dimension(ancho, alto));
-
-//                boton.setLayout(new FlowLayout());
-                jpCategoria.add(boton);
-                jpCategoria.repaint();
-                jpCategoria.validate();
-
+            if (imagen.getIconHeight() == -1) {
+                imagen = new Imagenes().getIcono("/imagenes/NoImageTransp 96 x 96.png");
             }
-        } catch (SQLException ex) {
-            LOG.log(Level.SEVERE, ex.getMessage(), ex);
-        }
+
+            Icon icon = new ImageIcon(
+                    imagen.getImage().getScaledInstance(72, 72, Image.SCALE_DEFAULT));
+            
+            imagen.getImage().flush();
+            
+            boton.setIcon(icon);
+            boton.validate();
+            boton.setIconTextGap(2);
+            boton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+            boton.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+            boton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+            boton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+            boton.addActionListener(this);
+
+            int ancho = 120, alto = 95;
+            boton.setPreferredSize(new java.awt.Dimension(ancho, alto));
+            boton.setMinimumSize(new java.awt.Dimension(ancho, alto));
+            boton.setMaximumSize(new java.awt.Dimension(ancho, alto));
+
+    //                boton.setLayout(new FlowLayout());
+            jpCategoria.add(boton);
+            jpCategoria.repaint();
+            jpCategoria.validate();
+        });
+        
+        
     }
 
 //    private void estadoCliente() {
@@ -1872,8 +1871,8 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
 
             while (rs.next()) {
                 g = Generales.builder().
-                cedula(rs.getString("cedula")).build();
-                
+                        cedula(rs.getString("cedula")).build();
+
                 p = Clientes.builder().
                         id_persona(rs.getInt("id")).
                         pNombre(rs.getString("pNombre")).

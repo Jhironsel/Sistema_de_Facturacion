@@ -2,10 +2,14 @@ package sur.softsurena.formularios;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 public class frmBusquedaCliente extends javax.swing.JDialog {
+
+    private static final Logger LOG = Logger.getLogger(frmBusquedaCliente.class.getName());
 
     private DefaultTableModel miTabla;
     
@@ -186,7 +190,7 @@ public class frmBusquedaCliente extends javax.swing.JDialog {
             }
             tblTabla.setModel(miTabla);
         } catch (SQLException ex) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
 
     }

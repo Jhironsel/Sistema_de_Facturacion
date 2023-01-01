@@ -3,32 +3,18 @@ package sur.softsurena.formularios;
 import java.awt.Image;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
+import javax.swing.table.*;
+import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import static sur.softsurena.conexion.Conexion.getCnn;
-import static sur.softsurena.datos.delete.DeleteMetodos.borrarProductoPorCodigo;
-import static sur.softsurena.datos.insert.InsertMetodos.agregarProducto;
-import sur.softsurena.datos.select.SelectMetodos;
-import static sur.softsurena.datos.select.SelectMetodos.existeProducto;
-import static sur.softsurena.datos.select.SelectMetodos.getProductos;
-import static sur.softsurena.datos.update.UpdateMetodos.modificarProducto;
 import sur.softsurena.entidades.Categorias;
+import static sur.softsurena.entidades.Categorias.getCategirias;
 import sur.softsurena.entidades.DefaultTableCellHeaderRenderer;
-import sur.softsurena.entidades.Producto;
+import sur.softsurena.entidades.Productos;
+import static sur.softsurena.entidades.Productos.*;
 import sur.softsurena.utilidades.Utilidades;
 import static sur.softsurena.utilidades.Utilidades.columnasCheckBox;
 import static sur.softsurena.utilidades.Utilidades.repararColumnaTable;
@@ -1002,7 +988,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         }
         cambio = false;
 
-        Producto p = Producto.builder().
+        Productos p = Productos.builder().
                 idCategoria(((Categorias) cbCategoria.getSelectedItem()).getId()).
                 codigo(txtCodigoBarra.getText()).
                 descripcion(txtDescripcion.getText()).
@@ -1211,15 +1197,15 @@ public class frmProductos extends javax.swing.JInternalFrame {
         miTabla = new DefaultTableModel(null, titulos);
         
         Categorias cat = null;
-        Producto prod = null;
+        Productos prod = null;
         
-        for (Producto producto : getProductos()) {
+        for (Productos producto : getProductos()) {
 
             cat = Categorias.builder().
                     id(producto.getIdCategoria()).
                     descripcion(producto.getDesc_categoria()).build();
             
-            prod = Producto.builder().
+            prod = Productos.builder().
                     id(producto.getId()).
                     descripcion(producto.getDescripcion()).build();
             
@@ -1253,12 +1239,16 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
         txtCodigoBarra.setText(tblTabla.getValueAt(
                 tblTabla.getSelectedRow(), 0).toString());
+        
         txtDescripcion.setText(tblTabla.getValueAt(
                 tblTabla.getSelectedRow(), 1).toString());
+        
         txtNotas.setText(tblTabla.getValueAt(
                 tblTabla.getSelectedRow(), 6).toString());
+        
         cbActivo.setSelected((Boolean) tblTabla.getValueAt(
                 tblTabla.getSelectedRow(), 5));
+        
         cbImpuesto.setSelected((Boolean) tblTabla.getValueAt(
                 tblTabla.getSelectedRow(), 8));
 
@@ -1396,7 +1386,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
     }
 
     private void updateCategoria() {
-        SelectMetodos.getCategirias(cbCategoria);
+        getCategirias(cbCategoria);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

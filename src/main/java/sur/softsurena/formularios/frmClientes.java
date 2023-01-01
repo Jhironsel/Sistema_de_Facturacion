@@ -16,12 +16,6 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import static sur.softsurena.datos.delete.DeleteMetodos.borrarCliente;
-import static sur.softsurena.datos.insert.InsertMetodos.agregarCliente;
-import sur.softsurena.datos.select.SelectMetodos;
-import static sur.softsurena.datos.select.SelectMetodos.existeCliente;
-import static sur.softsurena.datos.select.SelectMetodos.getClienteByID;
-import static sur.softsurena.datos.update.UpdateMetodos.modificarCliente;
 import sur.softsurena.entidades.Clientes;
 import sur.softsurena.entidades.ContactosEmail;
 import sur.softsurena.entidades.ContactosTel;
@@ -38,17 +32,25 @@ import sur.softsurena.entidades.ValidarCorreoTel;
 import static sur.softsurena.formularios.frmPrincipal.dpnEscritorio;
 import sur.softsurena.utilidades.Utilidades;
 import static sur.softsurena.utilidades.Utilidades.repararColumnaTable;
-import static sur.softsurena.datos.select.SelectMetodos.getClientesTablaSB;
-import static sur.softsurena.datos.select.SelectMetodos.getCorreoByID;
-import static sur.softsurena.datos.select.SelectMetodos.getDireccionByID;
-import static sur.softsurena.datos.select.SelectMetodos.getTelefonoByID;
-import static sur.softsurena.datos.select.SelectMetodos.privilegioCampo;
-import static sur.softsurena.datos.select.SelectMetodos.privilegioTabla;
+import static sur.softsurena.entidades.Clientes.agregarCliente;
+import static sur.softsurena.entidades.Clientes.borrarCliente;
+import static sur.softsurena.entidades.Clientes.existeCliente;
+import static sur.softsurena.entidades.Clientes.getClienteByID;
+import static sur.softsurena.entidades.Clientes.getClientesTablaSB;
+import static sur.softsurena.entidades.Clientes.modificarCliente;
 import sur.softsurena.entidades.Privilegios;
 import static sur.softsurena.utilidades.Utilidades.columnasCheckBox;
 import static sur.softsurena.entidades.ContactosEmail.TITULOS_CORREO;
+import static sur.softsurena.entidades.ContactosEmail.getCorreoByID;
 import static sur.softsurena.entidades.ContactosTel.TITULOS_TELEFONO;
+import static sur.softsurena.entidades.ContactosTel.getTelefonoByID;
 import static sur.softsurena.entidades.Direcciones.TITULOS_DIRECCION;
+import static sur.softsurena.entidades.Direcciones.getDireccionByID;
+import static sur.softsurena.entidades.Distritos_municipales.getDistritosMunicipales;
+import static sur.softsurena.entidades.Municipios.getMunicipio;
+import static sur.softsurena.entidades.Privilegios.privilegioCampo;
+import static sur.softsurena.entidades.Privilegios.privilegioTabla;
+import static sur.softsurena.entidades.Provincias.getProvincias;
 
 public final class frmClientes extends javax.swing.JInternalFrame {
 
@@ -1506,7 +1508,7 @@ public final class frmClientes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnHistorialActionPerformed
 
     private void jcbMunicipiosPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jcbMunicipiosPopupMenuWillBecomeInvisible
-        SelectMetodos.getDistritosMunicipales(jcbMunicipios.getSelectedIndex() <= 0 ? 0
+        getDistritosMunicipales(jcbMunicipios.getSelectedIndex() <= 0 ? 0
                 : ((Municipios) jcbMunicipios.getSelectedItem()).getId(),
                 jcbDistritoMunicipal);
 
@@ -1657,7 +1659,7 @@ public final class frmClientes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEliminarCorreoActionPerformed
 
     private void jcbProvinciasPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jcbProvinciasPopupMenuWillBecomeInvisible
-        SelectMetodos.getMunicipio(jcbProvincias.getSelectedIndex() <= 0 ? 0
+        getMunicipio(jcbProvincias.getSelectedIndex() <= 0 ? 0
                 : ((Provincias) jcbProvincias.getSelectedItem()).getId(),
                 jcbMunicipios);
 
@@ -1739,7 +1741,7 @@ public final class frmClientes extends javax.swing.JInternalFrame {
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
         llenarTablaClientes();
 
-        SelectMetodos.getProvincias(jcbProvincias);
+        getProvincias(jcbProvincias);
         Personas.llenarPersona(jcbPersona);
         Personas.llenarSexo(jcbSexo);
         Personas.llenarEstadoCivil(jcbEstadoCivil);

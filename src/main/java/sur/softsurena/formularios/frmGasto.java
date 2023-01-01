@@ -1,11 +1,13 @@
 package sur.softsurena.formularios;
 
 import java.awt.Color;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import static sur.softsurena.datos.procedure.ProcedureMetodos.gasto;
+import sur.softsurena.entidades.Gastos;
+import static sur.softsurena.entidades.Gastos.agregarGastosPorTurno;
 import sur.softsurena.hilos.hiloImpresionFactura;
 import sur.softsurena.utilidades.Utilidades;
 
@@ -234,23 +236,28 @@ public class frmGasto extends java.awt.Dialog {
             return;
         }
 
-        Double monto = Utilidades.controlDouble(txtMonto.getValue());
+        BigDecimal monto = new BigDecimal(txtMonto.getValue().toString());
 
-        if (monto <= 0) {
+        if (monto.compareTo(BigDecimal.ZERO) <= 0) {
             JOptionPane.showMessageDialog(this, "Monto debe ser mayor a 0");
             txtMonto.setValue(0.0);
             txtMonto.requestFocusInWindow();
             return;
         }
 
-        String re = "";
+        String descripcion = "";
         if (txtDescripcion.getText().length() >= 70) {
-            re = txtDescripcion.getText().substring(0, 69);
+            descripcion = txtDescripcion.getText().substring(0, 69);
         } else {
-            re = txtDescripcion.getText();
+            descripcion = txtDescripcion.getText();
         }
+        
+        Gastos g = Gastos.builder().
+                id_turno(getIdTurno()).
+                descripcion(descripcion).
+                monto(monto).build();
 
-        if (gasto(getIdTurno(), re, monto)) {
+        if (agregarGastosPorTurno(g)) {
             JOptionPane.showMessageDialog(this, "Gasto registrado....!!!");
         } else {
             JOptionPane.showMessageDialog(this, "No se puede registrar el Gasto");

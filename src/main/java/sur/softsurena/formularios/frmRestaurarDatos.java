@@ -8,7 +8,7 @@ import java.util.Properties;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import static sur.softsurena.datos.select.SelectMetodos.pathBaseDeDatos;
+import static sur.softsurena.entidades.BaseDeDatos.pathBaseDeDatos;
 
 public final class frmRestaurarDatos extends javax.swing.JInternalFrame implements Runnable {
 

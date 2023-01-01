@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
-import static sur.softsurena.datos.select.SelectMetodos.pathBaseDeDatos;
+import static sur.softsurena.entidades.BaseDeDatos.pathBaseDeDatos;
 
 public class hiloRestaurar extends Thread implements hiloMetodos {
 
