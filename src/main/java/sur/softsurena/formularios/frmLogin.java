@@ -27,7 +27,6 @@ public final class frmLogin extends javax.swing.JFrame {
     private static final Logger LOG = Logger.getLogger(frmLogin.class.getName());
     private String idMaquina = "";
     private boolean txtUsuarioKeyPress = true;
-    private frmPrincipal principal;
 
     public frmLogin() {
         initComponents();
@@ -37,6 +36,13 @@ public final class frmLogin extends javax.swing.JFrame {
         btnParametros.setVisible(false);//Boton parametros Invisible
 
         this.setLocationRelativeTo(null);
+    }
+
+    public frmLogin(String user, String clave) {
+        initComponents();
+        txtUsuario.setText(user);
+        txtClave.setText(clave);
+        btnAceptar.doClick();
     }
 
     @SuppressWarnings("unchecked")
@@ -213,6 +219,7 @@ public final class frmLogin extends javax.swing.JFrame {
                 /*Buscando nuevas alternativas sin root*/
  /*ls /dev/disk/by-uuid/ : Podemos ontener el valor del primer resultado.*/
  /*lsblk -o name,uuid: Otro que podemos filtrar por el disco duro.*/
+
                 p = Runtime.getRuntime().exec("lsblk -o UUID /dev/sda1");
             } catch (IOException ex) {
                 //Instalar Logger
@@ -284,13 +291,13 @@ public final class frmLogin extends javax.swing.JFrame {
 
         //Validación de campos del login. 
         if (txtUsuario.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Nombre del Usuario Vacio");
+            JOptionPane.showMessageDialog(null, "Nombre del Usuario Vacio");
             txtUsuario.requestFocusInWindow();
             return;
         }
 
         if (txtClave.getPassword().length == 0) {
-            JOptionPane.showMessageDialog(this, "Inserte una clave");
+            JOptionPane.showMessageDialog(null, "Inserte una clave");
             txtClave.requestFocusInWindow();
             return;
         }//Fin de validaciones de campos
@@ -314,7 +321,7 @@ public final class frmLogin extends javax.swing.JFrame {
             puerto = p.cargarParamentos("").getPuerto();
         }
 
-        Conexion conexion = Conexion.getInstance(
+        Conexion.getInstance(
                 txtUsuario.getText(),
                 new String(txtClave.getPassword()),
                 "None",
@@ -322,18 +329,18 @@ public final class frmLogin extends javax.swing.JFrame {
                 dominio,
                 puerto);
 
-        if (conexion.verificar()) {
+        if (!Conexion.verificar()) {
             txtUsuario.setText("");
             txtClave.setText("");
             txtUsuario.requestFocusInWindow();
             return;
         }
-        
+
         //Variables para almacenar los roles
         ArrayList<String> roles = comprobandoRol(txtUsuario.getText().trim());
-        
+
         if (roles == null) {
-            JOptionPane.showMessageDialog(this, "El usuario no cuenta con rol en el sistema");
+            JOptionPane.showMessageDialog(null, "El usuario no cuenta con rol en el sistema");
             return;
         }
 
@@ -342,8 +349,8 @@ public final class frmLogin extends javax.swing.JFrame {
 
         if (roles.size() > 1) {
             int resp = JOptionPane.showConfirmDialog(
-                    null, 
-                    comboBox, 
+                    this,
+                    comboBox,
                     "Seleccione un rol",
                     JOptionPane.YES_NO_OPTION);
 
@@ -353,38 +360,38 @@ public final class frmLogin extends javax.swing.JFrame {
         }
 
         String rol = comboBox.getSelectedItem().toString();
-        
+
         if (rol.equalsIgnoreCase("ADMINISTRADOR")) {
             rol = "RDB$ADMIN";
         }
-        
 
-        conexion = Conexion.getInstance(
+        Conexion.getInstance(
                 txtUsuario.getText(),
                 new String(txtClave.getPassword()),
                 rol,
                 p.cargarParamentos("").getPathBaseDatos(),
                 dominio,
                 puerto);
-        
-        if(conexion.verificar()){
+
+        if (!Conexion.verificar()) {
             return;
         }
 
         FirebirdEventos f = new FirebirdEventos();
-        
-        if(!f.registro(txtUsuario.getText(), new String(txtClave.getPassword()),
-                dominio, p.cargarParamentos("").getPathBaseDatos(), Integer.parseInt(puerto))){
-            JOptionPane.showMessageDialog(null, 
+
+        if (!f.registro(txtUsuario.getText(), new String(txtClave.getPassword()),
+                dominio, p.cargarParamentos("").getPathBaseDatos(), Integer.parseInt(puerto))) {
+            JOptionPane.showMessageDialog(null,
                     "Error a registrar los eventos...",
                     "Validación de procesos", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        txtClave.setText("");
 
         //Reconectarse con el rol seleccionado por el usuario. 
         if (!existeIdMaquina(idMaquina)) {
             //Ver si la maquina esta Registrada si no esta Entra
-            int num = JOptionPane.showConfirmDialog(this,
+            int num = JOptionPane.showConfirmDialog(null,
                     "Este equipo no esta Autorizado! \nDesea Registrar?",
                     "No Autorizado", JOptionPane.YES_NO_OPTION);
             if (num == 0) {
@@ -398,8 +405,8 @@ public final class frmLogin extends javax.swing.JFrame {
         //Comprobación de los dias restante de la licencia.
         int dia = periodoMaquina();
         if (dia < 1) {
-            JOptionPane.showMessageDialog(this, "Licencia expirada...");
-            int resp = JOptionPane.showConfirmDialog(this,
+            JOptionPane.showMessageDialog(null, "Licencia expirada...");
+            int resp = JOptionPane.showConfirmDialog(null,
                     "Desea registrar el producto",
                     "Auto Registros",
                     JOptionPane.YES_NO_OPTION);
@@ -410,17 +417,12 @@ public final class frmLogin extends javax.swing.JFrame {
         }
 
         if (dia > 1 && dia < 10) {
-            JOptionPane.showMessageDialog(this,
+            JOptionPane.showMessageDialog(null,
                     "Tiempo de version de prueba se acaba en " + dia + " dias.");
         }
 
         //Blanquear la pass
-        txtClave.setText("");
-
-        //Si el formulario principal no está instanciado lo hacemos. 
-        if (principal == null) {
-            principal = new frmPrincipal();
-        }
+        frmPrincipal principal = new frmPrincipal();
 
         principal.cerrarFormularios();
         principal.setVisible(true);
@@ -456,7 +458,7 @@ public final class frmLogin extends javax.swing.JFrame {
                 miRegistros.txtIdMaquina.getText().trim(),
                 new String(miRegistros.txtClave1.getPassword()).trim(),
                 new String(miRegistros.txtClave2.getPassword()).trim())) {
-            JOptionPane.showMessageDialog(this, "Maquina Registradas");
+            JOptionPane.showMessageDialog(null, "Maquina Registradas");
         }
 
         miRegistros.dispose();
@@ -489,6 +491,7 @@ public final class frmLogin extends javax.swing.JFrame {
                 frmLogin.setLocationRelativeTo(null);
             }
         });
+        
         String sql
                 = "SELECT t.id, trim( "
                 + "          case lunes when 1 then 'Lunes ' else trim('') end || "

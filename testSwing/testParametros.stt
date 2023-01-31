@@ -1,0 +1,193 @@
+<xy.ui.testing.Tester>
+  <editingOptions>
+    <analyticsEnabled>true</analyticsEnabled>
+    <controlsTheme>classic</controlsTheme>
+    <testableModalWindowsForcedToDocumentModality>true</testableModalWindowsForcedToDocumentModality>
+    <testableWindowsAlwaysOnTopFeatureDisabled>true</testableWindowsAlwaysOnTopFeatureDisabled>
+  </editingOptions>
+  <maximumSecondsToWaitBetwneenActions>1.5</maximumSecondsToWaitBetwneenActions>
+  <minimumSecondsToWaitBetwneenActions>0.1</minimumSecondsToWaitBetwneenActions>
+  <testActions>
+    <xy.ui.testing.action.CallMainMethodAction>
+      <arguments/>
+      <checkThrownExceptionAfterSeconds>2</checkThrownExceptionAfterSeconds>
+      <className>sur.softsurena.formularios.frmLogin</className>
+      <disabled>false</disabled>
+    </xy.ui.testing.action.CallMainMethodAction>
+    <xy.ui.testing.action.component.FocusAction>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentName>txtUsuario</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>0</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <eventType>FOCUS_GAIN</eventType>
+    </xy.ui.testing.action.component.FocusAction>
+    <xy.ui.testing.action.component.SendKeysAction>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentName>txtUsuario</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>0</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <keyboardInteractions>
+        <xy.ui.testing.action.component.SendKeysAction_-SpecialKey>
+          <altDown>false</altDown>
+          <altGrtDown>false</altGrtDown>
+          <ctrlDown>true</ctrlDown>
+          <keyName>KEY_UP</keyName>
+          <metaDown>false</metaDown>
+          <shiftDown>false</shiftDown>
+        </xy.ui.testing.action.component.SendKeysAction_-SpecialKey>
+      </keyboardInteractions>
+      <requestToFocusOnTheComponent>true</requestToFocusOnTheComponent>
+    </xy.ui.testing.action.component.SendKeysAction>
+    <xy.ui.testing.action.component.FocusAction>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentName>btnParametros</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>0</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <eventType>FOCUS_GAIN</eventType>
+    </xy.ui.testing.action.component.FocusAction>
+    <xy.ui.testing.action.component.ClickAction>
+      <button>LEFT_BUTTON</button>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentName>btnParametros</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>0</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <doubleClick>false</doubleClick>
+      <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <poupTrigger>false</poupTrigger>
+    </xy.ui.testing.action.component.ClickAction>
+    <xy.ui.testing.action.component.FocusAction>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentName>rbtnNombreServidor</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>1</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <eventType>FOCUS_GAIN</eventType>
+    </xy.ui.testing.action.component.FocusAction>
+    <xy.ui.testing.action.component.property.CheckComponentPropertyAction>
+      <componentClassName>javax.swing.JRadioButton</componentClassName>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentName>rbtnNombreServidor</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>1</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <propertyName>Selected</propertyName>
+      <propertyValueExpected>true</propertyValueExpected>
+      <regularExpressionExpected>false</regularExpressionExpected>
+    </xy.ui.testing.action.component.property.CheckComponentPropertyAction>
+    <xy.ui.testing.action.component.FocusAction>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentName>txtHost</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>1</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <eventType>FOCUS_GAIN</eventType>
+    </xy.ui.testing.action.component.FocusAction>
+    <xy.ui.testing.action.component.property.CheckComponentPropertyAction>
+      <componentClassName>javax.swing.JTextField</componentClassName>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentName>txtHost</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>1</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <propertyName>Text</propertyName>
+      <propertyValueExpected>localhost</propertyValueExpected>
+      <regularExpressionExpected>false</regularExpressionExpected>
+    </xy.ui.testing.action.component.property.CheckComponentPropertyAction>
+    <xy.ui.testing.action.component.FocusAction>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentName>chbPuerto</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>1</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <eventType>FOCUS_GAIN</eventType>
+    </xy.ui.testing.action.component.FocusAction>
+    <xy.ui.testing.action.component.property.CheckComponentPropertyAction>
+      <componentClassName>javax.swing.JCheckBox</componentClassName>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentName>chbPuerto</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>1</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <propertyName>Selected</propertyName>
+      <propertyValueExpected>true</propertyValueExpected>
+      <regularExpressionExpected>false</regularExpressionExpected>
+    </xy.ui.testing.action.component.property.CheckComponentPropertyAction>
+    <xy.ui.testing.action.component.FocusAction>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentName>txtPuerto</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>1</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <eventType>FOCUS_GAIN</eventType>
+    </xy.ui.testing.action.component.FocusAction>
+    <xy.ui.testing.action.component.property.CheckComponentPropertyAction>
+      <componentClassName>javax.swing.JTextField</componentClassName>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentName>txtPuerto</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>1</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <propertyName>Text</propertyName>
+      <propertyValueExpected>3050</propertyValueExpected>
+      <regularExpressionExpected>false</regularExpressionExpected>
+    </xy.ui.testing.action.component.property.CheckComponentPropertyAction>
+    <xy.ui.testing.action.component.FocusAction>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentName>txtPathBaseDatos</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>1</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <eventType>FOCUS_GAIN</eventType>
+    </xy.ui.testing.action.component.FocusAction>
+    <xy.ui.testing.action.component.property.CheckComponentPropertyAction>
+      <componentClassName>RSMaterialComponent.RSTextFieldMaterialIcon</componentClassName>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentName>txtPathBaseDatos</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>1</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <propertyName>Text</propertyName>
+      <propertyValueExpected>/home/jhironsel/BaseDatos/BaseDeDatos3.fdb</propertyValueExpected>
+      <regularExpressionExpected>false</regularExpressionExpected>
+    </xy.ui.testing.action.component.property.CheckComponentPropertyAction>
+    <xy.ui.testing.action.component.FocusAction>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentName>btnAceptar</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>1</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <eventType>FOCUS_GAIN</eventType>
+    </xy.ui.testing.action.component.FocusAction>
+    <xy.ui.testing.action.component.ClickAction>
+      <button>LEFT_BUTTON</button>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentName>btnAceptar</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>1</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <doubleClick>false</doubleClick>
+      <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <poupTrigger>false</poupTrigger>
+    </xy.ui.testing.action.component.ClickAction>
+  </testActions>
+</xy.ui.testing.Tester>

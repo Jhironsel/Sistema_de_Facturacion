@@ -416,7 +416,7 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
             return;
         }
 
-        int num = JOptionPane.showConfirmDialog(this,
+        int num = JOptionPane.showConfirmDialog(null,
                 "Esta seguro de realizar Cobro?",
                 "Confirmacion de Pago",
                 JOptionPane.YES_NO_OPTION);
@@ -517,7 +517,10 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
                 true,
                 false,
                 System.getProperty("user.dir") + "/Reportes/cobroFactura.jasper",
-                parametros);
+                parametros, 
+                frmPrincipal.jPanelImpresion, 
+                frmPrincipal.jprImpresion);
+        
         impresionFactura.start();
     }
 

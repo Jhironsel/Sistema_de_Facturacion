@@ -212,7 +212,7 @@ public final class frmRestaurarDatos extends javax.swing.JInternalFrame implemen
         }
         if (txtBaseActual.getText().equals(miFile.getSelectedFile().getAbsolutePath())) {
 
-            JOptionPane.showMessageDialog(this,
+            JOptionPane.showMessageDialog(null,
                     "No se debe seleccionar la misma base de datos",
                     "Coencidencias entre bases",
                     JOptionPane.INFORMATION_MESSAGE);
@@ -225,21 +225,21 @@ public final class frmRestaurarDatos extends javax.swing.JInternalFrame implemen
 
     private void btnProcederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcederActionPerformed
         if (txtBaseFuente.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Selecione una base de datos",
+            JOptionPane.showMessageDialog(null, "Selecione una base de datos",
                     "No encontrado el Archivo",
                     JOptionPane.INFORMATION_MESSAGE);
             btnBuscar.requestFocusInWindow();
             return;
         }
         if (txtUsuario.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Inserte el usuario",
+            JOptionPane.showMessageDialog(null, "Inserte el usuario",
                     "Usuario vacio",
                     JOptionPane.INFORMATION_MESSAGE);
             txtUsuario.requestFocusInWindow();
             return;
         }
         if (txtClave.getPassword().length == 0) {
-            JOptionPane.showMessageDialog(this, "Inserte la clave",
+            JOptionPane.showMessageDialog(null, "Inserte la clave",
                     "Clave vacia",
                     JOptionPane.INFORMATION_MESSAGE);
             txtClave.requestFocusInWindow();

@@ -355,7 +355,7 @@ public class frmEntradaProducto extends javax.swing.JDialog {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         if (txtNumeroFactura.getText().equals("")) {
-            JOptionPane.showMessageDialog(this,
+            JOptionPane.showMessageDialog(null,
                     "Debe Proporcional la factura asociada a este "
                     + "registros de productos");
             txtNumeroFactura.requestFocusInWindow();
@@ -363,19 +363,19 @@ public class frmEntradaProducto extends javax.swing.JDialog {
         }
 
         if (txtCodigoProducto.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Id Producto esta vacio....!!!");
+            JOptionPane.showMessageDialog(null, "Id Producto esta vacio....!!!");
             txtCodigoProducto.requestFocusInWindow();
             return;
         }
 
         if (miBusqueda == null) {
-            JOptionPane.showInternalMessageDialog(this,
+            JOptionPane.showInternalMessageDialog(null,
                     "Vuelva a buscar el articulo.");
             return;
         }
 
         if (txtEntrada.getText().isBlank()) {
-            JOptionPane.showMessageDialog(this,
+            JOptionPane.showMessageDialog(null,
                     "Debe de ingrar valores en entrada.");
             txtEntrada.requestFocus();
             return;
@@ -384,40 +384,40 @@ public class frmEntradaProducto extends javax.swing.JDialog {
         BigDecimal entrada = new BigDecimal(txtEntrada.getText().trim());
 
         if (entrada.compareTo(new BigDecimal(0)) <= 0) {
-            JOptionPane.showMessageDialog(this,
+            JOptionPane.showMessageDialog(null,
                     "No se permite numero negativo o cero...!!!");
             return;
         }
 
         if (txtCosto.getText().isBlank()) {
-            JOptionPane.showMessageDialog(this,
+            JOptionPane.showMessageDialog(null,
                     "Debe ingresar el costo del producto.");
             txtCosto.requestFocus();
             return;
         }
 
         if (Double.valueOf(txtCosto.getText()) <= 0) {
-            JOptionPane.showMessageDialog(this,
+            JOptionPane.showMessageDialog(null,
                     "Debe de ingresar costo del Art. mayor que cero(0).");
             return;
         }
 
         if (txtPrecio.getText().isBlank()) {
-            JOptionPane.showMessageDialog(this,
+            JOptionPane.showMessageDialog(null,
                     "Debe ingresar el precio del producto.");
             txtPrecio.requestFocus();
             return;
         }
 
         if (Double.valueOf(txtPrecio.getText()) <= 0) {
-            JOptionPane.showMessageDialog(this,
+            JOptionPane.showMessageDialog(null,
                     "Debe de ingresar precio del Art. mayor que cero(0).");
             return;
         }
 
         if (Double.valueOf(txtCosto.getText())
                 >= Double.valueOf(txtPrecio.getText())) {
-            JOptionPane.showMessageDialog(this,
+            JOptionPane.showMessageDialog(null,
                     "El costo no puede ser mayor al precio.");
             txtCosto.setText("");
             txtPrecio.setText("");
@@ -426,7 +426,7 @@ public class frmEntradaProducto extends javax.swing.JDialog {
         }
 
         if (!impuesto) {
-            int resp = JOptionPane.showConfirmDialog(this,
+            int resp = JOptionPane.showConfirmDialog(null,
                     "Este articulo tiene impuesto?",
                     "Proceso de verificacion.",
                     JOptionPane.YES_NO_OPTION);
@@ -446,7 +446,7 @@ public class frmEntradaProducto extends javax.swing.JDialog {
 
         if (impuesto) {
             if (txtImpuesto.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(this,
+                JOptionPane.showMessageDialog(null,
                         "Debe de ingresar un valor en impuesto.");
                 txtImpuesto.requestFocus();
                 return;
@@ -454,7 +454,7 @@ public class frmEntradaProducto extends javax.swing.JDialog {
             BigDecimal c = new BigDecimal(txtImpuesto.getText());
 
             if (c.compareTo(BigDecimal.ZERO) <= 0) {
-                JOptionPane.showMessageDialog(this,
+                JOptionPane.showMessageDialog(null,
                         "Debe de ingresar una cantidad mayor a cero.");
                 txtImpuesto.setText("");
                 txtImpuesto.requestFocus();
@@ -529,7 +529,7 @@ public class frmEntradaProducto extends javax.swing.JDialog {
         BufferedImage img = null;
         try {
             if (!rs.next()) {
-                JOptionPane.showMessageDialog(this, "Producto no encontrado...!!!!");
+                JOptionPane.showMessageDialog(null, "Producto no encontrado...!!!!");
                 txtCodigoProducto.setText("");
                 txtCodigoProducto.requestFocusInWindow();
                 return;
@@ -630,7 +630,7 @@ public class frmEntradaProducto extends javax.swing.JDialog {
 //                    new BigDecimal(tbArticulos.getValueAt(i, 6).toString())
 //                )
 //            )) {
-//                JOptionPane.showMessageDialog(this, "No se pudo registrar producto");
+//                JOptionPane.showMessageDialog(null, "No se pudo registrar producto");
 //                return;
 //            }
         }

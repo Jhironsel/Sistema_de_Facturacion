@@ -477,7 +477,7 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
         if (tblDetalleFactura.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "No ha seleccionado Factura");
+            JOptionPane.showMessageDialog(null, "No ha seleccionado Factura");
             return;
         }
         Map parametros = new HashMap();
@@ -487,8 +487,11 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
         hiloImpresionFactura impresionFactura = new hiloImpresionFactura(
                 true,
                 false,
-                System.getProperty("user.dir") + "/Reportes/factura(copia).jasper",
-                parametros);
+                "/Reportes/factura(copia).jasper",
+                parametros, 
+                frmPrincipal.jPanelImpresion, 
+                frmPrincipal.jprImpresion);
+        
         impresionFactura.start();
     }//GEN-LAST:event_btnImprimirActionPerformed
     void tablaClientes() {

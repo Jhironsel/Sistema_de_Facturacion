@@ -141,14 +141,14 @@ public class frmAutorizacion extends javax.swing.JDialog {
 
     private void txtPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassActionPerformed
         if(txtUsuario.getText().equals("") || txtUsuario.getText().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Campo Usuario vacio", 
+            JOptionPane.showMessageDialog(null, "Campo Usuario vacio", 
                     "Campo Vacio", JOptionPane.ERROR_MESSAGE);
             txtUsuario.requestFocusInWindow();
             return;
         }
         
         if(txtPass.getPassword().equals("") || txtPass.getPassword().length == 0){
-            JOptionPane.showMessageDialog(this, "Campo clave vacio", 
+            JOptionPane.showMessageDialog(null, "Campo clave vacio", 
                     "Campo Vacio", JOptionPane.ERROR_MESSAGE);
             txtPass.requestFocusInWindow();
             return;

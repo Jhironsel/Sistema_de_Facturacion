@@ -37,7 +37,6 @@ public class frmCerrarTurno extends java.awt.Dialog {
         this.aceptar = aceptar;
     }
 
-
     public frmCerrarTurno(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -173,35 +172,40 @@ public class frmCerrarTurno extends java.awt.Dialog {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         String idUsuario = ((Opcion) jcbUsuarios.getSelectedItem()).getValor();
         if (idUsuario.equals("0")) {
-            JOptionPane.showMessageDialog(this, "Debe Seleccionar un Usuario");
+            JOptionPane.showMessageDialog(null, "Debe Seleccionar un Usuario");
             return;
         }
         if (!usuarioTurnoActivo(idUsuario)) {
-            JOptionPane.showMessageDialog(this, "Usuario sin Turno Abierto...");
+            JOptionPane.showMessageDialog(null, "Usuario sin Turno Abierto...");
             return;
         }
 
         setIdTurno(idTurnoActivo(idUsuario));
 
         if (cerrarTurno(idUsuario)) {
-            JOptionPane.showMessageDialog(this, "Turno Cerrado");
+            JOptionPane.showMessageDialog(null, "Turno Cerrado");
         } else {
-            JOptionPane.showMessageDialog(this, "Problema para cerrar Turno");
+            JOptionPane.showMessageDialog(null, "Problema para cerrar Turno");
         }
-        
+
         imprimirReporte(((Opcion) jcbUsuarios.getSelectedItem()).getDescripcion());
         setAceptar(true);
         this.dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
     private void imprimirReporte(String nombreUsuario) {
+        
         Map parametros = new HashMap();
         parametros.put("idTurno", getIdTurno());
         parametros.put("idUsuario", nombreUsuario);
+        
         hiloImpresionFactura miHilo = new hiloImpresionFactura(
                 true,//Mostrar Reporte
                 false,//Con Copia
-                System.getProperty("user.dir") + "/Reportes/reporteCuadre.jasper", 
-                parametros);
+                "/Reportes/reporteCuadre.jasper",
+                parametros,
+                frmPrincipal.jPanelImpresion,
+                frmPrincipal.jprImpresion);
+        
         miHilo.start();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

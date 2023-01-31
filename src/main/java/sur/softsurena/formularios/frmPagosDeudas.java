@@ -364,7 +364,7 @@ public class frmPagosDeudas extends javax.swing.JDialog {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         if (tblDeudasPagas.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "No existen pagos");
+            JOptionPane.showMessageDialog(null, "No existen pagos");
             return;
         }
 //        Map parametros = new HashMap();

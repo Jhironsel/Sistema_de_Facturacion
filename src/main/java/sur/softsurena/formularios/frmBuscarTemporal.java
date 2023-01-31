@@ -166,7 +166,7 @@ public final class frmBuscarTemporal extends java.awt.Dialog {
     }//GEN-LAST:event_btnCancelarActionPerformed
     private void btnGrabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrabarActionPerformed
         if (tblDetalle.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(this, "Debe selecionar una Factura...");
+            JOptionPane.showMessageDialog(null, "Debe selecionar una Factura...");
             return;
         }
         setAceptar(true);
@@ -186,19 +186,28 @@ public final class frmBuscarTemporal extends java.awt.Dialog {
     }//GEN-LAST:event_btnAceptarMouseEntered
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        //Debe haber una factura selecciona
         if (tblDetalle.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(this, "No ha seleccionado Factura");
+            JOptionPane.showMessageDialog(null, "No ha seleccionado Factura");
             return;
         }
+        
+        //Creamos un mapa de los valores de la factura, la cual se requiere el 
+        //identificador de la factura. 
         Map parametros = new HashMap();
-        parametros.put("idFactura", Integer.parseInt(
-                String.valueOf(miTabla.getValueAt(tblDetalle.getSelectedRow(), 0))));
+        
+        parametros.put("idFactura", Integer.valueOf(
+                miTabla.getValueAt(
+                        tblDetalle.getSelectedRow(), 0).toString()));
+        
         hiloImpresionFactura miFactura
                 = new hiloImpresionFactura(
                         true, //Mostrar Reporte
-                        false,
+                        false, //No se requiere copia del documento
                         "/Reportes/factura.jasper",
-                        parametros);
+                        parametros, 
+                        frmPrincipal.jPanelImpresion, 
+                        frmPrincipal.jprImpresion);
         miFactura.start();
     }//GEN-LAST:event_btnAceptarActionPerformed
     /**

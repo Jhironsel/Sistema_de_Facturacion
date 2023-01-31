@@ -1,37 +1,24 @@
 package sur.softsurena.formularios;
 
-import java.awt.Color;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import lombok.Getter;
+import lombok.Setter;
 import sur.softsurena.entidades.Gastos;
 import static sur.softsurena.entidades.Gastos.agregarGastosPorTurno;
 import sur.softsurena.hilos.hiloImpresionFactura;
-import sur.softsurena.utilidades.Utilidades;
 
+@Getter
+@Setter
 public class frmGasto extends java.awt.Dialog {
 
     private int idTurno;
     private String usuario;
 
-    public int getIdTurno() {
-        return idTurno;
-    }
-
-    public void setIdTurno(int idTurno) {
-        this.idTurno = idTurno;
-    }
-
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
-
+    public static final String PROCESO_DE_VALIDACION = "Proceso de validación";
 
     public frmGasto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -61,8 +48,8 @@ public class frmGasto extends java.awt.Dialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtMonto = new javax.swing.JFormattedTextField();
-        btnAceptar = new javax.swing.JButton();
-        btnCancelar = new javax.swing.JButton();
+        rSButtonMaterialOne1 = new RSMaterialComponent.RSButtonMaterialOne();
+        btnAceptar = new RSMaterialComponent.RSButtonMaterialOne();
 
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -107,45 +94,17 @@ public class frmGasto extends java.awt.Dialog {
             }
         });
 
-        btnAceptar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        btnAceptar.setForeground(new java.awt.Color(1, 1, 1));
-        btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Aceptar 32 x 32.png"))); // NOI18N
-        btnAceptar.setMnemonic('a');
-        btnAceptar.setText("Aceptar");
-        btnAceptar.setToolTipText("");
-        btnAceptar.setBorder(null);
-        btnAceptar.setPreferredSize(new java.awt.Dimension(123, 44));
-        btnAceptar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnAceptarMouseExited(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnAceptarMouseEntered(evt);
-            }
-        });
-        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+        rSButtonMaterialOne1.setText("Cancelar");
+        rSButtonMaterialOne1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAceptarActionPerformed(evt);
+                rSButtonMaterialOne1ActionPerformed(evt);
             }
         });
 
-        btnCancelar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        btnCancelar.setForeground(new java.awt.Color(1, 1, 1));
-        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Cancelar 32 x 32.png"))); // NOI18N
-        btnCancelar.setMnemonic('c');
-        btnCancelar.setText("Cancelar");
-        btnCancelar.setBorder(null);
-        btnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnCancelarMouseExited(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnCancelarMouseEntered(evt);
-            }
-        });
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+        btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
+                btnAceptarActionPerformed(evt);
             }
         });
 
@@ -153,45 +112,44 @@ public class frmGasto extends java.awt.Dialog {
         contenedor.setLayout(contenedorLayout);
         contenedorLayout.setHorizontalGroup(
             contenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(contenedorLayout.createSequentialGroup()
-                .addGap(0, 0, 0)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, contenedorLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(contenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2)
+                    .addGroup(contenedorLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(168, 168, 168))
                     .addComponent(txtDescripcion, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(contenedorLayout.createSequentialGroup()
                         .addComponent(jLabel3)
-                        .addGap(0, 0, 0)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(168, 168, 168))
+                    .addGroup(contenedorLayout.createSequentialGroup()
+                        .addGap(83, 83, 83)
+                        .addComponent(rSButtonMaterialOne1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtMonto))
-                .addGap(0, 0, 0))
+                .addContainerGap())
         );
-
-        contenedorLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnAceptar, btnCancelar});
-
         contenedorLayout.setVerticalGroup(
             contenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(contenedorLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addGap(0, 0, 0)
                 .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
                 .addGap(0, 0, 0)
                 .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addGroup(contenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAceptar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(contenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rSButtonMaterialOne1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        contenedorLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnAceptar, btnCancelar});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -201,10 +159,7 @@ public class frmGasto extends java.awt.Dialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(contenedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+            .addComponent(contenedor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -214,79 +169,6 @@ public class frmGasto extends java.awt.Dialog {
         setVisible(false);
         dispose();
     }//GEN-LAST:event_closeDialog
-
-    private void btnAceptarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseEntered
-        btnAceptar.setForeground(Color.BLUE);
-    }//GEN-LAST:event_btnAceptarMouseEntered
-
-    private void btnAceptarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseExited
-        btnAceptar.setForeground(Color.BLACK);
-    }//GEN-LAST:event_btnAceptarMouseExited
-
-    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        if (txtDescripcion.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Debe ingresar un Concepto");
-            txtDescripcion.requestFocusInWindow();
-            return;
-        }
-        if (txtMonto.getValue() == null) {
-            JOptionPane.showMessageDialog(this, "Monto Vacio debe proporsionarlo");
-            txtMonto.setValue(0.0);
-            txtMonto.requestFocusInWindow();
-            return;
-        }
-
-        BigDecimal monto = new BigDecimal(txtMonto.getValue().toString());
-
-        if (monto.compareTo(BigDecimal.ZERO) <= 0) {
-            JOptionPane.showMessageDialog(this, "Monto debe ser mayor a 0");
-            txtMonto.setValue(0.0);
-            txtMonto.requestFocusInWindow();
-            return;
-        }
-
-        String descripcion = "";
-        if (txtDescripcion.getText().length() >= 70) {
-            descripcion = txtDescripcion.getText().substring(0, 69);
-        } else {
-            descripcion = txtDescripcion.getText();
-        }
-        
-        Gastos g = Gastos.builder().
-                id_turno(getIdTurno()).
-                descripcion(descripcion).
-                monto(monto).build();
-
-        if (agregarGastosPorTurno(g)) {
-            JOptionPane.showMessageDialog(this, "Gasto registrado....!!!");
-        } else {
-            JOptionPane.showMessageDialog(this, "No se puede registrar el Gasto");
-        }
-
-        //Constancia de Gasto a imprimir
-        Map parametros = new HashMap();
-        parametros.put("idTurno", getIdTurno());
-        parametros.put("idCajero", getUsuario());
-        hiloImpresionFactura miHilo = new hiloImpresionFactura(
-                true, //Mostrar Reporte
-                false, //Con Copia
-                System.getProperty("user.dir") + "/Reportes/gasto.jasper",
-                parametros);
-        miHilo.start();
-        this.dispose();
-    }//GEN-LAST:event_btnAceptarActionPerformed
-
-    private void btnCancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseEntered
-        btnCancelar.setForeground(Color.blue);
-    }//GEN-LAST:event_btnCancelarMouseEntered
-
-    private void btnCancelarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseExited
-        btnCancelar.setForeground(Color.BLACK);
-    }//GEN-LAST:event_btnCancelarMouseExited
-
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtDescripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescripcionActionPerformed
         txtMonto.requestFocusInWindow();
@@ -309,13 +191,89 @@ public class frmGasto extends java.awt.Dialog {
             evt.consume();  // ignorar el evento de teclado
         }
     }//GEN-LAST:event_txtMontoKeyTyped
+
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        if (txtDescripcion.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null,
+                    "Debe ingresar un Concepto",
+                    PROCESO_DE_VALIDACION,
+                    JOptionPane.WARNING_MESSAGE);
+            txtDescripcion.requestFocusInWindow();
+            return;
+        }
+        if (txtMonto.getValue() == null) {
+            JOptionPane.showMessageDialog(null,
+                    "Monto Vacio debe proporsionarlo",
+                    PROCESO_DE_VALIDACION,
+                    JOptionPane.WARNING_MESSAGE);
+            txtMonto.setValue(0.0);
+            txtMonto.requestFocusInWindow();
+            return;
+        }
+
+        BigDecimal monto = new BigDecimal(txtMonto.getValue().toString());
+
+        if (monto.compareTo(BigDecimal.ZERO) <= 0) {
+            JOptionPane.showMessageDialog(null,
+                    "Monto debe ser mayor a 0",
+                    PROCESO_DE_VALIDACION,
+                    JOptionPane.WARNING_MESSAGE);
+            txtMonto.setValue(0.0);
+            txtMonto.requestFocusInWindow();
+            return;
+        }
+
+        String descripcion = "";
+        if (txtDescripcion.getText().length() >= 70) {
+            descripcion = txtDescripcion.getText().substring(0, 69);
+        } else {
+            descripcion = txtDescripcion.getText();
+        }
+
+        Gastos g = Gastos.builder().
+                id_turno(getIdTurno()).
+                descripcion(descripcion).
+                monto(monto).build();
+
+        String msj = agregarGastosPorTurno(g);
+
+        int icono = msj.equals(Gastos.GASTO_REGISTRADOS_CORRECTAMENTE)
+                ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE;
+
+        JOptionPane.showMessageDialog(
+                null,
+                msj,
+                "Proceso de registro de gasto",
+                icono);
+
+        //Constancia de Gasto a imprimir
+        Map parametros = new HashMap();
+
+        parametros.put("idTurno", getIdTurno());
+        parametros.put("idCajero", getUsuario());
+
+        new hiloImpresionFactura(
+                true, //Mostrar Reporte
+                false, //Con Copia
+                System.getProperty("user.dir") + "/Reportes/gasto.jasper",
+                parametros,
+                frmPrincipal.jPanelImpresion,
+                frmPrincipal.jprImpresion).start();
+        
+        this.dispose();
+    }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void rSButtonMaterialOne1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonMaterialOne1ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_rSButtonMaterialOne1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAceptar;
-    private javax.swing.JButton btnCancelar;
+    private RSMaterialComponent.RSButtonMaterialOne btnAceptar;
     private javax.swing.JPanel contenedor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private RSMaterialComponent.RSButtonMaterialOne rSButtonMaterialOne1;
     private javax.swing.JTextField txtDescripcion;
     private javax.swing.JFormattedTextField txtMonto;
     // End of variables declaration//GEN-END:variables

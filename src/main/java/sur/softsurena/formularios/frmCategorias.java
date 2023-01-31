@@ -179,7 +179,7 @@ public class frmCategorias extends javax.swing.JDialog {
         }
 
         //Avisamos al usuario que le toca elegir la imagen de la categoria.
-        JOptionPane.showMessageDialog(this,
+        JOptionPane.showMessageDialog(null,
                 "Siguiente paso es para elejir una imagen para la Categoria "
                 + nombreCategoria);
 
@@ -198,7 +198,7 @@ public class frmCategorias extends javax.swing.JDialog {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         if (cbCategoria.getItemCount() == 0) {
-            JOptionPane.showMessageDialog(this, "Debe de crear una categoria...!!!");
+            JOptionPane.showMessageDialog(null, "Debe de crear una categoria...!!!");
             return;
         }
 
@@ -213,7 +213,7 @@ public class frmCategorias extends javax.swing.JDialog {
         if (miCategoria.isAceptar()) {
             if (!nombreCategoria.equals(miCategoria.getNombreCategoria())) {
                 if (existeCategoria(miCategoria.getNombreCategoria())) {
-                    JOptionPane.showMessageDialog(this, "Este nombre de Categoria Existe");
+                    JOptionPane.showMessageDialog(null, "Este nombre de Categoria Existe");
                     return;
                 }
             }
@@ -221,7 +221,7 @@ public class frmCategorias extends javax.swing.JDialog {
             if (buscarImagen()) {
                 guardar();
             } else {
-                int resp = JOptionPane.showConfirmDialog(this,
+                int resp = JOptionPane.showConfirmDialog(null,
                         "Desea solo guardar el nombre?",
                         "Confirmacion de Categoria",
                         JOptionPane.YES_NO_OPTION);
@@ -237,7 +237,7 @@ public class frmCategorias extends javax.swing.JDialog {
         if (cbCategoria.getItemCount() == 0) {
             return;
         }
-        int rta = JOptionPane.showConfirmDialog(this,
+        int rta = JOptionPane.showConfirmDialog(null,
                 "Esta Seguro de Eliminar la Categoria {"
                 + (((Categorias) cbCategoria.getSelectedItem()).getDescripcion())
                 + "} del Sistema? \n\n Este proceso tratara "
@@ -248,7 +248,7 @@ public class frmCategorias extends javax.swing.JDialog {
             return;
         }
         if (existeCategoriaProductos(((Categorias) cbCategoria.getSelectedItem()).getId())) {
-            JOptionPane.showMessageDialog(this, "No se permite eliminar categoria porque existe producto Asociados");
+            JOptionPane.showMessageDialog(null, "No se permite eliminar categoria porque existe producto Asociados");
             return;
         }
         String msg;
@@ -303,7 +303,7 @@ public class frmCategorias extends javax.swing.JDialog {
             //Si recibimos un mensaje de error del metodo anterior ejecutamos lo
             //siguiente.
             if (msj.equals("Error al insertar categoria.")) {
-                JOptionPane.showMessageDialog(this,
+                JOptionPane.showMessageDialog(null,
                         msj,
                         "Proceso de creacion Categoria.",
                         JOptionPane.ERROR_MESSAGE);
@@ -312,7 +312,7 @@ public class frmCategorias extends javax.swing.JDialog {
 
             //Si el condicional anterior no se ejecutó entonces mostramos al 
             //usuario que se inserto el registro.
-            JOptionPane.showMessageDialog(this,
+            JOptionPane.showMessageDialog(null,
                     msj,
                     "Proceso de creacion Categoria.",
                     JOptionPane.INFORMATION_MESSAGE);
@@ -326,7 +326,7 @@ public class frmCategorias extends javax.swing.JDialog {
 
             String msj = modificarCategoria(categoria);
 
-            JOptionPane.showMessageDialog(this, msj);
+            JOptionPane.showMessageDialog(null, msj);
 
             if (msj.equals("Error al Modificar Categoria...")) {
                 return;

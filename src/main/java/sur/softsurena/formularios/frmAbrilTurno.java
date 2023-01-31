@@ -146,21 +146,21 @@ public class frmAbrilTurno extends java.awt.Dialog {
         
         //Si el objeto idUsuario es igual a N/A, retornar y mandar mensaje de error.
         if (userName.equals("N/A")) {
-            JOptionPane.showMessageDialog(this, "Debe Seleccionar un Usuario");
+            JOptionPane.showMessageDialog(null, "Debe Seleccionar un Usuario");
             return;
         }
         
         //Verificamos si el usuario tiene turno abierto
         if(usuarioTurnoActivo(userName)){
-            JOptionPane.showMessageDialog(this, "Usuario con Turno Abierto...");
+            JOptionPane.showMessageDialog(null, "Usuario con Turno Abierto...");
             return;
         }
         
         //Si el usuario no tiene turno abierto, procedemos habilitar turno.
         if (habilitarTurno(userName)) {
-            JOptionPane.showMessageDialog(this, "Turno Habilitado");
+            JOptionPane.showMessageDialog(null, "Turno Habilitado");
         } else {
-            JOptionPane.showMessageDialog(this, "Problema para habilitar el Turno");
+            JOptionPane.showMessageDialog(null, "Problema para habilitar el Turno");
         }
         
         

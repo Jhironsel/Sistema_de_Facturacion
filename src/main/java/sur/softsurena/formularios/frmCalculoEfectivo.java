@@ -212,7 +212,7 @@ public class frmCalculoEfectivo extends javax.swing.JDialog {
         BigDecimal efe = new BigDecimal(txtEfectivo.getValue().toString());
 
         if (efe.compareTo(BigDecimal.ZERO) <= 0) {
-            JOptionPane.showMessageDialog(this,
+            JOptionPane.showMessageDialog(null,
                     "Inserte una cantidad mayor a cero (0)",
                     "Valor insertado incorrecto",
                     JOptionPane.INFORMATION_MESSAGE);
@@ -228,7 +228,7 @@ public class frmCalculoEfectivo extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtDevueltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDevueltaActionPerformed
-        JOptionPane.showMessageDialog(this, "Vamos");
+        JOptionPane.showMessageDialog(null, "Vamos");
         calculoEfectivo();
         btnAceptarActionPerformed(evt);
     }//GEN-LAST:event_txtDevueltaActionPerformed
@@ -265,7 +265,7 @@ public class frmCalculoEfectivo extends javax.swing.JDialog {
         txtDevuelta.setValue(dev);
 
         if (dev.compareTo(BigDecimal.ZERO) < 0) {
-            JOptionPane.showMessageDialog(this, "Cantidad negativa \nEscriba una nueva cantidad de Efectivo");
+            JOptionPane.showMessageDialog(null, "Cantidad negativa \nEscriba una nueva cantidad de Efectivo");
             txtEfectivo.requestFocusInWindow();
             txtEfectivo.setValue(0);
             return;

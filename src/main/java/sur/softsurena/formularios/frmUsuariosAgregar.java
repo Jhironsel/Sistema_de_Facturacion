@@ -28,10 +28,9 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
         txtSNombre.setText(u.getSNombre());
         txtApellidos.setText(u.getApellidos());
 
-
         cbEstado.setSelected(u.getEstado());
         cbEstadoActionPerformed(null);
-        
+
         cbAdministrador.setSelected(u.getAdministrador());
         cbAdministradorActionPerformed(null);
 
@@ -41,11 +40,8 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
         nuevo = false;
 
         txtIDUsuario.setEditable(false);
-        
+
         //Cargar las Tags
-        
-        
-        
     }
 
     @SuppressWarnings("unchecked")
@@ -413,7 +409,7 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
         /*
             Validando la informacion que el usuario trata de ingresar o 
         actualizara la base de datos.
-        */
+         */
         if (txtIDUsuario.getText().equals("")) {
             JOptionPane.showMessageDialog(
                     null,
@@ -429,7 +425,7 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
             txtPNombre.requestFocusInWindow();
             return;
         }
-        
+
         if (txtApellidos.getText().equals("")) {
             JOptionPane.showMessageDialog(
                     null,
@@ -441,7 +437,7 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
         /*
             Se extraen las contraseñas de los campos para verificar sean iguales y 
         sean segura tambien.
-        */
+         */
         String clave1 = new String(txtClave1.getPassword()),
                 clave2 = new String(txtClave2.getPassword());
 
@@ -476,7 +472,7 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
         /*
             Preparando el mensaje que verá el usuario para aceptar la información 
         que se ingresará a la base de datos.
-        */
+         */
         String mensaje = "<html><big>"
                 + "<b>Se va a agregar el Usuario: </b>" + txtIDUsuario.getText() + "<br>"
                 + "<b>Con Nombre y Apellido: </b>" + txtPNombre.getText() + " " + txtApellidos.getText() + "<br>"
@@ -487,9 +483,9 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
 
         int resp = JOptionPane.showConfirmDialog(
                 null,
-                mensaje, 
+                mensaje,
                 "Confirmacion de Usuario",
-                JOptionPane.YES_NO_OPTION, 
+                JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE);
 
         if (resp == JOptionPane.NO_OPTION) {
@@ -537,11 +533,23 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
             }
         }
 
+        /**
+         * Query que permite agregar usuarios al sistema.
+         */
+        final String INSERT
+                = "EXECUTE PROCEDURE SP_INSERT_USUARIOS(?,?,?,?,?,?,?,?)";
+
+        /**
+         * Procedimiento que se encarga de actualizar a los usuarios del
+         * sistema.
+         */
+        final String UPDATE
+                = "EXECUTE PROCEDURE SP_UPDATE_USUARIOS(?,?,?,?,?,?,?,?)";
 
         JOptionPane.showMessageDialog(
-                null, 
-                (agregarModificarUsuario(miUsuario, nuevo ? Usuarios.INSERT : Usuarios.UPDATE)));
-        
+                null,
+                (agregarModificarUsuario(miUsuario, nuevo ? INSERT : UPDATE)));
+
         dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 

@@ -38,13 +38,13 @@ public class FirebirdEventosIT {
     @Test
     public void testRegistro() {
         System.out.println("registro");
-        String user = "";
-        String clave = "";
-        String dominio = "";
-        String pathBaseDatos = "";
-        int puerto = 0;
+        String user = "jhironsel";
+        String clave = "123uasd";
+        String dominio = "localhost";
+        String pathBaseDatos = "/home/jhironsel/BaseDatos/BaseDeDatos3.fdb";
+        int puerto = 3050;
         FirebirdEventos instance = new FirebirdEventos();
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.registro(user, clave, dominio, pathBaseDatos, puerto);
         assertEquals(expResult, result);
     }

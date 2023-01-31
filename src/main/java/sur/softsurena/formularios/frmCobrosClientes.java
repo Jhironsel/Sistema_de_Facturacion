@@ -35,7 +35,6 @@ public class frmCobrosClientes extends javax.swing.JDialog {
         this.idTurno = idTurno;
     }
 
-
     public frmCobrosClientes(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -375,14 +374,14 @@ public class frmCobrosClientes extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        
-            Clientes c = Clientes.builder().
-                    id_persona(-1).
-                    pNombre("Seleccione un Cliente...").
-                    sNombre("").
-                    apellidos("").build();
-            cmbCliente.addItem(c);
-            getClientesTablaSBCombo(cmbCliente);
+
+        Clientes c = Clientes.builder().
+                id_persona(-1).
+                pNombre("Seleccione un Cliente...").
+                sNombre("").
+                apellidos("").build();
+        cmbCliente.addItem(c);
+        getClientesTablaSBCombo(cmbCliente);
     }//GEN-LAST:event_formWindowOpened
     private void btnPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarActionPerformed
         if (cmbCliente.getSelectedIndex() <= 0) {
@@ -405,7 +404,7 @@ public class frmCobrosClientes extends javax.swing.JDialog {
             txtMonto.requestFocusInWindow();
             return;
         }
-        if (Monto.compareTo(montoTotal) == 1 ) {
+        if (Monto.compareTo(montoTotal) == 1) {
             JOptionPane.showMessageDialog(rootPane, "No se permite Monto a pagar MAYOR QUE '>' Deuda del Cliente");
             return;
         }
@@ -413,12 +412,12 @@ public class frmCobrosClientes extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(rootPane, "No se permite monto NEGATIVO");
             return;
         }
-        if (Monto.compareTo(montoDeuda) > 0 && 
-                montoDeuda.compareTo(BigDecimal.ZERO) > 0) {
+        if (Monto.compareTo(montoDeuda) > 0
+                && montoDeuda.compareTo(BigDecimal.ZERO) > 0) {
             JOptionPane.showMessageDialog(rootPane, "No se permite monto MAYOR a la DEUDA");
             return;
         }
-        int num = JOptionPane.showConfirmDialog(this,
+        int num = JOptionPane.showConfirmDialog(null,
                 "Esta seguro de realizar Cobro?",
                 "Confirmacion de Pago",
                 JOptionPane.YES_NO_OPTION);
@@ -436,7 +435,7 @@ public class frmCobrosClientes extends javax.swing.JDialog {
 
         //Constancia de pago de Factura....
         JOptionPane.showMessageDialog(rootPane, "Pago realizado con Exito...");
-        
+
         Map parametros = new HashMap();
         parametros.put("nombreCajero", getNombreCajero());
         parametros.put("idFactura", Utilidades.objectToInt(tblFacturas.getValueAt(tblFacturas.getSelectedRow(), 0)));
@@ -444,13 +443,17 @@ public class frmCobrosClientes extends javax.swing.JDialog {
         parametros.put("idCliente", ((Clientes) cmbCliente.getItemAt(cmbCliente.getSelectedIndex())).getId_persona());
         parametros.put("nombreCliente", ((Clientes) cmbCliente.getItemAt(cmbCliente.getSelectedIndex())).toString());
         parametros.put("montoFactura", Utilidades.objectToDouble(tblFacturas.getValueAt(tblFacturas.getSelectedRow(), 1)));
+
         hiloImpresionFactura miHilo = new hiloImpresionFactura(
                 true, //Mostrar Reporte
                 false, //Con Copia
-                System.getProperty("user.dir") + "/Reportes/cobroFactura.jasper", 
-                parametros);
+                "/Reportes/cobroFactura.jasper",
+                parametros,
+                frmPrincipal.jPanelImpresion,
+                frmPrincipal.jprImpresion);
+
         miHilo.start();
-        
+
         dispose();
     }//GEN-LAST:event_btnPagarActionPerformed
     private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
@@ -576,7 +579,7 @@ public class frmCobrosClientes extends javax.swing.JDialog {
             Object registro[] = new Object[4];
             int i = 1;
             while (rs.next()) {
-                registro[0] = i + ") Cod.:" +rs.getString("idPagoDeuda");
+                registro[0] = i + ") Cod.:" + rs.getString("idPagoDeuda");
                 registro[1] = rs.getString("Fecha");
                 registro[2] = rs.getString("Hora");
                 registro[3] = rs.getString("montoPago");

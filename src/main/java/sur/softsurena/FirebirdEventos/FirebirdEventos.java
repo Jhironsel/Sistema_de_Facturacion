@@ -54,10 +54,7 @@ public class FirebirdEventos extends FBEventManager{
                         + event.getEventName() + "] occured "
                         + event.getEventCount() + " time(s)");
                 frmClientes.llenarTablaClientes();
-            });
-            
-            
-                        
+            });         
         } catch (SQLException ex) {
             LOG.log(Level.SEVERE, ex.getMessage(), ex);
             return false;

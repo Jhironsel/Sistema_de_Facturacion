@@ -659,7 +659,7 @@ public class frmDeudas extends javax.swing.JInternalFrame {
             Validamos el campo para saber si está vacio o está en blanco.
          */
         if (cedula.isEmpty() || cedula.isBlank()) {
-            JOptionPane.showMessageDialog(this,
+            JOptionPane.showMessageDialog(null,
                     "Inserte una cedula Valida, formato: 000-0000000-0");
             txtCedula.setValue("");
             txtCedula.requestFocusInWindow();
@@ -696,7 +696,7 @@ public class frmDeudas extends javax.swing.JInternalFrame {
             txtMonto.requestFocusInWindow();
         } else {
             //Cliente no existe
-            int resp = JOptionPane.showConfirmDialog(this,
+            int resp = JOptionPane.showConfirmDialog(null,
                     "Desea registrar este usuario al sistema?",
                     "Registro de Usuario",
                     JOptionPane.YES_NO_OPTION,
@@ -780,11 +780,11 @@ public class frmDeudas extends javax.swing.JInternalFrame {
         miAut.setVisible(true);
 
         if (!miAut.isAceptado()) {
-            JOptionPane.showMessageDialog(this, "Usuario no valido");
+            JOptionPane.showMessageDialog(null, "Usuario no valido");
             return;
         }
 
-        int valor = JOptionPane.showConfirmDialog(this,
+        int valor = JOptionPane.showConfirmDialog(null,
                 "Se procederá a eliminar los pagos tambien!",
                 "Confirmación!!!", JOptionPane.YES_NO_OPTION);
 
@@ -792,7 +792,7 @@ public class frmDeudas extends javax.swing.JInternalFrame {
             return;
         }
 
-        JOptionPane.showMessageDialog(this, modificarDeuda(
+        JOptionPane.showMessageDialog(null, modificarDeuda(
                 Integer.parseInt(tblClientes.getValueAt(cliAct, 0).toString()),
                 "i"));
         llenarTabla();
@@ -819,7 +819,7 @@ public class frmDeudas extends javax.swing.JInternalFrame {
 //            txtIDCliente.requestFocusInWindow();
 //            return;
 //        }
-//        JOptionPane.showMessageDialog(this, misDatos.modificarDeuda(
+//        JOptionPane.showMessageDialog(null, misDatos.modificarDeuda(
 //                tblClientes.getValueAt(cliAct, 0)), 
 //                "a"));
 //        llenarTabla();
@@ -840,11 +840,11 @@ public class frmDeudas extends javax.swing.JInternalFrame {
         miAut.setVisible(true);
 
         if (!miAut.isAceptado()) {
-            JOptionPane.showMessageDialog(this, "Usuario no valido");
+            JOptionPane.showMessageDialog(null, "Usuario no valido");
             return;
         }
 
-        JOptionPane.showMessageDialog(this, modificarDeuda(
+        JOptionPane.showMessageDialog(null, modificarDeuda(
                 Integer.parseInt(tblClientes.getValueAt(cliAct, 0).toString()),
                 "n"));
         llenarTabla();
@@ -901,7 +901,7 @@ public class frmDeudas extends javax.swing.JInternalFrame {
             //Instalar Logger
         }
         msg = "<html><big>" + msg + "</big></html>";
-        JOptionPane.showMessageDialog(this, msg);
+        JOptionPane.showMessageDialog(null, msg);
     }//GEN-LAST:event_btnGetTotalActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
@@ -924,7 +924,7 @@ public class frmDeudas extends javax.swing.JInternalFrame {
         String idCliente = txtCedula.getText().replace("-", "").trim();
         if (idCliente.isEmpty()) {
 
-            JOptionPane.showMessageDialog(this, "Debe seleccionar cliente...");
+            JOptionPane.showMessageDialog(null, "Debe seleccionar cliente...");
             return;
         }
 
@@ -953,21 +953,21 @@ public class frmDeudas extends javax.swing.JInternalFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         String idCliente = txtCedula.getText().replace("-", "").trim();
         if (idCliente.isEmpty()) {
-            JOptionPane.showMessageDialog(this,
+            JOptionPane.showMessageDialog(null,
                     "Debe Digitar un ID de Cliente...");
             txtCedula.requestFocusInWindow();
             return;
         }
 
         if (txtNombres.getText().equals("")) {
-            JOptionPane.showMessageDialog(this,
+            JOptionPane.showMessageDialog(null,
                     "Debe Digitar un Nombre...");
             txtNombres.requestFocusInWindow();
             return;
         }
 
         if (txtApellidos.getText().equals("")) {
-            JOptionPane.showMessageDialog(this,
+            JOptionPane.showMessageDialog(null,
                     "Debe Digitar un Apellido...");
             txtApellidos.requestFocusInWindow();
             return;
@@ -976,19 +976,19 @@ public class frmDeudas extends javax.swing.JInternalFrame {
         double monto = Utilidades.controlDouble(txtMonto.getValue());
 
         if (monto <= 0) {
-            JOptionPane.showMessageDialog(this, "Ingrese una cantidad mayor que cero");
+            JOptionPane.showMessageDialog(null, "Ingrese una cantidad mayor que cero");
             txtMonto.setValue(0);
             txtMonto.requestFocusInWindow();
             return;
         }
 
         if (txtConcepto.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Debe ingresar un concepto detallado de la deuda");
+            JOptionPane.showMessageDialog(null, "Debe ingresar un concepto detallado de la deuda");
             txtConcepto.requestFocusInWindow();
             return;
         }
         if (txtConcepto.getText().length() < 20 || txtConcepto.getText().length() > 199) {
-            JOptionPane.showMessageDialog(this, "Ingrese concepto de un minimo "
+            JOptionPane.showMessageDialog(null, "Ingrese concepto de un minimo "
                     + "de 20 caracteres y un Maximo 200, Caracteres actuales de:"
                     + " " + txtConcepto.getText().length());
             txtConcepto.requestFocusInWindow();
@@ -1012,7 +1012,7 @@ public class frmDeudas extends javax.swing.JInternalFrame {
             concepto = txtConcepto.getText();
         }
 
-        int resp = JOptionPane.showConfirmDialog(this,
+        int resp = JOptionPane.showConfirmDialog(null,
                 "<html><b><big>Se va a " + accion + " deuda de: </big></b><big>"
                 + txtNombres.getText() + " " + txtApellidos.getText()
                 + "</big></html>"
@@ -1035,12 +1035,12 @@ public class frmDeudas extends javax.swing.JInternalFrame {
         }
         if (nuevo) {
             if (insertDeudas(miDeuda)) {
-                JOptionPane.showMessageDialog(this,
+                JOptionPane.showMessageDialog(null,
                         "Registro de deuda Insertada!",
                         "Confirmación de proceso",
                         JOptionPane.INFORMATION_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(this,
+                JOptionPane.showMessageDialog(null,
                         "Falla de registro!",
                         "Confirmación de proceso",
                         JOptionPane.INFORMATION_MESSAGE);
@@ -1072,11 +1072,11 @@ public class frmDeudas extends javax.swing.JInternalFrame {
         String idCliente = txtCedula.getText().replace("-", "").trim();
 
         if (idCliente.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Debe seleccionar cliente...");
+            JOptionPane.showMessageDialog(null, "Debe seleccionar cliente...");
             return;
         }
         String idDeuda = tblClientes.getValueAt(tblClientes.getSelectedRow(), 0).toString();
-        int rta = JOptionPane.showConfirmDialog(this,
+        int rta = JOptionPane.showConfirmDialog(null,
                 "¿Esta Seguro de Eliminar Deuda #" + idDeuda,
                 "Borrar Deuda", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
@@ -1096,13 +1096,13 @@ public class frmDeudas extends javax.swing.JInternalFrame {
             return;
         }
         if (tblClientes.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "No existe contenido que buscar...!");
+            JOptionPane.showMessageDialog(null, "No existe contenido que buscar...!");
             return;
         }
 
         String cliente;
 
-        cliente = "" + JOptionPane.showInputDialog(this, "Ingrese la Cedula del Cliente");
+        cliente = "" + JOptionPane.showInputDialog(null, "Ingrese la Cedula del Cliente");
 
         if (cliente.equals("null")) {
             return;

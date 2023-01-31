@@ -717,7 +717,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
     private void txtCodigoBarraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoBarraKeyTyped
         if (txtCodigoBarra.getText().length() >= 35) {
             evt.consume();
-            JOptionPane.showMessageDialog(this, "Este codigo debe ser menor a 35 caracteres!!!");
+            JOptionPane.showMessageDialog(null, "Este codigo debe ser menor a 35 caracteres!!!");
         }
     }//GEN-LAST:event_txtCodigoBarraKeyTyped
     private void txtDescripcionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescripcionKeyReleased
@@ -757,7 +757,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
             try {
                 rs.next();
                 if (rs.getInt(1) == 0) {
-                    JOptionPane.showMessageDialog(this,
+                    JOptionPane.showMessageDialog(null,
                             "Deberia de crear una Categoria primero!!",
                             "Sin categoria en el sistema",
                             JOptionPane.INFORMATION_MESSAGE);
@@ -822,7 +822,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         if (tblTabla.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un producto");
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un producto");
             return;
         }
         
@@ -863,10 +863,10 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
         if (txtCodigoBarra.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un producto");
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un producto");
             return;
         }
-        int rta = JOptionPane.showConfirmDialog(this,
+        int rta = JOptionPane.showConfirmDialog(null,
                 "Esta Seguro de Eliminar el Producto {"
                 + txtDescripcion.getText() + "} de los Registro?",
                 "Confirmacion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -875,9 +875,9 @@ public class frmProductos extends javax.swing.JInternalFrame {
         }
         String msg;
         try {
-            msg = borrarProductoPorCodigo(txtCodigoBarra.getText());
+            msg = borrarProductoPorID_Codigo(txtCodigoBarra.getText());
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "No se puede eliminar el producto porque ya ha sido facturado"
+            JOptionPane.showMessageDialog(null, "No se puede eliminar el producto porque ya ha sido facturado"
                     + "\n!!Te recomendamos cambiar el ESTADO del producto...");
             return;
         }
@@ -891,7 +891,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
     private void btnBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProductoActionPerformed
         if (tblTabla.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "No hay producto registrado");
+            JOptionPane.showMessageDialog(null, "No hay producto registrado");
             return;
         }
         String producto = JOptionPane.showInputDialog("Ingrese el Codigo ID Producto...");
@@ -1005,7 +1005,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
             msg = txtNotas.getText();
         }
 
-        int resp = JOptionPane.showConfirmDialog(this,
+        int resp = JOptionPane.showConfirmDialog(null,
                 "<html><b><big>Se va a " + accion + " el Producto: </big></b><big>" + txtDescripcion.getText() + "</big></html>"
                 + "\n<html><b><big>Codigo no: </big></b><big>" + txtCodigoBarra.getText() + "</big></html>"
                 //+ "\n<html><b><big>Costo: </big></b><big>" + txtCosto.getText() + "</big></html>"
@@ -1077,7 +1077,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
     private void btnImprimirListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirListaActionPerformed
         if (tblTabla.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "No hay producto registrado");
+            JOptionPane.showMessageDialog(null, "No hay producto registrado");
             return;
         }
 
@@ -1100,7 +1100,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
     private void btnEntradaProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntradaProductoActionPerformed
         if (tblTabla.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "No hay producto registrado");
+            JOptionPane.showMessageDialog(null, "No hay producto registrado");
             return;
         }
 
@@ -1112,7 +1112,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
     private void btnSalidaProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalidaProductoActionPerformed
         if (tblTabla.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "No hay producto registrado");
+            JOptionPane.showMessageDialog(null, "No hay producto registrado");
             return;
         }
         frmSalidaProducto miSalida = new frmSalidaProducto(null, true);

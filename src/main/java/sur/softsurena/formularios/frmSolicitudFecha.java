@@ -341,7 +341,7 @@ public class frmSolicitudFecha extends javax.swing.JDialog {
     private void btnCancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelar1ActionPerformed
         if (cbCajeros.isSelected()) {
             if (jcbUsuarios.getSelectedIndex() == 0) {
-                JOptionPane.showMessageDialog(this,
+                JOptionPane.showMessageDialog(null,
                         "Debe seleccionar un usuario",
                         "Problema de Usuario!!!", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -350,13 +350,13 @@ public class frmSolicitudFecha extends javax.swing.JDialog {
         
         if (cbFechaFacturasDia.isSelected()) {
             if (jdDia.getDate()== null) {
-                JOptionPane.showMessageDialog(this,
+                JOptionPane.showMessageDialog(null,
                         "Digiste una fecha",
                         "Problema de Fecha!!!", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             if (jdDia.getDate().after(new Date())) {
-                JOptionPane.showMessageDialog(this,
+                JOptionPane.showMessageDialog(null,
                         "Fecha futura, incorrecta!!!",
                         "Problema de Fecha!!!", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -366,7 +366,7 @@ public class frmSolicitudFecha extends javax.swing.JDialog {
         if (cbIntervalosFactura.isSelected()) {
             if (Utilidades.objectToInt(jsInicio.getValue())
                     > Utilidades.objectToInt(jsFin.getValue())) {
-                JOptionPane.showMessageDialog(this,
+                JOptionPane.showMessageDialog(null,
                         "Intervalo de factura, incorrecto!!!",
                         "Problema de intervalos!!!", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -375,7 +375,7 @@ public class frmSolicitudFecha extends javax.swing.JDialog {
         
         if(cbEstados.isSelected()){
             if(jcEstados.getSelectedIndex() == 0){
-                JOptionPane.showMessageDialog(this,
+                JOptionPane.showMessageDialog(null,
                         "Debe seleccionar un estado",
                         "Problema de estado!!!", JOptionPane.ERROR_MESSAGE);
                 return;

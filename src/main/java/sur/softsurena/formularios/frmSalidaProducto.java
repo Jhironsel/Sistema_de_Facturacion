@@ -225,14 +225,14 @@ public class frmSalidaProducto extends javax.swing.JDialog {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         if (txtCodigo.getText().equals("")) {
-            JOptionPane.showMessageDialog(this,
+            JOptionPane.showMessageDialog(null,
                     "Id Producto esta vacio....!!!");
             txtCodigo.requestFocusInWindow();
             return;
         }
 
         if (txtConcepto.getText().equals("")) {
-            JOptionPane.showMessageDialog(this,
+            JOptionPane.showMessageDialog(null,
                     "Debe Proporcional el concepto o motivo de la salida"
                     + " de este producto del sistema...!!!!");
             txtConcepto.requestFocusInWindow();
@@ -242,14 +242,14 @@ public class frmSalidaProducto extends javax.swing.JDialog {
         BigDecimal valor = new BigDecimal(txtSalida.getText().trim());
 
         if (valor.compareTo(BigDecimal.ZERO) == 0.0) {
-            JOptionPane.showMessageDialog(this,
+            JOptionPane.showMessageDialog(null,
                     "Inserte una cantidad");
             txtSalida.requestFocusInWindow();
             return;
         }
 
         if (valor.compareTo(BigDecimal.ZERO) <= 0) {
-            JOptionPane.showMessageDialog(this,
+            JOptionPane.showMessageDialog(null,
                     "No se permite numero negativo o cero...!!!");
             txtSalida.requestFocusInWindow();
             return;
@@ -272,7 +272,7 @@ public class frmSalidaProducto extends javax.swing.JDialog {
 //                        false,
 //                        BigDecimal.ZERO)
 //        )) {
-//            JOptionPane.showMessageDialog(this,
+//            JOptionPane.showMessageDialog(null,
 //                    "No se pudo registrar producto");
 //            return;
 //        }
@@ -335,7 +335,7 @@ public class frmSalidaProducto extends javax.swing.JDialog {
         BufferedImage img = null;
         try {
             if (!rs.next()) {
-                JOptionPane.showMessageDialog(this,
+                JOptionPane.showMessageDialog(null,
                         "Producto no encontrado...!!!!");
                 txtCodigo.setText("");
                 txtCodigo.requestFocusInWindow();

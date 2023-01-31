@@ -505,15 +505,12 @@
                                   <Dimension value="[0, 25]"/>
                                 </Property>
                               </Properties>
-                              <AccessibilityProperties>
-                                <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                                  <ComponentRef name="Form"/>
-                                </Property>
-                              </AccessibilityProperties>
                               <Events>
-                                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtCedulaFocusLost"/>
                                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCedulaActionPerformed"/>
                               </Events>
+                              <AuxValues>
+                                <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="frmClientes_txtCedula"/>
+                              </AuxValues>
                             </Component>
                             <Component class="javax.swing.JComboBox" name="jcbPersona">
                               <Properties>
@@ -609,11 +606,6 @@
                                   <Dimension value="[0, 25]"/>
                                 </Property>
                               </Properties>
-                              <AccessibilityProperties>
-                                <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                                  <ComponentRef name="Form"/>
-                                </Property>
-                              </AccessibilityProperties>
                               <Events>
                                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPNombreActionPerformed"/>
                               </Events>
@@ -683,11 +675,6 @@
                                   <Dimension value="[0, 25]"/>
                                 </Property>
                               </Properties>
-                              <AccessibilityProperties>
-                                <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                                  <ComponentRef name="Form"/>
-                                </Property>
-                              </AccessibilityProperties>
                               <Events>
                                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtApellidosActionPerformed"/>
                               </Events>
@@ -872,7 +859,7 @@
                                             </Property>
                                           </Properties>
                                           <Events>
-                                            <EventHandler event="popupMenuWillBecomeInvisible" listener="javax.swing.event.PopupMenuListener" parameters="javax.swing.event.PopupMenuEvent" handler="jcbProvinciasPopupMenuWillBecomeInvisible"/>
+                                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcbProvinciasActionPerformed"/>
                                           </Events>
                                           <AuxValues>
                                             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
@@ -897,7 +884,7 @@
                                             </Property>
                                           </Properties>
                                           <Events>
-                                            <EventHandler event="popupMenuWillBecomeInvisible" listener="javax.swing.event.PopupMenuListener" parameters="javax.swing.event.PopupMenuEvent" handler="jcbMunicipiosPopupMenuWillBecomeInvisible"/>
+                                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcbMunicipiosActionPerformed"/>
                                           </Events>
                                           <AuxValues>
                                             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
@@ -922,6 +909,7 @@
                                           </Properties>
                                           <Events>
                                             <EventHandler event="popupMenuWillBecomeInvisible" listener="javax.swing.event.PopupMenuListener" parameters="javax.swing.event.PopupMenuEvent" handler="jcbDistritoMunicipalPopupMenuWillBecomeInvisible"/>
+                                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcbDistritoMunicipalActionPerformed"/>
                                           </Events>
                                           <AuxValues>
                                             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
@@ -1011,7 +999,7 @@
                                             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                                               <Dimension value="[0, 0]"/>
                                             </Property>
-                                            <Property name="name" type="java.lang.String" value="txtPNombre" noResource="true"/>
+                                            <Property name="name" type="java.lang.String" value="txtDireccion" noResource="true"/>
                                             <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
                                               <ComponentRef name="txtSNombre"/>
                                             </Property>
@@ -1058,6 +1046,9 @@
                                   </Layout>
                                   <SubComponents>
                                     <Container class="javax.swing.JTabbedPane" name="jTabbedPane3">
+                                      <Properties>
+                                        <Property name="name" type="java.lang.String" value="telefonoCorreos" noResource="true"/>
+                                      </Properties>
 
                                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
                                       <SubComponents>

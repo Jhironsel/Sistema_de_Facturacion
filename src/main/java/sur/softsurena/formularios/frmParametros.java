@@ -397,7 +397,7 @@ public class frmParametros extends javax.swing.JFrame {
 
         if (rbtnNombreServidor.isSelected()) {
             if (txtHost.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Nombre del servidor vacio");
+                JOptionPane.showMessageDialog(null, "Nombre del servidor vacio");
                 txtHost.requestFocusInWindow();
                 return;
             }

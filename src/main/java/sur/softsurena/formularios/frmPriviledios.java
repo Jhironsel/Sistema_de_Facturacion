@@ -281,7 +281,7 @@ public class frmPriviledios extends javax.swing.JInternalFrame {
         }
 
         if (!c.aceptar) {
-            JOptionPane.showMessageDialog(this, "Ingrese corretamente el codigo.");
+            JOptionPane.showMessageDialog(null, "Ingrese corretamente el codigo.");
             return;
         }
 

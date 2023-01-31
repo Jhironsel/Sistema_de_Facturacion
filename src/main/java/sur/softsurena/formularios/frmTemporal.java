@@ -158,7 +158,7 @@ public class frmTemporal extends java.awt.Dialog {
         Facturas f = Facturas.builder().id(idFactura).headerFactura(hf).build();
         
         if (agregarFacturaNombre(f) < 1) {
-            JOptionPane.showMessageDialog(this, 
+            JOptionPane.showMessageDialog(null, 
                     "Esta compra no se ha registrado...");
             return;
         } else {
@@ -166,7 +166,7 @@ public class frmTemporal extends java.awt.Dialog {
                 
                 if (agregarDetalleFactura(f) < -1) {
                     borrarFactura(idFactura);
-                    JOptionPane.showMessageDialog(this, 
+                    JOptionPane.showMessageDialog(null, 
                             "Esta compra no se ha registrado...");
                     return;
                 }

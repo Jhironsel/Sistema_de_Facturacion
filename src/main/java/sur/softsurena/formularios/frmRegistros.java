@@ -170,30 +170,30 @@ public class frmRegistros extends javax.swing.JDialog {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         if (txtIdMaquina.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "IdMaquina vacio, Rellenar...!!!");
+            JOptionPane.showMessageDialog(null, "IdMaquina vacio, Rellenar...!!!");
             txtIdMaquina.requestFocusInWindow();
             return;
         }
         if (txtClave1.getPassword().length == 0) {
-            JOptionPane.showMessageDialog(this, "Clave 1 vacia, Rellenar...!!!");
+            JOptionPane.showMessageDialog(null, "Clave 1 vacia, Rellenar...!!!");
             txtClave1.requestFocusInWindow();
             return;
         }
 
         if (txtClave2.getPassword().length == 0) {
-            JOptionPane.showMessageDialog(this, "Clave 2 vacia, Rellenar...!!!");
+            JOptionPane.showMessageDialog(null, "Clave 2 vacia, Rellenar...!!!");
             txtClave2.requestFocusInWindow();
             return;
         }
 
         if (txtClaveServidor.getPassword().length == 0) {
-            JOptionPane.showMessageDialog(this, "Clave 3 vacia, Rellenar...!!!");
+            JOptionPane.showMessageDialog(null, "Clave 3 vacia, Rellenar...!!!");
             txtClaveServidor.requestFocusInWindow();
             return;
         }
 
         if (dchFecha.getDate() == null) {
-            JOptionPane.showMessageDialog(this, "fecha vacia, Rellenar...!!!");
+            JOptionPane.showMessageDialog(null, "fecha vacia, Rellenar...!!!");
             dchFecha.requestFocusInWindow();
             return;
         }

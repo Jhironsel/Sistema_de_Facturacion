@@ -873,7 +873,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
         if (!usuarioTurnoActivo("CURRENT_USER")) {
 
-            JOptionPane.showMessageDialog(this, "Usuario no cuenta con Turno para Facturar...!");
+            JOptionPane.showMessageDialog(null, "Usuario no cuenta con Turno para Facturar...!");
             return;
         }
         if (bebida == null) {
@@ -956,7 +956,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
             if (miAut.isAceptado()) {
                 mnuArchivosCambioUsuarioActionPerformed(null);
             } else {
-                JOptionPane.showMessageDialog(this, "Usuario no valido");
+                JOptionPane.showMessageDialog(null, "Usuario no valido");
             }
         }
 
@@ -966,7 +966,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
             return;
         }
 
-        int resp = JOptionPane.showConfirmDialog(this,
+        int resp = JOptionPane.showConfirmDialog(null,
                 "Desea cambiar el logo de la empresa?",
                 "Confirmacion!!!",
                 JOptionPane.YES_NO_OPTION,
@@ -1038,7 +1038,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
             return;
         }//Elegir el backup de la base de datos a restaurar...
 
-        String usuarioMaster = JOptionPane.showInputDialog(this,
+        String usuarioMaster = JOptionPane.showInputDialog(null,
                 "Inserte el nombre de Usuario: ", "Usuario...",
                 JOptionPane.INFORMATION_MESSAGE);
 
@@ -1047,7 +1047,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         }//Coner el usuario que va a realizar la operacion de back up...
         JPasswordField pf = new JPasswordField();
 
-        Integer claveMaster = JOptionPane.showConfirmDialog(this, pf,
+        Integer claveMaster = JOptionPane.showConfirmDialog(null, pf,
                 "Inserte el nombre de Usuario: ", JOptionPane.OK_CANCEL_OPTION,
                 JOptionPane.INFORMATION_MESSAGE);
         pf.requestFocusInWindow();
@@ -1113,7 +1113,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jlRestauracionMouseEntered
 
     private void mnuLicenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuLicenciaActionPerformed
-        JOptionPane.showMessageDialog(this, "Se ejecuta");
+        JOptionPane.showMessageDialog(null, "Se ejecuta");
     }//GEN-LAST:event_mnuLicenciaActionPerformed
     private void mnuMovimientosDeudasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMovimientosDeudasActionPerformed
 

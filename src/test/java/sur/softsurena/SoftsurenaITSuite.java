@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4Suite.java to edit this template
- */
 package sur.softsurena;
 
 import org.junit.After;
@@ -16,7 +12,11 @@ import org.junit.runners.Suite;
  * @author jhironsel
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({sur.softsurena.swingWorker.SwingWorkerITSuite.class, sur.softsurena.hilos.HilosITSuite.class, sur.softsurena.FirebirdEventos.FirebirdEventosITSuite.class, sur.softsurena.formularios.FormulariosITSuite.class})
+@Suite.SuiteClasses({
+    sur.softsurena.swingWorker.SwingWorkerITSuite.class, 
+    sur.softsurena.hilos.HilosITSuite.class, 
+    sur.softsurena.FirebirdEventos.FirebirdEventosITSuite.class, 
+    sur.softsurena.formularios.FormulariosITSuite.class})
 public class SoftsurenaITSuite {
 
     @BeforeClass
