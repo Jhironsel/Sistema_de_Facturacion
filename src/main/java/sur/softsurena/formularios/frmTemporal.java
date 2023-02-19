@@ -151,8 +151,8 @@ public class frmTemporal extends java.awt.Dialog {
                 idCliente(idCliente).
                 idTurno(idTurno).
                 estado('t').
-                userName(userName).
-                nombreTemp(nombreCliente)
+                userName(userName)//.
+                //nombreTemp(nombreCliente)
                 .build();
                 
         Facturas f = Facturas.builder().id(idFactura).headerFactura(hf).build();

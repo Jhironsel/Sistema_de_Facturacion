@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.8" maxVersion="1.8" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
-  <NonVisualComponents>
-    <Component class="javax.swing.ButtonGroup" name="buttonGroup1">
-    </Component>
-  </NonVisualComponents>
   <Properties>
     <Property name="closable" type="boolean" value="true"/>
     <Property name="iconifiable" type="boolean" value="true"/>
@@ -16,7 +12,7 @@
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
   </SyntheticProperties>
   <Events>
-    <EventHandler event="internalFrameActivated" listener="javax.swing.event.InternalFrameListener" parameters="javax.swing.event.InternalFrameEvent" handler="formInternalFrameActivated"/>
+    <EventHandler event="internalFrameOpened" listener="javax.swing.event.InternalFrameListener" parameters="javax.swing.event.InternalFrameEvent" handler="formInternalFrameOpened"/>
   </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -274,84 +270,20 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Component class="javax.swing.JTable" name="tblTabla">
+                    <Component class="RSMaterialComponent.RSTableMetro" name="tblTabla">
                       <Properties>
-                        <Property name="autoCreateRowSorter" type="boolean" value="true"/>
-                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                            <TitledBorder>
-                              <Font PropertyName="font" name="Arial" size="12" style="0"/>
-                            </TitledBorder>
-                          </Border>
-                        </Property>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Ubuntu" size="14" style="0"/>
-                        </Property>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="7" rowCount="3">
-                            <Column editable="true" title="T&#xed;tulo 1" type="java.lang.Object"/>
-                            <Column editable="true" title="T&#xed;tulo 2" type="java.lang.Object"/>
-                            <Column editable="true" title="T&#xed;tulo 3" type="java.lang.Object"/>
-                            <Column editable="true" title="T&#xed;tulo 4" type="java.lang.Object"/>
-                            <Column editable="true" title="T&#xed;tulo 5" type="java.lang.Object"/>
-                            <Column editable="true" title="T&#xed;tulo 6" type="java.lang.Object"/>
-                            <Column editable="true" title="T&#xed;tulo 7" type="java.lang.Object"/>
+                          <Table columnCount="4" rowCount="4">
+                            <Column editable="true" title="Title 1" type="java.lang.Object"/>
+                            <Column editable="true" title="Title 2" type="java.lang.Object"/>
+                            <Column editable="true" title="Title 3" type="java.lang.Object"/>
+                            <Column editable="true" title="Title 4" type="java.lang.Object"/>
                           </Table>
-                        </Property>
-                        <Property name="autoResizeMode" type="int" value="0"/>
-                        <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
-                          <TableColumnModel selectionModel="0">
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                              <Title/>
-                              <Editor/>
-                              <Renderer/>
-                            </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                              <Title/>
-                              <Editor/>
-                              <Renderer/>
-                            </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                              <Title/>
-                              <Editor/>
-                              <Renderer/>
-                            </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                              <Title/>
-                              <Editor/>
-                              <Renderer/>
-                            </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                              <Title/>
-                              <Editor/>
-                              <Renderer/>
-                            </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                              <Title/>
-                              <Editor/>
-                              <Renderer/>
-                            </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                              <Title/>
-                              <Editor/>
-                              <Renderer/>
-                            </Column>
-                          </TableColumnModel>
-                        </Property>
-                        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                          <Color id="Cursor Por defecto"/>
-                        </Property>
-                        <Property name="doubleBuffered" type="boolean" value="true"/>
-                        <Property name="name" type="java.lang.String" value="tblTabla" noResource="true"/>
-                        <Property name="selectionModel" type="javax.swing.ListSelectionModel" editor="org.netbeans.modules.form.editors2.JTableSelectionModelEditor">
-                          <JTableSelectionModel selectionMode="0"/>
-                        </Property>
-                        <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
-                          <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
                         </Property>
                       </Properties>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JTable(){&#xd;&#xa;@Override&#xd;&#xa;public boolean isCellEditable(int rowIndex, int colIndex) { &#xd;&#xa;return false; //Las celdas no son editables. &#xd;&#xa;}&#xd;&#xa;};"/>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new RSMaterialComponent.RSTableMetro(){&#xa;@Override&#xa;public boolean isCellEditable(int rowIndex, int colIndex) { &#xa;    return false; //Las celdas no son editables. &#xa;}&#xa;}"/>
+                        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>
@@ -404,7 +336,7 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="62" max="32767" attributes="0"/>
+                      <EmptySpace pref="41" max="32767" attributes="0"/>
                       <Component id="jScrollPane4" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -429,37 +361,33 @@
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="jLabel7" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel7" alignment="1" max="32767" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                           <Component id="jLabel1" linkSize="1" pref="244" max="32767" attributes="0"/>
                                           <Component id="txtCodigoBarra" linkSize="1" max="32767" attributes="0"/>
                                       </Group>
-                                      <EmptySpace pref="13" max="32767" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
                                       <Component id="cbCategoria" linkSize="1" min="-2" pref="244" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="jScrollPane2" pref="335" max="32767" attributes="0"/>
-                                          <Component id="jLabel5" max="32767" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jlImagen" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="1" attributes="0">
-                                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                              <Component id="jLabel2" alignment="0" pref="501" max="32767" attributes="0"/>
-                                              <Component id="txtDescripcion" alignment="0" max="32767" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <Component id="cbImpuesto" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="jScrollPane2" min="-2" pref="335" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="cbActivo" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jlImagenProducto" min="-2" pref="160" max="-2" attributes="0"/>
                                           </Group>
-                                          <Component id="jLabel12" linkSize="1" alignment="1" min="-2" pref="244" max="-2" attributes="0"/>
+                                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                                  <Component id="jLabel2" alignment="0" pref="501" max="32767" attributes="0"/>
+                                                  <Component id="txtDescripcion" alignment="0" max="32767" attributes="0"/>
+                                              </Group>
+                                              <Component id="cbActivo" alignment="1" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jLabel12" linkSize="1" alignment="1" min="-2" pref="244" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Component id="jLabel5" alignment="0" min="-2" pref="335" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
@@ -472,10 +400,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="cbActivo" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="cbImpuesto" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="cbActivo" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                               <Component id="jLabel2" min="-2" pref="27" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
@@ -494,13 +419,11 @@
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jScrollPane2" min="-2" pref="138" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="jlImagen" min="-2" pref="159" max="-2" attributes="0"/>
+                              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jlImagenProducto" max="32767" attributes="0"/>
+                                  <Component id="jScrollPane2" pref="159" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
@@ -537,7 +460,6 @@
                       <SubComponents>
                         <Component class="javax.swing.JTextArea" name="txtNotas">
                           <Properties>
-                            <Property name="editable" type="boolean" value="false"/>
                             <Property name="columns" type="int" value="20"/>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Ubuntu" size="14" style="0"/>
@@ -555,7 +477,7 @@
                         </Component>
                       </SubComponents>
                     </Container>
-                    <Component class="javax.swing.JLabel" name="jlImagen">
+                    <Component class="javax.swing.JLabel" name="jlImagenProducto">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Ubuntu" size="14" style="1"/>
@@ -570,15 +492,14 @@
                             </TitledBorder>
                           </Border>
                         </Property>
-                        <Property name="name" type="java.lang.String" value="jlImagen" noResource="true"/>
+                        <Property name="name" type="java.lang.String" value="jlImagenProducto" noResource="true"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jlImagenMouseClicked"/>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jlImagenProductoMouseClicked"/>
                       </Events>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtCodigoBarra">
                       <Properties>
-                        <Property name="editable" type="boolean" value="false"/>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Ubuntu" size="14" style="0"/>
                         </Property>
@@ -622,7 +543,6 @@
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                           <StringArray count="0"/>
                         </Property>
-                        <Property name="enabled" type="boolean" value="false"/>
                         <Property name="name" type="java.lang.String" value="cbCategoria" noResource="true"/>
                       </Properties>
                       <Events>
@@ -644,7 +564,6 @@
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtDescripcion">
                       <Properties>
-                        <Property name="editable" type="boolean" value="false"/>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Ubuntu" size="14" style="0"/>
                         </Property>
@@ -667,28 +586,10 @@
                           <Color blue="0" green="0" red="0" type="rgb"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Inactivo"/>
-                        <Property name="enabled" type="boolean" value="false"/>
                         <Property name="name" type="java.lang.String" value="cbActivo" noResource="true"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbActivoActionPerformed"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JCheckBox" name="cbImpuesto">
-                      <Properties>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="DejaVu Sans" size="12" style="0"/>
-                        </Property>
-                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="0" green="0" red="0" type="rgb"/>
-                        </Property>
-                        <Property name="text" type="java.lang.String" value="Sin Impuesto"/>
-                        <Property name="toolTipText" type="java.lang.String" value="No se esta&apos; implementando..."/>
-                        <Property name="enabled" type="boolean" value="false"/>
-                        <Property name="name" type="java.lang.String" value="cbImpuesto" noResource="true"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbImpuestoActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>
@@ -759,7 +660,7 @@
               <Component id="btnImprimirLista" alignment="0" max="32767" attributes="0"/>
               <Component id="btnEntradaProducto" alignment="0" max="32767" attributes="0"/>
               <Component id="btnSalidaProducto" alignment="0" max="32767" attributes="0"/>
-              <Component id="btnSalidaProducto2" max="32767" attributes="0"/>
+              <Component id="btnEntradaSalidaProducto" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -774,7 +675,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnSalidaProducto" min="-2" pref="56" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btnSalidaProducto2" min="-2" pref="56" max="-2" attributes="0"/>
+                  <Component id="btnEntradaSalidaProducto" min="-2" pref="56" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -860,7 +761,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSalidaProductoActionPerformed"/>
           </Events>
         </Component>
-        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnSalidaProducto2">
+        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnEntradaSalidaProducto">
           <Properties>
             <Property name="text" type="java.lang.String" value="Historial E/S"/>
             <Property name="foregroundHover" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -885,7 +786,7 @@
             <Property name="round" type="int" value="30"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSalidaProducto2ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEntradaSalidaProductoActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

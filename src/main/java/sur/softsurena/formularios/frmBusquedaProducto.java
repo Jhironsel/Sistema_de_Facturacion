@@ -1,8 +1,5 @@
 package sur.softsurena.formularios;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import static sur.softsurena.entidades.Productos.buscarProducto;
@@ -162,42 +159,31 @@ public class frmBusquedaProducto extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAceptarActionPerformed
     private void llenarTabla() {
         String titulos[] = {"ID Producto", "Codigo", "Descripcion"};
-        
+
         Object registro[] = new Object[titulos.length];
-        
+
         miTabla = new DefaultTableModel(null, titulos);
-        
-        if (txtCriterio.getText().equals("")) {
-            miTabla = null;
+
+        if (txtCriterio.getText().isBlank()) {
+
             tblTabla.setModel(miTabla);
             return;
-        } 
-
-        ResultSet rs = buscarProducto(txtCriterio.getText());
-
-        try {
-            while (rs.next()) {
-                registro[0] = rs.getString("id");
-                registro[1] = rs.getString("codigo");
-                registro[2] = rs.getString("descripcion");
-                miTabla.addRow(registro);
-            }
-            tblTabla.setModel(miTabla);
-        } catch (SQLException ex) {
-            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
+
+        buscarProducto(txtCriterio.getText()).stream().forEach(producto -> {
+            registro[0] = producto.getId();
+            registro[1] = producto.getCodigo();
+            registro[2] = producto.getDescripcion();
+            miTabla.addRow(registro);
+        });
+        
+        tblTabla.setModel(miTabla);
 
         if (tblTabla.getRowCount() > 1) {
             btnAceptar.setEnabled(true);
             tblTabla.getSelectionModel().setSelectionInterval(0, 0);
-        }else{
+        } else {
             btnAceptar.setEnabled(false);
-        }
-        
-        try {
-            rs.close();
-        } catch (SQLException ex) {
-            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

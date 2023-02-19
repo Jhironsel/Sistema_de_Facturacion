@@ -10,10 +10,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import lombok.NonNull;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -24,7 +26,6 @@ import static sur.softsurena.conexion.Conexion.getCnn;
 import sur.softsurena.entidades.DesktopConFondo;
 import static sur.softsurena.entidades.E_S_SYS.getLogo;
 import static sur.softsurena.entidades.E_S_SYS.insertLogo;
-import static sur.softsurena.entidades.Turnos.idTurnoActivo;
 import static sur.softsurena.entidades.Turnos.usuarioTurnoActivo;
 import sur.softsurena.entidades.Usuarios;
 import static sur.softsurena.entidades.Usuarios.getUsuarioActual;
@@ -38,28 +39,11 @@ import sur.softsurena.utilidades.Utilidades;
 
 public final class frmPrincipal extends javax.swing.JFrame {
 
-    private Imagenes icono;
     private static final Logger LOG = Logger.getLogger(frmPrincipal.class.getName());
-
-    //Archivos
-    private frmClientes cliente;
-    private frmProductos productos;
-    private frmPriviledios privilegios;
-
-    //Movimientos
-    private frmFacturas bebida;
-    private frmReporteFacturas reporte;
-    private frmDeudas deudas;
-
-    //Panel Izquierdo
-    private frmMovimientoEntradaSalida movi;
-    private frmGraficos miGraficos;
+    private Imagenes icono;
 
     //Formularios Modales
-    private frmCambioClave cambio;
     private frmFechaReporte fechaReporte;
-    private frmAbrilTurno miTurno;
-    private frmCerrarTurno miTurnoACerra;
 
     public frmPrincipal() {
         initComponents();
@@ -81,8 +65,8 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jPanelImpresion.setVisible(false);
 
         icono = new Imagenes();
-        cargarIconos();
 
+        cargarIconos();
         cargarLogo();
     }
 
@@ -146,7 +130,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jlRestaurar = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         dpnEscritorio = new DesktopConFondo();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenuBar1 = new rojerusan.RSMenuBar();
         mnuArchivos = new javax.swing.JMenu();
         mnuArchivosCliente = new javax.swing.JMenuItem();
         mnuArchivosProductos = new javax.swing.JMenuItem();
@@ -165,7 +149,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
         mnuMovimientosInventario = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         mnuMovimientosAbrirTurno = new javax.swing.JMenuItem();
-        mnuMovimientosCerrarTurno = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
         mnuMovimientosDeudas = new javax.swing.JMenuItem();
         mnuAyuda = new javax.swing.JMenu();
@@ -319,9 +302,11 @@ public final class frmPrincipal extends javax.swing.JFrame {
             }
         });
 
+        jlUser.setForeground(new java.awt.Color(255, 255, 255));
         jlUser.setText("rSLabelTextIcon1");
         jlUser.setSizeIcon(32.0F);
 
+        jlRole.setForeground(new java.awt.Color(255, 255, 255));
         jlRole.setText("sdfsdf");
         jlRole.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.WORK);
         jlRole.setSizeIcon(32.0F);
@@ -330,7 +315,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
         setTitle("Ventana principal del sistema");
         setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png"));
         setMinimumSize(new java.awt.Dimension(640, 480));
-        setPreferredSize(new java.awt.Dimension(800, 600));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -605,13 +589,14 @@ public final class frmPrincipal extends javax.swing.JFrame {
         dpnEscritorio.setPreferredSize(new java.awt.Dimension(510, 531));
         jScrollPane4.setViewportView(dpnEscritorio);
 
-        jMenuBar1.setMinimumSize(new java.awt.Dimension(0, 0));
+        jMenuBar1.setBackground(new java.awt.Color(58, 66, 226));
+        jMenuBar1.setForeground(new java.awt.Color(255, 255, 255));
 
-        mnuArchivos.setBackground(new java.awt.Color(0, 0, 0));
+        mnuArchivos.setForeground(new java.awt.Color(255, 255, 255));
         mnuArchivos.setMnemonic('A');
         mnuArchivos.setText("Archivos");
         mnuArchivos.setDoubleBuffered(true);
-        mnuArchivos.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        mnuArchivos.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
 
         mnuArchivosCliente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
         mnuArchivosCliente.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
@@ -685,9 +670,10 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(mnuArchivos);
 
+        mnuMovimientos.setForeground(new java.awt.Color(255, 255, 255));
         mnuMovimientos.setMnemonic('M');
         mnuMovimientos.setText("Movimientos");
-        mnuMovimientos.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        mnuMovimientos.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
 
         mnuMovimientosNuevaFactura.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F7, 0));
         mnuMovimientosNuevaFactura.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
@@ -723,23 +709,13 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
         mnuMovimientosAbrirTurno.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F10, 0));
         mnuMovimientosAbrirTurno.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
-        mnuMovimientosAbrirTurno.setText("Abrir turno...");
+        mnuMovimientosAbrirTurno.setText("Administrador de turnos ...");
         mnuMovimientosAbrirTurno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnuMovimientosAbrirTurnoActionPerformed(evt);
             }
         });
         mnuMovimientos.add(mnuMovimientosAbrirTurno);
-
-        mnuMovimientosCerrarTurno.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F11, 0));
-        mnuMovimientosCerrarTurno.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
-        mnuMovimientosCerrarTurno.setText("Cerrar turno...");
-        mnuMovimientosCerrarTurno.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuMovimientosCerrarTurnoActionPerformed(evt);
-            }
-        });
-        mnuMovimientos.add(mnuMovimientosCerrarTurno);
         mnuMovimientos.add(jSeparator6);
 
         mnuMovimientosDeudas.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F12, 0));
@@ -754,9 +730,10 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(mnuMovimientos);
 
+        mnuAyuda.setForeground(new java.awt.Color(255, 255, 255));
         mnuAyuda.setMnemonic('y');
         mnuAyuda.setText("Ayuda");
-        mnuAyuda.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        mnuAyuda.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
 
         mnuAyudaAcercaDe.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         mnuAyudaAcercaDe.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
@@ -781,9 +758,11 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(mnuAyuda);
 
+        mnuLicencia.setBackground(new java.awt.Color(255, 255, 0));
+        mnuLicencia.setForeground(new java.awt.Color(51, 255, 0));
         mnuLicencia.setMnemonic('L');
         mnuLicencia.setText("Licencia");
-        mnuLicencia.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        mnuLicencia.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         mnuLicencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnuLicenciaActionPerformed(evt);
@@ -804,148 +783,13 @@ public final class frmPrincipal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jsEstatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)
+            .addComponent(jsEstatus, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private void mnuArchivosClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuArchivosClienteActionPerformed
-        if (cliente == null) {
-            cliente = new frmClientes();
-        }
 
-        if (!dpnEscritorio.isAncestorOf(cliente)) {
-            dpnEscritorio.add(cliente);
-        }
-
-        try {
-            cliente.setMaximum(false);
-            cliente.setMaximum(true);
-        } catch (PropertyVetoException ex) {
-            //Instalar Logger
-        }
-
-        cliente.setVisible(true);
-    }//GEN-LAST:event_mnuArchivosClienteActionPerformed
-    private void mnuArchivosProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuArchivosProductosActionPerformed
-        if (productos == null) {
-            productos = new frmProductos();
-        }
-        
-        if (!dpnEscritorio.isAncestorOf(productos)) {
-            dpnEscritorio.add(productos);
-        }
-        
-        try {
-            productos.setMaximum(false);
-            productos.setMaximum(true);
-        } catch (PropertyVetoException ex) {
-            //Instalar Logger
-        }
-
-        //productos.btnCancelar.doClick();
-        productos.setVisible(true);
-
-    }//GEN-LAST:event_mnuArchivosProductosActionPerformed
-    private void mnuCambioClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCambioClaveActionPerformed
-
-        if (cambio == null) {
-            cambio = new frmCambioClave(this, true);
-        }
-        cambio.limpiar();
-        cambio.setLocationRelativeTo(this);
-        cambio.setVisible(true);
-
-    }//GEN-LAST:event_mnuCambioClaveActionPerformed
-    private void mnuArchivosCambioUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuArchivosCambioUsuarioActionPerformed
-
-        dispose();
-        frmLogin login = new frmLogin();
-        login.setLocationRelativeTo(null);
-        login.setVisible(true);
-
-    }//GEN-LAST:event_mnuArchivosCambioUsuarioActionPerformed
-    private void mnuArchivosSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuArchivosSalirActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_mnuArchivosSalirActionPerformed
-    private void mnuMovimientosNuevaFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMovimientosNuevaFacturaActionPerformed
-
-        if (!usuarioTurnoActivo("CURRENT_USER")) {
-
-            JOptionPane.showMessageDialog(null, "Usuario no cuenta con Turno para Facturar...!");
-            return;
-        }
-        if (bebida == null) {
-            bebida = new frmFacturas();
-            dpnEscritorio.add(bebida);
-            bebidaR();
-        } else {
-            bebidaR();
-        }
-    }//GEN-LAST:event_mnuMovimientosNuevaFacturaActionPerformed
-
-    private void mnuMovimientosReporteFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMovimientosReporteFacturaActionPerformed
-
-        if (reporte == null) {
-            reporte = new frmReporteFacturas();
-        }
-        if (!dpnEscritorio.isAncestorOf(reporte)) {
-            dpnEscritorio.add(reporte);
-        }
-        reporte.centralizar();
-        reporte.setVisible(true);
-
-
-    }//GEN-LAST:event_mnuMovimientosReporteFacturaActionPerformed
-    private void mnuMovimientosInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMovimientosInventarioActionPerformed
-
-        if (fechaReporte == null) {
-            fechaReporte = new frmFechaReporte(this, true);
-        }
-
-        fechaReporte.setLocationRelativeTo(null);
-        fechaReporte.setVisible(true);
-
-        if (fechaReporte.getFecha() == null) {
-            return;
-        }
-
-        imprimirReporte(fechaReporte.getFecha());
-
-    }//GEN-LAST:event_mnuMovimientosInventarioActionPerformed
-    private void mnuMovimientosAbrirTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMovimientosAbrirTurnoActionPerformed
-
-        if (miTurno == null) {
-            miTurno = new frmAbrilTurno(this, true);
-        }
-        miTurno.setLocationRelativeTo(null);
-        miTurno.setVisible(true);
-        if (miTurno.isAceptar()) {
-            mnuArchivosCambioUsuarioActionPerformed(evt);
-        }
-
-    }//GEN-LAST:event_mnuMovimientosAbrirTurnoActionPerformed
-    private void mnuMovimientosCerrarTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMovimientosCerrarTurnoActionPerformed
-
-        if (miTurnoACerra == null) {
-            miTurnoACerra = new frmCerrarTurno(this, true);
-        }
-        miTurnoACerra.setLocationRelativeTo(null);
-        miTurnoACerra.setVisible(true);
-        if (miTurnoACerra.isAceptar()) {
-            mnuArchivosCambioUsuarioActionPerformed(evt);
-        }
-
-    }//GEN-LAST:event_mnuMovimientosCerrarTurnoActionPerformed
-    private void mnuAyudaAcercaDeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAyudaAcercaDeActionPerformed
-        frmAcercaDe acerca = new frmAcercaDe(this, true);
-        acerca.setLocationRelativeTo(this);
-        acerca.setVisible(true);
-    }//GEN-LAST:event_mnuAyudaAcercaDeActionPerformed
-    private void mnuAyudaAyudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAyudaAyudaActionPerformed
-
-    }//GEN-LAST:event_mnuAyudaAyudaActionPerformed
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         if (mnuArchivosSalir.isEnabled()) {
             mnuArchivosCambioUsuarioActionPerformed(null);
@@ -1006,19 +850,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jlGetIPMouseClicked
 
     private void jlMovimientoESMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlMovimientoESMouseClicked
-
-        if (movi == null) {
-            movi = new frmMovimientoEntradaSalida();
-            dpnEscritorio.add(movi);
-        }
-
-        movi.setVisible(true);
-        try {
-            movi.setMaximum(false);
-            movi.setMaximum(true);
-        } catch (PropertyVetoException ex) {
-            //Instalar Logger
-        }
+        abrirFormulario(new frmMovimientoEntradaSalida());
     }//GEN-LAST:event_jlMovimientoESMouseClicked
 
     private void jlRespaldarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlRespaldarMouseClicked
@@ -1099,7 +931,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
             restaurar.setMaximum(true);
 
         } catch (PropertyVetoException ex) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, "Error al crear ventana de cliente.", ex);
         }
         restaurar.show();
     }//GEN-LAST:event_jlRestauracionMouseClicked
@@ -1112,36 +944,11 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jlRestauracion.setText("Restauración");
     }//GEN-LAST:event_jlRestauracionMouseEntered
 
-    private void mnuLicenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuLicenciaActionPerformed
-        JOptionPane.showMessageDialog(null, "Se ejecuta");
-    }//GEN-LAST:event_mnuLicenciaActionPerformed
-    private void mnuMovimientosDeudasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMovimientosDeudasActionPerformed
-
-        if (deudas == null) {
-            deudas = new frmDeudas();
-            dpnEscritorio.add(deudas);
-            deudasR();
-        } else {
-            deudasR();
-        }
-
-    }//GEN-LAST:event_mnuMovimientosDeudasActionPerformed
-
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         ((DesktopConFondo) dpnEscritorio).setImagen("/sur/softsurena/imagenes/Fondo 1024 x 723.jpg");
     }//GEN-LAST:event_formWindowOpened
     private void jlGraficaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlGraficaMouseClicked
-        if (miGraficos == null) {
-            miGraficos = new frmGraficos();
-            dpnEscritorio.add(miGraficos);
-        }
-        try {
-            miGraficos.setMaximum(false);
-            miGraficos.setMaximum(true);
-        } catch (PropertyVetoException ex) {
-            //Instalar Logger
-        }
-        miGraficos.setVisible(true);
+        abrirFormulario(new frmGraficos());
     }//GEN-LAST:event_jlGraficaMouseClicked
 
     private void jlGraficaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlGraficaMouseExited
@@ -1189,7 +996,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmAbrirTurnoActionPerformed
 
     private void jmCerrarTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmCerrarTurnoActionPerformed
-        mnuMovimientosCerrarTurnoActionPerformed(evt);
+
     }//GEN-LAST:event_jmCerrarTurnoActionPerformed
 
     private void jmDeudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmDeudaActionPerformed
@@ -1221,27 +1028,90 @@ public final class frmPrincipal extends javax.swing.JFrame {
         pack();
     }//GEN-LAST:event_btnOcultarPanelActionPerformed
 
+    private void mnuArchivosClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuArchivosClienteActionPerformed
+        abrirFormulario(new frmClientes());
+    }//GEN-LAST:event_mnuArchivosClienteActionPerformed
+
+    private void mnuArchivosProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuArchivosProductosActionPerformed
+        abrirFormulario(new frmProductos());
+    }//GEN-LAST:event_mnuArchivosProductosActionPerformed
+
+    private void mnuCambioClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCambioClaveActionPerformed
+        frmCambioClave cambioClave = new frmCambioClave(this, true);
+        cambioClave.setLocationRelativeTo(this);
+        cambioClave.setVisible(true);
+    }//GEN-LAST:event_mnuCambioClaveActionPerformed
+
     private void mnuArchivosAdministracionPrivilegiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuArchivosAdministracionPrivilegiosActionPerformed
-        if (privilegios == null) {
-            privilegios = new frmPriviledios();
-        }
-
-        if (privilegios != null) {
-            if (!dpnEscritorio.isAncestorOf(privilegios)) {
-                dpnEscritorio.add(privilegios);
-            }
-
-            try {
-                privilegios.setMaximum(false);
-                privilegios.setMaximum(true);
-            } catch (PropertyVetoException ex) {
-                //Instalar Logger
-            }
-
-            privilegios.setVisible(true);
-        }
-
+        abrirFormulario(new frmPriviledios());
     }//GEN-LAST:event_mnuArchivosAdministracionPrivilegiosActionPerformed
+
+    private void mnuArchivosCambioUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuArchivosCambioUsuarioActionPerformed
+
+        dispose();
+        frmLogin login = new frmLogin();
+        login.setLocationRelativeTo(null);
+        login.setVisible(true);
+    }//GEN-LAST:event_mnuArchivosCambioUsuarioActionPerformed
+
+    private void mnuArchivosSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuArchivosSalirActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_mnuArchivosSalirActionPerformed
+
+    private void mnuMovimientosNuevaFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMovimientosNuevaFacturaActionPerformed
+        Usuarios usuarioActual = getUsuarioActual();
+
+        if (!usuarioTurnoActivo(usuarioActual.getUser_name())) {
+            JOptionPane.showMessageDialog(
+                null,
+                "Usuario no cuenta con Turno para Facturar...!",
+                "Validación de usuario.",
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        abrirFormulario(new frmFacturas());
+    }//GEN-LAST:event_mnuMovimientosNuevaFacturaActionPerformed
+
+    private void mnuMovimientosReporteFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMovimientosReporteFacturaActionPerformed
+        abrirFormularioCentralizado(new frmReporteFacturas());
+    }//GEN-LAST:event_mnuMovimientosReporteFacturaActionPerformed
+
+    private void mnuMovimientosInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMovimientosInventarioActionPerformed
+
+        fechaReporte = new frmFechaReporte(this, true);
+
+        fechaReporte.setLocationRelativeTo(null);
+        fechaReporte.setVisible(true);
+
+        if (fechaReporte.getFecha() == null) {
+            return;
+        }
+
+        imprimirReporte(fechaReporte.getFecha());
+    }//GEN-LAST:event_mnuMovimientosInventarioActionPerformed
+
+    private void mnuMovimientosAbrirTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMovimientosAbrirTurnoActionPerformed
+        abrirFormulario(new frmAdministradorTurnos());
+    }//GEN-LAST:event_mnuMovimientosAbrirTurnoActionPerformed
+
+    private void mnuMovimientosDeudasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMovimientosDeudasActionPerformed
+        abrirFormulario(new frmDeudas());
+    }//GEN-LAST:event_mnuMovimientosDeudasActionPerformed
+
+    private void mnuAyudaAcercaDeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAyudaAcercaDeActionPerformed
+        frmAcercaDe acerca = new frmAcercaDe(null, true);
+        acerca.setLocationRelativeTo(this);
+        acerca.setVisible(true);
+    }//GEN-LAST:event_mnuAyudaAcercaDeActionPerformed
+
+    private void mnuAyudaAyudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAyudaAyudaActionPerformed
+
+    }//GEN-LAST:event_mnuAyudaAyudaActionPerformed
+
+    private void mnuLicenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuLicenciaActionPerformed
+
+    }//GEN-LAST:event_mnuLicenciaActionPerformed
 
     private void imprimirReporte(Date fecha) {
         try {
@@ -1260,12 +1130,8 @@ public final class frmPrincipal extends javax.swing.JFrame {
             miView.setVisible(true);
 
         } catch (JRException ex) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, "Error al crear ventana de cliente.", ex);
         }
-    }
-
-    private boolean dime(String valor) {
-        return valor.equals("s");
     }
 
     //Funciones que estan en el panel de la Ventana Principal
@@ -1281,7 +1147,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 //            rs.next();
 //            imagen = new ImageIcon(rs.getString(1));
 //        } catch (SQLException ex) {
-//            //Instalar Logger
+//            LOG.log(Level.SEVERE, "Error al crear ventana de cliente.", ex);
 //        }
 //
 //        if (imagen.getIconHeight() == -1) {
@@ -1315,7 +1181,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 //            txtCosto.setValue(rs.getDouble("costo"));
 //            txtGanancia.setValue(rs.getDouble("venta") - rs.getDouble("costo"));
 //        } catch (SQLException ex) {
-//            //Instalar Logger
+//            LOG.log(Level.SEVERE, "Error al crear ventana de cliente.", ex);
 //        }
 //    }
 //    private void cajeros() {
@@ -1336,7 +1202,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 //            jtCajero.setModel(miTabla);
 //
 //        } catch (SQLException ex) {
-//            //Instalar Logger
+//            LOG.log(Level.SEVERE, "Error al crear ventana de cliente.", ex);
 //        }
 //    }
 //    private void mensaje() {
@@ -1361,7 +1227,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 //                    rs.getString("telefonoEmpresa"),
 //                    rs.getString("mensaje"));
 //        } catch (SQLException ex) {
-//            //Instalar Logger
+//            LOG.log(Level.SEVERE, "Error al crear ventana de cliente.", ex);
 //        }
 //    }///--------------Hasta Aqui.......
 //    public void menus() {
@@ -1400,7 +1266,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 //                jMenuBar1.add(jLabel9);
 //            }
 //        } catch (SQLException ex) {
-//            //Instalar Logger
+//            LOG.log(Level.SEVERE, "Error al crear ventana de cliente.", ex);
 //        }
 //
 //        if (getPerfil() == 1) {
@@ -1422,68 +1288,44 @@ public final class frmPrincipal extends javax.swing.JFrame {
 //        }
 //        jMenuBar1.add(jPanelImpresion);
 //    }
-    //Movimientos
-    private void bebidaR() {
-        try {
-            bebida.setMaximum(false);
-            bebida.setMaximum(true);
-        } catch (PropertyVetoException ex) {
-            //Instalar Logger
-        }
-
-        bebida.setTurno(idTurnoActivo("CURRENT_USER"));
-        bebida.setVisible(true);
-        bebida.txtCriterio.requestFocusInWindow();
-    }
-
-    private void deudasR() {
-        try {
-            deudas.setMaximum(false); //Instalar Logger
-            deudas.setMaximum(true);
-            deudas.setVisible(true);
-        } catch (PropertyVetoException ex) {
-            LOG.log(Level.SEVERE, ex.getMessage(), ex);
+    
+    protected void cerrarTodos() {
+        for (JInternalFrame allFrame : dpnEscritorio.getAllFrames()) {
+            if (allFrame != null) {
+                dpnEscritorio.getDesktopManager().closeFrame(allFrame);
+            }
         }
     }
 
-    protected void cerrarFormularios() {
-//Archivos
-        if (cliente != null) {
-            dpnEscritorio.getDesktopManager().closeFrame(cliente);
-            cliente = null;
-        }
-        if (productos != null) {
-            dpnEscritorio.getDesktopManager().closeFrame(productos);
-            productos = null;
-        }
-        if (cambio != null) {
-            cambio = null;
+    protected void abrirFormulario(@NonNull JInternalFrame formulario) {
+        dpnEscritorio.getDesktopManager().closeFrame(formulario);
+
+        if (!dpnEscritorio.isAncestorOf(formulario)) {
+            dpnEscritorio.add(formulario);
         }
 
-//Movimientos
-        if (bebida != null) {
-            dpnEscritorio.getDesktopManager().closeFrame(bebida);
-            bebida = null;
-        }
-        if (reporte != null) {
-            dpnEscritorio.getDesktopManager().closeFrame(reporte);
-            reporte = null;
-        }
-        if (deudas != null) {
-            dpnEscritorio.getDesktopManager().closeFrame(deudas);
-            deudas = null;
+        try {
+            formulario.setMaximum(false);
+            formulario.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            LOG.log(Level.SEVERE, "Error al crear ventana de cliente.", ex);
         }
 
-//Panel
-        if (movi != null) {
-            dpnEscritorio.getDesktopManager().closeFrame(movi);
-            movi = null;
-        }
-        if (miGraficos != null) {
-            dpnEscritorio.getDesktopManager().closeFrame(miGraficos);
-            miGraficos = null;
-        }
+        formulario.setVisible(true);
+
         System.gc();
+    }
+    
+    protected void abrirFormularioCentralizado(@NonNull JInternalFrame formulario) {
+        if (!dpnEscritorio.isAncestorOf(formulario)) {
+            dpnEscritorio.add(formulario);
+        }
+        
+        if(formulario instanceof frmReporteFacturas){
+            ((frmReporteFacturas) formulario).centralizar();
+        }
+        
+        formulario.setVisible(true);
     }
 
     private void cargarIconos() {
@@ -1505,7 +1347,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
         mnuMovimientosReporteFactura.setIcon(icono.getIcono("Reportar Factura 32 x 32.png"));
         mnuMovimientosInventario.setIcon(icono.getIcono("Inventario 32 x 32.png"));
         mnuMovimientosAbrirTurno.setIcon(icono.getIcono("Turno 32 x 32.png"));
-        mnuMovimientosCerrarTurno.setIcon(icono.getIcono("Cancelar 32 x 32.png"));
         mnuMovimientosDeudas.setIcon(icono.getIcono("Money 32 x 32.png"));
 
         //Iconos de subMenus
@@ -1542,6 +1383,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
         jlLogoEmpresa.setIcon(img);
     }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu Archivos;
     private javax.swing.JMenu Movimientos;
@@ -1556,7 +1398,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel9;
     public static javax.swing.JLabel jLabelImpresion;
-    private javax.swing.JMenuBar jMenuBar1;
+    private rojerusan.RSMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     public static javax.swing.JPanel jPanelImpresion;
@@ -1611,7 +1453,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu mnuLicencia;
     private javax.swing.JMenu mnuMovimientos;
     private javax.swing.JMenuItem mnuMovimientosAbrirTurno;
-    private javax.swing.JMenuItem mnuMovimientosCerrarTurno;
     private javax.swing.JMenuItem mnuMovimientosDeudas;
     private javax.swing.JMenuItem mnuMovimientosInventario;
     public static javax.swing.JMenuItem mnuMovimientosNuevaFactura;

@@ -1,22 +1,22 @@
 package sur.softsurena.formularios;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
+import java.util.List;
 import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import sur.softsurena.entidades.Clientes;
+import static sur.softsurena.entidades.Clientes.getClientesCombo;
 
 public class frmBusquedaCliente extends javax.swing.JDialog {
 
     private static final Logger LOG = Logger.getLogger(frmBusquedaCliente.class.getName());
 
     private DefaultTableModel miTabla;
-    
-    private String respuesta = "";
 
-    public String getRespuesta() {
-        return respuesta;
+    Clientes cliente;
+
+    public Clientes getCliente() {
+        return cliente;
     }
 
     public frmBusquedaCliente(java.awt.Frame parent, boolean modal) {
@@ -35,9 +35,9 @@ public class frmBusquedaCliente extends javax.swing.JDialog {
                 return false; //Las celdas no son editables. 
             }
         };
-        btnAceptar = new javax.swing.JButton();
-        btnCancelar = new javax.swing.JButton();
-        txtCriterio = new RSMaterialComponent.RSTextFieldMaterial();
+        btnCancelar = new newscomponents.RSButtonGradientIcon_new();
+        btnAceptar = new newscomponents.RSButtonGradientIcon_new();
+        txtCriterio = new rojeru_san.RSMTextFull();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Busqueda de Clientes");
@@ -63,25 +63,25 @@ public class frmBusquedaCliente extends javax.swing.JDialog {
         tblTabla.setGridColor(new java.awt.Color(1, 1, 1));
         jScrollPane1.setViewportView(tblTabla);
 
-        btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Aceptar 32 x 32.png"))); // NOI18N
-        btnAceptar.setBorder(null);
-        btnAceptar.setMaximumSize(new java.awt.Dimension(66, 42));
-        btnAceptar.setMinimumSize(new java.awt.Dimension(66, 42));
-        btnAceptar.setPreferredSize(new java.awt.Dimension(66, 42));
-        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAceptarActionPerformed(evt);
-            }
-        });
-
-        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Cancelar 32 x 32.png"))); // NOI18N
-        btnCancelar.setBorder(null);
+        btnCancelar.setText("Cancelar");
+        btnCancelar.setColorPrimario(new java.awt.Color(153, 0, 0));
+        btnCancelar.setColorPrimarioHover(new java.awt.Color(255, 51, 51));
+        btnCancelar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CANCEL);
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
             }
         });
 
+        btnAceptar.setText("Aceptar");
+        btnAceptar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DONE);
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
+
+        txtCriterio.setToolTipText("");
         txtCriterio.setPlaceholder("Ingrese criterio de busqueda ya sea Identificador de cliente, nombres o apellidos.");
         txtCriterio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,20 +100,16 @@ public class frmBusquedaCliente extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtCriterio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 751, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCriterio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnAceptar, btnCancelar});
-
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -122,13 +118,11 @@ public class frmBusquedaCliente extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAceptar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnAceptar, btnCancelar});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -140,66 +134,52 @@ public class frmBusquedaCliente extends javax.swing.JDialog {
     }//GEN-LAST:event_formWindowOpened
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        respuesta = null;
+        
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        int num = tblTabla.getRowCount();
-        if (num == 0) {
-            respuesta = "";
+        if(tblTabla.getSelectedRow() == -1){
             dispose();
             return;
         }
-        for (int i = 0; i < num; i++) {
-            if (tblTabla.isRowSelected(i)) {
-                respuesta = (tblTabla.getValueAt(i, 0).toString());
-                dispose();
-                return;
-            }
-        }
-        respuesta = (tblTabla.getValueAt(0, 0)).toString();
+        
+        cliente = (Clientes) tblTabla.getValueAt(tblTabla.getSelectedRow(), 0);
+        //cliente = (Clientes) tblTabla.getValueAt(0, 0);
         dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
-
-    private void txtCriterioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCriterioKeyReleased
-        llenarTabla();
-    }//GEN-LAST:event_txtCriterioKeyReleased
 
     private void txtCriterioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCriterioActionPerformed
         llenarTabla();
         btnAceptarActionPerformed(null);
     }//GEN-LAST:event_txtCriterioActionPerformed
 
+    private void txtCriterioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCriterioKeyReleased
+        llenarTabla();
+    }//GEN-LAST:event_txtCriterioKeyReleased
+
     private void llenarTabla() {
-        String titulos[] = {"ID Cliente", "Primer nombre","Segundo nombre", "Apellidos"};
+        String titulos[] = {"Lista de Clientes"};
         miTabla = new DefaultTableModel(null, titulos);
 
-        
+        List<Clientes> clientesList = getClientesCombo();
 
-        ResultSet rs = null;
+        Object registro[] = new Object[1];
 
-        Object registro[] = new Object[3];
-        try {
-            while (rs.next()) {
-                registro[0] = rs.getString("id");
-                registro[1] = rs.getString("pnombre");
-                registro[1] = rs.getString("snombre");
-                registro[2] = rs.getString("apellidos");
-                miTabla.addRow(registro);
-            }
-            tblTabla.setModel(miTabla);
-        } catch (SQLException ex) {
-            LOG.log(Level.SEVERE, ex.getMessage(), ex);
-        }
+        clientesList.stream().forEach(clienteList -> {
+            registro[0] = clienteList;
 
+            miTabla.addRow(registro);
+        });
+
+        tblTabla.setModel(miTabla);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAceptar;
-    private javax.swing.JButton btnCancelar;
+    private newscomponents.RSButtonGradientIcon_new btnAceptar;
+    private newscomponents.RSButtonGradientIcon_new btnCancelar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblTabla;
-    private RSMaterialComponent.RSTextFieldMaterial txtCriterio;
+    private rojeru_san.RSMTextFull txtCriterio;
     // End of variables declaration//GEN-END:variables
 }

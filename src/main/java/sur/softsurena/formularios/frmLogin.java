@@ -1,6 +1,7 @@
 package sur.softsurena.formularios;
 
 import com.formdev.flatlaf.FlatLightLaf;
+import com.thoughtworks.xstream.XStream;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
@@ -19,6 +20,8 @@ import sur.softsurena.conexion.Conexion;
 import static sur.softsurena.entidades.BaseDeDatos.existeIdMaquina;
 import static sur.softsurena.entidades.BaseDeDatos.periodoMaquina;
 import static sur.softsurena.entidades.BaseDeDatos.setLicencia;
+import sur.softsurena.entidades.Clientes;
+import sur.softsurena.entidades.Personas;
 import static sur.softsurena.entidades.Usuarios.comprobandoRol;
 import sur.softsurena.metodos.Imagenes;
 
@@ -422,9 +425,9 @@ public final class frmLogin extends javax.swing.JFrame {
         }
 
         //Blanquear la pass
+        txtClave.setText("");
+        
         frmPrincipal principal = new frmPrincipal();
-
-        principal.cerrarFormularios();
         principal.setVisible(true);
         principal.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
@@ -466,22 +469,6 @@ public final class frmLogin extends javax.swing.JFrame {
     }
 
     public static void main(String args[]) {
-        try {
-
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                System.out.println("Look And Feel: " + info.getName());
-            }
-
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("GTK+".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            LOG.log(Level.SEVERE, ex.getMessage(), ex);
-        }
-
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -490,22 +477,7 @@ public final class frmLogin extends javax.swing.JFrame {
                 frmLogin.setVisible(true);
                 frmLogin.setLocationRelativeTo(null);
             }
-        });
-        
-        String sql
-                = "SELECT t.id, trim( "
-                + "          case lunes when 1 then 'Lunes ' else trim('') end || "
-                + "          case martes when 1 then 'Martes ' else trim('') end || "
-                + "          case miercoles when 1 then 'Miercoles ' else trim('') end || "
-                + "          case jueves when 1 then 'Jueves ' else trim('') end ||  "
-                + "          case viernes when 1 then 'Viernes ' else trim('') end || "
-                + "          case sabados when 1 then 'Sabados ' else trim('') end|| "
-                + "          case domingos when 1 then 'Domingos ' else trim('') end) || ' De ' || "
-                + "          subString(t.Hora_Inicio FROM 1 for 8) ||' Hasta '|| "
-                + "             subString(t.Hora_Final FROM 1 for 8) AS HORARIO "
-                + "FROM V_TANDAS t "
-                + "WHERE t.edad_minima <= ? and t.edad_maxima >= ?";
-        System.out.println(sql);
+        });        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

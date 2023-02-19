@@ -681,18 +681,6 @@
                             </Component>
                             <Component class="com.toedter.calendar.JDateChooser" name="dchFechaNacimiento">
                               <Properties>
-                                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                                  <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                                    <TitledBorder title="Fecha nacimiento">
-                                      <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                                        <LineBorder thickness="2">
-                                          <Color PropertyName="color" blue="df" green="2d" red="25" type="rgb"/>
-                                        </LineBorder>
-                                      </Border>
-                                      <Font PropertyName="font" name="FreeSans" size="12" style="0"/>
-                                    </TitledBorder>
-                                  </Border>
-                                </Property>
                                 <Property name="name" type="java.lang.String" value="jdcFechaNacimiento" noResource="true"/>
                                 <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
                                   <ComponentRef name="jcbEstadoCivil"/>

@@ -203,7 +203,7 @@ public class frmCategorias extends javax.swing.JDialog {
         }
 
         nuevo = false;
-        idCategoria = ((Categorias) cbCategoria.getSelectedItem()).getId();
+        idCategoria = ((Categorias) cbCategoria.getSelectedItem()).getId_categoria();
         nombreCategoria = ((Categorias) cbCategoria.getSelectedItem()).getDescripcion();
         ruta = ((Categorias) cbCategoria.getSelectedItem()).getPathImage().toString();
 
@@ -247,12 +247,12 @@ public class frmCategorias extends javax.swing.JDialog {
         if (rta == 1) {
             return;
         }
-        if (existeCategoriaProductos(((Categorias) cbCategoria.getSelectedItem()).getId())) {
+        if (existeCategoriaProductos(((Categorias) cbCategoria.getSelectedItem()).getId_categoria())) {
             JOptionPane.showMessageDialog(null, "No se permite eliminar categoria porque existe producto Asociados");
             return;
         }
         String msg;
-        msg = borrarCategoria(((Categorias) cbCategoria.getSelectedItem()).getId());
+        msg = borrarCategoria(((Categorias) cbCategoria.getSelectedItem()).getId_categoria());
         JOptionPane.showMessageDialog(rootPane, msg);
         if (cbCategoria.getItemCount() != 0) {
             cbCategoria.setSelectedIndex(0);
@@ -320,7 +320,7 @@ public class frmCategorias extends javax.swing.JDialog {
         } else {
             //Creamos el objeto categoria que tendra' los atributos.
             Categorias categoria = Categorias.builder().
-                    id(idCategoria).
+                    id_categoria(idCategoria).
                     descripcion(nombreCategoria.trim()).
                     pathImage(new File(ruta)).build();
 
@@ -360,7 +360,7 @@ public class frmCategorias extends javax.swing.JDialog {
 
         categoriasList.stream().forEach(x -> {
             Categorias miCat = Categorias.builder().
-                    id(x.getId()).
+                    id_categoria(x.getId_categoria()).
                     descripcion(x.getDescripcion()).
                     image_texto(x.getImage_texto()).build();
             cbCategoria.addItem(miCat);

@@ -380,10 +380,7 @@ public class frmCambioClave extends javax.swing.JDialog {
             btnAceptar.setEnabled(false);
         }
     }//GEN-LAST:event_txtConfirmacionKeyReleased
-    public void limpiar() {
-        txtConfirmacion.setText("");
-        txtNueva.setText("");
-    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private RSMaterialComponent.RSButtonMaterialIconOne btnAceptar;
     private RSMaterialComponent.RSButtonMaterialIconOne btnCancelar;

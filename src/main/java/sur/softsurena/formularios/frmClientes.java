@@ -2,7 +2,6 @@ package sur.softsurena.formularios;
 
 import com.toedter.calendar.JTextFieldDateEditor;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -49,7 +48,7 @@ import static sur.softsurena.entidades.Privilegios.privilegioCampo;
 import static sur.softsurena.entidades.Privilegios.privilegioTabla;
 import static sur.softsurena.entidades.Provincias.getProvincias;
 
-public final class frmClientes extends javax.swing.JInternalFrame implements Runnable{
+public final class frmClientes extends javax.swing.JInternalFrame implements Runnable {
 
     private static final Logger LOG = Logger.getLogger(frmClientes.class.getName());
 
@@ -67,68 +66,54 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
 
     private List<ContactosTel> contactosTels;
 
-    private Privilegios p;
-    
+    private Privilegios privilegios;
+
     private Thread hilo;
 
-    
+    private final List<String> vistasList;
+
     private static final String PROCESO_DE_VALIDACION = "Proceso de validacion.";
-    private static final String VALIDACCIÓN_DE_CONTACTO = "Validacción de contacto.";
-    
+    private static final String VALIDACCION_DE_CONTACTO = "Validacción de contacto.";
 
     public frmClientes() {
-        //Metodo encargado de inicializar los componentes del formulario.
-        initComponents();
-        
-        /*
-            Las siguientes lineas de codigo, permiten verificar los permisos de 
-        lecturas a las vista de V_GENERALES, V_PERSONAS, V_DIRECCION, 
-        V_CONTACTS_EMAIL, V_DIRECCION.
-         */
-        p = Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_SELECT).
-                nombre_relacion("V_GENERALES").build();
-        boolean generales = privilegioTabla(p);
+        // Lista de vista que se utilizan para operar ventanas de cliente.
+        vistasList = new ArrayList<>();
 
-        p = Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_SELECT).
-                nombre_relacion("V_PERSONAS").build();
-        boolean personas = privilegioTabla(p);
-        
-        p = Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_SELECT).
-                nombre_relacion("V_PERSONAS").build();
-        boolean personasClientes = privilegioTabla(p);
-
-        p = Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_SELECT).
-                nombre_relacion("V_CONTACTOS_DIRECCIONES").build();
-        boolean dir = privilegioTabla(p);
-
-        p = Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_SELECT).
-                nombre_relacion("V_CONTACTOS_EMAIL").build();
-        boolean contactoEmail = privilegioTabla(p);
-
-        p = Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_SELECT).
-                nombre_relacion("V_CONTACTOS_TEL").build();
-        boolean contactoTel = privilegioTabla(p);
+        vistasList.add("V_GENERALES");
+        vistasList.add("V_PERSONAS");
+        vistasList.add("V_PERSONAS_CLIENTES");
+        vistasList.add("V_CONTACTOS_DIRECCIONES");
+        vistasList.add("V_CONTACTOS_EMAIL");
+        vistasList.add("V_CONTACTOS_TEL");
 
         /*
             Si un permiso a las vistas consultada anteriormente es negado, se 
         lanza una excepcion y la venta no se iniciará.
          */
-        if (!(generales && personas && dir && contactoEmail && contactoTel && personasClientes)) {
-            String mensaje = "No cuenta con permisos para ver la información de"
-                    + " este módulo.";
-            JOptionPane.showInternalMessageDialog(
-                    null,
-                    mensaje,
-                    "Validación de proceso",
-                    JOptionPane.WARNING_MESSAGE);
-            throw new ExceptionInInitializerError(mensaje);
-        }//---------FIN
+        vistasList.stream().forEach(vista -> {
+            privilegios = Privilegios.builder().
+                    privilegio(Privilegios.PRIVILEGIO_SELECT).
+                    nombre_relacion(vista).build();
+
+            boolean priviledio = privilegioTabla(privilegios);
+
+            if (!priviledio) {
+
+                String mensaje = "No cuenta con permisos para ver la información de"
+                        + " este módulo.";
+
+                JOptionPane.showInternalMessageDialog(
+                        null,
+                        mensaje,
+                        "Validación de proceso",
+                        JOptionPane.WARNING_MESSAGE);
+
+                throw new ExceptionInInitializerError(mensaje);
+            }
+        });
+
+        //Metodo encargado de inicializar los componentes del formulario.
+        initComponents();
 
         direcciones = new ArrayList<>();
         contactosCorreos = new ArrayList<>();
@@ -144,13 +129,17 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
 
         editor = (JTextFieldDateEditor) dchFechaNacimiento.getDateEditor();
 
-//        .addActionListener(new java.awt.event.ActionListener() {
-        editor.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                jcbEstadoCivil.requestFocus();
-                jcbEstadoCivil.showPopup();
-            }
+        editor.setBorder(javax.swing.BorderFactory.createTitledBorder(
+                new javax.swing.border.LineBorder(
+                        new java.awt.Color(37, 45, 223), 2, true),
+                "Fecha nacimiento",
+                javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+                javax.swing.border.TitledBorder.DEFAULT_POSITION,
+                new java.awt.Font("FreeSans", 0, 12)));
+
+        editor.addActionListener((ActionEvent e) -> {
+            jcbEstadoCivil.requestFocus();
+            jcbEstadoCivil.showPopup();
         });
 
         //Mantenimiento oculto por defecto. 
@@ -161,93 +150,50 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
 
         nuevasTablasDirTelCor();
 
-        //---------Boton nuevo
-        p = Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_INSERT).
-                nombre_relacion("V_GENERALES").build();
+        //Permiso para el boton de nuevo
+        int cantFalso = 0;
+        for (String vista : vistasList) {
+            privilegios = Privilegios.builder().
+                    privilegio(Privilegios.PRIVILEGIO_INSERT).
+                    nombre_relacion(vista).build();
 
-        generales = privilegioTabla(p);
+            boolean priviledio = privilegioTabla(privilegios);
 
-        p = Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_INSERT).
-                nombre_relacion("V_PERSONAS").build();
-        personas = privilegioTabla(p);
+            if (!priviledio) {
+                cantFalso++;
+            }
+        }
+        btnNuevo.setEnabled(cantFalso == 0);
 
-        p = Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_INSERT).
-                nombre_relacion("V_DIRECCIONES").build();
-        dir = privilegioTabla(p);
+        //Permiso para el boton de Borrar
+        cantFalso = 0;
+        for (String vista : vistasList) {
+            privilegios = Privilegios.builder().
+                    privilegio(Privilegios.PRIVILEGIO_DELETE).
+                    nombre_relacion(vista).build();
 
-        p = Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_INSERT).
-                nombre_relacion("V_CONTACTS_EMAIL").build();
-        contactoEmail = privilegioTabla(p);
+            boolean priviledio = privilegioTabla(privilegios);
 
-        p = Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_INSERT).
-                nombre_relacion("V_DIRECCIONES").build();
-        contactoTel = privilegioTabla(p);
+            if (!priviledio) {
+                cantFalso++;
+            }
+        }
+        btnBorrar.setEnabled(cantFalso == 0);
 
-        btnNuevo.setEnabled(generales && personas && dir
-                && contactoEmail && contactoTel);//----------FIN
+        //Permiso para el boton de Modificar
+        cantFalso = 0;
+        for (String vista : vistasList) {
+            privilegios = Privilegios.builder().
+                    privilegio(Privilegios.PRIVILEGIO_UPDATE).
+                    nombre_relacion(vista).build();
 
-        //-----------Borrar Registros
-        p = Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_DELETE).
-                nombre_relacion("V_GENERALES").build();
-        generales = privilegioTabla(p);
+            boolean priviledio = privilegioTabla(privilegios);
 
-        p = Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_DELETE).
-                nombre_relacion("V_PERSONAS").build();
-        personas = privilegioTabla(p);
-
-        p = Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_DELETE).
-                nombre_relacion("V_DIRECCIONES").build();
-        dir = privilegioTabla(p);
-
-        p = Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_DELETE).
-                nombre_relacion("V_CONTACTS_EMAIL").build();
-        contactoEmail = privilegioTabla(p);
-
-        p = Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_DELETE).
-                nombre_relacion("V_DIRECCIONES").build();
-        contactoTel = privilegioTabla(p);
-
-        btnBorrar.setEnabled(generales && personas && dir
-                && contactoEmail && contactoTel);//-------------FIN
-
-        //------------Actualizar registros
-        p = Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_UPDATE).
-                nombre_relacion("V_GENERALES").build();
-        generales = privilegioTabla(p);
-
-        p = Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_UPDATE).
-                nombre_relacion("V_PERSONAS").build();
-        personas = privilegioTabla(p);
-
-        p = Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_UPDATE).
-                nombre_relacion("V_DIRECCIONES").build();
-        dir = privilegioTabla(p);
-
-        p = Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_UPDATE).
-                nombre_relacion("V_CONTACTS_EMAIL").build();
-        contactoEmail = privilegioTabla(p);
-
-        p = Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_UPDATE).
-                nombre_relacion("V_DIRECCIONES").build();
-        contactoTel = privilegioTabla(p);
-
-        btnModificar.setEnabled(generales && personas && dir
-                && contactoEmail && contactoTel);//------FIN
+            if (!priviledio) {
+                cantFalso++;
+            }
+        }
+        btnModificar.setEnabled(cantFalso == 0);
     }
 
     @SuppressWarnings("unchecked")
@@ -581,7 +527,6 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
             }
         });
 
-        dchFechaNacimiento.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(37, 45, 223), 2), "Fecha nacimiento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("FreeSans", 0, 12))); // NOI18N
         dchFechaNacimiento.setName("jdcFechaNacimiento"); // NOI18N
         dchFechaNacimiento.setNextFocusableComponent(jcbEstadoCivil);
 
@@ -1440,8 +1385,8 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
             return;
         }
 
-        String msg = "";
-        int icono = -1;
+        String msg;
+        int icono;
 
         //Crear la logica para agregar los contactos de un cliente.
         if (nuevo) {
@@ -1499,7 +1444,7 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
         int idCliente = ((Clientes) tblClientes.getValueAt(
                 tblClientes.getSelectedRow(), 0)).getId_persona();
 
-        Boolean estado = Boolean.parseBoolean(tblClientes.getValueAt(
+        Boolean estado = Boolean.valueOf(tblClientes.getValueAt(
                 tblClientes.getSelectedRow(), 0).toString());
 
         //Mandamos a borrar el cliente y obtenemos el resultado de la operacion
@@ -1519,28 +1464,28 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
         //llenarTablaClientes(); La tabla se está llenando desde los postEvent de Firebird
         repararColumnaTable(tblClientes);
     }//GEN-LAST:event_btnBorrarActionPerformed
-    
+
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         //Hilo creado para ganar focus en la ventana de JopcionPane en buscar 
         //cedula
         hilo = new Thread(this);
         hilo.start();
-        
+
         txtCedula2.setValue("");
-        
+
         int resp = JOptionPane.showInternalConfirmDialog(
                 null,
                 txtCedula2,
                 "Buscar cliente por cedula: ",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.INFORMATION_MESSAGE);
-        
+
         hilo.interrupt();
-        
+
         if (resp == JOptionPane.NO_OPTION) {
             return;
         }
-        
+
         try {
             txtCedula2.commitEdit();
         } catch (ParseException ex) {
@@ -1551,20 +1496,20 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
         if (existeCliente(txtCedula2.getValue().toString()) == null) {
             JOptionPane.showMessageDialog(
                     null,
-                    "El Cliente No Existe!", 
+                    "El Cliente No Existe!",
                     "Proceso de busqueda terminado",
                     JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         for (int i = 0; i < tblClientes.getRowCount(); i++) {
-            
+
             if (tblClientes.getValueAt(i, 0).toString().contains(
                     txtCedula2.getText())) {
                 tblClientes.setRowSelectionInterval(i, i);
                 break;
             }
-            
+
             if (txtCedula2.getText().isBlank()) {
                 return;
             }
@@ -1651,11 +1596,11 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
     private void btnAgregarCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCorreoActionPerformed
         /*
             Validamos que el correo no esté vacio.
-        */
+         */
         if (txtCorreo.getText().isBlank()) {
             JOptionPane.showInternalMessageDialog(null,
-                    "Debe digitar correo electronico.", 
-                    VALIDACCIÓN_DE_CONTACTO,
+                    "Debe digitar correo electronico.",
+                    VALIDACCION_DE_CONTACTO,
                     JOptionPane.INFORMATION_MESSAGE);
             txtCorreo.requestFocusInWindow();
             return;
@@ -1663,11 +1608,11 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
 
         /*
             Verificamos que sea un correo valido.
-        */
+         */
         if (!ValidarCorreoTel.correo(txtCorreo.getText())) {
             JOptionPane.showInternalMessageDialog(null,
                     "Debe digitar correo electronico valido.",
-                    VALIDACCIÓN_DE_CONTACTO,
+                    VALIDACCION_DE_CONTACTO,
                     JOptionPane.INFORMATION_MESSAGE);
             txtCorreo.requestFocusInWindow();
             return;
@@ -1676,19 +1621,19 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
         /*
             Creamos un objecto de tipo array para las columnas. 
             Dichas columnas son Correo y Fecha.
-        */
+         */
         Object registroCorreo[] = new Object[TITULOS_CORREO.length];
 
         //Tomamos el valor del campo.
         registroCorreo[0] = txtCorreo.getText();
-        
+
         //Llenamos el List de correo.
         contactosCorreos.add(ContactosEmail.builder().
                 email(txtCorreo.getText()).build());
-        
+
         //Ingresamos el array al modelo
         dtmCorreo.addRow(registroCorreo);
-        
+
         //Y al modelo lo pasamos a la tabla para ser mostrado.
         tblCorreos.setModel(dtmCorreo);
 
@@ -1699,7 +1644,7 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
         //Reparamos la columnas de la tabla. 
         repararColumnaTable(tblCorreos);
     }//GEN-LAST:event_btnAgregarCorreoActionPerformed
-    
+
 
     private void txtTelelfonoMovilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelelfonoMovilActionPerformed
         btnAgregarTelefonoMovil.doClick();
@@ -1775,8 +1720,8 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
         /*
             Se preparan la provincia, municipio y el distrito municipal.
          */
-        Provincias p = ((Provincias) jcbProvincias.getSelectedItem());
-        Municipios m = ((Municipios) jcbMunicipios.getSelectedItem());
+        Provincias provincia = ((Provincias) jcbProvincias.getSelectedItem());
+        Municipios municipio = ((Municipios) jcbMunicipios.getSelectedItem());
         Distritos_municipales dm = ((Distritos_municipales) jcbDistritoMunicipal.getSelectedItem());
 
         /*
@@ -1785,8 +1730,8 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
         Direcciones d = Direcciones.builder().
                 id_persona(0).
                 accion('I').
-                provincia(p).
-                municipio(m).
+                provincia(provincia).
+                municipio(municipio).
                 distrito_municipal(dm).
                 direccion(txtDireccion.getText()).build();
 
@@ -1844,6 +1789,10 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
         btnGuardar.requestFocus();
     }//GEN-LAST:event_cbEstadoActionPerformed
     private void btnCedulaValidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCedulaValidadActionPerformed
+        if (txtCedula.getValue() == null) {
+            return;
+        }
+
         try {
             /*
             Si se va a insertar un nuevo registro la cedula no debe existir.
@@ -1851,36 +1800,46 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
              */
             txtCedula.commitEdit();
         } catch (ParseException ex) {
-            Logger.getLogger(frmClientes.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.log(Level.INFO, "El formato de la cedula no es el correcto.");
+            return;
         }
 
         String cedula = (String) txtCedula.getValue();
 
-        if (cedula == null) {
-            return;
-        }
-
-        Integer id = existeCliente(cedula);
+        Integer idCliente = existeCliente(cedula);
 
         if (nuevo) {//Condicion para cuando el proceso es un nuevo registro.
-            if (id != -1) {
-                JOptionPane.showInternalMessageDialog(null,
-                        "Esta cedula está registrada",
+            if (idCliente != -1) {
+                int resp = JOptionPane.showInternalConfirmDialog(
+                        null,
+                        "Esta cedula está registrada. \nProcede a cargar la Información?",
                         "Proceso de validación",
-                        JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE);
+
+                //Preguntamos si desea cargar la informacion del cliente.
+                if (resp == JOptionPane.YES_OPTION) {
+                    System.out.println("Id del cliente es: " + idCliente);
+                    mostrarRegistro(idCliente);
+                    repararColumnaTable(tblCorreos);
+                    repararColumnaTable(tblDireccion);
+                    repararColumnaTable(tblTelefonos);
+                }
+
                 txtCedula.setValue(null);
             } else {
                 JOptionPane.showInternalMessageDialog(null,
                         "Cedula valida, puede continuar.",
                         "Proceso de validación",
                         JOptionPane.INFORMATION_MESSAGE);
+                jcbPersona.requestFocus();
             }
         } else {//Condicion para cuando se va a modificar un registro. 
             /*
                 Si se va a actualizar un registro, la cedula debe de existir en la 
             Base de datos. 
              */
-            if (id == -1) {
+            if (idCliente == -1) {
                 int resp = JOptionPane.showInternalConfirmDialog(null,
                         "Esta cedula no está registrada, desea continuar",
                         "Proceso de validación",
@@ -1951,9 +1910,9 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
 
     /**
      * Metodo utilizado para llenar la tabla de cliente del sistema.
-     * 
-     * @return Para fines de prueba se envia un string indicando que la tabla 
-     * se llenó completamente. 
+     *
+     * @return Para fines de prueba se envia un string indicando que la tabla se
+     * llenó completamente.
      */
     public synchronized static String llenarTablaClientes() {
         dtmClientes = getClientesTablaSB();
@@ -1980,11 +1939,10 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
     }
 
     /**
-     * Este metodo valida que:
-     * 1) Que la tabla de clientes del sistema existan registros.
-     * 2) Que en la tabla haya un elemento seleccionado.
-     * 3) Que cliente seleccionado no sea el GENERICO.
-     * 
+     * Este metodo valida que: 1) Que la tabla de clientes del sistema existan
+     * registros. 2) Que en la tabla haya un elemento seleccionado. 3) Que
+     * cliente seleccionado no sea el GENERICO.
+     *
      * @return Devuelve un valor verdadero para indicar que una restriccion, de
      * lo contrario devuelve falso indicando que no existe restriciones.
      */
@@ -2188,59 +2146,64 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
             txtCedula.requestFocus();
         } else {
             //Modificar registro
-            p = Privilegios.builder().
+            /**
+             * Debo de reducir las siguientes lineas de codigo usando vistaList.
+             * Como lo hice en el constructor.
+             */
+            privilegios = Privilegios.builder().
                     privilegio(Privilegios.PRIVILEGIO_UPDATE).
                     nombre_relacion("V_GENERALES").
                     nombre_campo("CEDULA").build();
-            txtCedula.setEditable(privilegioCampo(p) || privilegioTabla(p));
 
-            p = Privilegios.builder().
+            txtCedula.setEditable(privilegioCampo(privilegios) || privilegioTabla(privilegios));
+
+            privilegios = Privilegios.builder().
                     privilegio(Privilegios.PRIVILEGIO_UPDATE).
                     nombre_relacion("V_PERSONAS").
                     nombre_campo("PNOMBRE").build();
-            txtPNombre.setEditable(privilegioCampo(p) || privilegioTabla(p));
+            txtPNombre.setEditable(privilegioCampo(privilegios) || privilegioTabla(privilegios));
 
-            p = Privilegios.builder().
+            privilegios = Privilegios.builder().
                     privilegio(Privilegios.PRIVILEGIO_UPDATE).
                     nombre_relacion("V_PERSONAS").
-                    nombre_campo("PNOMBRE").build();
-            txtSNombre.setEditable(privilegioCampo(p) || privilegioTabla(p));
+                    nombre_campo("SNOMBRE").build();
+            txtSNombre.setEditable(privilegioCampo(privilegios) || privilegioTabla(privilegios));
 
-            p = Privilegios.builder().
+            privilegios = Privilegios.builder().
                     privilegio(Privilegios.PRIVILEGIO_UPDATE).
                     nombre_relacion("V_PERSONAS").
                     nombre_campo("APELLIDOS").build();
-            txtApellidos.setEditable(privilegioCampo(p) || privilegioTabla(p));
+            txtApellidos.setEditable(privilegioCampo(privilegios) || privilegioTabla(privilegios));
 
-            p = Privilegios.builder().
+            privilegios = Privilegios.builder().
                     privilegio(Privilegios.PRIVILEGIO_UPDATE).
                     nombre_relacion("V_PERSONAS").
                     nombre_campo("FECHA_NACIMIENTO").build();
-            dchFechaNacimiento.setEnabled(privilegioCampo(p) || privilegioTabla(p));
+            dchFechaNacimiento.setEnabled(privilegioCampo(privilegios) || privilegioTabla(privilegios));
 
-            p = Privilegios.builder().
+            privilegios = Privilegios.builder().
                     privilegio(Privilegios.PRIVILEGIO_UPDATE).
                     nombre_relacion("V_PERSONAS").
                     nombre_campo("PERSONA").build();
-            jcbPersona.setEnabled(privilegioCampo(p) || privilegioTabla(p));
+            jcbPersona.setEnabled(privilegioCampo(privilegios) || privilegioTabla(privilegios));
 
-            p = Privilegios.builder().
+            privilegios = Privilegios.builder().
                     privilegio(Privilegios.PRIVILEGIO_UPDATE).
                     nombre_relacion("V_GENERALES").
                     nombre_campo("ESTADO_CIVIL").build();
-            jcbEstadoCivil.setEnabled(privilegioCampo(p) || privilegioTabla(p));
+            jcbEstadoCivil.setEnabled(privilegioCampo(privilegios) || privilegioTabla(privilegios));
 
-            p = Privilegios.builder().
+            privilegios = Privilegios.builder().
                     privilegio(Privilegios.PRIVILEGIO_UPDATE).
                     nombre_relacion("V_PERSONAS").
                     nombre_campo("SEXO").build();
-            jcbSexo.setEnabled(privilegioCampo(p) || privilegioTabla(p));
+            jcbSexo.setEnabled(privilegioCampo(privilegios) || privilegioTabla(privilegios));
 
-            p = Privilegios.builder().
+            privilegios = Privilegios.builder().
                     privilegio(Privilegios.PRIVILEGIO_UPDATE).
                     nombre_relacion("V_PERSONAS").
                     nombre_campo("ESTADO").build();
-            cbEstado.setEnabled(privilegioCampo(p) || privilegioTabla(p));
+            cbEstado.setEnabled(privilegioCampo(privilegios) || privilegioTabla(privilegios));
 
             txtPNombre.requestFocus();
         }
@@ -2331,8 +2294,8 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
 
     @Override
     public void run() {
-        while(!txtCedula2.hasFocus()){
-            if(txtCedula2.isShowing()){
+        while (!txtCedula2.hasFocus()) {
+            if (txtCedula2.isShowing()) {
                 txtCedula2.requestFocus();
             }
         }

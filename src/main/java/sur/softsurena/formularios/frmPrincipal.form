@@ -283,12 +283,18 @@
     </Component>
     <Component class="RSMaterialComponent.RSLabelTextIcon" name="jlUser">
       <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="rSLabelTextIcon1"/>
         <Property name="sizeIcon" type="float" value="32.0"/>
       </Properties>
     </Component>
     <Component class="RSMaterialComponent.RSLabelTextIcon" name="jlRole">
       <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="sdfsdf"/>
         <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
           <Value id="WORK"/>
@@ -296,23 +302,26 @@
         <Property name="sizeIcon" type="float" value="32.0"/>
       </Properties>
     </Component>
-    <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
+    <Menu class="rojerusan.RSMenuBar" name="jMenuBar1">
       <Properties>
-        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[0, 0]"/>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="e2" green="42" red="3a" type="rgb"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
       </Properties>
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="mnuArchivos">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="0" green="0" red="0" type="rgb"/>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="mnemonic" type="int" value="65"/>
             <Property name="text" type="java.lang.String" value="Archivos"/>
             <Property name="doubleBuffered" type="boolean" value="true"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Ubuntu" size="14" style="0"/>
+              <Font name="Dialog" size="16" style="1"/>
             </Property>
           </Properties>
           <AuxValues>
@@ -419,10 +428,13 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="mnuMovimientos">
           <Properties>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
             <Property name="mnemonic" type="int" value="77"/>
             <Property name="text" type="java.lang.String" value="Movimientos"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Ubuntu" size="14" style="0"/>
+              <Font name="Dialog" size="16" style="1"/>
             </Property>
           </Properties>
           <SubComponents>
@@ -483,24 +495,10 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="FreeSans" size="14" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Abrir turno..."/>
+                <Property name="text" type="java.lang.String" value="Administrador de turnos ..."/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuMovimientosAbrirTurnoActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="mnuMovimientosCerrarTurno">
-              <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="F11"/>
-                </Property>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="FreeSans" size="14" style="0"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Cerrar turno..."/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuMovimientosCerrarTurnoActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator6">
@@ -523,10 +521,13 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="mnuAyuda">
           <Properties>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
             <Property name="mnemonic" type="int" value="121"/>
             <Property name="text" type="java.lang.String" value="Ayuda"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Ubuntu" size="14" style="0"/>
+              <Font name="Dialog" size="16" style="1"/>
             </Property>
           </Properties>
           <SubComponents>
@@ -563,10 +564,16 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="mnuLicencia">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="0" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="0" green="ff" red="33" type="rgb"/>
+            </Property>
             <Property name="mnemonic" type="int" value="76"/>
             <Property name="text" type="java.lang.String" value="Licencia"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Ubuntu" size="14" style="0"/>
+              <Font name="Dialog" size="16" style="1"/>
             </Property>
           </Properties>
           <Events>
@@ -584,9 +591,6 @@
     </Property>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[640, 480]"/>
-    </Property>
-    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[800, 600]"/>
     </Property>
   </Properties>
   <SyntheticProperties>
@@ -622,8 +626,8 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jsEstatus" max="32767" attributes="0"/>
-          <Component id="jScrollPane4" pref="579" max="32767" attributes="0"/>
+          <Component id="jsEstatus" pref="550" max="32767" attributes="0"/>
+          <Component id="jScrollPane4" pref="550" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>

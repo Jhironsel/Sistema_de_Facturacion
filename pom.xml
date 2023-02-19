@@ -26,6 +26,7 @@
             <groupId>sur.softsurena</groupId>
             <artifactId>entidades</artifactId>
             <version>1</version>
+            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>net.java.dev.beansbinding</groupId>

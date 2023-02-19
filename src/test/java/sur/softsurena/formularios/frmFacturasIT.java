@@ -80,52 +80,6 @@ public class frmFacturasIT {
     }
 
     /**
-     * Test of getTurno method, of class frmFacturas.
-     */
-    @Test
-    public void testGetTurno() {
-        System.out.println("getTurno");
-        frmFacturas instance = new frmFacturas();
-        int expResult = 0;
-        int result = instance.getTurno();
-        assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of setTurno method, of class frmFacturas.
-     */
-    @Test
-    public void testSetTurno() {
-        System.out.println("setTurno");
-        int turno = 0;
-        frmFacturas instance = new frmFacturas();
-        instance.setTurno(turno);
-    }
-
-    /**
-     * Test of getIdUsuario method, of class frmFacturas.
-     */
-    @Test
-    public void testGetIdUsuario() {
-        System.out.println("getIdUsuario");
-        frmFacturas instance = new frmFacturas();
-        Integer expResult = null;
-        Integer result = instance.getIdUsuario();
-        assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of setIdUsuario method, of class frmFacturas.
-     */
-    @Test
-    public void testSetIdUsuario() {
-        System.out.println("setIdUsuario");
-        Integer idUsuario = null;
-        frmFacturas instance = new frmFacturas();
-        instance.setIdUsuario(idUsuario);
-    }
-
-    /**
      * Test of run method, of class frmFacturas.
      */
     @Test

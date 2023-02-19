@@ -1,5 +1,6 @@
 package sur.softsurena.formularios;
 
+import java.awt.Component;
 import java.awt.Image;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,38 +15,42 @@ import sur.softsurena.entidades.Categorias;
 import static sur.softsurena.entidades.Categorias.getCategirias;
 import sur.softsurena.entidades.DefaultTableCellHeaderRenderer;
 import sur.softsurena.entidades.Productos;
-import static sur.softsurena.entidades.Productos.*;
+import static sur.softsurena.entidades.Productos.agregarProducto;
+import static sur.softsurena.entidades.Productos.borrarProductoPorID_Codigo;
+import static sur.softsurena.entidades.Productos.existeProducto;
+import static sur.softsurena.entidades.Productos.getProductos;
+import static sur.softsurena.entidades.Productos.modificarProducto;
 import sur.softsurena.utilidades.Utilidades;
 import static sur.softsurena.utilidades.Utilidades.columnasCheckBox;
 import static sur.softsurena.utilidades.Utilidades.repararColumnaTable;
 
 public class frmProductos extends javax.swing.JInternalFrame {
 
-    private int returnVal = JFileChooser.CANCEL_OPTION;
     private Boolean nuevo = null, cambio = false;
-    private DefaultTableModel miTabla;
-    private String path, ext, source, dest;
+    private static DefaultTableModel miTabla;
     private JFileChooser file = new JFileChooser();
+    private final FileNameExtensionFilter filter;
     private final DefaultTableCellRenderer tcr;
+    private static final String PROCESO_DE_VALIDACION_DEL_SISTEMA = "Proceso de validacion del sistema.";
+    private int fila = 0;
+    private static final int SCALA_ICONO = 155;
 
     public frmProductos() {
 
         initComponents();
 
-        jpOpciones.setVisible(false);
-        
+        filter = new FileNameExtensionFilter("Imagenes", "jpg", "png", "PNG", "JPG");
+        file.setFileFilter(filter);
+
         //Mantenimiento oculto por defecto. 
-        jtpUnico.setEnabledAt(
-                jtpUnico.indexOfComponent(jpMantenimiento), false);
-        jtpUnico.setEnabledAt(
-                jtpUnico.indexOfComponent(jpCategorias), false);
-        jtpUnico.setEnabledAt(
-                jtpUnico.indexOfComponent(jpESHistorial), false);
-        jtpUnico.setEnabledAt(
-                jtpUnico.indexOfComponent(jpESProductos), false);
+        //Debe indicarse que se va a crear un producto nuevo desde el btnNuevo.
+        jtpUnico.remove(jtpUnico.indexOfComponent(jpCategorias));
+        jtpUnico.remove(jtpUnico.indexOfComponent(jpESHistorial));
+        jtpUnico.remove(jtpUnico.indexOfComponent(jpESProductos));
+        jtpUnico.remove(jtpUnico.indexOfComponent(jpMantenimiento));
 
         tcr = new DefaultTableCellHeaderRenderer();
-        
+
 //        editor = (JTextFieldDateEditor) dchFechaVencimiento.getDateEditor();
 //        button = (JButton) dchFechaVencimiento.getCalendarButton();
 //        editor.setEditable(false);
@@ -56,7 +61,6 @@ public class frmProductos extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
         jScrollPane3 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
         btnNuevo = new RSMaterialComponent.RSButtonMaterialIconOne();
@@ -69,10 +73,10 @@ public class frmProductos extends javax.swing.JInternalFrame {
         jpProductos = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblTabla = new JTable(){
+        tblTabla = new RSMaterialComponent.RSTableMetro(){
             @Override
-            public boolean isCellEditable(int rowIndex, int colIndex) { 
-                return false; //Las celdas no son editables. 
+            public boolean isCellEditable(int rowIndex, int colIndex) {
+                return false; //Las celdas no son editables.
             }
         };
         jpCategorias = new javax.swing.JPanel();
@@ -83,7 +87,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtNotas = new javax.swing.JTextArea();
-        jlImagen = new javax.swing.JLabel();
+        jlImagenProducto = new javax.swing.JLabel();
         txtCodigoBarra = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -91,7 +95,6 @@ public class frmProductos extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         txtDescripcion = new javax.swing.JTextField();
         cbActivo = new javax.swing.JCheckBox();
-        cbImpuesto = new javax.swing.JCheckBox();
         jpESProductos = new javax.swing.JPanel();
         jpESHistorial = new javax.swing.JPanel();
         jpOpciones = new javax.swing.JPanel();
@@ -99,7 +102,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         btnImprimirLista = new RSMaterialComponent.RSButtonMaterialIconOne();
         btnEntradaProducto = new RSMaterialComponent.RSButtonMaterialIconOne();
         btnSalidaProducto = new RSMaterialComponent.RSButtonMaterialIconOne();
-        btnSalidaProducto2 = new RSMaterialComponent.RSButtonMaterialIconOne();
+        btnEntradaSalidaProducto = new RSMaterialComponent.RSButtonMaterialIconOne();
 
         setClosable(true);
         setIconifiable(true);
@@ -108,7 +111,6 @@ public class frmProductos extends javax.swing.JInternalFrame {
         setTitle("Productos");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
-                formInternalFrameActivated(evt);
             }
             public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
             }
@@ -121,6 +123,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
             public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
             }
         });
 
@@ -216,25 +219,17 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Detalle de Productos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 12))); // NOI18N
 
-        tblTabla.setAutoCreateRowSorter(true);
-        tblTabla.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 12))); // NOI18N
-        tblTabla.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
         tblTabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Título 1", "Título 2", "Título 3", "Título 4", "Título 5", "Título 6", "Título 7"
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tblTabla.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-        tblTabla.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        tblTabla.setDoubleBuffered(true);
-        tblTabla.setName("tblTabla"); // NOI18N
-        tblTabla.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tblTabla.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblTabla);
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
@@ -296,7 +291,6 @@ public class frmProductos extends javax.swing.JInternalFrame {
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel5.setText("Notas :");
 
-        txtNotas.setEditable(false);
         txtNotas.setColumns(20);
         txtNotas.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
         txtNotas.setForeground(new java.awt.Color(0, 0, 0));
@@ -310,18 +304,17 @@ public class frmProductos extends javax.swing.JInternalFrame {
         });
         jScrollPane2.setViewportView(txtNotas);
 
-        jlImagen.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        jlImagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlImagen.setToolTipText("Doble click para buscar la imagen.");
-        jlImagen.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Seleccione Imagen", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 12), new java.awt.Color(0, 0, 0))); // NOI18N
-        jlImagen.setName("jlImagen"); // NOI18N
-        jlImagen.addMouseListener(new java.awt.event.MouseAdapter() {
+        jlImagenProducto.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        jlImagenProducto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlImagenProducto.setToolTipText("Doble click para buscar la imagen.");
+        jlImagenProducto.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Seleccione Imagen", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 12), new java.awt.Color(0, 0, 0))); // NOI18N
+        jlImagenProducto.setName("jlImagenProducto"); // NOI18N
+        jlImagenProducto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jlImagenMouseClicked(evt);
+                jlImagenProductoMouseClicked(evt);
             }
         });
 
-        txtCodigoBarra.setEditable(false);
         txtCodigoBarra.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
         txtCodigoBarra.setForeground(java.awt.SystemColor.textText);
         txtCodigoBarra.setName("txtCodigoBarra"); // NOI18N
@@ -349,7 +342,6 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
         cbCategoria.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
         cbCategoria.setForeground(java.awt.SystemColor.textText);
-        cbCategoria.setEnabled(false);
         cbCategoria.setName("cbCategoria"); // NOI18N
         cbCategoria.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
             public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
@@ -370,7 +362,6 @@ public class frmProductos extends javax.swing.JInternalFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel2.setText("*Descripcion :");
 
-        txtDescripcion.setEditable(false);
         txtDescripcion.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
         txtDescripcion.setForeground(java.awt.SystemColor.textText);
         txtDescripcion.setName("txtDescripcion"); // NOI18N
@@ -388,23 +379,10 @@ public class frmProductos extends javax.swing.JInternalFrame {
         cbActivo.setFont(new java.awt.Font("DejaVu Sans", 0, 12)); // NOI18N
         cbActivo.setForeground(new java.awt.Color(0, 0, 0));
         cbActivo.setText("Inactivo");
-        cbActivo.setEnabled(false);
         cbActivo.setName("cbActivo"); // NOI18N
         cbActivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbActivoActionPerformed(evt);
-            }
-        });
-
-        cbImpuesto.setFont(new java.awt.Font("DejaVu Sans", 0, 12)); // NOI18N
-        cbImpuesto.setForeground(new java.awt.Color(0, 0, 0));
-        cbImpuesto.setText("Sin Impuesto");
-        cbImpuesto.setToolTipText("No se esta' implementando...");
-        cbImpuesto.setEnabled(false);
-        cbImpuesto.setName("cbImpuesto"); // NOI18N
-        cbImpuesto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbImpuestoActionPerformed(evt);
             }
         });
 
@@ -413,31 +391,28 @@ public class frmProductos extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
                             .addComponent(txtCodigoBarra))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jlImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE)
-                                .addComponent(txtDescripcion, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(cbImpuesto)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cbActivo))
-                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jlImagenProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE)
+                                    .addComponent(txtDescripcion, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addComponent(cbActivo)
+                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -448,9 +423,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbActivo)
-                    .addComponent(cbImpuesto))
+                .addComponent(cbActivo)
                 .addGap(0, 0, 0)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -466,12 +439,11 @@ public class frmProductos extends javax.swing.JInternalFrame {
                         .addGap(0, 0, 0)
                         .addComponent(txtCodigoBarra, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jlImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jlImagenProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -491,7 +463,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         jpMantenimientoLayout.setVerticalGroup(
             jpMantenimientoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpMantenimientoLayout.createSequentialGroup()
-                .addContainerGap(62, Short.MAX_VALUE)
+                .addContainerGap(41, Short.MAX_VALUE)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -579,20 +551,20 @@ public class frmProductos extends javax.swing.JInternalFrame {
             }
         });
 
-        btnSalidaProducto2.setText("Historial E/S");
-        btnSalidaProducto2.setForegroundHover(new java.awt.Color(204, 0, 0));
-        btnSalidaProducto2.setForegroundIcon(new java.awt.Color(204, 0, 0));
-        btnSalidaProducto2.setForegroundIconHover(new java.awt.Color(204, 0, 0));
-        btnSalidaProducto2.setHideActionText(true);
-        btnSalidaProducto2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnSalidaProducto2.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-        btnSalidaProducto2.setIconTextGap(0);
-        btnSalidaProducto2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.HISTORY);
-        btnSalidaProducto2.setPreferredSize(new java.awt.Dimension(100, 30));
-        btnSalidaProducto2.setRound(30);
-        btnSalidaProducto2.addActionListener(new java.awt.event.ActionListener() {
+        btnEntradaSalidaProducto.setText("Historial E/S");
+        btnEntradaSalidaProducto.setForegroundHover(new java.awt.Color(204, 0, 0));
+        btnEntradaSalidaProducto.setForegroundIcon(new java.awt.Color(204, 0, 0));
+        btnEntradaSalidaProducto.setForegroundIconHover(new java.awt.Color(204, 0, 0));
+        btnEntradaSalidaProducto.setHideActionText(true);
+        btnEntradaSalidaProducto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnEntradaSalidaProducto.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        btnEntradaSalidaProducto.setIconTextGap(0);
+        btnEntradaSalidaProducto.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.HISTORY);
+        btnEntradaSalidaProducto.setPreferredSize(new java.awt.Dimension(100, 30));
+        btnEntradaSalidaProducto.setRound(30);
+        btnEntradaSalidaProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalidaProducto2ActionPerformed(evt);
+                btnEntradaSalidaProductoActionPerformed(evt);
             }
         });
 
@@ -604,7 +576,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
             .addComponent(btnImprimirLista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnEntradaProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnSalidaProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnSalidaProducto2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnEntradaSalidaProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jpOpcionesLayout.setVerticalGroup(
             jpOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -618,7 +590,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSalidaProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSalidaProducto2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnEntradaSalidaProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -650,7 +622,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         txtDescripcion.requestFocusInWindow();
     }//GEN-LAST:event_txtCodigoBarraActionPerformed
     private void txtCodigoBarraKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoBarraKeyReleased
-        String replaceAll = txtCodigoBarra.getText().replaceAll(" ", "");
+        String replaceAll = txtCodigoBarra.getText();
         replaceAll = replaceAll.toUpperCase();
         txtCodigoBarra.setText(replaceAll);
     }//GEN-LAST:event_txtCodigoBarraKeyReleased
@@ -669,55 +641,34 @@ public class frmProductos extends javax.swing.JInternalFrame {
             cbActivo.setText("Inactivo");
         }
     }//GEN-LAST:event_cbActivoActionPerformed
-    private void cbImpuestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbImpuestoActionPerformed
-        if (!txtDescripcion.isEditable()) {
-            cbImpuesto.setSelected(!cbImpuesto.isSelected());
-            return;
-        }
-        if (cbImpuesto.isSelected()) {
-            cbImpuesto.setText("Con impuesto");
-        } else {
-            cbImpuesto.setText("Sin impuesto");
-        }
-    }//GEN-LAST:event_cbImpuestoActionPerformed
-    private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
-        llenarTabla();
-    }//GEN-LAST:event_formInternalFrameActivated
-    private void jlImagenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlImagenMouseClicked
-        if (!txtDescripcion.isEditable()) {
+    private void jlImagenProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlImagenProductoMouseClicked
+        //Solo se permite buscar la imagen con doble click
+        if (evt.getClickCount() != 2) {
             evt.consume();
             return;
         }
 
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Imagenes", "jpg", "png", "PNG", "JPG");
-        file.setFileFilter(filter);
-        returnVal = file.showOpenDialog(this);
-        source = file.getSelectedFile().getAbsolutePath();
+        //Abrimos un dialogo para obtener la imagen del producto.
+        int respuesta = file.showOpenDialog(this);
 
-        if (source == null || returnVal == JFileChooser.CANCEL_OPTION) {
-            return;
+        //Cargamos la imagen en el jlImagenProducto.
+        if (respuesta == JFileChooser.APPROVE_OPTION) {
+
+            ImageIcon imagen = new ImageIcon(file.getSelectedFile().getAbsolutePath());
+            
+            Icon icon = new ImageIcon(imagen.getImage().getScaledInstance(SCALA_ICONO, SCALA_ICONO, Image.SCALE_SMOOTH));
+
+            imagen.getImage().flush();
+
+            jlImagenProducto.setIcon(icon);
+
+            jlImagenProducto.validate();
         }
-        cambio = true;
-        path = System.getProperty("user.dir") + "/imagesProductos/"
-                + ((Categorias) cbCategoria.getSelectedItem()).getDescripcion() + "/";
-
-        dest = System.getProperty("user.dir") + path + "/"
-                + txtCodigoBarra.getText().
-                        concat("                                         ").
-                        substring(0, 35) + "." + getExtension(source);
-
-        ImageIcon imagen = new ImageIcon("" + source);
-        //Tamaño de icono
-        Icon icon = new ImageIcon(imagen.getImage().getScaledInstance(72, 72,
-                Image.SCALE_DEFAULT));
-        imagen.getImage().flush();
-        jlImagen.setIcon(icon);
-        jlImagen.validate();
-    }//GEN-LAST:event_jlImagenMouseClicked
+    }//GEN-LAST:event_jlImagenProductoMouseClicked
     private void txtCodigoBarraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoBarraKeyTyped
-        if (txtCodigoBarra.getText().length() >= 35) {
+        if (txtCodigoBarra.getText().length() >= 25) {
             evt.consume();
-            JOptionPane.showMessageDialog(null, "Este codigo debe ser menor a 35 caracteres!!!");
+            JOptionPane.showMessageDialog(null, "Este codigo debe ser menor a 25 caracteres!!!");
         }
     }//GEN-LAST:event_txtCodigoBarraKeyTyped
     private void txtDescripcionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescripcionKeyReleased
@@ -751,142 +702,158 @@ public class frmProductos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cbCategoriaPopupMenuWillBecomeInvisible
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        if (cbCategoria.getItemCount() == 0) {
-//            getConsulta("SELECT COUNT(*) FROM TABLA_CATEGORIA")
-            ResultSet rs = null;
-            try {
-                rs.next();
-                if (rs.getInt(1) == 0) {
-                    JOptionPane.showMessageDialog(null,
-                            "Deberia de crear una Categoria primero!!",
-                            "Sin categoria en el sistema",
-                            JOptionPane.INFORMATION_MESSAGE);
-                    btnAdmCategoriasActionPerformed(null);
-                    return;
-                }
-            } catch (SQLException ex) {
-                //Instalar Logger
-            }
-        }
-        //Botones Para Deshabilitar:
-        btnModificar.setEnabled(false);
-        btnBuscarProducto.setEnabled(false);
-        btnBorrar.setEnabled(false);
-        btnNuevo.setEnabled(false);
-        tblTabla.setEnabled(false);
 
-        //Botones Para Habilitar
-        btnGuardar.setEnabled(true);
-        btnCancelar.setEnabled(true);
-
-        //Caja de Texto Habilitado
-        //txtCosto.setEditable(true);
-        txtDescripcion.setEditable(true);
-        txtCodigoBarra.setEditable(true);
-        txtNotas.setEditable(true);
-        //txtPrecio.setEditable(true);
-
-        //Caja de Perfil Habilitado
-        cbCategoria.setEnabled(true);
-
-        jlImagen.setEnabled(true);
-        String miFile = System.getProperty("user.dir") + "/images/Sin_imagen 64 x 64.png";
-        ImageIcon imagen = new ImageIcon(miFile);
-        Icon icon = new ImageIcon(imagen.getImage().getScaledInstance(72, 72,
-                Image.SCALE_DEFAULT));
-        imagen.getImage().flush();
-        jlImagen.setIcon(icon);
-        jlImagen.validate();
-
-        cbActivo.setEnabled(true);
-        cbActivo.setText("Activo");
-
-        cbImpuesto.setEnabled(true);
-        cbImpuesto.setText("Con impuesto");
-
-        //Vacear los txt
-        //txtCosto.setValue(0);
-        //txtPrecio.setValue(0);
-        txtDescripcion.setText("");
-        txtCodigoBarra.setText("");
-        txtNotas.setText("");
-
-        cbActivo.setSelected(false);
-        cbImpuesto.setSelected(false);
-        cbCategoria.setSelectedIndex(-1);
-
-        //Activamos el Flag de registro Nuevo
-        nuevo = true;
-        txtCodigoBarra.requestFocusInWindow();
+        jtpUnico.addTab("Mantenimiento", jpMantenimiento);
+        jtpUnico.setSelectedIndex(jtpUnico.indexOfComponent(jpMantenimiento));
+        
+        /*
+            Investigamos primero si existe por lo menos una categoria registrada.
+         */
+//        if (cbCategoria.getItemCount() == 0) {
+////            getConsulta("SELECT COUNT(*) FROM TABLA_CATEGORIA")
+//            ResultSet rs = null;
+//            try {
+//                rs.next();
+//                if (rs.getInt(1) == 0) {
+//                    JOptionPane.showMessageDialog(null,
+//                            "Debe crear una categoria primero!!",
+//                            "Sin categoria en el sistema",
+//                            JOptionPane.INFORMATION_MESSAGE);
+//                    btnAdmCategoriasActionPerformed(null);
+//                    return;
+//                }
+//            } catch (SQLException ex) {
+//                //Instalar Logger
+//            }
+//        }
+        
+//        jtpUnico.setEnabledAt(jtpUnico.indexOfComponent(jpMantenimiento), true);
+//        
+//
+//        jtpUnico.setEnabledAt(jtpUnico.indexOfComponent(jpProductos), false);
+//
+//        cancelar(false, null, null);
+//
+//        tblTabla.setEnabled(false);
+//        //Caja de Texto Habilitado
+//        //txtCosto.setEditable(true);
+//        txtDescripcion.setEditable(true);
+//        txtCodigoBarra.setEditable(true);
+//        txtNotas.setEditable(true);
+//        //txtPrecio.setEditable(true);
+//
+//        //Caja de Perfil Habilitado
+//        cbCategoria.setEnabled(true);
+//
+//        jlImagenProducto.setEnabled(true);
+//
+//        String miFile = System.getProperty("user.dir") + "/images/Sin_imagen 64 x 64.png";
+//
+//        ImageIcon imagen = new ImageIcon(miFile);
+//
+//        Icon icon = new ImageIcon(imagen.getImage().getScaledInstance(72, 72,
+//                Image.SCALE_DEFAULT));
+//
+//        imagen.getImage().flush();
+//
+//        jlImagenProducto.setIcon(icon);
+//        jlImagenProducto.validate();
+//
+//        cbActivo.setEnabled(true);
+//        cbActivo.setText("Activo");
+//
+//
+//        //Vacear los txt
+//        txtDescripcion.setText("");
+//        txtCodigoBarra.setText("");
+//        txtNotas.setText("");
+//
+//        cbActivo.setSelected(false);
+//        cbCategoria.setSelectedIndex(-1);
+//
+//        //Activamos el Flag de registro Nuevo
+//        nuevo = true;
+//        txtCodigoBarra.requestFocusInWindow();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        if (tblTabla.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un producto");
+        if (tblTabla.getSelectedRow() <= -1) {
+            JOptionPane.showMessageDialog(
+                    null, 
+                    "Debe seleccionar un producto", 
+                    PROCESO_DE_VALIDACION_DEL_SISTEMA, 
+                    JOptionPane.WARNING_MESSAGE);
             return;
         }
         
+        fila = tblTabla.getSelectedRow();
+
         updateCategoria();
+
         
-        jtpUnico.setEnabledAt(
-                jtpUnico.indexOfComponent(jpMantenimiento), true);
+        jtpUnico.setEnabledAt(jtpUnico.indexOfComponent(jpMantenimiento), true);
+        
         jtpUnico.setSelectedIndex(jtpUnico.indexOfComponent(jpMantenimiento));
-        
-        jtpUnico.setEnabledAt(
-                jtpUnico.indexOfComponent(jpProductos), false);
-        
-        //Botones Para Deshabilitar:
-        btnModificar.setEnabled(false);
-        btnBuscarProducto.setEnabled(false);
-        btnBorrar.setEnabled(false);
-        btnNuevo.setEnabled(false);
-        tblTabla.setEnabled(false);
-        //Botones Para Habilitar
-        btnGuardar.setEnabled(true);
-        btnCancelar.setEnabled(true);
-        //Caja de Texto Habilitado
-        //txtCosto.setEditable(true);
-        txtDescripcion.setEditable(true);
-        txtNotas.setEditable(true);
-        //txtPrecio.setEditable(true);
-        cbCategoria.setEnabled(true);
 
-        //Caja de Perfil Habilitado
-        cbActivo.setEnabled(true);
-        cbImpuesto.setEnabled(true);
-
+        jtpUnico.setEnabledAt(jtpUnico.indexOfComponent(jpProductos), false);
+        
+        //Pasamos false para habilitar los botones guardar y cancelar.
+        cancelar(false, null, null);
+        
+        
         //Desactivamos el Flag de registro Nuevo
         nuevo = false;
 
+        mostrarRegistro();
+        
         txtDescripcion.requestFocusInWindow();
+        
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
-        if (txtCodigoBarra.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un producto");
+        
+        Integer id = ((Productos) tblTabla.getValueAt(tblTabla.getSelectedRow(), 2)).getId();
+        String descripcion = ((Productos) tblTabla.getValueAt(tblTabla.getSelectedRow(), 2)).getDescripcion();
+        
+        if (id == null) {
+            JOptionPane.showMessageDialog(
+                    null, 
+                    "Debe seleccionar un producto",
+                    PROCESO_DE_VALIDACION_DEL_SISTEMA,
+                    JOptionPane.WARNING_MESSAGE
+            );
             return;
         }
-        int rta = JOptionPane.showConfirmDialog(null,
-                "Esta Seguro de Eliminar el Producto {"
-                + txtDescripcion.getText() + "} de los Registro?",
-                "Confirmacion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (rta == 1) {
+        
+        int rta = JOptionPane.showConfirmDialog(
+                null,
+                "Esta Seguro de Eliminar el Producto {"+ descripcion + "} de los Registro?",
+                PROCESO_DE_VALIDACION_DEL_SISTEMA, 
+                JOptionPane.YES_NO_OPTION, 
+                JOptionPane.QUESTION_MESSAGE);
+        
+        if (rta == JOptionPane.NO_OPTION) {
             return;
         }
+        
         String msg;
         try {
-            msg = borrarProductoPorID_Codigo(txtCodigoBarra.getText());
+            msg = borrarProductoPorID_Codigo(id);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "No se puede eliminar el producto porque ya ha sido facturado"
+            JOptionPane.showMessageDialog(
+                    null, 
+                    "No se puede eliminar el producto porque ya ha sido facturado"
                     + "\n!!Te recomendamos cambiar el ESTADO del producto...");
             return;
         }
-        JOptionPane.showMessageDialog(rootPane, msg);
+        
+        JOptionPane.showMessageDialog(
+                null, 
+                msg
+        );
 
         //Actualizamos los cambios en la Tabla
-        llenarTabla();
-        reOrdenar(0);
-        reOrdenar(0);
+        reOrdenar();
     }//GEN-LAST:event_btnBorrarActionPerformed
 
     private void btnBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProductoActionPerformed
@@ -894,12 +861,19 @@ public class frmProductos extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "No hay producto registrado");
             return;
         }
-        String producto = JOptionPane.showInputDialog("Ingrese el Codigo ID Producto...");
+        String producto = JOptionPane.showInputDialog(
+                null,
+                "Ingrese el Codigo ID Producto...",
+                "Busqueda de producto del sistema",
+                JOptionPane.QUESTION_MESSAGE);
 
-        if (producto == null || producto.equals("")) {
-        } else {
+        if (!producto.isBlank()) {
             if (!existeProducto(producto)) {
-                JOptionPane.showMessageDialog(null, "El Producto No Existe...");
+                JOptionPane.showMessageDialog(
+                        null,
+                        "El Producto No Existe...",
+                        "Consulta de productos en el sistema.",
+                        JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
             //Detalle de Factura
@@ -911,96 +885,80 @@ public class frmProductos extends javax.swing.JInternalFrame {
                     break;
                 }
             }
-            llenarTabla();
-            //mostrarRegistro();
-            reOrdenar(0);
-            reOrdenar(0);
+            reOrdenar();
         }
     }//GEN-LAST:event_btnBuscarProductoActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         //Validaciones
-        if (txtCodigoBarra.getText().equals("")) {
-            JOptionPane.showMessageDialog(rootPane, "Debe Digitar un ID");
+        //Validamos que Codigo de barra sea proporcionado. 
+        if (txtCodigoBarra.getText().isBlank()) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Debe Digitar un ID",
+                    PROCESO_DE_VALIDACION_DEL_SISTEMA,
+                    JOptionPane.WARNING_MESSAGE);
             txtCodigoBarra.requestFocusInWindow();
             return;
         }
-        if (txtDescripcion.getText().equals("")) {
-            JOptionPane.showMessageDialog(rootPane, "Debe Digitar una Descripcion...");
+
+        //Validamos que la descripcion sea proporcionada.
+        if (txtDescripcion.getText().isBlank()) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Debe Digitar una Descripcion...",
+                    PROCESO_DE_VALIDACION_DEL_SISTEMA,
+                    JOptionPane.WARNING_MESSAGE);
             txtDescripcion.requestFocusInWindow();
             return;
         }
 
-        /*if (txtCosto.getText().equals("")) {
-            JOptionPane.showMessageDialog(rootPane, "Debe Digitar un Valor en Costo");
-            txtCosto.requestFocusInWindow();
-            return;
-        }
-        if (!Utilidades.isNumercFloat(txtCosto.getValue().toString())) {
-            JOptionPane.showMessageDialog(rootPane, "Debe Digitar un Valor Numerico...");
-            txtCosto.requestFocusInWindow();
-            return;
-        }
-        if (txtPrecio.getText().equals("")) {
-            JOptionPane.showMessageDialog(rootPane, "Debe Digitar un Valor en Precio");
-            txtPrecio.requestFocusInWindow();
-            return;
-        }
-        if (!Utilidades.isNumercFloat(txtPrecio.getValue().toString())) {
-            JOptionPane.showMessageDialog(rootPane, "Debe Digitar un Valor Numerico...");
-            txtPrecio.requestFocusInWindow();
-            return;
-        }*/
-        if (cbCategoria.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(rootPane, "Seleccione una categoria");
+        //Validamos que sea proporcionada una categoria del producto
+        if (cbCategoria.getSelectedIndex() <= 0) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Seleccione una categoria",
+                    PROCESO_DE_VALIDACION_DEL_SISTEMA,
+                    JOptionPane.WARNING_MESSAGE);
             cbCategoria.requestFocusInWindow();
             return;
         }
 
-        // si es nuevo validamos que el Producto no exista
+        // Si es nuevo validamos que el Producto no exista
         if (nuevo) {
             if (existeProducto(txtCodigoBarra.getText())) {
-                JOptionPane.showMessageDialog(rootPane, "Producto ID Ya existe...");
+                JOptionPane.showMessageDialog(null,
+                        "Codigo de barra existente en el sistema",
+                        PROCESO_DE_VALIDACION_DEL_SISTEMA,
+                        JOptionPane.WARNING_MESSAGE
+                );
                 txtCodigoBarra.setText("");
                 txtCodigoBarra.requestFocusInWindow();
                 return;
             }
         }
 
-        String miFile = System.getProperty("user.dir")
-                + "/images/Sin_imagen 64 x 64.png";
-
-        if (cambio) {
-            miFile = System.getProperty("user.dir") + path + "/" + txtCodigoBarra.getText().concat(
-                    "                                                 ").
-                    substring(0, 35) + "." + ext;
-        } else {
-            String sql = "select imagepath from tabla_productos where idProducto"
-                    + " like '" + txtCodigoBarra.getText() + "'";
-            ResultSet rs = null;
-            try {
-                while (rs.next()) {
-                    miFile = rs.getString("imagepath");
-                }
-            } catch (SQLException ex) {
-                //Instalar Logger
-            }
-        }
-        cambio = false;
-
-        Productos p = Productos.builder().
-                idCategoria(((Categorias) cbCategoria.getSelectedItem()).getId()).
+        Productos p = Productos.
+                builder().
+                categoria(Categorias.
+                        builder().
+                        id_categoria(((Categorias) cbCategoria.getSelectedItem()).getId_categoria()).
+                        build()).
                 codigo(txtCodigoBarra.getText()).
                 descripcion(txtDescripcion.getText()).
+                imagenProducto(Utilidades.imagenEncode64(file.getSelectedFile())).
                 estado(cbActivo.isSelected()).
-                nota(txtNotas.getText()).build();
+                nota(txtNotas.getText()).
+                build();
 
-        String msg = "", accion = "editar";
+        String msg, accion = "editar";
+        
         if (nuevo) {
             accion = "crear";
         }
+        
         if (txtNotas.getText().length() >= 51) {
-            msg = txtNotas.getText().substring(0, 49);
+            msg = txtNotas.getText().substring(0, 49)+"...";
         } else {
             msg = txtNotas.getText();
         }
@@ -1008,70 +966,55 @@ public class frmProductos extends javax.swing.JInternalFrame {
         int resp = JOptionPane.showConfirmDialog(null,
                 "<html><b><big>Se va a " + accion + " el Producto: </big></b><big>" + txtDescripcion.getText() + "</big></html>"
                 + "\n<html><b><big>Codigo no: </big></b><big>" + txtCodigoBarra.getText() + "</big></html>"
-                //+ "\n<html><b><big>Costo: </big></b><big>" + txtCosto.getText() + "</big></html>"
-                //+ "\n<html><b><big>Precio: </big></b><big>" + txtPrecio.getText() + "</big></html>"
                 + "\n<html><b><big>Categoria: </big></b><big>" + ((Categorias) cbCategoria.getSelectedItem()).getDescripcion() + "</big></html>"
                 + "\n<html><b><big>Estado: </big></b><big>" + (cbActivo.isSelected() ? "Activo" : "Inactivo") + "</big></html>"
-                + "\n<html><b><big>Impuesto al Articulo: </big></b><big>" + (cbImpuesto.isSelected() ? "Con Impuesto" : "Sin Impuesto") + "</big></html>"
                 + "\n<html><b><big>Notas: </big></b><big>" + msg + "</big></html>"
                 + "\n<html><b><big>Desea continuar? </big></b></html>",
                 "Confirmacion de Usuario",
                 JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE, jlImagen.getIcon());
-        if (resp != 0) {
+                JOptionPane.QUESTION_MESSAGE, 
+                jlImagenProducto.getIcon());
+        
+        if (resp == JOptionPane.NO_OPTION) {
             return;
         }
-
+        
+        
         if (nuevo) {
             msg = agregarProducto(p).getMensaje();
         } else {
-            msg = modificarProducto(p);
+            int id = ((Productos) tblTabla.getValueAt(tblTabla.getSelectedRow(), 2)).getId();
+            msg = modificarProducto(id,p);
         }
 
-        JOptionPane.showMessageDialog(rootPane, msg);
-
-        if (msg.equals("Error al Insertar Producto...")
-                || msg.equals("Error al Modificar Producto...")) {
-            file = new JFileChooser();
-            source = null;
-            dest = null;
-            cambio = false;
-            returnVal = JFileChooser.CANCEL_OPTION;
-            path = null;
-            ext = null;
-            cancelar();
-            return;
-        }
-
-        if (source != null && returnVal == JFileChooser.APPROVE_OPTION) {
-            Utilidades.copyFileUsingFileChannels(source, dest);
-            ImageIcon imagen = new ImageIcon("" + dest);
-            Icon icon = new ImageIcon(imagen.getImage().getScaledInstance(72, 72,
-                    Image.SCALE_DEFAULT));
-            imagen.getImage().flush();
-            jlImagen.setIcon(icon);
-            jlImagen.validate();
-        }
-
-        file = new JFileChooser();
-        source = null;
-        dest = null;
-        cambio = false;
-        returnVal = JFileChooser.CANCEL_OPTION;
-        path = null;
-        ext = null;
-        cancelar();
+        JOptionPane.showMessageDialog(
+                null, 
+                msg);
+        
+        jtpUnico.setEnabledAt(jtpUnico.indexOfComponent(jpProductos), true);  
+        
+        jtpUnico.setSelectedIndex(jtpUnico.indexOfComponent(jpProductos));
+        
+        jtpUnico.setEnabledAt(jtpUnico.indexOfComponent(jpMantenimiento), false);
+        
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        cancelar();
+        cancelar(true, null, null);
+        
+        jtpUnico.setEnabledAt(jtpUnico.indexOfComponent(jpMantenimiento), false);
+        
+        jtpUnico.setSelectedIndex(jtpUnico.indexOfComponent(jpProductos));
+
+        jtpUnico.setEnabledAt(jtpUnico.indexOfComponent(jpProductos), true);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAdmCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdmCategoriasActionPerformed
         frmCategorias miCategoria = new frmCategorias(null, true);
         miCategoria.setLocationRelativeTo(null);
         miCategoria.setVisible(true);
-        cancelar();
+        cancelar(false, null, null);
         updateCategoria();
     }//GEN-LAST:event_btnAdmCategoriasActionPerformed
 
@@ -1107,7 +1050,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         frmEntradaProducto miEntrada = new frmEntradaProducto(null, true);
         miEntrada.setLocationRelativeTo(null);
         miEntrada.setVisible(true);
-        cancelar();
+        cancelar(false, null, null);
     }//GEN-LAST:event_btnEntradaProductoActionPerformed
 
     private void btnSalidaProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalidaProductoActionPerformed
@@ -1118,112 +1061,90 @@ public class frmProductos extends javax.swing.JInternalFrame {
         frmSalidaProducto miSalida = new frmSalidaProducto(null, true);
         miSalida.setLocationRelativeTo(null);
         miSalida.setVisible(true);
-        cancelar();
+        cancelar(false, null, null);
     }//GEN-LAST:event_btnSalidaProductoActionPerformed
 
-    private void btnSalidaProducto2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalidaProducto2ActionPerformed
+    private void btnEntradaSalidaProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntradaSalidaProductoActionPerformed
 
-    }//GEN-LAST:event_btnSalidaProducto2ActionPerformed
-    private void teclas(java.awt.event.KeyEvent evt) {
-        char caracter = evt.getKeyChar();
-        if (caracter == '.') {
-            return;
-        }
-        if (caracter == ',') {
-            return;
-        }
-        if (caracter == 'R') {
-            return;
-        }
-        if (caracter == 'D') {
-            return;
-        }
-        if (caracter == '$') {
-            return;
-        }
-        if (caracter < '0' || (caracter > '9')) {
-            evt.consume();
-        }
-    }
+    }//GEN-LAST:event_btnEntradaSalidaProductoActionPerformed
 
-    private String getExtension(String s) {
-        int i = s.lastIndexOf('.');
-
-        if (i > 0 && i < s.length() - 1) {
-            ext = s.substring(i + 1).toLowerCase();
-        }
-        return ext;
-    }
-
-    private void cancelar() {
-        //Botones Para habilitar:
-        btnModificar.setEnabled(true);
-        btnBuscarProducto.setEnabled(true);
-        btnBorrar.setEnabled(true);
-        btnNuevo.setEnabled(true);
-        tblTabla.setEnabled(true);
-
-        //Botones Para Deshabitar
-        btnGuardar.setEnabled(false);
-        btnCancelar.setEnabled(false);
-
-        //Caja de Texto Deshabitar
-        txtDescripcion.setEditable(false);
-        txtCodigoBarra.setEditable(false);
-        txtNotas.setEditable(false);
-
-        file = new JFileChooser();
-        source = null;
-        dest = null;
-        cambio = false;
-        returnVal = JFileChooser.CANCEL_OPTION;
-        path = null;
-        ext = null;
-        nuevo = null;
-
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+        //Se llena la tabla de producto por primera vez. 
         llenarTabla();
-        mostrarRegistro();
-        reOrdenar(0);
-        reOrdenar(0);
+        reOrdenar();
+        updateCategoria();
+    }//GEN-LAST:event_formInternalFrameOpened
+
+    /**
+     * Metodo utilizado para 
+     * @param valor
+     * @param component
+     * @param componente 
+     */
+    private void cancelar(Boolean valor, Component component, Boolean componente) {
+        if (valor != null) {
+            //Botones Para habilitar:
+            btnNuevo.setEnabled(valor);
+            btnModificar.setEnabled(valor);
+            btnBuscarProducto.setEnabled(valor);
+            btnBorrar.setEnabled(valor);
+            
+            //Botones Para Deshabitar
+            btnGuardar.setEnabled(!valor);
+            btnCancelar.setEnabled(!valor);
+        }
+
+        if (component != null) {
+            jtpUnico.setEnabledAt(jtpUnico.indexOfComponent(component), componente);
+        }
+
+        //Se llena la tabla al cancelar un proceso
+        llenarTabla();
+        //
+        reOrdenar();
     }
 
-    private void llenarTabla() {
+    /**
+     * Es el metodo encargado de llenar la lista de producto del sistema. 
+     * Este metodo es llamado por los evento que ocurren cuando se inserta
+     * actualizan o elimina un producto del sistema. 
+     */
+    public static void llenarTabla() {
         String titulos[] = {"Codigo Producto", "Categoria", "Descripcion",
-            "Fecha creación", "Estado","Nota"};
+            "Fecha creación", "Estado", "Nota"};
         tblTabla.removeAll();
 
         Object registro[] = new Object[titulos.length];
 
         miTabla = new DefaultTableModel(null, titulos);
-        
-        Categorias cat = null;
-        Productos prod = null;
-        
-        for (Productos producto : getProductos()) {
 
-            cat = Categorias.builder().
-                    id(producto.getIdCategoria()).
-                    descripcion(producto.getDesc_categoria()).build();
-            
-            prod = Productos.builder().
+        getProductos().stream().forEach(producto -> {
+            registro[0] = producto.getCodigo();
+            registro[1] = Categorias.builder().
+                    id_categoria(producto.getCategoria().getId_categoria()).
+                    descripcion(producto.getCategoria().getDescripcion()).build();
+            registro[2] = Productos.builder().
                     id(producto.getId()).
                     descripcion(producto.getDescripcion()).build();
-            
-            registro[0] = producto.getCodigo();
-            registro[1] = cat;
-            registro[2] = prod;
             registro[3] = producto.getFechaCreacion();
             registro[4] = producto.getEstado();
             registro[5] = producto.getNota();
             miTabla.addRow(registro);
-        }
+        });
 
         tblTabla.setModel(miTabla);
+
         repararColumnaTable(tblTabla);
+
         int[] indices = {4};
+
         columnasCheckBox(tblTabla, indices);
     }
 
+    /**
+     * Es el metodo encargado de mostrar el modulo de mantenimiento de producto 
+     * o registro a actualizar. 
+     */
     private void mostrarRegistro() {
         //Si la tabla no cuenta con registro se envian valores por defecto.
         if (tblTabla.getRowCount() <= 0) {
@@ -1232,157 +1153,100 @@ public class frmProductos extends javax.swing.JInternalFrame {
             txtNotas.setText("");
 
             cbActivo.setSelected(false);
-            cbImpuesto.setSelected(false);
             cbCategoria.setSelectedIndex(-1);
             return;
         }
-
-        txtCodigoBarra.setText(tblTabla.getValueAt(
-                tblTabla.getSelectedRow(), 0).toString());
         
-        txtDescripcion.setText(tblTabla.getValueAt(
-                tblTabla.getSelectedRow(), 1).toString());
-        
-        txtNotas.setText(tblTabla.getValueAt(
-                tblTabla.getSelectedRow(), 6).toString());
-        
-        cbActivo.setSelected((Boolean) tblTabla.getValueAt(
-                tblTabla.getSelectedRow(), 5));
-        
-        cbImpuesto.setSelected((Boolean) tblTabla.getValueAt(
-                tblTabla.getSelectedRow(), 8));
+        int id = ((Productos) tblTabla.getValueAt(fila, 2)).getId();
 
-        String sql = "select p.IDCATEGORIA, p.IMAGEPATH "
-                + "from GET_PRODUCTOS p "
-                + "where idProducto like '" + txtCodigoBarra.getText() + "'";
+        Productos producto = Productos.getProducto(id);
+        
+        txtCodigoBarra.setText(producto.getCodigo());
 
-        ResultSet rs = null;
-        try {
-            while (rs.next()) {
-                ImageIcon imagen = new ImageIcon(rs.getString("imagepath"));
-                if (imagen.getIconHeight() == -1) {
-                    imagen = new ImageIcon(System.getProperty("user.dir")
-                            + "/images/Sin_imagen 64 x 64.png");
-                }
-                Icon icon = new ImageIcon(imagen.getImage().getScaledInstance(72, 72,
-                        Image.SCALE_DEFAULT));
-                imagen.getImage().flush();
-                jlImagen.setIcon(icon);
-                jlImagen.validate();
+        txtDescripcion.setText(producto.getDescripcion());
 
-                for (int i = 0; i < cbCategoria.getItemCount(); i++) {
-                    if (((Categorias) cbCategoria.getItemAt(i)).getId().equals(
-                            rs.getInt("idCategoria"))) {
-                        cbCategoria.setSelectedIndex(i);
-                        break;
-                    }
-                }
+        txtNotas.setText(producto.getNota());
+
+        cbActivo.setSelected(producto.getEstado());
+        
+        
+        ImageIcon imagen = Utilidades.imagenDecode64(producto.getImagenProducto());
+        
+        Icon icon = new ImageIcon(imagen.getImage().getScaledInstance(SCALA_ICONO, SCALA_ICONO, Image.SCALE_SMOOTH));
+
+        imagen.getImage().flush();
+            
+        jlImagenProducto.setIcon(icon);
+        
+        for (int i = 0; i < cbCategoria.getItemCount(); i++) {
+            int idCategoria = ((Categorias) cbCategoria.getItemAt(i)).getId_categoria();
+            if(idCategoria == producto.getCategoria().getId_categoria()){
+                cbCategoria.setSelectedIndex(i);
             }
-        } catch (SQLException ex) {
-            //Instalar Logger
         }
+        
     }
 
-    private void reOrdenar(int colm) {
-        if (tblTabla.getRowCount() == 0) {
+    /**
+     * Metodo utilizado para modicar el ancho de cada columna del modulo
+     * producto.
+     */
+    private void reOrdenar() {
+        if (tblTabla.getRowCount() <= 0) {
             return;
         }
+        
         TableColumn miTableColumn;
-        for (int i = 0; i <= 9; i++) {
+        for (int i = 0; i < tblTabla.getColumnCount(); i++) {
+
             miTableColumn = tblTabla.getColumnModel().getColumn(i);
-            if (i == 0) {
-                miTableColumn.setPreferredWidth(120);
-                miTableColumn.setMaxWidth(120);
+
+            if (i == 0) {//Codigo Producto
+                miTableColumn.setPreferredWidth(150);
+                miTableColumn.setMaxWidth(200);
                 miTableColumn.setMinWidth(120);
             }
-            if (i == 1) {
-                miTableColumn.setPreferredWidth(400);
+
+            if (i == 1) {//Categoria
+                miTableColumn.setPreferredWidth(300);
                 miTableColumn.setMaxWidth(400);
-                miTableColumn.setMinWidth(400);
-                if (colm != 0) {
-                    miTableColumn.setPreferredWidth(300);
-                    miTableColumn.setMaxWidth(300);
-                    miTableColumn.setMinWidth(300);
-                }
+                miTableColumn.setMinWidth(200);
             }
-            if (i == 2) {
+
+            if (i == 2) {//Descripcion 
+                miTableColumn.setPreferredWidth(500);
+                miTableColumn.setMaxWidth(800);
+                miTableColumn.setMinWidth(100);
+            }
+
+            if (i == 3) {//Fecha de vecimiento
+                miTableColumn.setPreferredWidth(200);
+                miTableColumn.setMaxWidth(300);
+                miTableColumn.setMinWidth(100);
+            }
+
+            if (i == 4) {//Estado del producto
                 miTableColumn.setPreferredWidth(100);
                 miTableColumn.setMaxWidth(100);
                 miTableColumn.setMinWidth(100);
             }
-            if (i == 3) {
-                miTableColumn.setPreferredWidth(100);
-                miTableColumn.setMaxWidth(100);
+
+            if (i == 5) {//Nota del producto.
+                miTableColumn.setPreferredWidth(300);
+                miTableColumn.setMaxWidth(800);
                 miTableColumn.setMinWidth(100);
-            }
-            if (i == 4) {
-                miTableColumn.setPreferredWidth(100);
-                miTableColumn.setMaxWidth(100);
-                miTableColumn.setMinWidth(100);
-            }
-            if (i == 5) {
-                miTableColumn.setPreferredWidth(80);
-                miTableColumn.setMaxWidth(80);
-                miTableColumn.setMinWidth(80);
-            }
-            if (i == 6) {
-                miTableColumn.setPreferredWidth(0);
-                miTableColumn.setMaxWidth(00);
-                miTableColumn.setMinWidth(00);
-                if (colm == 6) {
-                    miTableColumn.setPreferredWidth(200);
-                    miTableColumn.setMaxWidth(200);
-                    miTableColumn.setMinWidth(200);
-                    tblTabla.repaint();
-                }
-            }
-            if (i == 7) {
-                miTableColumn.setPreferredWidth(0);
-                miTableColumn.setMaxWidth(0);
-                miTableColumn.setMinWidth(0);
-                if (colm == 7) {
-                    miTableColumn.setPreferredWidth(150);
-                    miTableColumn.setMaxWidth(150);
-                    miTableColumn.setMinWidth(150);
-                    tblTabla.repaint();
-                }
-            }
-            if (i == 8) {
-                miTableColumn.setPreferredWidth(0);
-                miTableColumn.setMaxWidth(0);
-                miTableColumn.setMinWidth(0);
-                if (colm == 8) {
-                    miTableColumn.setPreferredWidth(100);
-                    miTableColumn.setMaxWidth(100);
-                    miTableColumn.setMinWidth(100);
-                    tblTabla.repaint();
-                }
-            }
-            if (i == 9) {
-                miTableColumn.setPreferredWidth(0);
-                miTableColumn.setMaxWidth(0);
-                miTableColumn.setMinWidth(0);
-                if (colm == 9) {
-                    miTableColumn.setPreferredWidth(100);
-                    miTableColumn.setMaxWidth(100);
-                    miTableColumn.setMinWidth(100);
-                    tblTabla.repaint();
-                }
             }
         }
         //Para Alinear el Texto de la Table a la Derecha...
 
         tcr.setHorizontalAlignment(SwingConstants.RIGHT);
-
-        tblTabla.getColumnModel().getColumn(2).setCellRenderer(tcr);
         tblTabla.getColumnModel().getColumn(3).setCellRenderer(tcr);
-        tblTabla.getColumnModel().getColumn(4).setCellRenderer(tcr);
 
-        int[] indices = {5, 8};
+        int[] indices = {4};
+
         columnasCheckBox(tblTabla, indices);
 
-        tblTabla.setRowSelectionInterval(tblTabla.getSelectedRow(),
-                tblTabla.getSelectedRow());
+        tblTabla.setRowSelectionInterval(fila, fila);
     }
 
     private void updateCategoria() {
@@ -1395,16 +1259,14 @@ public class frmProductos extends javax.swing.JInternalFrame {
     private RSMaterialComponent.RSButtonMaterialIconOne btnBuscarProducto;
     public RSMaterialComponent.RSButtonMaterialIconOne btnCancelar;
     private RSMaterialComponent.RSButtonMaterialIconOne btnEntradaProducto;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnEntradaSalidaProducto;
     private RSMaterialComponent.RSButtonMaterialIconOne btnGuardar;
     private RSMaterialComponent.RSButtonMaterialIconOne btnImprimirLista;
     private RSMaterialComponent.RSButtonMaterialIconOne btnModificar;
     private RSMaterialComponent.RSButtonMaterialIconOne btnNuevo;
     private RSMaterialComponent.RSButtonMaterialIconOne btnSalidaProducto;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnSalidaProducto2;
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JCheckBox cbActivo;
     private javax.swing.JComboBox cbCategoria;
-    private javax.swing.JCheckBox cbImpuesto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
@@ -1417,7 +1279,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JLabel jlImagen;
+    private javax.swing.JLabel jlImagenProducto;
     private javax.swing.JPanel jpCategorias;
     private javax.swing.JPanel jpESHistorial;
     private javax.swing.JPanel jpESProductos;
@@ -1425,7 +1287,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jpOpciones;
     private javax.swing.JPanel jpProductos;
     private javax.swing.JTabbedPane jtpUnico;
-    private javax.swing.JTable tblTabla;
+    private static RSMaterialComponent.RSTableMetro tblTabla;
     private javax.swing.JTextField txtCodigoBarra;
     private javax.swing.JTextField txtDescripcion;
     private javax.swing.JTextArea txtNotas;

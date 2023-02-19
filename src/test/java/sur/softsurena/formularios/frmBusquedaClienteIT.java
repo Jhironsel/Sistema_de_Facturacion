@@ -32,16 +32,5 @@ public class frmBusquedaClienteIT {
     public void tearDown() {
     }
 
-    /**
-     * Test of getRespuesta method, of class frmBusquedaCliente.
-     */
-    @Test
-    public void testGetRespuesta() {
-        System.out.println("getRespuesta");
-        frmBusquedaCliente instance = null;
-        String expResult = "";
-        String result = instance.getRespuesta();
-        assertEquals(expResult, result);
-    }
     
 }

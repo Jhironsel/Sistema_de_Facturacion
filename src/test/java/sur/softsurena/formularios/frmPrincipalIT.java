@@ -31,15 +31,5 @@ public class frmPrincipalIT {
     @After
     public void tearDown() {
     }
-
-    /**
-     * Test of cerrarFormularios method, of class frmPrincipal.
-     */
-    @Test
-    public void testCerrarFormularios() {
-        System.out.println("cerrarFormularios");
-        frmPrincipal instance = new frmPrincipal();
-        instance.cerrarFormularios();
-    }
     
 }

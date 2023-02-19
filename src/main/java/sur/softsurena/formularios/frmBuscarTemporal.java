@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,13 +15,14 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import sur.softsurena.entidades.DefaultTableCellHeaderRenderer;
+import sur.softsurena.entidades.Temporales;
 import static sur.softsurena.entidades.Temporales.getTemporales;
 import sur.softsurena.hilos.hiloImpresionFactura;
 
 public final class frmBuscarTemporal extends java.awt.Dialog {
 
     private static final Logger LOG = Logger.getLogger(frmBuscarTemporal.class.getName());
-    
+
     private DefaultTableModel miTabla;
     private boolean aceptar;
     private String factura;
@@ -42,7 +44,6 @@ public final class frmBuscarTemporal extends java.awt.Dialog {
         this.aceptar = aceptar;
     }
 
-
     public frmBuscarTemporal(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -58,9 +59,10 @@ public final class frmBuscarTemporal extends java.awt.Dialog {
                 return false; //Las celdas no son editables.
             }
         };
-        btnCancelar = new javax.swing.JButton();
-        btnGrabar = new javax.swing.JButton();
-        btnAceptar = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        btnAceptar = new newscomponents.RSButtonGradientIcon_new();
+        btnImprimirCuenta = new newscomponents.RSButtonGradientIcon_new();
+        btnCancelar = new newscomponents.RSButtonGradientIcon_new();
 
         setMinimumSize(new java.awt.Dimension(668, 258));
         setResizable(false);
@@ -85,86 +87,116 @@ public final class frmBuscarTemporal extends java.awt.Dialog {
         ));
         jScrollPane1.setViewportView(tblDetalle);
 
-        btnCancelar.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        btnCancelar.setForeground(new java.awt.Color(1, 1, 1));
-        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Cancelar 32 x 32.png"))); // NOI18N
-        btnCancelar.setMnemonic('t');
-        btnCancelar.setText("Cancelar");
-        btnCancelar.setToolTipText("Cancelar Factura Actual");
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
-            }
-        });
-
-        btnGrabar.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        btnGrabar.setForeground(new java.awt.Color(1, 1, 1));
-        btnGrabar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Aceptar 32 x 32.png"))); // NOI18N
-        btnGrabar.setMnemonic('t');
-        btnGrabar.setText("Aceptar");
-        btnGrabar.setToolTipText("Confirmar Factura");
-        btnGrabar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGrabarActionPerformed(evt);
-            }
-        });
-
-        btnAceptar.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        btnAceptar.setForeground(new java.awt.Color(1, 1, 1));
-        btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Impresora.png"))); // NOI18N
-        btnAceptar.setMnemonic('I');
-        btnAceptar.setText("Imprimir Cuenta");
-        btnAceptar.setToolTipText("");
-        btnAceptar.setBorder(null);
-        btnAceptar.setBorderPainted(false);
-        btnAceptar.setPreferredSize(new java.awt.Dimension(123, 44));
-        btnAceptar.setSelected(true);
-        btnAceptar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnAceptarMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnAceptarMouseExited(evt);
-            }
-        });
+        btnAceptar.setText("Aceptar");
+        btnAceptar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DONE);
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAceptarActionPerformed(evt);
             }
         });
 
+        btnImprimirCuenta.setText("Imprimir Cuenta");
+        btnImprimirCuenta.setColorPrimario(new java.awt.Color(51, 255, 51));
+        btnImprimirCuenta.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.PRINT);
+        btnImprimirCuenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirCuentaActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setText("Cancelar");
+        btnCancelar.setColorPrimario(new java.awt.Color(255, 0, 0));
+        btnCancelar.setColorPrimarioHover(new java.awt.Color(255, 51, 102));
+        btnCancelar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CANCEL);
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnImprimirCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 398, Short.MAX_VALUE)
+                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnImprimirCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 976, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCancelar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnGrabar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnGrabar)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnCancelar)
-                        .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
-
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnAceptar, btnCancelar, btnGrabar});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        llenarTabla();
+    }//GEN-LAST:event_formWindowOpened
+
+    private void btnImprimirCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirCuentaActionPerformed
+        //Debe haber una factura selecciona
+        if (tblDetalle.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "No ha seleccionado Factura");
+            return;
+        }
+
+        //Creamos un mapa de los valores de la factura, la cual se requiere el 
+        //identificador de la factura. 
+        Map parametros = new HashMap();
+
+        parametros.put("idFactura", Integer.valueOf(
+                miTabla.getValueAt(
+                        tblDetalle.getSelectedRow(), 0).toString()));
+
+        hiloImpresionFactura miFactura
+                = new hiloImpresionFactura(
+                        true, //Mostrar Reporte
+                        false, //No se requiere copia del documento
+                        "/Reportes/factura.jasper",
+                        parametros,
+                        frmPrincipal.jPanelImpresion,
+                        frmPrincipal.jprImpresion);
+        miFactura.start();
+    }//GEN-LAST:event_btnImprimirCuentaActionPerformed
+
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         setAceptar(false);
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
-    private void btnGrabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrabarActionPerformed
+
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         if (tblDetalle.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(null, "Debe selecionar una Factura...");
             return;
@@ -172,97 +204,44 @@ public final class frmBuscarTemporal extends java.awt.Dialog {
         setAceptar(true);
         setFactura(tblDetalle.getValueAt(tblDetalle.getSelectedRow(), 0).toString());
         dispose();
-    }//GEN-LAST:event_btnGrabarActionPerformed
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        llenarTabla();
-    }//GEN-LAST:event_formWindowOpened
-
-    private void btnAceptarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseExited
-        btnAceptar.setForeground(Color.BLACK);
-    }//GEN-LAST:event_btnAceptarMouseExited
-
-    private void btnAceptarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseEntered
-        btnAceptar.setForeground(Color.BLUE);
-    }//GEN-LAST:event_btnAceptarMouseEntered
-
-    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        //Debe haber una factura selecciona
-        if (tblDetalle.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(null, "No ha seleccionado Factura");
-            return;
-        }
-        
-        //Creamos un mapa de los valores de la factura, la cual se requiere el 
-        //identificador de la factura. 
-        Map parametros = new HashMap();
-        
-        parametros.put("idFactura", Integer.valueOf(
-                miTabla.getValueAt(
-                        tblDetalle.getSelectedRow(), 0).toString()));
-        
-        hiloImpresionFactura miFactura
-                = new hiloImpresionFactura(
-                        true, //Mostrar Reporte
-                        false, //No se requiere copia del documento
-                        "/Reportes/factura.jasper",
-                        parametros, 
-                        frmPrincipal.jPanelImpresion, 
-                        frmPrincipal.jprImpresion);
-        miFactura.start();
     }//GEN-LAST:event_btnAceptarActionPerformed
     /**
-     * Metodo utilizado para llenar las tablas de las facturas que existen en 
-     * temporal.
-     * Actualizado el 05 Junio 2022: nota: 
+     * Metodo utilizado para llenar las tablas de las facturas que existen en
+     * temporal. Actualizado el 05 Junio 2022: nota:
      */
     private void llenarTabla() {
-        try {
-            String titulos[] = {"N° Factura", "Nombre Cliente", "Fecha", "Hora",
-                "Cajero", "Monto"};
-
-            miTabla = new DefaultTableModel(null, titulos);
+        String titulos[] = {"N° Factura", "Nombre Cliente", "Fecha", "Hora",
+            "Cajero", "Monto"};
+        miTabla = new DefaultTableModel(null, titulos);
+        //Consulta a la base de datos que trae los registros
+        List<Temporales> temporalesList = getTemporales();
+        //Objecto utlizado en la construción de la tabla.
+        Object registro[] = new Object[6];
+        
+        temporalesList.stream().forEach(temporal -> {
+            registro[0] = temporal.getId();
             
-            //Consulta a la base de datos que trae los registros
-            ResultSet rs = getTemporales();
-            
-            //Objecto utlizado en la construción de la tabla.
-            Object registro[] = new Object[6];
-            
-            while (rs.next()) {
-                registro[0] = rs.getString("ID");
-                
-                if (rs.getInt("ID_CLIENTE") == 0) {
-                    registro[1] = rs.getString("NOMBRETEMP");
-                } else {
-                    registro[1] = rs.getString("PNOMBRE") + (
-                            rs.getString("PNOMBRE") == null || 
-                                rs.getString("SNOMBRE").isEmpty() ? 
-                            "" : rs.getString("SNOMBRE")) + " " + 
-                            rs.getString("APELLIDOS");
-                }
-                
-                registro[2] = rs.getString("Fecha");
-                registro[3] = rs.getString("Hora");
-                registro[4] = rs.getString("IDUsuario");
-                registro[5] = rs.getString("Monto");
-
-                miTabla.addRow(registro);//Se van insertando los registros.
+            if (temporal.getId_persona() == 0) {
+                registro[1] = temporal.getNombreTemporal();
+            } else {
+                registro[1] = temporal.toString();
             }
             
-            //Se agrega el modelo a la tabla.
-            tblDetalle.setModel(miTabla);
+            registro[2] = temporal.getFecha_ingreso();
+            registro[3] = temporal.getHeaderFactura().getUserName();
             
-            //Para Alinear el Texto de la Table a la Derecha...
-            tcr.setHorizontalAlignment(SwingConstants.CENTER);
-            tblDetalle.getColumnModel().getColumn(0).setCellRenderer(tcr);
+            
+            miTabla.addRow(registro);//Se van insertando los registros.
+            
+        });
+        //Se agrega el modelo a la tabla.
+        tblDetalle.setModel(miTabla);
+        //Para Alinear el Texto de la Table a la Derecha...
+        tcr.setHorizontalAlignment(SwingConstants.CENTER);
+        tblDetalle.getColumnModel().getColumn(0).setCellRenderer(tcr);
+        tcr.setHorizontalAlignment(SwingConstants.RIGHT);
+        tblDetalle.getColumnModel().getColumn(5).setCellRenderer(tcr);
 
-            tcr.setHorizontalAlignment(SwingConstants.RIGHT);
-            tblDetalle.getColumnModel().getColumn(5).setCellRenderer(tcr);
-
-        } catch (SQLException ex) {
-            LOG.log(Level.SEVERE, ex.getMessage(), ex);
-        }
-        
         //Ordenando las columnas
         TableColumn miTableColumn;
         for (int i = 0; i <= 5; i++) {
@@ -287,11 +266,12 @@ public final class frmBuscarTemporal extends java.awt.Dialog {
             }
         }
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAceptar;
-    private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnGrabar;
+    private newscomponents.RSButtonGradientIcon_new btnAceptar;
+    private newscomponents.RSButtonGradientIcon_new btnCancelar;
+    private newscomponents.RSButtonGradientIcon_new btnImprimirCuenta;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTable tblDetalle;
     // End of variables declaration//GEN-END:variables

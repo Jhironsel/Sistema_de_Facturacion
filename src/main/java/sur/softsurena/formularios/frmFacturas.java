@@ -9,13 +9,17 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,6 +54,8 @@ import sur.softsurena.entidades.HeaderFactura;
 import sur.softsurena.entidades.Opcion;
 import sur.softsurena.entidades.Personas;
 import static sur.softsurena.entidades.Productos.existeProducto;
+import static sur.softsurena.entidades.Turnos.idTurnoActivo;
+import sur.softsurena.entidades.Usuarios;
 import static sur.softsurena.formularios.frmPrincipal.mnuMovimientosNuevaFactura;
 import sur.softsurena.hilos.hiloImpresionFactura;
 import sur.softsurena.metodos.Imagenes;
@@ -59,17 +65,17 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
 
     private static final Logger LOG = Logger.getLogger(frmFacturas.class.getName());
 
-    private Integer idUsuario, idCliente, turno, idClienteTemporal;
+    private Integer idCliente, idClienteTemporal;
 
     private String nombreCliente = "";
 
     private final String titulos[] = {"Cantidad", "Descripcion", "Montos"};
 
-    private double valorCredito = 0;
+    private final double valorCredito = 0;
 
     private JButton btn, boton;
 
-    private ActionEvent e1;
+    private ActionEvent copiaActionEvent;
 
     private boolean temporal;
 
@@ -89,18 +95,25 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
 
     private ArrayList<DetalleFactura> detalleFacturaList;
 
+    private Usuarios usuario;
+    
+    private static final String PROCESO_DE_CREACION_DE_FACTURA = "Proceso de creación de factura.";
+
     private Properties getPropiedad() {
         return propiedad;
     }
 
     private void setPropiedad() {
-        try {
-            getPropiedad().load(new FileReader("sur/softsurena/properties/propiedades.properties"));
+        File file = new File("target/classes/sur/softsurena/properties/proFacturas.prop");
+
+        try (InputStream is = new FileInputStream(file);) {
+            getPropiedad().load(is);
         } catch (FileNotFoundException ex) {
-            LOG.log(Level.SEVERE, ex.getMessage(), ex);
+            LOG.log(Level.SEVERE, "Archivo proFacturas.prop no ha sido encontrado.", ex);
         } catch (IOException ex) {
-            LOG.log(Level.SEVERE, ex.getMessage(), ex);
+            LOG.log(Level.SEVERE, "Error al cargar el archivos de propiedades proFacturas.prop", ex);
         }
+
     }
 
     public boolean isTemporal() {
@@ -119,24 +132,13 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
         this.idCliente = idCliente;
     }
 
-    public int getTurno() {
-        return turno;
-    }
-
-    public void setTurno(int turno) {
-        this.turno = turno;
-    }
-
-    public Integer getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(Integer idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
     public frmFacturas() {
         initComponents();
+        
+        txtCriterio.requestFocusInWindow();
+
+        usuario = Usuarios.getUsuarioActual();
+
         tcr = new DefaultTableCellHeaderRenderer();
 
         propiedad = new Properties();
@@ -169,7 +171,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
             } catch (InterruptedException e) {
                 JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
             }
-            txtHora.setText("");
+            txtHora.setText(new Time(0).toString());
         }
     }
 
@@ -178,31 +180,34 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
     private void initComponents() {
 
         btnGrupoPago = new javax.swing.ButtonGroup();
+        rSMenuBar2 = new rojerusan.RSMenuBar();
+        jMenu3 = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jPanel2 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        btnEspera = new javax.swing.JButton();
-        btnBuscarEspera = new javax.swing.JButton();
-        btnGastos = new javax.swing.JButton();
-        btnPagoDeuda = new javax.swing.JButton();
-        btnImpresionUltima = new javax.swing.JButton();
-        btnGrabar = new javax.swing.JButton();
-        btnLimpiarF12 = new javax.swing.JButton();
-        btnDevolucion = new javax.swing.JButton();
+        btnEspera = new newscomponents.RSButtonGradientIcon_new();
+        btnBuscarEspera = new newscomponents.RSButtonGradientIcon_new();
+        btnGastos = new newscomponents.RSButtonGradientIcon_new();
+        btnPagoDeuda = new newscomponents.RSButtonGradientIcon_new();
+        btnImpresionUltima = new newscomponents.RSButtonGradientIcon_new();
+        btnGrabar = new newscomponents.RSButtonGradientIcon_new();
+        btnLimpiarF12 = new newscomponents.RSButtonGradientIcon_new();
         jPanel6 = new javax.swing.JPanel();
         cbTodos = new javax.swing.JCheckBox();
         cbTodosProductos = new javax.swing.JCheckBox();
         cbPrevista = new javax.swing.JCheckBox();
         jScrollPane3 = new javax.swing.JScrollPane();
         jPanel8 = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
+        jpFacturas = new javax.swing.JPanel();
         jpCliente = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         rbtContado = new javax.swing.JRadioButton();
         rbtCredito = new javax.swing.JRadioButton();
-        jPanel7 = new javax.swing.JPanel();
-        btnBuscarCliente = new javax.swing.JButton();
+        btnBuscarCliente = new newscomponents.RSButtonGradientIcon_new();
         cmbCliente = new javax.swing.JComboBox();
+        jPanel14 = new javax.swing.JPanel();
         JlCantidad1 = new javax.swing.JLabel();
         JlCantidad2 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -240,6 +245,15 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
         txtFecha = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         txtHora = new javax.swing.JTextField();
+        jMenuBar1 = new javax.swing.JMenuBar();
+
+        jMenu3.setText("File");
+        rSMenuBar2.add(jMenu3);
+
+        jMenu4.setText("Edit");
+        rSMenuBar2.add(jMenu4);
+
+        jMenuItem1.setText("jMenuItem1");
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -274,15 +288,15 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
         jPanel5.setMinimumSize(new java.awt.Dimension(250, 68));
         jPanel5.setLayout(new java.awt.GridLayout(1, 7, 3, 3));
 
-        btnEspera.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        btnEspera.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/clock 32 x 32.png"))); // NOI18N
-        btnEspera.setMnemonic('T');
-        btnEspera.setText("<html><center>Temporal<br>F5</center></html>");
-        btnEspera.setToolTipText("Poner una factura en espera y seguir con la otra");
-        btnEspera.setBorder(null);
-        btnEspera.setFocusPainted(false);
-        btnEspera.setFocusable(false);
+        btnEspera.setText("<html><center>Getion<br>Temporal<br>F5</center></html>");
+        btnEspera.setToolTipText("<html><center>Temporal<br>F5</center></html>");
+        btnEspera.setGradiente(newscomponents.RSButtonGradientIcon_new.Gradiente.HORIZONTAL);
         btnEspera.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnEspera.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.HOURGLASS_FULL);
+        btnEspera.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnEspera.setName("btnTemporal"); // NOI18N
+        btnEspera.setRound(30);
+        btnEspera.setSizeIcon(40.0F);
         btnEspera.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnEspera.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -291,14 +305,15 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
         });
         jPanel5.add(btnEspera);
 
-        btnBuscarEspera.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        btnBuscarEspera.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Buscar3 32 x 32.png"))); // NOI18N
-        btnBuscarEspera.setText("<html><center>Temporal<br>F6</center></html>");
-        btnBuscarEspera.setToolTipText("Buscar factura que estan en espera");
-        btnBuscarEspera.setBorder(null);
-        btnBuscarEspera.setFocusPainted(false);
-        btnBuscarEspera.setFocusable(false);
+        btnBuscarEspera.setText("<html><center>Buscar<br>Temporal<br>F6</center></html>");
+        btnBuscarEspera.setToolTipText("<html><center>Temporal<br>F6</center></html>");
+        btnBuscarEspera.setGradiente(newscomponents.RSButtonGradientIcon_new.Gradiente.HORIZONTAL);
         btnBuscarEspera.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnBuscarEspera.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
+        btnBuscarEspera.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnBuscarEspera.setName("btnTemporal"); // NOI18N
+        btnBuscarEspera.setRound(30);
+        btnBuscarEspera.setSizeIcon(40.0F);
         btnBuscarEspera.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnBuscarEspera.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -307,14 +322,15 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
         });
         jPanel5.add(btnBuscarEspera);
 
-        btnGastos.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        btnGastos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/gasto 32 x 32.png"))); // NOI18N
-        btnGastos.setText("<html><center>Gasto<br>F7</center></html>");
-        btnGastos.setToolTipText("Pagar gastos del Negocio");
-        btnGastos.setBorder(null);
-        btnGastos.setFocusPainted(false);
-        btnGastos.setFocusable(false);
+        btnGastos.setText("<html><center>Gestion<br>Gastos<br>F7</center></html>");
+        btnGastos.setToolTipText("<html><center>Gasto<br>F7</center></html>");
+        btnGastos.setGradiente(newscomponents.RSButtonGradientIcon_new.Gradiente.HORIZONTAL);
         btnGastos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnGastos.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.LOCAL_ATM);
+        btnGastos.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnGastos.setName("btnTemporal"); // NOI18N
+        btnGastos.setRound(30);
+        btnGastos.setSizeIcon(40.0F);
         btnGastos.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnGastos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -323,14 +339,15 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
         });
         jPanel5.add(btnGastos);
 
-        btnPagoDeuda.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        btnPagoDeuda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Dinero 32 x 32.png"))); // NOI18N
-        btnPagoDeuda.setText("<html><center>Deuda<br>F8</center></html>");
-        btnPagoDeuda.setToolTipText("Buscar Deuda");
-        btnPagoDeuda.setBorder(null);
-        btnPagoDeuda.setFocusPainted(false);
-        btnPagoDeuda.setFocusable(false);
+        btnPagoDeuda.setText("<html><center>Gestion<br>Deudas<br>F8</center></html>");
+        btnPagoDeuda.setToolTipText("<html><center>Gasto<br>F7</center></html>");
+        btnPagoDeuda.setGradiente(newscomponents.RSButtonGradientIcon_new.Gradiente.HORIZONTAL);
         btnPagoDeuda.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnPagoDeuda.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ATTACH_MONEY);
+        btnPagoDeuda.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnPagoDeuda.setName("btnTemporal"); // NOI18N
+        btnPagoDeuda.setRound(30);
+        btnPagoDeuda.setSizeIcon(40.0F);
         btnPagoDeuda.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnPagoDeuda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -339,14 +356,15 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
         });
         jPanel5.add(btnPagoDeuda);
 
-        btnImpresionUltima.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        btnImpresionUltima.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/epson32x32.png"))); // NOI18N
-        btnImpresionUltima.setText("<html><center>Ultima<br>F9</center></html>");
-        btnImpresionUltima.setToolTipText("Ultima Facura");
-        btnImpresionUltima.setBorder(null);
-        btnImpresionUltima.setFocusPainted(false);
-        btnImpresionUltima.setFocusable(false);
+        btnImpresionUltima.setText("<html><center>Ultimas<br>Facturas<br>F8</center></html>");
+        btnImpresionUltima.setToolTipText("<html><center>Gasto<br>F7</center></html>");
+        btnImpresionUltima.setGradiente(newscomponents.RSButtonGradientIcon_new.Gradiente.HORIZONTAL);
         btnImpresionUltima.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnImpresionUltima.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.YOUTUBE_SEARCHED_FOR);
+        btnImpresionUltima.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnImpresionUltima.setName("btnTemporal"); // NOI18N
+        btnImpresionUltima.setRound(30);
+        btnImpresionUltima.setSizeIcon(40.0F);
         btnImpresionUltima.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnImpresionUltima.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -355,15 +373,15 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
         });
         jPanel5.add(btnImpresionUltima);
 
-        btnGrabar.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        btnGrabar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Aceptar 32 x 32.png"))); // NOI18N
-        btnGrabar.setText("<html><center>Terminar<br>F10</center></html>");
-        btnGrabar.setToolTipText("Confirmar Factura");
-        btnGrabar.setAutoscrolls(true);
-        btnGrabar.setBorder(null);
-        btnGrabar.setFocusPainted(false);
-        btnGrabar.setFocusable(false);
+        btnGrabar.setText("<html><center><br>Terminar<br>F10</center></html>");
+        btnGrabar.setToolTipText("<html><center>Gasto<br>F7</center></html>");
+        btnGrabar.setGradiente(newscomponents.RSButtonGradientIcon_new.Gradiente.HORIZONTAL);
         btnGrabar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnGrabar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DONE_ALL);
+        btnGrabar.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnGrabar.setName("btnTemporal"); // NOI18N
+        btnGrabar.setRound(30);
+        btnGrabar.setSizeIcon(40.0F);
         btnGrabar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnGrabar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -372,14 +390,15 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
         });
         jPanel5.add(btnGrabar);
 
-        btnLimpiarF12.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        btnLimpiarF12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Cancelar 32 x 32.png"))); // NOI18N
-        btnLimpiarF12.setText("<html><center>Limpiar<br>F12</center></html>");
-        btnLimpiarF12.setToolTipText("Cancelar Factura Actual");
-        btnLimpiarF12.setBorder(null);
-        btnLimpiarF12.setFocusPainted(false);
-        btnLimpiarF12.setFocusable(false);
+        btnLimpiarF12.setText("<html><center><br>Limpiar<br>F12</center></html>");
+        btnLimpiarF12.setToolTipText("<html><center>Gasto<br>F7</center></html>");
+        btnLimpiarF12.setGradiente(newscomponents.RSButtonGradientIcon_new.Gradiente.HORIZONTAL);
         btnLimpiarF12.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnLimpiarF12.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLEAR_ALL);
+        btnLimpiarF12.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnLimpiarF12.setName("btnTemporal"); // NOI18N
+        btnLimpiarF12.setRound(30);
+        btnLimpiarF12.setSizeIcon(40.0F);
         btnLimpiarF12.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnLimpiarF12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -387,22 +406,6 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
             }
         });
         jPanel5.add(btnLimpiarF12);
-
-        btnDevolucion.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        btnDevolucion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/devolucion32x32.png"))); // NOI18N
-        btnDevolucion.setText("Devoluciones");
-        btnDevolucion.setToolTipText("Cancelar Factura Actual");
-        btnDevolucion.setBorder(null);
-        btnDevolucion.setFocusPainted(false);
-        btnDevolucion.setFocusable(false);
-        btnDevolucion.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnDevolucion.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnDevolucion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDevolucionActionPerformed(evt);
-            }
-        });
-        jPanel5.add(btnDevolucion);
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Opciones de busqueda"));
         jPanel6.setAutoscrolls(true);
@@ -450,11 +453,11 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 643, Short.MAX_VALUE)
-                .addGap(0, 0, 0)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addContainerGap()
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -478,17 +481,19 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
         jpCliente.setMinimumSize(new java.awt.Dimension(30, 30));
         jpCliente.setPreferredSize(new java.awt.Dimension(265, 135));
         org.jdesktop.swingx.VerticalLayout verticalLayout1 = new org.jdesktop.swingx.VerticalLayout();
-        verticalLayout1.setGap(3);
+        verticalLayout1.setGap(10);
         jpCliente.setLayout(verticalLayout1);
 
         jPanel9.setMaximumSize(new java.awt.Dimension(153, 100));
         jPanel9.setMinimumSize(new java.awt.Dimension(153, 30));
         jPanel9.setName(""); // NOI18N
         jPanel9.setPreferredSize(new java.awt.Dimension(153, 40));
+        jPanel9.setLayout(new org.jdesktop.swingx.HorizontalLayout());
 
-        jPanel4.setMaximumSize(new java.awt.Dimension(153, 40));
+        jPanel4.setMinimumSize(new java.awt.Dimension(32767, 32767));
         jPanel4.setName(""); // NOI18N
-        jPanel4.setPreferredSize(new java.awt.Dimension(153, 40));
+        jPanel4.setPreferredSize(new java.awt.Dimension(300, 10));
+        jPanel4.setLayout(new org.jdesktop.swingx.VerticalLayout());
 
         btnGrupoPago.add(rbtContado);
         rbtContado.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
@@ -503,6 +508,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
                 rbtContadoActionPerformed(evt);
             }
         });
+        jPanel4.add(rbtContado);
 
         btnGrupoPago.add(rbtCredito);
         rbtCredito.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
@@ -516,75 +522,23 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
                 rbtCreditoActionPerformed(evt);
             }
         });
+        jPanel4.add(rbtCredito);
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(rbtContado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(rbtCredito, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(rbtContado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0)
-                .addComponent(rbtCredito, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
-        );
+        jPanel9.add(jPanel4);
 
-        jPanel7.setBackground(new java.awt.Color(0, 153, 255));
-        jPanel7.setMaximumSize(new java.awt.Dimension(153, 40));
-        jPanel7.setPreferredSize(new java.awt.Dimension(153, 40));
-
-        btnBuscarCliente.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        btnBuscarCliente.setForeground(new java.awt.Color(0, 0, 0));
-        btnBuscarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Cliente 32 x 32.png"))); // NOI18N
-        btnBuscarCliente.setMnemonic('c');
-        btnBuscarCliente.setText("Cliente");
-        btnBuscarCliente.setToolTipText("Busca un Cliente");
-        btnBuscarCliente.setBorder(null);
-        btnBuscarCliente.setFocusPainted(false);
-        btnBuscarCliente.setFocusable(false);
-        btnBuscarCliente.setMaximumSize(new java.awt.Dimension(123, 35));
-        btnBuscarCliente.setMinimumSize(new java.awt.Dimension(123, 35));
-        btnBuscarCliente.setPreferredSize(new java.awt.Dimension(123, 35));
-        btnBuscarCliente.setRequestFocusEnabled(false);
+        btnBuscarCliente.setText("Clientes");
+        btnBuscarCliente.setGradiente(newscomponents.RSButtonGradientIcon_new.Gradiente.HORIZONTAL);
+        btnBuscarCliente.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnBuscarCliente.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.PEOPLE);
+        btnBuscarCliente.setPreferredSize(new java.awt.Dimension(150, 40));
+        btnBuscarCliente.setRound(30);
+        btnBuscarCliente.setSizeIcon(40.0F);
         btnBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarClienteActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnBuscarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(btnBuscarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
-        );
-
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
-                .addGap(0, 0, 0)
-                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        jPanel9.add(btnBuscarCliente);
 
         jpCliente.add(jPanel9);
 
@@ -605,17 +559,23 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
         });
         jpCliente.add(cmbCliente);
 
+        org.jdesktop.swingx.HorizontalLayout horizontalLayout1 = new org.jdesktop.swingx.HorizontalLayout();
+        horizontalLayout1.setGap(20);
+        jPanel14.setLayout(horizontalLayout1);
+
         JlCantidad1.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
         JlCantidad1.setText("w");
         JlCantidad1.setToolTipText("");
         JlCantidad1.setMaximumSize(new java.awt.Dimension(360, 24));
-        jpCliente.add(JlCantidad1);
+        jPanel14.add(JlCantidad1);
 
         JlCantidad2.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
         JlCantidad2.setText("w");
         JlCantidad2.setToolTipText("");
         JlCantidad2.setMaximumSize(new java.awt.Dimension(360, 26));
-        jpCliente.add(JlCantidad2);
+        jPanel14.add(JlCantidad2);
+
+        jpCliente.add(jPanel14);
 
         tblDetalle.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
         tblDetalle.setModel(new javax.swing.table.DefaultTableModel(
@@ -675,23 +635,26 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
         txtTotalValor.setFont(new java.awt.Font("Ubuntu", 1, 20)); // NOI18N
         jPanel3.add(txtTotalValor);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jpCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(jpCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
-                .addGap(0, 0, 0)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        javax.swing.GroupLayout jpFacturasLayout = new javax.swing.GroupLayout(jpFacturas);
+        jpFacturas.setLayout(jpFacturasLayout);
+        jpFacturasLayout.setHorizontalGroup(
+            jpFacturasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpFacturasLayout.createSequentialGroup()
+                .addGroup(jpFacturasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE)
+                    .addComponent(jpCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, 0))
+        );
+        jpFacturasLayout.setVerticalGroup(
+            jpFacturasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpFacturasLayout.createSequentialGroup()
+                .addComponent(jpCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jpCategoria.setBorder(javax.swing.BorderFactory.createTitledBorder("Categoria"));
@@ -735,7 +698,6 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
         jpBusqueda.add(jLabel4);
 
         jpProductos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Productos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Ubuntu", 0, 14))); // NOI18N
-        jpProductos.setPreferredSize(new java.awt.Dimension(20, 1500));
         java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout();
         flowLayout1.setAlignOnBaseline(true);
         jpProductos.setLayout(flowLayout1);
@@ -748,7 +710,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jpBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jpBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE)
                     .addComponent(jpCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane4))
                 .addGap(0, 0, 0))
@@ -760,9 +722,9 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
                 .addComponent(jpCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jpBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
@@ -770,14 +732,17 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
+                .addComponent(jpFacturas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jpFacturas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, 0))
         );
 
         jScrollPane3.setViewportView(jPanel8);
@@ -875,78 +840,44 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
 
         jPanel11.add(jPanel12);
 
+        jMenuBar1.setMinimumSize(new java.awt.Dimension(0, 0));
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, 976, Short.MAX_VALUE)
+            .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, 784, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 619, Short.MAX_VALUE)
-                .addGap(0, 0, 0)
-                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
-        frmBusquedaCliente miBusqueda = new frmBusquedaCliente(null, closable);
-        miBusqueda.setLocationRelativeTo(null);
-        miBusqueda.setVisible(true);
-
-        if (miBusqueda.getRespuesta().equals("")) {
-            return;
-        }
-
-        for (int i = 0; i <= cmbCliente.getItemCount() + 1; i++) {
-            if (((Opcion) cmbCliente.getItemAt(i)).getValor().equals(miBusqueda.getRespuesta())) {
-                cmbCliente.setSelectedIndex(i);
-                return;
-            }
-        }
-    }//GEN-LAST:event_btnBuscarClienteActionPerformed
-    private void btnPagoDeudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagoDeudaActionPerformed
-        int resp = JOptionPane.showOptionDialog(null, "<html><big>Tipo de Deuda?</big></html",
-                "Elegir el tipo de deuda!!!",
-                JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                null, new String[]{"<html><big>Credito</big></html>",
-                    "<html><big>Externa</big></html",
-                    "<html><big>Cancelar</big></html"}, 0);
-
-        if (resp == 0) {
-            frmCobrosClientes miPagoCliente = new frmCobrosClientes(null, closable);
-            miPagoCliente.setNombreCajero(getIdUsuario().toString());
-            miPagoCliente.setIdTurno(getTurno());
-            miPagoCliente.setLocationRelativeTo(null);
-            miPagoCliente.setVisible(true);
-
-            return;
-        }
-        if (resp == 1) {
-
-            frmCobrosDeudas miPagoDeuda = new frmCobrosDeudas(null, closable);
-            miPagoDeuda.setNombreCajero(getIdUsuario().toString());
-            miPagoDeuda.setIdTurno(getTurno());
-            miPagoDeuda.setLocationRelativeTo(null);
-            miPagoDeuda.setVisible(true);
-
-        }
-    }//GEN-LAST:event_btnPagoDeudaActionPerformed
     private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
         Date now = new Date(System.currentTimeMillis());
         SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy");
+
         txtFecha.setText(date.format(now));
-        txtHora.setText("00:00:00 AM");
+        
+//        txtHora.setText("00:00:00 AM");
+        
         rbtContado.doClick();
-        txtUsuario.setText(getIdUsuario().toString());
-        txtTurno.setText("" + getTurno());
+
+        txtUsuario.setText(usuario.getUser_name());
+
+        txtTurno.setText("" + idTurnoActivo(usuario.getUser_name()));
+
         txtCriterio.requestFocusInWindow();
     }//GEN-LAST:event_formInternalFrameActivated
     private void cbTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTodosActionPerformed
@@ -954,7 +885,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
         jpCategoria.setBorder(javax.swing.BorderFactory.createTitledBorder("Categoria"));
         jpCategoria.setAutoscrolls(true);
         jpCategoria.setMaximumSize(null);
-        //getPropiedad().setProperty("Yiro", "Sophia");
+
         categoriaR();
 
         getPropiedad().setProperty("cbTodosUsuario", "" + cbTodos.isSelected());
@@ -967,144 +898,6 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
             LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }//GEN-LAST:event_cbTodosActionPerformed
-    private void btnGrabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrabarActionPerformed
-        //Obtener el identificador de la Factura.
-        Integer idFactura = Integer.parseInt(txtIdFactura.getText());
-
-        /*
-         * Validaciones Si credicto es verdadero y el cmbClientes es generico
-         * debe seleccionar un cliente de la lista.
-         */
-        if (rbtCredito.isSelected() && cmbCliente.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(null,
-                    "Debe Seleccinar un Cliente...");
-            cmbCliente.requestFocusInWindow();
-            return;
-        }
-
-        /*
-         * La cantidad del txtTotalCantidad debe estar presente, no se debe
-         * digitar en el.
-         */
-        if (Utilidades.controlDouble(txtTotalCantidad.getValue()) == 0.0) {
-            JOptionPane.showMessageDialog(null,
-                    "Debe Ingresar Detalle de la Factura...");
-            txtCriterio.requestFocusInWindow();
-            return;
-        }
-
-        double total = Utilidades.controlDouble(txtTotalValor.getValue());
-
-        if (total > valorCredito && rbtCredito.isSelected()) {
-            int resp = JOptionPane.showConfirmDialog(null,
-                    "Limite de credito Excedido! \nDesea continuar?",
-                    "Autorización de venta sobre el credito", JOptionPane.YES_NO_OPTION);
-            if (resp == 1) {
-                return;
-            } else {
-                frmAutorizacion miAut = new frmAutorizacion(null, true);
-                miAut.setLocationRelativeTo(null);
-                miAut.setVisible(true);
-                if (!miAut.isAceptado()) {
-                    JOptionPane.showMessageDialog(null, "Usuario no valido");
-                    return;
-                }
-            }
-        }
-
-        frmCalculoEfectivo miEfe = new frmCalculoEfectivo(null, true, total, rbtCredito.isSelected());
-
-        miEfe.setLocationRelativeTo(null);
-        miEfe.setVisible(true);
-
-        if (miEfe.getResp() == 0) {
-            return;
-        }
-
-        //Adicionamos un consecutivo a la Factura oh numero d Factura proxima
-        char estado = rbtCredito.isSelected() ? 'c' : 'p';
-
-        if (isTemporal()) {
-            //Preparar Factura Temporal
-            HeaderFactura hf = HeaderFactura.builder().
-                    estado(estado).
-                    nombreTemp(nombreCliente)
-                    .build();
-            Facturas f = Facturas.builder().id(idFactura).headerFactura(hf).build();
-
-            if (!modificarFactura(f)) {
-                JOptionPane.showMessageDialog(null, "Ocurrio un error factura Temporal");
-                return;
-            } else {
-                for (int i = 1; i <= facturas.getDetalleFactura().size(); i++) {
-//                    if (!agregarOrInsertarDetalleFactura(
-//                            facturas.getId(),
-//                            i,
-//                            facturas.getDetalleFactura().get(i).getIdProducto(),
-//                            facturas.getDetalleFactura().get(i).getPrecio(),
-//                            facturas.getDetalleFactura().get(i).getCantidad())) {
-//
-//                        borrarFactura(idFactura);
-//
-//                        JOptionPane.showMessageDialog(null,
-//                                "Ocurrio un error Temporal Detallle");
-//
-//                        return;
-//                    }
-                }
-            }
-        } else {
-
-            HeaderFactura hf = HeaderFactura.builder().
-                    idCliente(((Clientes) cmbCliente.getSelectedItem()).getId_persona()).
-                    idTurno(getTurno()).
-                    efectivo(new BigDecimal(miEfe.txtEfectivo.getValue().toString())).
-                    cambio(new BigDecimal(miEfe.txtDevuelta.getValue().toString())).
-                    credito(rbtCredito.isSelected()).build();
-
-            DetalleFactura objDF = null;
-
-            detalleFacturaList = new ArrayList<DetalleFactura>();
-
-            detalleFacturaList.add(objDF);
-
-            Facturas f = Facturas.builder().
-                    id(idFactura).headerFactura(hf).detalleFactura(detalleFacturaList).build();
-
-            if (agregarFacturaNombre(f) < 1) {
-                JOptionPane.showMessageDialog(null, "Esta compra no se ha registrado...");
-            } else {
-                for (int i = 0; i < facturas.getDetalleFactura().size(); i++) {
-                    if (agregarDetalleFactura(f) < 1) {
-                        JOptionPane.showMessageDialog(null, "Esta compra no se ha registrado...");
-                        return;
-                    }
-                }
-            }
-        }
-
-//        txtIdFactura.setText("" + getNumFac(getIdUsuario(), getTurno()));
-        Map parametros = new HashMap();
-
-        parametros.put("idFactura", idFactura);
-
-        new hiloImpresionFactura(
-                cbPrevista.isSelected(),
-                rbtCredito.isSelected(),
-                "/Reportes/factura.jasper",
-                parametros,
-                frmPrincipal.jPanelImpresion,
-                frmPrincipal.jprImpresion).start();
-
-        limpiarTabla();
-        totales();
-
-        rbtContado.doClick();
-        setTemporal(false);
-        facturas.getDetalleFactura().clear();
-        nombreCliente = "";
-        idClienteTemporal = 0;
-    }//GEN-LAST:event_btnGrabarActionPerformed
 
     private void txtCriterioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCriterioActionPerformed
         //Cambio de tipo de criterio del comboBox
@@ -1239,36 +1032,33 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
         }
     }//GEN-LAST:event_txtCriterioActionPerformed
     private void rbtCreditoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtCreditoActionPerformed
+        
         if (evt == null) {
             rbtCredito.doClick();
         }
+        
+        //Si la venta sera a credito, debe seleccionarse un cliente.
         cmbCliente.setEnabled(true);
+        
+        //Se habilita el boton que permite obtener los clientes.
         btnBuscarCliente.setEnabled(true);
+        
+        //Se seleccionan el primero Item del comboBox.
         cmbCliente.setSelectedIndex(0);
     }//GEN-LAST:event_rbtCreditoActionPerformed
     private void rbtContadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtContadoActionPerformed
+        
         if (evt == null) {
             rbtContado.doClick();
         }
+        
         cmbCliente.setEnabled(false);
+        
         cmbCliente.setSelectedIndex(0);
+        
         JlCantidad1.setText("Limt Cred.:$0.00");
         JlCantidad2.setText("Deud Actu.:$0.00");
     }//GEN-LAST:event_rbtContadoActionPerformed
-    private void btnLimpiarF12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarF12ActionPerformed
-        frmDetalleQuitarEliminar miForm = new frmDetalleQuitarEliminar(null, true);
-
-        miForm.setLocationRelativeTo(null);
-        miForm.setVisible(true);
-
-        if (miForm.getOpcion() == 1) {
-            opcion1();
-        }
-        if (miForm.getOpcion() == 2) {
-            opcion2();
-        }
-
-    }//GEN-LAST:event_btnLimpiarF12ActionPerformed
 
     private void opcion1() {
         int rta = JOptionPane.showConfirmDialog(null,
@@ -1310,6 +1100,87 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
         }
     }
 
+    private void cbTodosProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTodosProductosActionPerformed
+        jpProductos = new javax.swing.JPanel();
+
+        jpProductos.setAutoscrolls(true);
+
+        jpProductos.setBackground(new java.awt.Color(255, 102, 51));
+
+        jpProductos.setBorder(javax.swing.BorderFactory.createTitledBorder(null,
+                "Productos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+                javax.swing.border.TitledBorder.DEFAULT_POSITION,
+                new java.awt.Font("Ubuntu", 0, 14)));
+
+        jpProductos.setMaximumSize(new java.awt.Dimension(350, 1500));
+
+        jpProductos.setMinimumSize(new java.awt.Dimension(350, 1500));
+
+        jpProductos.setPreferredSize(new java.awt.Dimension(350, 1500));
+
+        java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout();
+
+        flowLayout1.setAlignOnBaseline(true);
+
+        jpProductos.setLayout(flowLayout1);
+
+        jScrollPane4.setViewportView(jpProductos);
+
+        actionPerformed(copiaActionEvent);
+    }//GEN-LAST:event_cbTodosProductosActionPerformed
+    private void tblDetalleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDetalleMouseClicked
+        precio();
+    }//GEN-LAST:event_tblDetalleMouseClicked
+
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+        getClientes();
+//        txtIdFactura.setText("" + getNumFac(getIdUsuario(), getTurno()));
+        setTemporal(false);
+        repararRegistro();
+        totales();
+    }//GEN-LAST:event_formInternalFrameOpened
+
+    private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
+        if (tblDetalle.getRowCount() != 0) {
+            int resp = JOptionPane.showInternalConfirmDialog(
+                    null,
+                    "Existe una factura, Desea Salir?", 
+                    "Advertencia, Factura existente",
+                    JOptionPane.YES_NO_OPTION);
+            if (resp == JOptionPane.YES_OPTION) {
+                dispose();
+            }
+        } else {
+            dispose();
+        }
+    }//GEN-LAST:event_formInternalFrameClosing
+
+    private void cmbClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbClienteActionPerformed
+        if (!cmbCliente.isEnabled()) {
+            return;
+        }
+        //estadoCliente();
+    }//GEN-LAST:event_cmbClienteActionPerformed
+
+    private void cmbClienteItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbClienteItemStateChanged
+        if (cmbCliente.getSelectedIndex() == 0) {
+            JlCantidad1.setVisible(false);
+            JlCantidad2.setVisible(false);
+            jpCliente.setSize(265, 86);
+            jpCliente.setPreferredSize(new Dimension(265, 86));
+            jpCliente.setMinimumSize(new Dimension(265, 86));
+            jpCliente.setMaximumSize(new Dimension(265, 86));
+
+        } else {
+            JlCantidad1.setVisible(true);
+            JlCantidad2.setVisible(true);
+            jpCliente.setSize(265, 135);
+            jpCliente.setPreferredSize(new Dimension(265, 135));
+            jpCliente.setMinimumSize(new Dimension(265, 135));
+            jpCliente.setMaximumSize(new Dimension(265, 135));
+        }
+    }//GEN-LAST:event_cmbClienteItemStateChanged
+
     private void btnEsperaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsperaActionPerformed
         if (tblDetalle.getRowCount() == 0) {
             JOptionPane.showMessageDialog(null, "Factura Vacia...");
@@ -1324,8 +1195,8 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
         }
 
         if (cmbCliente.getSelectedIndex() > 0) {
-            nombreCliente = ((Opcion) cmbCliente.getSelectedItem()).getDescripcion();
-            idClienteTemporal = ((Personas) cmbCliente.getSelectedItem()).getId_persona();
+            nombreCliente = ((Clientes) cmbCliente.getSelectedItem()).toString();
+            idClienteTemporal = ((Clientes) cmbCliente.getSelectedItem()).getId_persona();
         } else {
             idClienteTemporal = 0;
             if ("".equals(nombreCliente)) {
@@ -1379,7 +1250,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
 
             setTitle("Nueva Factura: " + miTempo.getFactura()
                     + "   Numero del Turno Activo del Cajero: "
-                    + getTurno() + " Factura Temporarl activa, Cliente: " + nombreCliente);
+                    + idTurnoActivo(usuario.getUser_name()) + " Factura Temporarl activa, Cliente: " + nombreCliente);
 
             txtIdFactura.setText("" + miTempo.getFactura());
 
@@ -1439,7 +1310,8 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
             }
 
             for (int i = 0; i <= cmbCliente.getItemCount() + 1; i++) {
-                if (((Opcion) cmbCliente.getItemAt(i)).getValor().equals(getIdCliente())) {
+
+                if (((Clientes) cmbCliente.getItemAt(i)).getId_persona() == getIdCliente()) {
                     cmbCliente.setSelectedIndex(i);
                     totales();
                     break;
@@ -1447,34 +1319,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
             }
         }
     }//GEN-LAST:event_btnBuscarEsperaActionPerformed
-    private void cbTodosProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTodosProductosActionPerformed
-        jpProductos = new javax.swing.JPanel();
 
-        jpProductos.setAutoscrolls(true);
-
-        jpProductos.setBackground(new java.awt.Color(255, 102, 51));
-
-        jpProductos.setBorder(javax.swing.BorderFactory.createTitledBorder(null,
-                "Productos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-                javax.swing.border.TitledBorder.DEFAULT_POSITION,
-                new java.awt.Font("Ubuntu", 0, 14)));
-
-        jpProductos.setMaximumSize(new java.awt.Dimension(350, 1500));
-
-        jpProductos.setMinimumSize(new java.awt.Dimension(350, 1500));
-
-        jpProductos.setPreferredSize(new java.awt.Dimension(350, 1500));
-
-        java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout();
-
-        flowLayout1.setAlignOnBaseline(true);
-
-        jpProductos.setLayout(flowLayout1);
-
-        jScrollPane4.setViewportView(jpProductos);
-
-        actionPerformed(e1);
-    }//GEN-LAST:event_cbTodosProductosActionPerformed
     private void btnGastosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGastosActionPerformed
         int resp = JOptionPane.showOptionDialog(null, "<html><big>Que desea registrar?</big></html",
                 "Elija una accion!!!",
@@ -1493,7 +1338,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
             }
 
             frmGasto miGasto = new frmGasto(null, true);
-            miGasto.setIdTurno(getTurno());
+            miGasto.setIdTurno(idTurnoActivo(usuario.getUser_name()));
             miGasto.setUsuario(txtUsuario.getText());
             miGasto.setLocationRelativeTo(null);
             miGasto.setVisible(true);
@@ -1502,8 +1347,39 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
 
         if (resp == 1) {
         }
-
     }//GEN-LAST:event_btnGastosActionPerformed
+
+    private void btnPagoDeudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagoDeudaActionPerformed
+        int resp = JOptionPane.showOptionDialog(
+                null,
+                "<html><big>Tipo de Deuda?</big></html",
+                "Elegir el tipo de deuda!!!",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null, new String[]{"<html><big>Credito</big></html>",
+                    "<html><big>Externa</big></html",
+                    "<html><big>Cancelar</big></html"}, 0);
+
+        if (resp == 0) {
+            frmCobrosClientes miPagoCliente = new frmCobrosClientes(null, closable);
+            miPagoCliente.setNombreCajero(usuario.getUser_name());
+            miPagoCliente.setIdTurno(idTurnoActivo(usuario.getUser_name()));
+            miPagoCliente.setLocationRelativeTo(null);
+            miPagoCliente.setVisible(true);
+
+            return;
+        }
+        if (resp == 1) {
+
+            frmCobrosDeudas miPagoDeuda = new frmCobrosDeudas(null, closable);
+            miPagoDeuda.setNombreCajero(usuario.getUser_name());
+            miPagoDeuda.setIdTurno(idTurnoActivo(usuario.getUser_name()));
+            miPagoDeuda.setLocationRelativeTo(null);
+            miPagoDeuda.setVisible(true);
+
+        }
+    }//GEN-LAST:event_btnPagoDeudaActionPerformed
+
     private void btnImpresionUltimaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImpresionUltimaActionPerformed
         int resp = JOptionPane.showConfirmDialog(null,
                 "Desea Imprimir la Ultima Factura?",
@@ -1516,94 +1392,243 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
         miPrint.setLocationRelativeTo(null);
         miPrint.setVisible(true);
     }//GEN-LAST:event_btnImpresionUltimaActionPerformed
-    private void tblDetalleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDetalleMouseClicked
-        precio();
-    }//GEN-LAST:event_tblDetalleMouseClicked
 
-    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
-        getClientes();
-//        txtIdFactura.setText("" + getNumFac(getIdUsuario(), getTurno()));
-        setTemporal(false);
-        repararRegistro();
-        totales();
-    }//GEN-LAST:event_formInternalFrameOpened
+    private void btnGrabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrabarActionPerformed
+        //Obtener el identificador de la Factura.
+        Integer idFactura = Integer.valueOf(txtIdFactura.getText());
 
-    private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
-        if (tblDetalle.getRowCount() != 0) {
-            int resp = JOptionPane.showInternalConfirmDialog(null,
-                    "Existe una factura, Desea Salir?", "Advertencia, Factura existente",
-                    JOptionPane.YES_NO_OPTION);
-            if (resp == 0) {
-                dispose();
+        /*
+         * Validaciones Si credicto es verdadero y el cmbClientes es generico
+         * debe seleccionar un cliente de la lista.
+         */
+        if (rbtCredito.isSelected() && cmbCliente.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(null,
+                    "Debe Seleccinar un Cliente...");
+            cmbCliente.requestFocusInWindow();
+            return;
+        }
+
+        /*
+         * La cantidad del txtTotalCantidad debe estar presente, no se debe
+         * digitar en el.
+         */
+        if (Utilidades.controlDouble(txtTotalCantidad.getValue()) == 0.0) {
+            JOptionPane.showMessageDialog(null,
+                    "Debe Ingresar Detalle de la Factura...");
+            txtCriterio.requestFocusInWindow();
+            return;
+        }
+
+        double total = Utilidades.controlDouble(txtTotalValor.getValue());
+
+        if (total > valorCredito && rbtCredito.isSelected()) {
+            int resp = JOptionPane.showConfirmDialog(null,
+                    "Limite de credito Excedido! \nDesea continuar?",
+                    "Autorización de venta sobre el credito", JOptionPane.YES_NO_OPTION);
+            if (resp == 1) {
+                return;
+            } else {
+                frmAutorizacion miAut = new frmAutorizacion(null, true);
+                miAut.setLocationRelativeTo(null);
+                miAut.setVisible(true);
+                if (!miAut.isAceptado()) {
+                    JOptionPane.showMessageDialog(null, "Usuario no valido");
+                    return;
+                }
+            }
+        }
+
+        frmCalculoEfectivo miEfe = new frmCalculoEfectivo(null, true, total, rbtCredito.isSelected());
+
+        miEfe.setLocationRelativeTo(null);
+        miEfe.setVisible(true);
+
+        if (miEfe.getResp() == 0) {
+            return;
+        }
+
+        //Adicionamos un consecutivo a la Factura oh numero d Factura proxima
+        char estado = rbtCredito.isSelected() ? 'c' : 'p';
+
+        if (isTemporal()) {
+            //Preparar Factura Temporal
+            HeaderFactura hf = HeaderFactura.builder().
+                    estado(estado).build();
+            
+            Facturas f = Facturas.builder().id(idFactura).headerFactura(hf).build();
+
+            if (!modificarFactura(f)) {
+                JOptionPane.showMessageDialog(null, "Ocurrio un error factura Temporal");
+                return;
+            } else {
+                for (int i = 1; i <= facturas.getDetalleFactura().size(); i++) {
+//                    if (!agregarOrInsertarDetalleFactura(
+//                            facturas.getId(),
+//                            i,
+//                            facturas.getDetalleFactura().get(i).getIdProducto(),
+//                            facturas.getDetalleFactura().get(i).getPrecio(),
+//                            facturas.getDetalleFactura().get(i).getCantidad())) {
+//
+//                        borrarFactura(idFactura);
+//
+//                        JOptionPane.showMessageDialog(null,
+//                                "Ocurrio un error Temporal Detallle");
+//
+//                        return;
+//                    }
+                }
             }
         } else {
-            dispose();
-        }
-    }//GEN-LAST:event_formInternalFrameClosing
 
-    private void cmbClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbClienteActionPerformed
-        if (!cmbCliente.isEnabled()) {
+            HeaderFactura hf = HeaderFactura.builder().
+                    idCliente(((Clientes) cmbCliente.getSelectedItem()).getId_persona()).
+                    idTurno(idTurnoActivo(usuario.getUser_name())).
+                    efectivo(new BigDecimal(miEfe.txtEfectivo.getValue().toString())).
+                    cambio(new BigDecimal(miEfe.txtDevuelta.getValue().toString())).
+                    credito(rbtCredito.isSelected()).build();
+
+            DetalleFactura objDF = null;
+
+            detalleFacturaList = new ArrayList<DetalleFactura>();
+
+            detalleFacturaList.add(objDF);
+
+            Facturas f = Facturas.builder().
+                    id(idFactura).headerFactura(hf).detalleFactura(detalleFacturaList).build();
+
+            if (agregarFacturaNombre(f) < 1) {
+                JOptionPane.showMessageDialog(null, "Esta compra no se ha registrado...");
+            } else {
+                for (int i = 0; i < facturas.getDetalleFactura().size(); i++) {
+                    if (agregarDetalleFactura(f) < 1) {
+                        JOptionPane.showMessageDialog(null, "Esta compra no se ha registrado...");
+                        return;
+                    }
+                }
+            }
+        }
+
+//        txtIdFactura.setText("" + getNumFac(getIdUsuario(), getTurno()));
+        Map parametros = new HashMap();
+
+        parametros.put("idFactura", idFactura);
+
+        new hiloImpresionFactura(
+                cbPrevista.isSelected(),
+                rbtCredito.isSelected(),
+                "/Reportes/factura.jasper",
+                parametros,
+                frmPrincipal.jPanelImpresion,
+                frmPrincipal.jprImpresion).start();
+
+        limpiarTabla();
+        totales();
+
+        rbtContado.doClick();
+        setTemporal(false);
+        facturas.getDetalleFactura().clear();
+        nombreCliente = "";
+        idClienteTemporal = 0;
+    }//GEN-LAST:event_btnGrabarActionPerformed
+
+    private void btnLimpiarF12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarF12ActionPerformed
+        frmDetalleQuitarEliminar miForm = new frmDetalleQuitarEliminar(null, true);
+
+        miForm.setLocationRelativeTo(null);
+        miForm.setVisible(true);
+
+        if (miForm.getOpcion() == 1) {
+            opcion1();
+        }
+        if (miForm.getOpcion() == 2) {
+            opcion2();
+        }
+    }//GEN-LAST:event_btnLimpiarF12ActionPerformed
+
+    private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
+        frmBusquedaCliente miBusqueda = new frmBusquedaCliente(null, closable);
+        miBusqueda.setLocationRelativeTo(null);
+        miBusqueda.setVisible(true);
+
+        Clientes cliente = miBusqueda.getCliente();
+
+        if (cliente == null) {
             return;
         }
-        //estadoCliente();
-    }//GEN-LAST:event_cmbClienteActionPerformed
+        getClientes();
 
-    private void btnDevolucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolucionActionPerformed
-        // Procedimiento para devolucion. 
-
-    }//GEN-LAST:event_btnDevolucionActionPerformed
-
-    private void cmbClienteItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbClienteItemStateChanged
-        if (cmbCliente.getSelectedIndex() == 0) {
-            JlCantidad1.setVisible(false);
-            JlCantidad2.setVisible(false);
-            jpCliente.setSize(265, 86);
-            jpCliente.setPreferredSize(new Dimension(265, 86));
-            jpCliente.setMinimumSize(new Dimension(265, 86));
-            jpCliente.setMaximumSize(new Dimension(265, 86));
-
-        } else {
-            JlCantidad1.setVisible(true);
-            JlCantidad2.setVisible(true);
-            jpCliente.setSize(265, 135);
-            jpCliente.setPreferredSize(new Dimension(265, 135));
-            jpCliente.setMinimumSize(new Dimension(265, 135));
-            jpCliente.setMaximumSize(new Dimension(265, 135));
+        for (int i = 0; i < cmbCliente.getItemCount(); i++) {
+            if (((Clientes) cmbCliente.getItemAt(i)).getId_persona() == cliente.getId_persona()) {
+                cmbCliente.setSelectedIndex(i);
+                break;
+            }
         }
-    }//GEN-LAST:event_cmbClienteItemStateChanged
+    }//GEN-LAST:event_btnBuscarClienteActionPerformed
+    
     @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e == null) {
+    public void actionPerformed(ActionEvent actionEvent) {
+        //Parametro no puede ser nulo.
+        if (actionEvent == null) {
             return;
         }
+        
+        //Se hace una copia del evento. 
+        copiaActionEvent = actionEvent;
 
-        e1 = e;
-
+        //Se obtiene el boton presionado.
         try {
-            btn = (JButton) e.getSource();
+            btn = (JButton) actionEvent.getSource();
         } catch (Exception eb) {
             return;
         }
 
-        if (btn.getMnemonic() == 80) {//Incluir elemento a la factura....
-            double cantidad = 0, precio = 0;
-            boolean bandera;//Cuadro de Texto pidiendo Cantidad
-
+        /*
+         * La siguiente condicional es utilizada para obtener el producto a 
+         * facturar. 
+         */
+        if (btn.getMnemonic() == 80) {
+            /*
+             * El siguiente bucle permite obtener la cantidad del producto a
+             * facturar.
+             *
+             * Si la cantidadPro es nula se devuelve. Si la cantidadPro es
+             * diferente de nulo, entonces se guarda este String en la variable
+             * cantidad, parseandola, la cual es de tipo Double.
+             *
+             * Si introduce una cantidad valida el ciclo se rompe.
+             * 
+             * la variable cantidad es la cantidad ingresada por el usuario de 
+             * un producto.
+             *
+             */
+            double cantidad = 0;
+            boolean bandera = false;
             do {
                 try {
-                    String es = JOptionPane.showInputDialog("Introduce cantidad: ");
-                    if (es == null) {
-                        return;
+                    String cantidadPro = JOptionPane.showInputDialog(null,
+                            "Introduce cantidad: ",
+                            PROCESO_DE_CREACION_DE_FACTURA,
+                            JOptionPane.INFORMATION_MESSAGE);
+
+                    if (cantidadPro == null) {
+                        continue;
                     }
-                    cantidad = Double.parseDouble(es);
+
+                    cantidad = Double.parseDouble(cantidadPro);
+
                     bandera = true;
                 } catch (NumberFormatException ex) {
-                    javax.swing.JOptionPane.showMessageDialog(null, "Solo se permiten numeros");
+                    javax.swing.JOptionPane.showMessageDialog(
+                            null,
+                            "Solo se permiten numeros",
+                            PROCESO_DE_CREACION_DE_FACTURA,
+                            JOptionPane.WARNING_MESSAGE);
                     bandera = false;
                 }
-            } while (!bandera);//Fin del cuadro texto pidiendo la cantidad
 
-            //Para obtener el precio                                                --IdProducto
+            } while (!bandera);//Fin del bucle.
+
+            
             String sql
                     = "select Precio from "
                     + "TABLA_PRODUCTOS "
@@ -1611,7 +1636,8 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
 
 //            ResultSet rs = getConsulta(sql);
             ResultSet rs = null;
-
+            
+            double precio = 0;
             try {
                 rs.next();
                 precio = rs.getDouble("Precio");
@@ -1640,7 +1666,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
             miTabla.addRow(registro);
             tblDetalle.setModel(miTabla);
 
-            e1 = null;//Porque va tu aqui...
+            copiaActionEvent = null;//Porque va tu aqui...
 
             jpProductos.removeAll();
             jpProductos.repaint();
@@ -1655,25 +1681,27 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
             return;
         }//Fin de la inclusion....
 
-//        ResultSet rs = getConsulta(sql);
-        ResultSet rs = null;
-
+        
         String sql = "select Descripcion, IdProducto, imagePath, Precio "
                 + "from TABLA_PRODUCTOS "
-                + "where idCategoria = " + btn.getToolTipText() + " and "
-                + "entrada > 0 and "
-                + "estado = 1";
+                + "where idCategoria = " + btn.getToolTipText() + " and entrada > 0 and estado;";
 
+        
         if (cbTodosProductos.isSelected()) {
             sql = "select Descripcion, IdProducto, imagePath, Precio "
                     + "from TABLA_PRODUCTOS "
                     + "where idCategoria = " + btn.getToolTipText();
         }
 
+        
+//        ResultSet rs = getConsulta(sql);
+        ResultSet rs = null;
+
         jpProductos.removeAll();
         jpProductos.repaint();
         jpProductos.setLayout(new FlowLayout());
 
+        
         try {
             while (rs.next()) {
                 boton = new JButton(rs.getString("Descripcion"));
@@ -1725,7 +1753,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
             LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }//Fin de actionPerformed
-
+    
     private void repararRegistro() {
         miTabla = new DefaultTableModel(null, titulos);
         tblDetalle.setModel(miTabla);
@@ -1762,7 +1790,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
 
         categoriasList.stream().forEach(x -> {
             boton = new JButton(x.getDescripcion());
-            boton.setToolTipText(x.getId() + "");
+            boton.setToolTipText(x.getId_categoria()+ "");
             boton.setMnemonic('c');
 
             ImageIcon imagen = Utilidades.imagenDecode64(x.getImage_texto());
@@ -1857,40 +1885,17 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
         cmbCliente.removeAllItems();
         cmbCliente.repaint();
 
-        Generales g = Generales.builder().
-                cedula("000-0000000-0").build();
-        Clientes p = Clientes.builder().
-                id_persona(0).
-                pNombre("Seleccione un cliente").
-                sNombre("").
-                apellidos("").build();
+        List<Clientes> clientesList = getClientesCombo();
 
-        cmbCliente.addItem(p);
+        clientesList.stream().forEach(cliente -> {
+            cmbCliente.addItem(cliente);
+        });
 
-        try {
-            ResultSet rs = getClientesCombo();
-
-            while (rs.next()) {
-                g = Generales.builder().
-                        cedula(rs.getString("cedula")).build();
-
-                p = Clientes.builder().
-                        id_persona(rs.getInt("id")).
-                        pNombre(rs.getString("pNombre")).
-                        sNombre(rs.getString("sNombre")).
-                        apellidos(rs.getString("apellidos")).
-                        generales(g).build();
-
-                cmbCliente.addItem(p);
-            }//fin
-            cmbCliente.setSelectedIndex(0);
-        } catch (SQLException ex) {
-            LOG.log(Level.SEVERE, ex.getMessage(), ex);
-        }
+        cmbCliente.setSelectedIndex(0);
 
         if (isTemporal()) {
             for (int i = 0; i < cmbCliente.getItemCount(); i++) {
-                if (((Opcion) cmbCliente.getItemAt(i)).getValor().equals(getIdCliente())) {
+                if (((Clientes) cmbCliente.getItemAt(i)).getId_persona() == getIdCliente()) {
                     cmbCliente.setSelectedIndex(i);
                     return;
                 }
@@ -1956,16 +1961,15 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JlCantidad1;
     private javax.swing.JLabel JlCantidad2;
-    private javax.swing.JButton btnBuscarCliente;
-    private javax.swing.JButton btnBuscarEspera;
-    public javax.swing.JButton btnDevolucion;
-    private javax.swing.JButton btnEspera;
-    private javax.swing.JButton btnGastos;
-    private javax.swing.JButton btnGrabar;
+    private newscomponents.RSButtonGradientIcon_new btnBuscarCliente;
+    private newscomponents.RSButtonGradientIcon_new btnBuscarEspera;
+    private newscomponents.RSButtonGradientIcon_new btnEspera;
+    private newscomponents.RSButtonGradientIcon_new btnGastos;
+    private newscomponents.RSButtonGradientIcon_new btnGrabar;
     private javax.swing.ButtonGroup btnGrupoPago;
-    private javax.swing.JButton btnImpresionUltima;
-    public javax.swing.JButton btnLimpiarF12;
-    private javax.swing.JButton btnPagoDeuda;
+    private newscomponents.RSButtonGradientIcon_new btnImpresionUltima;
+    private newscomponents.RSButtonGradientIcon_new btnLimpiarF12;
+    private newscomponents.RSButtonGradientIcon_new btnPagoDeuda;
     private javax.swing.JComboBox<String> cbCriterio;
     private javax.swing.JCheckBox cbPrevista;
     private javax.swing.JCheckBox cbTodos;
@@ -1980,17 +1984,20 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane3;
@@ -1999,7 +2006,9 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
     private javax.swing.JPanel jpBusqueda;
     private javax.swing.JPanel jpCategoria;
     private javax.swing.JPanel jpCliente;
+    private javax.swing.JPanel jpFacturas;
     private javax.swing.JPanel jpProductos;
+    private rojerusan.RSMenuBar rSMenuBar2;
     private javax.swing.JRadioButton rbtContado;
     public javax.swing.JRadioButton rbtCredito;
     public javax.swing.JTable tblDetalle;

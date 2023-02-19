@@ -32,14 +32,5 @@ public class frmCambioClaveIT {
     public void tearDown() {
     }
 
-    /**
-     * Test of limpiar method, of class frmCambioClave.
-     */
-    @Test
-    public void testLimpiar() {
-        System.out.println("limpiar");
-        frmCambioClave instance = null;
-        instance.limpiar();
-    }
     
 }

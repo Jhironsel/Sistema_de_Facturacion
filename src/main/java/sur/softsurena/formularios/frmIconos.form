@@ -6,6 +6,9 @@
     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[400, 2147483647]"/>
     </Property>
+    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[500, 500]"/>
+    </Property>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -28,7 +31,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="636" max="32767" attributes="0"/>
+              <Component id="jspListaComponente" pref="781" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -37,25 +40,28 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="320" max="32767" attributes="0"/>
+              <Component id="jspListaComponente" max="32767" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+    <Container class="javax.swing.JScrollPane" name="jspListaComponente">
+      <Properties>
+        <Property name="doubleBuffered" type="boolean" value="true"/>
+      </Properties>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="jPanel2">
+        <Container class="javax.swing.JPanel" name="jpListaComponente">
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
             <Property name="columns" type="int" value="1"/>
             <Property name="rows" type="int" value="0"/>
           </Layout>
           <SubComponents>
-            <Container class="javax.swing.JPanel" name="jPanel3">
+            <Container class="javax.swing.JPanel" name="jpComponente">
 
               <Layout>
                 <DimensionLayout dim="0">
@@ -65,7 +71,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jlLetra" alignment="0" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jScrollPane2" max="32767" attributes="0"/>
+                                  <Component id="jcpCajeBotones" max="32767" attributes="0"/>
                                   <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -79,7 +85,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jlLetra" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane2" pref="211" max="32767" attributes="0"/>
+                          <Component id="jcpCajeBotones" pref="548" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -89,29 +95,40 @@
                 <Component class="rojeru_san.rslabel.RSLabelSombra" name="jlLetra">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="A"/>
+                    <Property name="doubleBuffered" type="boolean" value="true"/>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Arial" size="70" style="2"/>
                     </Property>
                   </Properties>
                 </Component>
-                <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+                <Container class="javax.swing.JScrollPane" name="jcpCajeBotones">
+                  <Properties>
+                    <Property name="doubleBuffered" type="boolean" value="true"/>
+                  </Properties>
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Container class="javax.swing.JPanel" name="jPanel1">
+                    <Container class="javax.swing.JPanel" name="jpCajaBotones">
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
-                        <Property name="columns" type="int" value="3"/>
+                        <Property name="columns" type="int" value="4"/>
                         <Property name="horizontalGap" type="int" value="10"/>
-                        <Property name="rows" type="int" value="0"/>
+                        <Property name="rows" type="int" value="-1"/>
                         <Property name="verticalGap" type="int" value="10"/>
                       </Layout>
                       <SubComponents>
                         <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns">
                           <Properties>
                             <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
-                              <Value id="EXTENSION"/>
+                              <Value id="AV_TIMER"/>
                             </Property>
+                            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[200, 60]"/>
+                            </Property>
+                            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[200, 40]"/>
+                            </Property>
+                            <Property name="padding" type="int" value="10"/>
                           </Properties>
                         </Component>
                         <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns5">
@@ -274,7 +291,7 @@
                 </Container>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="jPanel12">
+            <Container class="javax.swing.JPanel" name="jpComponente1">
 
               <Layout>
                 <DimensionLayout dim="0">
@@ -282,9 +299,9 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jlLetra5" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jlLetra1" alignment="0" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jScrollPane7" max="32767" attributes="0"/>
+                                  <Component id="jcpCajeBotones1" max="32767" attributes="0"/>
                                   <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -296,191 +313,191 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jlLetra5" min="-2" max="-2" attributes="0"/>
+                          <Component id="jlLetra1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane7" pref="211" max="32767" attributes="0"/>
+                          <Component id="jcpCajeBotones1" pref="548" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="rojeru_san.rslabel.RSLabelSombra" name="jlLetra5">
+                <Component class="rojeru_san.rslabel.RSLabelSombra" name="jlLetra1">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="A"/>
+                    <Property name="text" type="java.lang.String" value="B"/>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Arial" size="70" style="2"/>
                     </Property>
                   </Properties>
                 </Component>
-                <Container class="javax.swing.JScrollPane" name="jScrollPane7">
+                <Container class="javax.swing.JScrollPane" name="jcpCajeBotones1">
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Container class="javax.swing.JPanel" name="jPanel13">
+                    <Container class="javax.swing.JPanel" name="jpCajaBotones1">
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
-                        <Property name="columns" type="int" value="3"/>
+                        <Property name="columns" type="int" value="4"/>
                         <Property name="horizontalGap" type="int" value="10"/>
-                        <Property name="rows" type="int" value="0"/>
+                        <Property name="rows" type="int" value="-1"/>
                         <Property name="verticalGap" type="int" value="10"/>
                       </Layout>
                       <SubComponents>
-                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns95">
+                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns1">
                           <Properties>
                             <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                               <Value id="EXTENSION"/>
                             </Property>
                           </Properties>
                         </Component>
-                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns96">
+                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns27">
                           <Properties>
                             <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                               <Value id="EXTENSION"/>
                             </Property>
                           </Properties>
                         </Component>
-                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns97">
+                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns28">
                           <Properties>
                             <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                               <Value id="EXTENSION"/>
                             </Property>
                           </Properties>
                         </Component>
-                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns98">
+                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns29">
                           <Properties>
                             <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                               <Value id="EXTENSION"/>
                             </Property>
                           </Properties>
                         </Component>
-                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns99">
+                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns30">
                           <Properties>
                             <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                               <Value id="EXTENSION"/>
                             </Property>
                           </Properties>
                         </Component>
-                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns100">
+                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns31">
                           <Properties>
                             <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                               <Value id="EXTENSION"/>
                             </Property>
                           </Properties>
                         </Component>
-                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns101">
+                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns32">
                           <Properties>
                             <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                               <Value id="EXTENSION"/>
                             </Property>
                           </Properties>
                         </Component>
-                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns102">
+                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns33">
                           <Properties>
                             <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                               <Value id="EXTENSION"/>
                             </Property>
                           </Properties>
                         </Component>
-                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns103">
+                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns34">
                           <Properties>
                             <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                               <Value id="EXTENSION"/>
                             </Property>
                           </Properties>
                         </Component>
-                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns104">
+                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns35">
                           <Properties>
                             <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                               <Value id="EXTENSION"/>
                             </Property>
                           </Properties>
                         </Component>
-                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns105">
+                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns36">
                           <Properties>
                             <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                               <Value id="EXTENSION"/>
                             </Property>
                           </Properties>
                         </Component>
-                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns106">
+                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns37">
                           <Properties>
                             <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                               <Value id="EXTENSION"/>
                             </Property>
                           </Properties>
                         </Component>
-                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns107">
+                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns38">
                           <Properties>
                             <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                               <Value id="EXTENSION"/>
                             </Property>
                           </Properties>
                         </Component>
-                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns108">
+                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns39">
                           <Properties>
                             <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                               <Value id="EXTENSION"/>
                             </Property>
                           </Properties>
                         </Component>
-                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns109">
+                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns40">
                           <Properties>
                             <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                               <Value id="EXTENSION"/>
                             </Property>
                           </Properties>
                         </Component>
-                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns110">
+                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns41">
                           <Properties>
                             <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                               <Value id="EXTENSION"/>
                             </Property>
                           </Properties>
                         </Component>
-                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns111">
+                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns42">
                           <Properties>
                             <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                               <Value id="EXTENSION"/>
                             </Property>
                           </Properties>
                         </Component>
-                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns112">
+                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns43">
                           <Properties>
                             <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                               <Value id="EXTENSION"/>
                             </Property>
                           </Properties>
                         </Component>
-                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns113">
+                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns44">
                           <Properties>
                             <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                               <Value id="EXTENSION"/>
                             </Property>
                           </Properties>
                         </Component>
-                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns114">
+                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns45">
                           <Properties>
                             <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                               <Value id="EXTENSION"/>
                             </Property>
                           </Properties>
                         </Component>
-                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns115">
+                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns46">
                           <Properties>
                             <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                               <Value id="EXTENSION"/>
                             </Property>
                           </Properties>
                         </Component>
-                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns116">
+                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns47">
                           <Properties>
                             <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                               <Value id="EXTENSION"/>
                             </Property>
                           </Properties>
                         </Component>
-                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns117">
+                        <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btns48">
                           <Properties>
                             <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                               <Value id="EXTENSION"/>

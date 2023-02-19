@@ -2,6 +2,7 @@ package sur.softsurena.formularios;
 
 import java.awt.Dimension;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import sur.softsurena.entidades.Clientes;
 import static sur.softsurena.entidades.Clientes.getClientesTablaSBCombo;
 import sur.softsurena.entidades.Facturas;
@@ -10,15 +11,24 @@ import sur.softsurena.entidades.Opcion;
 import sur.softsurena.utilidades.Utilidades;
 
 public class frmReporteFacturas extends javax.swing.JInternalFrame {
-
+    
     public frmReporteFacturas() {
 
         initComponents();
-        bgrTipo.add(rbtTodo);
-        bgrTipo.add(rbtSeleccion);
-        bgrFiltro.add(rbtFecha);
-        bgrFiltro.add(rbtFactura);
-        bgrFiltro.add(rbtCliente);
+        
+        JTextField editorFecha = (JTextField) dchFechaInicial.getDateEditor();
+        
+        editorFecha.setBorder(
+                javax.swing.BorderFactory.createTitledBorder(
+                        javax.swing.BorderFactory.createLineBorder(
+                                new java.awt.Color(0, 0, 255)), "Fecha inicial"));
+        
+        editorFecha = (JTextField) dchFechaFinal.getDateEditor();
+        
+        editorFecha.setBorder(
+                javax.swing.BorderFactory.createTitledBorder(
+                        javax.swing.BorderFactory.createLineBorder(
+                                new java.awt.Color(0, 0, 255)), "Fecha final"));
     }
 
     public void centralizar() {
@@ -30,27 +40,18 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        bgrFiltro = new javax.swing.ButtonGroup();
-        bgrTipo = new javax.swing.ButtonGroup();
-        jLabel1 = new javax.swing.JLabel();
         txtArchivo = new javax.swing.JTextField();
         btnSeleccionArchivo = new javax.swing.JButton();
-        rbtFecha = new javax.swing.JRadioButton();
-        rbtFactura = new javax.swing.JRadioButton();
-        rbtCliente = new javax.swing.JRadioButton();
-        rbtTodo = new javax.swing.JRadioButton();
-        rbtSeleccion = new javax.swing.JRadioButton();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        dchFechaFinal = new com.toedter.calendar.JDateChooser();
+        btnGenerar = new RSMaterialComponent.RSButtonMaterialIconOne();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
         dchFechaInicial = new com.toedter.calendar.JDateChooser();
+        dchFechaFinal = new com.toedter.calendar.JDateChooser();
+        jPanel2 = new javax.swing.JPanel();
         cmbFacturaInicial = new javax.swing.JComboBox();
         cmbFacturaFinal = new javax.swing.JComboBox();
-        jLabel7 = new javax.swing.JLabel();
         cmbCliente = new javax.swing.JComboBox();
-        btnGenerar = new RSMaterialComponent.RSButtonMaterialIconOne();
+        jCheckBox1 = new javax.swing.JCheckBox();
 
         setClosable(true);
         setIconifiable(true);
@@ -73,10 +74,8 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel1.setText("Archivo: ");
-
         txtArchivo.setText("Reporte");
+        txtArchivo.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)), "Nombre archivo"));
 
         btnSeleccionArchivo.setText("...");
         btnSeleccionArchivo.addActionListener(new java.awt.event.ActionListener() {
@@ -84,77 +83,6 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame {
                 btnSeleccionArchivoActionPerformed(evt);
             }
         });
-
-        rbtFecha.setMnemonic('f');
-        rbtFecha.setSelected(true);
-        rbtFecha.setText("Fecha");
-        rbtFecha.setEnabled(false);
-        rbtFecha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbtFechaActionPerformed(evt);
-            }
-        });
-
-        rbtFactura.setMnemonic('n');
-        rbtFactura.setText("Numero de Factura");
-        rbtFactura.setEnabled(false);
-        rbtFactura.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbtFacturaActionPerformed(evt);
-            }
-        });
-
-        rbtCliente.setMnemonic('c');
-        rbtCliente.setText("Cliente");
-        rbtCliente.setEnabled(false);
-        rbtCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbtClienteActionPerformed(evt);
-            }
-        });
-
-        rbtTodo.setMnemonic('t');
-        rbtTodo.setSelected(true);
-        rbtTodo.setText("Todas");
-        rbtTodo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbtTodoActionPerformed(evt);
-            }
-        });
-
-        rbtSeleccion.setMnemonic('s');
-        rbtSeleccion.setText("Selección");
-        rbtSeleccion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbtSeleccionActionPerformed(evt);
-            }
-        });
-
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel2.setText("Fecha Inicial: ");
-
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel3.setText("Fecha Final: ");
-
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel4.setText("Factura Inicial: ");
-
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel5.setText("Factura Final: ");
-
-        dchFechaFinal.setEnabled(false);
-
-        dchFechaInicial.setEnabled(false);
-
-        cmbFacturaInicial.setEnabled(false);
-
-        cmbFacturaFinal.setEnabled(false);
-
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel7.setText("Cliente: ");
-        jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-
-        cmbCliente.setEnabled(false);
 
         btnGenerar.setText("Generar reporte");
         btnGenerar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -165,118 +93,110 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame {
             }
         });
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(dchFechaInicial, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
+                    .addComponent(dchFechaFinal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(dchFechaInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(dchFechaFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(34, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Por Fecha", jPanel1);
+
+        cmbFacturaInicial.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)), "Factura inicial"));
+
+        cmbFacturaFinal.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)), "Factura final"));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cmbFacturaInicial, 0, 379, Short.MAX_VALUE)
+                    .addComponent(cmbFacturaFinal, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(cmbFacturaInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(cmbFacturaFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cmbFacturaFinal, cmbFacturaInicial});
+
+        jTabbedPane1.addTab("Por rango", jPanel2);
+
+        cmbCliente.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)), "Listado de clientes"));
+
+        jCheckBox1.setText("Parametrizada");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnGenerar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(dchFechaFinal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cmbFacturaInicial, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cmbFacturaFinal, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cmbCliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(dchFechaInicial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(btnGenerar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnSeleccionArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(rbtFecha, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(rbtTodo, javax.swing.GroupLayout.Alignment.TRAILING))
-                            .addGap(18, 18, 18)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(rbtSeleccion)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(rbtFactura)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(rbtCliente))))))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(cmbCliente, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(txtArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnSeleccionArchivo)))
+                            .addComponent(jCheckBox1))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSeleccionArchivo)
-                    .addComponent(txtArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnSeleccionArchivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtArchivo, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rbtTodo)
-                    .addComponent(rbtSeleccion))
-                .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rbtFecha)
-                    .addComponent(rbtFactura)
-                    .addComponent(rbtCliente))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel2)
-                    .addComponent(dchFechaInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel3)
-                    .addComponent(dchFechaFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel4)
-                    .addComponent(cmbFacturaInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(5, 5, 5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel5)
-                    .addComponent(cmbFacturaFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel7)
-                    .addComponent(cmbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(cmbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jCheckBox1)
+                .addGap(18, 18, 18)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnGenerar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void rbtSeleccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtSeleccionActionPerformed
-        habilitarCampos();
-    }//GEN-LAST:event_rbtSeleccionActionPerformed
-
-    private void rbtTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtTodoActionPerformed
-        habilitarCampos();
-    }//GEN-LAST:event_rbtTodoActionPerformed
-
-    private void rbtFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtFechaActionPerformed
-        habilitarCampos();
-    }//GEN-LAST:event_rbtFechaActionPerformed
-
-    private void rbtFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtFacturaActionPerformed
-        habilitarCampos();
-    }//GEN-LAST:event_rbtFacturaActionPerformed
-
-    private void rbtClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtClienteActionPerformed
-        habilitarCampos();
-    }//GEN-LAST:event_rbtClienteActionPerformed
-
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
-
+        /*
+            El campo o ComboBox de cliente debe de estar habilitado cuando es
+        seleccionado y quiera buscarse los numero o identificador de factura. 
+        
+        */
         //Cargamos Clientes
         Clientes cli = Clientes.builder().
                 id_persona(-1).
@@ -317,91 +237,83 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Debe ingresar o Selecionar un Nombre de Archivo...");
             return;
         }
-        try {
-            String archivo = txtArchivo.getText();
-            String sql = "SELECT factura.idFactura, factura.idCliente, "
-                    + " (nombres||' '||apellidos) AS nombreFull, "
-                    + "fecha, idLinea, idProducto, (select descripcion from productos where idProducto like detalleFactura.idProducto) as descripcion, precio, "
-                    + "cantidad, precio * cantidad AS Valor "
-                    + "FROM factura "
-                    + "INNER JOIN cliente ON factura.idCliente = cliente.idCliente "
-                    + "INNER JOIN detalleFactura ON factura.idFactura = detalleFactura.idFactura ";
+        String archivo = txtArchivo.getText();
+        String sql = "SELECT factura.idFactura, factura.idCliente, "
+                + " (nombres||' '||apellidos) AS nombreFull, "
+                + "fecha, idLinea, idProducto, (select descripcion from productos where idProducto like detalleFactura.idProducto) as descripcion, precio, "
+                + "cantidad, precio * cantidad AS Valor "
+                + "FROM factura "
+                + "INNER JOIN cliente ON factura.idCliente = cliente.idCliente "
+                + "INNER JOIN detalleFactura ON factura.idFactura = detalleFactura.idFactura ";
 
-            String filtro = "";
+        String filtro = "";
 
-            if (rbtTodo.isSelected()) {
-                filtro = "";
-            } else {
-                //Para Realizar la Consulta por Nombre del Cliente...
-                if (rbtCliente.isSelected()) {
-                    if (cmbCliente.getSelectedIndex() == 0) {
-                        JOptionPane.showMessageDialog(null, "Debe Selecionar un Cliente...");
-                        cmbCliente.requestFocusInWindow();
-                        return;
-                    }
-                    filtro = "WHERE factura.idCliente = '"
-                            + ((Opcion) cmbCliente.getSelectedItem()).getValor() + "'";
+        //Si todo es seleccionado
+            filtro = "";
+        //De lo contrario
+            //Para Realizar la Consulta por Nombre del Cliente...
+
+            //Si la lista de cliente es seleccionada
+                if (cmbCliente.getSelectedIndex() == 0) {
+                    JOptionPane.showMessageDialog(null, "Debe Selecionar un Cliente...");
+                    cmbCliente.requestFocusInWindow();
+                    return;
+                }
+                filtro = "WHERE factura.idCliente = '"
+                        + ((Clientes) cmbCliente.getSelectedItem()).getId_persona()+ "'";
+
+            //Para Realizar la Consulta por Numero de Factura...
+            //Si las factura es seleccionada.
+                if (cmbFacturaInicial.getSelectedIndex() == 0) {
+                    JOptionPane.showMessageDialog(null, "Debe Selecionar una Factura Inicial...");
+                    cmbFacturaInicial.requestFocusInWindow();
+                    return;
+                }
+                if (cmbFacturaFinal.getSelectedIndex() == 0) {
+                    JOptionPane.showMessageDialog(null, "Debe Selecionar una Factura Final...");
+                    cmbFacturaFinal.requestFocusInWindow();
+                    return;
                 }
 
-                //Para Realizar la Consulta por Numero de Factura...
-                if (rbtFactura.isSelected()) {
-                    if (cmbFacturaInicial.getSelectedIndex() == 0) {
-                        JOptionPane.showMessageDialog(null, "Debe Selecionar una Factura Inicial...");
-                        cmbFacturaInicial.requestFocusInWindow();
-                        return;
-                    }
-                    if (cmbFacturaFinal.getSelectedIndex() == 0) {
-                        JOptionPane.showMessageDialog(null, "Debe Selecionar una Factura Final...");
-                        cmbFacturaFinal.requestFocusInWindow();
-                        return;
-                    }
-
-                    if (cmbFacturaInicial.getSelectedIndex() > cmbFacturaFinal.getSelectedIndex()) {
-                        JOptionPane.showMessageDialog(null, "Factura Inicial Maryor que la Final");
-                        cmbFacturaInicial.requestFocusInWindow();
-                        return;
-                    }
-
-                    filtro = "WHERE factura.idFactura >= "
-                            + ((Opcion) cmbFacturaInicial.getSelectedItem()).getValor()
-                            + " and factura.idFactura <= "
-                            + ((Opcion) cmbFacturaFinal.getSelectedItem()).getValor();
+                if (cmbFacturaInicial.getSelectedIndex() > cmbFacturaFinal.getSelectedIndex()) {
+                    JOptionPane.showMessageDialog(null, "Factura Inicial Maryor que la Final");
+                    cmbFacturaInicial.requestFocusInWindow();
+                    return;
                 }
 
-                //Para Realizar la Consulta por Fecha...
-                if (rbtFecha.isSelected()) {
-                    if (dchFechaInicial.getDate() == null) {
-                        JOptionPane.showMessageDialog(null, "Debe Selecionar una Fecha Inicial...");
-                        dchFechaInicial.requestFocusInWindow();
-                        return;
-                    }
-                    if (dchFechaFinal.getDate() == null) {
-                        JOptionPane.showMessageDialog(null, "Debe Selecionar una Fecha Final...");
-                        dchFechaFinal.requestFocusInWindow();
-                        return;
-                    }
+                filtro = "WHERE factura.idFactura >= "
+                        + ((Facturas) cmbFacturaInicial.getSelectedItem()).getId()
+                        + " and factura.idFactura <= "
+                        + ((Facturas) cmbFacturaFinal.getSelectedItem()).getId();
 
-                    filtro = "WHERE fecha >= '"
-                            + Utilidades.formatDate(dchFechaInicial.getDate(), "MM-dd-yyyy")
-                            + "' and fecha <= '"
-                            + Utilidades.formatDate(dchFechaFinal.getDate(), "MM-dd-yyyy") + "'";
+            //Para Realizar la Consulta por Fecha...
+            //Si la fecha es seleccionada.
+                if (dchFechaInicial.getDate() == null) {
+                    JOptionPane.showMessageDialog(null, "Debe Selecionar una Fecha Inicial...");
+                    dchFechaInicial.requestFocusInWindow();
+                    return;
                 }
-            }
-            //Adicionamos el fitro a la Consulta....
-            sql = sql + filtro;
+                if (dchFechaFinal.getDate() == null) {
+                    JOptionPane.showMessageDialog(null, "Debe Selecionar una Fecha Final...");
+                    dchFechaFinal.requestFocusInWindow();
+                    return;
+                }
+
+                filtro = "WHERE fecha >= '"
+                        + Utilidades.formatDate(dchFechaInicial.getDate(), "MM-dd-yyyy")
+                        + "' and fecha <= '"
+                        + Utilidades.formatDate(dchFechaFinal.getDate(), "MM-dd-yyyy") + "'";
+
+        //Adicionamos el fitro a la Consulta....
+        sql = sql + filtro;
 
 //            Reporte.reporteFacturas(archivo, getConsulta(sql));
-            JOptionPane.showMessageDialog(null, "Reporte Generado...");
-            dispose();
-        } catch (Exception ex) {
-            //Instalar Logger
-        }
+        JOptionPane.showMessageDialog(null, "Reporte Generado...");
+        dispose();
+        
     }//GEN-LAST:event_btnGenerarActionPerformed
     private void habilitarCampos() {
-        if (rbtTodo.isSelected()) {
-            rbtFecha.setEnabled(false);
-            rbtFactura.setEnabled(false);
-            rbtCliente.setEnabled(false);
+        //Si todo es seleccionado
 
             dchFechaInicial.setEnabled(false);
             dchFechaFinal.setEnabled(false);
@@ -411,12 +323,9 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame {
             cmbFacturaInicial.setEnabled(false);
             cmbFacturaFinal.setEnabled(false);
 
-        } else {
-            rbtFecha.setEnabled(true);
-            rbtFactura.setEnabled(true);
-            rbtCliente.setEnabled(true);
+        //De lo contrario
 
-            if (rbtFecha.isSelected()) {
+            //Si fecha es seleccionada
                 dchFechaInicial.setEnabled(true);
                 dchFechaFinal.setEnabled(true);
 
@@ -424,8 +333,8 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame {
 
                 cmbFacturaInicial.setEnabled(false);
                 cmbFacturaFinal.setEnabled(false);
-            }
-            if (rbtFactura.isSelected()) {
+            
+            //Se las factura es seleccionada
                 dchFechaInicial.setEnabled(false);
                 dchFechaFinal.setEnabled(false);
 
@@ -433,8 +342,8 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame {
 
                 cmbFacturaInicial.setEnabled(true);
                 cmbFacturaFinal.setEnabled(true);
-            }
-            if (rbtCliente.isSelected()) {
+            
+            //Si el listado de cliente es seleccionado
                 dchFechaInicial.setEnabled(false);
                 dchFechaFinal.setEnabled(false);
 
@@ -442,14 +351,8 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame {
 
                 cmbFacturaInicial.setEnabled(false);
                 cmbFacturaFinal.setEnabled(false);
-
-            }
-
-        }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup bgrFiltro;
-    private javax.swing.ButtonGroup bgrTipo;
     private RSMaterialComponent.RSButtonMaterialIconOne btnGenerar;
     private javax.swing.JButton btnSeleccionArchivo;
     private javax.swing.JComboBox cmbCliente;
@@ -457,17 +360,10 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox cmbFacturaInicial;
     private com.toedter.calendar.JDateChooser dchFechaFinal;
     private com.toedter.calendar.JDateChooser dchFechaInicial;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JRadioButton rbtCliente;
-    private javax.swing.JRadioButton rbtFactura;
-    private javax.swing.JRadioButton rbtFecha;
-    private javax.swing.JRadioButton rbtSeleccion;
-    private javax.swing.JRadioButton rbtTodo;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField txtArchivo;
     // End of variables declaration//GEN-END:variables
 }

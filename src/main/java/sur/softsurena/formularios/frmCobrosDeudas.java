@@ -439,12 +439,14 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
         miBusqueda.setLocationRelativeTo(null);
         miBusqueda.setVisible(true);
 
-        String rta = miBusqueda.getRespuesta();
-        if (rta.equals("")) {
+        Clientes cliente = miBusqueda.getCliente();
+        
+        if (cliente == null) {
             return;
         }
+        
         for (int i = 0; i < cmbCliente.getItemCount(); i++) {
-            if (((Clientes) cmbCliente.getItemAt(i)).getGenerales().getCedula().equals(rta)) {
+            if (((Clientes) cmbCliente.getItemAt(i)).getGenerales().getCedula().equals(cliente.getGenerales().getCedula())) {
                 cmbCliente.setSelectedIndex(i);
                 return;
             }
