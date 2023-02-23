@@ -60,7 +60,7 @@ public class frmSalidaProducto extends javax.swing.JDialog {
         });
 
         jlImagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Sin_imagen 64 x 64.png"))); // NOI18N
+        jlImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sur/softsurena/imagenes/NoImageTransp 96 x 96.png"))); // NOI18N
         jlImagen.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Seleccione Imagen", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 12))); // NOI18N
 
         btnGuardar.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -354,7 +354,7 @@ public class frmSalidaProducto extends javax.swing.JDialog {
                 imagen = new ImageIcon(img);
             } else {
                 imagen = new ImageIcon(getClass().getResource(
-                        "/images/Sin_imagen 64 x 64.png"));
+                        "/images/NoImageTransp 96 x 96.png"));
             }
 
             Icon icon = new ImageIcon(imagen.getImage().getScaledInstance(
@@ -402,7 +402,7 @@ public class frmSalidaProducto extends javax.swing.JDialog {
     }
 
     private void quitarImagen() {
-        ImageIcon imagen = new ImageIcon(getClass().getResource("/images/Sin_imagen 64 x 64.png"));
+        ImageIcon imagen = new ImageIcon(getClass().getResource("/images/NoImageTransp 96 x 96.png"));
         Icon icon = new ImageIcon(imagen.getImage().getScaledInstance(72, 72,
                 Image.SCALE_DEFAULT));
         imagen.getImage().flush();

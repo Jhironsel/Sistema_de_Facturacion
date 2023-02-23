@@ -1152,7 +1152,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 //
 //        if (imagen.getIconHeight() == -1) {
 //            imagen = new ImageIcon(System.getProperty("user.dir")
-//                    + "/images/Sin_imagen 64 x 64.png");
+//                    + "/images/NoImageTransp 96 x 96.png");
 //            icon = new ImageIcon(imagen.getImage().getScaledInstance(180, 120,
 //                    Image.SCALE_DEFAULT));
 //            imagen.getImage().flush();
@@ -1366,7 +1366,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jlRestaurar.setIcon(icono.getIcono("RestaurarBD 32 x 32.png"));
 
         //
-        jlLogoEmpresa.setIcon(icono.getIcono("Sin_imagen 64 x 64.png"));
+        jlLogoEmpresa.setIcon(icono.getIcono("NoImageTransp 96 x 96.png"));
 
         btnEstablecerEncabezado.setIcon(icono.getIcono("Factura 32 x 32.png"));
         btnSeleccionarImpresora.setIcon(icono.getIcono("Impresora 32 x 32.png"));

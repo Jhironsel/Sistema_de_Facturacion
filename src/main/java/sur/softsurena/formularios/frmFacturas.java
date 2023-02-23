@@ -962,7 +962,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
 
                     if (imagen.getIconHeight() == -1) {
                         imagen = new ImageIcon(System.getProperty("user.dir")
-                                + "/images/Sin_imagen 64 x 64.png");
+                                + "/images/NoImageTransp 96 x 96.png");
                     }
                     Icon icon = new ImageIcon(imagen.getImage().getScaledInstance(
                             64,
@@ -1718,7 +1718,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
 
                 if (imagen.getIconHeight() == -1) {
                     imagen = new ImageIcon(System.getProperty("user.dir")
-                            + "/images/Sin_imagen 64 x 64.png");
+                            + "/images/NoImageTransp 96 x 96.png");
                 }
                 Icon icon = new ImageIcon(imagen.getImage().getScaledInstance(
                         64,

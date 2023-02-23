@@ -143,9 +143,6 @@
                 <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                   <Value id="HOURGLASS_FULL"/>
                 </Property>
-                <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                  <Insets value="[0, 0, 0, 0]"/>
-                </Property>
                 <Property name="name" type="java.lang.String" value="btnTemporal" noResource="true"/>
                 <Property name="round" type="int" value="30"/>
                 <Property name="sizeIcon" type="float" value="40.0"/>
@@ -165,9 +162,6 @@
                 <Property name="horizontalTextPosition" type="int" value="0"/>
                 <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                   <Value id="SEARCH"/>
-                </Property>
-                <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                  <Insets value="[0, 0, 0, 0]"/>
                 </Property>
                 <Property name="name" type="java.lang.String" value="btnTemporal" noResource="true"/>
                 <Property name="round" type="int" value="30"/>
@@ -189,9 +183,6 @@
                 <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                   <Value id="LOCAL_ATM"/>
                 </Property>
-                <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                  <Insets value="[0, 0, 0, 0]"/>
-                </Property>
                 <Property name="name" type="java.lang.String" value="btnTemporal" noResource="true"/>
                 <Property name="round" type="int" value="30"/>
                 <Property name="sizeIcon" type="float" value="40.0"/>
@@ -211,9 +202,6 @@
                 <Property name="horizontalTextPosition" type="int" value="0"/>
                 <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                   <Value id="ATTACH_MONEY"/>
-                </Property>
-                <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                  <Insets value="[0, 0, 0, 0]"/>
                 </Property>
                 <Property name="name" type="java.lang.String" value="btnTemporal" noResource="true"/>
                 <Property name="round" type="int" value="30"/>
@@ -235,9 +223,6 @@
                 <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                   <Value id="YOUTUBE_SEARCHED_FOR"/>
                 </Property>
-                <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                  <Insets value="[0, 0, 0, 0]"/>
-                </Property>
                 <Property name="name" type="java.lang.String" value="btnTemporal" noResource="true"/>
                 <Property name="round" type="int" value="30"/>
                 <Property name="sizeIcon" type="float" value="40.0"/>
@@ -258,9 +243,6 @@
                 <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                   <Value id="DONE_ALL"/>
                 </Property>
-                <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                  <Insets value="[0, 0, 0, 0]"/>
-                </Property>
                 <Property name="name" type="java.lang.String" value="btnTemporal" noResource="true"/>
                 <Property name="round" type="int" value="30"/>
                 <Property name="sizeIcon" type="float" value="40.0"/>
@@ -280,9 +262,6 @@
                 <Property name="horizontalTextPosition" type="int" value="0"/>
                 <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                   <Value id="CLEAR_ALL"/>
-                </Property>
-                <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                  <Insets value="[0, 0, 0, 0]"/>
                 </Property>
                 <Property name="name" type="java.lang.String" value="btnTemporal" noResource="true"/>
                 <Property name="round" type="int" value="30"/>

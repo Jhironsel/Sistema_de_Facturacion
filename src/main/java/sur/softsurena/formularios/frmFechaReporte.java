@@ -2,6 +2,7 @@ package sur.softsurena.formularios;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import newscomponents.RSDateChooser;
 import sur.softsurena.utilidades.Utilidades;
 
 public class frmFechaReporte extends java.awt.Dialog {
@@ -24,10 +25,14 @@ public class frmFechaReporte extends java.awt.Dialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jcFecha = new com.toedter.calendar.JCalendar();
-        btnGrabar = new javax.swing.JButton();
-        btnCancelar = new javax.swing.JButton();
+        defaultDateSelectionModel1 = new org.jdesktop.swingx.calendar.DefaultDateSelectionModel();
+        jPanel1 = new javax.swing.JPanel();
         jFecha = new javax.swing.JLabel();
+        btnGrabar = new newscomponents.RSButtonGradientIcon_new();
+        jcFecha = new com.toedter.calendar.JCalendar();
+        btnCancelar = new newscomponents.RSButtonGradientIcon_new();
+
+        defaultDateSelectionModel1.setAdjusting(true);
 
         setMinimumSize(new java.awt.Dimension(508, 389));
         setResizable(false);
@@ -38,58 +43,69 @@ public class frmFechaReporte extends java.awt.Dialog {
             }
         });
 
-        jcFecha.setDecorationBordersVisible(true);
-
-        btnGrabar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        btnGrabar.setForeground(new java.awt.Color(1, 1, 1));
-        btnGrabar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Aceptar 32 x 32.png"))); // NOI18N
-        btnGrabar.setMnemonic('a');
         btnGrabar.setText("Aceptar");
-        btnGrabar.setToolTipText("Confirmar Factura");
+        btnGrabar.setGradiente(newscomponents.RSButtonGradientIcon_new.Gradiente.HORIZONTAL);
+        btnGrabar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DONE);
         btnGrabar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGrabarActionPerformed(evt);
             }
         });
 
-        btnCancelar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        btnCancelar.setForeground(new java.awt.Color(1, 1, 1));
-        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Cancelar 32 x 32.png"))); // NOI18N
-        btnCancelar.setMnemonic('c');
+        jcFecha.setDecorationBordersVisible(true);
+
         btnCancelar.setText("Cancelar");
-        btnCancelar.setToolTipText("Cancelar Factura Actual");
+        btnCancelar.setColorPrimario(new java.awt.Color(255, 0, 0));
+        btnCancelar.setColorPrimarioHover(new java.awt.Color(255, 51, 51));
+        btnCancelar.setGradiente(newscomponents.RSButtonGradientIcon_new.Gradiente.HORIZONTAL);
+        btnCancelar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CANCEL);
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
             }
         });
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jcFecha, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnGrabar, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jcFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnGrabar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jcFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jFecha, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnGrabar))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnCancelar, btnGrabar});
-
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jcFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnGrabar)
-                    .addComponent(btnCancelar)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
 
         pack();
@@ -101,15 +117,15 @@ public class frmFechaReporte extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_closeDialog
 
-    private void btnGrabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrabarActionPerformed
-        setFecha(Utilidades.javaDateToSqlDate(jcFecha.getDate()));
-        this.dispose();
-    }//GEN-LAST:event_btnGrabarActionPerformed
-
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         setFecha(null);
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnGrabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrabarActionPerformed
+        setFecha(Utilidades.javaDateToSqlDate(jcFecha.getDate()));
+        this.dispose();
+    }//GEN-LAST:event_btnGrabarActionPerformed
     private void agregarOyente() {
         jcFecha.getDayChooser().addPropertyChangeListener(
                 (java.beans.PropertyChangeEvent evt) -> {
@@ -120,9 +136,11 @@ public class frmFechaReporte extends java.awt.Dialog {
                 });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnGrabar;
+    private newscomponents.RSButtonGradientIcon_new btnCancelar;
+    private newscomponents.RSButtonGradientIcon_new btnGrabar;
+    private org.jdesktop.swingx.calendar.DefaultDateSelectionModel defaultDateSelectionModel1;
     private javax.swing.JLabel jFecha;
+    private javax.swing.JPanel jPanel1;
     public static com.toedter.calendar.JCalendar jcFecha;
     // End of variables declaration//GEN-END:variables
 }

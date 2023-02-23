@@ -91,6 +91,7 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
         lanza una excepcion y la venta no se iniciará.
          */
         vistasList.stream().forEach(vista -> {
+            
             privilegios = Privilegios.builder().
                     privilegio(Privilegios.PRIVILEGIO_SELECT).
                     nombre_relacion(vista).build();
@@ -142,11 +143,8 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
             jcbEstadoCivil.showPopup();
         });
 
-        //Mantenimiento oculto por defecto. 
-        jtpUnico.setEnabledAt(
-                jtpUnico.indexOfComponent(
-                        jspMantenimiento),
-                false);
+        //Mantenimiento oculto por defecto.
+        jtpUnico.remove(jspMantenimiento);
 
         nuevasTablasDirTelCor();
 
@@ -2079,22 +2077,16 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
      */
     private void cambioBoton(boolean activo) {
         /*
-            Si activo es true jspClientes se deshabilita.
-            En caso contrario el jspMantenimiento se habilita para hacer ya sea
-        actualizaciones o modificaciones de registro de clientes.
-         */
-        jtpUnico.setEnabledAt(jtpUnico.indexOfComponent(jspClientes), !activo);
-        jtpUnico.setEnabledAt(jtpUnico.indexOfComponent(jspMantenimiento), activo);
-
-        /*
             Aqui pasan los JScrollPane se alternan con el valor de activo,
         true selecciona el mantenimiento y false selecciona los registros de 
         clientes.
          */
         if (activo) {
+            jtpUnico.addTab("Mantenimiento", jspMantenimiento);
             jtpUnico.setSelectedComponent(jspMantenimiento);
         } else {
             jtpUnico.setSelectedComponent(jspClientes);
+            jtpUnico.remove(jspMantenimiento);
         }
 
         /*
@@ -2118,6 +2110,8 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
         //Botones de guardar y cancelar
         btnGuardar.setEnabled(activo);
         btnCancelar.setEnabled(activo);
+        
+        
 
         //txt Vaciar
         txtPNombre.setText("");
@@ -2142,7 +2136,7 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
         if (nuevo) {
             //Nuevo registro
             txtCedula.setValue(null);
-            txtCedula.setEditable(nuevo);
+            txtCedula.setEditable(true);
             txtCedula.requestFocus();
         } else {
             //Modificar registro

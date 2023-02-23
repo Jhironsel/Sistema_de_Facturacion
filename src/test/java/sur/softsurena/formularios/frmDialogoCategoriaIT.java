@@ -33,41 +33,6 @@ public class frmDialogoCategoriaIT {
     }
 
     /**
-     * Test of getNombreCategoria method, of class frmDialogoCategoria.
-     */
-    @Test
-    public void testGetNombreCategoria() {
-        System.out.println("getNombreCategoria");
-        frmDialogoCategoria instance = null;
-        String expResult = "";
-        String result = instance.getNombreCategoria();
-        assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of setNombreCategoria method, of class frmDialogoCategoria.
-     */
-    @Test
-    public void testSetNombreCategoria() {
-        System.out.println("setNombreCategoria");
-        String nombreCategoria = "";
-        frmDialogoCategoria instance = null;
-        instance.setNombreCategoria(nombreCategoria);
-    }
-
-    /**
-     * Test of isAceptar method, of class frmDialogoCategoria.
-     */
-    @Test
-    public void testIsAceptar() {
-        System.out.println("isAceptar");
-        frmDialogoCategoria instance = null;
-        boolean expResult = false;
-        boolean result = instance.isAceptar();
-        assertEquals(expResult, result);
-    }
-
-    /**
      * Test of setAceptar method, of class frmDialogoCategoria.
      */
     @Test

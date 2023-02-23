@@ -2,8 +2,7 @@ package sur.softsurena.formularios;
 
 import java.awt.Component;
 import java.awt.Image;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.*;
@@ -26,9 +25,10 @@ import static sur.softsurena.utilidades.Utilidades.repararColumnaTable;
 
 public class frmProductos extends javax.swing.JInternalFrame {
 
-    private Boolean nuevo = null, cambio = false;
-    private static DefaultTableModel miTabla;
-    private JFileChooser file = new JFileChooser();
+    private static final Logger LOG = Logger.getLogger(frmProductos.class.getName());
+    
+    private Boolean nuevo = null;
+    private final JFileChooser file;
     private final FileNameExtensionFilter filter;
     private final DefaultTableCellRenderer tcr;
     private static final String PROCESO_DE_VALIDACION_DEL_SISTEMA = "Proceso de validacion del sistema.";
@@ -38,23 +38,15 @@ public class frmProductos extends javax.swing.JInternalFrame {
     public frmProductos() {
 
         initComponents();
+        jpOpciones.setVisible(false);
+        file = new JFileChooser();
 
         filter = new FileNameExtensionFilter("Imagenes", "jpg", "png", "PNG", "JPG");
         file.setFileFilter(filter);
 
-        //Mantenimiento oculto por defecto. 
-        //Debe indicarse que se va a crear un producto nuevo desde el btnNuevo.
-        jtpUnico.remove(jtpUnico.indexOfComponent(jpCategorias));
-        jtpUnico.remove(jtpUnico.indexOfComponent(jpESHistorial));
-        jtpUnico.remove(jtpUnico.indexOfComponent(jpESProductos));
-        jtpUnico.remove(jtpUnico.indexOfComponent(jpMantenimiento));
-
         tcr = new DefaultTableCellHeaderRenderer();
 
-//        editor = (JTextFieldDateEditor) dchFechaVencimiento.getDateEditor();
-//        button = (JButton) dchFechaVencimiento.getCalendarButton();
-//        editor.setEditable(false);
-//        button.setEnabled(false);
+        cancelar(true, true);
     }
 
     @SuppressWarnings("unchecked")
@@ -103,6 +95,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         btnEntradaProducto = new RSMaterialComponent.RSButtonMaterialIconOne();
         btnSalidaProducto = new RSMaterialComponent.RSButtonMaterialIconOne();
         btnEntradaSalidaProducto = new RSMaterialComponent.RSButtonMaterialIconOne();
+        jlOpcionesMostrar = new RSMaterialComponent.RSLabelIcon();
 
         setClosable(true);
         setIconifiable(true);
@@ -238,7 +231,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 764, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 725, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
         jPanel10Layout.setVerticalGroup(
@@ -272,7 +265,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         jpCategorias.setLayout(jpCategoriasLayout);
         jpCategoriasLayout.setHorizontalGroup(
             jpCategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 776, Short.MAX_VALUE)
+            .addGap(0, 737, Short.MAX_VALUE)
         );
         jpCategoriasLayout.setVerticalGroup(
             jpCategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -456,9 +449,9 @@ public class frmProductos extends javax.swing.JInternalFrame {
         jpMantenimientoLayout.setHorizontalGroup(
             jpMantenimientoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpMantenimientoLayout.createSequentialGroup()
-                .addContainerGap(146, Short.MAX_VALUE)
+                .addContainerGap(126, Short.MAX_VALUE)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(105, Short.MAX_VALUE))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
         jpMantenimientoLayout.setVerticalGroup(
             jpMantenimientoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -474,7 +467,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         jpESProductos.setLayout(jpESProductosLayout);
         jpESProductosLayout.setHorizontalGroup(
             jpESProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 776, Short.MAX_VALUE)
+            .addGap(0, 737, Short.MAX_VALUE)
         );
         jpESProductosLayout.setVerticalGroup(
             jpESProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -487,7 +480,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         jpESHistorial.setLayout(jpESHistorialLayout);
         jpESHistorialLayout.setHorizontalGroup(
             jpESHistorialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 776, Short.MAX_VALUE)
+            .addGap(0, 737, Short.MAX_VALUE)
         );
         jpESHistorialLayout.setVerticalGroup(
             jpESHistorialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -594,6 +587,13 @@ public class frmProductos extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jlOpcionesMostrar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ARROW_BACK);
+        jlOpcionesMostrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jlOpcionesMostrarMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -602,6 +602,8 @@ public class frmProductos extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jtpUnico)
                     .addComponent(jScrollPane3))
+                .addGap(0, 0, 0)
+                .addComponent(jlOpcionesMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jpOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
@@ -614,6 +616,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jpOpciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jlOpcionesMostrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -655,7 +658,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         if (respuesta == JFileChooser.APPROVE_OPTION) {
 
             ImageIcon imagen = new ImageIcon(file.getSelectedFile().getAbsolutePath());
-            
+
             Icon icon = new ImageIcon(imagen.getImage().getScaledInstance(SCALA_ICONO, SCALA_ICONO, Image.SCALE_SMOOTH));
 
             imagen.getImage().flush();
@@ -702,157 +705,127 @@ public class frmProductos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cbCategoriaPopupMenuWillBecomeInvisible
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        nuevo = true;
 
         jtpUnico.addTab("Mantenimiento", jpMantenimiento);
-        jtpUnico.setSelectedIndex(jtpUnico.indexOfComponent(jpMantenimiento));
         
+        cancelar(false, false);
+        
+        jtpUnico.setSelectedIndex(jtpUnico.indexOfComponent(jpMantenimiento));
+
         /*
             Investigamos primero si existe por lo menos una categoria registrada.
          */
-//        if (cbCategoria.getItemCount() == 0) {
-////            getConsulta("SELECT COUNT(*) FROM TABLA_CATEGORIA")
-//            ResultSet rs = null;
-//            try {
-//                rs.next();
-//                if (rs.getInt(1) == 0) {
-//                    JOptionPane.showMessageDialog(null,
-//                            "Debe crear una categoria primero!!",
-//                            "Sin categoria en el sistema",
-//                            JOptionPane.INFORMATION_MESSAGE);
-//                    btnAdmCategoriasActionPerformed(null);
-//                    return;
-//                }
-//            } catch (SQLException ex) {
-//                //Instalar Logger
-//            }
-//        }
+        if (cbCategoria.getItemCount() <= 0) {
+            updateCategoria();
+            if(cbCategoria.getItemCount() <= 0){
+                JOptionPane.showInternalMessageDialog(
+                        null, 
+                        "Debe agregar una categoria de producto al sistema", 
+                        PROCESO_DE_VALIDACION_DEL_SISTEMA, 
+                        JOptionPane.WARNING_MESSAGE
+                );
+                return;
+            }
+        }
+
+        ImageIcon imagen = new ImageIcon("imagenes/NoImageTransp 96 x 96.png");
+
+        Icon icon = new ImageIcon(imagen.getImage().getScaledInstance(96, 96, Image.SCALE_AREA_AVERAGING));
+
+        imagen.getImage().flush();
+
+        jlImagenProducto.setIcon(icon);
+        jlImagenProducto.validate();
+
+        cbActivo.setEnabled(true);
+        cbActivo.setText("Activo");
         
-//        jtpUnico.setEnabledAt(jtpUnico.indexOfComponent(jpMantenimiento), true);
-//        
-//
-//        jtpUnico.setEnabledAt(jtpUnico.indexOfComponent(jpProductos), false);
-//
-//        cancelar(false, null, null);
-//
-//        tblTabla.setEnabled(false);
-//        //Caja de Texto Habilitado
-//        //txtCosto.setEditable(true);
-//        txtDescripcion.setEditable(true);
-//        txtCodigoBarra.setEditable(true);
-//        txtNotas.setEditable(true);
-//        //txtPrecio.setEditable(true);
-//
-//        //Caja de Perfil Habilitado
-//        cbCategoria.setEnabled(true);
-//
-//        jlImagenProducto.setEnabled(true);
-//
-//        String miFile = System.getProperty("user.dir") + "/images/Sin_imagen 64 x 64.png";
-//
-//        ImageIcon imagen = new ImageIcon(miFile);
-//
-//        Icon icon = new ImageIcon(imagen.getImage().getScaledInstance(72, 72,
-//                Image.SCALE_DEFAULT));
-//
-//        imagen.getImage().flush();
-//
-//        jlImagenProducto.setIcon(icon);
-//        jlImagenProducto.validate();
-//
-//        cbActivo.setEnabled(true);
-//        cbActivo.setText("Activo");
-//
-//
-//        //Vacear los txt
-//        txtDescripcion.setText("");
-//        txtCodigoBarra.setText("");
-//        txtNotas.setText("");
-//
-//        cbActivo.setSelected(false);
-//        cbCategoria.setSelectedIndex(-1);
-//
-//        //Activamos el Flag de registro Nuevo
-//        nuevo = true;
-//        txtCodigoBarra.requestFocusInWindow();
+        //Vacear los txt
+        txtDescripcion.setText("");
+        txtCodigoBarra.setText("");
+        txtNotas.setText("");
+
+        cbActivo.setSelected(false);
+        cbCategoria.setSelectedIndex(0);
+
+        txtCodigoBarra.requestFocusInWindow();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         if (tblTabla.getSelectedRow() <= -1) {
             JOptionPane.showMessageDialog(
-                    null, 
-                    "Debe seleccionar un producto", 
-                    PROCESO_DE_VALIDACION_DEL_SISTEMA, 
+                    null,
+                    "Debe seleccionar un producto",
+                    PROCESO_DE_VALIDACION_DEL_SISTEMA,
                     JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
+
         fila = tblTabla.getSelectedRow();
 
         updateCategoria();
 
-        
-        jtpUnico.setEnabledAt(jtpUnico.indexOfComponent(jpMantenimiento), true);
-        
-        jtpUnico.setSelectedIndex(jtpUnico.indexOfComponent(jpMantenimiento));
+        jtpUnico.addTab("Mantenimiento", jpMantenimiento);
 
-        jtpUnico.setEnabledAt(jtpUnico.indexOfComponent(jpProductos), false);
-        
         //Pasamos false para habilitar los botones guardar y cancelar.
-        cancelar(false, null, null);
-        
+        cancelar(false, false);
+
+        jtpUnico.setSelectedIndex(jtpUnico.indexOfComponent(jpMantenimiento));
         
         //Desactivamos el Flag de registro Nuevo
         nuevo = false;
 
         mostrarRegistro();
-        
+
         txtDescripcion.requestFocusInWindow();
-        
+
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
-        
+
         Integer id = ((Productos) tblTabla.getValueAt(tblTabla.getSelectedRow(), 2)).getId();
         String descripcion = ((Productos) tblTabla.getValueAt(tblTabla.getSelectedRow(), 2)).getDescripcion();
-        
+
         if (id == null) {
             JOptionPane.showMessageDialog(
-                    null, 
+                    null,
                     "Debe seleccionar un producto",
                     PROCESO_DE_VALIDACION_DEL_SISTEMA,
                     JOptionPane.WARNING_MESSAGE
             );
             return;
         }
-        
+
         int rta = JOptionPane.showConfirmDialog(
                 null,
-                "Esta Seguro de Eliminar el Producto {"+ descripcion + "} de los Registro?",
-                PROCESO_DE_VALIDACION_DEL_SISTEMA, 
-                JOptionPane.YES_NO_OPTION, 
+                "Esta Seguro de Eliminar el Producto {" + descripcion + "} de los Registro?",
+                PROCESO_DE_VALIDACION_DEL_SISTEMA,
+                JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE);
-        
+
         if (rta == JOptionPane.NO_OPTION) {
             return;
         }
-        
+
         String msg;
         try {
             msg = borrarProductoPorID_Codigo(id);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(
-                    null, 
+                    null,
                     "No se puede eliminar el producto porque ya ha sido facturado"
-                    + "\n!!Te recomendamos cambiar el ESTADO del producto...");
+                    + "\n!!Te recomendamos cambiar el ESTADO del producto...",
+                    "Proceso de verificación.",
+                    JOptionPane.WARNING_MESSAGE
+            );
             return;
         }
-        
+
         JOptionPane.showMessageDialog(
-                null, 
+                null,
                 msg
         );
-
-        //Actualizamos los cambios en la Tabla
         reOrdenar();
     }//GEN-LAST:event_btnBorrarActionPerformed
 
@@ -952,13 +925,13 @@ public class frmProductos extends javax.swing.JInternalFrame {
                 build();
 
         String msg, accion = "editar";
-        
+
         if (nuevo) {
             accion = "crear";
         }
-        
+
         if (txtNotas.getText().length() >= 51) {
-            msg = txtNotas.getText().substring(0, 49)+"...";
+            msg = txtNotas.getText().substring(0, 49) + "...";
         } else {
             msg = txtNotas.getText();
         }
@@ -972,49 +945,37 @@ public class frmProductos extends javax.swing.JInternalFrame {
                 + "\n<html><b><big>Desea continuar? </big></b></html>",
                 "Confirmacion de Usuario",
                 JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE, 
+                JOptionPane.QUESTION_MESSAGE,
                 jlImagenProducto.getIcon());
-        
+
         if (resp == JOptionPane.NO_OPTION) {
             return;
         }
-        
-        
+
         if (nuevo) {
             msg = agregarProducto(p).getMensaje();
         } else {
             int id = ((Productos) tblTabla.getValueAt(tblTabla.getSelectedRow(), 2)).getId();
-            msg = modificarProducto(id,p);
+            msg = modificarProducto(id, p);
         }
 
         JOptionPane.showMessageDialog(
-                null, 
+                null,
                 msg);
-        
-        jtpUnico.setEnabledAt(jtpUnico.indexOfComponent(jpProductos), true);  
-        
-        jtpUnico.setSelectedIndex(jtpUnico.indexOfComponent(jpProductos));
-        
-        jtpUnico.setEnabledAt(jtpUnico.indexOfComponent(jpMantenimiento), false);
-        
+
+        jtpUnico.remove(jpMantenimiento);
+
     }//GEN-LAST:event_btnGuardarActionPerformed
 
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        cancelar(true, null, null);
-        
-        jtpUnico.setEnabledAt(jtpUnico.indexOfComponent(jpMantenimiento), false);
-        
-        jtpUnico.setSelectedIndex(jtpUnico.indexOfComponent(jpProductos));
-
-        jtpUnico.setEnabledAt(jtpUnico.indexOfComponent(jpProductos), true);
+        cancelar(true, true);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAdmCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdmCategoriasActionPerformed
         frmCategorias miCategoria = new frmCategorias(null, true);
         miCategoria.setLocationRelativeTo(null);
         miCategoria.setVisible(true);
-        cancelar(false, null, null);
         updateCategoria();
     }//GEN-LAST:event_btnAdmCategoriasActionPerformed
 
@@ -1050,7 +1011,6 @@ public class frmProductos extends javax.swing.JInternalFrame {
         frmEntradaProducto miEntrada = new frmEntradaProducto(null, true);
         miEntrada.setLocationRelativeTo(null);
         miEntrada.setVisible(true);
-        cancelar(false, null, null);
     }//GEN-LAST:event_btnEntradaProductoActionPerformed
 
     private void btnSalidaProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalidaProductoActionPerformed
@@ -1061,7 +1021,6 @@ public class frmProductos extends javax.swing.JInternalFrame {
         frmSalidaProducto miSalida = new frmSalidaProducto(null, true);
         miSalida.setLocationRelativeTo(null);
         miSalida.setVisible(true);
-        cancelar(false, null, null);
     }//GEN-LAST:event_btnSalidaProductoActionPerformed
 
     private void btnEntradaSalidaProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntradaSalidaProductoActionPerformed
@@ -1075,48 +1034,75 @@ public class frmProductos extends javax.swing.JInternalFrame {
         updateCategoria();
     }//GEN-LAST:event_formInternalFrameOpened
 
+    private void jlOpcionesMostrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlOpcionesMostrarMouseClicked
+        if(jpOpciones.isVisible()){
+            jpOpciones.setVisible(false);
+            jlOpcionesMostrar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ARROW_BACK);
+        }else{
+            jpOpciones.setVisible(true);
+            jlOpcionesMostrar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ARROW_FORWARD);
+        }
+    }//GEN-LAST:event_jlOpcionesMostrarMouseClicked
+
     /**
-     * Metodo utilizado para 
+     * Metodo utilizado para controla el comportamiento de los botones del
+     * formulario.
+     *
+     * Dichos botones son btnNuevo, btnModificar, btnBuscarProducto, btnBorrar
+     * btnGuardar, btnCancelar.
+     * 
+     * Si este metodo es ejecutado y desea seleccionar otro JPane se debe
+     * ejecutar 
+     * jtpUnico.setSelectedIndex(jtpUnico.indexOfComponent(NOMBRE_JPANE));
+     * 
+     * Este metodo siempre seleccionara el jpProductos.
      * @param valor
-     * @param component
-     * @param componente 
      */
-    private void cancelar(Boolean valor, Component component, Boolean componente) {
-        if (valor != null) {
-            //Botones Para habilitar:
-            btnNuevo.setEnabled(valor);
-            btnModificar.setEnabled(valor);
-            btnBuscarProducto.setEnabled(valor);
-            btnBorrar.setEnabled(valor);
-            
-            //Botones Para Deshabitar
-            btnGuardar.setEnabled(!valor);
-            btnCancelar.setEnabled(!valor);
-        }
+    private void cancelar(boolean valor, boolean cerrar) {
+        //Botones Para habilitar:
+        btnNuevo.setEnabled(valor);
+        btnModificar.setEnabled(valor);
+        btnBuscarProducto.setEnabled(valor);
+        btnBorrar.setEnabled(valor);
 
-        if (component != null) {
-            jtpUnico.setEnabledAt(jtpUnico.indexOfComponent(component), componente);
-        }
+        //Botones Para Deshabitar
+        btnGuardar.setEnabled(!valor);
+        btnCancelar.setEnabled(!valor);
 
-        //Se llena la tabla al cancelar un proceso
-        llenarTabla();
-        //
-        reOrdenar();
+        if (cerrar) {
+            for (Component component : jtpUnico.getComponents()) {
+                if (component != jpProductos) {
+                    jtpUnico.remove(component);
+                }
+            }
+        }
+        
+        jtpUnico.setSelectedIndex(jtpUnico.indexOfComponent(jpProductos));
+
     }
 
     /**
-     * Es el metodo encargado de llenar la lista de producto del sistema. 
-     * Este metodo es llamado por los evento que ocurren cuando se inserta
-     * actualizan o elimina un producto del sistema. 
+     * Es el metodo encargado de llenar la lista de producto del sistema. Este
+     * metodo es llamado por los evento que ocurren cuando se inserta actualizan
+     * o elimina un producto del sistema.
+     * 
+     * Es llamado tambien cuando el modulo de producto se abre por primera vez.
+     * 
      */
     public static void llenarTabla() {
+        // Array de String que dan nombre a las columnas de la tabla.
         String titulos[] = {"Codigo Producto", "Categoria", "Descripcion",
             "Fecha creación", "Estado", "Nota"};
+        
+        //Limpiamos todos los registro de la tabla. 
         tblTabla.removeAll();
 
+        //Creamos un array de objectos con la longitud de los titulos de la 
+        //columnas.
         Object registro[] = new Object[titulos.length];
 
-        miTabla = new DefaultTableModel(null, titulos);
+        //Modelo que se pasará a la tablas de productos.
+        DefaultTableModel miTabla = new DefaultTableModel(null, titulos);
 
         getProductos().stream().forEach(producto -> {
             registro[0] = producto.getCodigo();
@@ -1142,8 +1128,8 @@ public class frmProductos extends javax.swing.JInternalFrame {
     }
 
     /**
-     * Es el metodo encargado de mostrar el modulo de mantenimiento de producto 
-     * o registro a actualizar. 
+     * Es el metodo encargado de mostrar el modulo de mantenimiento de producto
+     * o registro a actualizar.
      */
     private void mostrarRegistro() {
         //Si la tabla no cuenta con registro se envian valores por defecto.
@@ -1156,11 +1142,11 @@ public class frmProductos extends javax.swing.JInternalFrame {
             cbCategoria.setSelectedIndex(-1);
             return;
         }
-        
+
         int id = ((Productos) tblTabla.getValueAt(fila, 2)).getId();
 
         Productos producto = Productos.getProducto(id);
-        
+
         txtCodigoBarra.setText(producto.getCodigo());
 
         txtDescripcion.setText(producto.getDescripcion());
@@ -1168,23 +1154,22 @@ public class frmProductos extends javax.swing.JInternalFrame {
         txtNotas.setText(producto.getNota());
 
         cbActivo.setSelected(producto.getEstado());
-        
-        
+
         ImageIcon imagen = Utilidades.imagenDecode64(producto.getImagenProducto());
-        
+
         Icon icon = new ImageIcon(imagen.getImage().getScaledInstance(SCALA_ICONO, SCALA_ICONO, Image.SCALE_SMOOTH));
 
         imagen.getImage().flush();
-            
+
         jlImagenProducto.setIcon(icon);
-        
+
         for (int i = 0; i < cbCategoria.getItemCount(); i++) {
             int idCategoria = ((Categorias) cbCategoria.getItemAt(i)).getId_categoria();
-            if(idCategoria == producto.getCategoria().getId_categoria()){
+            if (idCategoria == producto.getCategoria().getId_categoria()) {
                 cbCategoria.setSelectedIndex(i);
             }
         }
-        
+
     }
 
     /**
@@ -1195,7 +1180,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         if (tblTabla.getRowCount() <= 0) {
             return;
         }
-        
+
         TableColumn miTableColumn;
         for (int i = 0; i < tblTabla.getColumnCount(); i++) {
 
@@ -1280,6 +1265,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel jlImagenProducto;
+    private RSMaterialComponent.RSLabelIcon jlOpcionesMostrar;
     private javax.swing.JPanel jpCategorias;
     private javax.swing.JPanel jpESHistorial;
     private javax.swing.JPanel jpESProductos;

@@ -1,54 +1,56 @@
 package sur.softsurena.formularios;
 
+
 public class frmDialogoCategoria extends java.awt.Dialog {
-    private boolean aceptar;
-    private String nombreCategoria;
+    
+    private static Boolean aceptar;
 
-    public String getNombreCategoria() {
-        return nombreCategoria;
-    }
-
-    public void setNombreCategoria(String nombreCategoria) {
-        this.nombreCategoria = nombreCategoria;
-    }
-
-    public boolean isAceptar() {
+    public Boolean getAceptar() {
         return aceptar;
     }
 
-    public void setAceptar(boolean aceptar) {
-        this.aceptar = aceptar;
+    public void setAceptar(Boolean aceptar) {
+        frmDialogoCategoria.aceptar = aceptar;
     }
     
-    public frmDialogoCategoria(java.awt.Frame parent, boolean modal, String Categoria) {
+    public frmDialogoCategoria(java.awt.Frame parent, boolean modal, String categoria, Boolean estado, boolean nuevo) {
         super(parent, modal);
         initComponents();
-        txtCategoria.setText(Categoria);
-    }
-    public frmDialogoCategoria(java.awt.Frame parent, boolean modal, String Categoria,
-                                String label1, String label2) {
-        super(parent, modal);
-        initComponents();
-        txtCategoria.setText(Categoria);
-        jLabel1.setText(label1);
-        jLabel2.setText(label2);
+        txtCategoria.setText(categoria);
+        jcbEstado.setSelected(estado);
+        jcbEstadoActionPerformed(null);
+        if(nuevo){
+            jlTitulo.setText("Agregar categoria");
+            setTitle("Agregando categoria");
+        }else{
+            jlTitulo.setText("Modificar categoria");
+            setTitle("Modificando categoria");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txtCategoria = new javax.swing.JTextField();
-        btnGrabar = new javax.swing.JButton();
-        btnCancelar = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jlTitulo = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        txtCategoria = new javax.swing.JTextField();
+        btnCancelar = new newscomponents.RSButtonGradientIcon_new();
+        btnGrabar = new newscomponents.RSButtonGradientIcon_new();
+        jcbEstado = new javax.swing.JCheckBox();
 
-        setBackground(javax.swing.UIManager.getDefaults().getColor("nb.multitabs.underlineColor"));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 closeDialog(evt);
             }
         });
+
+        jlTitulo.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        jlTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlTitulo.setText("Modificar Categoria");
+
+        jLabel2.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        jLabel2.setText("Nombre Categoria: ");
 
         txtCategoria.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
         txtCategoria.addActionListener(new java.awt.event.ActionListener() {
@@ -57,110 +59,123 @@ public class frmDialogoCategoria extends java.awt.Dialog {
             }
         });
 
-        btnGrabar.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        btnGrabar.setForeground(new java.awt.Color(1, 1, 1));
-        btnGrabar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Aceptar 32 x 32.png"))); // NOI18N
-        btnGrabar.setText("Continuar");
-        btnGrabar.setToolTipText("Confirmar Factura");
-        btnGrabar.setFocusPainted(false);
-        btnGrabar.setFocusable(false);
-        btnGrabar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnGrabar.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        btnGrabar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnGrabar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGrabarActionPerformed(evt);
-            }
-        });
-
-        btnCancelar.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        btnCancelar.setForeground(new java.awt.Color(1, 1, 1));
-        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Cancelar 32 x 32.png"))); // NOI18N
-        btnCancelar.setText("Cancelar");
-        btnCancelar.setToolTipText("Cancelar Factura Actual");
-        btnCancelar.setFocusPainted(false);
-        btnCancelar.setFocusable(false);
-        btnCancelar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnCancelar.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        btnCancelar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnCancelar.setText("Cacnelar");
+        btnCancelar.setColorPrimario(new java.awt.Color(255, 0, 0));
+        btnCancelar.setColorPrimarioHover(new java.awt.Color(255, 51, 51));
+        btnCancelar.setGradiente(newscomponents.RSButtonGradientIcon_new.Gradiente.HORIZONTAL);
+        btnCancelar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CANCEL);
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Modificar Categoria");
+        btnGrabar.setText("Continuar");
+        btnGrabar.setGradiente(newscomponents.RSButtonGradientIcon_new.Gradiente.HORIZONTAL);
+        btnGrabar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ARROW_FORWARD);
+        btnGrabar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGrabarActionPerformed(evt);
+            }
+        });
 
-        jLabel2.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        jLabel2.setText("Nombre Categoria: ");
+        jcbEstado.setText("Inactivo");
+        jcbEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbEstadoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnGrabar, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jcbEstado))
+                        .addComponent(jlTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtCategoria)))
+                .addContainerGap())
+        );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnCancelar, btnGrabar});
+
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jlTitulo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcbEstado))
+                .addGap(6, 6, 6)
+                .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGrabar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtCategoria)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(4, 4, 4)
-                        .addComponent(btnGrabar)))
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnCancelar, btnGrabar});
-
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
-                .addGap(7, 7, 7)
-                .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnGrabar)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(12, 12, 12))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
-
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnCancelar, btnGrabar});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void closeDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_closeDialog
-        setVisible(false);
-        dispose();
-    }//GEN-LAST:event_closeDialog
-
-    private void btnGrabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrabarActionPerformed
-        setAceptar(true);
-        setNombreCategoria(txtCategoria.getText());
-        setVisible(false);
-    }//GEN-LAST:event_btnGrabarActionPerformed
-
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         setAceptar(false);
-        setVisible(false);
-    }//GEN-LAST:event_btnCancelarActionPerformed
+    }//GEN-LAST:event_closeDialog
 
     private void txtCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCategoriaActionPerformed
         btnGrabarActionPerformed(evt);
     }//GEN-LAST:event_txtCategoriaActionPerformed
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        dispose();
+        setAceptar(false);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnGrabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrabarActionPerformed
+        dispose();
+        setAceptar(true);
+    }//GEN-LAST:event_btnGrabarActionPerformed
+
+    private void jcbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbEstadoActionPerformed
+        if(jcbEstado.isSelected()){
+            jcbEstado.setText("Activo");
+        }else{
+            jcbEstado.setText("Inactivo");
+        }
+    }//GEN-LAST:event_jcbEstadoActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnGrabar;
-    private javax.swing.JLabel jLabel1;
+    private newscomponents.RSButtonGradientIcon_new btnCancelar;
+    private newscomponents.RSButtonGradientIcon_new btnGrabar;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField txtCategoria;
+    private javax.swing.JPanel jPanel1;
+    public javax.swing.JCheckBox jcbEstado;
+    private javax.swing.JLabel jlTitulo;
+    public javax.swing.JTextField txtCategoria;
     // End of variables declaration//GEN-END:variables
 }
