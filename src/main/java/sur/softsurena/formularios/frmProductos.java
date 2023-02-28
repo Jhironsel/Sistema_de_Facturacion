@@ -2,6 +2,9 @@ package sur.softsurena.formularios;
 
 import java.awt.Component;
 import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -26,7 +29,7 @@ import static sur.softsurena.utilidades.Utilidades.repararColumnaTable;
 public class frmProductos extends javax.swing.JInternalFrame {
 
     private static final Logger LOG = Logger.getLogger(frmProductos.class.getName());
-    
+
     private Boolean nuevo = null;
     private final JFileChooser file;
     private final FileNameExtensionFilter filter;
@@ -76,17 +79,15 @@ public class frmProductos extends javax.swing.JInternalFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtNotas = new javax.swing.JTextArea();
         jlImagenProducto = new javax.swing.JLabel();
         txtCodigoBarra = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         cbCategoria = new javax.swing.JComboBox();
-        jLabel2 = new javax.swing.JLabel();
         txtDescripcion = new javax.swing.JTextField();
         cbActivo = new javax.swing.JCheckBox();
+        btnAgregarFoto = new newscomponents.RSButtonGradientIcon_new();
+        btnEliminarFoto = new newscomponents.RSButtonGradientIcon_new();
         jpESProductos = new javax.swing.JPanel();
         jpESHistorial = new javax.swing.JPanel();
         jpOpciones = new javax.swing.JPanel();
@@ -231,7 +232,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 725, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 820, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
         jPanel10Layout.setVerticalGroup(
@@ -265,7 +266,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         jpCategorias.setLayout(jpCategoriasLayout);
         jpCategoriasLayout.setHorizontalGroup(
             jpCategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 737, Short.MAX_VALUE)
+            .addGap(0, 832, Short.MAX_VALUE)
         );
         jpCategoriasLayout.setVerticalGroup(
             jpCategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -280,15 +281,12 @@ public class frmProductos extends javax.swing.JInternalFrame {
         jLabel7.setText("* Campos Obligatorios");
         jLabel7.setToolTipText("");
 
-        jLabel5.setFont(new java.awt.Font("DejaVu Sans", 0, 12)); // NOI18N
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel5.setText("Notas :");
-
         txtNotas.setColumns(20);
         txtNotas.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
         txtNotas.setForeground(new java.awt.Color(0, 0, 0));
         txtNotas.setLineWrap(true);
         txtNotas.setWrapStyleWord(true);
+        txtNotas.setBorder(javax.swing.BorderFactory.createTitledBorder("Nota:"));
         txtNotas.setName("txtNotas"); // NOI18N
         txtNotas.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -300,7 +298,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         jlImagenProducto.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         jlImagenProducto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlImagenProducto.setToolTipText("Doble click para buscar la imagen.");
-        jlImagenProducto.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Seleccione Imagen", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 12), new java.awt.Color(0, 0, 0))); // NOI18N
+        jlImagenProducto.setBorder(javax.swing.BorderFactory.createTitledBorder("Seleccione Imagen"));
         jlImagenProducto.setName("jlImagenProducto"); // NOI18N
         jlImagenProducto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -310,6 +308,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
         txtCodigoBarra.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
         txtCodigoBarra.setForeground(java.awt.SystemColor.textText);
+        txtCodigoBarra.setBorder(javax.swing.BorderFactory.createTitledBorder("*Codigo de barra"));
         txtCodigoBarra.setName("txtCodigoBarra"); // NOI18N
         txtCodigoBarra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -317,6 +316,9 @@ public class frmProductos extends javax.swing.JInternalFrame {
             }
         });
         txtCodigoBarra.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCodigoBarraKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtCodigoBarraKeyReleased(evt);
             }
@@ -325,16 +327,9 @@ public class frmProductos extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("DejaVu Sans", 0, 12)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel1.setText("*Codigo de barra:");
-
-        jLabel12.setFont(new java.awt.Font("DejaVu Sans", 0, 12)); // NOI18N
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel12.setText("*Categoria :");
-
         cbCategoria.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
         cbCategoria.setForeground(java.awt.SystemColor.textText);
+        cbCategoria.setBorder(javax.swing.BorderFactory.createTitledBorder("Categorias"));
         cbCategoria.setName("cbCategoria"); // NOI18N
         cbCategoria.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
             public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
@@ -350,13 +345,15 @@ public class frmProductos extends javax.swing.JInternalFrame {
                 cbCategoriaActionPerformed(evt);
             }
         });
-
-        jLabel2.setFont(new java.awt.Font("DejaVu Sans", 0, 12)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel2.setText("*Descripcion :");
+        cbCategoria.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cbCategoriaKeyPressed(evt);
+            }
+        });
 
         txtDescripcion.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
         txtDescripcion.setForeground(java.awt.SystemColor.textText);
+        txtDescripcion.setBorder(javax.swing.BorderFactory.createTitledBorder("*Descripcion el producto"));
         txtDescripcion.setName("txtDescripcion"); // NOI18N
         txtDescripcion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -364,6 +361,9 @@ public class frmProductos extends javax.swing.JInternalFrame {
             }
         });
         txtDescripcion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtDescripcionKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtDescripcionKeyReleased(evt);
             }
@@ -379,67 +379,75 @@ public class frmProductos extends javax.swing.JInternalFrame {
             }
         });
 
+        btnAgregarFoto.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.PHOTO_SIZE_SELECT_ACTUAL);
+        btnAgregarFoto.setName("btnAgregarFoto"); // NOI18N
+        btnAgregarFoto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarFotoActionPerformed(evt);
+            }
+        });
+
+        btnEliminarFoto.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DELETE);
+        btnEliminarFoto.setName("btnEliminarFoto"); // NOI18N
+        btnEliminarFoto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarFotoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
-                            .addComponent(txtCodigoBarra))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(cbActivo))
+                    .addComponent(txtDescripcion)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel7)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
+                            .addComponent(cbCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtCodigoBarra, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnEliminarFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jlImagenProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE)
-                                    .addComponent(txtDescripcion, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addComponent(cbActivo)
-                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(btnAgregarFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jlImagenProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
-
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cbCategoria, jLabel1, jLabel12, txtCodigoBarra});
-
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(cbActivo)
-                .addGap(0, 0, 0)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtCodigoBarra, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(txtCodigoBarra, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jlImagenProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE))
+                        .addComponent(jlImagenProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAgregarFoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnEliminarFoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 30, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jScrollPane4.setViewportView(jPanel1);
@@ -449,16 +457,16 @@ public class frmProductos extends javax.swing.JInternalFrame {
         jpMantenimientoLayout.setHorizontalGroup(
             jpMantenimientoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpMantenimientoLayout.createSequentialGroup()
-                .addContainerGap(126, Short.MAX_VALUE)
+                .addContainerGap(104, Short.MAX_VALUE)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addContainerGap(108, Short.MAX_VALUE))
         );
         jpMantenimientoLayout.setVerticalGroup(
             jpMantenimientoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpMantenimientoLayout.createSequentialGroup()
-                .addContainerGap(41, Short.MAX_VALUE)
+                .addContainerGap(54, Short.MAX_VALUE)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
 
         jtpUnico.addTab("Mantenimiento", jpMantenimiento);
@@ -467,7 +475,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         jpESProductos.setLayout(jpESProductosLayout);
         jpESProductosLayout.setHorizontalGroup(
             jpESProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 737, Short.MAX_VALUE)
+            .addGap(0, 832, Short.MAX_VALUE)
         );
         jpESProductosLayout.setVerticalGroup(
             jpESProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -480,7 +488,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         jpESHistorial.setLayout(jpESHistorialLayout);
         jpESHistorialLayout.setHorizontalGroup(
             jpESHistorialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 737, Short.MAX_VALUE)
+            .addGap(0, 832, Short.MAX_VALUE)
         );
         jpESHistorialLayout.setVerticalGroup(
             jpESHistorialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -645,28 +653,8 @@ public class frmProductos extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_cbActivoActionPerformed
     private void jlImagenProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlImagenProductoMouseClicked
-        //Solo se permite buscar la imagen con doble click
-        if (evt.getClickCount() != 2) {
-            evt.consume();
-            return;
-        }
 
-        //Abrimos un dialogo para obtener la imagen del producto.
-        int respuesta = file.showOpenDialog(this);
 
-        //Cargamos la imagen en el jlImagenProducto.
-        if (respuesta == JFileChooser.APPROVE_OPTION) {
-
-            ImageIcon imagen = new ImageIcon(file.getSelectedFile().getAbsolutePath());
-
-            Icon icon = new ImageIcon(imagen.getImage().getScaledInstance(SCALA_ICONO, SCALA_ICONO, Image.SCALE_SMOOTH));
-
-            imagen.getImage().flush();
-
-            jlImagenProducto.setIcon(icon);
-
-            jlImagenProducto.validate();
-        }
     }//GEN-LAST:event_jlImagenProductoMouseClicked
     private void txtCodigoBarraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoBarraKeyTyped
         if (txtCodigoBarra.getText().length() >= 25) {
@@ -708,9 +696,9 @@ public class frmProductos extends javax.swing.JInternalFrame {
         nuevo = true;
 
         jtpUnico.addTab("Mantenimiento", jpMantenimiento);
-        
+
         cancelar(false, false);
-        
+
         jtpUnico.setSelectedIndex(jtpUnico.indexOfComponent(jpMantenimiento));
 
         /*
@@ -718,11 +706,11 @@ public class frmProductos extends javax.swing.JInternalFrame {
          */
         if (cbCategoria.getItemCount() <= 0) {
             updateCategoria();
-            if(cbCategoria.getItemCount() <= 0){
+            if (cbCategoria.getItemCount() <= 0) {
                 JOptionPane.showInternalMessageDialog(
-                        null, 
-                        "Debe agregar una categoria de producto al sistema", 
-                        PROCESO_DE_VALIDACION_DEL_SISTEMA, 
+                        null,
+                        "Debe agregar una categoria de producto al sistema",
+                        PROCESO_DE_VALIDACION_DEL_SISTEMA,
                         JOptionPane.WARNING_MESSAGE
                 );
                 return;
@@ -740,7 +728,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
         cbActivo.setEnabled(true);
         cbActivo.setText("Activo");
-        
+
         //Vacear los txt
         txtDescripcion.setText("");
         txtCodigoBarra.setText("");
@@ -753,6 +741,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        //Validamos que exista un producto seleccionar.
         if (tblTabla.getSelectedRow() <= -1) {
             JOptionPane.showMessageDialog(
                     null,
@@ -762,24 +751,29 @@ public class frmProductos extends javax.swing.JInternalFrame {
             return;
         }
 
+        //Guardamos la fila de producto en la tabla, he tenido que hacerlo asi,
+        //porque se está la fila.
         fila = tblTabla.getSelectedRow();
 
+        //Se actualiza el combo box de la categoria. 
         updateCategoria();
-
-        jtpUnico.addTab("Mantenimiento", jpMantenimiento);
 
         //Pasamos false para habilitar los botones guardar y cancelar.
         cancelar(false, false);
 
+        //Agregamos el jpMantenimiento y seleccionamos jTapPane
+        jtpUnico.addTab("Mantenimiento", jpMantenimiento);
+
         jtpUnico.setSelectedIndex(jtpUnico.indexOfComponent(jpMantenimiento));
-        
-        //Desactivamos el Flag de registro Nuevo
+
+        //Desactivamos el Flag de registro Nuevo para realizar actualizaciones.
         nuevo = false;
 
+        //Metodo utilizado para mostrar el registro del usuario seleccionado 
+        //en la tabla. 
         mostrarRegistro();
 
         txtDescripcion.requestFocusInWindow();
-
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
@@ -897,7 +891,8 @@ public class frmProductos extends javax.swing.JInternalFrame {
             return;
         }
 
-        // Si es nuevo validamos que el Producto no exista
+        // Si es nuevo validamos que el Producto no exista por su codigo de 
+        //barra.
         if (nuevo) {
             if (existeProducto(txtCodigoBarra.getText())) {
                 JOptionPane.showMessageDialog(null,
@@ -911,6 +906,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
             }
         }
 
+        //Creando el objecto producto.
         Productos p = Productos.
                 builder().
                 categoria(Categorias.
@@ -923,7 +919,15 @@ public class frmProductos extends javax.swing.JInternalFrame {
                 estado(cbActivo.isSelected()).
                 nota(txtNotas.getText()).
                 build();
-
+        /*
+         * La variable msg es llamada mensaje la cual servirá para dos cosa,
+         * la primera es que para recoger la nota del producto, para mostrarlo 
+         * en el proximo JOpcionPane y luego para almacenar el resultado de la
+         * Operacion de insertar o actualizar el producto.
+         * La variable editar es utilizada para ser utilizada en el siguiente 
+         * JopcionPane para dar a conocer al usuario que hara una insersion o 
+         * modificación.
+         */
         String msg, accion = "editar";
 
         if (nuevo) {
@@ -964,7 +968,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
                 msg);
 
         jtpUnico.remove(jpMantenimiento);
-
+        cancelar(true, true);
     }//GEN-LAST:event_btnGuardarActionPerformed
 
 
@@ -1035,14 +1039,90 @@ public class frmProductos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_formInternalFrameOpened
 
     private void jlOpcionesMostrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlOpcionesMostrarMouseClicked
-        if(jpOpciones.isVisible()){
+        if (jpOpciones.isVisible()) {
             jpOpciones.setVisible(false);
             jlOpcionesMostrar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ARROW_BACK);
-        }else{
+        } else {
             jpOpciones.setVisible(true);
             jlOpcionesMostrar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ARROW_FORWARD);
         }
     }//GEN-LAST:event_jlOpcionesMostrarMouseClicked
+
+    private void txtDescripcionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescripcionKeyPressed
+        if (evt.isControlDown()) {
+            if (evt.isAltDown()) {
+                if (evt.isShiftDown()) {
+                    if (evt.isAltGraphDown()) {
+                        txtDescripcion.setText(Productos.generarProducto());
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_txtDescripcionKeyPressed
+
+    private void txtCodigoBarraKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoBarraKeyPressed
+        if (evt.isControlDown()) {
+            if (evt.isAltDown()) {
+                if (evt.isShiftDown()) {
+                    if (evt.isAltGraphDown()) {
+                        txtCodigoBarra.setText(Productos.generarCodigoBarra());
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_txtCodigoBarraKeyPressed
+
+    private void cbCategoriaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbCategoriaKeyPressed
+        if (evt.isControlDown()) {
+            if (evt.isAltDown()) {
+                if (evt.isShiftDown()) {
+                    if (evt.isAltGraphDown()) {
+                        int num1 = (int) (Math.random() * cbCategoria.getItemCount());
+                        cbCategoria.setSelectedIndex(num1);
+
+                        cbActivo.setSelected(((num1 % 2) == 0));
+
+                        StringBuilder string = new StringBuilder();
+                        string.append("El producto ").
+                                append(txtDescripcion.getText()).
+                                append(" Con el codigo de barra ").
+                                append(txtCodigoBarra.getText()).
+                                append(" pertenece a la categoria de producto llamado ").
+                                append(((Categorias) cbCategoria.getSelectedItem()).getDescripcion()).
+                                append(" con el estado actual ").
+                                append((cbActivo.isSelected() ? "Activo" : "Inactivo"));
+                        
+                        
+                        txtNotas.setText(string.toString());
+
+                        String file2 = null;
+                        try {
+                            file2 = new File("").getCanonicalPath();
+                        } catch (IOException ex) {
+                            Logger.getLogger(frmProductos.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        System.out.println("file2 = " + file2);
+                        ponerImagenProducto(file2);
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_cbCategoriaKeyPressed
+
+    private void btnAgregarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarFotoActionPerformed
+        //Abrimos un dialogo para obtener la imagen del producto.
+        int respuesta = file.showOpenDialog(this);
+
+        //Cargamos la imagen en el jlImagenProducto.
+        if (respuesta == JFileChooser.APPROVE_OPTION) {
+            ponerImagenProducto(file.getSelectedFile().getAbsolutePath());
+
+        }
+    }//GEN-LAST:event_btnAgregarFotoActionPerformed
+
+    private void btnEliminarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarFotoActionPerformed
+
+    }//GEN-LAST:event_btnEliminarFotoActionPerformed
 
     /**
      * Metodo utilizado para controla el comportamiento de los botones del
@@ -1050,12 +1130,13 @@ public class frmProductos extends javax.swing.JInternalFrame {
      *
      * Dichos botones son btnNuevo, btnModificar, btnBuscarProducto, btnBorrar
      * btnGuardar, btnCancelar.
-     * 
+     *
      * Si este metodo es ejecutado y desea seleccionar otro JPane se debe
-     * ejecutar 
+     * ejecutar
      * jtpUnico.setSelectedIndex(jtpUnico.indexOfComponent(NOMBRE_JPANE));
-     * 
+     *
      * Este metodo siempre seleccionara el jpProductos.
+     *
      * @param valor
      */
     private void cancelar(boolean valor, boolean cerrar) {
@@ -1076,7 +1157,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
                 }
             }
         }
-        
+
         jtpUnico.setSelectedIndex(jtpUnico.indexOfComponent(jpProductos));
 
     }
@@ -1085,15 +1166,15 @@ public class frmProductos extends javax.swing.JInternalFrame {
      * Es el metodo encargado de llenar la lista de producto del sistema. Este
      * metodo es llamado por los evento que ocurren cuando se inserta actualizan
      * o elimina un producto del sistema.
-     * 
+     *
      * Es llamado tambien cuando el modulo de producto se abre por primera vez.
-     * 
+     *
      */
     public static void llenarTabla() {
         // Array de String que dan nombre a las columnas de la tabla.
         String titulos[] = {"Codigo Producto", "Categoria", "Descripcion",
             "Fecha creación", "Estado", "Nota"};
-        
+
         //Limpiamos todos los registro de la tabla. 
         tblTabla.removeAll();
 
@@ -1235,14 +1316,37 @@ public class frmProductos extends javax.swing.JInternalFrame {
     }
 
     private void updateCategoria() {
-        getCategirias(cbCategoria);
+        //Elimina registros previos.
+        cbCategoria.removeAllItems();
+
+        //Agregar primer elemento con id negativo
+        //Lo agregamos al comboBox.
+        cbCategoria.addItem(
+                Categorias.
+                        builder().
+                        id_categoria(-1).
+                        descripcion("Seleccione categoria").
+                        build()
+        );
+        getCategirias().stream().forEach(categoria -> {
+            cbCategoria.addItem(
+                    Categorias.
+                            builder().
+                            id_categoria(categoria.getId_categoria()).
+                            descripcion(categoria.getDescripcion()).
+                            fecha_creacion(categoria.getFecha_creacion()).
+                            build()
+            );
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private RSMaterialComponent.RSButtonMaterialIconOne btnAdmCategorias;
+    private newscomponents.RSButtonGradientIcon_new btnAgregarFoto;
     private RSMaterialComponent.RSButtonMaterialIconOne btnBorrar;
     private RSMaterialComponent.RSButtonMaterialIconOne btnBuscarProducto;
     public RSMaterialComponent.RSButtonMaterialIconOne btnCancelar;
+    private newscomponents.RSButtonGradientIcon_new btnEliminarFoto;
     private RSMaterialComponent.RSButtonMaterialIconOne btnEntradaProducto;
     private RSMaterialComponent.RSButtonMaterialIconOne btnEntradaSalidaProducto;
     private RSMaterialComponent.RSButtonMaterialIconOne btnGuardar;
@@ -1252,10 +1356,6 @@ public class frmProductos extends javax.swing.JInternalFrame {
     private RSMaterialComponent.RSButtonMaterialIconOne btnSalidaProducto;
     private javax.swing.JCheckBox cbActivo;
     private javax.swing.JComboBox cbCategoria;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
@@ -1278,4 +1378,16 @@ public class frmProductos extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtDescripcion;
     private javax.swing.JTextArea txtNotas;
     // End of variables declaration//GEN-END:variables
+
+    private void ponerImagenProducto(String file) {
+        ImageIcon imagen = new ImageIcon(file);
+
+        Icon icon = new ImageIcon(imagen.getImage().getScaledInstance(SCALA_ICONO, SCALA_ICONO, Image.SCALE_SMOOTH));
+
+        imagen.getImage().flush();
+
+        jlImagenProducto.setIcon(icon);
+
+        jlImagenProducto.validate();
+    }
 }

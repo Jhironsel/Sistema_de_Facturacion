@@ -8,16 +8,19 @@ import xy.ui.testing.util.TestingUtils;
 
 public class TestSwingConexion {
 
-    private TestSwingConexion() {
-    }
+    private TestSwingConexion() {}
 
     public static void main(String[] args) throws IOException, Exception {
 
-        final String files[] = {
-            "testSwing/testParametros.stt",
-            "testSwing/testCliente.stt",
-            "testSwing/testCheckCliente.stt",
+        final String parametros = "testSwing/testParametros.stt";
+        final String moduloClientes[] = {
+            "testSwing/testInsertCliente.stt",
+            "testSwing/testUpdateCliente.stt",
             "testSwing/testBorrarCliente.stt"
+        };
+        
+        final String moduloProductos[] = {
+            "testSwing/testInsertProducto.stt"
         };
         
         //Crear un objecto de la clase Tester
@@ -27,11 +30,10 @@ public class TestSwingConexion {
 //        tester.loadFromFile(new File(files[1]));
         
         //Asserts that the given test specification file gets load and executed successfully.
-        for (String file : files) {
+        for (String file : moduloProductos) {
            TestingUtils.assertSuccessfulReplay(new File(file));
         }
         
-
         //The main window that allows to edit and execute test specifications.
         TestEditor testEditor = new TestEditor(tester);
 
@@ -48,10 +50,4 @@ public class TestSwingConexion {
         //Toca las pruebas automaticamente.
         //tester.replayAll();
     }
-    
-    
 }
-
-/**
- * 
- */

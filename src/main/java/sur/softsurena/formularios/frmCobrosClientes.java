@@ -380,8 +380,12 @@ public class frmCobrosClientes extends javax.swing.JDialog {
                 pNombre("Seleccione un Cliente...").
                 sNombre("").
                 apellidos("").build();
+        cmbCliente.removeAllItems();
         cmbCliente.addItem(c);
-        getClientesTablaSBCombo(cmbCliente);
+        
+        getClientesTablaSBCombo().stream().forEach(cliente ->{
+            cmbCliente.addItem(cliente);
+        });
     }//GEN-LAST:event_formWindowOpened
     private void btnPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarActionPerformed
         if (cmbCliente.getSelectedIndex() <= 0) {

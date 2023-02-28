@@ -7,7 +7,6 @@ import sur.softsurena.entidades.Clientes;
 import static sur.softsurena.entidades.Clientes.getClientesTablaSBCombo;
 import sur.softsurena.entidades.Facturas;
 import static sur.softsurena.entidades.Facturas.getFacturas;
-import sur.softsurena.entidades.Opcion;
 import sur.softsurena.utilidades.Utilidades;
 
 public class frmReporteFacturas extends javax.swing.JInternalFrame {
@@ -206,7 +205,9 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame {
 
         cmbCliente.addItem(cli);
 
-        getClientesTablaSBCombo(cmbCliente);
+        getClientesTablaSBCombo().stream().forEach(cliente ->{
+            cmbCliente.addItem(cliente);
+        });
 
         //Cargamos Facturas
         Facturas fac = Facturas.builder().id(-1).build();

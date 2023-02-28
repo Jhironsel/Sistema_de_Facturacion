@@ -127,16 +127,13 @@
       </componentFinder>
       <disabled>false</disabled>
       <keyboardInteractions>
-        <xy.ui.testing.action.component.SendKeysAction_-WriteText>
-          <text>01200893442</text>
-        </xy.ui.testing.action.component.SendKeysAction_-WriteText>
         <xy.ui.testing.action.component.SendKeysAction_-SpecialKey>
-          <altDown>false</altDown>
-          <altGrtDown>false</altGrtDown>
-          <ctrlDown>false</ctrlDown>
-          <keyName>KEY_ENTER</keyName>
+          <altDown>true</altDown>
+          <altGrtDown>true</altGrtDown>
+          <ctrlDown>true</ctrlDown>
+          <keyName>KEY_UNDEFINED</keyName>
           <metaDown>false</metaDown>
-          <shiftDown>false</shiftDown>
+          <shiftDown>true</shiftDown>
         </xy.ui.testing.action.component.SendKeysAction_-SpecialKey>
       </keyboardInteractions>
       <requestToFocusOnTheComponent>true</requestToFocusOnTheComponent>
@@ -439,9 +436,14 @@
       </componentFinder>
       <disabled>false</disabled>
       <keyboardInteractions>
-        <xy.ui.testing.action.component.SendKeysAction_-WriteText>
-          <text>8292972015 </text>
-        </xy.ui.testing.action.component.SendKeysAction_-WriteText>
+        <xy.ui.testing.action.component.SendKeysAction_-SpecialKey>
+          <altDown>true</altDown>
+          <altGrtDown>true</altGrtDown>
+          <ctrlDown>true</ctrlDown>
+          <keyName>KEY_UNDEFINED</keyName>
+          <metaDown>false</metaDown>
+          <shiftDown>true</shiftDown>
+        </xy.ui.testing.action.component.SendKeysAction_-SpecialKey>
       </keyboardInteractions>
       <requestToFocusOnTheComponent>true</requestToFocusOnTheComponent>
     </xy.ui.testing.action.component.SendKeysAction>
@@ -477,9 +479,14 @@
       </componentFinder>
       <disabled>false</disabled>
       <keyboardInteractions>
-        <xy.ui.testing.action.component.SendKeysAction_-WriteText>
-          <text>8492212022 </text>
-        </xy.ui.testing.action.component.SendKeysAction_-WriteText>
+        <xy.ui.testing.action.component.SendKeysAction_-SpecialKey>
+          <altDown>true</altDown>
+          <altGrtDown>true</altGrtDown>
+          <ctrlDown>true</ctrlDown>
+          <keyName>KEY_UNDEFINED</keyName>
+          <metaDown>false</metaDown>
+          <shiftDown>true</shiftDown>
+        </xy.ui.testing.action.component.SendKeysAction_-SpecialKey>
       </keyboardInteractions>
       <requestToFocusOnTheComponent>true</requestToFocusOnTheComponent>
     </xy.ui.testing.action.component.SendKeysAction>
@@ -512,9 +519,14 @@
       </componentFinder>
       <disabled>false</disabled>
       <keyboardInteractions>
-        <xy.ui.testing.action.component.SendKeysAction_-WriteText>
-          <text>jhironsel@hotmail.com</text>
-        </xy.ui.testing.action.component.SendKeysAction_-WriteText>
+        <xy.ui.testing.action.component.SendKeysAction_-SpecialKey>
+          <altDown>true</altDown>
+          <altGrtDown>true</altGrtDown>
+          <ctrlDown>true</ctrlDown>
+          <keyName>KEY_UNDEFINED</keyName>
+          <metaDown>false</metaDown>
+          <shiftDown>true</shiftDown>
+        </xy.ui.testing.action.component.SendKeysAction_-SpecialKey>
       </keyboardInteractions>
       <requestToFocusOnTheComponent>true</requestToFocusOnTheComponent>
     </xy.ui.testing.action.component.SendKeysAction>
@@ -538,9 +550,14 @@
       </componentFinder>
       <disabled>false</disabled>
       <keyboardInteractions>
-        <xy.ui.testing.action.component.SendKeysAction_-WriteText>
-          <text>jhironself@gmail.com</text>
-        </xy.ui.testing.action.component.SendKeysAction_-WriteText>
+        <xy.ui.testing.action.component.SendKeysAction_-SpecialKey>
+          <altDown>true</altDown>
+          <altGrtDown>true</altGrtDown>
+          <ctrlDown>true</ctrlDown>
+          <keyName>KEY_UNDEFINED</keyName>
+          <metaDown>false</metaDown>
+          <shiftDown>true</shiftDown>
+        </xy.ui.testing.action.component.SendKeysAction_-SpecialKey>
       </keyboardInteractions>
       <requestToFocusOnTheComponent>true</requestToFocusOnTheComponent>
     </xy.ui.testing.action.component.SendKeysAction>
@@ -568,24 +585,6 @@
       <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
       <poupTrigger>false</poupTrigger>
     </xy.ui.testing.action.component.ClickAction>
-    <xy.ui.testing.action.component.CheckVisibleStringsAction>
-      <completenessChecked>false</completenessChecked>
-      <componentFinder class="xy.ui.testing.finder.DisplayedStringComponentFinder">
-        <componentClassName>javax.swing.JOptionPane</componentClassName>
-        <occurrencesToSkip>0</occurrencesToSkip>
-        <visibleString>&lt;html&gt;&lt;b&gt;Se va a crear el Cliente: &lt;/b&gt;Jhironsel Diaz Almonte&lt;br&gt;&lt;b&gt;Cedula no.: &lt;/b&gt; 012-0089344-2&lt;br&gt;&lt;b&gt;Fecha Nacimiento: &lt;/b&gt;07-04-1984&lt;br&gt;&lt;b&gt;Estado del Cliente: &lt;/b&gt;Activo&lt;br&gt;&lt;b&gt;Desea continuar? &lt;/b&gt;&lt;/html&gt;</visibleString>
-        <visibleStringInTree>true</visibleStringInTree>
-        <windowIndex>1</windowIndex>
-      </componentFinder>
-      <disabled>false</disabled>
-      <negated>false</negated>
-      <orderChecked>false</orderChecked>
-      <visibleStrings>
-        <string>&lt;html&gt;&lt;b&gt;Se va a crear el Cliente: &lt;/b&gt;Jhironsel Diaz Almonte&lt;br&gt;&lt;b&gt;Cedula no.: &lt;/b&gt; 012-0089344-2&lt;br&gt;&lt;b&gt;Fecha Nacimiento: &lt;/b&gt;07-04-1984&lt;br&gt;&lt;b&gt;Estado del Cliente: &lt;/b&gt;Activo&lt;br&gt;&lt;b&gt;Desea continuar? &lt;/b&gt;&lt;/html&gt;</string>
-        <string>Sí</string>
-        <string>No</string>
-      </visibleStrings>
-    </xy.ui.testing.action.component.CheckVisibleStringsAction>
     <xy.ui.testing.action.component.ClickAction>
       <button>LEFT_BUTTON</button>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">

@@ -61,7 +61,21 @@ public class FirebirdEventos extends FBEventManager{
                 frmClientes.llenarTablaClientes();
             });    
             
+            //Evento para personas clientes.
+            addEventListener("ins_persona_clientes", (DatabaseEvent event) -> {
+                LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
+                frmClientes.llenarTablaClientes();
+            });
             
+            addEventListener("del_persona_clientes", (DatabaseEvent event) -> {
+                LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
+                frmClientes.llenarTablaClientes();
+            });
+            
+            addEventListener("upd_persona_clientes", (DatabaseEvent event) -> {
+                LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
+                frmClientes.llenarTablaClientes();
+            });    
         } catch (SQLException ex) {
             LOG.log(Level.SEVERE, ex.getMessage(), ex);
             return false;

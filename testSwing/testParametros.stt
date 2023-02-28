@@ -35,7 +35,7 @@
           <altDown>false</altDown>
           <altGrtDown>false</altGrtDown>
           <ctrlDown>true</ctrlDown>
-          <keyName>KEY_UP</keyName>
+          <keyName>KEY_DOWN</keyName>
           <metaDown>false</metaDown>
           <shiftDown>false</shiftDown>
         </xy.ui.testing.action.component.SendKeysAction_-SpecialKey>
@@ -144,7 +144,7 @@
       </componentFinder>
       <disabled>false</disabled>
       <propertyName>Text</propertyName>
-      <propertyValueExpected>3050</propertyValueExpected>
+      <propertyValueExpected>3051</propertyValueExpected>
       <regularExpressionExpected>false</regularExpressionExpected>
     </xy.ui.testing.action.component.property.CheckComponentPropertyAction>
     <xy.ui.testing.action.component.FocusAction>
@@ -165,7 +165,7 @@
       </componentFinder>
       <disabled>false</disabled>
       <propertyName>Text</propertyName>
-      <propertyValueExpected>/home/jhironsel/BaseDatos/BaseDeDatos3.fdb</propertyValueExpected>
+      <propertyValueExpected>/home/jhironsel/BaseDatos/BaseDeDatos4.fdb</propertyValueExpected>
       <regularExpressionExpected>false</regularExpressionExpected>
     </xy.ui.testing.action.component.property.CheckComponentPropertyAction>
     <xy.ui.testing.action.component.FocusAction>

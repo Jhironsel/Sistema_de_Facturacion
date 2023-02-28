@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -40,7 +41,6 @@ import static sur.softsurena.utilidades.Utilidades.columnasCheckBox;
 import static sur.softsurena.entidades.ContactosEmail.getCorreoByID;
 import static sur.softsurena.entidades.ContactosTel.TITULOS_TELEFONO;
 import static sur.softsurena.entidades.ContactosTel.getTelefonoByID;
-import static sur.softsurena.entidades.Direcciones.TITULOS_DIRECCION;
 import static sur.softsurena.entidades.Direcciones.getDireccionByID;
 import static sur.softsurena.entidades.Distritos_municipales.getDistritosMunicipales;
 import static sur.softsurena.entidades.Municipios.getMunicipio;
@@ -56,7 +56,7 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
 
     private JTextFieldDateEditor editor = null;
 
-    private static DefaultTableModel dtmClientes, dtmTelefono, dtmCorreo, dtmDireccion;
+    private static DefaultTableModel dtmTelefono, dtmCorreo, dtmDireccion;
 
     private frmDetalleFacturaClientes miDetalle;
 
@@ -75,6 +75,9 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
     private static final String PROCESO_DE_VALIDACION = "Proceso de validacion.";
     private static final String VALIDACCION_DE_CONTACTO = "Validacción de contacto.";
 
+    private final static String[] TITULOS_DIRECCION = {"Provincia", "Municipio",
+        "Distrito M.", "Calle y No. Casa", "Fecha"};
+
     public frmClientes() {
         // Lista de vista que se utilizan para operar ventanas de cliente.
         vistasList = new ArrayList<>();
@@ -91,7 +94,7 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
         lanza una excepcion y la venta no se iniciará.
          */
         vistasList.stream().forEach(vista -> {
-            
+
             privilegios = Privilegios.builder().
                     privilegio(Privilegios.PRIVILEGIO_SELECT).
                     nombre_relacion(vista).build();
@@ -107,7 +110,8 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
                         null,
                         mensaje,
                         "Validación de proceso",
-                        JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.WARNING_MESSAGE
+                );
 
                 throw new ExceptionInInitializerError(mensaje);
             }
@@ -261,7 +265,6 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
         btnBorrarTelefonoMovil = new RSMaterialComponent.RSButtonMaterialIconOne();
         jrbMovil = new javax.swing.JRadioButton();
         jrbResidencial = new javax.swing.JRadioButton();
-        btnEliminarDirrecion2 = new RSMaterialComponent.RSButtonMaterialIconOne();
         jPanel11 = new javax.swing.JPanel();
         jScrollPane7 = new javax.swing.JScrollPane();
         tblCorreos = new JTable(){
@@ -274,7 +277,6 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
         btnAgregarCorreo = new RSMaterialComponent.RSButtonMaterialIconOne();
         btnEliminarCorreo = new RSMaterialComponent.RSButtonMaterialIconOne();
         txtCorreo = new RSMaterialComponent.RSTextFieldIconOne();
-        btnEliminarDirrecion3 = new RSMaterialComponent.RSButtonMaterialIconOne();
         btnCedulaValidad = new RSMaterialComponent.RSButtonMaterialIconOne();
         jPanel13 = new javax.swing.JPanel();
         jPanel14 = new javax.swing.JPanel();
@@ -308,7 +310,6 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
         setMinimumSize(new java.awt.Dimension(915, 535));
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
-                formInternalFrameActivated(evt);
             }
             public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
             }
@@ -450,6 +451,11 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
         txtCedula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCedulaActionPerformed(evt);
+            }
+        });
+        txtCedula.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCedulaKeyPressed(evt);
             }
         });
 
@@ -734,6 +740,11 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
                 txtTelelfonoMovilActionPerformed(evt);
             }
         });
+        txtTelelfonoMovil.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtTelelfonoMovilKeyPressed(evt);
+            }
+        });
 
         btnAgregarTelefonoMovil.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.PLUS_ONE);
         btnAgregarTelefonoMovil.setName("btnAgregarTelefono"); // NOI18N
@@ -760,8 +771,6 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
         jrbResidencial.setText("Telefono");
         jrbResidencial.setName("jrbTelefonoResidencial"); // NOI18N
 
-        btnEliminarDirrecion2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.UNDO);
-
         org.jdesktop.layout.GroupLayout jPanel8Layout = new org.jdesktop.layout.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -777,12 +786,10 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
                 .add(btnAgregarTelefonoMovil, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 48, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(btnBorrarTelefonoMovil, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 48, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(btnEliminarDirrecion2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 36, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(310, Short.MAX_VALUE))
         );
 
-        jPanel8Layout.linkSize(new java.awt.Component[] {btnAgregarTelefonoMovil, btnBorrarTelefonoMovil, btnEliminarDirrecion2}, org.jdesktop.layout.GroupLayout.HORIZONTAL);
+        jPanel8Layout.linkSize(new java.awt.Component[] {btnAgregarTelefonoMovil, btnBorrarTelefonoMovil}, org.jdesktop.layout.GroupLayout.HORIZONTAL);
 
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -792,8 +799,7 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
                     .add(jPanel8Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.CENTER)
                         .add(txtTelelfonoMovil, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .add(btnAgregarTelefonoMovil, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(btnBorrarTelefonoMovil, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(btnEliminarDirrecion2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 42, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .add(btnBorrarTelefonoMovil, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(jPanel8Layout.createSequentialGroup()
                         .add(jrbMovil)
                         .add(0, 0, 0)
@@ -801,7 +807,7 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
                 .add(3, 3, 3))
         );
 
-        jPanel8Layout.linkSize(new java.awt.Component[] {btnAgregarTelefonoMovil, btnBorrarTelefonoMovil, btnEliminarDirrecion2, txtTelelfonoMovil}, org.jdesktop.layout.GroupLayout.VERTICAL);
+        jPanel8Layout.linkSize(new java.awt.Component[] {btnAgregarTelefonoMovil, btnBorrarTelefonoMovil, txtTelelfonoMovil}, org.jdesktop.layout.GroupLayout.VERTICAL);
 
         org.jdesktop.layout.GroupLayout jPanel10Layout = new org.jdesktop.layout.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -860,8 +866,11 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
                 txtCorreoActionPerformed(evt);
             }
         });
-
-        btnEliminarDirrecion3.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.UNDO);
+        txtCorreo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCorreoKeyPressed(evt);
+            }
+        });
 
         org.jdesktop.layout.GroupLayout jPanel12Layout = new org.jdesktop.layout.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -874,12 +883,10 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
                 .add(btnAgregarCorreo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 42, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(btnEliminarCorreo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 42, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(6, 6, 6)
-                .add(btnEliminarDirrecion3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 42, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel12Layout.linkSize(new java.awt.Component[] {btnAgregarCorreo, btnEliminarCorreo, btnEliminarDirrecion3}, org.jdesktop.layout.GroupLayout.HORIZONTAL);
+        jPanel12Layout.linkSize(new java.awt.Component[] {btnAgregarCorreo, btnEliminarCorreo}, org.jdesktop.layout.GroupLayout.HORIZONTAL);
 
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -888,20 +895,19 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
                 .add(jPanel12Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jPanel12Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.CENTER)
                         .add(btnAgregarCorreo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 42, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(btnEliminarCorreo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 42, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(btnEliminarDirrecion3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 42, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .add(btnEliminarCorreo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 42, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(txtCorreo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel12Layout.linkSize(new java.awt.Component[] {btnAgregarCorreo, btnEliminarCorreo, btnEliminarDirrecion3}, org.jdesktop.layout.GroupLayout.VERTICAL);
+        jPanel12Layout.linkSize(new java.awt.Component[] {btnAgregarCorreo, btnEliminarCorreo}, org.jdesktop.layout.GroupLayout.VERTICAL);
 
         org.jdesktop.layout.GroupLayout jPanel11Layout = new org.jdesktop.layout.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel12, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jScrollPane7, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 754, Short.MAX_VALUE)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jScrollPane7, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE)
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -1015,9 +1021,9 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
         jpMantenimientoLayout.setVerticalGroup(
             jpMantenimientoLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jpMantenimientoLayout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jspMantenimiento.setViewportView(jpMantenimiento);
@@ -1156,9 +1162,6 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
         dchFechaNacimiento.requestFocus();
         editor.requestFocus();
     }//GEN-LAST:event_txtApellidosActionPerformed
-    private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
-
-    }//GEN-LAST:event_formInternalFrameActivated
     private void txtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaActionPerformed
         jcbPersona.requestFocus();
     }//GEN-LAST:event_txtCedulaActionPerformed
@@ -1211,19 +1214,20 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
      */
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         //Hacemos la validaciones de los campos.
-        if (txtCedula.getValue().toString().isBlank()
-                || txtCedula.getValue().toString().isEmpty()) {//1
+        try {
+            txtCedula.commitEdit();
+        } catch (ParseException ex) {
             JOptionPane.showInternalMessageDialog(
                     null,
                     "Debe digitar la cedula del cliente",
                     PROCESO_DE_VALIDACION,
                     JOptionPane.INFORMATION_MESSAGE);
             txtCedula.requestFocus();
+            txtCedula.selectAll();
             return;
         }
 
-        if (txtPNombre.getText().isBlank()
-                || txtPNombre.getText().isEmpty()) {//2
+        if (txtPNombre.getText().isBlank()) {//2
             JOptionPane.showInternalMessageDialog(
                     null,
                     "Debe digitar un nombre...",
@@ -1233,8 +1237,7 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
             return;
         }
 
-        if (txtApellidos.getText().isBlank()
-                || txtApellidos.getText().isEmpty()) {//2
+        if (txtApellidos.getText().isBlank()) {//2
             JOptionPane.showInternalMessageDialog(null,
                     "Debe digitar un apellido...",
                     PROCESO_DE_VALIDACION,
@@ -1275,11 +1278,13 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
         int cantCorreo = tblCorreos.getRowCount();
 
         if (cantCorreo < 1 || cantTelefono < 1) {
-            JOptionPane.showInternalMessageDialog(null,
+            JOptionPane.showInternalMessageDialog(
+                    null,
                     "No existe forma de contactar al cliente, "
                     + "\nAgregue un numero de telefono o correo electronico.",
                     PROCESO_DE_VALIDACION,
-                    JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.INFORMATION_MESSAGE
+            );
         }
 
         /*
@@ -1306,7 +1311,7 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
                 mostrarRegistro(idCliente);
             }
         } else {
-            if (idCliente == null) {
+            if (idCliente == -1) {
                 /*
                     Si es una actualización de cliente validamos que la cedula exista
                     en el sistema.
@@ -1315,7 +1320,8 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
                         null,
                         "Desea editar la cedula de cliente.",
                         "Validación de procesos",
-                        JOptionPane.YES_NO_OPTION);
+                        JOptionPane.YES_NO_OPTION
+                );
 
                 if (resp == JOptionPane.NO_OPTION) {
                     return;
@@ -1341,9 +1347,7 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
         los apellidos, fecha de nacimiento, su estado por defecto es true. 
          */
         Clientes miCliente = Clientes.builder().
-                id_persona(tblClientes.getSelectedRow() >= 0
-                        ? ((Clientes) tblClientes.getValueAt(
-                                tblClientes.getSelectedRow(), 0)).getId_persona() : 0).
+                id_persona(idCliente).
                 generales(g).
                 direccion(direcciones).
                 persona(((TipoPersona) jcbPersona.getSelectedItem()).getAbreviatura()).
@@ -1351,9 +1355,9 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
                 pNombre(txtPNombre.getText()).
                 sNombre(txtSNombre.getText()).
                 apellidos(txtApellidos.getText()).
-                fecha_nacimiento(new java.sql.Date(
-                        dchFechaNacimiento.getDate().getTime())).
-                estado(cbEstado.isSelected()).build();
+                fecha_nacimiento(new java.sql.Date(dchFechaNacimiento.getDate().getTime())).
+                estado(cbEstado.isSelected()).
+                build();
 
         /*
             La variable accion es utilizado para ayudar al siguiente mensaje 
@@ -1386,7 +1390,6 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
         String msg;
         int icono;
 
-        //Crear la logica para agregar los contactos de un cliente.
         if (nuevo) {
             msg = agregarCliente(miCliente, contactosTels, contactosCorreos).getMensaje();
 
@@ -1396,7 +1399,7 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
             JOptionPane.showInternalMessageDialog(null, msg, "Agregando cliente", icono);
 
         } else {
-            msg = modificarCliente(miCliente, contactosTels, contactosCorreos).getMensaje();
+            msg = modificarCliente(miCliente).getMensaje();
 
             icono = msg.equals(Clientes.CLIENTE__MODIFICADO__CORRECTAMENTE)
                     ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE;
@@ -1404,11 +1407,12 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
             JOptionPane.showInternalMessageDialog(null, msg, "Modificando cliente", icono);
         }
 
-        //Actualizamos los cambios en la Tabla
-        //llenarTablaClientes(); Este metodo está siendo llamado desde los eventos de firebird.
         btnCancelarActionPerformed(null);
+
         contactosCorreos.clear();
         contactosTels.clear();
+        direcciones.clear();
+
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -1442,12 +1446,9 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
         int idCliente = ((Clientes) tblClientes.getValueAt(
                 tblClientes.getSelectedRow(), 0)).getId_persona();
 
-        Boolean estado = Boolean.valueOf(tblClientes.getValueAt(
-                tblClientes.getSelectedRow(), 0).toString());
-
         //Mandamos a borrar el cliente y obtenemos el resultado de la operacion
         //y almacenamos en una variable.
-        String mensaje = borrarCliente(idCliente, estado).getMensaje();
+        String mensaje = borrarCliente(idCliente).getMensaje();
 
         //Posibles icono a utilizar en el JOpcionPane
         int icono = mensaje.equals(Clientes.CLIENTE_BORRADO_CORRECTAMENTE)
@@ -1596,10 +1597,12 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
             Validamos que el correo no esté vacio.
          */
         if (txtCorreo.getText().isBlank()) {
-            JOptionPane.showInternalMessageDialog(null,
+            JOptionPane.showInternalMessageDialog(
+                    null,
                     "Debe digitar correo electronico.",
                     VALIDACCION_DE_CONTACTO,
-                    JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.INFORMATION_MESSAGE
+            );
             txtCorreo.requestFocusInWindow();
             return;
         }
@@ -1608,26 +1611,34 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
             Verificamos que sea un correo valido.
          */
         if (!ValidarCorreoTel.correo(txtCorreo.getText())) {
-            JOptionPane.showInternalMessageDialog(null,
+            JOptionPane.showInternalMessageDialog(
+                    null,
                     "Debe digitar correo electronico valido.",
                     VALIDACCION_DE_CONTACTO,
-                    JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.INFORMATION_MESSAGE
+            );
             txtCorreo.requestFocusInWindow();
             return;
+        }
+
+        if (nuevo) {
+            //Llenamos el List de correo.
+            contactosCorreos.add(
+                    ContactosEmail.
+                            builder().
+                            email(txtCorreo.getText()).
+                            build()
+            );
+        } else {
+            //Necesitamos el Id del registro del correo.
+
         }
 
         /*
             Creamos un objecto de tipo array para las columnas. 
             Dichas columnas son Correo y Fecha.
          */
-        Object registroCorreo[] = new Object[TITULOS_CORREO.length];
-
-        //Tomamos el valor del campo.
-        registroCorreo[0] = txtCorreo.getText();
-
-        //Llenamos el List de correo.
-        contactosCorreos.add(ContactosEmail.builder().
-                email(txtCorreo.getText()).build());
+        Object registroCorreo[] = {txtCorreo.getText()};
 
         //Ingresamos el array al modelo
         dtmCorreo.addRow(registroCorreo);
@@ -1655,10 +1666,12 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
     private void btnAgregarDireccionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarDireccionesActionPerformed
         //Nos aseguramos que exista una provincia seleccionada. 
         if (jcbProvincias.getSelectedIndex() < 1) {
-            JOptionPane.showInternalMessageDialog(null,
+            JOptionPane.showInternalMessageDialog(
+                    null,
                     "Debe seleccionar una provincia.",
                     "Validacción de contacto.",
-                    JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.WARNING_MESSAGE
+            );
             jcbProvincias.requestFocus();
             jcbProvincias.showPopup();
             return;
@@ -1666,24 +1679,51 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
 
         //Nos aseguramos que exiista un municipio seleccionado
         if (jcbMunicipios.getSelectedIndex() < 1) {
-            JOptionPane.showInternalMessageDialog(null,
+            JOptionPane.showInternalMessageDialog(
+                    null,
                     "Debe seleccionar un municipio.",
                     "Validacción de contacto.",
-                    JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.WARNING_MESSAGE
+            );
             jcbMunicipios.requestFocus();
             jcbMunicipios.showPopup();
             return;
         }
 
         //La direccion residencia debe escribirse en la caja de texto de direccion.
-        if (txtDireccion.getText().isBlank() || txtDireccion.getText().isEmpty()) {
-            JOptionPane.showInternalMessageDialog(null,
+        if (txtDireccion.getText().isBlank()) {
+            JOptionPane.showInternalMessageDialog(
+                    null,
                     "Debe digitar dirección.!",
                     "Validacción de contacto.",
-                    JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.WARNING_MESSAGE
+            );
             txtDireccion.requestFocusInWindow();
             return;
         }
+
+        //Se necesita el identificador del cliente para hacer un INSERT a la
+        //Tabla de direcciones.
+        int idCliente = (nuevo ? -1 : ((Clientes) tblClientes.getValueAt(
+                tblClientes.getSelectedRow(), 0)).getId_persona());
+
+        /*
+            Se preparan la provincia, municipio y el distrito municipal.
+         */
+        Provincias provincia = (Provincias) jcbProvincias.getSelectedItem();
+        Municipios municipio = (Municipios) jcbMunicipios.getSelectedItem();
+        Distritos_municipales dm = (Distritos_municipales) jcbDistritoMunicipal.getSelectedItem();
+
+        Direcciones direccion = Direcciones.
+                builder().
+                id_persona(idCliente).
+                provincia(provincia).
+                municipio(municipio).
+                distrito_municipal(dm).
+                direccion(txtDireccion.getText()).
+                build();
+
+        direcciones.add(direccion);
 
         /*
             Se crea un array de objecto para agregarlo a la tabla como un 
@@ -1695,9 +1735,9 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
             Se rellena los objetos del array con cada jcb que componen una dire-
         ccion de cada cliente.
          */
-        registroDireccion[0] = jcbProvincias.getSelectedItem();
-        registroDireccion[1] = jcbMunicipios.getSelectedItem();
-        registroDireccion[2] = jcbDistritoMunicipal.getSelectedItem();
+        registroDireccion[0] = provincia;
+        registroDireccion[1] = municipio;
+        registroDireccion[2] = dm;
         registroDireccion[3] = txtDireccion.getText();
 
         /*
@@ -1715,28 +1755,9 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
          */
         tblDireccion.setModel(dtmDireccion);
 
-        /*
-            Se preparan la provincia, municipio y el distrito municipal.
-         */
-        Provincias provincia = ((Provincias) jcbProvincias.getSelectedItem());
-        Municipios municipio = ((Municipios) jcbMunicipios.getSelectedItem());
-        Distritos_municipales dm = ((Distritos_municipales) jcbDistritoMunicipal.getSelectedItem());
-
-        /*
-            Se empacan los objetos anteriores a direcciones. 
-         */
-        Direcciones d = Direcciones.builder().
-                id_persona(0).
-                accion('I').
-                provincia(provincia).
-                municipio(municipio).
-                distrito_municipal(dm).
-                direccion(txtDireccion.getText()).build();
-
-        /*
-            Se agregar el objecto de direcciones d a la lista global.
-         */
-        direcciones.add(d);
+        if (!nuevo) {//Si va a modificar entonces hacemos un insert 
+            Direcciones.agregarDireccion(idCliente, direccion);
+        }
 
         //Colocamos los jcb en la posicion cero
         jcbProvincias.setSelectedIndex(0);
@@ -1757,11 +1778,21 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
     }//GEN-LAST:event_btnAgregarDireccionesActionPerformed
 
     private void btnBorrarTelefonoMovilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarTelefonoMovilActionPerformed
+        if (nuevo) {
+
+        } else {
+
+        }
         eliminarRegistro(tblTelefonos, dtmTelefono);
         repararColumnaTable(tblTelefonos);
     }//GEN-LAST:event_btnBorrarTelefonoMovilActionPerformed
 
     private void btnEliminarCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarCorreoActionPerformed
+        if (nuevo) {
+
+        } else {
+
+        }
         eliminarRegistro(tblCorreos, dtmCorreo);
         repararColumnaTable(tblCorreos);
     }//GEN-LAST:event_btnEliminarCorreoActionPerformed
@@ -1787,14 +1818,10 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
         btnGuardar.requestFocus();
     }//GEN-LAST:event_cbEstadoActionPerformed
     private void btnCedulaValidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCedulaValidadActionPerformed
-        if (txtCedula.getValue() == null) {
-            return;
-        }
-
         try {
             /*
-            Si se va a insertar un nuevo registro la cedula no debe existir.
-            Si existe mostrar mensaje de que el cliente esta registrado
+                Si se va a insertar un nuevo registro la cedula no debe existir.
+                Si existe mostrar mensaje de que el cliente esta registrado
              */
             txtCedula.commitEdit();
         } catch (ParseException ex) {
@@ -1810,25 +1837,22 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
             if (idCliente != -1) {
                 int resp = JOptionPane.showInternalConfirmDialog(
                         null,
-                        "Esta cedula está registrada. \nProcede a cargar la Información?",
-                        "Proceso de validación",
+                        "Esta cedula está registrada. \nProcede a habilitar la información?",
+                        PROCESO_DE_VALIDACION,
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE);
 
                 //Preguntamos si desea cargar la informacion del cliente.
                 if (resp == JOptionPane.YES_OPTION) {
-                    System.out.println("Id del cliente es: " + idCliente);
-                    mostrarRegistro(idCliente);
-                    repararColumnaTable(tblCorreos);
-                    repararColumnaTable(tblDireccion);
-                    repararColumnaTable(tblTelefonos);
-                }
 
-                txtCedula.setValue(null);
+                    Clientes.agregarClienteById(idCliente);
+
+                    btnCancelarActionPerformed(evt);
+                }
             } else {
                 JOptionPane.showInternalMessageDialog(null,
                         "Cedula valida, puede continuar.",
-                        "Proceso de validación",
+                        PROCESO_DE_VALIDACION,
                         JOptionPane.INFORMATION_MESSAGE);
                 jcbPersona.requestFocus();
             }
@@ -1855,6 +1879,7 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
         llenarTablaClientes();
 
         getProvincias(jcbProvincias);
+
         Personas.llenarPersona(jcbPersona);
         Personas.llenarSexo(jcbSexo);
         Personas.llenarEstadoCivil(jcbEstadoCivil);
@@ -1894,6 +1919,46 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
         txtDireccion.requestFocus();
     }//GEN-LAST:event_jcbDistritoMunicipalActionPerformed
 
+    private void txtCedulaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaKeyPressed
+        /**
+         * El objectivo del siguiente codigo es generar un cedula valida para
+         * fines de pruebas del sistema.
+         */
+        if (evt.isControlDown()) {
+            if (evt.isAltDown()) {
+                if (evt.isShiftDown()) {
+                    if (evt.isAltGraphDown()) {
+                        txtCedula.setText(ValidarCorreoTel.generarCedula());
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_txtCedulaKeyPressed
+
+    private void txtTelelfonoMovilKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelelfonoMovilKeyPressed
+        if (evt.isControlDown()) {
+            if (evt.isAltDown()) {
+                if (evt.isShiftDown()) {
+                    if (evt.isAltGraphDown()) {
+                        txtTelelfonoMovil.setText(ValidarCorreoTel.generarTelMovil());
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_txtTelelfonoMovilKeyPressed
+
+    private void txtCorreoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCorreoKeyPressed
+        if (evt.isControlDown()) {
+            if (evt.isAltDown()) {
+                if (evt.isShiftDown()) {
+                    if (evt.isAltGraphDown()) {
+                        txtCorreo.setText(ValidarCorreoTel.generarCorreo());
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_txtCorreoKeyPressed
+
     private void eliminarRegistro(JTable tabla, DefaultTableModel modelo) {
         if (tabla.getSelectedRow() == -1) {
             JOptionPane.showInternalMessageDialog(null,
@@ -1909,31 +1974,38 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
     /**
      * Metodo utilizado para llenar la tabla de cliente del sistema.
      *
-     * @return Para fines de prueba se envia un string indicando que la tabla se
-     * llenó completamente.
      */
-    public synchronized static String llenarTablaClientes() {
-        dtmClientes = getClientesTablaSB();
+    public synchronized static void llenarTablaClientes() {
+        final String titulos[] = {"Cedulas", "Persona", "Primer Nombre", "Segundo Nombre",
+            "Apellidos", "Sexo", "Fecha nacimiento", "Fecha Ingreso", "Estado"};
 
-        if (dtmClientes == null) {
-            return "La tabla es nula.";
-        }
+        Object registro[] = new Object[titulos.length];
+
+        DefaultTableModel dtmClientes = new DefaultTableModel(null, titulos);
+
+        getClientesTablaSB().stream().forEach(cliente -> {
+            registro[0] = Clientes.
+                    builder().
+                    id_persona(cliente.getId_persona()).
+                    generales(cliente.getGenerales()).
+                    build();
+            registro[1] = String.valueOf(cliente.getPersona()).equalsIgnoreCase("j") ? "JURÍDICA" : "FÍSICA";
+            registro[2] = cliente.getPNombre();
+            registro[3] = cliente.getSNombre();
+            registro[4] = cliente.getApellidos();
+            registro[5] = String.valueOf(cliente.getSexo()).equalsIgnoreCase("M") ? "MASCULINO" : "FEMENINO";
+            registro[6] = Utilidades.formatDate(cliente.getFecha_nacimiento(), "dd/MM/yyyy");
+            registro[7] = Utilidades.formatDate(cliente.getFecha_ingreso(), "dd/MM/yyyy");
+            registro[8] = cliente.getEstado();
+            dtmClientes.addRow(registro);
+        });
 
         tblClientes.setModel(dtmClientes);
 
-        //Para Alinear el Texto de la Table a la Derecha...
-//        DefaultTableCellHeaderRenderer tcr = new DefaultTableCellHeaderRenderer();
-//
-//        tcr.setHorizontalAlignment(SwingConstants.RIGHT);
-//        tblClientes.getColumnModel().getColumn(3).setCellRenderer(tcr);
-//        tblClientes.getColumnModel().getColumn(4).setCellRenderer(tcr);
-        //Variable de tipo Array que guarda las columnas que van a ser de tipo 
-        //CheckBox.
         int[] indices = {8};
         columnasCheckBox(tblClientes, indices);
 
         repararColumnaTable(tblClientes);
-        return "Tabla completada.";
     }
 
     /**
@@ -1966,8 +2038,7 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
 
         //Verificamos que el registro no sea de un cliente generico, de serlo lo 
         // devolvemos true para que el proceso no continue. 
-        if (((Personas) tblClientes.getValueAt(
-                tblClientes.getSelectedRow(), 0)).getId_persona() == 0) {
+        if (((Personas) tblClientes.getValueAt(tblClientes.getSelectedRow(), 0)).getId_persona() == 0) {
             JOptionPane.showInternalMessageDialog(null,
                     "Cliente GENERICO no puede ser modificado",
                     "Proceso de validación.", JOptionPane.INFORMATION_MESSAGE);
@@ -2027,19 +2098,20 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
         //Obteniendo direcciones.
         dtmDireccion = new DefaultTableModel(null, TITULOS_DIRECCION);
 
-        Object registroDireccion[];
-
-        for (Direcciones direccione : getDireccionByID(idCliente)) {
-            registroDireccion = new Object[TITULOS_DIRECCION.length];
+        getDireccionByID(idCliente).stream().forEach(direccione -> {
+            Object registroDireccion[] = new Object[TITULOS_DIRECCION.length];
 
             registroDireccion[0] = direccione.getProvincia();
             registroDireccion[1] = direccione.getMunicipio();
             registroDireccion[2] = direccione.getDistrito_municipal();
-            registroDireccion[3] = direccione.getDireccion();
+            registroDireccion[3] = Direcciones.
+                    builder().
+                    id(direccione.getId()).
+                    direccion(direccione.getDireccion()).build();
             registroDireccion[4] = direccione.getFecha();
 
             dtmDireccion.addRow(registroDireccion);
-        }
+        });
 
         tblDireccion.setModel(dtmDireccion);
 
@@ -2110,8 +2182,6 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
         //Botones de guardar y cancelar
         btnGuardar.setEnabled(activo);
         btnCancelar.setEnabled(activo);
-        
-        
 
         //txt Vaciar
         txtPNombre.setText("");
@@ -2228,8 +2298,6 @@ public final class frmClientes extends javax.swing.JInternalFrame implements Run
     private RSMaterialComponent.RSButtonMaterialIconOne btnCedulaValidad;
     private RSMaterialComponent.RSButtonMaterialIconOne btnEliminarCorreo;
     private RSMaterialComponent.RSButtonMaterialIconOne btnEliminarDirrecion;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnEliminarDirrecion2;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnEliminarDirrecion3;
     private RSMaterialComponent.RSButtonMaterialIconOne btnGuardar;
     private RSMaterialComponent.RSButtonMaterialIconOne btnHistorial;
     private RSMaterialComponent.RSButtonMaterialIconOne btnImprimirInforme;

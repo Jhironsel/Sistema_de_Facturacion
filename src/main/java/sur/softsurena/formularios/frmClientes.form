@@ -50,7 +50,6 @@
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
   </SyntheticProperties>
   <Events>
-    <EventHandler event="internalFrameActivated" listener="javax.swing.event.InternalFrameListener" parameters="javax.swing.event.InternalFrameEvent" handler="formInternalFrameActivated"/>
     <EventHandler event="internalFrameOpened" listener="javax.swing.event.InternalFrameListener" parameters="javax.swing.event.InternalFrameEvent" handler="formInternalFrameOpened"/>
   </Events>
   <AuxValues>
@@ -385,9 +384,9 @@
                         <DimensionLayout dim="1">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace pref="22" max="32767" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
                                   <Component id="jPanel1" max="32767" attributes="0"/>
-                                  <EmptySpace pref="23" max="32767" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -507,6 +506,7 @@
                               </Properties>
                               <Events>
                                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCedulaActionPerformed"/>
+                                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCedulaKeyPressed"/>
                               </Events>
                               <AuxValues>
                                 <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="frmClientes_txtCedula"/>
@@ -1111,9 +1111,7 @@
                                                           <Component id="btnAgregarTelefonoMovil" linkSize="13" min="-2" pref="48" max="-2" attributes="0"/>
                                                           <EmptySpace max="-2" attributes="0"/>
                                                           <Component id="btnBorrarTelefonoMovil" linkSize="13" min="-2" pref="48" max="-2" attributes="0"/>
-                                                          <EmptySpace max="-2" attributes="0"/>
-                                                          <Component id="btnEliminarDirrecion2" linkSize="13" min="-2" pref="36" max="-2" attributes="0"/>
-                                                          <EmptySpace max="32767" attributes="0"/>
+                                                          <EmptySpace pref="310" max="32767" attributes="0"/>
                                                       </Group>
                                                   </Group>
                                                 </DimensionLayout>
@@ -1126,7 +1124,6 @@
                                                                   <Component id="txtTelelfonoMovil" linkSize="7" alignment="2" min="-2" max="-2" attributes="0"/>
                                                                   <Component id="btnAgregarTelefonoMovil" linkSize="7" alignment="2" min="-2" max="-2" attributes="0"/>
                                                                   <Component id="btnBorrarTelefonoMovil" linkSize="7" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                                  <Component id="btnEliminarDirrecion2" linkSize="7" alignment="2" min="-2" pref="42" max="-2" attributes="0"/>
                                                               </Group>
                                                               <Group type="102" alignment="0" attributes="0">
                                                                   <Component id="jrbMovil" min="-2" max="-2" attributes="0"/>
@@ -1160,6 +1157,7 @@
                                                   </Properties>
                                                   <Events>
                                                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtTelelfonoMovilActionPerformed"/>
+                                                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtTelelfonoMovilKeyPressed"/>
                                                   </Events>
                                                 </Component>
                                                 <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnAgregarTelefonoMovil">
@@ -1203,13 +1201,6 @@
                                                     <Property name="name" type="java.lang.String" value="jrbTelefonoResidencial" noResource="true"/>
                                                   </Properties>
                                                 </Component>
-                                                <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnEliminarDirrecion2">
-                                                  <Properties>
-                                                    <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
-                                                      <Value id="UNDO"/>
-                                                    </Property>
-                                                  </Properties>
-                                                </Component>
                                               </SubComponents>
                                             </Container>
                                           </SubComponents>
@@ -1227,7 +1218,7 @@
                                             <DimensionLayout dim="0">
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Component id="jPanel12" alignment="1" max="32767" attributes="0"/>
-                                                  <Component id="jScrollPane7" alignment="1" pref="754" max="32767" attributes="0"/>
+                                                  <Component id="jScrollPane7" alignment="1" pref="760" max="32767" attributes="0"/>
                                               </Group>
                                             </DimensionLayout>
                                             <DimensionLayout dim="1">
@@ -1280,8 +1271,6 @@
                                                           <Component id="btnAgregarCorreo" linkSize="17" min="-2" pref="42" max="-2" attributes="0"/>
                                                           <EmptySpace max="-2" attributes="0"/>
                                                           <Component id="btnEliminarCorreo" linkSize="17" min="-2" pref="42" max="-2" attributes="0"/>
-                                                          <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                                                          <Component id="btnEliminarDirrecion3" linkSize="17" min="-2" pref="42" max="-2" attributes="0"/>
                                                           <EmptySpace max="32767" attributes="0"/>
                                                       </Group>
                                                   </Group>
@@ -1294,7 +1283,6 @@
                                                               <Group type="103" groupAlignment="2" attributes="0">
                                                                   <Component id="btnAgregarCorreo" linkSize="15" alignment="2" min="-2" pref="42" max="-2" attributes="0"/>
                                                                   <Component id="btnEliminarCorreo" linkSize="15" alignment="2" min="-2" pref="42" max="-2" attributes="0"/>
-                                                                  <Component id="btnEliminarDirrecion3" linkSize="15" alignment="2" min="-2" pref="42" max="-2" attributes="0"/>
                                                               </Group>
                                                               <Component id="txtCorreo" alignment="0" min="-2" max="-2" attributes="0"/>
                                                           </Group>
@@ -1336,14 +1324,8 @@
                                                   </Properties>
                                                   <Events>
                                                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCorreoActionPerformed"/>
+                                                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCorreoKeyPressed"/>
                                                   </Events>
-                                                </Component>
-                                                <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnEliminarDirrecion3">
-                                                  <Properties>
-                                                    <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
-                                                      <Value id="UNDO"/>
-                                                    </Property>
-                                                  </Properties>
                                                 </Component>
                                               </SubComponents>
                                             </Container>
