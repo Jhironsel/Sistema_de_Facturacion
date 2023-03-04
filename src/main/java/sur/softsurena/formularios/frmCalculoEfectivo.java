@@ -28,24 +28,18 @@ public class frmCalculoEfectivo extends javax.swing.JDialog {
         txtEfectivo.addFocusListener(new java.awt.event.FocusAdapter() {
             @Override
             public void focusGained(java.awt.event.FocusEvent evt) {
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        txtEfectivo.setSelectionStart(3);
-                        txtEfectivo.setSelectionEnd(txtEfectivo.getText().length());
-                    }
+                SwingUtilities.invokeLater(() -> {
+                    txtEfectivo.setSelectionStart(3);
+                    txtEfectivo.setSelectionEnd(txtEfectivo.getText().length());
                 });
             }
         });
         txtDevuelta.addFocusListener(new java.awt.event.FocusAdapter() {
             @Override
             public void focusGained(java.awt.event.FocusEvent evt) {
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        txtDevuelta.setSelectionStart(3);
-                        txtDevuelta.setSelectionEnd(txtEfectivo.getText().length());
-                    }
+                SwingUtilities.invokeLater(() -> {
+                    txtDevuelta.setSelectionStart(3);
+                    txtDevuelta.setSelectionEnd(txtEfectivo.getText().length());
                 });
             }
         });

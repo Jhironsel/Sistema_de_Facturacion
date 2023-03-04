@@ -14,6 +14,7 @@ public class TestSwingConexion {
 
         final String parametros = "testSwing/testParametros.stt";
         final String moduloClientes[] = {
+            "testSwing/testProvinciaMunicipioDistrito.stt",
             "testSwing/testInsertCliente.stt",
             "testSwing/testUpdateCliente.stt",
             "testSwing/testBorrarCliente.stt"
@@ -26,11 +27,12 @@ public class TestSwingConexion {
         //Crear un objecto de la clase Tester
         Tester tester = new Tester();
         
+        
         //Ejecutar una sola prueba
 //        tester.loadFromFile(new File(files[1]));
         
         //Asserts that the given test specification file gets load and executed successfully.
-        for (String file : moduloProductos) {
+        for (String file : moduloClientes) {
            TestingUtils.assertSuccessfulReplay(new File(file));
         }
         

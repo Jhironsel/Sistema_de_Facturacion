@@ -26,14 +26,14 @@ public class frmCambioClave extends javax.swing.JDialog {
         txtConfirmacion = new RSMaterialComponent.RSPasswordIconOne();
         btnCancelar = new RSMaterialComponent.RSButtonMaterialIconOne();
         btnAceptar = new RSMaterialComponent.RSButtonMaterialIconOne();
-        panel1 = new necesario.Panel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
         start1 = new necesario.LabelIcon();
         start2 = new necesario.LabelIcon();
         start3 = new necesario.LabelIcon();
@@ -96,81 +96,79 @@ public class frmCambioClave extends javax.swing.JDialog {
             }
         });
 
-        panel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Medidor de contraseñas"));
-
-        jLabel1.setText("1) Debe contener minusculas");
-        jLabel1.setDoubleBuffered(true);
-
-        jLabel2.setText("2) Debe contener mayusculas");
-        jLabel2.setDoubleBuffered(true);
-
-        jLabel3.setText("3) Debe contener numeros");
-        jLabel3.setDoubleBuffered(true);
-
-        jLabel4.setText("4) Debe contener minimo 10");
-        jLabel4.setDoubleBuffered(true);
+        jLabel6.setText("especial");
+        jLabel6.setDoubleBuffered(true);
 
         jLabel5.setText("5) Debe contener caracter");
         jLabel5.setDoubleBuffered(true);
 
-        jLabel6.setText("especial");
-        jLabel6.setDoubleBuffered(true);
+        jLabel4.setText("4) Debe contener minimo 10");
+        jLabel4.setDoubleBuffered(true);
 
-        jPanel2.setLayout(new java.awt.GridLayout(1, 5, 10, 0));
+        jLabel3.setText("3) Debe contener numeros");
+        jLabel3.setDoubleBuffered(true);
+
+        jLabel2.setText("2) Debe contener mayusculas");
+        jLabel2.setDoubleBuffered(true);
+
+        jLabel1.setText("1) Debe contener minusculas");
+        jLabel1.setDoubleBuffered(true);
+
+        jPanel3.setLayout(new java.awt.GridLayout(1, 5, 10, 0));
 
         start1.setDoubleBuffered(true);
         start1.setFont(new java.awt.Font("FreeSans", 0, 12)); // NOI18N
         start1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
-        jPanel2.add(start1);
+        jPanel3.add(start1);
 
         start2.setDoubleBuffered(true);
         start2.setFont(new java.awt.Font("FreeSans", 0, 12)); // NOI18N
         start2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
-        jPanel2.add(start2);
+        jPanel3.add(start2);
 
         start3.setDoubleBuffered(true);
         start3.setFont(new java.awt.Font("FreeSans", 0, 12)); // NOI18N
         start3.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
-        jPanel2.add(start3);
+        jPanel3.add(start3);
 
         start4.setDoubleBuffered(true);
         start4.setFont(new java.awt.Font("FreeSans", 0, 12)); // NOI18N
         start4.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
-        jPanel2.add(start4);
+        jPanel3.add(start4);
 
         start5.setDoubleBuffered(true);
         start5.setFont(new java.awt.Font("FreeSans", 0, 12)); // NOI18N
         start5.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STAR_BORDER);
-        jPanel2.add(start5);
+        jPanel3.add(start5);
 
-        javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
-        panel1.setLayout(panel1Layout);
-        panel1Layout.setHorizontalGroup(
-            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel1Layout.createSequentialGroup()
-                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panel1Layout.createSequentialGroup()
-                        .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1)
                                     .addComponent(jLabel2)
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel4)
                                     .addComponent(jLabel5)))
-                            .addGroup(panel1Layout.createSequentialGroup()
+                            .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(40, 40, 40)
                                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        panel1Layout.setVerticalGroup(
-            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -191,11 +189,15 @@ public class frmCambioClave extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtConfirmacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtNueva, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtConfirmacion, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
+                            .addComponent(txtNueva, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jlFoto, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
@@ -218,9 +220,11 @@ public class frmCambioClave extends javax.swing.JDialog {
                         .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jlFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jlFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -392,8 +396,8 @@ public class frmCambioClave extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel jlFoto;
-    private necesario.Panel panel1;
     private necesario.LabelIcon start1;
     private necesario.LabelIcon start2;
     private necesario.LabelIcon start3;

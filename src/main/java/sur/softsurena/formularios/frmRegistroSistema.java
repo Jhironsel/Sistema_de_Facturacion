@@ -1,12 +1,15 @@
 package sur.softsurena.formularios;
 
-import java.awt.Color;
-import sur.softsurena.entidades.Personas;
+import sur.softsurena.entidades.Sexo;
 
 public class frmRegistroSistema extends javax.swing.JFrame {
+
     public frmRegistroSistema() {
         initComponents();
-        Personas.llenarSexo(jcbSexo);
+
+        jcbSexo.removeAllItems();
+
+        Sexo.getSexoList().stream().forEach(sexo -> jcbSexo.addItem(sexo));
     }
 
     @SuppressWarnings("unchecked")
@@ -28,11 +31,11 @@ public class frmRegistroSistema extends javax.swing.JFrame {
         txtCedula_F1 = new javax.swing.JFormattedTextField();
         txtTelefono_F1 = new javax.swing.JFormattedTextField();
         txtDireccion1 = new javax.swing.JTextField();
-        btnAceptar = new javax.swing.JButton();
-        btnCancelar = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         txtNombres3 = new javax.swing.JTextField();
         jPasswordField1 = new javax.swing.JPasswordField();
+        rSButtonGradientIcon_new1 = new newscomponents.RSButtonGradientIcon_new();
+        rSButtonGradientIcon_new2 = new newscomponents.RSButtonGradientIcon_new();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -105,17 +108,18 @@ public class frmRegistroSistema extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtNombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txtCedula_F))
+                    .addComponent(txtCedula_F, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtTelefono_F)
-                        .addComponent(txtMovil_F))
-                    .addComponent(jcbSexo))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtTelefono_F, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMovil_F, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jcbSexo, txtApellidos, txtCedula_F, txtDireccion, txtMovil_F, txtNombres, txtTelefono_F});
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "Datos de la empresa"));
 
@@ -159,52 +163,14 @@ public class frmRegistroSistema extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNombres1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTelefono_F1)
-                    .addComponent(txtCedula_F1))
+                    .addComponent(txtTelefono_F1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCedula_F1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtDireccion1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        btnAceptar.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        btnAceptar.setForeground(new java.awt.Color(1, 1, 1));
-        btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Aceptar 32 x 32.png"))); // NOI18N
-        btnAceptar.setMnemonic('a');
-        btnAceptar.setText("Aceptar");
-        btnAceptar.setToolTipText("");
-        btnAceptar.setPreferredSize(new java.awt.Dimension(123, 44));
-        btnAceptar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnAceptarMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnAceptarMouseExited(evt);
-            }
-        });
-        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAceptarActionPerformed(evt);
-            }
-        });
-
-        btnCancelar.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        btnCancelar.setForeground(new java.awt.Color(1, 1, 1));
-        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Cancelar 32 x 32.png"))); // NOI18N
-        btnCancelar.setMnemonic('c');
-        btnCancelar.setText("Cancelar");
-        btnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnCancelarMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnCancelarMouseExited(evt);
-            }
-        });
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
-            }
-        });
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txtCedula_F1, txtDireccion1, txtNombres1, txtTelefono_F1});
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "Acceso de registro de usuario autorizado"));
 
@@ -236,6 +202,18 @@ public class frmRegistroSistema extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jPanel4Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jPasswordField1, txtNombres3});
+
+        rSButtonGradientIcon_new1.setText("Aceptar");
+        rSButtonGradientIcon_new1.setGradiente(newscomponents.RSButtonGradientIcon_new.Gradiente.HORIZONTAL);
+        rSButtonGradientIcon_new1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DONE);
+
+        rSButtonGradientIcon_new2.setText("Cancelar");
+        rSButtonGradientIcon_new2.setColorPrimario(new java.awt.Color(255, 0, 0));
+        rSButtonGradientIcon_new2.setColorPrimarioHover(new java.awt.Color(255, 51, 102));
+        rSButtonGradientIcon_new2.setGradiente(newscomponents.RSButtonGradientIcon_new.Gradiente.HORIZONTAL);
+        rSButtonGradientIcon_new2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CANCEL);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -244,13 +222,13 @@ public class frmRegistroSistema extends javax.swing.JFrame {
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCancelar)
+                .addComponent(rSButtonGradientIcon_new2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(rSButtonGradientIcon_new1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -264,44 +242,18 @@ public class frmRegistroSistema extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(rSButtonGradientIcon_new1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rSButtonGradientIcon_new2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAceptarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseEntered
-        btnAceptar.setForeground(Color.BLUE);
-    }//GEN-LAST:event_btnAceptarMouseEntered
-
-    private void btnAceptarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseExited
-        btnAceptar.setForeground(Color.BLACK);
-    }//GEN-LAST:event_btnAceptarMouseExited
-
-    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        
-    }//GEN-LAST:event_btnAceptarActionPerformed
-
-    private void btnCancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseEntered
-        btnCancelar.setForeground(Color.BLUE);
-    }//GEN-LAST:event_btnCancelarMouseEntered
-
-    private void btnCancelarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseExited
-        btnCancelar.setForeground(Color.BLACK);
-    }//GEN-LAST:event_btnCancelarMouseExited
-
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        System.exit(0);//Terminamos el programa.
-    }//GEN-LAST:event_btnCancelarActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAceptar;
-    private javax.swing.JButton btnCancelar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
@@ -309,6 +261,8 @@ public class frmRegistroSistema extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JComboBox jcbSexo;
+    private newscomponents.RSButtonGradientIcon_new rSButtonGradientIcon_new1;
+    private newscomponents.RSButtonGradientIcon_new rSButtonGradientIcon_new2;
     private javax.swing.JTextField txtApellidos;
     private javax.swing.JFormattedTextField txtCedula_F;
     private javax.swing.JFormattedTextField txtCedula_F1;

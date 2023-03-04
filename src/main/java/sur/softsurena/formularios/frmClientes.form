@@ -1,50 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.6" maxVersion="1.8" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
   <NonVisualComponents>
-    <Component class="javax.swing.ButtonGroup" name="buttonGroup1">
-    </Component>
-    <Component class="javax.swing.JFormattedTextField" name="txtCedula2">
-      <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Cedula">
-              <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                <LineBorder roundedCorners="true" thickness="2">
-                  <Color PropertyName="color" blue="df" green="2d" red="25" type="rgb"/>
-                </LineBorder>
-              </Border>
-              <Font PropertyName="font" name="FreeSans" size="12" style="0"/>
-            </TitledBorder>
-          </Border>
-        </Property>
-        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
-          <Format format="###-#######-#" subtype="-1" type="5"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value=""/>
-        <Property name="toolTipText" type="java.lang.String" value="Cedula del Cliente"/>
-        <Property name="focusLostBehavior" type="int" value="0"/>
-        <Property name="focusTraversalPolicyProvider" type="boolean" value="true"/>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Ubuntu Mono" size="14" style="1"/>
-        </Property>
-        <Property name="name" type="java.lang.String" value="txtCedula" noResource="true"/>
-        <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-          <ComponentRef name="jcbPersona"/>
-        </Property>
-      </Properties>
+    <Component class="javax.swing.ButtonGroup" name="btnGMovilTelefono">
     </Component>
   </NonVisualComponents>
   <Properties>
+    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+      <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+        <EmptyBorder/>
+      </Border>
+    </Property>
     <Property name="closable" type="boolean" value="true"/>
     <Property name="iconifiable" type="boolean" value="true"/>
     <Property name="maximizable" type="boolean" value="true"/>
     <Property name="resizable" type="boolean" value="true"/>
     <Property name="title" type="java.lang.String" value="Administraci&#xf3;n Clientes"/>
-    <Property name="focusTraversalPolicyProvider" type="boolean" value="true"/>
-    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[915, 535]"/>
-    </Property>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -58,7 +29,7 @@
     <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
     <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
-    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="2"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
@@ -67,36 +38,35 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="jScrollPane4" max="32767" attributes="0"/>
-          </Group>
+          <Component id="jScrollPane1" alignment="0" pref="818" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="jScrollPane4" max="32767" attributes="0"/>
-          </Group>
+          <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JScrollPane" name="jScrollPane4">
+    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="jPanel4">
+        <Container class="javax.swing.JPanel" name="jPanel1">
+          <Properties>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[800, 600]"/>
+            </Property>
+          </Properties>
 
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jPanel13" pref="873" max="32767" attributes="0"/>
-                          <Component id="jtpUnico" pref="873" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jtpUnico" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jPanel13" alignment="0" pref="804" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -106,27 +76,16 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="jtpUnico" pref="424" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
-                      <Component id="jPanel13" min="-2" max="-2" attributes="0"/>
+                      <Component id="jtpUnico" pref="506" max="32767" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Component id="jPanel13" min="-2" pref="81" max="-2" attributes="0"/>
+                      <EmptySpace min="15" pref="15" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
             <Container class="javax.swing.JTabbedPane" name="jtpUnico">
-              <Properties>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                    <LineBorder roundedCorners="true"/>
-                  </Border>
-                </Property>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="DejaVu Sans" size="12" style="0"/>
-                </Property>
-                <Property name="name" type="java.lang.String" value="jtpUnico" noResource="true"/>
-              </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
               </AuxValues>
@@ -134,9 +93,6 @@
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
               <SubComponents>
                 <Container class="javax.swing.JScrollPane" name="jspClientes">
-                  <Properties>
-                    <Property name="name" type="java.lang.String" value="jspClientes" noResource="true"/>
-                  </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                       <JTabbedPaneConstraints tabName="Clientes">
@@ -148,18 +104,15 @@
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
                     <Container class="javax.swing.JPanel" name="jpClientes">
-                      <Properties>
-                        <Property name="name" type="java.lang.String" value="jpClientes" noResource="true"/>
-                      </Properties>
 
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jPanel15" max="32767" attributes="0"/>
-                                      <Component id="jScrollPane3" max="32767" attributes="0"/>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="jpsTablaCliente" pref="790" max="32767" attributes="0"/>
+                                      <Component id="jScrollPane2" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
@@ -169,169 +122,101 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jScrollPane3" pref="309" max="32767" attributes="0"/>
+                                  <Component id="jpsTablaCliente" pref="379" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jPanel15" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
                       </Layout>
                       <SubComponents>
-                        <Container class="javax.swing.JScrollPane" name="jScrollPane3">
+                        <Container class="javax.swing.JScrollPane" name="jpsTablaCliente">
                           <Properties>
-                            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                                <LineBorder roundedCorners="true">
-                                  <Color PropertyName="color" blue="bb" green="bb" red="bb" type="rgb"/>
-                                </LineBorder>
-                              </Border>
-                            </Property>
-                            <Property name="autoscrolls" type="boolean" value="true"/>
-                            <Property name="doubleBuffered" type="boolean" value="true"/>
+                            <Property name="name" type="java.lang.String" value="jpsTablaCliente" noResource="true"/>
                           </Properties>
+                          <AuxValues>
+                            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                          </AuxValues>
 
                           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                           <SubComponents>
-                            <Component class="javax.swing.JTable" name="tblClientes">
+                            <Component class="rojerusan.RSTableMetro1" name="tblClientes">
                               <Properties>
-                                <Property name="autoCreateRowSorter" type="boolean" value="true"/>
-                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                  <Font name="Ubuntu" size="14" style="0"/>
+                                <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                                  <Table columnCount="4" rowCount="4">
+                                    <Column editable="true" title="Title 1" type="java.lang.Object"/>
+                                    <Column editable="true" title="Title 2" type="java.lang.Object"/>
+                                    <Column editable="true" title="Title 3" type="java.lang.Object"/>
+                                    <Column editable="true" title="Title 4" type="java.lang.Object"/>
+                                  </Table>
                                 </Property>
-                                <Property name="autoResizeMode" type="int" value="0"/>
-                                <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
-                                  <TableColumnModel selectionModel="0">
-                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                                      <Title value="1"/>
-                                      <Editor/>
-                                      <Renderer/>
-                                    </Column>
-                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                                      <Title value="2"/>
-                                      <Editor/>
-                                      <Renderer/>
-                                    </Column>
-                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                                      <Title value="3"/>
-                                      <Editor/>
-                                      <Renderer/>
-                                    </Column>
-                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                                      <Title value="4"/>
-                                      <Editor/>
-                                      <Renderer/>
-                                    </Column>
-                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                                      <Title value="5"/>
-                                      <Editor/>
-                                      <Renderer/>
-                                    </Column>
-                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                                      <Title value="6"/>
-                                      <Editor/>
-                                      <Renderer/>
-                                    </Column>
-                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                                      <Title value="7"/>
-                                      <Editor/>
-                                      <Renderer/>
-                                    </Column>
-                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                                      <Title value="8"/>
-                                      <Editor/>
-                                      <Renderer/>
-                                    </Column>
-                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                                      <Title value="9"/>
-                                      <Editor/>
-                                      <Renderer/>
-                                    </Column>
-                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                                      <Title value="10"/>
-                                      <Editor/>
-                                      <Renderer/>
-                                    </Column>
-                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                                      <Title value="11"/>
-                                      <Editor/>
-                                      <Renderer/>
-                                    </Column>
-                                  </TableColumnModel>
+                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="FreeMono" size="14" style="1"/>
+                                </Property>
+                                <Property name="fontHead" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="FreeMono" size="14" style="1"/>
+                                </Property>
+                                <Property name="fontRowHover" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="FreeMono" size="14" style="1"/>
+                                </Property>
+                                <Property name="fontRowSelect" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="FreeMono" size="14" style="1"/>
                                 </Property>
                                 <Property name="name" type="java.lang.String" value="tblClientes" noResource="true"/>
-                                <Property name="selectionMode" type="int" value="0"/>
-                                <Property name="showGrid" type="boolean" value="false"/>
-                                <Property name="showHorizontalLines" type="boolean" value="true"/>
-                                <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
-                                  <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
-                                </Property>
+                                <Property name="showGrid" type="boolean" value="true"/>
                               </Properties>
                               <AuxValues>
-                                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JTable(){&#xa;    @Override&#xa;    public boolean isCellEditable(int rowIndex, int colIndex) {&#xa;        return false; //Las celdas no son editables.&#xa;    }&#xa;}"/>
+                                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new rojerusan.RSTableMetro1(){&#xa;@Override&#xa;public boolean isCellEditable(int rowIndex, int colIndex) { &#xa;    return false; //Las celdas no son editables. &#xa;}&#xa;}"/>
                                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
                               </AuxValues>
                             </Component>
                           </SubComponents>
                         </Container>
-                        <Container class="javax.swing.JPanel" name="jPanel15">
-                          <Properties>
-                            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                                <LineBorder roundedCorners="true">
-                                  <Color PropertyName="color" blue="bb" green="bb" red="bb" type="rgb"/>
-                                </LineBorder>
-                              </Border>
-                            </Property>
-                          </Properties>
+                        <Container class="javax.swing.JScrollPane" name="jScrollPane2">
 
-                          <Layout>
-                            <DimensionLayout dim="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="btnImprimirInforme" min="-2" pref="230" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="btnHistorial" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace pref="425" max="32767" attributes="0"/>
-                                  </Group>
-                              </Group>
-                            </DimensionLayout>
-                            <DimensionLayout dim="1">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="btnImprimirInforme" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="btnHistorial" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                            </DimensionLayout>
-                          </Layout>
+                          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                           <SubComponents>
-                            <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnImprimirInforme">
+                            <Container class="javax.swing.JPanel" name="jPanel16">
                               <Properties>
-                                <Property name="text" type="java.lang.String" value="Imprimir informe de cliente"/>
-                                <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
-                                  <Value id="PRINT"/>
+                                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                                  <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                                    <LineBorder roundedCorners="true">
+                                      <Color PropertyName="color" blue="bb" green="bb" red="bb" type="rgb"/>
+                                    </LineBorder>
+                                  </Border>
                                 </Property>
-                                <Property name="name" type="java.lang.String" value="btnImprimirInforme" noResource="true"/>
                               </Properties>
-                            </Component>
-                            <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnHistorial">
-                              <Properties>
-                                <Property name="text" type="java.lang.String" value="Historial de Cliente"/>
-                                <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
-                                  <Value id="CANCEL"/>
-                                </Property>
-                                <Property name="name" type="java.lang.String" value="btnHistorial" noResource="true"/>
-                              </Properties>
-                              <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnHistorialActionPerformed"/>
-                              </Events>
-                            </Component>
+
+                              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
+                                <Property name="alignment" type="int" value="0"/>
+                              </Layout>
+                              <SubComponents>
+                                <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnImprimirInforme1">
+                                  <Properties>
+                                    <Property name="text" type="java.lang.String" value="Imprimir informe de cliente"/>
+                                    <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                      <Value id="PRINT"/>
+                                    </Property>
+                                    <Property name="name" type="java.lang.String" value="btnImprimirInforme" noResource="true"/>
+                                    <Property name="round" type="int" value="40"/>
+                                  </Properties>
+                                </Component>
+                                <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnHistorial1">
+                                  <Properties>
+                                    <Property name="text" type="java.lang.String" value="Historial de Cliente"/>
+                                    <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                      <Value id="CANCEL"/>
+                                    </Property>
+                                    <Property name="name" type="java.lang.String" value="btnHistorial" noResource="true"/>
+                                    <Property name="round" type="int" value="40"/>
+                                  </Properties>
+                                  <Events>
+                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnHistorial1ActionPerformed"/>
+                                  </Events>
+                                </Component>
+                              </SubComponents>
+                            </Container>
                           </SubComponents>
                         </Container>
                       </SubComponents>
@@ -339,11 +224,6 @@
                   </SubComponents>
                 </Container>
                 <Container class="javax.swing.JScrollPane" name="jspMantenimiento">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="DejaVu Sans" size="12" style="0"/>
-                    </Property>
-                  </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                       <JTabbedPaneConstraints tabName="Mantenimiento">
@@ -355,115 +235,96 @@
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
                     <Container class="javax.swing.JPanel" name="jpMantenimiento">
-                      <Properties>
-                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                            <TitledBorder position="2" title="Datos Cliente">
-                              <Font PropertyName="font" name="DejaVu Sans" size="14" style="0"/>
-                            </TitledBorder>
-                          </Border>
-                        </Property>
-                        <Property name="focusCycleRoot" type="boolean" value="true"/>
-                        <Property name="focusTraversalPolicyProvider" type="boolean" value="true"/>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Arial" size="12" style="0"/>
-                        </Property>
-                        <Property name="name" type="java.lang.String" value="jpMantenimiento" noResource="true"/>
-                      </Properties>
 
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="789" max="32767" attributes="0"/>
+                              <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <EmptySpace pref="7" max="32767" attributes="0"/>
+                                      <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace pref="7" max="32767" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="jPanel1" max="32767" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="633" max="32767" attributes="0"/>
+                              <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                         </DimensionLayout>
                       </Layout>
                       <SubComponents>
-                        <Container class="javax.swing.JPanel" name="jPanel1">
-                          <Properties>
-                            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                                <LineBorder>
-                                  <Color PropertyName="color" blue="df" green="2d" red="25" type="rgb"/>
-                                </LineBorder>
-                              </Border>
-                            </Property>
-                            <Property name="name" type="java.lang.String" value="" noResource="true"/>
-                          </Properties>
+                        <Container class="javax.swing.JPanel" name="jPanel2">
 
                           <Layout>
                             <DimensionLayout dim="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="1" attributes="0">
-                                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jtpDireccionContactos" alignment="0" min="-2" pref="762" max="-2" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="txtPNombre" linkSize="10" min="-2" pref="250" max="-2" attributes="0"/>
-                                                  <Component id="dchFechaNacimiento" linkSize="10" alignment="0" min="-2" pref="250" max="-2" attributes="0"/>
+                                                  <Component id="txtPNombre" alignment="0" min="-2" pref="250" max="-2" attributes="0"/>
+                                                  <Component id="dchFechaNacimiento" alignment="0" min="-2" pref="250" max="-2" attributes="0"/>
                                                   <Group type="102" alignment="0" attributes="0">
-                                                      <Component id="txtCedula" min="-2" pref="185" max="-2" attributes="0"/>
-                                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                                      <Component id="txtCedula" min="-2" pref="191" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
                                                       <Component id="btnCedulaValidad" min="-2" pref="54" max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="txtSNombre" linkSize="10" alignment="0" min="-2" pref="250" max="-2" attributes="0"/>
-                                                  <Component id="jcbEstadoCivil" linkSize="10" alignment="0" min="-2" pref="250" max="-2" attributes="0"/>
-                                                  <Component id="jcbPersona" linkSize="10" alignment="0" min="-2" pref="250" max="-2" attributes="0"/>
+                                                  <Component id="txtSNombre" alignment="0" min="-2" pref="250" max="-2" attributes="0"/>
+                                                  <Component id="jcbEstadoCivil" alignment="0" min="-2" pref="250" max="-2" attributes="0"/>
+                                                  <Component id="jcbPersona" alignment="0" min="-2" pref="250" max="-2" attributes="0"/>
                                               </Group>
                                               <EmptySpace min="-2" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="txtApellidos" linkSize="10" min="-2" pref="250" max="-2" attributes="0"/>
-                                                  <Component id="cbEstado" linkSize="10" min="-2" pref="250" max="-2" attributes="0"/>
-                                                  <Component id="jcbSexo" linkSize="10" min="-2" pref="250" max="-2" attributes="0"/>
+                                                  <Component id="txtApellidos" alignment="0" min="-2" pref="250" max="-2" attributes="0"/>
+                                                  <Component id="cbEstado" alignment="0" min="-2" pref="250" max="-2" attributes="0"/>
+                                                  <Component id="jcbSexo" alignment="0" min="-2" pref="250" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                       </Group>
-                                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
                             <DimensionLayout dim="1">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="2" attributes="0">
-                                          <Component id="jcbPersona" linkSize="11" alignment="2" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txtCedula" linkSize="11" alignment="2" min="-2" pref="34" max="-2" attributes="0"/>
-                                          <Component id="cbEstado" linkSize="11" alignment="2" min="-2" pref="52" max="-2" attributes="0"/>
-                                          <Component id="btnCedulaValidad" linkSize="11" alignment="0" min="-2" pref="53" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="2" max="-2" attributes="0">
+                                          <Component id="jcbPersona" alignment="2" min="-2" max="-2" attributes="0"/>
+                                          <Component id="cbEstado" alignment="2" min="-2" pref="52" max="-2" attributes="0"/>
+                                          <Component id="btnCedulaValidad" alignment="0" min="-2" pref="53" max="-2" attributes="0"/>
+                                          <Component id="txtCedula" alignment="0" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="-2" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="2" attributes="0">
-                                          <Component id="txtPNombre" linkSize="11" alignment="2" min="-2" pref="52" max="-2" attributes="0"/>
-                                          <Component id="txtSNombre" linkSize="11" alignment="2" min="-2" pref="52" max="-2" attributes="0"/>
-                                          <Component id="txtApellidos" linkSize="11" alignment="2" min="-2" pref="52" max="-2" attributes="0"/>
+                                          <Component id="txtPNombre" alignment="2" min="-2" pref="52" max="-2" attributes="0"/>
+                                          <Component id="txtSNombre" alignment="2" min="-2" pref="52" max="-2" attributes="0"/>
+                                          <Component id="txtApellidos" alignment="2" min="-2" pref="52" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="2" attributes="0">
-                                          <Component id="dchFechaNacimiento" linkSize="11" alignment="2" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jcbEstadoCivil" linkSize="11" alignment="2" min="-2" pref="53" max="-2" attributes="0"/>
-                                          <Component id="jcbSexo" linkSize="11" alignment="2" min="-2" pref="53" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="jcbEstadoCivil" alignment="0" pref="53" max="32767" attributes="0"/>
+                                          <Component id="jcbSexo" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="dchFechaNacimiento" alignment="0" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jtpDireccionContactos" max="32767" attributes="0"/>
-                                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -491,15 +352,12 @@
                                 <Property name="focusLostBehavior" type="int" value="0"/>
                                 <Property name="focusTraversalPolicyProvider" type="boolean" value="true"/>
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                  <Font name="Ubuntu Mono" size="14" style="1"/>
+                                  <Font name="FreeMono" size="14" style="1"/>
                                 </Property>
                                 <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                                   <Dimension value="[0, 0]"/>
                                 </Property>
                                 <Property name="name" type="java.lang.String" value="txtCedula" noResource="true"/>
-                                <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                                  <ComponentRef name="jcbPersona"/>
-                                </Property>
                                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                                   <Dimension value="[0, 25]"/>
                                 </Property>
@@ -514,6 +372,9 @@
                             </Component>
                             <Component class="javax.swing.JComboBox" name="jcbPersona">
                               <Properties>
+                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="FreeMono" size="14" style="1"/>
+                                </Property>
                                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                                   <StringArray count="0"/>
                                 </Property>
@@ -530,9 +391,6 @@
                                   </Border>
                                 </Property>
                                 <Property name="name" type="java.lang.String" value="jcbPersona" noResource="true"/>
-                                <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                                  <ComponentRef name="txtPNombre"/>
-                                </Property>
                               </Properties>
                               <Events>
                                 <EventHandler event="popupMenuWillBecomeInvisible" listener="javax.swing.event.PopupMenuListener" parameters="javax.swing.event.PopupMenuEvent" handler="jcbPersonaPopupMenuWillBecomeInvisible"/>
@@ -579,7 +437,7 @@
                             <Component class="javax.swing.JTextField" name="txtPNombre">
                               <Properties>
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                  <Font name="Ubuntu" size="14" style="0"/>
+                                  <Font name="FreeMono" size="14" style="1"/>
                                 </Property>
                                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                   <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -599,9 +457,6 @@
                                   <Dimension value="[0, 0]"/>
                                 </Property>
                                 <Property name="name" type="java.lang.String" value="txtPNombre" noResource="true"/>
-                                <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                                  <ComponentRef name="txtSNombre"/>
-                                </Property>
                                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                                   <Dimension value="[0, 25]"/>
                                 </Property>
@@ -613,7 +468,7 @@
                             <Component class="javax.swing.JTextField" name="txtSNombre">
                               <Properties>
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                  <Font name="Ubuntu" size="14" style="0"/>
+                                  <Font name="FreeMono" size="14" style="1"/>
                                 </Property>
                                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                   <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -633,9 +488,6 @@
                                   <Dimension value="[0, 0]"/>
                                 </Property>
                                 <Property name="name" type="java.lang.String" value="txtSNombre" noResource="true"/>
-                                <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                                  <ComponentRef name="txtApellidos"/>
-                                </Property>
                                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                                   <Dimension value="[0, 25]"/>
                                 </Property>
@@ -647,7 +499,7 @@
                             <Component class="javax.swing.JTextField" name="txtApellidos">
                               <Properties>
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                  <Font name="Ubuntu" size="14" style="0"/>
+                                  <Font name="FreeMono" size="14" style="1"/>
                                 </Property>
                                 <Property name="horizontalAlignment" type="int" value="2"/>
                                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -668,9 +520,6 @@
                                   <Dimension value="[0, 0]"/>
                                 </Property>
                                 <Property name="name" type="java.lang.String" value="txtApellidos" noResource="true"/>
-                                <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                                  <ComponentRef name="dchFechaNacimiento"/>
-                                </Property>
                                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                                   <Dimension value="[0, 25]"/>
                                 </Property>
@@ -681,14 +530,17 @@
                             </Component>
                             <Component class="com.toedter.calendar.JDateChooser" name="dchFechaNacimiento">
                               <Properties>
-                                <Property name="name" type="java.lang.String" value="jdcFechaNacimiento" noResource="true"/>
-                                <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                                  <ComponentRef name="jcbEstadoCivil"/>
+                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="FreeMono" size="14" style="1"/>
                                 </Property>
+                                <Property name="name" type="java.lang.String" value="jdcFechaNacimiento" noResource="true"/>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JComboBox" name="jcbEstadoCivil">
                               <Properties>
+                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="FreeMono" size="14" style="1"/>
+                                </Property>
                                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                                   <StringArray count="0"/>
                                 </Property>
@@ -705,9 +557,6 @@
                                   </Border>
                                 </Property>
                                 <Property name="name" type="java.lang.String" value="jcbEstadoCivil" noResource="true"/>
-                                <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                                  <ComponentRef name="jcbSexo"/>
-                                </Property>
                               </Properties>
                               <Events>
                                 <EventHandler event="popupMenuWillBecomeInvisible" listener="javax.swing.event.PopupMenuListener" parameters="javax.swing.event.PopupMenuEvent" handler="jcbEstadoCivilPopupMenuWillBecomeInvisible"/>
@@ -718,6 +567,9 @@
                             </Component>
                             <Component class="javax.swing.JComboBox" name="jcbSexo">
                               <Properties>
+                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="FreeMono" size="14" style="1"/>
+                                </Property>
                                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                                   <StringArray count="0"/>
                                 </Property>
@@ -734,9 +586,6 @@
                                   </Border>
                                 </Property>
                                 <Property name="name" type="java.lang.String" value="jcbSexo" noResource="true"/>
-                                <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                                  <ComponentRef name="jcbProvincias"/>
-                                </Property>
                               </Properties>
                               <AuxValues>
                                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
@@ -765,12 +614,19 @@
                                   <Layout>
                                     <DimensionLayout dim="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                                          <Group type="102" attributes="0">
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="jPanel3" max="32767" attributes="0"/>
-                                                  <Component id="jPanel2" pref="748" max="32767" attributes="0"/>
-                                                  <Component id="jScrollPane8" max="32767" attributes="0"/>
+                                                  <Group type="102" attributes="0">
+                                                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                                                      <Component id="jPanel5" pref="748" max="32767" attributes="0"/>
+                                                  </Group>
+                                                  <Group type="102" attributes="0">
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Group type="103" groupAlignment="0" attributes="0">
+                                                          <Component id="jPanel6" max="32767" attributes="0"/>
+                                                          <Component id="jScrollPane3" max="32767" attributes="0"/>
+                                                      </Group>
+                                                  </Group>
                                               </Group>
                                               <EmptySpace max="-2" attributes="0"/>
                                           </Group>
@@ -779,50 +635,19 @@
                                     <DimensionLayout dim="1">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jScrollPane8" pref="214" max="32767" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                                              <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                                              <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                                              <Component id="jScrollPane3" pref="261" max="32767" attributes="0"/>
+                                              <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                     </DimensionLayout>
                                   </Layout>
                                   <SubComponents>
-                                    <Container class="javax.swing.JScrollPane" name="jScrollPane8">
-                                      <AuxValues>
-                                        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-                                      </AuxValues>
-
-                                      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-                                      <SubComponents>
-                                        <Component class="javax.swing.JTable" name="tblDireccion">
-                                          <Properties>
-                                            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                                              <Table columnCount="5" rowCount="10">
-                                                <Column editable="false" title="Provincia" type="java.lang.Object"/>
-                                                <Column editable="false" title="Municipio" type="java.lang.Object"/>
-                                                <Column editable="false" title="Distrito M." type="java.lang.Object"/>
-                                                <Column editable="false" title="Direcci&#xf3;n" type="java.lang.Object"/>
-                                                <Column editable="false" title="Fecha" type="java.lang.Object"/>
-                                              </Table>
-                                            </Property>
-                                            <Property name="autoResizeMode" type="int" value="0"/>
-                                            <Property name="name" type="java.lang.String" value="tblDireccion" noResource="true"/>
-                                            <Property name="selectionMode" type="int" value="1"/>
-                                            <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
-                                              <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
-                                            </Property>
-                                          </Properties>
-                                          <AuxValues>
-                                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JTable(){&#xd;&#xa;@Override&#xd;&#xa;public boolean isCellEditable(int rowIndex, int colIndex) { &#xd;&#xa;return false; //Las celdas no son editables. &#xd;&#xa;}&#xd;&#xa;};"/>
-                                          </AuxValues>
-                                        </Component>
-                                      </SubComponents>
-                                    </Container>
-                                    <Container class="javax.swing.JPanel" name="jPanel2">
+                                    <Container class="javax.swing.JPanel" name="jPanel5">
 
                                       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
                                         <Property name="columns" type="int" value="3"/>
@@ -841,10 +666,10 @@
                                             <Property name="colorFondo" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                                             </Property>
-                                            <Property name="name" type="java.lang.String" value="jcbProvincia" noResource="true"/>
-                                            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                                              <ComponentRef name="jcbMunicipios"/>
+                                            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                              <Font name="FreeMono" size="14" style="1"/>
                                             </Property>
+                                            <Property name="name" type="java.lang.String" value="jcbProvincia" noResource="true"/>
                                           </Properties>
                                           <Events>
                                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcbProvinciasActionPerformed"/>
@@ -866,10 +691,10 @@
                                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                                             </Property>
                                             <Property name="enabled" type="boolean" value="false"/>
-                                            <Property name="name" type="java.lang.String" value="jcbMunicipios" noResource="true"/>
-                                            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                                              <ComponentRef name="jcbDistritoMunicipal"/>
+                                            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                              <Font name="FreeMono" size="14" style="1"/>
                                             </Property>
+                                            <Property name="name" type="java.lang.String" value="jcbMunicipios" noResource="true"/>
                                           </Properties>
                                           <Events>
                                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcbMunicipiosActionPerformed"/>
@@ -890,14 +715,13 @@
                                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                                             </Property>
                                             <Property name="enabled" type="boolean" value="false"/>
-                                            <Property name="name" type="java.lang.String" value="jcbDistritoMunicipal" noResource="true"/>
-                                            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                                              <ComponentRef name="btnAgregarTelefonoMovil"/>
+                                            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                              <Font name="FreeMono" size="14" style="1"/>
                                             </Property>
+                                            <Property name="name" type="java.lang.String" value="jcbDistritoMunicipal" noResource="true"/>
                                           </Properties>
                                           <Events>
                                             <EventHandler event="popupMenuWillBecomeInvisible" listener="javax.swing.event.PopupMenuListener" parameters="javax.swing.event.PopupMenuEvent" handler="jcbDistritoMunicipalPopupMenuWillBecomeInvisible"/>
-                                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcbDistritoMunicipalActionPerformed"/>
                                           </Events>
                                           <AuxValues>
                                             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
@@ -905,27 +729,26 @@
                                         </Component>
                                       </SubComponents>
                                     </Container>
-                                    <Container class="javax.swing.JPanel" name="jPanel3">
+                                    <Container class="javax.swing.JPanel" name="jPanel6">
 
                                       <Layout>
                                         <DimensionLayout dim="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" alignment="0" attributes="0">
-                                                  <EmptySpace max="-2" attributes="0"/>
                                                   <Component id="txtDireccion" max="32767" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="jPanel6" min="-2" pref="111" max="-2" attributes="0"/>
-                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="jPanel7" min="-2" pref="111" max="-2" attributes="0"/>
+                                                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                         </DimensionLayout>
                                         <DimensionLayout dim="1">
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" attributes="0">
+                                              <Group type="102" alignment="0" attributes="0">
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="jPanel6" linkSize="19" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="txtDireccion" linkSize="19" alignment="0" min="-2" pref="52" max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                      <Component id="txtDireccion" pref="52" max="32767" attributes="0"/>
+                                                      <Component id="jPanel7" max="32767" attributes="0"/>
                                                   </Group>
                                                   <EmptySpace max="-2" attributes="0"/>
                                               </Group>
@@ -933,7 +756,7 @@
                                         </DimensionLayout>
                                       </Layout>
                                       <SubComponents>
-                                        <Container class="javax.swing.JPanel" name="jPanel6">
+                                        <Container class="javax.swing.JPanel" name="jPanel7">
 
                                           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
                                             <Property name="columns" type="int" value="3"/>
@@ -968,7 +791,7 @@
                                         <Component class="javax.swing.JTextField" name="txtDireccion">
                                           <Properties>
                                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                              <Font name="Ubuntu" size="14" style="0"/>
+                                              <Font name="FreeMono" size="14" style="1"/>
                                             </Property>
                                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -988,9 +811,6 @@
                                               <Dimension value="[0, 0]"/>
                                             </Property>
                                             <Property name="name" type="java.lang.String" value="txtDireccion" noResource="true"/>
-                                            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                                              <ComponentRef name="txtSNombre"/>
-                                            </Property>
                                             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                                               <Dimension value="[0, 25]"/>
                                             </Property>
@@ -998,6 +818,42 @@
                                           <Events>
                                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtDireccionActionPerformed"/>
                                           </Events>
+                                        </Component>
+                                      </SubComponents>
+                                    </Container>
+                                    <Container class="javax.swing.JScrollPane" name="jScrollPane3">
+                                      <AuxValues>
+                                        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                                      </AuxValues>
+
+                                      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                                      <SubComponents>
+                                        <Component class="rojerusan.RSTableMetro1" name="tblDireccion">
+                                          <Properties>
+                                            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                                              <Table columnCount="4" rowCount="4">
+                                                <Column editable="true" title="Title 1" type="java.lang.Object"/>
+                                                <Column editable="true" title="Title 2" type="java.lang.Object"/>
+                                                <Column editable="true" title="Title 3" type="java.lang.Object"/>
+                                                <Column editable="true" title="Title 4" type="java.lang.Object"/>
+                                              </Table>
+                                            </Property>
+                                            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                              <Font name="FreeMono" size="14" style="1"/>
+                                            </Property>
+                                            <Property name="fontHead" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                              <Font name="FreeMono" size="14" style="1"/>
+                                            </Property>
+                                            <Property name="fontRowHover" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                              <Font name="FreeMono" size="14" style="1"/>
+                                            </Property>
+                                            <Property name="fontRowSelect" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                              <Font name="FreeMono" size="14" style="1"/>
+                                            </Property>
+                                          </Properties>
+                                          <AuxValues>
+                                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new rojerusan.RSTableMetro1(){&#xa;@Override&#xa;public boolean isCellEditable(int rowIndex, int colIndex) { &#xa;    return false; //Las celdas no son editables. &#xa;}&#xa;}"/>
+                                          </AuxValues>
                                         </Component>
                                       </SubComponents>
                                     </Container>
@@ -1053,7 +909,11 @@
                                             <DimensionLayout dim="0">
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Component id="jPanel8" alignment="1" max="32767" attributes="0"/>
-                                                  <Component id="jScrollPane2" alignment="1" pref="754" max="32767" attributes="0"/>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="jScrollPane5" max="32767" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                  </Group>
                                               </Group>
                                             </DimensionLayout>
                                             <DimensionLayout dim="1">
@@ -1061,39 +921,14 @@
                                                   <Group type="102" alignment="1" attributes="0">
                                                       <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
                                                       <Component id="jPanel8" min="-2" max="-2" attributes="0"/>
-                                                      <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
-                                                      <Component id="jScrollPane2" pref="239" max="32767" attributes="0"/>
-                                                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="jScrollPane5" pref="268" max="32767" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
                                             </DimensionLayout>
                                           </Layout>
                                           <SubComponents>
-                                            <Container class="javax.swing.JScrollPane" name="jScrollPane2">
-                                              <AuxValues>
-                                                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-                                              </AuxValues>
-
-                                              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-                                              <SubComponents>
-                                                <Component class="javax.swing.JTable" name="tblTelefonos">
-                                                  <Properties>
-                                                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                                                      <Table columnCount="4" rowCount="4">
-                                                        <Column editable="true" title="Title 1" type="java.lang.Object"/>
-                                                        <Column editable="true" title="Title 2" type="java.lang.Object"/>
-                                                        <Column editable="true" title="Title 3" type="java.lang.Object"/>
-                                                        <Column editable="true" title="Title 4" type="java.lang.Object"/>
-                                                      </Table>
-                                                    </Property>
-                                                    <Property name="name" type="java.lang.String" value="tblTelefonos" noResource="true"/>
-                                                  </Properties>
-                                                  <AuxValues>
-                                                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JTable(){&#xd;&#xa;@Override&#xd;&#xa;public boolean isCellEditable(int rowIndex, int colIndex) { &#xd;&#xa;return false; //Las celdas no son editables. &#xd;&#xa;}&#xd;&#xa;};"/>
-                                                  </AuxValues>
-                                                </Component>
-                                              </SubComponents>
-                                            </Container>
                                             <Container class="javax.swing.JPanel" name="jPanel8">
 
                                               <Layout>
@@ -1104,34 +939,37 @@
                                                           <Component id="txtTelelfonoMovil" min="-2" pref="212" max="-2" attributes="0"/>
                                                           <EmptySpace max="-2" attributes="0"/>
                                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                              <Component id="jrbResidencial" max="32767" attributes="0"/>
-                                                              <Component id="jrbMovil" max="32767" attributes="0"/>
+                                                              <Component id="jrbResidencial" alignment="0" max="32767" attributes="0"/>
+                                                              <Component id="jrbMovil" alignment="0" max="32767" attributes="0"/>
                                                           </Group>
                                                           <EmptySpace max="-2" attributes="0"/>
-                                                          <Component id="btnAgregarTelefonoMovil" linkSize="13" min="-2" pref="48" max="-2" attributes="0"/>
+                                                          <Component id="btnAgregarTelefonoMovil" min="-2" pref="48" max="-2" attributes="0"/>
                                                           <EmptySpace max="-2" attributes="0"/>
-                                                          <Component id="btnBorrarTelefonoMovil" linkSize="13" min="-2" pref="48" max="-2" attributes="0"/>
+                                                          <Component id="btnBorrarTelefonoMovil" min="-2" pref="48" max="-2" attributes="0"/>
                                                           <EmptySpace pref="310" max="32767" attributes="0"/>
                                                       </Group>
                                                   </Group>
                                                 </DimensionLayout>
                                                 <DimensionLayout dim="1">
                                                   <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Group type="102" attributes="0">
+                                                      <Group type="102" alignment="0" attributes="0">
                                                           <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                                                          <Group type="103" groupAlignment="0" attributes="0">
-                                                              <Group type="103" groupAlignment="2" attributes="0">
-                                                                  <Component id="txtTelelfonoMovil" linkSize="7" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                                  <Component id="btnAgregarTelefonoMovil" linkSize="7" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                                  <Component id="btnBorrarTelefonoMovil" linkSize="7" alignment="2" min="-2" max="-2" attributes="0"/>
-                                                              </Group>
-                                                              <Group type="102" alignment="0" attributes="0">
+                                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                              <Component id="txtTelelfonoMovil" max="32767" attributes="0"/>
+                                                              <Group type="102" attributes="0">
                                                                   <Component id="jrbMovil" min="-2" max="-2" attributes="0"/>
                                                                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                                                   <Component id="jrbResidencial" min="-2" max="-2" attributes="0"/>
+                                                                  <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                                                              </Group>
+                                                              <Group type="102" attributes="0">
+                                                                  <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
+                                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                                      <Component id="btnAgregarTelefonoMovil" max="32767" attributes="0"/>
+                                                                      <Component id="btnBorrarTelefonoMovil" max="32767" attributes="0"/>
+                                                                  </Group>
                                                               </Group>
                                                           </Group>
-                                                          <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                                                       </Group>
                                                   </Group>
                                                 </DimensionLayout>
@@ -1152,6 +990,9 @@
                                                     </Property>
                                                     <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
                                                       <Format format="+1(###) ###-####" subtype="-1" type="5"/>
+                                                    </Property>
+                                                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                                      <Font name="FreeMono" size="14" style="1"/>
                                                     </Property>
                                                     <Property name="name" type="java.lang.String" value="txtTelefonoMovil" noResource="true"/>
                                                   </Properties>
@@ -1185,7 +1026,7 @@
                                                 <Component class="javax.swing.JRadioButton" name="jrbMovil">
                                                   <Properties>
                                                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                                                      <ComponentRef name="buttonGroup1"/>
+                                                      <ComponentRef name="btnGMovilTelefono"/>
                                                     </Property>
                                                     <Property name="selected" type="boolean" value="true"/>
                                                     <Property name="text" type="java.lang.String" value="Movil"/>
@@ -1195,11 +1036,47 @@
                                                 <Component class="javax.swing.JRadioButton" name="jrbResidencial">
                                                   <Properties>
                                                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                                                      <ComponentRef name="buttonGroup1"/>
+                                                      <ComponentRef name="btnGMovilTelefono"/>
                                                     </Property>
                                                     <Property name="text" type="java.lang.String" value="Telefono"/>
                                                     <Property name="name" type="java.lang.String" value="jrbTelefonoResidencial" noResource="true"/>
                                                   </Properties>
+                                                </Component>
+                                              </SubComponents>
+                                            </Container>
+                                            <Container class="javax.swing.JScrollPane" name="jScrollPane5">
+                                              <AuxValues>
+                                                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                                              </AuxValues>
+
+                                              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                                              <SubComponents>
+                                                <Component class="rojerusan.RSTableMetro1" name="tblTelefonos">
+                                                  <Properties>
+                                                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                                                      <Table columnCount="4" rowCount="4">
+                                                        <Column editable="true" title="Title 1" type="java.lang.Object"/>
+                                                        <Column editable="true" title="Title 2" type="java.lang.Object"/>
+                                                        <Column editable="true" title="Title 3" type="java.lang.Object"/>
+                                                        <Column editable="true" title="Title 4" type="java.lang.Object"/>
+                                                      </Table>
+                                                    </Property>
+                                                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                                      <Font name="FreeMono" size="14" style="1"/>
+                                                    </Property>
+                                                    <Property name="fontHead" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                                      <Font name="FreeMono" size="14" style="1"/>
+                                                    </Property>
+                                                    <Property name="fontRowHover" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                                      <Font name="FreeMono" size="14" style="1"/>
+                                                    </Property>
+                                                    <Property name="fontRowSelect" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                                      <Font name="FreeMono" size="14" style="1"/>
+                                                    </Property>
+                                                  </Properties>
+                                                  <AuxValues>
+                                                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new rojerusan.RSTableMetro1(){&#xa;@Override&#xa;public boolean isCellEditable(int rowIndex, int colIndex) { &#xa;    return false; //Las celdas no son editables. &#xa;}&#xa;}"/>
+                                                  </AuxValues>
                                                 </Component>
                                               </SubComponents>
                                             </Container>
@@ -1218,7 +1095,11 @@
                                             <DimensionLayout dim="0">
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Component id="jPanel12" alignment="1" max="32767" attributes="0"/>
-                                                  <Component id="jScrollPane7" alignment="1" pref="760" max="32767" attributes="0"/>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="jScrollPane4" max="32767" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                  </Group>
                                               </Group>
                                             </DimensionLayout>
                                             <DimensionLayout dim="1">
@@ -1227,38 +1108,13 @@
                                                       <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                                                       <Component id="jPanel12" min="-2" pref="45" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
-                                                      <Component id="jScrollPane7" pref="241" max="32767" attributes="0"/>
-                                                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                                                      <Component id="jScrollPane4" pref="282" max="32767" attributes="0"/>
+                                                      <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
                                             </DimensionLayout>
                                           </Layout>
                                           <SubComponents>
-                                            <Container class="javax.swing.JScrollPane" name="jScrollPane7">
-                                              <AuxValues>
-                                                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-                                              </AuxValues>
-
-                                              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-                                              <SubComponents>
-                                                <Component class="javax.swing.JTable" name="tblCorreos">
-                                                  <Properties>
-                                                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                                                      <Table columnCount="4" rowCount="4">
-                                                        <Column editable="true" title="Title 1" type="java.lang.Object"/>
-                                                        <Column editable="true" title="Title 2" type="java.lang.Object"/>
-                                                        <Column editable="true" title="Title 3" type="java.lang.Object"/>
-                                                        <Column editable="true" title="Title 4" type="java.lang.Object"/>
-                                                      </Table>
-                                                    </Property>
-                                                    <Property name="name" type="java.lang.String" value="tblCorreos" noResource="true"/>
-                                                  </Properties>
-                                                  <AuxValues>
-                                                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JTable(){&#xd;&#xa;@Override&#xd;&#xa;public boolean isCellEditable(int rowIndex, int colIndex) { &#xd;&#xa;return false; //Las celdas no son editables. &#xd;&#xa;}&#xd;&#xa;};"/>
-                                                  </AuxValues>
-                                                </Component>
-                                              </SubComponents>
-                                            </Container>
                                             <Container class="javax.swing.JPanel" name="jPanel12">
 
                                               <Layout>
@@ -1268,21 +1124,21 @@
                                                           <EmptySpace max="-2" attributes="0"/>
                                                           <Component id="txtCorreo" min="-2" pref="310" max="-2" attributes="0"/>
                                                           <EmptySpace max="-2" attributes="0"/>
-                                                          <Component id="btnAgregarCorreo" linkSize="17" min="-2" pref="42" max="-2" attributes="0"/>
+                                                          <Component id="btnAgregarCorreo" min="-2" pref="42" max="-2" attributes="0"/>
                                                           <EmptySpace max="-2" attributes="0"/>
-                                                          <Component id="btnEliminarCorreo" linkSize="17" min="-2" pref="42" max="-2" attributes="0"/>
-                                                          <EmptySpace max="32767" attributes="0"/>
+                                                          <Component id="btnEliminarCorreo" min="-2" pref="42" max="-2" attributes="0"/>
+                                                          <EmptySpace pref="348" max="32767" attributes="0"/>
                                                       </Group>
                                                   </Group>
                                                 </DimensionLayout>
                                                 <DimensionLayout dim="1">
                                                   <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Group type="102" attributes="0">
+                                                      <Group type="102" alignment="0" attributes="0">
                                                           <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
                                                           <Group type="103" groupAlignment="0" attributes="0">
-                                                              <Group type="103" groupAlignment="2" attributes="0">
-                                                                  <Component id="btnAgregarCorreo" linkSize="15" alignment="2" min="-2" pref="42" max="-2" attributes="0"/>
-                                                                  <Component id="btnEliminarCorreo" linkSize="15" alignment="2" min="-2" pref="42" max="-2" attributes="0"/>
+                                                              <Group type="103" alignment="0" groupAlignment="2" attributes="0">
+                                                                  <Component id="btnAgregarCorreo" alignment="2" min="-2" pref="42" max="-2" attributes="0"/>
+                                                                  <Component id="btnEliminarCorreo" alignment="2" min="-2" pref="42" max="-2" attributes="0"/>
                                                               </Group>
                                                               <Component id="txtCorreo" alignment="0" min="-2" max="-2" attributes="0"/>
                                                           </Group>
@@ -1316,6 +1172,9 @@
                                                 </Component>
                                                 <Component class="RSMaterialComponent.RSTextFieldIconOne" name="txtCorreo">
                                                   <Properties>
+                                                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                                      <Font name="FreeMono" size="14" style="1"/>
+                                                    </Property>
                                                     <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                                                       <Value id="EMAIL"/>
                                                     </Property>
@@ -1326,6 +1185,42 @@
                                                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCorreoActionPerformed"/>
                                                     <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCorreoKeyPressed"/>
                                                   </Events>
+                                                </Component>
+                                              </SubComponents>
+                                            </Container>
+                                            <Container class="javax.swing.JScrollPane" name="jScrollPane4">
+                                              <AuxValues>
+                                                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                                              </AuxValues>
+
+                                              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                                              <SubComponents>
+                                                <Component class="rojerusan.RSTableMetro1" name="tblCorreos">
+                                                  <Properties>
+                                                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                                                      <Table columnCount="4" rowCount="4">
+                                                        <Column editable="true" title="Title 1" type="java.lang.Object"/>
+                                                        <Column editable="true" title="Title 2" type="java.lang.Object"/>
+                                                        <Column editable="true" title="Title 3" type="java.lang.Object"/>
+                                                        <Column editable="true" title="Title 4" type="java.lang.Object"/>
+                                                      </Table>
+                                                    </Property>
+                                                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                                      <Font name="FreeMono" size="14" style="1"/>
+                                                    </Property>
+                                                    <Property name="fontHead" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                                      <Font name="FreeMono" size="14" style="1"/>
+                                                    </Property>
+                                                    <Property name="fontRowHover" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                                      <Font name="FreeMono" size="14" style="1"/>
+                                                    </Property>
+                                                    <Property name="fontRowSelect" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                                      <Font name="FreeMono" size="14" style="1"/>
+                                                    </Property>
+                                                  </Properties>
+                                                  <AuxValues>
+                                                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new rojerusan.RSTableMetro1(){&#xa;@Override&#xa;public boolean isCellEditable(int rowIndex, int colIndex) { &#xa;    return false; //Las celdas no son editables. &#xa;}&#xa;}"/>
+                                                  </AuxValues>
                                                 </Component>
                                               </SubComponents>
                                             </Container>
@@ -1392,7 +1287,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
-                          <Component id="jPanel14" max="32767" attributes="0"/>
+                          <Component id="jPanel14" pref="51" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -1414,6 +1309,7 @@
                           <Value id="ADD"/>
                         </Property>
                         <Property name="name" type="java.lang.String" value="btnNuevo" noResource="true"/>
+                        <Property name="round" type="int" value="40"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNuevoActionPerformed"/>
@@ -1426,6 +1322,7 @@
                           <Value id="MODE_EDIT"/>
                         </Property>
                         <Property name="name" type="java.lang.String" value="btnModificar" noResource="true"/>
+                        <Property name="round" type="int" value="40"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnModificarActionPerformed"/>
@@ -1438,6 +1335,7 @@
                           <Value id="DELETE"/>
                         </Property>
                         <Property name="name" type="java.lang.String" value="btnBorrar" noResource="true"/>
+                        <Property name="round" type="int" value="40"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBorrarActionPerformed"/>
@@ -1450,6 +1348,7 @@
                           <Value id="FIND_IN_PAGE"/>
                         </Property>
                         <Property name="name" type="java.lang.String" value="btnBuscar" noResource="true"/>
+                        <Property name="round" type="int" value="40"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarActionPerformed"/>
@@ -1463,6 +1362,7 @@
                           <Value id="SAVE"/>
                         </Property>
                         <Property name="name" type="java.lang.String" value="btnGuardar" noResource="true"/>
+                        <Property name="round" type="int" value="40"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGuardarActionPerformed"/>
@@ -1476,6 +1376,7 @@
                           <Value id="CANCEL"/>
                         </Property>
                         <Property name="name" type="java.lang.String" value="btnCancelar" noResource="true"/>
+                        <Property name="round" type="int" value="40"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarActionPerformed"/>

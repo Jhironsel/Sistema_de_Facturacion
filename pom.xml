@@ -4,23 +4,29 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>sur.softsurena</groupId>
-    <artifactId>SistemaBebida1</artifactId>
-    <version>2.0</version>
+    <artifactId>SistemaFacturacion</artifactId>
+    <version>2.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <repositories>
-        <repository>
-            <id>unknown-jars-temp-repo</id>
-            <name>A temporary repository created by NetBeans for libraries and 
-                jars it could not identify. Please replace the dependencies in 
-                this repository with correct ones and delete this repository.</name>
-            <url>file:${project.basedir}/lib</url>
-        </repository>
-    </repositories>
     <build>
         <plugins>
             <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
                 <version>3.3.0</version>
+                <configuration>
+                    <archive>
+                        <index>true</index>
+                        
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>sur.softsurena.formularios.frmLogin</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.5.0</version>
                 <configuration>
                     <archive>
                         <manifest>
@@ -41,21 +47,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.3.0</version>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <mainClass>sur.softsurena.formularios.frmLogin</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
         </plugins>
-        
     </build>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -63,12 +55,6 @@
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
     <dependencies>
-        <dependency>
-            <groupId>sur.softsurena</groupId>
-            <artifactId>entidades</artifactId>
-            <version>1</version>
-            <type>jar</type>
-        </dependency>
         <dependency>
             <groupId>net.java.dev.beansbinding</groupId>
             <artifactId>beansbinding</artifactId>
@@ -80,54 +66,14 @@
             <version>1.4</version>
         </dependency>
         <dependency>
-            <groupId>org.jdesktop</groupId>
-            <artifactId>swing-layout</artifactId>
-            <version>1.0.2</version>
-        </dependency>
-        <dependency>
-            <groupId>unknown.binary</groupId>
-            <artifactId>RojeruSan.lib-SNAPSHOT</artifactId>
-            <version>SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>unknown.binary</groupId>
-            <artifactId>RojeruSan.lib.full_v1.0-1.0</artifactId>
-            <version>SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>sur.softsurena</groupId>
-            <artifactId>RojeruSan.lib.full_v1.0</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>sur.softsurena</groupId>
-            <artifactId>RSMaterialComponents</artifactId>
-            <version>3.0</version>
-        </dependency>
-        <dependency>
-            <groupId>sur.softsurena</groupId>
-            <artifactId>imagenes</artifactId>
-            <version>1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.formdev</groupId>
-            <artifactId>flatlaf</artifactId>
-            <version>2.4</version>
-        </dependency>
-        <dependency>
             <groupId>org.firebirdsql.jdbc</groupId>
             <artifactId>jaybird</artifactId>
-            <version>4.0.6.java11</version>
+            <version>4.0.9.java11</version>
         </dependency>
         <dependency>
             <groupId>com.github.dotxyteam</groupId>
             <artifactId>swing-testing-toolkit</artifactId>
             <version>1.8.2</version>
-        </dependency>
-        <dependency>
-            <groupId>unknown.binary</groupId>
-            <artifactId>RojeruSan.lib-1.0</artifactId>
-            <version>SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -141,5 +87,46 @@
             <version>6.8.1</version>
             <scope>test</scope>
         </dependency>
-    </dependencies>    
+        
+        
+        
+        <dependency>
+            <groupId>sur.softsurena</groupId>
+            <artifactId>imagenes</artifactId>
+            <version>2</version>
+        </dependency>
+        <dependency>
+            <groupId>sur.softsurena</groupId>
+            <artifactId>entidades</artifactId>
+            <version>2</version>
+            <type>jar</type>
+        </dependency>
+        
+        
+        <dependency>
+            <groupId>sur.softsurena</groupId>
+            <artifactId>RSMaterialComponents3</artifactId>
+            <version>1</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>sur.softsurena</groupId>
+            <artifactId>RojeruSan.lib2</artifactId>
+            <version>1</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>sur.softsurena</groupId>
+            <artifactId>RojeruSan.full_9.6</artifactId>
+            <version>1</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>sur.softsurena</groupId>
+            <artifactId>RojeruSan.full_6</artifactId>
+            <version>1</version>
+        </dependency>
+        
+    </dependencies>
+    <name>SistemaFacturacion</name>
 </project>

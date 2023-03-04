@@ -1,6 +1,5 @@
 package sur.softsurena.formularios;
 
-import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
@@ -20,7 +19,6 @@ import static sur.softsurena.entidades.BaseDeDatos.setLicencia;
 import static sur.softsurena.entidades.Usuarios.comprobandoRol;
 import sur.softsurena.metodos.Imagenes;
 
-
 public final class frmLogin extends javax.swing.JFrame {
 
     private String idMaquina = "";
@@ -33,7 +31,7 @@ public final class frmLogin extends javax.swing.JFrame {
 
         btnParametros.setVisible(false);//Boton parametros Invisible
 
-        this.setLocationRelativeTo(null);        
+        this.setLocationRelativeTo(null);
     }
 
     public frmLogin(String user, String clave) {
@@ -94,6 +92,8 @@ public final class frmLogin extends javax.swing.JFrame {
         labelIcon1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         labelIcon1.setOpaque(true);
 
+        txtUsuario.setFont(new java.awt.Font("FreeMono", 1, 24)); // NOI18N
+        txtUsuario.setForeground(new java.awt.Color(51, 51, 255));
         txtUsuario.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         txtUsuario.setName("txtUsuario"); // NOI18N
         txtUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -131,6 +131,8 @@ public final class frmLogin extends javax.swing.JFrame {
         labelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.LOCK);
         labelIcon2.setOpaque(true);
 
+        txtClave.setFont(new java.awt.Font("FreeMono", 1, 24)); // NOI18N
+        txtClave.setForeground(new java.awt.Color(51, 51, 255));
         txtClave.setName("txtClave"); // NOI18N
         txtClave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -241,9 +243,9 @@ public final class frmLogin extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lamina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(0, 0, 0)
+                .addComponent(lamina, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
 
         pack();
@@ -301,7 +303,6 @@ public final class frmLogin extends javax.swing.JFrame {
             idMaquina = sc.nextLine().trim();
         }
         System.out.println(idMaquina);
-        //btnAceptarActionPerformed(null);
     }//GEN-LAST:event_formWindowOpened
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         btnCancelarActionPerformed(null);
@@ -443,7 +444,7 @@ public final class frmLogin extends javax.swing.JFrame {
 
         //Blanquear la pass
         txtClave.setText("");
-        
+
         frmPrincipal principal = new frmPrincipal();
         principal.setVisible(true);
         principal.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -510,12 +511,11 @@ public final class frmLogin extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                FlatLightLaf.setup();
                 frmLogin frmLogin = new frmLogin();
                 frmLogin.setVisible(true);
                 frmLogin.setLocationRelativeTo(null);
             }
-        });        
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

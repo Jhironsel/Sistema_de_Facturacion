@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,24 +17,25 @@ import sur.softsurena.entidades.Servidor;
 
 public class frmParametros extends javax.swing.JFrame {
 
+    private static final Logger LOG = Logger.getLogger(frmParametros.class.getName());
+    
     private final Properties propiedades;
     private File f = null;
 
     public frmParametros() {
         initComponents();
         propiedades = new Properties();
+        
+        f = new File("properties/propiedades.properties");
+        
+        System.out.println("Existe: "+f.getAbsolutePath());
 
         try {
-            f = new File(getClass().getResource(
-                    "/sur/softsurena/properties/propiedades.properties").toURI());
             propiedades.load(new FileReader(f));
-
-        } catch (URISyntaxException ex) {
-            Logger.getLogger(frmParametros.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(frmParametros.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            LOG.log(Level.INFO, "Archivo no encotrado", ex);
         } catch (IOException ex) {
-            Logger.getLogger(frmParametros.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            LOG.log(Level.INFO, "Error de entrada o salida del archivo propiedades.", ex);
         }
 
         cargarParamentos("todo");
@@ -451,20 +451,20 @@ public class frmParametros extends javax.swing.JFrame {
     private void txtValor4KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValor4KeyReleased
         validarNumeros(txtValor4);
     }//GEN-LAST:event_txtValor4KeyReleased
-    
-    private void validarNumeros(RSMTextFull campo){
+
+    private void validarNumeros(RSMTextFull campo) {
         if (!campo.getText().isBlank() || !campo.getText().isEmpty()) {
             int numero = Integer.parseInt(campo.getText());
             if (numero < 0 || numero > 255 || campo.getText().isEmpty()) {
                 campo.setBordeColorFocus(Color.RED);
                 campo.setBordeColorNoFocus(Color.RED);
             } else {
-                campo.setBordeColorFocus(new Color(0,112,192));
-                campo.setBordeColorNoFocus(new Color(0,112,192));
+                campo.setBordeColorFocus(new Color(0, 112, 192));
+                campo.setBordeColorNoFocus(new Color(0, 112, 192));
             }
         }
     }
-    
+
     private void valoresEstados(boolean estado) {
         txtValor1.setEnabled(estado);
         txtValor2.setEnabled(estado);
@@ -493,14 +493,14 @@ public class frmParametros extends javax.swing.JFrame {
                 ipServidor4(propiedades.getProperty("Ip_Servidor4", "1")).
                 pathBaseDatos(propiedades.getProperty("PathBaseDatos", "/"))
                 .build();
-        
+
         if (zona.equals("todo") || zona.equals("nombre")) {
             if (s.getConServidor()) {
                 txtHost.setText(s.getUriServidor());
                 rbtnNombreServidor.doClick();
             }
         }
-        
+
         if (zona.equals("todo") || zona.equals("puerto")) {
             if (s.getConPuerto()) {
                 if (zona.equals("todo")) {
@@ -541,11 +541,10 @@ public class frmParametros extends javax.swing.JFrame {
             }
         }
 
-
         if (zona.equals("todo") || zona.equals("PathBaseDatos")) {
             txtPathBaseDatos.setText(s.getPathBaseDatos());
         }
-        
+
         return s;
     }
 
