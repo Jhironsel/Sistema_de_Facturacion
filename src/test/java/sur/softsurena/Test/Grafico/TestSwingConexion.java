@@ -21,20 +21,20 @@ public class TestSwingConexion {
         };
         
         final String moduloProductos[] = {
-            "testSwing/testInsertProducto.stt"
+            "testSwing/testInsertProducto.stt",
+            "testSwing/testUpdateProducto.stt"
         };
         
         //Crear un objecto de la clase Tester
         Tester tester = new Tester();
         
-        
         //Ejecutar una sola prueba
-//        tester.loadFromFile(new File(files[1]));
+        tester.loadFromFile(new File(moduloProductos[1]));
         
         //Asserts that the given test specification file gets load and executed successfully.
-        for (String file : moduloClientes) {
-           TestingUtils.assertSuccessfulReplay(new File(file));
-        }
+//        for (String file : moduloProductos) {
+//           TestingUtils.assertSuccessfulReplay(new File(file));
+//        }
         
         //The main window that allows to edit and execute test specifications.
         TestEditor testEditor = new TestEditor(tester);
@@ -51,5 +51,6 @@ public class TestSwingConexion {
         
         //Toca las pruebas automaticamente.
         //tester.replayAll();
+        
     }
 }

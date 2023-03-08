@@ -80,24 +80,5 @@
       <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
       <poupTrigger>false</poupTrigger>
     </xy.ui.testing.action.component.ClickAction>
-    <xy.ui.testing.action.component.SendKeysAction>
-      <componentFinder class="xy.ui.testing.finder.ClassBasedComponentFinder">
-        <componentClassName>sur.softsurena.entidades.DesktopConFondo</componentClassName>
-        <occurrencesToSkip>0</occurrencesToSkip>
-        <windowIndex>0</windowIndex>
-      </componentFinder>
-      <disabled>false</disabled>
-      <keyboardInteractions>
-        <xy.ui.testing.action.component.SendKeysAction_-SpecialKey>
-          <altDown>false</altDown>
-          <altGrtDown>false</altGrtDown>
-          <ctrlDown>false</ctrlDown>
-          <keyName>KEY_F2</keyName>
-          <metaDown>false</metaDown>
-          <shiftDown>false</shiftDown>
-        </xy.ui.testing.action.component.SendKeysAction_-SpecialKey>
-      </keyboardInteractions>
-      <requestToFocusOnTheComponent>true</requestToFocusOnTheComponent>
-    </xy.ui.testing.action.component.SendKeysAction>
   </testActions>
 </xy.ui.testing.Tester>
