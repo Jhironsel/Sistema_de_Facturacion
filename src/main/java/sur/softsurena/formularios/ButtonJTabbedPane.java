@@ -25,7 +25,7 @@ public class ButtonJTabbedPane extends JPanel {
         Imagenes i = new Imagenes();
         B.setIcon(i.getIcono("Cerrar 24 x 25.png"));
         //Listener para cierre de tabs con acceso estatico al `JTabbedPane`
-        B.addActionListener(e -> frmClientes.jtpUnico.removeTabAt(frmClientes.jtpUnico.indexOfTab(title))
+        B.addActionListener(e -> frmClientes.jtpPrincipal.removeTabAt(frmClientes.jtpPrincipal.indexOfTab(title))
         );
         
         add(L, gbc);

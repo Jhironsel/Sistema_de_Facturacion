@@ -28,8 +28,6 @@ public class frmParametros extends javax.swing.JFrame {
         
         f = new File("properties/propiedades.properties");
         
-        System.out.println("Existe: "+f.getAbsolutePath());
-
         try {
             propiedades.load(new FileReader(f));
         } catch (FileNotFoundException ex) {

@@ -541,3 +541,7 @@ public final class frmLogin extends javax.swing.JFrame {
         lamina.setImagen(imagen.getIcono("FondoLogin 626 x 386.jpg"));
     }
 }
+
+/**
+ * 
+ */

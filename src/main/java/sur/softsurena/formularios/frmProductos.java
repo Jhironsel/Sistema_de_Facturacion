@@ -2,9 +2,6 @@ package sur.softsurena.formularios;
 
 import java.awt.Component;
 import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -15,7 +12,6 @@ import net.sf.jasperreports.view.JasperViewer;
 import static sur.softsurena.conexion.Conexion.getCnn;
 import sur.softsurena.entidades.Categorias;
 import static sur.softsurena.entidades.Categorias.getCategirias;
-import sur.softsurena.entidades.DefaultTableCellHeaderRenderer;
 import sur.softsurena.entidades.Productos;
 import static sur.softsurena.entidades.Productos.agregarProducto;
 import static sur.softsurena.entidades.Productos.borrarProductoPorID_Codigo;
@@ -30,12 +26,11 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
     private static final Logger LOG = Logger.getLogger(frmProductos.class.getName());
 
-    private Boolean nuevo = null;
+    private Boolean v_nuevo = null;
     private final JFileChooser file;
     private final FileNameExtensionFilter filter;
-    private final DefaultTableCellRenderer tcr;
     private static final String PROCESO_DE_VALIDACION_DEL_SISTEMA = "Proceso de validacion del sistema.";
-    private int fila = 0;
+    private int v_fila = 0;
     private static final int SCALA_ICONO = 155;
 
     public frmProductos() {
@@ -46,8 +41,6 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
         filter = new FileNameExtensionFilter("Imagenes", "jpg", "png", "PNG", "JPG");
         file.setFileFilter(filter);
-
-        tcr = new DefaultTableCellHeaderRenderer();
 
         cancelar(true, true);
     }
@@ -64,11 +57,11 @@ public class frmProductos extends javax.swing.JInternalFrame {
         btnBuscarProducto = new RSMaterialComponent.RSButtonMaterialIconOne();
         btnGuardar = new RSMaterialComponent.RSButtonMaterialIconOne();
         btnCancelar = new RSMaterialComponent.RSButtonMaterialIconOne();
-        jtpUnico = new javax.swing.JTabbedPane();
+        jtpPrincipal = new javax.swing.JTabbedPane();
         jpProductos = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblProducto = new RSMaterialComponent.RSTableMetro(){
+        tblProducto = new rojerusan.RSTableMetro1(){
             @Override
             public boolean isCellEditable(int rowIndex, int colIndex) {
                 return false; //Las celdas no son editables.
@@ -217,7 +210,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
         jScrollPane3.setViewportView(jPanel2);
 
-        jtpUnico.setName("jtpUnico"); // NOI18N
+        jtpPrincipal.setName("jtpPrincipal"); // NOI18N
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Detalle de Productos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 12))); // NOI18N
 
@@ -232,7 +225,6 @@ public class frmProductos extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tblProducto.setName("tblProducto"); // NOI18N
         tblProducto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tblProductoKeyPressed(evt);
@@ -274,7 +266,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        jtpUnico.addTab("Productos", jpProductos);
+        jtpPrincipal.addTab("Productos", jpProductos);
 
         javax.swing.GroupLayout jpCategoriasLayout = new javax.swing.GroupLayout(jpCategorias);
         jpCategorias.setLayout(jpCategoriasLayout);
@@ -287,7 +279,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
             .addGap(0, 464, Short.MAX_VALUE)
         );
 
-        jtpUnico.addTab("Categorias", jpCategorias);
+        jtpPrincipal.addTab("Categorias", jpCategorias);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalle del Producto"));
 
@@ -311,6 +303,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
         jlImagenProducto.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         jlImagenProducto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlImagenProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sur/softsurena/imagenes/NoImageTransp 96 x 96.png"))); // NOI18N
         jlImagenProducto.setToolTipText("Doble click para buscar la imagen.");
         jlImagenProducto.setBorder(javax.swing.BorderFactory.createTitledBorder("Seleccione Imagen"));
         jlImagenProducto.setName("jlImagenProducto"); // NOI18N
@@ -486,7 +479,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jtpUnico.addTab("Mantenimiento", jpMantenimiento);
+        jtpPrincipal.addTab("Mantenimiento", jpMantenimiento);
 
         javax.swing.GroupLayout jpESProductosLayout = new javax.swing.GroupLayout(jpESProductos);
         jpESProductos.setLayout(jpESProductosLayout);
@@ -499,7 +492,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
             .addGap(0, 464, Short.MAX_VALUE)
         );
 
-        jtpUnico.addTab("E/S Productos", jpESProductos);
+        jtpPrincipal.addTab("E/S Productos", jpESProductos);
 
         javax.swing.GroupLayout jpESHistorialLayout = new javax.swing.GroupLayout(jpESHistorial);
         jpESHistorial.setLayout(jpESHistorialLayout);
@@ -512,7 +505,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
             .addGap(0, 464, Short.MAX_VALUE)
         );
 
-        jtpUnico.addTab("E/S Historial", jpESHistorial);
+        jtpPrincipal.addTab("E/S Historial", jpESHistorial);
 
         jpOpciones.setBorder(javax.swing.BorderFactory.createTitledBorder("Opciones"));
 
@@ -631,8 +624,8 @@ public class frmProductos extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jtpUnico)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 701, Short.MAX_VALUE))
+                    .addComponent(jtpPrincipal)
+                    .addComponent(jScrollPane3))
                 .addGap(0, 0, 0)
                 .addComponent(jlOpcionesMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
@@ -643,7 +636,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jtpUnico)
+                .addComponent(jtpPrincipal)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jpOpciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -716,13 +709,13 @@ public class frmProductos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cbCategoriaPopupMenuWillBecomeInvisible
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        nuevo = true;
+        v_nuevo = true;
 
-        jtpUnico.addTab("Mantenimiento", jpMantenimiento);
+        jtpPrincipal.addTab("Mantenimiento", jpMantenimiento);
 
         cancelar(false, false);
 
-        jtpUnico.setSelectedIndex(jtpUnico.indexOfComponent(jpMantenimiento));
+        jtpPrincipal.setSelectedIndex(jtpPrincipal.indexOfComponent(jpMantenimiento));
 
         /*
             Investigamos primero si existe por lo menos una categoria registrada.
@@ -740,16 +733,11 @@ public class frmProductos extends javax.swing.JInternalFrame {
             }
         }
 
-        ImageIcon imagen = new ImageIcon("imagenes/NoImageTransp 96 x 96.png");
-
-        Icon icon = new ImageIcon(imagen.getImage().getScaledInstance(96, 96, Image.SCALE_AREA_AVERAGING));
-
-        imagen.getImage().flush();
-
-        jlImagenProducto.setIcon(icon);
+        ponerImagenProducto("imagenes/NoImageTransp 96 x 96.png");
+        
         jlImagenProducto.validate();
 
-        cbActivo.setEnabled(true);
+        cbActivo.setSelected(true);
         cbActivo.setText("Activo");
 
         //Vacear los txt
@@ -757,10 +745,9 @@ public class frmProductos extends javax.swing.JInternalFrame {
         txtCodigoBarra.setText("");
         txtNotas.setText("");
 
-        cbActivo.setSelected(false);
         cbCategoria.setSelectedIndex(0);
 
-        txtCodigoBarra.requestFocusInWindow();
+        txtDescripcion.requestFocus();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
@@ -776,7 +763,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
         //Guardamos la fila de producto en la tabla, he tenido que hacerlo asi,
         //porque se está la fila.
-        fila = tblProducto.getSelectedRow();
+        v_fila = tblProducto.getSelectedRow();
 
         //Se actualiza el combo box de la categoria. 
         updateCategoria();
@@ -785,12 +772,12 @@ public class frmProductos extends javax.swing.JInternalFrame {
         cancelar(false, false);
 
         //Agregamos el jpMantenimiento y seleccionamos jTapPane
-        jtpUnico.addTab("Mantenimiento", jpMantenimiento);
+        jtpPrincipal.addTab("Mantenimiento", jpMantenimiento);
 
-        jtpUnico.setSelectedIndex(jtpUnico.indexOfComponent(jpMantenimiento));
+        jtpPrincipal.setSelectedIndex(jtpPrincipal.indexOfComponent(jpMantenimiento));
 
         //Desactivamos el Flag de registro Nuevo para realizar actualizaciones.
-        nuevo = false;
+        v_nuevo = false;
 
         //Metodo utilizado para mostrar el registro del usuario seleccionado 
         //en la tabla. 
@@ -919,7 +906,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
         // Si es nuevo validamos que el Producto no exista por su codigo de 
         //barra.
-        if (nuevo) {
+        if (v_nuevo) {
             if (existeProducto(txtCodigoBarra.getText())) {
                 JOptionPane.showMessageDialog(null,
                         "Codigo de barra existente en el sistema",
@@ -956,7 +943,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
          */
         String msg, accion = "editar";
 
-        if (nuevo) {
+        if (v_nuevo) {
             accion = "crear";
         }
 
@@ -982,7 +969,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
             return;
         }
 
-        if (nuevo) {
+        if (v_nuevo) {
             msg = agregarProducto(p).getMensaje();
         } else {
             int id = ((Productos) tblProducto.getValueAt(tblProducto.getSelectedRow(), 2)).getId();
@@ -993,7 +980,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
                 null,
                 msg);
 
-        jtpUnico.remove(jpMantenimiento);
+        jtpPrincipal.remove(jpMantenimiento);
         cancelar(true, true);
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -1119,15 +1106,8 @@ public class frmProductos extends javax.swing.JInternalFrame {
                                 append((cbActivo.isSelected() ? "Activo" : "Inactivo"));
 
                         txtNotas.setText(string.toString());
-
-                        String file2 = null;
-                        try {
-                            file2 = new File("").getCanonicalPath();
-                        } catch (IOException ex) {
-                            Logger.getLogger(frmProductos.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        System.out.println("file2 = " + file2);
-                        ponerImagenProducto(file2);
+                        
+                        ponerImagenProducto("imagenes/NoImageTransp 96 x 96.png");
                     }
                 }
             }
@@ -1175,28 +1155,28 @@ public class frmProductos extends javax.swing.JInternalFrame {
      *
      * Este metodo siempre seleccionara el jpProductos.
      *
-     * @param valor
+     * @param botones
      */
-    private void cancelar(boolean valor, boolean cerrar) {
+    private void cancelar(boolean botones, boolean cerrar) {
         //Botones Para habilitar:
-        btnNuevo.setEnabled(valor);
-        btnModificar.setEnabled(valor);
-        btnBuscarProducto.setEnabled(valor);
-        btnBorrar.setEnabled(valor);
+        btnNuevo.setEnabled(botones);
+        btnModificar.setEnabled(botones);
+        btnBuscarProducto.setEnabled(botones);
+        btnBorrar.setEnabled(botones);
 
         //Botones Para Deshabitar
-        btnGuardar.setEnabled(!valor);
-        btnCancelar.setEnabled(!valor);
+        btnGuardar.setEnabled(!botones);
+        btnCancelar.setEnabled(!botones);
 
         if (cerrar) {
-            for (Component component : jtpUnico.getComponents()) {
+            for (Component component : jtpPrincipal.getComponents()) {
                 if (component != jpProductos) {
-                    jtpUnico.remove(component);
+                    jtpPrincipal.remove(component);
                 }
             }
         }
 
-        jtpUnico.setSelectedIndex(jtpUnico.indexOfComponent(jpProductos));
+        jtpPrincipal.setSelectedIndex(jtpPrincipal.indexOfComponent(jpProductos));
 
     }
 
@@ -1249,6 +1229,9 @@ public class frmProductos extends javax.swing.JInternalFrame {
     /**
      * Es el metodo encargado de mostrar el modulo de mantenimiento de producto
      * o registro a actualizar.
+     * 
+     * Este metodo es llamado desde:
+     *  1) btnModificarActionPerformed
      */
     private void mostrarRegistro() {
         //Si la tabla no cuenta con registro se envian valores por defecto.
@@ -1262,7 +1245,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
             return;
         }
 
-        int id = ((Productos) tblProducto.getValueAt(fila, 2)).getId();
+        int id = ((Productos) tblProducto.getValueAt(v_fila, 2)).getId();
 
         Productos producto = Productos.getProducto(id);
 
@@ -1294,6 +1277,11 @@ public class frmProductos extends javax.swing.JInternalFrame {
     /**
      * Metodo utilizado para modicar el ancho de cada columna del modulo
      * producto.
+     * 
+     * Este metodo es llamado desde: 
+     *  1) btnBorrarActionPerformed
+     *  2) btnBuscarProductoActionPerformed
+     *  3) formInternalFrameOpened
      */
     private void reOrdenar() {
         if (tblProducto.getRowCount() <= 0) {
@@ -1341,18 +1329,19 @@ public class frmProductos extends javax.swing.JInternalFrame {
                 miTableColumn.setMinWidth(100);
             }
         }
-        //Para Alinear el Texto de la Table a la Derecha...
 
-        tcr.setHorizontalAlignment(SwingConstants.RIGHT);
-        tblProducto.getColumnModel().getColumn(3).setCellRenderer(tcr);
-
-        int[] indices = {4};
-
-        columnasCheckBox(tblProducto, indices);
-
-        tblProducto.setRowSelectionInterval(fila, fila);
+        tblProducto.setRowSelectionInterval(v_fila, v_fila);
     }
 
+    /**
+     * Metodo utilizado para actualizar el jComboBox de categorias del sistema.
+     * 
+     * Este metodo es llamado desde: 
+     *  1) btnNuevoActionPerformed
+     *  2) btnModificarActionPerformed
+     *  3) btnAdmCategoriasActionPerformed
+        4) formInternalFrameOpened
+     */
     private void updateCategoria() {
         //Elimina registros previos.
         cbCategoria.removeAllItems();
@@ -1376,6 +1365,29 @@ public class frmProductos extends javax.swing.JInternalFrame {
                             build()
             );
         });
+    }
+    
+    /**
+     * Meto que permite colocar una imagen en el jlImagenProducto, la cual debe
+     * pasarsele por parametros un String con el path de la imagen.
+     * 
+     * Este metodo es llamado desde: 
+     *  1) btnNuevoActionPerformed
+     *  2) cbCategoriaKeyPressed: solo es utilizado para pruebas del sistema.
+     *  3) btnAgregarFotoActionPerformed
+     * 
+     * @param file representa la ruta de la imagen en el sistema.
+     */
+    private void ponerImagenProducto(String file) {
+        ImageIcon imagen = new ImageIcon(file);
+
+        Icon icon = new ImageIcon(imagen.getImage().getScaledInstance(SCALA_ICONO, SCALA_ICONO, Image.SCALE_SMOOTH));
+
+        imagen.getImage().flush();
+
+        jlImagenProducto.setIcon(icon);
+
+        jlImagenProducto.validate();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1410,22 +1422,41 @@ public class frmProductos extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jpMantenimiento;
     private javax.swing.JPanel jpOpciones;
     private javax.swing.JPanel jpProductos;
-    private javax.swing.JTabbedPane jtpUnico;
-    private static RSMaterialComponent.RSTableMetro tblProducto;
+    private javax.swing.JTabbedPane jtpPrincipal;
+    public static rojerusan.RSTableMetro1 tblProducto;
     private javax.swing.JTextField txtCodigoBarra;
     private javax.swing.JTextField txtDescripcion;
     private javax.swing.JTextArea txtNotas;
     // End of variables declaration//GEN-END:variables
-
-    private void ponerImagenProducto(String file) {
-        ImageIcon imagen = new ImageIcon(file);
-
-        Icon icon = new ImageIcon(imagen.getImage().getScaledInstance(SCALA_ICONO, SCALA_ICONO, Image.SCALE_SMOOTH));
-
-        imagen.getImage().flush();
-
-        jlImagenProducto.setIcon(icon);
-
-        jlImagenProducto.validate();
-    }
+    
+    
 }
+
+/**
+ * btnNuevoActionPerformed tenemos las siguiente logica: <br>
+ *  1) Cambiamos a true el flag nuevo. X<br>
+ *  2) En el jtpPrincipal agrega el jpMantenimiento enseguida cambia a este. X<br>
+ *  3) El metodo cancelar inhabilita los botones Nuevo, Editar, Borrar y Buscar. X<br>
+ *      Y habilita los botones de guardar y cancelar. X<br>
+ *  4) Luego el jtpPrincipal selecciona el jpMantenimiento para mostrar. X<br>
+ *  5) Se valida que existan categorias en el sistema. X<br>
+ *  6) Se coloca la imagen predeterminada. X<br>
+ *  7) Se coloca el estado del producto true de forma predeterminada. X<br>
+ *  8) Se limpian los campos descripcion, codigo de barra, nota. X<br>
+ *  9) El campo de la categoria se coloca en el index cero. X<br>
+ * 
+ * 
+ * btnModificarActionPerformed tenemos las siguiente logica:<br>
+ *  1) Se valida que se tenga un registro seleccionado, en caso contrario <br>
+ *      Muestra un mensaje de error. X<br>
+ *  2) Guardamos la fila seleccionada en la variable v_fila. X<br>
+ *  3) Actualizamos las categorias registradas en el sistema. X <br>
+ *  4) Del punto 3 anterior es aplicado aqui.X <br>
+ *  5) Se agrega el jpMantenimiento y de inmediato se selecciona. X <br>
+ *  6) La variable v_nueva se le da valor de false. X <br>
+ *  7) Se manda a llamar el metodo mostrarRegistro(). X <br>
+ *  8) El campo descripcion hace la peticion de focus. X <br>
+ * 
+ * Nota:
+ *  
+ */
