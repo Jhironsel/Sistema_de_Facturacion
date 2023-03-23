@@ -60,7 +60,7 @@
                   <Component id="txtArchivo" pref="54" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="cmbCliente" linkSize="1" min="-2" pref="65" max="-2" attributes="0"/>
+              <Component id="cmbCliente" min="-2" pref="65" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>

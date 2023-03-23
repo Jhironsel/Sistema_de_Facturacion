@@ -7,6 +7,12 @@
     <artifactId>SistemaFacturacion</artifactId>
     <version>2.0-SNAPSHOT</version>
     <packaging>jar</packaging>
+    <parent>
+        <groupId>sur.softsurena</groupId>
+        <artifactId>sistemasPom</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../../sistemasPom/pom.xml</relativePath>
+    </parent>
     <build>
         <plugins>
             <plugin>
@@ -16,7 +22,6 @@
                 <configuration>
                     <archive>
                         <index>true</index>
-                        
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <mainClass>sur.softsurena.formularios.frmLogin</mainClass>
@@ -54,79 +59,5 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
-    <dependencies>
-        <dependency>
-            <groupId>net.java.dev.beansbinding</groupId>
-            <artifactId>beansbinding</artifactId>
-            <version>1.2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.toedter</groupId>
-            <artifactId>jcalendar</artifactId>
-            <version>1.4</version>
-        </dependency>
-        <dependency>
-            <groupId>org.firebirdsql.jdbc</groupId>
-            <artifactId>jaybird</artifactId>
-            <version>4.0.9.java11</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.dotxyteam</groupId>
-            <artifactId>swing-testing-toolkit</artifactId>
-            <version>1.8.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.26</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>6.8.1</version>
-            <scope>test</scope>
-        </dependency>
-        
-        
-        
-        <dependency>
-            <groupId>sur.softsurena</groupId>
-            <artifactId>imagenes</artifactId>
-            <version>2</version>
-        </dependency>
-        <dependency>
-            <groupId>sur.softsurena</groupId>
-            <artifactId>entidades</artifactId>
-            <version>2</version>
-            <type>jar</type>
-        </dependency>
-        
-        
-        <dependency>
-            <groupId>sur.softsurena</groupId>
-            <artifactId>RSMaterialComponents3</artifactId>
-            <version>1</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>sur.softsurena</groupId>
-            <artifactId>RojeruSan.lib2</artifactId>
-            <version>1</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>sur.softsurena</groupId>
-            <artifactId>RojeruSan.full_9.6</artifactId>
-            <version>1</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>sur.softsurena</groupId>
-            <artifactId>RojeruSan.full_6</artifactId>
-            <version>1</version>
-        </dependency>
-        
-    </dependencies>
     <name>SistemaFacturacion</name>
 </project>

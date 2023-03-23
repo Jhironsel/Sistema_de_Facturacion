@@ -1205,8 +1205,8 @@ public class frmDeudas extends javax.swing.JInternalFrame {
 
         deudasList.stream().forEach(x -> {
             registro[0] = x.getGenerales().getCedula();
-            registro[1] = x.getPNombre();
-            registro[2] = x.getSNombre();
+            registro[1] = x.getPnombre();
+            registro[2] = x.getSnombre();
             registro[3] = x.getApellidos();
             registro[4] = x.getConcepto();
             registro[5] = x.getMonto();

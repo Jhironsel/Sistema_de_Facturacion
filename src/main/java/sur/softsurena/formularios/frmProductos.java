@@ -9,21 +9,30 @@ import javax.swing.table.*;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
-import static sur.softsurena.conexion.Conexion.getCnn;
 import sur.softsurena.entidades.Categorias;
-import static sur.softsurena.entidades.Categorias.getCategirias;
 import sur.softsurena.entidades.Productos;
-import static sur.softsurena.entidades.Productos.agregarProducto;
-import static sur.softsurena.entidades.Productos.borrarProductoPorID_Codigo;
-import static sur.softsurena.entidades.Productos.existeProducto;
-import static sur.softsurena.entidades.Productos.getProductos;
-import static sur.softsurena.entidades.Productos.modificarProducto;
 import sur.softsurena.utilidades.Utilidades;
 import static sur.softsurena.utilidades.Utilidades.columnasCheckBox;
 import static sur.softsurena.utilidades.Utilidades.repararColumnaTable;
+//Importe de consultas de base de datos.
+import static sur.softsurena.conexion.Conexion.getCnn;
+import static sur.softsurena.entidades.Categorias.getCategirias;//X
+import static sur.softsurena.entidades.Productos.agregarProducto;//X
+import static sur.softsurena.entidades.Productos.borrarProductoPorID_Codigo;//X
+import static sur.softsurena.entidades.Productos.existeProducto;//X
+import static sur.softsurena.entidades.Productos.getProductos;//X
+import static sur.softsurena.entidades.Productos.modificarProducto;//X
 
 public class frmProductos extends javax.swing.JInternalFrame {
-
+    public static final String[] v_vistasList = {
+        "V_CATEGORIAS",
+        "V_PRODUCTOS",
+        "GET_PRODUCTOS"
+    };
+    public static final String[] v_procedimientosList = {
+        
+    };
+    
     private static final Logger LOG = Logger.getLogger(frmProductos.class.getName());
 
     private Boolean v_nuevo = null;
@@ -67,7 +76,6 @@ public class frmProductos extends javax.swing.JInternalFrame {
                 return false; //Las celdas no son editables.
             }
         };
-        jpCategorias = new javax.swing.JPanel();
         jpMantenimiento = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
@@ -245,7 +253,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
 
@@ -268,19 +276,6 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
         jtpPrincipal.addTab("Productos", jpProductos);
 
-        javax.swing.GroupLayout jpCategoriasLayout = new javax.swing.GroupLayout(jpCategorias);
-        jpCategorias.setLayout(jpCategoriasLayout);
-        jpCategoriasLayout.setHorizontalGroup(
-            jpCategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 701, Short.MAX_VALUE)
-        );
-        jpCategoriasLayout.setVerticalGroup(
-            jpCategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 464, Short.MAX_VALUE)
-        );
-
-        jtpPrincipal.addTab("Categorias", jpCategorias);
-
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalle del Producto"));
 
         jLabel7.setFont(new java.awt.Font("DejaVu Sans", 0, 12)); // NOI18N
@@ -297,6 +292,9 @@ public class frmProductos extends javax.swing.JInternalFrame {
         txtNotas.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtNotasKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNotasKeyTyped(evt);
             }
         });
         jScrollPane2.setViewportView(txtNotas);
@@ -489,7 +487,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         );
         jpESProductosLayout.setVerticalGroup(
             jpESProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 464, Short.MAX_VALUE)
+            .addGap(0, 502, Short.MAX_VALUE)
         );
 
         jtpPrincipal.addTab("E/S Productos", jpESProductos);
@@ -502,7 +500,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         );
         jpESHistorialLayout.setVerticalGroup(
             jpESHistorialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 464, Short.MAX_VALUE)
+            .addGap(0, 502, Short.MAX_VALUE)
         );
 
         jtpPrincipal.addTab("E/S Historial", jpESHistorial);
@@ -646,7 +644,9 @@ public class frmProductos extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     private void txtCodigoBarraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoBarraActionPerformed
-        txtDescripcion.requestFocusInWindow();
+        cbCategoria.requestFocus();
+        cbCategoria.showPopup();
+        
     }//GEN-LAST:event_txtCodigoBarraActionPerformed
     private void txtCodigoBarraKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoBarraKeyReleased
         String replaceAll = txtCodigoBarra.getText();
@@ -654,7 +654,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         txtCodigoBarra.setText(replaceAll);
     }//GEN-LAST:event_txtCodigoBarraKeyReleased
     private void txtDescripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescripcionActionPerformed
-        cbCategoria.requestFocusInWindow();
+        txtCodigoBarra.requestFocus();
     }//GEN-LAST:event_txtDescripcionActionPerformed
     private void cbActivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbActivoActionPerformed
         if (!txtDescripcion.isEditable()) {
@@ -686,10 +686,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtNotasKeyReleased
 
     private void cbCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCategoriaActionPerformed
-        if (!txtDescripcion.isEditable()) {
-            return;
-        }
-        //txtCosto.requestFocusInWindow();
+        txtNotas.requestFocus();
     }//GEN-LAST:event_cbCategoriaActionPerformed
 
     private void cbCategoriaPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cbCategoriaPopupMenuWillBecomeInvisible
@@ -1142,6 +1139,11 @@ public class frmProductos extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_tblProductoKeyPressed
 
+    private void txtNotasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNotasKeyTyped
+        if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_TAB)
+            btnAgregarFoto.requestFocus();
+    }//GEN-LAST:event_txtNotasKeyTyped
+
     /**
      * Metodo utilizado para controla el comportamiento de los botones del
      * formulario.
@@ -1416,7 +1418,6 @@ public class frmProductos extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel jlImagenProducto;
     private RSMaterialComponent.RSLabelIcon jlOpcionesMostrar;
-    private javax.swing.JPanel jpCategorias;
     private javax.swing.JPanel jpESHistorial;
     private javax.swing.JPanel jpESProductos;
     private javax.swing.JPanel jpMantenimiento;

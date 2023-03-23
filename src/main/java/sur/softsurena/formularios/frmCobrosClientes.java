@@ -377,8 +377,8 @@ public class frmCobrosClientes extends javax.swing.JDialog {
 
         Clientes c = Clientes.builder().
                 id_persona(-1).
-                pNombre("Seleccione un Cliente...").
-                sNombre("").
+                pnombre("Seleccione un Cliente...").
+                snombre("").
                 apellidos("").build();
         cmbCliente.removeAllItems();
         cmbCliente.addItem(c);

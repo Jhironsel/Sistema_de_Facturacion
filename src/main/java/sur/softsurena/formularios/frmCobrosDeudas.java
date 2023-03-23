@@ -360,8 +360,8 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
         try {
             Clientes opc = Clientes.builder().
                     id_persona(-1).
-                    pNombre("Seleccione un cliente").
-                    sNombre("").
+                    pnombre("Seleccione un cliente").
+                    snombre("").
                     apellidos("").build();
             cmbCliente.addItem(opc);
             ResultSet rsCli = null;
@@ -376,8 +376,8 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
             while (rsCli.next()) {
                 opc = Clientes.builder().
                         id_persona(rsCli.getInt("id")).
-                        pNombre(rsCli.getString("PNOMBRE")).
-                        sNombre(rsCli.getString("SNOMBRE")).
+                        pnombre(rsCli.getString("PNOMBRE")).
+                        snombre(rsCli.getString("SNOMBRE")).
                         apellidos(rsCli.getString("apellidos")).build();
 
                 cmbCliente.addItem(opc);

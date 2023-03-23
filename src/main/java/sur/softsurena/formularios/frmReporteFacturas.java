@@ -199,8 +199,8 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame {
         //Cargamos Clientes
         Clientes cli = Clientes.builder().
                 id_persona(-1).
-                pNombre("Seleccione un cliente").
-                sNombre("").
+                pnombre("Seleccione un cliente").
+                snombre("").
                 apellidos("").build();
 
         cmbCliente.addItem(cli);

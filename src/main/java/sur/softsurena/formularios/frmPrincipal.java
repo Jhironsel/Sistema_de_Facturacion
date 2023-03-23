@@ -75,10 +75,8 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel6 = new javax.swing.JLabel();
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 32767));
         jLabel9 = new javax.swing.JLabel();
         filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         jPanelImpresion = new javax.swing.JPanel();
         jLabelImpresion = new javax.swing.JLabel();
         jprImpresion = new javax.swing.JProgressBar();
@@ -1297,7 +1295,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         }
     }
 
-    protected void abrirFormulario(@NonNull JInternalFrame formulario) {
+    protected synchronized void abrirFormulario(@NonNull JInternalFrame formulario) {
         dpnEscritorio.getDesktopManager().closeFrame(formulario);
 
         if (!dpnEscritorio.isAncestorOf(formulario)) {
@@ -1391,8 +1389,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnOcultarPanel;
     private javax.swing.JButton btnSeleccionarImpresora;
     public static javax.swing.JDesktopPane dpnEscritorio;
-    private javax.swing.Box.Filler filler1;
-    private javax.swing.Box.Filler filler2;
     private javax.swing.Box.Filler filler3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel6;

@@ -246,8 +246,8 @@ public class frmSolicitudFecha extends javax.swing.JDialog {
 
         Usuarios user = Usuarios.builder().
                 user_name("").
-                pNombre("").
-                sNombre("").
+                pnombre("").
+                snombre("").
                 apellidos("").build();
         
         jcbUsuarios.addItem(user);
@@ -258,8 +258,8 @@ public class frmSolicitudFecha extends javax.swing.JDialog {
             while (rs.next()) {
                 user = Usuarios.builder().
                 user_name("").
-                pNombre("").
-                sNombre("").
+                pnombre("").
+                snombre("").
                 apellidos("").build();
                 
                 jcbUsuarios.addItem(user);

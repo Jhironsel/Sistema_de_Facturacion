@@ -33,7 +33,6 @@ import org.junit.runners.Suite;
     sur.softsurena.formularios.frmPrintFacturaConReporteIT.class, 
     sur.softsurena.formularios.ButtonJTabbedPaneIT.class, 
     sur.softsurena.formularios.frmCalculoEfectivoIT.class, 
-    sur.softsurena.formularios.frmDialogoCategoriaIT.class, 
     sur.softsurena.formularios.frmBusquedaTresValoresPersonaIT.class, 
     sur.softsurena.formularios.frmIconosIT.class, 
     sur.softsurena.formularios.frmPruebasSliderIT.class, 

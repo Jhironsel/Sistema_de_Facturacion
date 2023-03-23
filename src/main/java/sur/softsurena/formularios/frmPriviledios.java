@@ -362,8 +362,8 @@ public class frmPriviledios extends javax.swing.JInternalFrame {
                     descripcion(usuario.getDescripcion())
                     .build();
             registro[0] = u;
-            registro[1] = usuario.getPNombre();
-            registro[2] = usuario.getSNombre();
+            registro[1] = usuario.getPnombre();
+            registro[2] = usuario.getSnombre();
             registro[3] = usuario.getApellidos();
             registro[4] = usuario.getAdministrador();
             registro[5] = usuario.getEstado();

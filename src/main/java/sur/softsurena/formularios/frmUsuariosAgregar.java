@@ -24,8 +24,8 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
         initComponents();
 
         txtIDUsuario.setText(u.getUser_name());
-        txtPNombre.setText(u.getPNombre());
-        txtSNombre.setText(u.getSNombre());
+        txtPNombre.setText(u.getPnombre());
+        txtSNombre.setText(u.getSnombre());
         txtApellidos.setText(u.getApellidos());
 
         cbEstado.setSelected(u.getEstado());
@@ -512,8 +512,8 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
         //Creamos el Objeto Usuario y los agregamos a Datos
         Usuarios miUsuario = Usuarios.builder().
                 user_name(txtIDUsuario.getText()).
-                pNombre(txtPNombre.getText()).
-                sNombre(txtSNombre.getText()).
+                pnombre(txtPNombre.getText()).
+                snombre(txtSNombre.getText()).
                 apellidos(txtApellidos.getText()).
                 descripcion(txtDescripcion.getText()).
                 clave(clave1).

@@ -17,6 +17,7 @@ import static sur.softsurena.entidades.Categorias.getCategorias;
 import static sur.softsurena.entidades.Categorias.modificarCategoria;
 import static sur.softsurena.entidades.Productos.existeCategoriaProductos;
 import sur.softsurena.entidades.Resultados;
+import sur.softsurena.metodos.Imagenes;
 import sur.softsurena.utilidades.Utilidades;
 
 public class frmCategorias extends javax.swing.JDialog {
@@ -243,7 +244,7 @@ public class frmCategorias extends javax.swing.JDialog {
 
         estado = ((Categorias) cbCategoria.getSelectedItem()).getEstado();
 
-        frmDialogoCategoria miCategoria = new frmDialogoCategoria(null, true, nombreCategoria, estado, false);
+        frmCategoriasAdmin miCategoria = new frmCategoriasAdmin(nombreCategoria, estado, false);
         miCategoria.setLocationRelativeTo(null);
         miCategoria.setVisible(true);
 
@@ -252,7 +253,10 @@ public class frmCategorias extends javax.swing.JDialog {
                 if (existeCategoria(miCategoria.txtCategoria.getText())) {
                     JOptionPane.showMessageDialog(
                             null,
-                            "Este nombre de Categoria Existe");
+                            "Este nombre de Categoria Existe",
+                            "Proceso de validacion",
+                            JOptionPane.WARNING_MESSAGE
+                    );
                     return;
                 }
             }
@@ -278,9 +282,11 @@ public class frmCategorias extends javax.swing.JDialog {
         //Activamos el Flag de registro Nuevo
         nuevo = true;
 
-        jlImagen.setIcon(null);
-        
-        frmDialogoCategoria miCategoria = new frmDialogoCategoria(null, true, "", false, true);
+        jlImagen.setIcon(new javax.swing.ImageIcon(
+                getClass().getResource(
+                        "/sur/softsurena/imagenes/NoImageTransp 96 x 96.png")));
+
+        frmCategoriasAdmin miCategoria = new frmCategoriasAdmin("", false, true);
         miCategoria.setLocationRelativeTo(null);
         miCategoria.setVisible(true);
 
@@ -306,13 +312,15 @@ public class frmCategorias extends javax.swing.JDialog {
             );
             return;
         }
-        
+
         estado = miCategoria.jcbEstado.isSelected();
 
         //Avisamos al usuario que le toca elegir la imagen de la categoria.
-        JOptionPane.showMessageDialog(null,
+        JOptionPane.showMessageDialog(
+                null,
                 "Siguiente paso es para elejir una imagen para la Categoria "
-                + nombreCategoria);
+                + nombreCategoria
+        );
 
         if (buscarImagen()) {
             guardar();
@@ -335,7 +343,7 @@ public class frmCategorias extends javax.swing.JDialog {
         Boolean estado = ((Categorias) cbCategoria.getSelectedItem()).getEstado();
 
         if (estado) {
-            jlEstado.setForeground(new java.awt.Color(37,45,223));
+            jlEstado.setForeground(new java.awt.Color(37, 45, 223));
             jlEstado.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
             jlEstado.setText("Activo");
             jlEstado.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CHECK_BOX);
@@ -357,20 +365,24 @@ public class frmCategorias extends javax.swing.JDialog {
     private void guardar() {
         if (nuevo) {
             //Ejecutamos la consulta siguiente para insertar la categoria.
-            String msj = agregarCategoria(Categorias.
-                    builder().
-                    descripcion(nombreCategoria.trim()).
-                    pathImage(new File(ruta)).
-                    estado(estado)
-                    .build()).getMensaje();
+            String msj = agregarCategoria(
+                    Categorias.
+                            builder().
+                            descripcion(nombreCategoria.trim()).
+                            pathImage(new File(ruta)).
+                            estado(estado)
+                            .build()
+            ).getMensaje();
 
             //Si recibimos un mensaje de error del metodo anterior ejecutamos lo
             //siguiente.
             if (msj.equals("Error al insertar categoria.")) {
-                JOptionPane.showMessageDialog(null,
+                JOptionPane.showMessageDialog(
+                        null,
                         msj,
                         "Proceso de creacion Categoria.",
-                        JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.ERROR_MESSAGE
+                );
                 return;
             }
 
@@ -462,7 +474,7 @@ public class frmCategorias extends javax.swing.JDialog {
         }
 
         source = jfileChooser.getSelectedFile().getAbsolutePath();
-        dest = "/imagesCategorias/";
+        dest = "imagesCategorias/";
 
         ImageIcon imagen = new ImageIcon(source);
 
@@ -492,3 +504,9 @@ public class frmCategorias extends javax.swing.JDialog {
     private RSMaterialComponent.RSLabelTextIcon jlfecha;
     // End of variables declaration//GEN-END:variables
 }
+
+/**
+ * btnNuevoActionPerformed:
+ * 1) Colocamos el flag de nuevo a true.
+ * 2) Seteamos el jlImagen a null
+ */
