@@ -27,14 +27,18 @@ public class TestSwingConexion {
             "testSwing/testUpdateProducto.stt",
             "testSwing/testDeleteProducto.stt"
         };
+        
+        final String moduloUsuario[] = {
+            "testSwing/testInsertUsuario.stt"
+        };
 
         //Crear un objecto de la clase Tester
         Tester tester = new Tester();
 
         //Ejecutar una sola prueba
-//        tester.loadFromFile(new File(moduloProductos[2]));
+//        tester.loadFromFile(new File(moduloClientes[0]));
         //Asserts that the given test specification file gets load and executed successfully.
-        for (String file : moduloClientes) {
+        for (String file : moduloUsuario) {
             TestingUtils.assertSuccessfulReplay(new File(file));
         }
 

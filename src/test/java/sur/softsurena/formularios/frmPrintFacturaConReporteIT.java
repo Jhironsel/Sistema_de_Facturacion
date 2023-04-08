@@ -38,7 +38,7 @@ public class frmPrintFacturaConReporteIT {
     @Test
     public void testGetCopia() {
         System.out.println("getCopia");
-        frmPrintFacturaConReporte instance = null;
+        frmPrintFacturaConReporte2 instance = null;
         boolean expResult = false;
         boolean result = instance.getCopia();
         assertEquals(expResult, result);
@@ -51,7 +51,7 @@ public class frmPrintFacturaConReporteIT {
     public void testSetCopia() {
         System.out.println("setCopia");
         boolean copia = false;
-        frmPrintFacturaConReporte instance = null;
+        frmPrintFacturaConReporte2 instance = null;
         instance.setCopia(copia);
     }
     

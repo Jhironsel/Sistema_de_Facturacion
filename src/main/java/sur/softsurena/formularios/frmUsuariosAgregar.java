@@ -4,6 +4,7 @@ import javax.swing.JOptionPane;
 import sur.softsurena.entidades.Usuarios;
 import static sur.softsurena.entidades.Usuarios.*;
 import static sur.softsurena.entidades.Usuarios.existeUsuarioByUserName;
+import static sur.softsurena.utilidades.Utilidades.showTooltip;
 
 public class frmUsuariosAgregar extends javax.swing.JDialog {
 
@@ -23,7 +24,7 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
 
-        txtIDUsuario.setText(u.getUser_name());
+        txtUserName.setText(u.getUser_name());
         txtPNombre.setText(u.getPnombre());
         txtSNombre.setText(u.getSnombre());
         txtApellidos.setText(u.getApellidos());
@@ -39,7 +40,7 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
         revokeRol = u.getRol();
         nuevo = false;
 
-        txtIDUsuario.setEditable(false);
+        txtUserName.setEditable(false);
 
         //Cargar las Tags
     }
@@ -50,25 +51,29 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        txtIDUsuario = new rojeru_san.rsfield.RSTextFullRound();
+        txtUserName = new rojeru_san.rsfield.RSTextFullRound();
         txtPNombre = new rojeru_san.rsfield.RSTextFullRound();
         txtSNombre = new rojeru_san.rsfield.RSTextFullRound();
         txtApellidos = new rojeru_san.rsfield.RSTextFullRound();
         txtClave1 = new rojeru_san.rsfield.RSPassViewRound();
         txtClave2 = new rojeru_san.rsfield.RSPassViewRound();
-        rSPanelForma1 = new rojeru_san.rspanel.RSPanelForma();
-        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(1000, 1000));
-        cbEstado = new javax.swing.JCheckBox();
-        cbAdministrador = new javax.swing.JCheckBox();
+        jPanel7 = new javax.swing.JPanel();
+        cbAdministrador = new RSMaterialComponent.RSCheckBoxMaterial();
+        cbEstado = new RSMaterialComponent.RSCheckBoxMaterial();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtDescripcion = new javax.swing.JTextArea();
+        jPanel8 = new javax.swing.JPanel();
+        btnAgregarRol = new RSMaterialComponent.RSButtonMaterialIconOne();
+        btnBorrarRol = new RSMaterialComponent.RSButtonMaterialIconOne();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblRoles = new rojerusan.RSTableMetro();
         jPanel4 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        rSTableMetro1 = new rojerusan.RSTableMetro();
         btnAgregarTag = new RSMaterialComponent.RSButtonMaterialIconOne();
         btnBorrarTag = new RSMaterialComponent.RSButtonMaterialIconOne();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblEtiquetas = new rojerusan.RSTableMetro();
         jPanel6 = new javax.swing.JPanel();
         btnAceptar = new RSMaterialComponent.RSButtonMaterialIconOne();
         btnCancelar = new RSMaterialComponent.RSButtonMaterialIconOne();
@@ -82,19 +87,21 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
 
         jPanel5.setLayout(new java.awt.GridLayout(7, 1, 5, 5));
 
-        txtIDUsuario.setToolTipText("Identificador del usuario en el sistema");
-        txtIDUsuario.setFont(new java.awt.Font("FreeMono", 1, 18)); // NOI18N
-        txtIDUsuario.setPlaceholder("ID Usuario");
-        txtIDUsuario.setSoloLetras(true);
-        txtIDUsuario.addActionListener(new java.awt.event.ActionListener() {
+        txtUserName.setToolTipText("Identificador del usuario en el sistema");
+        txtUserName.setFont(new java.awt.Font("FreeMono", 1, 18)); // NOI18N
+        txtUserName.setName("txtUserName"); // NOI18N
+        txtUserName.setPlaceholder("ID Usuario");
+        txtUserName.setSoloLetras(true);
+        txtUserName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIDUsuarioActionPerformed(evt);
+                txtUserNameActionPerformed(evt);
             }
         });
-        jPanel5.add(txtIDUsuario);
+        jPanel5.add(txtUserName);
 
         txtPNombre.setToolTipText("Nombres del usuario");
         txtPNombre.setFont(new java.awt.Font("FreeMono", 1, 18)); // NOI18N
+        txtPNombre.setName("txtPNombre"); // NOI18N
         txtPNombre.setPlaceholder("Primer Nombre");
         txtPNombre.setSoloLetras(true);
         txtPNombre.addActionListener(new java.awt.event.ActionListener() {
@@ -106,6 +113,7 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
 
         txtSNombre.setToolTipText("Nombres del usuario");
         txtSNombre.setFont(new java.awt.Font("FreeMono", 1, 18)); // NOI18N
+        txtSNombre.setName("txtSNombre"); // NOI18N
         txtSNombre.setPlaceholder("Segundo Nombre");
         txtSNombre.setSoloLetras(true);
         txtSNombre.addActionListener(new java.awt.event.ActionListener() {
@@ -117,6 +125,7 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
 
         txtApellidos.setToolTipText("Apellidos del usuario");
         txtApellidos.setFont(new java.awt.Font("FreeMono", 1, 18)); // NOI18N
+        txtApellidos.setName("txtApellidos"); // NOI18N
         txtApellidos.setPlaceholder("Apellidos");
         txtApellidos.setSoloLetras(true);
         txtApellidos.addActionListener(new java.awt.event.ActionListener() {
@@ -128,6 +137,7 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
 
         txtClave1.setToolTipText("Clave del suario para el sistema");
         txtClave1.setFont(new java.awt.Font("FreeMono", 1, 18)); // NOI18N
+        txtClave1.setName("txtClave1"); // NOI18N
         txtClave1.setPlaceholder("Ingrese clave");
         txtClave1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -138,6 +148,7 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
 
         txtClave2.setToolTipText("Confirme la clave del usuario ");
         txtClave2.setFont(new java.awt.Font("FreeMono", 1, 18)); // NOI18N
+        txtClave2.setName("txtClave2"); // NOI18N
         txtClave2.setPlaceholder("Confirmación");
         txtClave2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -146,34 +157,26 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
         });
         jPanel5.add(txtClave2);
 
-        org.jdesktop.swingx.HorizontalLayout horizontalLayout1 = new org.jdesktop.swingx.HorizontalLayout();
-        horizontalLayout1.setGap(10);
-        rSPanelForma1.setLayout(horizontalLayout1);
-        rSPanelForma1.add(filler2);
+        jPanel7.setLayout(new java.awt.BorderLayout());
 
-        cbEstado.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        cbEstado.setMnemonic('T');
-        cbEstado.setText("Inactivo");
-        cbEstado.setToolTipText("permite autorizar algunas acciones que requieren un alto nivel...");
-        cbEstado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbEstadoActionPerformed(evt);
-            }
-        });
-        rSPanelForma1.add(cbEstado);
-
-        cbAdministrador.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        cbAdministrador.setMnemonic('D');
         cbAdministrador.setText("No Administrador");
-        cbAdministrador.setToolTipText("permite autorizar algunas acciones que requieren un alto nivel...");
+        cbAdministrador.setName("cbAdministrador"); // NOI18N
         cbAdministrador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbAdministradorActionPerformed(evt);
             }
         });
-        rSPanelForma1.add(cbAdministrador);
+        jPanel7.add(cbAdministrador, java.awt.BorderLayout.PAGE_END);
 
-        jPanel5.add(rSPanelForma1);
+        cbEstado.setText("Inactivo");
+        cbEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbEstadoActionPerformed(evt);
+            }
+        });
+        jPanel7.add(cbEstado, java.awt.BorderLayout.CENTER);
+
+        jPanel5.add(jPanel7);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -184,15 +187,19 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addGap(0, 0, 0)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
         );
 
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jPanel2.setPreferredSize(new java.awt.Dimension(486, 0));
+
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(" Descripción "));
+        jPanel3.setPreferredSize(new java.awt.Dimension(266, 0));
 
         txtDescripcion.setColumns(20);
         txtDescripcion.setRows(5);
+        txtDescripcion.setName("txtDescripcion"); // NOI18N
         jScrollPane1.setViewportView(txtDescripcion);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -208,36 +215,123 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(" Etiquetas "));
+        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder("Roles"));
+        jPanel8.setPreferredSize(new java.awt.Dimension(480, 0));
 
-        rSTableMetro1.setModel(new javax.swing.table.DefaultTableModel(
+        btnAgregarRol.setText("Agregar");
+        btnAgregarRol.setToolTipText("Es necesario un rol de usuario.");
+        btnAgregarRol.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD);
+        btnAgregarRol.setName("btnAgregarRol"); // NOI18N
+        btnAgregarRol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarRolActionPerformed(evt);
+            }
+        });
+
+        btnBorrarRol.setText("Borrar");
+        btnBorrarRol.setToolTipText("Elimina el rol de usuario seleccionado en la tabla.");
+        btnBorrarRol.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DELETE);
+        btnBorrarRol.setName("btnBorrarRol"); // NOI18N
+        btnBorrarRol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrarRolActionPerformed(evt);
+            }
+        });
+
+        tblRoles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "Clave", "Valor"
             }
         ));
-        rSTableMetro1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-        rSTableMetro1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        rSTableMetro1.setShowGrid(false);
-        rSTableMetro1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(rSTableMetro1);
+        tblRoles.setToolTipText("Roles que el usuario tiene registrado.");
+        tblRoles.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        tblRoles.setMaximumSize(new java.awt.Dimension(2147483647, 0));
+        tblRoles.setMinimumSize(new java.awt.Dimension(30, 0));
+        tblRoles.setName("tblRoles"); // NOI18N
+        tblRoles.setPreferredScrollableViewportSize(new java.awt.Dimension(450, 0));
+        tblRoles.setPreferredSize(new java.awt.Dimension(150, 0));
+        tblRoles.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblRoles.setShowGrid(true);
+        tblRoles.getTableHeader().setReorderingAllowed(false);
+        jScrollPane3.setViewportView(tblRoles);
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnBorrarRol, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAgregarRol, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(71, 71, 71)
+                .addComponent(btnAgregarRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBorrarRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(12, Short.MAX_VALUE))
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addComponent(jScrollPane3)
+                .addContainerGap())
+        );
+
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(" Etiquetas "));
+        jPanel4.setPreferredSize(new java.awt.Dimension(480, 0));
 
         btnAgregarTag.setText("Agregar");
         btnAgregarTag.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD);
         btnAgregarTag.setName("btnAgregarTag"); // NOI18N
+        btnAgregarTag.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarTagActionPerformed(evt);
+            }
+        });
 
         btnBorrarTag.setText("Borrar");
         btnBorrarTag.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DELETE);
         btnBorrarTag.setName("btnBorrarTag"); // NOI18N
+        btnBorrarTag.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrarTagActionPerformed(evt);
+            }
+        });
+
+        jScrollPane2.setMaximumSize(new java.awt.Dimension(32767, 0));
+        jScrollPane2.setMinimumSize(new java.awt.Dimension(27, 0));
+        jScrollPane2.setPreferredSize(new java.awt.Dimension(458, 0));
+
+        tblEtiquetas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Clave", "Valor"
+            }
+        ));
+        tblEtiquetas.setToolTipText("Las etiquetas son atributos que pueden usar los usuario del sistema.");
+        tblEtiquetas.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        tblEtiquetas.setMaximumSize(new java.awt.Dimension(2147483647, 0));
+        tblEtiquetas.setMinimumSize(new java.awt.Dimension(30, 0));
+        tblEtiquetas.setName("tblEtiquetas"); // NOI18N
+        tblEtiquetas.setPreferredScrollableViewportSize(new java.awt.Dimension(450, 0));
+        tblEtiquetas.setPreferredSize(new java.awt.Dimension(150, 0));
+        tblEtiquetas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblEtiquetas.setShowGrid(true);
+        tblEtiquetas.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(tblEtiquetas);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -245,25 +339,23 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(btnAgregarTag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnBorrarTag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnAgregarTag, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                    .addComponent(btnBorrarTag, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAgregarTag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBorrarTag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addGap(43, 77, Short.MAX_VALUE)
+                        .addComponent(btnAgregarTag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBorrarTag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -271,21 +363,26 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(10, Short.MAX_VALUE))
         );
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jPanel3, jPanel4, jPanel8});
 
         btnAceptar.setText("Aceptar");
         btnAceptar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -341,49 +438,33 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 609, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(6, 6, 6))
+                .addGap(12, 12, 12))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cbAdministradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbAdministradorActionPerformed
-        if (cbAdministrador.isSelected()) {
-            cbAdministrador.setText("Administrador");
-        } else {
-            cbAdministrador.setText("No Administrador");
-        }
-    }//GEN-LAST:event_cbAdministradorActionPerformed
-
-    private void cbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEstadoActionPerformed
-        if (cbEstado.isSelected()) {
-            cbEstado.setText("Activo");
-        } else {
-            cbEstado.setText("Inactivo");
-        }
-    }//GEN-LAST:event_cbEstadoActionPerformed
-
-    private void txtIDUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDUsuarioActionPerformed
+    private void txtUserNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserNameActionPerformed
         txtPNombre.requestFocus();
-    }//GEN-LAST:event_txtIDUsuarioActionPerformed
+    }//GEN-LAST:event_txtUserNameActionPerformed
 
     private void txtPNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPNombreActionPerformed
         txtSNombre.requestFocus();
@@ -408,13 +489,13 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         /*
             Validando la informacion que el usuario trata de ingresar o 
-        actualizara la base de datos.
+        actualizar a la base de datos.
          */
-        if (txtIDUsuario.getText().equals("")) {
+        if (txtUserName.getText().equals("")) {
             JOptionPane.showMessageDialog(
                     null,
                     "Debe Digitar un ID.");
-            txtIDUsuario.requestFocusInWindow();
+            txtUserName.requestFocusInWindow();
             return;
         }
 
@@ -468,13 +549,27 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
                 return;
             }
         }
+        
+        System.out.println("Filas: "+tblRoles.getRowCount());
+        
+        if(tblRoles.getRowCount() <= 0){
+            JOptionPane.showMessageDialog(
+                    null, 
+                    "Debe agregar un rol para el usuario", 
+                    "Proceso de validacion de usuario", 
+                    JOptionPane.WARNING_MESSAGE
+            );
+            btnAgregarRol.requestFocus();
+            showTooltip(btnAgregarRol);
+            return;
+        }
 
         /*
             Preparando el mensaje que verá el usuario para aceptar la información 
         que se ingresará a la base de datos.
          */
         String mensaje = "<html><big>"
-                + "<b>Se va a agregar el Usuario: </b>" + txtIDUsuario.getText() + "<br>"
+                + "<b>Se va a agregar el Usuario: </b>" + txtUserName.getText() + "<br>"
                 + "<b>Con Nombre y Apellido: </b>" + txtPNombre.getText() + " " + txtApellidos.getText() + "<br>"
                 + "<b>Delegar: </b>" + (cbAdministrador.isSelected() ? "Activado" : "NO Activado") + "<br>"
                 + "<b>Estado del Usuario: </b>" + (cbEstado.isSelected() ? "Activo" : "No Activo") + "<br>"
@@ -492,12 +587,14 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
             return;
         }
 
-        if (existeUsuarioByUserName(txtIDUsuario.getText()) && nuevo) {
+        if (existeUsuarioByUserName(txtUserName.getText()) & nuevo) {
             int r = JOptionPane.showConfirmDialog(
                     null,
                     "Usuario ya existe. \n\nDesea recuperar el usuario?",
                     "Proceso de verificación",
-                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    JOptionPane.YES_NO_OPTION, 
+                    JOptionPane.QUESTION_MESSAGE
+            );
 
             if (r == JOptionPane.YES_OPTION) {
 
@@ -511,7 +608,7 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
 
         //Creamos el Objeto Usuario y los agregamos a Datos
         Usuarios miUsuario = Usuarios.builder().
-                user_name(txtIDUsuario.getText()).
+                user_name(txtUserName.getText()).
                 pnombre(txtPNombre.getText()).
                 snombre(txtSNombre.getText()).
                 apellidos(txtApellidos.getText()).
@@ -520,35 +617,11 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
                 estado(cbEstado.isSelected()).
                 administrador(cbAdministrador.isSelected()).
                 build();
-
-        cbAdministrador.isSelected();
-        //Vaceamos las claves tomadas de los campos y vaceamos los campos tambien.
-        //Cuestiones de seguridad...
-        clave1 = null;
-        clave2 = null;
-
-        if (revokeRol != null) {
-            if (revokeRol.equalsIgnoreCase("ADMINISTRADOR")) {
-                revokeRol = "RDB$ADMIN";
-            }
-        }
-
-        /**
-         * Query que permite agregar usuarios al sistema.
-         */
-        final String INSERT
-                = "EXECUTE PROCEDURE SP_INSERT_USUARIOS(?,?,?,?,?,?,?,?)";
-
-        /**
-         * Procedimiento que se encarga de actualizar a los usuarios del
-         * sistema.
-         */
-        final String UPDATE
-                = "EXECUTE PROCEDURE SP_UPDATE_USUARIOS(?,?,?,?,?,?,?,?)";
-
+        
         JOptionPane.showMessageDialog(
                 null,
-                (agregarModificarUsuario(miUsuario, nuevo ? INSERT : UPDATE)));
+                (agregarModificarUsuario(miUsuario, nuevo))
+        );
 
         dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
@@ -557,31 +630,67 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void cbAdministradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbAdministradorActionPerformed
+        if (cbAdministrador.isSelected()) {
+            cbAdministrador.setText("Administrador");
+        } else {
+            cbAdministrador.setText("No Administrador");
+        }
+    }//GEN-LAST:event_cbAdministradorActionPerformed
+
+    private void cbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEstadoActionPerformed
+        if (cbEstado.isSelected()) {
+            cbEstado.setText("Activo");
+        } else {
+            cbEstado.setText("Inactivo");
+        }
+    }//GEN-LAST:event_cbEstadoActionPerformed
+
+    private void btnAgregarTagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarTagActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAgregarTagActionPerformed
+
+    private void btnBorrarTagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarTagActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBorrarTagActionPerformed
+
+    private void btnAgregarRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarRolActionPerformed
+        
+    }//GEN-LAST:event_btnAgregarRolActionPerformed
+
+    private void btnBorrarRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarRolActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBorrarRolActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private RSMaterialComponent.RSButtonMaterialIconOne btnAceptar;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnAgregarRol;
     private RSMaterialComponent.RSButtonMaterialIconOne btnAgregarTag;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnBorrarRol;
     private RSMaterialComponent.RSButtonMaterialIconOne btnBorrarTag;
     private RSMaterialComponent.RSButtonMaterialIconOne btnCancelar;
-    private javax.swing.JCheckBox cbAdministrador;
-    private javax.swing.JCheckBox cbEstado;
-    private javax.swing.Box.Filler filler2;
+    private RSMaterialComponent.RSCheckBoxMaterial cbAdministrador;
+    private RSMaterialComponent.RSCheckBoxMaterial cbEstado;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private rojeru_san.rspanel.RSPanelForma rSPanelForma1;
-    private rojerusan.RSTableMetro rSTableMetro1;
+    private javax.swing.JScrollPane jScrollPane3;
+    private rojerusan.RSTableMetro tblEtiquetas;
+    private rojerusan.RSTableMetro tblRoles;
     private rojeru_san.rsfield.RSTextFullRound txtApellidos;
     private rojeru_san.rsfield.RSPassViewRound txtClave1;
     private rojeru_san.rsfield.RSPassViewRound txtClave2;
     private javax.swing.JTextArea txtDescripcion;
-    private rojeru_san.rsfield.RSTextFullRound txtIDUsuario;
     private rojeru_san.rsfield.RSTextFullRound txtPNombre;
     private rojeru_san.rsfield.RSTextFullRound txtSNombre;
+    private rojeru_san.rsfield.RSTextFullRound txtUserName;
     // End of variables declaration//GEN-END:variables
 }

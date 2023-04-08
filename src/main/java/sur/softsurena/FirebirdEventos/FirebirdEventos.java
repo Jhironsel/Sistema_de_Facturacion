@@ -20,9 +20,15 @@ public class FirebirdEventos extends FBEventManager{
             int puerto) {
         setUser(user);
         setPassword(clave);
-        setHost(dominio);
-        setDatabase(pathBaseDatos);
-        setPort(puerto);
+        
+        //setHost(dominio); Han sido sustituido para futura versiones de JayBird
+        setServerName(dominio);
+        
+        //setDatabase(pathBaseDatos);
+        setDatabaseName(pathBaseDatos);
+        
+        //setPort(puerto);
+        setPortNumber(puerto);
         
         try {
             if(isConnected()){

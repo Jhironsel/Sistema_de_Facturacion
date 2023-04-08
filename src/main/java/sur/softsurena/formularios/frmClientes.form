@@ -312,6 +312,9 @@
                       </Layout>
                       <SubComponents>
                         <Container class="javax.swing.JPanel" name="jpMantenimiento2">
+                          <Properties>
+                            <Property name="name" type="java.lang.String" value="jpMantenimiento2" noResource="true"/>
+                          </Properties>
 
                           <Layout>
                             <DimensionLayout dim="0">
@@ -351,6 +354,7 @@
                                   </Border>
                                 </Property>
                                 <Property name="toolTipText" type="java.lang.String" value=""/>
+                                <Property name="name" type="java.lang.String" value="jtpDireccionContactos" noResource="true"/>
                               </Properties>
                               <Events>
                                 <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtpDireccionContactosKeyPressed"/>
@@ -361,6 +365,7 @@
                                 <Container class="javax.swing.JPanel" name="jpGenerales">
                                   <Properties>
                                     <Property name="toolTipText" type="java.lang.String" value="Acceso con Control + 1"/>
+                                    <Property name="name" type="java.lang.String" value="jpGenerales" noResource="true"/>
                                   </Properties>
                                   <Constraints>
                                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
@@ -711,6 +716,7 @@
                                 <Container class="javax.swing.JPanel" name="jpDireccion">
                                   <Properties>
                                     <Property name="toolTipText" type="java.lang.String" value="Acceso con Control + 2"/>
+                                    <Property name="name" type="java.lang.String" value="jpDireccion" noResource="true"/>
                                   </Properties>
                                   <Constraints>
                                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
@@ -782,6 +788,7 @@
                                           </Properties>
                                           <Events>
                                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcbProvinciasActionPerformed"/>
+                                            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jcbProvinciasKeyPressed"/>
                                           </Events>
                                           <AuxValues>
                                             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
@@ -807,6 +814,7 @@
                                           </Properties>
                                           <Events>
                                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcbMunicipiosActionPerformed"/>
+                                            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jcbMunicipiosKeyPressed"/>
                                           </Events>
                                           <AuxValues>
                                             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
@@ -831,6 +839,7 @@
                                           </Properties>
                                           <Events>
                                             <EventHandler event="popupMenuWillBecomeInvisible" listener="javax.swing.event.PopupMenuListener" parameters="javax.swing.event.PopupMenuEvent" handler="jcbDistritoMunicipalPopupMenuWillBecomeInvisible"/>
+                                            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jcbDistritoMunicipalKeyPressed"/>
                                           </Events>
                                           <AuxValues>
                                             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
@@ -982,6 +991,7 @@
                                 <Container class="javax.swing.JPanel" name="jpContactos">
                                   <Properties>
                                     <Property name="toolTipText" type="java.lang.String" value="Acceso con Control + 3"/>
+                                    <Property name="name" type="java.lang.String" value="jpContactos" noResource="true"/>
                                   </Properties>
                                   <Constraints>
                                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
@@ -1311,6 +1321,7 @@
                                                         </TitledBorder>
                                                       </Border>
                                                     </Property>
+                                                    <Property name="name" type="java.lang.String" value="txtCorreo" noResource="true"/>
                                                   </Properties>
                                                   <Events>
                                                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCorreoActionPerformed"/>
@@ -1366,6 +1377,7 @@
                             <Component class="javax.swing.JLabel" name="jlFechaCreacion">
                               <Properties>
                                 <Property name="text" type="java.lang.String" value="Fecha de creacion: "/>
+                                <Property name="name" type="java.lang.String" value="jlFechaCreacion" noResource="true"/>
                               </Properties>
                             </Component>
                           </SubComponents>

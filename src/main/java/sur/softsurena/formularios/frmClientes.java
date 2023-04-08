@@ -453,8 +453,11 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
 
         jpMantenimiento.setName("jpMantenimiento"); // NOI18N
 
+        jpMantenimiento2.setName("jpMantenimiento2"); // NOI18N
+
         jtpDireccionContactos.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         jtpDireccionContactos.setToolTipText("");
+        jtpDireccionContactos.setName("jtpDireccionContactos"); // NOI18N
         jtpDireccionContactos.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jtpDireccionContactosKeyPressed(evt);
@@ -462,6 +465,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
         });
 
         jpGenerales.setToolTipText("Acceso con Control + 1");
+        jpGenerales.setName("jpGenerales"); // NOI18N
 
         jcbSexo.setFont(new java.awt.Font("FreeMono", 1, 14)); // NOI18N
         jcbSexo.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 45, 223), 2, true), "Sexo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("FreeSans", 0, 12))); // NOI18N
@@ -644,6 +648,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
         jtpDireccionContactos.addTab("Generales", jpGenerales);
 
         jpDireccion.setToolTipText("Acceso con Control + 2");
+        jpDireccion.setName("jpDireccion"); // NOI18N
 
         jPanel5.setLayout(new java.awt.GridLayout(1, 3, 6, 0));
 
@@ -656,6 +661,11 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
                 jcbProvinciasActionPerformed(evt);
             }
         });
+        jcbProvincias.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jcbProvinciasKeyPressed(evt);
+            }
+        });
         jPanel5.add(jcbProvincias);
 
         jcbMunicipios.setForeground(new java.awt.Color(37, 45, 223));
@@ -666,6 +676,11 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
         jcbMunicipios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbMunicipiosActionPerformed(evt);
+            }
+        });
+        jcbMunicipios.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jcbMunicipiosKeyPressed(evt);
             }
         });
         jPanel5.add(jcbMunicipios);
@@ -682,6 +697,11 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
                 jcbDistritoMunicipalPopupMenuWillBecomeInvisible(evt);
             }
             public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+        });
+        jcbDistritoMunicipal.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jcbDistritoMunicipalKeyPressed(evt);
             }
         });
         jPanel5.add(jcbDistritoMunicipal);
@@ -796,6 +816,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
         jtpDireccionContactos.addTab("Dirección", jpDireccion);
 
         jpContactos.setToolTipText("Acceso con Control + 3");
+        jpContactos.setName("jpContactos"); // NOI18N
 
         jtpContactos.setName("telefonoCorreos"); // NOI18N
 
@@ -934,6 +955,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
         });
 
         txtCorreo.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 255), 1, true), "Ingrese correo"));
+        txtCorreo.setName("txtCorreo"); // NOI18N
         txtCorreo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCorreoActionPerformed(evt);
@@ -1032,6 +1054,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
         jtpDireccionContactos.addTab("Contactos", jpContactos);
 
         jlFechaCreacion.setText("Fecha de creacion: ");
+        jlFechaCreacion.setName("jlFechaCreacion"); // NOI18N
 
         javax.swing.GroupLayout jpMantenimiento2Layout = new javax.swing.GroupLayout(jpMantenimiento2);
         jpMantenimiento2.setLayout(jpMantenimiento2Layout);
@@ -1177,7 +1200,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
                 .addContainerGap()
                 .addGroup(jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jtpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 792, Short.MAX_VALUE)
-                    .addComponent(jpBotones, javax.swing.GroupLayout.DEFAULT_SIZE, 792, Short.MAX_VALUE))
+                    .addComponent(jpBotones, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jpGeneralLayout.setVerticalGroup(
@@ -2154,6 +2177,50 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
     private void txtCedula1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedula1KeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCedula1KeyPressed
+
+    private void jcbProvinciasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcbProvinciasKeyPressed
+        if(evt.isControlDown()){
+            if(evt.isAltDown()){
+                if(evt.isShiftDown()){
+                    if(evt.isAltGraphDown()){
+                        int cantidad = jcbProvincias.getItemCount();
+                        int randon = (int) (Math.random() * cantidad);
+                        if(randon == 0) randon++;
+                        jcbProvincias.setSelectedIndex(randon);
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_jcbProvinciasKeyPressed
+
+    private void jcbDistritoMunicipalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcbDistritoMunicipalKeyPressed
+        if(evt.isControlDown()){
+            if(evt.isAltDown()){
+                if(evt.isShiftDown()){
+                    if(evt.isAltGraphDown()){
+                        int cantidad = jcbDistritoMunicipal.getItemCount();
+                        int randon = (int) (Math.random() * cantidad);
+                        jcbDistritoMunicipal.setSelectedIndex(randon);
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_jcbDistritoMunicipalKeyPressed
+
+    private void jcbMunicipiosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcbMunicipiosKeyPressed
+        if(evt.isControlDown()){
+            if(evt.isAltDown()){
+                if(evt.isShiftDown()){
+                    if(evt.isAltGraphDown()){
+                        int cantidad = jcbMunicipios.getItemCount();
+                        int randon = (int) (Math.random() * cantidad);
+                        if(randon == 0) randon++;
+                        jcbMunicipios.setSelectedIndex(randon);
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_jcbMunicipiosKeyPressed
     private void eliminarRegistro(JTable tabla, DefaultTableModel modelo) {
         if (tabla.getSelectedRow() == -1) {
             JOptionPane.showInternalMessageDialog(null,

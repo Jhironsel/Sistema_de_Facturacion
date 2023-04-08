@@ -12,7 +12,6 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -49,10 +48,7 @@ import static sur.softsurena.entidades.DetalleFactura.agregarDetalleFactura;
 import sur.softsurena.entidades.Facturas;
 import static sur.softsurena.entidades.Facturas.agregarFacturaNombre;
 import static sur.softsurena.entidades.Facturas.modificarFactura;
-import sur.softsurena.entidades.Generales;
 import sur.softsurena.entidades.HeaderFactura;
-import sur.softsurena.entidades.Opcion;
-import sur.softsurena.entidades.Personas;
 import static sur.softsurena.entidades.Productos.existeProducto;
 import static sur.softsurena.entidades.Turnos.idTurnoActivo;
 import sur.softsurena.entidades.Usuarios;
@@ -1387,7 +1383,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
         if (resp == 1) {
             return;
         }
-        frmPrintFacturaConReporte miPrint = new frmPrintFacturaConReporte(null, true);
+        frmPrintFacturaConReporte2 miPrint = new frmPrintFacturaConReporte2(null, true);
         miPrint.setCopia(false);
         miPrint.setLocationRelativeTo(null);
         miPrint.setVisible(true);

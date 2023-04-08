@@ -111,98 +111,72 @@
       <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
       <poupTrigger>false</poupTrigger>
     </xy.ui.testing.action.component.ClickAction>
-    <xy.ui.testing.action.component.specific.SelectComboBoxItemAction>
+    <xy.ui.testing.action.component.specific.SelectTabAction>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentName>jtpDireccionContactos</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>0</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <tabToSelect>Dirección</tabToSelect>
+    </xy.ui.testing.action.component.specific.SelectTabAction>
+    <xy.ui.testing.action.component.SendKeysAction>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
         <componentName>jcbProvincia</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
       </componentFinder>
       <disabled>false</disabled>
-      <knownOptions>
-        <string>0</string>
-        <string>1</string>
-        <string>2</string>
-        <string>3</string>
-        <string>4</string>
-        <string>5</string>
-        <string>6</string>
-        <string>7</string>
-        <string>8</string>
-        <string>9</string>
-        <string>10</string>
-        <string>11</string>
-        <string>12</string>
-        <string>13</string>
-        <string>14</string>
-        <string>15</string>
-        <string>16</string>
-        <string>17</string>
-        <string>18</string>
-        <string>19</string>
-        <string>20</string>
-        <string>21</string>
-        <string>22</string>
-        <string>23</string>
-        <string>24</string>
-        <string>25</string>
-        <string>26</string>
-        <string>27</string>
-        <string>28</string>
-        <string>29</string>
-        <string>30</string>
-        <string>31</string>
-        <string>32</string>
-      </knownOptions>
-      <optionListChecked>true</optionListChecked>
-      <optionToSelect>1</optionToSelect>
-      <selectionMode>BY_POSITION</selectionMode>
-    </xy.ui.testing.action.component.specific.SelectComboBoxItemAction>
-    <xy.ui.testing.action.component.specific.SelectComboBoxItemAction>
+      <keyboardInteractions>
+        <xy.ui.testing.action.component.SendKeysAction_-SpecialKey>
+          <altDown>true</altDown>
+          <altGrtDown>true</altGrtDown>
+          <ctrlDown>true</ctrlDown>
+          <keyName>KEY_UNDEFINED</keyName>
+          <metaDown>false</metaDown>
+          <shiftDown>true</shiftDown>
+        </xy.ui.testing.action.component.SendKeysAction_-SpecialKey>
+      </keyboardInteractions>
+      <requestToFocusOnTheComponent>true</requestToFocusOnTheComponent>
+    </xy.ui.testing.action.component.SendKeysAction>
+    <xy.ui.testing.action.component.SendKeysAction>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
         <componentName>jcbMunicipios</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
       </componentFinder>
       <disabled>false</disabled>
-      <knownOptions>
-        <string>0</string>
-        <string>1</string>
-        <string>2</string>
-        <string>3</string>
-        <string>4</string>
-        <string>5</string>
-        <string>6</string>
-        <string>7</string>
-        <string>8</string>
-        <string>9</string>
-        <string>10</string>
-      </knownOptions>
-      <optionListChecked>true</optionListChecked>
-      <optionToSelect>1</optionToSelect>
-      <selectionMode>BY_POSITION</selectionMode>
-    </xy.ui.testing.action.component.specific.SelectComboBoxItemAction>
-    <xy.ui.testing.action.component.specific.SelectComboBoxItemAction>
+      <keyboardInteractions>
+        <xy.ui.testing.action.component.SendKeysAction_-SpecialKey>
+          <altDown>true</altDown>
+          <altGrtDown>true</altGrtDown>
+          <ctrlDown>true</ctrlDown>
+          <keyName>KEY_UNDEFINED</keyName>
+          <metaDown>false</metaDown>
+          <shiftDown>true</shiftDown>
+        </xy.ui.testing.action.component.SendKeysAction_-SpecialKey>
+      </keyboardInteractions>
+      <requestToFocusOnTheComponent>true</requestToFocusOnTheComponent>
+    </xy.ui.testing.action.component.SendKeysAction>
+    <xy.ui.testing.action.component.SendKeysAction>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
         <componentName>jcbDistritoMunicipal</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
       </componentFinder>
       <disabled>false</disabled>
-      <knownOptions>
-        <string>0</string>
-        <string>1</string>
-        <string>2</string>
-        <string>3</string>
-        <string>4</string>
-        <string>5</string>
-        <string>6</string>
-        <string>7</string>
-        <string>8</string>
-      </knownOptions>
-      <optionListChecked>true</optionListChecked>
-      <optionToSelect>1</optionToSelect>
-      <selectionMode>BY_POSITION</selectionMode>
-    </xy.ui.testing.action.component.specific.SelectComboBoxItemAction>
+      <keyboardInteractions>
+        <xy.ui.testing.action.component.SendKeysAction_-SpecialKey>
+          <altDown>true</altDown>
+          <altGrtDown>true</altGrtDown>
+          <ctrlDown>true</ctrlDown>
+          <keyName>KEY_UNDEFINED</keyName>
+          <metaDown>false</metaDown>
+          <shiftDown>true</shiftDown>
+        </xy.ui.testing.action.component.SendKeysAction_-SpecialKey>
+      </keyboardInteractions>
+      <requestToFocusOnTheComponent>true</requestToFocusOnTheComponent>
+    </xy.ui.testing.action.component.SendKeysAction>
     <xy.ui.testing.action.component.SendKeysAction>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
         <componentName>txtDireccion</componentName>
@@ -229,19 +203,5 @@
       <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
       <poupTrigger>false</poupTrigger>
     </xy.ui.testing.action.component.ClickAction>
-    <xy.ui.testing.action.component.CheckVisibleStringsAction>
-      <completenessChecked>false</completenessChecked>
-      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
-        <componentName>tblDireccion</componentName>
-        <occurrencesToSkip>0</occurrencesToSkip>
-        <windowIndex>0</windowIndex>
-      </componentFinder>
-      <disabled>false</disabled>
-      <negated>false</negated>
-      <orderChecked>false</orderChecked>
-      <visibleStrings>
-        <string>Prueba Superada</string>
-      </visibleStrings>
-    </xy.ui.testing.action.component.CheckVisibleStringsAction>
   </testActions>
 </xy.ui.testing.Tester>

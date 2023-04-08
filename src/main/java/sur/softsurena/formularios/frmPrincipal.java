@@ -1010,7 +1010,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEstablecerEncabezadoActionPerformed
 
     private void btnSeleccionarImpresoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImpresoraActionPerformed
-        frmImpresoras miImpresora = new frmImpresoras(null, true);
+        frmImpresoras2 miImpresora = new frmImpresoras2(null, true);
         miImpresora.setLocationRelativeTo(null);
         miImpresora.setVisible(true);
     }//GEN-LAST:event_btnSeleccionarImpresoraActionPerformed
@@ -1041,13 +1041,13 @@ public final class frmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuCambioClaveActionPerformed
 
     private void mnuArchivosAdministracionPrivilegiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuArchivosAdministracionPrivilegiosActionPerformed
-        abrirFormulario(new frmPriviledios());
+        abrirFormulario(new frmUsuarios());
     }//GEN-LAST:event_mnuArchivosAdministracionPrivilegiosActionPerformed
 
     private void mnuArchivosCambioUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuArchivosCambioUsuarioActionPerformed
 
         dispose();
-        frmLogin login = new frmLogin();
+        frmLogin login = new frmLogin("es");
         login.setLocationRelativeTo(null);
         login.setVisible(true);
     }//GEN-LAST:event_mnuArchivosCambioUsuarioActionPerformed

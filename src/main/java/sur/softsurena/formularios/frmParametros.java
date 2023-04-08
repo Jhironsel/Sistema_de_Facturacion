@@ -31,9 +31,9 @@ public class frmParametros extends javax.swing.JFrame {
         try {
             propiedades.load(new FileReader(f));
         } catch (FileNotFoundException ex) {
-            LOG.log(Level.INFO, "Archivo no encotrado", ex);
+            LOG.log(Level.SEVERE, "Archivo no encotrado", ex);
         } catch (IOException ex) {
-            LOG.log(Level.INFO, "Error de entrada o salida del archivo propiedades.", ex);
+            LOG.log(Level.SEVERE, "Error de entrada o salida del archivo propiedades.", ex);
         }
 
         cargarParamentos("todo");
@@ -562,9 +562,10 @@ public class frmParametros extends javax.swing.JFrame {
 
             propiedades.store(
                     new FileWriter(f),
-                    "Parametros del Servidor");
+                    "Parametros del Servidor"
+            );
         } catch (IOException ex) {
-            Logger.getLogger(frmParametros.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            LOG.log(Level.SEVERE, "Error al leer la propiedades del archivo.", ex);
         }
     }
 

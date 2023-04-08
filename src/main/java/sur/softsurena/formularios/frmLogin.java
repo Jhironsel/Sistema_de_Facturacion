@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -16,15 +18,19 @@ import sur.softsurena.conexion.Conexion;
 import static sur.softsurena.entidades.BaseDeDatos.existeIdMaquina;
 import static sur.softsurena.entidades.BaseDeDatos.periodoMaquina;
 import static sur.softsurena.entidades.BaseDeDatos.setLicencia;
-import static sur.softsurena.entidades.Usuarios.comprobandoRol;
+import static sur.softsurena.entidades.Roles.comprobandoRol;
 import sur.softsurena.metodos.Imagenes;
 
 public final class frmLogin extends javax.swing.JFrame {
 
     private String idMaquina = "";
     private boolean txtUsuarioKeyPress = true;
+    private final ResourceBundle bundle;
+    
+    private static final String VALIDACION_DE_PROCESO_DE_USUARIO = "Validacion de proceso de usuario";
 
-    public frmLogin() {
+    public frmLogin(String language) {
+        bundle = ResourceBundle.getBundle("sur.softsurena.idioma.mensaje", new Locale(language));
         initComponents();
 
         cargarIconos();
@@ -35,6 +41,7 @@ public final class frmLogin extends javax.swing.JFrame {
     }
 
     public frmLogin(String user, String clave) {
+        bundle = ResourceBundle.getBundle("sur.softsurena.idioma.mensaje", new Locale("es"));
         initComponents();
         txtUsuario.setText(user);
         txtClave.setText(clave);
@@ -61,7 +68,7 @@ public final class frmLogin extends javax.swing.JFrame {
         btnParametros = new RSMaterialComponent.RSButtonMaterialIconOne();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Login de Sistema Comercial");
+        setTitle(bundle.getString("frmLogin.jlTitle"));
         setFocusTraversalPolicyProvider(true);
         setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png"));
         setResizable(false);
@@ -163,7 +170,7 @@ public final class frmLogin extends javax.swing.JFrame {
         jPanel1.setLayout(new java.awt.GridLayout(1, 2, 5, 0));
 
         btnCancelar.setBackground(new java.awt.Color(204, 0, 51));
-        btnCancelar.setText("Cancelar");
+        btnCancelar.setText(bundle.getString("frmLogin.btnCancelar"));
         btnCancelar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnCancelar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnCancelar.setIconTextGap(0);
@@ -179,7 +186,7 @@ public final class frmLogin extends javax.swing.JFrame {
         });
         jPanel1.add(btnCancelar);
 
-        btnAceptar.setText("Aceptar");
+        btnAceptar.setText(bundle.getString("frmLogin.btnInicio"));
         btnAceptar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnAceptar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnAceptar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CHECK);
@@ -197,7 +204,7 @@ public final class frmLogin extends javax.swing.JFrame {
         jpDatos.add(jPanel1);
 
         btnParametros.setBackground(new java.awt.Color(0, 204, 51));
-        btnParametros.setText("Opcion de conexion");
+        btnParametros.setText(bundle.getString("frmLogin.btnOpcionPanel"));
         btnParametros.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DASHBOARD);
         btnParametros.setMaximumSize(new java.awt.Dimension(216, 40));
         btnParametros.setMinimumSize(new java.awt.Dimension(216, 40));
@@ -260,8 +267,10 @@ public final class frmLogin extends javax.swing.JFrame {
         if (sistema.equals("Linux")) {
             try {
                 /*Buscando nuevas alternativas sin root*/
- /*ls /dev/disk/by-uuid/ : Podemos ontener el valor del primer resultado.*/
- /*lsblk -o name,uuid: Otro que podemos filtrar por el disco duro.*/
+ /*ls /dev/disk/by-uuid/ : Podemos ontener el valor del 
+                primer resultado.*/
+ /*lsblk -o name,uuid: Otro que podemos filtrar por el 
+                disco duro.*/
 
                 p = Runtime.getRuntime().exec("lsblk -o UUID /dev/sda1");
             } catch (IOException ex) {
@@ -312,13 +321,22 @@ public final class frmLogin extends javax.swing.JFrame {
 
         //Validación de campos del login. 
         if (txtUsuario.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Nombre del Usuario Vacio");
+            JOptionPane.showMessageDialog(null, 
+                    "Ingrese un usuario", 
+                    VALIDACION_DE_PROCESO_DE_USUARIO,
+                    JOptionPane.WARNING_MESSAGE
+            );
             txtUsuario.requestFocusInWindow();
             return;
         }
 
         if (txtClave.getPassword().length == 0) {
-            JOptionPane.showMessageDialog(null, "Inserte una clave");
+            JOptionPane.showMessageDialog(
+                    null, 
+                    "Inserte una clave", 
+                    VALIDACION_DE_PROCESO_DE_USUARIO,
+                    JOptionPane.WARNING_MESSAGE
+            );
             txtClave.requestFocusInWindow();
             return;
         }//Fin de validaciones de campos
@@ -358,10 +376,21 @@ public final class frmLogin extends javax.swing.JFrame {
         }
 
         //Variables para almacenar los roles
-        ArrayList<String> roles = comprobandoRol(txtUsuario.getText().trim());
+        ArrayList<String> roles = comprobandoRol(txtUsuario.getText().strip());
 
-        if (roles == null) {
-            JOptionPane.showMessageDialog(null, "El usuario no cuenta con rol en el sistema");
+        if(roles.isEmpty()){
+            
+            txtClave.setText("");
+            txtUsuario.setText("");
+            txtUsuario.requestFocus();
+            
+            JOptionPane.showMessageDialog(
+                    null, 
+                    "Usuario no cuenta con un rol asignado en el sistema",                                                                                                    
+                    "Validacion de rol de Usuario.", 
+                    JOptionPane.WARNING_MESSAGE
+            );
+            
             return;
         }
 
@@ -400,21 +429,33 @@ public final class frmLogin extends javax.swing.JFrame {
 
         FirebirdEventos f = new FirebirdEventos();
 
-        if (!f.registro(txtUsuario.getText(), new String(txtClave.getPassword()),
-                dominio, p.cargarParamentos("").getPathBaseDatos(), Integer.parseInt(puerto))) {
-            JOptionPane.showMessageDialog(null,
+        if (!f.registro(
+                txtUsuario.getText(),
+                new String(txtClave.getPassword()),
+                dominio,
+                p.cargarParamentos("").getPathBaseDatos(),
+                Integer.parseInt(puerto)
+        )) {
+            JOptionPane.showMessageDialog(
+                    null,
                     "Error a registrar los eventos...",
-                    "Validación de procesos", JOptionPane.ERROR_MESSAGE);
+                    "Validación de procesos", 
+                    JOptionPane.ERROR_MESSAGE
+            );
             return;
         }
+        
         txtClave.setText("");
 
         //Reconectarse con el rol seleccionado por el usuario. 
         if (!existeIdMaquina(idMaquina)) {
             //Ver si la maquina esta Registrada si no esta Entra
-            int num = JOptionPane.showConfirmDialog(null,
+            int num = JOptionPane.showConfirmDialog(
+                    null,
                     "Este equipo no esta Autorizado! \nDesea Registrar?",
-                    "No Autorizado", JOptionPane.YES_NO_OPTION);
+                    "No Autorizado", 
+                    JOptionPane.YES_NO_OPTION
+            );
             if (num == 0) {
                 registro();
                 return;
@@ -508,14 +549,17 @@ public final class frmLogin extends javax.swing.JFrame {
     }
 
     public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                frmLogin frmLogin = new frmLogin();
-                frmLogin.setVisible(true);
-                frmLogin.setLocationRelativeTo(null);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            frmLogin frmLogin = new frmLogin("es");
+            frmLogin.setVisible(true);
+            frmLogin.setLocationRelativeTo(null);
         });
+    }
+
+    private void cargarIconos() {
+        Imagenes imagen = new Imagenes();
+        jlLogoSistema.setIcon(imagen.getIcono("Panel de Control 128 x 128.png"));
+        lamina.setImagen(imagen.getIcono("FondoLogin 626 x 386.jpg"));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -534,14 +578,8 @@ public final class frmLogin extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtClave;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
-
-    private void cargarIconos() {
-        Imagenes imagen = new Imagenes();
-        jlLogoSistema.setIcon(imagen.getIcono("Panel de Control 128 x 128.png"));
-        lamina.setImagen(imagen.getIcono("FondoLogin 626 x 386.jpg"));
-    }
 }
 
 /**
- * 
+ *
  */
