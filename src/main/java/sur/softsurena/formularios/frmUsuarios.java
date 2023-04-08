@@ -301,7 +301,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         } else if (jtpPrivilegios.getSelectedComponent() == jpMantUsuarios) {
             int rta = JOptionPane.showConfirmDialog(
                     this,
-                    "Esta seguro de eliminar Usuario",
+                    "Esta seguro de eliminar Usuario?",
                     "Confirmacion!!!",
                     JOptionPane.YES_NO_OPTION);
 
@@ -314,8 +314,12 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             c.setVisible(true);
 
             if (!c.aceptar) {
-                JOptionPane.showMessageDialog(null,
-                        "Ingrese corretamente el codigo.");
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Ingrese corretamente el codigo.",
+                        "Proceso de validacion.",
+                        JOptionPane.WARNING_MESSAGE
+                );
                 return;
             }
 
