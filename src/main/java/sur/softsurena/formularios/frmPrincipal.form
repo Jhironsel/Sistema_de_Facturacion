@@ -21,16 +21,6 @@
         <Property name="text" type="java.lang.String" value="jLabel9"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.Box$Filler" name="filler3">
-      <Properties>
-        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[32767, 32767]"/>
-        </Property>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="classDetails" type="java.lang.String" value="Box.Filler.Glue"/>
-      </AuxValues>
-    </Component>
     <Container class="javax.swing.JPanel" name="jPanelImpresion">
       <Properties>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -255,6 +245,16 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnOcultarPanelActionPerformed"/>
       </Events>
     </Component>
+    <Component class="javax.swing.Box$Filler" name="filler3">
+      <Properties>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[32767, 32767]"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="classDetails" type="java.lang.String" value="Box.Filler.Glue"/>
+      </AuxValues>
+    </Component>
     <Component class="RSMaterialComponent.RSLabelTextIcon" name="jlUser">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -264,17 +264,46 @@
         <Property name="sizeIcon" type="float" value="32.0"/>
       </Properties>
     </Component>
-    <Component class="RSMaterialComponent.RSLabelTextIcon" name="jlRole">
+    <Container class="necesario.LabelIcon" name="liWork">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="sdfsdf"/>
         <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
           <Value id="WORK"/>
         </Property>
-        <Property name="sizeIcon" type="float" value="32.0"/>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[40, 40]"/>
+        </Property>
+        <Property name="name" type="java.lang.String" value="liWork" noResource="true"/>
+        <Property name="opaque" type="boolean" value="true"/>
       </Properties>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
+        <Property name="columns" type="int" value="0"/>
+        <Property name="rows" type="int" value="1"/>
+      </Layout>
+    </Container>
+    <Component class="RSMaterialComponent.RSComboBox" name="cbRoles">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+        <Property name="itemHeight" type="int" value="20"/>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[200, 40]"/>
+        </Property>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[50, 30]"/>
+        </Property>
+        <Property name="name" type="java.lang.String" value="cbRoles" noResource="true"/>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[200, 40]"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="popupMenuWillBecomeInvisible" listener="javax.swing.event.PopupMenuListener" parameters="javax.swing.event.PopupMenuEvent" handler="cbRolesPopupMenuWillBecomeInvisible"/>
+      </Events>
     </Component>
     <Menu class="rojerusan.RSMenuBar" name="jMenuBar1">
       <Properties>

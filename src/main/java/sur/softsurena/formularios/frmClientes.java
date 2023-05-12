@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -45,29 +44,28 @@ import static sur.softsurena.entidades.Distritos_municipales.getDistritosMunicip
 import static sur.softsurena.entidades.Municipios.getMunicipio;
 import static sur.softsurena.entidades.Privilegios.privilegioCampo;
 import static sur.softsurena.entidades.Privilegios.privilegioTabla;
+import static sur.softsurena.utilidades.Utilidades.LOGGER;
 
 public class frmClientes extends javax.swing.JInternalFrame implements Runnable {
+
     public static final String[] v_vistasList = {
-        "GET_PRIVILEGIOS",
         "V_GENERALES",
         "V_PERSONAS",
         "V_PERSONAS_CLIENTES",
         "V_CONTACTOS_DIRECCIONES",
         "V_CONTACTOS_EMAIL",
         "V_CONTACTOS_TEL",
-        "V_DISTRITOS_MUNICIPALES",
-        "V_MUNICIPIOS",
         "GET_PERSONAS_ID",
         "GET_CLIENTES_SB",
         "GET_DIRECCION_BY_ID"
     };
+
     public static final String[] v_procedimientosList = {
+        "SP_SELECT_GET_CLIENTES_SB",
         "SP_INSERT_CLIENTE_SB",
         "SP_DELETE_CLIENTE_SB",
         "SP_UPDATE_CLIENTE_SB"
     };
-
-    private static final Logger v_LOG = Logger.getLogger(frmClientes.class.getName());
 
     private boolean v_nuevo = false;
 
@@ -83,7 +81,6 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
 
     private final List<ContactosTel> v_contactosTelsList;
 
-
     private Privilegios v_privilegios;
 
     private Thread v_hilo;
@@ -94,9 +91,9 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
 
     private final static String[] v_TITULOS_DIRECCION = {"Provincia", "Municipio",
         "Distrito M.", "Calle y No. Casa", "Fecha", "Estado", "Por defecto"};
-    
+
     private static final String[] TITULOS_CORREO = {"Correo", "Fecha"};
-    
+
     private static final String[] TITULOS_TELEFONO = {"Numero", "Tipo", "Fecha"};
 
     /**
@@ -135,28 +132,24 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
             Si un permiso a las vistas consultada anteriormente es negado, se 
         lanza una excepcion y la venta no se iniciará.
          */
-        for (String vista : v_vistasList) {
 
-            v_privilegios = Privilegios.builder().
-                    privilegio(Privilegios.PRIVILEGIO_SELECT).
-                    nombre_relacion(vista).build();
+        v_privilegios = Privilegios.builder().
+                privilegio(Privilegios.PRIVILEGIO_EXECUTE).
+                nombre_relacion("SP_SELECT_GET_CLIENTES_SB").build();
 
-            boolean priviledio = privilegioTabla(v_privilegios);
+        if (!privilegioTabla(v_privilegios)) {
 
-            if (!priviledio) {
+            String mensaje = "No cuenta con permisos para ver la información de"
+                    + " este módulo.";
 
-                String mensaje = "No cuenta con permisos para ver la información de"
-                        + " este módulo. [" + vista + "]";
+            JOptionPane.showInternalMessageDialog(
+                    null,
+                    mensaje,
+                    "Validación de proceso",
+                    JOptionPane.WARNING_MESSAGE
+            );
 
-                JOptionPane.showInternalMessageDialog(
-                        null,
-                        mensaje,
-                        "Validación de proceso",
-                        JOptionPane.WARNING_MESSAGE
-                );
-
-                throw new ExceptionInInitializerError(mensaje);
-            }
+            throw new ExceptionInInitializerError(mensaje);
         }
 
         //Metodo encargado de inicializar los componentes del formulario.
@@ -185,49 +178,27 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
         jtpPrincipal.remove(jspMantenimiento);
 
         //Permiso para el boton de nuevo
-        int cantFalso = 0;
-        for (String vista : v_vistasList) {
-            v_privilegios = Privilegios.builder().
-                    privilegio(Privilegios.PRIVILEGIO_INSERT).
-                    nombre_relacion(vista).build();
+        v_privilegios = Privilegios.builder().
+                privilegio(Privilegios.PRIVILEGIO_EXECUTE).
+                nombre_relacion("SP_INSERT_CLIENTE_SB").
+                build();
 
-            boolean priviledio = privilegioTabla(v_privilegios);
-
-            if (!priviledio) {
-                cantFalso++;
-            }
-        }
-        btnNuevo.setEnabled(cantFalso == 0);
+        btnNuevo.setEnabled(privilegioTabla(v_privilegios));
 
         //Permiso para el boton de Borrar
-        cantFalso = 0;
-        for (String vista : v_vistasList) {
-            v_privilegios = Privilegios.builder().
-                    privilegio(Privilegios.PRIVILEGIO_DELETE).
-                    nombre_relacion(vista).build();
+        v_privilegios = Privilegios.builder().
+                privilegio(Privilegios.PRIVILEGIO_EXECUTE).
+                nombre_relacion("SP_DELETE_CLIENTE_SB").
+                build();
 
-            boolean priviledio = privilegioTabla(v_privilegios);
-
-            if (!priviledio) {
-                cantFalso++;
-            }
-        }
-        btnBorrar.setEnabled(cantFalso == 0);
+        btnBorrar.setEnabled(privilegioTabla(v_privilegios));
 
         //Permiso para el boton de Modificar
-        cantFalso = 0;
-        for (String vista : v_vistasList) {
-            v_privilegios = Privilegios.builder().
-                    privilegio(Privilegios.PRIVILEGIO_UPDATE).
-                    nombre_relacion(vista).build();
+        v_privilegios = Privilegios.builder().
+                privilegio(Privilegios.PRIVILEGIO_EXECUTE).
+                nombre_relacion("SP_UPDATE_CLIENTE_SB").build();
 
-            boolean priviledio = privilegioTabla(v_privilegios);
-
-            if (!priviledio) {
-                cantFalso++;
-            }
-        }
-        btnModificar.setEnabled(cantFalso == 0);
+        btnModificar.setEnabled(privilegioTabla(v_privilegios));
     }
 
     @SuppressWarnings("unchecked")
@@ -241,17 +212,12 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
         jtpPrincipal = new javax.swing.JTabbedPane();
         jspClientes = new javax.swing.JScrollPane();
         jpClientes = new javax.swing.JPanel();
-        jpsTablaCliente = new javax.swing.JScrollPane();
-        tblClientes = new rojerusan.RSTableMetro1(){
-            @Override
-            public boolean isCellEditable(int rowIndex, int colIndex) {
-                return false; //Las celdas no son editables.
-            }
-        };
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanel16 = new javax.swing.JPanel();
         btnImprimirInforme1 = new RSMaterialComponent.RSButtonMaterialIconOne();
         btnHistorial1 = new RSMaterialComponent.RSButtonMaterialIconOne();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblClientes = new RSMaterialComponent.RSTableMetro();
         jspMantenimiento = new javax.swing.JScrollPane();
         jpMantenimiento = new javax.swing.JPanel();
         jpMantenimiento2 = new javax.swing.JPanel();
@@ -380,28 +346,6 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
 
         jpClientes.setName("jpClientes"); // NOI18N
 
-        jpsTablaCliente.setName("jpsTablaCliente"); // NOI18N
-
-        tblClientes.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        tblClientes.setBackgoundHover(new java.awt.Color(102, 102, 255));
-        tblClientes.setFont(new java.awt.Font("FreeMono", 1, 14)); // NOI18N
-        tblClientes.setFontHead(new java.awt.Font("FreeMono", 1, 14)); // NOI18N
-        tblClientes.setFontRowHover(new java.awt.Font("FreeMono", 1, 14)); // NOI18N
-        tblClientes.setFontRowSelect(new java.awt.Font("FreeMono", 1, 14)); // NOI18N
-        tblClientes.setName("tblClientes"); // NOI18N
-        tblClientes.setShowGrid(false);
-        jpsTablaCliente.setViewportView(tblClientes);
-
         jPanel16.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(187, 187, 187), 1, true));
         jPanel16.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
@@ -424,22 +368,35 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
 
         jScrollPane2.setViewportView(jPanel16);
 
+        tblClientes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblClientes);
+
         javax.swing.GroupLayout jpClientesLayout = new javax.swing.GroupLayout(jpClientes);
         jpClientes.setLayout(jpClientesLayout);
         jpClientesLayout.setHorizontalGroup(
             jpClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpClientesLayout.createSequentialGroup()
+            .addGroup(jpClientesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jpClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jpsTablaCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 790, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2))
+                .addGroup(jpClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
                 .addContainerGap())
         );
         jpClientesLayout.setVerticalGroup(
             jpClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpClientesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jpsTablaCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -1589,7 +1546,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
             v_miDetalle.setMaximum(false);
             v_miDetalle.setMaximum(true);
         } catch (PropertyVetoException ex) {
-            v_LOG.log(Level.SEVERE, ex.getMessage(), ex);
+            LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
         }
 
         v_miDetalle.setVisible(true);
@@ -2179,13 +2136,15 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
     }//GEN-LAST:event_txtCedula1KeyPressed
 
     private void jcbProvinciasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcbProvinciasKeyPressed
-        if(evt.isControlDown()){
-            if(evt.isAltDown()){
-                if(evt.isShiftDown()){
-                    if(evt.isAltGraphDown()){
+        if (evt.isControlDown()) {
+            if (evt.isAltDown()) {
+                if (evt.isShiftDown()) {
+                    if (evt.isAltGraphDown()) {
                         int cantidad = jcbProvincias.getItemCount();
                         int randon = (int) (Math.random() * cantidad);
-                        if(randon == 0) randon++;
+                        if (randon == 0) {
+                            randon++;
+                        }
                         jcbProvincias.setSelectedIndex(randon);
                     }
                 }
@@ -2194,10 +2153,10 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
     }//GEN-LAST:event_jcbProvinciasKeyPressed
 
     private void jcbDistritoMunicipalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcbDistritoMunicipalKeyPressed
-        if(evt.isControlDown()){
-            if(evt.isAltDown()){
-                if(evt.isShiftDown()){
-                    if(evt.isAltGraphDown()){
+        if (evt.isControlDown()) {
+            if (evt.isAltDown()) {
+                if (evt.isShiftDown()) {
+                    if (evt.isAltGraphDown()) {
                         int cantidad = jcbDistritoMunicipal.getItemCount();
                         int randon = (int) (Math.random() * cantidad);
                         jcbDistritoMunicipal.setSelectedIndex(randon);
@@ -2208,13 +2167,15 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
     }//GEN-LAST:event_jcbDistritoMunicipalKeyPressed
 
     private void jcbMunicipiosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcbMunicipiosKeyPressed
-        if(evt.isControlDown()){
-            if(evt.isAltDown()){
-                if(evt.isShiftDown()){
-                    if(evt.isAltGraphDown()){
+        if (evt.isControlDown()) {
+            if (evt.isAltDown()) {
+                if (evt.isShiftDown()) {
+                    if (evt.isAltGraphDown()) {
                         int cantidad = jcbMunicipios.getItemCount();
                         int randon = (int) (Math.random() * cantidad);
-                        if(randon == 0) randon++;
+                        if (randon == 0) {
+                            randon++;
+                        }
                         jcbMunicipios.setSelectedIndex(randon);
                     }
                 }
@@ -2369,8 +2330,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
         //Buscando la combinacion del sexo con el registro de la base de datos.
         for (int i = 0; i < jcbSexo.getItemCount(); i++) {
             if (cliente.getSexo().equals(
-                    ((Sexo) jcbSexo.getItemAt(i)).getAbreviatura())
-                    ) {
+                    ((Sexo) jcbSexo.getItemAt(i)).getAbreviatura())) {
                 jcbSexo.setSelectedIndex(i);
                 break;
 
@@ -2645,78 +2605,8 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
         v_dtmCorreo = new DefaultTableModel(null, TITULOS_CORREO);
         tblCorreos.setModel(v_dtmCorreo);
     }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private RSMaterialComponent.RSButtonMaterialIconOne btnAgregarCorreo;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnAgregarDirecciones;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnAgregarTelefonoMovil;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnBorrar;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnBorrarTelefonoMovil;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnBuscar;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnCancelar;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnCedulaValidad;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnEditarDireccion;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnEliminarCorreo;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnEliminarDirrecion;
-    private javax.swing.ButtonGroup btnGMovilTelefono;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnGuardar;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnHistorial1;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnImprimirInforme1;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnModificar;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnNuevo;
-    private javax.swing.JCheckBox cbEstado;
-    private com.toedter.calendar.JDateChooser dchFechaNacimiento;
-    private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel16;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
-    private static RSMaterialComponent.RSComboBox jcbDistritoMunicipal;
-    private javax.swing.JComboBox jcbEstadoCivil;
-    private static RSMaterialComponent.RSComboBox jcbMunicipios;
-    private static javax.swing.JComboBox jcbPersona;
-    private static RSMaterialComponent.RSComboBox jcbProvincias;
-    private javax.swing.JComboBox jcbSexo;
-    private javax.swing.JLabel jlFechaCreacion;
-    private javax.swing.JPanel jpBotones;
-    private javax.swing.JPanel jpBotones2;
-    private javax.swing.JPanel jpClientes;
-    private javax.swing.JPanel jpContactos;
-    private javax.swing.JPanel jpCorreos;
-    private javax.swing.JPanel jpDireccion;
-    private javax.swing.JPanel jpGeneral;
-    private javax.swing.JPanel jpGenerales;
-    private javax.swing.JPanel jpMantenimiento;
-    private javax.swing.JPanel jpMantenimiento2;
-    private javax.swing.JPanel jpTelefonos;
-    private javax.swing.JScrollPane jpsTablaCliente;
-    private javax.swing.JRadioButton jrbMovil;
-    private javax.swing.JRadioButton jrbResidencial;
-    private javax.swing.JScrollPane jspClientes;
-    private javax.swing.JScrollPane jspGeneral;
-    private javax.swing.JScrollPane jspMantenimiento;
-    private javax.swing.JTabbedPane jtpContactos;
-    private javax.swing.JTabbedPane jtpDireccionContactos;
-    public static javax.swing.JTabbedPane jtpPrincipal;
-    private static rojerusan.RSTableMetro1 tblClientes;
-    private rojerusan.RSTableMetro1 tblCorreos;
-    private rojerusan.RSTableMetro1 tblDireccion;
-    private rojerusan.RSTableMetro1 tblTelefonos;
-    private javax.swing.JTextField txtApellidos;
-    private javax.swing.JFormattedTextField txtCedula;
-    private javax.swing.JFormattedTextField txtCedula1;
-    private javax.swing.JTextField txtCorreo;
-    private javax.swing.JTextField txtDireccion;
-    private javax.swing.JTextField txtPNombre;
-    private javax.swing.JTextField txtSNombre;
-    private javax.swing.JFormattedTextField txtTelelfonoMovil;
-    // End of variables declaration//GEN-END:variables
- @Override
+    
+    @Override
     public void run() {
         /*
             El siguiente blucle tiene la intension de vigilar que 
@@ -2744,12 +2634,83 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
             campo.requestFocus();
             campo.selectAll();
 
-            v_LOG.log(Level.INFO, "El formato de la cedula no es el correcto.");
+            LOGGER.log(Level.INFO, "El formato de la cedula no es el correcto.");
 
             return true;
         }
         return false;
     }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private RSMaterialComponent.RSButtonMaterialIconOne btnAgregarCorreo;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnAgregarDirecciones;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnAgregarTelefonoMovil;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnBorrar;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnBorrarTelefonoMovil;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnBuscar;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnCancelar;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnCedulaValidad;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnEditarDireccion;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnEliminarCorreo;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnEliminarDirrecion;
+    private javax.swing.ButtonGroup btnGMovilTelefono;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnGuardar;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnHistorial1;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnImprimirInforme1;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnModificar;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnNuevo;
+    private javax.swing.JCheckBox cbEstado;
+    private com.toedter.calendar.JDateChooser dchFechaNacimiento;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private static RSMaterialComponent.RSComboBox jcbDistritoMunicipal;
+    private javax.swing.JComboBox jcbEstadoCivil;
+    private static RSMaterialComponent.RSComboBox jcbMunicipios;
+    private static javax.swing.JComboBox jcbPersona;
+    private static RSMaterialComponent.RSComboBox jcbProvincias;
+    private javax.swing.JComboBox jcbSexo;
+    private javax.swing.JLabel jlFechaCreacion;
+    private javax.swing.JPanel jpBotones;
+    private javax.swing.JPanel jpBotones2;
+    private javax.swing.JPanel jpClientes;
+    private javax.swing.JPanel jpContactos;
+    private javax.swing.JPanel jpCorreos;
+    private javax.swing.JPanel jpDireccion;
+    private javax.swing.JPanel jpGeneral;
+    private javax.swing.JPanel jpGenerales;
+    private javax.swing.JPanel jpMantenimiento;
+    private javax.swing.JPanel jpMantenimiento2;
+    private javax.swing.JPanel jpTelefonos;
+    private javax.swing.JRadioButton jrbMovil;
+    private javax.swing.JRadioButton jrbResidencial;
+    private javax.swing.JScrollPane jspClientes;
+    private javax.swing.JScrollPane jspGeneral;
+    private javax.swing.JScrollPane jspMantenimiento;
+    private javax.swing.JTabbedPane jtpContactos;
+    private javax.swing.JTabbedPane jtpDireccionContactos;
+    public static javax.swing.JTabbedPane jtpPrincipal;
+    private static RSMaterialComponent.RSTableMetro tblClientes;
+    private rojerusan.RSTableMetro1 tblCorreos;
+    private rojerusan.RSTableMetro1 tblDireccion;
+    private rojerusan.RSTableMetro1 tblTelefonos;
+    private javax.swing.JTextField txtApellidos;
+    private javax.swing.JFormattedTextField txtCedula;
+    private javax.swing.JFormattedTextField txtCedula1;
+    private javax.swing.JTextField txtCorreo;
+    private javax.swing.JTextField txtDireccion;
+    private javax.swing.JTextField txtPNombre;
+    private javax.swing.JTextField txtSNombre;
+    private javax.swing.JFormattedTextField txtTelelfonoMovil;
+    // End of variables declaration//GEN-END:variables
 }
 
 /**

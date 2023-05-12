@@ -18,21 +18,26 @@ import static sur.softsurena.utilidades.Utilidades.repararColumnaTable;
 import static sur.softsurena.conexion.Conexion.getCnn;
 import static sur.softsurena.entidades.Categorias.getCategirias;//X
 import static sur.softsurena.entidades.Productos.agregarProducto;//X
-import static sur.softsurena.entidades.Productos.borrarProductoPorID_Codigo;//X
 import static sur.softsurena.entidades.Productos.existeProducto;//X
 import static sur.softsurena.entidades.Productos.getProductos;//X
 import static sur.softsurena.entidades.Productos.modificarProducto;//X
+import static sur.softsurena.entidades.Productos.borrarProductoPorID;
 
 public class frmProductos extends javax.swing.JInternalFrame {
+
     public static final String[] v_vistasList = {
         "V_CATEGORIAS",
         "V_PRODUCTOS",
         "GET_PRODUCTOS"
     };
     public static final String[] v_procedimientosList = {
-        
+        "SP_INSERT_PRODUCTO",
+        "SP_SELECT_PRODUCTOS_FIND",
+        "SP_SELECT_GET_PRODUCTOS",
+        "SP_DELETE_PRODUCTO",
+        "SP_UPDATE_PRODUCTO"
     };
-    
+
     private static final Logger LOG = Logger.getLogger(frmProductos.class.getName());
 
     private Boolean v_nuevo = null;
@@ -70,12 +75,8 @@ public class frmProductos extends javax.swing.JInternalFrame {
         jpProductos = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblProducto = new rojerusan.RSTableMetro1(){
-            @Override
-            public boolean isCellEditable(int rowIndex, int colIndex) {
-                return false; //Las celdas no son editables.
-            }
-        };
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tblProducto = new RSMaterialComponent.RSTableMetro();
         jpMantenimiento = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
@@ -233,28 +234,21 @@ public class frmProductos extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tblProducto.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                tblProductoKeyPressed(evt);
-            }
-        });
-        jScrollPane1.setViewportView(tblProducto);
+        jScrollPane5.setViewportView(tblProducto);
+
+        jScrollPane1.setViewportView(jScrollPane5);
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 689, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 683, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jpProductosLayout = new javax.swing.GroupLayout(jpProductos);
@@ -487,7 +481,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         );
         jpESProductosLayout.setVerticalGroup(
             jpESProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 502, Short.MAX_VALUE)
+            .addGap(0, 533, Short.MAX_VALUE)
         );
 
         jtpPrincipal.addTab("E/S Productos", jpESProductos);
@@ -500,7 +494,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         );
         jpESHistorialLayout.setVerticalGroup(
             jpESHistorialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 502, Short.MAX_VALUE)
+            .addGap(0, 533, Short.MAX_VALUE)
         );
 
         jtpPrincipal.addTab("E/S Historial", jpESHistorial);
@@ -646,7 +640,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
     private void txtCodigoBarraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoBarraActionPerformed
         cbCategoria.requestFocus();
         cbCategoria.showPopup();
-        
+
     }//GEN-LAST:event_txtCodigoBarraActionPerformed
     private void txtCodigoBarraKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoBarraKeyReleased
         String replaceAll = txtCodigoBarra.getText();
@@ -706,230 +700,274 @@ public class frmProductos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cbCategoriaPopupMenuWillBecomeInvisible
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        v_nuevo = true;
+        if (jtpPrincipal.getSelectedComponent() == jpProductos) {
+            v_nuevo = true;
 
-        jtpPrincipal.addTab("Mantenimiento", jpMantenimiento);
+            jtpPrincipal.addTab("Mantenimiento", jpMantenimiento);
 
-        cancelar(false, false);
+            cancelar(false, false);
 
-        jtpPrincipal.setSelectedIndex(jtpPrincipal.indexOfComponent(jpMantenimiento));
+            jtpPrincipal.setSelectedIndex(jtpPrincipal.indexOfComponent(jpMantenimiento));
 
-        /*
+            /*
             Investigamos primero si existe por lo menos una categoria registrada.
-         */
-        if (cbCategoria.getItemCount() <= 0) {
-            updateCategoria();
+             */
             if (cbCategoria.getItemCount() <= 0) {
-                JOptionPane.showInternalMessageDialog(
-                        null,
-                        "Debe agregar una categoria de producto al sistema",
-                        PROCESO_DE_VALIDACION_DEL_SISTEMA,
-                        JOptionPane.WARNING_MESSAGE
-                );
-                return;
+                updateCategoria();
+                if (cbCategoria.getItemCount() <= 0) {
+                    JOptionPane.showInternalMessageDialog(
+                            null,
+                            "Debe agregar una categoria de producto al sistema",
+                            PROCESO_DE_VALIDACION_DEL_SISTEMA,
+                            JOptionPane.WARNING_MESSAGE
+                    );
+                    return;
+                }
             }
+
+            ponerImagenProducto("imagenes/NoImageTransp 96 x 96.png");
+
+            jlImagenProducto.validate();
+
+            cbActivo.setSelected(true);
+            cbActivo.setText("Activo");
+
+            //Vacear los txt
+            txtDescripcion.setText("");
+            txtCodigoBarra.setText("");
+            txtNotas.setText("");
+
+            cbCategoria.setSelectedIndex(0);
+
+            txtDescripcion.requestFocus();
+        } else if (jtpPrincipal.getSelectedComponent() == jpMantenimiento) {
+
+        } else if (jtpPrincipal.getSelectedComponent() == jpESProductos) {
+
+        } else if (jtpPrincipal.getSelectedComponent() == jpESHistorial) {
+
         }
 
-        ponerImagenProducto("imagenes/NoImageTransp 96 x 96.png");
-        
-        jlImagenProducto.validate();
-
-        cbActivo.setSelected(true);
-        cbActivo.setText("Activo");
-
-        //Vacear los txt
-        txtDescripcion.setText("");
-        txtCodigoBarra.setText("");
-        txtNotas.setText("");
-
-        cbCategoria.setSelectedIndex(0);
-
-        txtDescripcion.requestFocus();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        //Validamos que exista un producto seleccionar.
-        if (tblProducto.getSelectedRow() <= -1) {
-            JOptionPane.showMessageDialog(
-                    null,
-                    "Debe seleccionar un producto",
-                    PROCESO_DE_VALIDACION_DEL_SISTEMA,
-                    JOptionPane.WARNING_MESSAGE);
-            return;
+        if (jtpPrincipal.getSelectedComponent() == jpProductos) {
+            //Validamos que exista un producto seleccionar.
+            if (tblProducto.getSelectedRow() <= -1) {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Debe seleccionar un producto",
+                        PROCESO_DE_VALIDACION_DEL_SISTEMA,
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            //Guardamos la fila de producto en la tabla, he tenido que hacerlo asi,
+            //porque se está la fila.
+            v_fila = tblProducto.getSelectedRow();
+
+            //Se actualiza el combo box de la categoria. 
+            updateCategoria();
+
+            //Pasamos false para habilitar los botones guardar y cancelar.
+            cancelar(false, false);
+
+            //Agregamos el jpMantenimiento y seleccionamos jTapPane
+            jtpPrincipal.addTab("Mantenimiento", jpMantenimiento);
+
+            jtpPrincipal.setSelectedIndex(jtpPrincipal.indexOfComponent(jpMantenimiento));
+
+            //Desactivamos el Flag de registro Nuevo para realizar actualizaciones.
+            v_nuevo = false;
+
+            //Metodo utilizado para mostrar el registro del usuario seleccionado 
+            //en la tabla. 
+            mostrarRegistro();
+
+            txtDescripcion.requestFocusInWindow();
+        } else if (jtpPrincipal.getSelectedComponent() == jpMantenimiento) {
+
+        } else if (jtpPrincipal.getSelectedComponent() == jpESProductos) {
+
+        } else if (jtpPrincipal.getSelectedComponent() == jpESHistorial) {
+
         }
 
-        //Guardamos la fila de producto en la tabla, he tenido que hacerlo asi,
-        //porque se está la fila.
-        v_fila = tblProducto.getSelectedRow();
 
-        //Se actualiza el combo box de la categoria. 
-        updateCategoria();
-
-        //Pasamos false para habilitar los botones guardar y cancelar.
-        cancelar(false, false);
-
-        //Agregamos el jpMantenimiento y seleccionamos jTapPane
-        jtpPrincipal.addTab("Mantenimiento", jpMantenimiento);
-
-        jtpPrincipal.setSelectedIndex(jtpPrincipal.indexOfComponent(jpMantenimiento));
-
-        //Desactivamos el Flag de registro Nuevo para realizar actualizaciones.
-        v_nuevo = false;
-
-        //Metodo utilizado para mostrar el registro del usuario seleccionado 
-        //en la tabla. 
-        mostrarRegistro();
-
-        txtDescripcion.requestFocusInWindow();
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
+        if (jtpPrincipal.getSelectedComponent() == jpProductos) {
+            Integer id = ((Productos) tblProducto.getValueAt(tblProducto.getSelectedRow(), 2)).getId();
+            String descripcion = ((Productos) tblProducto.getValueAt(tblProducto.getSelectedRow(), 2)).getDescripcion();
 
-        Integer id = ((Productos) tblProducto.getValueAt(tblProducto.getSelectedRow(), 2)).getId();
-        String descripcion = ((Productos) tblProducto.getValueAt(tblProducto.getSelectedRow(), 2)).getDescripcion();
-
-        if (id == null) {
-            JOptionPane.showMessageDialog(
-                    null,
-                    "Debe seleccionar un producto",
-                    PROCESO_DE_VALIDACION_DEL_SISTEMA,
-                    JOptionPane.WARNING_MESSAGE
-            );
-            return;
-        }
-
-        int rta = JOptionPane.showConfirmDialog(
-                null,
-                "Esta Seguro de Eliminar el Producto {" + descripcion + "} de los Registro?",
-                PROCESO_DE_VALIDACION_DEL_SISTEMA,
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE);
-
-        if (rta == JOptionPane.NO_OPTION) {
-            return;
-        }
-
-        String msg;
-        try {
-            msg = borrarProductoPorID_Codigo(id);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(
-                    null,
-                    "No se puede eliminar el producto porque ya ha sido facturado"
-                    + "\n!!Te recomendamos cambiar el ESTADO del producto...",
-                    "Proceso de verificación.",
-                    JOptionPane.WARNING_MESSAGE
-            );
-            return;
-        }
-
-        JOptionPane.showMessageDialog(
-                null,
-                msg
-        );
-        reOrdenar();
-    }//GEN-LAST:event_btnBorrarActionPerformed
-
-    private void btnBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProductoActionPerformed
-        if (tblProducto.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(null, "No hay producto registrado");
-            return;
-        }
-        String producto = JOptionPane.showInputDialog(
-                null,
-                "Ingrese el Codigo ID Producto...",
-                "Busqueda de producto del sistema",
-                JOptionPane.QUESTION_MESSAGE);
-
-        if (!producto.isBlank()) {
-            if (!existeProducto(producto)) {
+            if (id == null) {
                 JOptionPane.showMessageDialog(
                         null,
-                        "El Producto No Existe...",
-                        "Consulta de productos en el sistema.",
-                        JOptionPane.INFORMATION_MESSAGE);
-                return;
-            }
-            //Detalle de Factura
-            int num = tblProducto.getRowCount();
-            for (int i = 0; i < num; i++) {
-                if (tblProducto.getValueAt(i, 0).toString().equals(producto)) {
-                    tblProducto.setRowSelectionInterval(tblProducto.getSelectedRow(),
-                            tblProducto.getSelectedRow());
-                    break;
-                }
-            }
-            reOrdenar();
-        }
-    }//GEN-LAST:event_btnBuscarProductoActionPerformed
-
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        //Validaciones
-        //Validamos que Codigo de barra sea proporcionado. 
-        if (txtCodigoBarra.getText().isBlank()) {
-            JOptionPane.showMessageDialog(
-                    null,
-                    "Debe Digitar un ID",
-                    PROCESO_DE_VALIDACION_DEL_SISTEMA,
-                    JOptionPane.WARNING_MESSAGE
-            );
-            txtCodigoBarra.requestFocusInWindow();
-            return;
-        }
-
-        //Validamos que la descripcion sea proporcionada.
-        if (txtDescripcion.getText().isBlank()) {
-            JOptionPane.showMessageDialog(
-                    null,
-                    "Debe Digitar una Descripcion...",
-                    PROCESO_DE_VALIDACION_DEL_SISTEMA,
-                    JOptionPane.WARNING_MESSAGE
-            );
-            txtDescripcion.requestFocusInWindow();
-            return;
-        }
-
-        //Validamos que sea proporcionada una categoria del producto
-        if (cbCategoria.getSelectedIndex() <= 0) {
-            JOptionPane.showMessageDialog(
-                    null,
-                    "Seleccione una categoria",
-                    PROCESO_DE_VALIDACION_DEL_SISTEMA,
-                    JOptionPane.WARNING_MESSAGE
-            );
-            cbCategoria.requestFocusInWindow();
-            return;
-        }
-
-        // Si es nuevo validamos que el Producto no exista por su codigo de 
-        //barra.
-        if (v_nuevo) {
-            if (existeProducto(txtCodigoBarra.getText())) {
-                JOptionPane.showMessageDialog(null,
-                        "Codigo de barra existente en el sistema",
+                        "Debe seleccionar un producto",
                         PROCESO_DE_VALIDACION_DEL_SISTEMA,
                         JOptionPane.WARNING_MESSAGE
                 );
-                txtCodigoBarra.setText("");
+                return;
+            }
+
+            int rta = JOptionPane.showConfirmDialog(
+                    null,
+                    "Esta Seguro de Eliminar el Producto {" + descripcion + "} de los Registro?",
+                    PROCESO_DE_VALIDACION_DEL_SISTEMA,
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE);
+
+            if (rta == JOptionPane.NO_OPTION) {
+                return;
+            }
+
+            String msg;
+            try {
+                msg = borrarProductoPorID(id);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "No se puede eliminar el producto porque ya ha sido facturado"
+                        + "\n!!Te recomendamos cambiar el ESTADO del producto...",
+                        "Proceso de verificación.",
+                        JOptionPane.WARNING_MESSAGE
+                );
+                return;
+            }
+
+            JOptionPane.showMessageDialog(
+                    null,
+                    msg
+            );
+            reOrdenar();
+        } else if (jtpPrincipal.getSelectedComponent() == jpMantenimiento) {
+
+        } else if (jtpPrincipal.getSelectedComponent() == jpESProductos) {
+
+        } else if (jtpPrincipal.getSelectedComponent() == jpESHistorial) {
+
+        }
+
+
+    }//GEN-LAST:event_btnBorrarActionPerformed
+
+    private void btnBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProductoActionPerformed
+        if (jtpPrincipal.getSelectedComponent() == jpProductos) {
+            if (tblProducto.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(null, "No hay producto registrado");
+                return;
+            }
+            String producto = JOptionPane.showInputDialog(
+                    null,
+                    "Ingrese el Codigo ID Producto...",
+                    "Busqueda de producto del sistema",
+                    JOptionPane.QUESTION_MESSAGE);
+
+            if (!producto.isBlank()) {
+                if (!existeProducto(producto)) {
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "El Producto No Existe...",
+                            "Consulta de productos en el sistema.",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
+                //Detalle de Factura
+                int num = tblProducto.getRowCount();
+                for (int i = 0; i < num; i++) {
+                    if (tblProducto.getValueAt(i, 0).toString().equals(producto)) {
+                        tblProducto.setRowSelectionInterval(tblProducto.getSelectedRow(),
+                                tblProducto.getSelectedRow());
+                        break;
+                    }
+                }
+                reOrdenar();
+            }
+        } else if (jtpPrincipal.getSelectedComponent() == jpMantenimiento) {
+
+        } else if (jtpPrincipal.getSelectedComponent() == jpESProductos) {
+
+        } else if (jtpPrincipal.getSelectedComponent() == jpESHistorial) {
+
+        }
+
+
+    }//GEN-LAST:event_btnBuscarProductoActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        if (jtpPrincipal.getSelectedComponent() == jpProductos) {
+
+        } else if (jtpPrincipal.getSelectedComponent() == jpMantenimiento) {
+            //Validaciones
+            //Validamos que Codigo de barra sea proporcionado. 
+            if (txtCodigoBarra.getText().isBlank()) {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Debe Digitar un ID",
+                        PROCESO_DE_VALIDACION_DEL_SISTEMA,
+                        JOptionPane.WARNING_MESSAGE
+                );
                 txtCodigoBarra.requestFocusInWindow();
                 return;
             }
-        }
 
-        //Creando el objecto producto.
-        Productos p = Productos.
-                builder().
-                categoria(Categorias.
-                        builder().
-                        id_categoria(((Categorias) cbCategoria.getSelectedItem()).getId_categoria()).
-                        build()).
-                codigo(txtCodigoBarra.getText()).
-                descripcion(txtDescripcion.getText()).
-                imagenProducto(Utilidades.imagenEncode64(file.getSelectedFile())).
-                estado(cbActivo.isSelected()).
-                nota(txtNotas.getText()).
-                build();
-        /*
+            //Validamos que la descripcion sea proporcionada.
+            if (txtDescripcion.getText().isBlank()) {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Debe Digitar una Descripcion...",
+                        PROCESO_DE_VALIDACION_DEL_SISTEMA,
+                        JOptionPane.WARNING_MESSAGE
+                );
+                txtDescripcion.requestFocusInWindow();
+                return;
+            }
+
+            //Validamos que sea proporcionada una categoria del producto
+            if (cbCategoria.getSelectedIndex() <= 0) {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Seleccione una categoria",
+                        PROCESO_DE_VALIDACION_DEL_SISTEMA,
+                        JOptionPane.WARNING_MESSAGE
+                );
+                cbCategoria.requestFocusInWindow();
+                return;
+            }
+
+            // Si es nuevo validamos que el Producto no exista por su codigo de 
+            //barra.
+            if (v_nuevo) {
+                if (existeProducto(txtCodigoBarra.getText())) {
+                    JOptionPane.showMessageDialog(null,
+                            "Codigo de barra existente en el sistema",
+                            PROCESO_DE_VALIDACION_DEL_SISTEMA,
+                            JOptionPane.WARNING_MESSAGE
+                    );
+                    txtCodigoBarra.setText("");
+                    txtCodigoBarra.requestFocusInWindow();
+                    return;
+                }
+            }
+
+            int id = ((Productos) tblProducto.getValueAt(tblProducto.getSelectedRow(), 2)).getId();
+
+            //Creando el objecto producto.
+            Productos p = Productos.
+                    builder().
+                    id(id).
+                    categoria(Categorias.
+                            builder().
+                            id_categoria(((Categorias) cbCategoria.getSelectedItem()).getId_categoria()).
+                            build()).
+                    codigo(txtCodigoBarra.getText()).
+                    descripcion(txtDescripcion.getText()).
+                    imagenProducto(Utilidades.imagenEncode64(file.getSelectedFile())).
+                    estado(cbActivo.isSelected()).
+                    nota(txtNotas.getText()).
+                    build();
+            /*
          * La variable msg es llamada mensaje la cual servirá para dos cosa,
          * la primera es que para recoger la nota del producto, para mostrarlo 
          * en el proximo JOpcionPane y luego para almacenar el resultado de la
@@ -937,52 +975,91 @@ public class frmProductos extends javax.swing.JInternalFrame {
          * La variable editar es utilizada para ser utilizada en el siguiente 
          * JopcionPane para dar a conocer al usuario que hara una insersion o 
          * modificación.
-         */
-        String msg, accion = "editar";
+             */
+            String msg, accion = "editar";
 
-        if (v_nuevo) {
-            accion = "crear";
+            if (v_nuevo) {
+                accion = "crear";
+            }
+
+            if (txtNotas.getText().length() >= 51) {
+                msg = txtNotas.getText().substring(0, 49) + "...";
+            } else {
+                msg = txtNotas.getText();
+            }
+
+            int resp = JOptionPane.showConfirmDialog(null,
+                    "<html><b><big>Se va a " + accion + " el Producto: </big></b><big>" + txtDescripcion.getText() + "</big></html>"
+                    + "\n<html><b><big>Codigo no: </big></b><big>" + txtCodigoBarra.getText() + "</big></html>"
+                    + "\n<html><b><big>Categoria: </big></b><big>" + ((Categorias) cbCategoria.getSelectedItem()).getDescripcion() + "</big></html>"
+                    + "\n<html><b><big>Estado: </big></b><big>" + (cbActivo.isSelected() ? "Activo" : "Inactivo") + "</big></html>"
+                    + "\n<html><b><big>Notas: </big></b><big>" + msg + "</big></html>"
+                    + "\n<html><b><big>Desea continuar? </big></b></html>",
+                    "Confirmacion de Usuario",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    jlImagenProducto.getIcon());
+
+            if (resp == JOptionPane.NO_OPTION) {
+                return;
+            }
+
+            int icono;
+
+            if (v_nuevo) {
+                msg = agregarProducto(p).getMensaje();
+            } else {
+                msg = modificarProducto(p);
+            }
+            
+            /*
+                Dependiendo de resultado de la operacion elegimos un icono.
+            */
+            if(msg.equals(Productos.PRODUCTO_AGREGADO_CORRECTAMENTE) || 
+                    msg.equals(Productos.PRODUCTO__MODIFICADO__CORRECTAMENTE)){
+                icono = JOptionPane.INFORMATION_MESSAGE;
+            }else{
+                icono = JOptionPane.ERROR_MESSAGE;
+            }
+            
+            /*
+                Mostramos mensaje de la operacion.
+            */
+            JOptionPane.showMessageDialog(
+                    null,
+                    msg,
+                    "Resultado de la operacion.",
+                    icono
+            );
+
+            /*
+                Removemos el jpMantenimiento de la vista del usuario.
+            */
+            jtpPrincipal.remove(jpMantenimiento);
+            
+            /*
+                Para inhabilitar los botones de Guardar y Cancelar. 
+            */
+            cancelar(true, true);
+        } else if (jtpPrincipal.getSelectedComponent() == jpESProductos) {
+
+        } else if (jtpPrincipal.getSelectedComponent() == jpESHistorial) {
+
         }
 
-        if (txtNotas.getText().length() >= 51) {
-            msg = txtNotas.getText().substring(0, 49) + "...";
-        } else {
-            msg = txtNotas.getText();
-        }
-
-        int resp = JOptionPane.showConfirmDialog(null,
-                "<html><b><big>Se va a " + accion + " el Producto: </big></b><big>" + txtDescripcion.getText() + "</big></html>"
-                + "\n<html><b><big>Codigo no: </big></b><big>" + txtCodigoBarra.getText() + "</big></html>"
-                + "\n<html><b><big>Categoria: </big></b><big>" + ((Categorias) cbCategoria.getSelectedItem()).getDescripcion() + "</big></html>"
-                + "\n<html><b><big>Estado: </big></b><big>" + (cbActivo.isSelected() ? "Activo" : "Inactivo") + "</big></html>"
-                + "\n<html><b><big>Notas: </big></b><big>" + msg + "</big></html>"
-                + "\n<html><b><big>Desea continuar? </big></b></html>",
-                "Confirmacion de Usuario",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                jlImagenProducto.getIcon());
-
-        if (resp == JOptionPane.NO_OPTION) {
-            return;
-        }
-
-        if (v_nuevo) {
-            msg = agregarProducto(p).getMensaje();
-        } else {
-            int id = ((Productos) tblProducto.getValueAt(tblProducto.getSelectedRow(), 2)).getId();
-            msg = modificarProducto(id, p);
-        }
-
-        JOptionPane.showMessageDialog(
-                null,
-                msg);
-
-        jtpPrincipal.remove(jpMantenimiento);
-        cancelar(true, true);
     }//GEN-LAST:event_btnGuardarActionPerformed
 
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        if (jtpPrincipal.getSelectedComponent() == jpProductos) {
+
+        } else if (jtpPrincipal.getSelectedComponent() == jpMantenimiento) {
+
+        } else if (jtpPrincipal.getSelectedComponent() == jpESProductos) {
+
+        } else if (jtpPrincipal.getSelectedComponent() == jpESHistorial) {
+
+        }
         cancelar(true, true);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -1103,7 +1180,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
                                 append((cbActivo.isSelected() ? "Activo" : "Inactivo"));
 
                         txtNotas.setText(string.toString());
-                        
+
                         ponerImagenProducto("imagenes/NoImageTransp 96 x 96.png");
                     }
                 }
@@ -1126,21 +1203,8 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_btnEliminarFotoActionPerformed
 
-    private void tblProductoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblProductoKeyPressed
-        if (evt.isControlDown()) {
-            if (evt.isAltDown()) {
-                if (evt.isShiftDown()) {
-                    if (evt.isAltGraphDown()) {
-                        int numero = (int) (Math.random() * tblProducto.getRowCount());
-                        tblProducto.setRowSelectionInterval(numero, numero);
-                    }
-                }
-            }
-        }
-    }//GEN-LAST:event_tblProductoKeyPressed
-
     private void txtNotasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNotasKeyTyped
-        if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_TAB)
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_TAB)
             btnAgregarFoto.requestFocus();
     }//GEN-LAST:event_txtNotasKeyTyped
 
@@ -1231,9 +1295,8 @@ public class frmProductos extends javax.swing.JInternalFrame {
     /**
      * Es el metodo encargado de mostrar el modulo de mantenimiento de producto
      * o registro a actualizar.
-     * 
-     * Este metodo es llamado desde:
-     *  1) btnModificarActionPerformed
+     *
+     * Este metodo es llamado desde: 1) btnModificarActionPerformed
      */
     private void mostrarRegistro() {
         //Si la tabla no cuenta con registro se envian valores por defecto.
@@ -1249,7 +1312,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
         int id = ((Productos) tblProducto.getValueAt(v_fila, 2)).getId();
 
-        Productos producto = Productos.getProducto(id);
+        Productos producto = Productos.getProductoById(id, null);
 
         txtCodigoBarra.setText(producto.getCodigo());
 
@@ -1279,11 +1342,9 @@ public class frmProductos extends javax.swing.JInternalFrame {
     /**
      * Metodo utilizado para modicar el ancho de cada columna del modulo
      * producto.
-     * 
-     * Este metodo es llamado desde: 
-     *  1) btnBorrarActionPerformed
-     *  2) btnBuscarProductoActionPerformed
-     *  3) formInternalFrameOpened
+     *
+     * Este metodo es llamado desde: 1) btnBorrarActionPerformed 2)
+     * btnBuscarProductoActionPerformed 3) formInternalFrameOpened
      */
     private void reOrdenar() {
         if (tblProducto.getRowCount() <= 0) {
@@ -1337,12 +1398,10 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
     /**
      * Metodo utilizado para actualizar el jComboBox de categorias del sistema.
-     * 
-     * Este metodo es llamado desde: 
-     *  1) btnNuevoActionPerformed
-     *  2) btnModificarActionPerformed
-     *  3) btnAdmCategoriasActionPerformed
-        4) formInternalFrameOpened
+     *
+     * Este metodo es llamado desde: 1) btnNuevoActionPerformed 2)
+     * btnModificarActionPerformed 3) btnAdmCategoriasActionPerformed 4)
+     * formInternalFrameOpened
      */
     private void updateCategoria() {
         //Elimina registros previos.
@@ -1368,16 +1427,15 @@ public class frmProductos extends javax.swing.JInternalFrame {
             );
         });
     }
-    
+
     /**
      * Meto que permite colocar una imagen en el jlImagenProducto, la cual debe
      * pasarsele por parametros un String con el path de la imagen.
-     * 
-     * Este metodo es llamado desde: 
-     *  1) btnNuevoActionPerformed
-     *  2) cbCategoriaKeyPressed: solo es utilizado para pruebas del sistema.
-     *  3) btnAgregarFotoActionPerformed
-     * 
+     *
+     * Este metodo es llamado desde: 1) btnNuevoActionPerformed 2)
+     * cbCategoriaKeyPressed: solo es utilizado para pruebas del sistema. 3)
+     * btnAgregarFotoActionPerformed
+     *
      * @param file representa la ruta de la imagen en el sistema.
      */
     private void ponerImagenProducto(String file) {
@@ -1416,6 +1474,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JLabel jlImagenProducto;
     private RSMaterialComponent.RSLabelIcon jlOpcionesMostrar;
     private javax.swing.JPanel jpESHistorial;
@@ -1424,40 +1483,41 @@ public class frmProductos extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jpOpciones;
     private javax.swing.JPanel jpProductos;
     private javax.swing.JTabbedPane jtpPrincipal;
-    public static rojerusan.RSTableMetro1 tblProducto;
+    public static RSMaterialComponent.RSTableMetro tblProducto;
     private javax.swing.JTextField txtCodigoBarra;
     private javax.swing.JTextField txtDescripcion;
     private javax.swing.JTextArea txtNotas;
     // End of variables declaration//GEN-END:variables
-    
-    
+
 }
 
 /**
  * btnNuevoActionPerformed tenemos las siguiente logica: <br>
- *  1) Cambiamos a true el flag nuevo. X<br>
- *  2) En el jtpPrincipal agrega el jpMantenimiento enseguida cambia a este. X<br>
- *  3) El metodo cancelar inhabilita los botones Nuevo, Editar, Borrar y Buscar. X<br>
- *      Y habilita los botones de guardar y cancelar. X<br>
- *  4) Luego el jtpPrincipal selecciona el jpMantenimiento para mostrar. X<br>
- *  5) Se valida que existan categorias en el sistema. X<br>
- *  6) Se coloca la imagen predeterminada. X<br>
- *  7) Se coloca el estado del producto true de forma predeterminada. X<br>
- *  8) Se limpian los campos descripcion, codigo de barra, nota. X<br>
- *  9) El campo de la categoria se coloca en el index cero. X<br>
- * 
- * 
+ * 1) Cambiamos a true el flag nuevo. X<br>
+ * 2) En el jtpPrincipal agrega el jpMantenimiento enseguida cambia a este.
+ * X<br>
+ * 3) El metodo cancelar inhabilita los botones Nuevo, Editar, Borrar y Buscar.
+ * X<br>
+ * Y habilita los botones de guardar y cancelar. X<br>
+ * 4) Luego el jtpPrincipal selecciona el jpMantenimiento para mostrar. X<br>
+ * 5) Se valida que existan categorias en el sistema. X<br>
+ * 6) Se coloca la imagen predeterminada. X<br>
+ * 7) Se coloca el estado del producto true de forma predeterminada. X<br>
+ * 8) Se limpian los campos descripcion, codigo de barra, nota. X<br>
+ * 9) El campo de la categoria se coloca en el index cero. X<br>
+ *
+ *
  * btnModificarActionPerformed tenemos las siguiente logica:<br>
- *  1) Se valida que se tenga un registro seleccionado, en caso contrario <br>
- *      Muestra un mensaje de error. X<br>
- *  2) Guardamos la fila seleccionada en la variable v_fila. X<br>
- *  3) Actualizamos las categorias registradas en el sistema. X <br>
- *  4) Del punto 3 anterior es aplicado aqui.X <br>
- *  5) Se agrega el jpMantenimiento y de inmediato se selecciona. X <br>
- *  6) La variable v_nueva se le da valor de false. X <br>
- *  7) Se manda a llamar el metodo mostrarRegistro(). X <br>
- *  8) El campo descripcion hace la peticion de focus. X <br>
- * 
+ * 1) Se valida que se tenga un registro seleccionado, en caso contrario <br>
+ * Muestra un mensaje de error. X<br>
+ * 2) Guardamos la fila seleccionada en la variable v_fila. X<br>
+ * 3) Actualizamos las categorias registradas en el sistema. X <br>
+ * 4) Del punto 3 anterior es aplicado aqui.X <br>
+ * 5) Se agrega el jpMantenimiento y de inmediato se selecciona. X <br>
+ * 6) La variable v_nueva se le da valor de false. X <br>
+ * 7) Se manda a llamar el metodo mostrarRegistro(). X <br>
+ * 8) El campo descripcion hace la peticion de focus. X <br>
+ *
  * Nota:
- *  
+ *
  */

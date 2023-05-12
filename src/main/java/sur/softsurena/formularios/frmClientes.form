@@ -153,11 +153,11 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="1" attributes="0">
+                              <Group type="102" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="jpsTablaCliente" pref="790" max="32767" attributes="0"/>
-                                      <Component id="jScrollPane2" max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jScrollPane2" pref="768" max="32767" attributes="0"/>
+                                      <Component id="jScrollPane1" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
@@ -167,7 +167,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jpsTablaCliente" pref="386" max="32767" attributes="0"/>
+                                  <Component id="jScrollPane1" pref="367" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -176,51 +176,6 @@
                         </DimensionLayout>
                       </Layout>
                       <SubComponents>
-                        <Container class="javax.swing.JScrollPane" name="jpsTablaCliente">
-                          <Properties>
-                            <Property name="name" type="java.lang.String" value="jpsTablaCliente" noResource="true"/>
-                          </Properties>
-                          <AuxValues>
-                            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-                          </AuxValues>
-
-                          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-                          <SubComponents>
-                            <Component class="rojerusan.RSTableMetro1" name="tblClientes">
-                              <Properties>
-                                <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                                  <Table columnCount="4" rowCount="4">
-                                    <Column editable="true" title="Title 1" type="java.lang.Object"/>
-                                    <Column editable="true" title="Title 2" type="java.lang.Object"/>
-                                    <Column editable="true" title="Title 3" type="java.lang.Object"/>
-                                    <Column editable="true" title="Title 4" type="java.lang.Object"/>
-                                  </Table>
-                                </Property>
-                                <Property name="backgoundHover" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                                  <Color blue="ff" green="66" red="66" type="rgb"/>
-                                </Property>
-                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                  <Font name="FreeMono" size="14" style="1"/>
-                                </Property>
-                                <Property name="fontHead" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                  <Font name="FreeMono" size="14" style="1"/>
-                                </Property>
-                                <Property name="fontRowHover" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                  <Font name="FreeMono" size="14" style="1"/>
-                                </Property>
-                                <Property name="fontRowSelect" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                  <Font name="FreeMono" size="14" style="1"/>
-                                </Property>
-                                <Property name="name" type="java.lang.String" value="tblClientes" noResource="true"/>
-                                <Property name="showGrid" type="boolean" value="false"/>
-                              </Properties>
-                              <AuxValues>
-                                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new rojerusan.RSTableMetro1(){&#xa;@Override&#xa;public boolean isCellEditable(int rowIndex, int colIndex) { &#xa;    return false; //Las celdas no son editables. &#xa;}&#xa;}"/>
-                                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
-                              </AuxValues>
-                            </Component>
-                          </SubComponents>
-                        </Container>
                         <Container class="javax.swing.JScrollPane" name="jScrollPane2">
 
                           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
@@ -265,6 +220,30 @@
                                 </Component>
                               </SubComponents>
                             </Container>
+                          </SubComponents>
+                        </Container>
+                        <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+                          <AuxValues>
+                            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                          </AuxValues>
+
+                          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                          <SubComponents>
+                            <Component class="RSMaterialComponent.RSTableMetro" name="tblClientes">
+                              <Properties>
+                                <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                                  <Table columnCount="4" rowCount="4">
+                                    <Column editable="true" title="Title 1" type="java.lang.Object"/>
+                                    <Column editable="true" title="Title 2" type="java.lang.Object"/>
+                                    <Column editable="true" title="Title 3" type="java.lang.Object"/>
+                                    <Column editable="true" title="Title 4" type="java.lang.Object"/>
+                                  </Table>
+                                </Property>
+                              </Properties>
+                              <AuxValues>
+                                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
+                              </AuxValues>
+                            </Component>
                           </SubComponents>
                         </Container>
                       </SubComponents>

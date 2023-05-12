@@ -957,8 +957,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
                     ImageIcon imagen = new ImageIcon(im);
 
                     if (imagen.getIconHeight() == -1) {
-                        imagen = new ImageIcon(System.getProperty("user.dir")
-                                + "/images/NoImageTransp 96 x 96.png");
+                        imagen = new ImageIcon("sur/softsurena/imagenes/NoImageTransp 96 x 96.png");
                     }
                     Icon icon = new ImageIcon(imagen.getImage().getScaledInstance(
                             64,
@@ -1713,8 +1712,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
                 ImageIcon imagen = new ImageIcon(im);
 
                 if (imagen.getIconHeight() == -1) {
-                    imagen = new ImageIcon(System.getProperty("user.dir")
-                            + "/images/NoImageTransp 96 x 96.png");
+                    imagen = new ImageIcon("sur/softsurena/imagenes/NoImageTransp 96 x 96.png");
                 }
                 Icon icon = new ImageIcon(imagen.getImage().getScaledInstance(
                         64,
@@ -1792,7 +1790,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
             ImageIcon imagen = Utilidades.imagenDecode64(x.getImage_texto());
 
             if (imagen.getIconHeight() == -1) {
-                imagen = new Imagenes().getIcono("/imagenes/NoImageTransp 96 x 96.png");
+                imagen = new Imagenes().getIcono("NoImageTransp 96 x 96.png");
             }
 
             Icon icon = new ImageIcon(

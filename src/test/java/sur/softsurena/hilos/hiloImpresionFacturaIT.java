@@ -37,7 +37,6 @@ public class hiloImpresionFacturaIT {
      */
     @Test
     public void testRun() {
-        System.out.println("run");
         hiloImpresionFactura instance = null;
         instance.run();
     }
@@ -47,7 +46,6 @@ public class hiloImpresionFacturaIT {
      */
     @Test
     public void testTerminar() {
-        System.out.println("terminar");
         hiloImpresionFactura instance = null;
         instance.terminar();
     }
@@ -57,7 +55,6 @@ public class hiloImpresionFacturaIT {
      */
     @Test
     public void testDetenElHilo() {
-        System.out.println("detenElHilo");
         hiloImpresionFactura instance = null;
         instance.detenElHilo();
     }
@@ -67,7 +64,6 @@ public class hiloImpresionFacturaIT {
      */
     @Test
     public void testIniciarElHilo() {
-        System.out.println("iniciarElHilo");
         hiloImpresionFactura instance = null;
         instance.iniciarElHilo();
     }

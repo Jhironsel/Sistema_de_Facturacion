@@ -5,12 +5,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
-/**
- *
- * @author jhironsel
- */
 public class hiloIpIT {
     
     public hiloIpIT() {
@@ -37,7 +32,6 @@ public class hiloIpIT {
      */
     @Test
     public void testRun() {
-        System.out.println("run");
         hiloIp instance = new hiloIp();
         instance.run();
     }
@@ -47,7 +41,6 @@ public class hiloIpIT {
      */
     @Test
     public void testDetener() {
-        System.out.println("detener");
         hiloIp instance = new hiloIp();
         instance.detener();
     }
@@ -57,7 +50,6 @@ public class hiloIpIT {
      */
     @Test
     public void testIniciar() {
-        System.out.println("iniciar");
         hiloIp instance = new hiloIp();
         instance.iniciar();
     }
@@ -67,7 +59,6 @@ public class hiloIpIT {
      */
     @Test
     public void testCorrer() {
-        System.out.println("correr");
         hiloIp instance = new hiloIp();
         instance.correr();
     }

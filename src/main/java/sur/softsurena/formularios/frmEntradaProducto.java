@@ -8,16 +8,20 @@ import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import rojerusan.RSTableMetro;
 import sur.softsurena.entidades.Productos;
+import static sur.softsurena.entidades.Productos.getProductoById;
 
 public class frmEntradaProducto extends javax.swing.JDialog {
 
+    private static final Logger LOG = Logger.getLogger(frmEntradaProducto.class.getName());
+    
     private frmBusquedaProducto miBusqueda;
     private Boolean impuesto = false;
     private DefaultTableModel miTabla;
@@ -376,7 +380,7 @@ public class frmEntradaProducto extends javax.swing.JDialog {
             return;
         }
 
-//        getProductoById(null, txtCodigoProducto.getText())
+        Productos productoById = getProductoById(null, txtCodigoProducto.getText());
         ResultSet rs = null;
         BufferedImage img = null;
         try {
@@ -398,7 +402,7 @@ public class frmEntradaProducto extends javax.swing.JDialog {
             if (img != null) {
                 imagen = new ImageIcon(img);
             } else {
-                imagen = new ImageIcon(getClass().getResource("/images/NoImageTransp 96 x 96.png"));
+                imagen = new ImageIcon("sur/softsurena/imagenes/NoImageTransp 96 x 96.png");
 
             }
             Icon icon = new ImageIcon(imagen.getImage().getScaledInstance(72, 72,
@@ -412,9 +416,9 @@ public class frmEntradaProducto extends javax.swing.JDialog {
 
             txtEntrada.requestFocusInWindow();
         } catch (SQLException ex) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         } catch (IOException ex) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }//GEN-LAST:event_txtCodigoProductoActionPerformed
 
@@ -639,7 +643,7 @@ public class frmEntradaProducto extends javax.swing.JDialog {
         miBusqueda.setLocationRelativeTo(null);
         miBusqueda.setVisible(true);
         if (miBusqueda.getRespuesta() != null) {
-//            txtCodigoProducto.setText(((Categoria) miBusqueda.getRespuesta()).getDescripcion());
+            txtCodigoProducto.setText(miBusqueda.getRespuesta());
             txtCodigoProductoActionPerformed(evt);
         }
         
@@ -658,7 +662,7 @@ public class frmEntradaProducto extends javax.swing.JDialog {
     }
 
     private void quitarImagen() {
-        ImageIcon imagen = new ImageIcon(getClass().getResource("/images/NoImageTransp 96 x 96.png"));
+        ImageIcon imagen = new ImageIcon("sur/softsurena/imagenes/NoImageTransp 96 x 96.png");
         Icon icon = new ImageIcon(imagen.getImage().getScaledInstance(72, 72,
                 Image.SCALE_DEFAULT));
         imagen.getImage().flush();

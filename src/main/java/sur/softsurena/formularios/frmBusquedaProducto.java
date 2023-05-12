@@ -3,6 +3,7 @@ package sur.softsurena.formularios;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import static sur.softsurena.entidades.Productos.buscarProducto;
+import sur.softsurena.utilidades.Utilidades;
 
 public class frmBusquedaProducto extends javax.swing.JDialog {
 
@@ -40,6 +41,7 @@ public class frmBusquedaProducto extends javax.swing.JDialog {
         });
 
         txtCriterio.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.FIND_IN_PAGE);
+        txtCriterio.setName("txtCriterio"); // NOI18N
         txtCriterio.setPlaceholder("Busqueda por Descripción o por Código de Producto");
         txtCriterio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -52,6 +54,8 @@ public class frmBusquedaProducto extends javax.swing.JDialog {
             }
         });
 
+        jScrollPane3.setBorder(javax.swing.BorderFactory.createTitledBorder("Resultados de la busqueda"));
+
         tblTabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -63,6 +67,7 @@ public class frmBusquedaProducto extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblTabla.setName("tblTabla"); // NOI18N
         tblTabla.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tblTabla.setShowGrid(true);
         jScrollPane3.setViewportView(tblTabla);
@@ -70,6 +75,7 @@ public class frmBusquedaProducto extends javax.swing.JDialog {
         btnAceptar.setText("Aceptar");
         btnAceptar.setEnabled(false);
         btnAceptar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CHECK);
+        btnAceptar.setName("btnAceptar"); // NOI18N
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAceptarActionPerformed(evt);
@@ -79,6 +85,7 @@ public class frmBusquedaProducto extends javax.swing.JDialog {
         btnCancelar.setBackground(new java.awt.Color(204, 0, 51));
         btnCancelar.setText("Cancelar");
         btnCancelar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CANCEL);
+        btnCancelar.setName("btnCancelar"); // NOI18N
         btnCancelar.setThemeTooltip(necesario.Global.THEMETOOLTIP.LIGHT);
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,13 +100,13 @@ public class frmBusquedaProducto extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtCriterio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 513, Short.MAX_VALUE)
+                    .addComponent(txtCriterio, javax.swing.GroupLayout.DEFAULT_SIZE, 513, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
 
@@ -162,7 +169,12 @@ public class frmBusquedaProducto extends javax.swing.JDialog {
 
         Object registro[] = new Object[titulos.length];
 
-        miTabla = new DefaultTableModel(null, titulos);
+        miTabla = new DefaultTableModel(null, titulos){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
 
         if (txtCriterio.getText().isBlank()) {
 
@@ -173,18 +185,20 @@ public class frmBusquedaProducto extends javax.swing.JDialog {
         buscarProducto(txtCriterio.getText()).stream().forEach(producto -> {
             registro[0] = producto.getId();
             registro[1] = producto.getCodigo();
-            registro[2] = producto.getDescripcion();
+            registro[2] = producto;
             miTabla.addRow(registro);
         });
         
         tblTabla.setModel(miTabla);
 
-        if (tblTabla.getRowCount() > 1) {
+        if (tblTabla.getRowCount() >= 1) {
             btnAceptar.setEnabled(true);
             tblTabla.getSelectionModel().setSelectionInterval(0, 0);
         } else {
             btnAceptar.setEnabled(false);
         }
+        
+        Utilidades.repararColumnaTable(tblTabla);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private RSMaterialComponent.RSButtonMaterialIconOne btnAceptar;

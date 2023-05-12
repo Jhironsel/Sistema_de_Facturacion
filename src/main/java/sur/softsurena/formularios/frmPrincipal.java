@@ -22,13 +22,9 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
-import static sur.softsurena.conexion.Conexion.getCnn;
-import sur.softsurena.entidades.DesktopConFondo;
-import static sur.softsurena.entidades.E_S_SYS.getLogo;
-import static sur.softsurena.entidades.E_S_SYS.insertLogo;
-import static sur.softsurena.entidades.Turnos.usuarioTurnoActivo;
+import sur.softsurena.entidades.Roles;
 import sur.softsurena.entidades.Usuarios;
-import static sur.softsurena.entidades.Usuarios.getUsuarioActual;
+import sur.softsurena.entidades.DesktopConFondo;
 import sur.softsurena.hilos.hiloIp;
 import sur.softsurena.hilos.hiloRestaurar;
 import sur.softsurena.jfilechooser.ImageFileView;
@@ -36,6 +32,13 @@ import sur.softsurena.jfilechooser.ImageFilter;
 import sur.softsurena.jfilechooser.ImagePreview;
 import sur.softsurena.metodos.Imagenes;
 import sur.softsurena.utilidades.Utilidades;
+//Conexiones a la base de datos.
+import static sur.softsurena.conexion.Conexion.getCnn;
+import static sur.softsurena.entidades.E_S_SYS.getLogo;
+import static sur.softsurena.entidades.E_S_SYS.insertLogo;
+import static sur.softsurena.entidades.Roles.comprobandoRol;
+import static sur.softsurena.entidades.Turnos.usuarioTurnoActivo;
+import static sur.softsurena.entidades.Usuarios.getUsuarioActual;
 
 public final class frmPrincipal extends javax.swing.JFrame {
 
@@ -48,19 +51,42 @@ public final class frmPrincipal extends javax.swing.JFrame {
     public frmPrincipal() {
         initComponents();
 
-        Usuarios u = getUsuarioActual();
+        //Hacemos la consulta a la base de datos, para saber cual es el usuario
+        //y el rol del usuario conectado a la base de datos.
+        Usuarios u = getUsuarioActual();        
         jlUser.setText(u.getUser_name());
-
-        String rol = u.getRol();
-        if (rol.equalsIgnoreCase("RDB$ADMIN")) {
-            rol = "ADMINISTRADOR";
+        
+        //Proceso para cargar los roles del usuario al sistema.
+        cbRoles.removeAllItems();
+        cbRoles.setToolTipText("Rol actual: "+u.getRol());
+        
+        cbRoles.addItem(Roles.builder().
+                propietario("SYSDBA").
+                roleName("None").
+                descripcion("Rol que indica que no ha sido establecido").
+                build()
+        );
+        
+        comprobandoRol(jlUser.getText().strip()).stream().forEach(rolItem ->{
+            cbRoles.addItem(rolItem);
+        });
+        
+        for (int i = 0; i < cbRoles.getItemCount(); i++) {
+            if(cbRoles.getItemAt(i).toString().strip().equalsIgnoreCase(u.getRol())){
+                cbRoles.setSelectedIndex(i);
+                break;
+            }
+            if(u.getRol().strip().equalsIgnoreCase("RDB$ADMIN") & 
+                    cbRoles.getItemAt(i).toString().strip().equalsIgnoreCase("ADMINISTRADOR")){
+                cbRoles.setSelectedIndex(i);
+                break;
+            }
         }
-
-        jlRole.setText(rol);
-
-        jMenuBar1.add(filler3);
-        jMenuBar1.add(jlUser);
-        jMenuBar1.add(jlRole);
+        
+        jMenuBar1.add(filler3,5);
+        jMenuBar1.add(jlUser, 6);
+        jMenuBar1.add(liWork, 7);
+        jMenuBar1.add(cbRoles, 8);
 
         jPanelImpresion.setVisible(false);
 
@@ -76,7 +102,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
         jLabel6 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
         jPanelImpresion = new javax.swing.JPanel();
         jLabelImpresion = new javax.swing.JLabel();
         jprImpresion = new javax.swing.JProgressBar();
@@ -100,8 +125,10 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jSeparator11 = new javax.swing.JPopupMenu.Separator();
         jmDeuda = new javax.swing.JMenuItem();
         btnOcultarPanel = new javax.swing.JButton();
+        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
         jlUser = new RSMaterialComponent.RSLabelTextIcon();
-        jlRole = new RSMaterialComponent.RSLabelTextIcon();
+        liWork = new necesario.LabelIcon();
+        cbRoles = new RSMaterialComponent.RSComboBox();
         jsEstatus = new javax.swing.JScrollPane();
         pEstatus = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -304,10 +331,27 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jlUser.setText("rSLabelTextIcon1");
         jlUser.setSizeIcon(32.0F);
 
-        jlRole.setForeground(new java.awt.Color(255, 255, 255));
-        jlRole.setText("sdfsdf");
-        jlRole.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.WORK);
-        jlRole.setSizeIcon(32.0F);
+        liWork.setForeground(new java.awt.Color(255, 255, 255));
+        liWork.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.WORK);
+        liWork.setMaximumSize(new java.awt.Dimension(40, 40));
+        liWork.setName("liWork"); // NOI18N
+        liWork.setOpaque(true);
+        liWork.setLayout(new java.awt.GridLayout(1, 0));
+
+        cbRoles.setItemHeight(20);
+        cbRoles.setMaximumSize(new java.awt.Dimension(200, 40));
+        cbRoles.setMinimumSize(new java.awt.Dimension(50, 30));
+        cbRoles.setName("cbRoles"); // NOI18N
+        cbRoles.setPreferredSize(new java.awt.Dimension(200, 40));
+        cbRoles.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                cbRolesPopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Ventana principal del sistema");
@@ -1111,6 +1155,20 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_mnuLicenciaActionPerformed
 
+    private void cbRolesPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cbRolesPopupMenuWillBecomeInvisible
+        String rol = ((Roles) cbRoles.getItemAt(cbRoles.getSelectedIndex())).getRoleName();
+        
+        rol = (rol.equalsIgnoreCase("ADMINISTRADOR") ? "RDB$ADMIN":rol);
+        
+        Roles.setRole(rol);
+        
+        Usuarios u = getUsuarioActual();
+        
+        jlUser.setText(u.getUser_name());
+        
+        cbRoles.setToolTipText("Rol actual: "+u.getRol());
+    }//GEN-LAST:event_cbRolesPopupMenuWillBecomeInvisible
+
     private void imprimirReporte(Date fecha) {
         try {
             String miFile = "sur.softsurena.reportes.repSistemaDeBebida.jasper";
@@ -1149,8 +1207,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 //        }
 //
 //        if (imagen.getIconHeight() == -1) {
-//            imagen = new ImageIcon(System.getProperty("user.dir")
-//                    + "/images/NoImageTransp 96 x 96.png");
+//            imagen = new ImageIcon("sur/softsurena/imagenes/NoImageTransp 96 x 96.png");
 //            icon = new ImageIcon(imagen.getImage().getScaledInstance(180, 120,
 //                    Image.SCALE_DEFAULT));
 //            imagen.getImage().flush();
@@ -1388,6 +1445,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnEstablecerEncabezado;
     private javax.swing.JButton btnOcultarPanel;
     private javax.swing.JButton btnSeleccionarImpresora;
+    private RSMaterialComponent.RSComboBox cbRoles;
     public static javax.swing.JDesktopPane dpnEscritorio;
     private javax.swing.Box.Filler filler3;
     private javax.swing.JLabel jLabel1;
@@ -1420,7 +1478,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jlRespaldar;
     private javax.swing.JLabel jlRestauracion;
     private javax.swing.JLabel jlRestaurar;
-    private RSMaterialComponent.RSLabelTextIcon jlRole;
     private RSMaterialComponent.RSLabelTextIcon jlUser;
     private javax.swing.JMenuItem jmAbrirTurno;
     private javax.swing.JMenuItem jmCambioClave;
@@ -1436,6 +1493,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     public static javax.swing.JProgressBar jprImpresion;
     private javax.swing.JScrollPane jsEstatus;
     private javax.swing.JTable jtCajero;
+    private necesario.LabelIcon liWork;
     private javax.swing.JMenu mnuArchivos;
     private javax.swing.JMenuItem mnuArchivosAdministracionPrivilegios;
     private javax.swing.JMenuItem mnuArchivosCambioUsuario;

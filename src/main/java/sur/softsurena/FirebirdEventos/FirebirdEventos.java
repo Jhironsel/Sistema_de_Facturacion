@@ -7,17 +7,14 @@ import org.firebirdsql.event.DatabaseEvent;
 import org.firebirdsql.event.FBEventManager;
 import sur.softsurena.formularios.frmClientes;
 import sur.softsurena.formularios.frmProductos;
+import sur.softsurena.formularios.frmUsuarios;
 
 public class FirebirdEventos extends FBEventManager{
 
     private static final Logger LOG = Logger.getLogger(FirebirdEventos.class.getName());
     
-    public synchronized boolean registro(
-            String user, 
-            String clave, 
-            String dominio, 
-            String pathBaseDatos, 
-            int puerto) {
+    public synchronized boolean registro(String user, String clave, 
+            String dominio, String pathBaseDatos, int puerto) {
         setUser(user);
         setPassword(clave);
         
@@ -81,7 +78,21 @@ public class FirebirdEventos extends FBEventManager{
             addEventListener("upd_persona_clientes", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
                 frmClientes.llenarTablaClientes();
-            });    
+            });
+            
+            //Eventos de usuario.
+            addEventListener("INSERT_USUARIOS", (DatabaseEvent event) -> {
+                LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
+                frmUsuarios.llenarTabla();
+            });
+            addEventListener("DELETE_USUARIOS", (DatabaseEvent event) -> {
+                LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
+                frmUsuarios.llenarTabla();
+            });
+            addEventListener("UPDATE_USUARIOS", (DatabaseEvent event) -> {
+                LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
+                frmUsuarios.llenarTabla();
+            });
         } catch (SQLException ex) {
             LOG.log(Level.SEVERE, ex.getMessage(), ex);
             return false;

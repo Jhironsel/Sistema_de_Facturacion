@@ -12,7 +12,13 @@ import org.junit.runners.Suite;
  * @author jhironsel
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({sur.softsurena.hilos.hiloIpIT.class, sur.softsurena.hilos.hiloMetodosIT.class, sur.softsurena.hilos.hiloRespardarIT.class, sur.softsurena.hilos.hiloImpresionFacturaIT.class, sur.softsurena.hilos.hiloRestaurarIT.class})
+@Suite.SuiteClasses({
+    sur.softsurena.hilos.hiloIpIT.class, 
+    sur.softsurena.hilos.hiloMetodosIT.class, 
+    sur.softsurena.hilos.hiloRespardarIT.class, 
+    sur.softsurena.hilos.hiloImpresionFacturaIT.class, 
+    sur.softsurena.hilos.hiloRestaurarIT.class
+})
 public class HilosITSuite {
 
     @BeforeClass

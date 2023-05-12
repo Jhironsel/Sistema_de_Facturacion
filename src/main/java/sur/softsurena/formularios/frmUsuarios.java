@@ -8,9 +8,11 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import sur.softsurena.entidades.DefaultTableCellHeaderRenderer;
 import static sur.softsurena.entidades.Roles.getRoles;
+import sur.softsurena.entidades.Usuarios;
 import static sur.softsurena.entidades.Usuarios.borrarUsuario;
 import static sur.softsurena.entidades.Usuarios.getUsuario;
 import static sur.softsurena.entidades.Usuarios.getUsuarios;
+import static sur.softsurena.utilidades.Utilidades.columnasCheckBox;
 import static sur.softsurena.utilidades.Utilidades.repararColumnaTable;
 
 public class frmUsuarios extends javax.swing.JInternalFrame {
@@ -44,7 +46,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         btnBuscar = new RSMaterialComponent.RSButtonMaterialIconOne();
         jtpPrivilegios = new javax.swing.JTabbedPane();
         jpMantUsuarios = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
+        jScrollPane4 = new javax.swing.JScrollPane();
         tblUsuarios = new RSMaterialComponent.RSTableMetro();
         jpMantRoles = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -140,6 +142,16 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jPanel2);
 
         jtpPrivilegios.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
+        jtpPrivilegios.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jtpPrivilegiosStateChanged(evt);
+            }
+        });
+        jtpPrivilegios.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                jtpPrivilegiosComponentShown(evt);
+            }
+        });
 
         tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -152,7 +164,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane3.setViewportView(tblUsuarios);
+        jScrollPane4.setViewportView(tblUsuarios);
 
         javax.swing.GroupLayout jpMantUsuariosLayout = new javax.swing.GroupLayout(jpMantUsuarios);
         jpMantUsuarios.setLayout(jpMantUsuariosLayout);
@@ -160,15 +172,15 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             jpMantUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpMantUsuariosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 772, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 865, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jpMantUsuariosLayout.setVerticalGroup(
             jpMantUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpMantUsuariosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane4)
+                .addContainerGap())
         );
 
         jtpPrivilegios.addTab("<html><center><b>Mantenimiento<br>Usuarios</b><center></html>", null, jpMantUsuarios, "Permite definir los roles del sistema que agrupan a un conjuto de usuarios.");
@@ -201,16 +213,16 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         jpMantRolesLayout.setHorizontalGroup(
             jpMantRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpMantRolesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(528, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jpMantRolesLayout.setVerticalGroup(
             jpMantRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpMantRolesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jtpPrivilegios.addTab("<html><center><b>Mantenimiento<br>Roles</b><center></html>", null, jpMantRoles, "Permite definir los roles del sistema que agrupan a un conjuto de usuarios.");
@@ -219,7 +231,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         jpDefRoles.setLayout(jpDefRolesLayout);
         jpDefRolesLayout.setHorizontalGroup(
             jpDefRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 784, Short.MAX_VALUE)
+            .addGap(0, 877, Short.MAX_VALUE)
         );
         jpDefRolesLayout.setVerticalGroup(
             jpDefRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,7 +252,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jtpPrivilegios)
                 .addGap(0, 0, 0)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -248,29 +260,31 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
         llenarTabla();
-        llenarTblRoles();
     }//GEN-LAST:event_formInternalFrameOpened
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        if (jtpPrivilegios.getSelectedComponent() == jpDefRoles) {
-            System.out.println("Este es Definicion de roles");
-        } else if (jtpPrivilegios.getSelectedComponent() == jpMantRoles) {
-            System.out.println("Este es Mantenimiento de roles");
-        } else if (jtpPrivilegios.getSelectedComponent() == jpMantUsuarios) {
+        if (jtpPrivilegios.getSelectedComponent() == jpMantUsuarios) {
             frmUsuariosAgregar u = new frmUsuariosAgregar(null, true);
             u.setLocationRelativeTo(null);
             u.setVisible(true);
-            llenarTabla();
-        } else {
-            System.out.println("Ninguno.");
+        } else if (jtpPrivilegios.getSelectedComponent() == jpMantRoles) {
+            String rol = JOptionPane.showInternalInputDialog(
+                    null, 
+                    "Ingrese nombre del rol", 
+                    "Agregando rol al sistema", 
+                    JOptionPane.PLAIN_MESSAGE
+            );
+            
+        } else if (jtpPrivilegios.getSelectedComponent() == jpDefRoles) {
+            
         }
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         if (jtpPrivilegios.getSelectedComponent() == jpDefRoles) {
-            System.out.println("Este es Definicion de roles");
+
         } else if (jtpPrivilegios.getSelectedComponent() == jpMantRoles) {
-            System.out.println("Este es Mantenimiento de roles");
+
         } else if (jtpPrivilegios.getSelectedComponent() == jpMantUsuarios) {
             if (tblUsuarios.getSelectedRow() == -1) {
                 JOptionPane.showInternalMessageDialog(
@@ -278,19 +292,19 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
                         "Debes seleccionar un usuario.");
                 return;
             }
+            String userName = tblUsuarios.getValueAt(
+                    tblUsuarios.getSelectedRow(), 0).
+                    toString().trim();
 
-            frmUsuariosAgregar user = new frmUsuariosAgregar(null, true,
-                    getUsuario(tblUsuarios.getValueAt(
-                            tblUsuarios.getSelectedRow(), 0).toString().trim()));
+            frmUsuariosAgregar user = new frmUsuariosAgregar(
+                    null,
+                    true,
+                    getUsuario(userName)
+            );
 
             user.setLocationRelativeTo(this);
             user.setVisible(true);
-            llenarTabla();
-        } else {
-            System.out.println("Ninguno.");
         }
-
-
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
@@ -333,9 +347,6 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
                     null,
                     msg
             );
-
-            //Actualizamos los cambios en la Tabla
-            llenarTabla();
         } else {
             System.out.println("Ninguno.");
         }
@@ -351,50 +362,60 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             return;
         }
 
-        RSTableMetro tablaBuscar = null;
-
-        if (jtpPrivilegios.getSelectedComponent() == jpDefRoles) {
-            System.out.println("Este es Definicion de roles");
-        } else if (jtpPrivilegios.getSelectedComponent() == jpMantRoles) {
-            tablaBuscar = tblRoles;
-        } else if (jtpPrivilegios.getSelectedComponent() == jpMantUsuarios) {
-//            if (!existeUsuarioByUserName(usuario)) {
+        if (jtpPrivilegios.getSelectedComponent() == jpMantUsuarios) {
+            //            if (!existeUsuarioByUserName(usuario)) {
 //                JOptionPane.showMessageDialog(rootPane, "El Usuario No Existe");
 //                return;
 //            }
             //Detalle de Factura
-            tablaBuscar = tblUsuarios;
+            for (int i = 0; i < tblUsuarios.getRowCount(); i++) {
+                if (tblUsuarios.getValueAt(i, 0).toString().strip().equalsIgnoreCase(usuario.strip())) {
+                    tblUsuarios.setRowSelectionInterval(i, i);
+                    break;
+                }
+                if (tblUsuarios.getValueAt(i, 1).toString().strip().equalsIgnoreCase(usuario.strip())) {
+                    tblUsuarios.setRowSelectionInterval(i, i);
+                    break;
+                }
+                if (tblUsuarios.getValueAt(i, 2).toString().strip().equalsIgnoreCase(usuario.strip())) {
+                    tblUsuarios.setRowSelectionInterval(i, i);
+                    break;
+                }
+                if (tblUsuarios.getValueAt(i, 3).toString().strip().equalsIgnoreCase(usuario.strip())) {
+                    tblUsuarios.setRowSelectionInterval(i, i);
+                    break;
+                }
+            }
+        } else if (jtpPrivilegios.getSelectedComponent() == jpMantRoles) {
+            for (int i = 0; i < tblRoles.getRowCount(); i++) {
+                if (tblRoles.getValueAt(i, 0).toString().strip().equalsIgnoreCase(usuario.strip())) {
+                    tblRoles.setRowSelectionInterval(i, i);
+                    break;
+                }
+            }
+        } else if (jtpPrivilegios.getSelectedComponent() == jpDefRoles) {
 
-        } else {
-            System.out.println("Ninguno.");
-            return;
         }
-
-        int num = tablaBuscar.getRowCount();
-        for (int i = 0; i < num; i++) {
-            if (tablaBuscar.getValueAt(i, 0).toString().strip().equalsIgnoreCase(usuario.strip())) {
-                tablaBuscar.setRowSelectionInterval(i, i);
-                break;
-            }
-            if (tablaBuscar.getValueAt(i, 1).toString().strip().equalsIgnoreCase(usuario.strip())) {
-                tablaBuscar.setRowSelectionInterval(i, i);
-                break;
-            }
-            if (tablaBuscar.getValueAt(i, 2).toString().strip().equalsIgnoreCase(usuario.strip())) {
-                tablaBuscar.setRowSelectionInterval(i, i);
-                break;
-            }
-            if (tablaBuscar.getValueAt(i, 3).toString().strip().equalsIgnoreCase(usuario.strip())) {
-                tablaBuscar.setRowSelectionInterval(i, i);
-                break;
-            }
-        }
-
 
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-    private void llenarTabla() {
-        tblUsuarios.removeAll();
+    private void jtpPrivilegiosComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jtpPrivilegiosComponentShown
+
+
+    }//GEN-LAST:event_jtpPrivilegiosComponentShown
+
+    private void jtpPrivilegiosStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jtpPrivilegiosStateChanged
+        if (jtpPrivilegios.getSelectedComponent() == jpMantUsuarios) {
+            llenarTabla();
+        } else if (jtpPrivilegios.getSelectedComponent() == jpMantRoles) {
+            llenarTblRoles();
+        } else if (jtpPrivilegios.getSelectedComponent() == jpDefRoles) {
+
+        }
+    }//GEN-LAST:event_jtpPrivilegiosStateChanged
+
+    public static void llenarTabla() {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                tblUsuarios.removeAll();
         String titulos[] = {"Nombre usuario", "Primer Nombre",
             "Segundo Nombre", "Apellidos", "Administrador", "Estado"};
 
@@ -427,7 +448,14 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         });
 
         tblUsuarios.setModel(miTabla);
+        
+        int[] indices = {4,5};
+        columnasCheckBox(tblUsuarios, indices);
+        
         repararColumnaTable(tblUsuarios);
+        
+        
+        
     }
 
     private void llenarTblRoles() {
@@ -443,7 +471,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
 
         getRoles().stream().forEach(rol -> {
             registro[0] = rol.getRoleName().strip().equalsIgnoreCase("RDB$ADMIN")
-                    ? "ADMINISTRADOR" : rol.getRoleName().strip().replace("RRR_", "");
+                    ? "ADMINISTRADOR" : rol.getRoleName().strip();
             miTabla.addRow(registro);
         });
 
@@ -468,12 +496,13 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JPanel jpDefRoles;
     private javax.swing.JPanel jpMantRoles;
     private javax.swing.JPanel jpMantUsuarios;
     private javax.swing.JTabbedPane jtpPrivilegios;
     private RSMaterialComponent.RSTableMetro tblRoles;
-    private RSMaterialComponent.RSTableMetro tblUsuarios;
+    private static RSMaterialComponent.RSTableMetro tblUsuarios;
     // End of variables declaration//GEN-END:variables
 }
+//private static rojerusan.RSTableMetro1 tblClientes;

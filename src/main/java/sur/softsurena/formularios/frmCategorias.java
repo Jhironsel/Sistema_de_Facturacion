@@ -192,24 +192,32 @@ public class frmCategorias extends javax.swing.JDialog {
         if (cbCategoria.getItemCount() == 0) {
             return;
         }
+        
+        String categoria = ((Categorias) cbCategoria.getSelectedItem()).getDescripcion();
+        
         int rta = JOptionPane.showConfirmDialog(null,
-                "Esta Seguro de Eliminar la Categoria {"
-                + (((Categorias) cbCategoria.getSelectedItem()).getDescripcion())
-                + "} del Sistema? \n\n Este proceso tratara "
-                + "de eliminarlo si no ocurre es porque existen"
-                + "\nproducto asociado a dicha categoria.",
-                "Confirmacion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                "Está seguro de eliminar la Categoria { "+ (categoria) + " } del Sistema?",
+                "Proceso de validación.", 
+                JOptionPane.YES_NO_OPTION, 
+                JOptionPane.QUESTION_MESSAGE
+        );
 
         if (rta == JOptionPane.NO_OPTION) {
             return;
         }
 
-        if (existeCategoriaProductos(((Categorias) cbCategoria.getSelectedItem()).getId_categoria())) {
-            JOptionPane.showMessageDialog(null, "No se permite eliminar categoria porque existe producto Asociados");
+        /*
+            Verificamos que la categoria no cuente con productos asociados.
+        */
+        int idCategoria = ((Categorias) cbCategoria.getSelectedItem()).getId_categoria();
+        
+        if (existeCategoriaProductos(idCategoria)) {
+            JOptionPane.showMessageDialog(null, 
+                    "No se permite eliminar categoria porque existe producto Asociados");
             return;
         }
 
-        Resultados resultados = borrarCategoria(((Categorias) cbCategoria.getSelectedItem()).getId_categoria());
+        Resultados resultados = borrarCategoria( idCategoria );
 
         String msg = resultados.getMensaje();
         int cant = resultados.getCantidad();

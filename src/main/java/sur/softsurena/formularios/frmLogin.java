@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -18,6 +19,7 @@ import sur.softsurena.conexion.Conexion;
 import static sur.softsurena.entidades.BaseDeDatos.existeIdMaquina;
 import static sur.softsurena.entidades.BaseDeDatos.periodoMaquina;
 import static sur.softsurena.entidades.BaseDeDatos.setLicencia;
+import sur.softsurena.entidades.Roles;
 import static sur.softsurena.entidades.Roles.comprobandoRol;
 import sur.softsurena.metodos.Imagenes;
 
@@ -343,6 +345,7 @@ public final class frmLogin extends javax.swing.JFrame {
 
         //Cargar los valores de la conexion desde el properties
         frmParametros p = new frmParametros();
+        
         String dominio = "localhost", puerto = "3050";
 
         if (p.cargarParamentos("").getConIpServidor()) {
@@ -360,65 +363,10 @@ public final class frmLogin extends javax.swing.JFrame {
             puerto = p.cargarParamentos("").getPuerto();
         }
 
-        Conexion.getInstance(
-                txtUsuario.getText(),
-                new String(txtClave.getPassword()),
-                "None",
-                p.cargarParamentos("").getPathBaseDatos(),
-                dominio,
-                puerto);
-
-        if (!Conexion.verificar()) {
-            txtUsuario.setText("");
-            txtClave.setText("");
-            txtUsuario.requestFocusInWindow();
-            return;
-        }
-
-        //Variables para almacenar los roles
-        ArrayList<String> roles = comprobandoRol(txtUsuario.getText().strip());
-
-        if(roles.isEmpty()){
-            
-            txtClave.setText("");
-            txtUsuario.setText("");
-            txtUsuario.requestFocus();
-            
-            JOptionPane.showMessageDialog(
-                    null, 
-                    "Usuario no cuenta con un rol asignado en el sistema",                                                                                                    
-                    "Validacion de rol de Usuario.", 
-                    JOptionPane.WARNING_MESSAGE
-            );
-            
-            return;
-        }
-
-        JComboBox<String> comboBox = new JComboBox(roles.toArray());
-        comboBox.setName("jcbRoles");
-
-        if (roles.size() > 1) {
-            int resp = JOptionPane.showConfirmDialog(
-                    this,
-                    comboBox,
-                    "Seleccione un rol",
-                    JOptionPane.YES_NO_OPTION);
-
-            if (resp == JOptionPane.NO_OPTION) {
-                return;
-            }
-        }
-
-        String rol = comboBox.getSelectedItem().toString();
-
-        if (rol.equalsIgnoreCase("ADMINISTRADOR")) {
-            rol = "RDB$ADMIN";
-        }
 
         Conexion.getInstance(
                 txtUsuario.getText(),
                 new String(txtClave.getPassword()),
-                rol,
                 p.cargarParamentos("").getPathBaseDatos(),
                 dominio,
                 puerto);
@@ -535,7 +483,7 @@ public final class frmLogin extends javax.swing.JFrame {
 
         String claveServidor = new String(miRegistros.txtClaveServidor.getPassword());
 
-        Conexion.getInstance("None", "SYSDBA", claveServidor, "", "", "");
+        //Conexion.getInstance("None", "SYSDBA", claveServidor, "", "", "");
 
         if (setLicencia(new Date(miRegistros.dchFecha.getDate().getTime()),
                 miRegistros.txtIdMaquina.getText().trim(),
