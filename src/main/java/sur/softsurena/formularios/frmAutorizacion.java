@@ -143,7 +143,7 @@ public class frmAutorizacion extends javax.swing.JDialog {
         if(txtUsuario.getText().equals("") || txtUsuario.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Campo Usuario vacio", 
                     "Campo Vacio", JOptionPane.ERROR_MESSAGE);
-            txtUsuario.requestFocusInWindow();
+            txtUsuario.requestFocus();
             return;
         }
         

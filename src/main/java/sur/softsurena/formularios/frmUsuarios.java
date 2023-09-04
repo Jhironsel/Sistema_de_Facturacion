@@ -1,14 +1,15 @@
 package sur.softsurena.formularios;
 
-import RSMaterialComponent.RSTableMetro;
+import java.util.Objects;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import sur.softsurena.entidades.DefaultTableCellHeaderRenderer;
+import sur.softsurena.entidades.Roles;
+import static sur.softsurena.entidades.Roles.getPermisosRoles;
 import static sur.softsurena.entidades.Roles.getRoles;
-import sur.softsurena.entidades.Usuarios;
 import static sur.softsurena.entidades.Usuarios.borrarUsuario;
 import static sur.softsurena.entidades.Usuarios.getUsuario;
 import static sur.softsurena.entidades.Usuarios.getUsuarios;
@@ -51,7 +52,21 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         jpMantRoles = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblRoles = new RSMaterialComponent.RSTableMetro();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        tblPermisosDisponibles = new RSMaterialComponent.RSTableMetro();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        tblPermisosAsignados = new RSMaterialComponent.RSTableMetro();
+        btnNuevo1 = new RSMaterialComponent.RSButtonMaterialIconOne();
+        btnNuevo2 = new RSMaterialComponent.RSButtonMaterialIconOne();
         jpDefRoles = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblListadoUsuarios = new RSMaterialComponent.RSTableMetro();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tblRolesUsuario = new RSMaterialComponent.RSTableMetro();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        tblRolesDisponibles = new RSMaterialComponent.RSTableMetro();
+        btnAsignarRol = new RSMaterialComponent.RSButtonMaterialIconOne();
+        btnQuitarRol = new RSMaterialComponent.RSButtonMaterialIconOne();
 
         setClosable(true);
         setIconifiable(true);
@@ -206,36 +221,234 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         });
         tblRoles.setToolTipText("");
         tblRoles.setName("tblRoles"); // NOI18N
+        tblRoles.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblRolesMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblRoles);
+
+        tblPermisosDisponibles.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Permisos disponibles", "Detalle del permiso"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblPermisosDisponibles.setToolTipText("");
+        tblPermisosDisponibles.setName("tblRoles"); // NOI18N
+        jScrollPane7.setViewportView(tblPermisosDisponibles);
+
+        tblPermisosAsignados.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Permisos asignados", "Descripcion del permiso"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblPermisosAsignados.setToolTipText("");
+        tblPermisosAsignados.setName("tblRoles"); // NOI18N
+        jScrollPane8.setViewportView(tblPermisosAsignados);
+
+        btnNuevo1.setText("Quitar permiso");
+        btnNuevo1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD);
+        btnNuevo1.setPreferredSize(new java.awt.Dimension(100, 40));
+        btnNuevo1.setRound(40);
+        btnNuevo1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevo1ActionPerformed(evt);
+            }
+        });
+
+        btnNuevo2.setText("Asignar permiso");
+        btnNuevo2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD);
+        btnNuevo2.setPreferredSize(new java.awt.Dimension(100, 40));
+        btnNuevo2.setRound(40);
+        btnNuevo2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevo2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jpMantRolesLayout = new javax.swing.GroupLayout(jpMantRoles);
         jpMantRoles.setLayout(jpMantRolesLayout);
         jpMantRolesLayout.setHorizontalGroup(
             jpMantRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpMantRolesLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpMantRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 576, Short.MAX_VALUE)
+                    .addComponent(jScrollPane7)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpMantRolesLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jpMantRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnNuevo1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnNuevo2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap())
         );
         jpMantRolesLayout.setVerticalGroup(
             jpMantRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpMantRolesLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpMantRolesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpMantRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jpMantRolesLayout.createSequentialGroup()
+                        .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnNuevo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnNuevo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(15, 15, 15))
+                    .addComponent(jScrollPane2))
+                .addContainerGap())
         );
 
         jtpPrivilegios.addTab("<html><center><b>Mantenimiento<br>Roles</b><center></html>", null, jpMantRoles, "Permite definir los roles del sistema que agrupan a un conjuto de usuarios.");
+
+        tblListadoUsuarios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null},
+                {null},
+                {null},
+                {null}
+            },
+            new String [] {
+                "Listado de Usuarios"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblListadoUsuarios.setToolTipText("");
+        tblListadoUsuarios.setName("tblRoles"); // NOI18N
+        jScrollPane3.setViewportView(tblListadoUsuarios);
+
+        tblRolesUsuario.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Rol del usuario", "Descripcion del rol"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblRolesUsuario.setToolTipText("");
+        tblRolesUsuario.setName("tblRoles"); // NOI18N
+        jScrollPane5.setViewportView(tblRolesUsuario);
+
+        tblRolesDisponibles.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Rol disponible", "Descripcion del rol"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblRolesDisponibles.setToolTipText("");
+        tblRolesDisponibles.setName("tblRoles"); // NOI18N
+        jScrollPane6.setViewportView(tblRolesDisponibles);
+
+        btnAsignarRol.setText("Asignar rol");
+        btnAsignarRol.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD);
+        btnAsignarRol.setPreferredSize(new java.awt.Dimension(100, 40));
+        btnAsignarRol.setRound(40);
+        btnAsignarRol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAsignarRolActionPerformed(evt);
+            }
+        });
+
+        btnQuitarRol.setText("Quitar rol");
+        btnQuitarRol.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD);
+        btnQuitarRol.setPreferredSize(new java.awt.Dimension(100, 40));
+        btnQuitarRol.setRound(40);
 
         javax.swing.GroupLayout jpDefRolesLayout = new javax.swing.GroupLayout(jpDefRoles);
         jpDefRoles.setLayout(jpDefRolesLayout);
         jpDefRolesLayout.setHorizontalGroup(
             jpDefRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 877, Short.MAX_VALUE)
+            .addGroup(jpDefRolesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpDefRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpDefRolesLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jpDefRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAsignarRol, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnQuitarRol, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 576, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5))
+                .addContainerGap())
         );
         jpDefRolesLayout.setVerticalGroup(
             jpDefRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 455, Short.MAX_VALUE)
+            .addGroup(jpDefRolesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpDefRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3)
+                    .addGroup(jpDefRolesLayout.createSequentialGroup()
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnQuitarRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAsignarRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
 
         jtpPrivilegios.addTab("<html><center><b>Asignación<br>Roles</b><center></html>", null, jpDefRoles, "Permite definir los roles del sistema que agrupan a un conjuto de usuarios.");
@@ -269,14 +482,18 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             u.setVisible(true);
         } else if (jtpPrivilegios.getSelectedComponent() == jpMantRoles) {
             String rol = JOptionPane.showInternalInputDialog(
-                    null, 
-                    "Ingrese nombre del rol", 
-                    "Agregando rol al sistema", 
+                    this,
+                    "Ingrese nombre del rol.",
+                    "Agregando rol al sistema",
                     JOptionPane.PLAIN_MESSAGE
             );
-            
+            if (Objects.isNull(rol)) {
+                return;
+            }
+            Roles.createRole(rol);
+            llenarTblRoles();
         } else if (jtpPrivilegios.getSelectedComponent() == jpDefRoles) {
-            
+
         }
     }//GEN-LAST:event_btnNuevoActionPerformed
 
@@ -284,7 +501,27 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         if (jtpPrivilegios.getSelectedComponent() == jpDefRoles) {
 
         } else if (jtpPrivilegios.getSelectedComponent() == jpMantRoles) {
-
+            if(tblRoles.getSelectedRow() == -1){
+                JOptionPane.showMessageDialog(
+                        null, 
+                        "Debe seleccionar un registros.", 
+                        "Comprobacion de proceso.", 
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            String rolActual = tblRoles.getValueAt(
+                    tblRoles.getSelectedRow(), 0).toString();
+            
+            String rolNuevo = JOptionPane.showInternalInputDialog(
+                    this, 
+                    "Ingrese nombre del nuevo rol:", 
+                    "Cambio de nombre de roles.", 
+                    JOptionPane.QUESTION_MESSAGE
+            );
+            
+            Roles.modificarRol(rolActual, rolNuevo);
+            llenarTblRoles();
         } else if (jtpPrivilegios.getSelectedComponent() == jpMantUsuarios) {
             if (tblUsuarios.getSelectedRow() == -1) {
                 JOptionPane.showInternalMessageDialog(
@@ -414,8 +651,28 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jtpPrivilegiosStateChanged
 
+    private void btnAsignarRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarRolActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAsignarRolActionPerformed
+
+    private void btnNuevo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevo1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnNuevo1ActionPerformed
+
+    private void btnNuevo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevo2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnNuevo2ActionPerformed
+
+    private void tblRolesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblRolesMouseClicked
+        String rol = tblRoles.getValueAt(tblRoles.getSelectedRow(), 0).toString();
+        if(rol.equalsIgnoreCase("ADMINISTRADOR")){
+            rol = "RDB$ADMIN";
+        }
+        llenarTblPermisos(rol);
+    }//GEN-LAST:event_tblRolesMouseClicked
+
     public static void llenarTabla() {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                tblUsuarios.removeAll();
+        tblUsuarios.removeAll();
         String titulos[] = {"Nombre usuario", "Primer Nombre",
             "Segundo Nombre", "Apellidos", "Administrador", "Estado"};
 
@@ -448,14 +705,12 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         });
 
         tblUsuarios.setModel(miTabla);
-        
-        int[] indices = {4,5};
+
+        int[] indices = {4, 5};
         columnasCheckBox(tblUsuarios, indices);
-        
+
         repararColumnaTable(tblUsuarios);
-        
-        
-        
+
     }
 
     private void llenarTblRoles() {
@@ -484,24 +739,59 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
 
         tblRoles.setModel(miTabla);
         repararColumnaTable(tblRoles);
+    }
+    
+    private void llenarTblPermisos(String rolee){
+        tblPermisosAsignados.removeAll();
+        String[] titulos = {"Permisos asignados", "Descripcion del permiso"};
+        Object[] registro = new Object[titulos.length];
+        DefaultTableModel miTabla = new DefaultTableModel(null, titulos) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
 
+        getPermisosRoles(rolee).stream().forEach(rol -> {
+            registro[0] = rol.getNombreProcedimiento().strip();
+            registro[1] = (Objects.isNull(rol.getDescripcion()) ? "":rol.getDescripcion().strip());
+            miTabla.addRow(registro);
+        });
+
+        tblPermisosAsignados.setModel(miTabla);
+
+        repararColumnaTable(tblPermisosAsignados);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private RSMaterialComponent.RSButtonMaterialIconOne btnAsignarRol;
     private RSMaterialComponent.RSButtonMaterialIconOne btnBorrar;
     private RSMaterialComponent.RSButtonMaterialIconOne btnBuscar;
     private RSMaterialComponent.RSButtonMaterialIconOne btnModificar;
     private RSMaterialComponent.RSButtonMaterialIconOne btnNuevo;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnNuevo1;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnNuevo2;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnQuitarRol;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JPanel jpDefRoles;
     private javax.swing.JPanel jpMantRoles;
     private javax.swing.JPanel jpMantUsuarios;
     private javax.swing.JTabbedPane jtpPrivilegios;
+    private RSMaterialComponent.RSTableMetro tblListadoUsuarios;
+    private RSMaterialComponent.RSTableMetro tblPermisosAsignados;
+    private RSMaterialComponent.RSTableMetro tblPermisosDisponibles;
     private RSMaterialComponent.RSTableMetro tblRoles;
+    private RSMaterialComponent.RSTableMetro tblRolesDisponibles;
+    private RSMaterialComponent.RSTableMetro tblRolesUsuario;
     private static RSMaterialComponent.RSTableMetro tblUsuarios;
     // End of variables declaration//GEN-END:variables
 }

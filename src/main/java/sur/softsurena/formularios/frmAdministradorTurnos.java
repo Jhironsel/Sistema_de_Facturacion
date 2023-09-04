@@ -3,16 +3,12 @@ package sur.softsurena.formularios;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
-import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.modules.gui.base.PreviewFrame;
-import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.DriverConnectionProvider;
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.SQLReportDataFactory;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
@@ -24,7 +20,6 @@ import static sur.softsurena.entidades.Turnos.cerrarTurno;
 import static sur.softsurena.entidades.Turnos.habilitarTurno;
 import static sur.softsurena.entidades.Turnos.usuarioTurnoActivo;
 import sur.softsurena.entidades.Usuarios;
-import sur.softsurena.hilos.hiloImpresionFactura;
 import sur.softsurena.utilidades.Utilidades;
 
 /**
@@ -456,13 +451,13 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
             // Using the classloader, get the URL to the reportDefinition file
             // NOTE: We will re-use the report definition from SAMPLE1
             File file = new File(REPORTE_CORTO_PATH);
-
+            
             // Parse the report file
             final ResourceManager resourceManager = new ResourceManager();
-
+            
             final Resource directly = resourceManager.createDirectly(file, 
                     MasterReport.class);
-
+            
             report = (MasterReport) directly.getResource();
         } catch (ResourceException e) {
             e.printStackTrace();
@@ -515,6 +510,7 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
 //    }
 
     private void crearReporte(String userName) {
+        //Columnas de la tabla....
         String[] columnas2 = {"ID Turno", "Fecha de inicio", "Fecha final",
             "Monto Facturado", "Monto Devuelto", "Monto efectivo",
             "Monto acredito"};
@@ -526,7 +522,7 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
             }
         };
 
-        Object[] rowData2 = new Object[columnas2.length];
+        var rowData2 = new Object[columnas2.length];
 
         Turnos.getTurnosByUserName(userName).stream().forEach(turnos -> {
             rowData2[0] = turnos.getId();

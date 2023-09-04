@@ -2,6 +2,7 @@ package sur.softsurena.formularios;
 
 import java.awt.Component;
 import java.awt.Image;
+import java.sql.SQLException;
 import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -1011,20 +1012,20 @@ public class frmProductos extends javax.swing.JInternalFrame {
             } else {
                 msg = modificarProducto(p);
             }
-            
+
             /*
                 Dependiendo de resultado de la operacion elegimos un icono.
-            */
-            if(msg.equals(Productos.PRODUCTO_AGREGADO_CORRECTAMENTE) || 
-                    msg.equals(Productos.PRODUCTO__MODIFICADO__CORRECTAMENTE)){
+             */
+            if (msg.equals(Productos.PRODUCTO_AGREGADO_CORRECTAMENTE)
+                    || msg.equals(Productos.PRODUCTO__MODIFICADO__CORRECTAMENTE)) {
                 icono = JOptionPane.INFORMATION_MESSAGE;
-            }else{
+            } else {
                 icono = JOptionPane.ERROR_MESSAGE;
             }
-            
+
             /*
                 Mostramos mensaje de la operacion.
-            */
+             */
             JOptionPane.showMessageDialog(
                     null,
                     msg,
@@ -1034,12 +1035,12 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
             /*
                 Removemos el jpMantenimiento de la vista del usuario.
-            */
+             */
             jtpPrincipal.remove(jpMantenimiento);
-            
+
             /*
                 Para inhabilitar los botones de Guardar y Cancelar. 
-            */
+             */
             cancelar(true, true);
         } else if (jtpPrincipal.getSelectedComponent() == jpESProductos) {
 
@@ -1416,16 +1417,27 @@ public class frmProductos extends javax.swing.JInternalFrame {
                         descripcion("Seleccione categoria").
                         build()
         );
-        getCategirias().stream().forEach(categoria -> {
-            cbCategoria.addItem(
-                    Categorias.
-                            builder().
-                            id_categoria(categoria.getId_categoria()).
-                            descripcion(categoria.getDescripcion()).
-                            fecha_creacion(categoria.getFecha_creacion()).
-                            build()
-            );
-        });
+        try {
+            getCategirias().stream().forEach(categoria -> {
+                cbCategoria.addItem(
+                        Categorias.
+                                builder().
+                                id_categoria(categoria.getId_categoria()).
+                                descripcion(categoria.getDescripcion()).
+                                fecha_creacion(categoria.getFecha_creacion()).
+                                build()
+                );
+            });
+        } catch (SQLException i) {
+            System.out.println("No hay categorias por permisos.");
+        }
+        if (cbCategoria.getItemCount() < 2) {
+            btnModificar.setEnabled(false);
+            String toolTip = btnModificar.getToolTipText();
+            btnModificar.setToolTipText(toolTip + "\nDebe Obtener derecho obtener categorias.");
+        } else {
+            btnModificar.setEnabled(true);
+        }
     }
 
     /**

@@ -205,6 +205,7 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
 
         txtDescripcion.setColumns(20);
         txtDescripcion.setRows(5);
+        txtDescripcion.setWrapStyleWord(true);
         txtDescripcion.setName("txtDescripcion"); // NOI18N
         jScrollPane1.setViewportView(txtDescripcion);
 
@@ -496,9 +497,9 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
                     null,
                     "Debe Digitar un ID.",
                     PROCESO_DE_VALIDACION,
-                    JOptionPane.WARNING_MESSAGE
+                    JOptionPane.ERROR_MESSAGE
             );
-            txtUserName.requestFocusInWindow();
+            txtUserName.requestFocus();
             return;
         }
 
@@ -507,9 +508,9 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
                     null,
                     "Debe Digitar nombres.",
                     PROCESO_DE_VALIDACION,
-                    JOptionPane.WARNING_MESSAGE
+                    JOptionPane.ERROR_MESSAGE
             );
-            txtPNombre.requestFocusInWindow();
+            txtPNombre.requestFocus();
             return;
         }
 
@@ -518,9 +519,9 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
                     null,
                     "Debe Digitar un apellidos.",
                     PROCESO_DE_VALIDACION,
-                    JOptionPane.WARNING_MESSAGE
+                    JOptionPane.ERROR_MESSAGE
             );
-            txtApellidos.requestFocusInWindow();
+            txtApellidos.requestFocus();
             return;
         }
 
@@ -537,9 +538,9 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
                         null,
                         "Debe Ingresar clave.",
                     PROCESO_DE_VALIDACION,
-                    JOptionPane.WARNING_MESSAGE
+                    JOptionPane.ERROR_MESSAGE
                 );
-                txtClave1.requestFocusInWindow();
+                txtClave1.requestFocus();
                 return;
             }
 
@@ -548,9 +549,9 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
                         null,
                         "Debe Ingresar confirmacion.",
                     PROCESO_DE_VALIDACION,
-                    JOptionPane.WARNING_MESSAGE
+                    JOptionPane.ERROR_MESSAGE
                 );
-                txtClave2.requestFocusInWindow();
+                txtClave2.requestFocus();
                 return;
             }
         }
@@ -564,7 +565,7 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
             );
             txtClave2.setText("");
             txtClave1.setText("");
-            txtClave1.requestFocusInWindow();
+            txtClave1.requestFocus();
             return;
         }
 
@@ -618,7 +619,7 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
 
             txtClave1.setText("");
             txtClave2.setText("");
-            txtClave1.requestFocusInWindow();
+            txtClave1.requestFocus();
             return;
         }
 

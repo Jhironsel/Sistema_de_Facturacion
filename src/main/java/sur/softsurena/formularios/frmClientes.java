@@ -13,38 +13,36 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import sur.softsurena.entidades.Clientes;
-import sur.softsurena.entidades.ContactosEmail;
-import sur.softsurena.entidades.ContactosTel;
-import sur.softsurena.entidades.Direcciones;
-import sur.softsurena.entidades.Distritos_municipales;
-import sur.softsurena.entidades.EstadoCivil;
-import sur.softsurena.entidades.Generales;
-import sur.softsurena.entidades.Municipios;
-import sur.softsurena.entidades.Personas;
-import sur.softsurena.entidades.Privilegios;
-import sur.softsurena.entidades.Provincias;
-import sur.softsurena.entidades.Sexo;
-import sur.softsurena.entidades.TipoPersona;
-import sur.softsurena.entidades.ValidarCorreoTel;
-import sur.softsurena.utilidades.Utilidades;
-import static sur.softsurena.formularios.frmPrincipal.dpnEscritorio;
-import static sur.softsurena.utilidades.Utilidades.columnasCheckBox;
-import static sur.softsurena.utilidades.Utilidades.repararColumnaTable;
-//De consultas de Base de datos.
 import static sur.softsurena.entidades.Clientes.agregarCliente;
 import static sur.softsurena.entidades.Clientes.borrarCliente;
 import static sur.softsurena.entidades.Clientes.existeCliente;
 import static sur.softsurena.entidades.Clientes.getClienteByID;
 import static sur.softsurena.entidades.Clientes.getClientesTablaSB;
 import static sur.softsurena.entidades.Clientes.modificarCliente;
+import sur.softsurena.entidades.ContactosEmail;
 import static sur.softsurena.entidades.ContactosEmail.getCorreoByID;
+import sur.softsurena.entidades.ContactosTel;
 import static sur.softsurena.entidades.ContactosTel.getTelefonoByID;
+import sur.softsurena.entidades.Direcciones;
 import static sur.softsurena.entidades.Direcciones.getDireccionByID;
+import sur.softsurena.entidades.Distritos_municipales;
 import static sur.softsurena.entidades.Distritos_municipales.getDistritosMunicipales;
+import sur.softsurena.entidades.EstadoCivil;
+import sur.softsurena.entidades.Generales;
+import sur.softsurena.entidades.Municipios;
 import static sur.softsurena.entidades.Municipios.getMunicipio;
+import sur.softsurena.entidades.Personas;
+import sur.softsurena.entidades.Privilegios;
 import static sur.softsurena.entidades.Privilegios.privilegioCampo;
 import static sur.softsurena.entidades.Privilegios.privilegioTabla;
+import sur.softsurena.entidades.Provincias;
+import sur.softsurena.entidades.Sexo;
+import sur.softsurena.entidades.TipoPersona;
+import static sur.softsurena.formularios.frmPrincipal.dpnEscritorio;
+import sur.softsurena.utilidades.Utilidades;
 import static sur.softsurena.utilidades.Utilidades.LOGGER;
+import static sur.softsurena.utilidades.Utilidades.columnasCheckBox;
+import static sur.softsurena.utilidades.Utilidades.repararColumnaTable;
 
 public class frmClientes extends javax.swing.JInternalFrame implements Runnable {
 
@@ -216,8 +214,13 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
         jPanel16 = new javax.swing.JPanel();
         btnImprimirInforme1 = new RSMaterialComponent.RSButtonMaterialIconOne();
         btnHistorial1 = new RSMaterialComponent.RSButtonMaterialIconOne();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblClientes = new RSMaterialComponent.RSTableMetro();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        tblClientes = new rojerusan.RSTableMetro1(){
+            @Override
+            public boolean isCellEditable(int rowIndex, int colIndex) {
+                return false; //Las celdas no son editables.
+            }
+        };
         jspMantenimiento = new javax.swing.JScrollPane();
         jpMantenimiento = new javax.swing.JPanel();
         jpMantenimiento2 = new javax.swing.JPanel();
@@ -379,7 +382,11 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tblClientes);
+        tblClientes.setFont(new java.awt.Font("FreeMono", 1, 14)); // NOI18N
+        tblClientes.setFontHead(new java.awt.Font("FreeMono", 1, 14)); // NOI18N
+        tblClientes.setFontRowHover(new java.awt.Font("FreeMono", 1, 14)); // NOI18N
+        tblClientes.setFontRowSelect(new java.awt.Font("FreeMono", 1, 14)); // NOI18N
+        jScrollPane6.setViewportView(tblClientes);
 
         javax.swing.GroupLayout jpClientesLayout = new javax.swing.GroupLayout(jpClientes);
         jpClientes.setLayout(jpClientesLayout);
@@ -388,16 +395,16 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
             .addGroup(jpClientesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jpClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE)
+                    .addComponent(jScrollPane6))
                 .addContainerGap())
         );
         jpClientesLayout.setVerticalGroup(
             jpClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpClientesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
+                .addGap(6, 6, 6)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -1156,15 +1163,15 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
             .addGroup(jpGeneralLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jtpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 792, Short.MAX_VALUE)
-                    .addComponent(jpBotones, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE))
+                    .addComponent(jtpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+                    .addComponent(jpBotones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jpGeneralLayout.setVerticalGroup(
             jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpGeneralLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jtpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE)
+                .addComponent(jtpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 513, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jpBotones, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15))
@@ -1176,11 +1183,11 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jspGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, 806, Short.MAX_VALUE)
+            .addComponent(jspGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, 820, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jspGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE)
+            .addComponent(jspGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, 629, Short.MAX_VALUE)
         );
 
         pack();
@@ -1464,7 +1471,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
                                         .getAbreviatura()).
                                 build()
                 ).
-                direccion(v_direccionesList).
+                direcciones(v_direccionesList).
                 contactosTel(v_contactosTelsList).
                 contactosEmail(v_contactosCorreosList).
                 persona(((TipoPersona) jcbPersona.getSelectedItem()).getAbreviatura()).
@@ -1565,7 +1572,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
             if (evt.isAltDown()) {
                 if (evt.isShiftDown()) {
                     if (evt.isAltGraphDown()) {
-                        txtCedula.setText(ValidarCorreoTel.generarCedula());
+                        txtCedula.setText(Generales.generarCedula());
                     }
                 }
             }
@@ -1779,7 +1786,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
             if (evt.isAltDown()) {
                 if (evt.isShiftDown()) {
                     if (evt.isAltGraphDown()) {
-                        txtTelelfonoMovil.setText(ValidarCorreoTel.generarTelMovil());
+                        txtTelelfonoMovil.setText(ContactosTel.generarTelMovil());
                         int numero = (int) (Math.random() * 10);
                         jrbMovil.setSelected((numero % 2) == 0);
                         jrbResidencial.setSelected((numero % 2) != 0);
@@ -1806,7 +1813,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
         }
 
         //Esta validacion deberia de ser si el cliente en nacional
-        if (!ValidarCorreoTel.telefono(txtTelelfonoMovil.getValue().toString())) {
+        if (!ContactosTel.telefono(txtTelelfonoMovil.getValue().toString())) {
             JOptionPane.showInternalMessageDialog(null,
                     "Debe digitar numero telefonico valido.",
                     "Validacción de contacto.",
@@ -1865,7 +1872,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
         /*
         Verificamos que sea un correo valido.
          */
-        if (!ValidarCorreoTel.correo(txtCorreo.getText())) {
+        if (!ContactosEmail.correo(txtCorreo.getText())) {
             JOptionPane.showInternalMessageDialog(
                     null,
                     "Debe digitar correo electronico valido.",
@@ -2005,23 +2012,28 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
     }//GEN-LAST:event_btnCedulaValidadActionPerformed
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+        //1) Llenar la lista de clientes en el sistema.
         llenarTablaClientes();
 
+        //2) Llenar los comboBox de las provincias.
         jcbProvincias.removeAllItems();
         Provincias.getProvincias().stream().forEach(provincia
                 -> jcbProvincias.addItem(provincia)
         );
 
+        //3) Llenar los comboBox de las personas juridicas.
         jcbPersona.removeAllItems();
         TipoPersona.getTipoPersonaList().stream().forEach(tipoPersona
                 -> jcbPersona.addItem(tipoPersona)
         );
 
+        //4) Obtener la lista de sexo de personas.
         jcbSexo.removeAllItems();
         Sexo.getSexoList().stream().forEach(sexo
                 -> jcbSexo.addItem(sexo)
         );
 
+        //5) Obtener la lista de estado civil de las personas.
         jcbEstadoCivil.removeAllItems();
         EstadoCivil.getEstadoCivilList().stream().forEach(estadoCivil
                 -> jcbEstadoCivil.addItem(estadoCivil)
@@ -2038,7 +2050,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
             if (evt.isAltDown()) {
                 if (evt.isShiftDown()) {
                     if (evt.isAltGraphDown()) {
-                        txtCorreo.setText(ValidarCorreoTel.generarCorreo());
+                        txtCorreo.setText(ContactosEmail.generarCorreo());
                     }
                 }
             }
@@ -2667,11 +2679,11 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private static RSMaterialComponent.RSComboBox jcbDistritoMunicipal;
     private javax.swing.JComboBox jcbEstadoCivil;
     private static RSMaterialComponent.RSComboBox jcbMunicipios;
@@ -2698,7 +2710,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
     private javax.swing.JTabbedPane jtpContactos;
     private javax.swing.JTabbedPane jtpDireccionContactos;
     public static javax.swing.JTabbedPane jtpPrincipal;
-    private static RSMaterialComponent.RSTableMetro tblClientes;
+    private static rojerusan.RSTableMetro1 tblClientes;
     private rojerusan.RSTableMetro1 tblCorreos;
     private rojerusan.RSTableMetro1 tblDireccion;
     private rojerusan.RSTableMetro1 tblTelefonos;

@@ -1,8 +1,6 @@
-package sur.softsurena.Test.Grafico;
 
 import java.io.File;
 import java.io.IOException;
-
 import xy.ui.testing.Tester;
 import xy.ui.testing.editor.TestEditor;
 

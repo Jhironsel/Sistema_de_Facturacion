@@ -247,12 +247,11 @@ public final class frmRestaurarDatos extends javax.swing.JInternalFrame implemen
         }
 
         try {
-            Class.forName("org.firebirdsql.jdbc.FBDriver");
             Properties props = new Properties();
             props.setProperty("user", txtUsuario.getText());
             props.setProperty("password", new String(txtClave.getPassword()));
             cnn = DriverManager.getConnection("jdbc:firebirdsql://localhost/" + txtBaseActual.getText(), props);
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (SQLException ex) {
             //Instalar Logger
         }
 
