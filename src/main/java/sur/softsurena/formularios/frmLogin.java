@@ -6,12 +6,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Scanner;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import sur.softsurena.FirebirdEventos.FirebirdEventos;
@@ -19,17 +16,15 @@ import sur.softsurena.conexion.Conexion;
 import static sur.softsurena.entidades.BaseDeDatos.existeIdMaquina;
 import static sur.softsurena.entidades.BaseDeDatos.periodoMaquina;
 import static sur.softsurena.entidades.BaseDeDatos.setLicencia;
-import sur.softsurena.entidades.Roles;
-import static sur.softsurena.entidades.Roles.comprobandoRol;
 import sur.softsurena.metodos.Imagenes;
 
 public final class frmLogin extends javax.swing.JFrame {
 
-    private String idMaquina = "";
     private boolean txtUsuarioKeyPress = true;
     private final ResourceBundle bundle;
-    
+
     private static final String VALIDACION_DE_PROCESO_DE_USUARIO = "Validacion de proceso de usuario";
+    private boolean accesoSistema;
 
     public frmLogin(String language) {
         bundle = ResourceBundle.getBundle("sur.softsurena.idioma.mensaje", new Locale(language));
@@ -261,59 +256,7 @@ public final class frmLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        String sistema = System.getProperty("os.name");
-        JLSystema.setText("Usted se encuentra en el SO: " + sistema);
 
-        Process p;
-
-        if (sistema.equals("Linux")) {
-            try {
-                /*Buscando nuevas alternativas sin root*/
- /*ls /dev/disk/by-uuid/ : Podemos ontener el valor del 
-                primer resultado.*/
- /*lsblk -o name,uuid: Otro que podemos filtrar por el 
-                disco duro.*/
-
-                p = Runtime.getRuntime().exec("lsblk -o UUID /dev/sda1");
-            } catch (IOException ex) {
-                //Instalar Logger
-                return;
-            }
-            BufferedReader stdInput = new BufferedReader(new InputStreamReader(
-                    p.getInputStream()));
-            try {
-                stdInput.readLine();
-                idMaquina = stdInput.readLine().trim();
-            } catch (IOException ex) {
-                //Instalar Logger
-            }
-        } else {
-            Scanner sc;
-            if (sistema.equals("Windows 7")) {
-                try {
-                    /*Aun funciona 25 de julio 2022*/
-                    p = Runtime.getRuntime().exec("C:\\Windows\\System32\\wbem\\wmic csproduct get uuid");
-                    sc = new Scanner(p.getInputStream());
-                    p.getOutputStream().close();
-                } catch (IOException ex) {
-                    //Instalar Logger
-                    return;
-                }
-            } else {
-                try {
-                    p = Runtime.getRuntime().exec("wmic csproduct get uuid");
-                    sc = new Scanner(p.getInputStream());
-                    p.getOutputStream().close();
-                } catch (IOException ex) {
-                    //Instalar Logger
-                    return;
-                }
-            }
-            System.out.println(sc.nextLine().trim());
-            System.out.println(sc.nextLine().trim());
-            idMaquina = sc.nextLine().trim();
-        }
-        System.out.println(idMaquina);
     }//GEN-LAST:event_formWindowOpened
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         btnCancelarActionPerformed(null);
@@ -323,8 +266,8 @@ public final class frmLogin extends javax.swing.JFrame {
 
         //Validación de campos del login. 
         if (txtUsuario.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, 
-                    "Ingrese un usuario", 
+            JOptionPane.showMessageDialog(null,
+                    "Ingrese un usuario",
                     VALIDACION_DE_PROCESO_DE_USUARIO,
                     JOptionPane.WARNING_MESSAGE
             );
@@ -334,8 +277,8 @@ public final class frmLogin extends javax.swing.JFrame {
 
         if (txtClave.getPassword().length == 0) {
             JOptionPane.showMessageDialog(
-                    null, 
-                    "Inserte una clave", 
+                    null,
+                    "Inserte una clave",
                     VALIDACION_DE_PROCESO_DE_USUARIO,
                     JOptionPane.WARNING_MESSAGE
             );
@@ -345,7 +288,7 @@ public final class frmLogin extends javax.swing.JFrame {
 
         //Cargar los valores de la conexion desde el properties
         frmParametros p = new frmParametros();
-        
+
         String dominio = "localhost", puerto = "3050";
 
         if (p.cargarParamentos("").getConIpServidor()) {
@@ -363,7 +306,6 @@ public final class frmLogin extends javax.swing.JFrame {
             puerto = p.cargarParamentos("").getPuerto();
         }
 
-
         Conexion.getInstance(
                 txtUsuario.getText(),
                 new String(txtClave.getPassword()),
@@ -372,9 +314,63 @@ public final class frmLogin extends javax.swing.JFrame {
                 puerto);
 
         if (!Conexion.verificar()) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Usuario y clave incorrectos! \nVuelva intentarlo.!!!",
+                    "Validación de usuario.",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            txtClave.setText("");
+            txtUsuario.setText("");
             return;
         }
 
+        String sistema = System.getProperty("os.name").strip();
+        JLSystema.setText("Usted se encuentra en el SO: " + sistema);
+
+        Process pp;
+
+        if (sistema.equals("Linux")) {
+            try {
+                //pp = Runtime.getRuntime().exec("lsblk -o UUID /dev/sda1");
+                pp = Runtime.getRuntime().exec("ls /dev/disk/by-uuid/");
+                //pp = Runtime.getRuntime().exec("lsblk -o NAME,UUID");
+                //pp = Runtime.getRuntime().exec("pkexec lsblk -o NAME,UUID");
+
+                BufferedReader stdInput = new BufferedReader(new InputStreamReader(
+                        pp.getInputStream()));
+                while (stdInput.ready()) {
+                    accesoSistema = existeIdMaquina(stdInput.readLine());
+                    if (accesoSistema) {
+                        break;
+                    }
+                }
+            } catch (IOException ex) {
+                //TODO Poner Log aqui.
+            }
+        } else {
+            /*TODO analizar este proceso para adatarlo mejor en Windows. */
+            Scanner sc;
+            String comando = "";
+
+            if (sistema.equalsIgnoreCase("Windows 7")) {
+                comando = "C:\\Windows\\System32\\wbem\\wmic csproduct get uuid";
+            } else {
+                comando = "wmic csproduct get uuid";
+            }
+
+            try {
+                pp = Runtime.getRuntime().exec(comando);
+                sc = new Scanner(pp.getInputStream());
+                pp.getOutputStream().close();
+            } catch (IOException ex) {
+                //Instalar Logger
+                return;
+            }
+            String trim = sc.nextLine().trim();
+        }
+        //-----------------------------------------------------
+        
         FirebirdEventos f = new FirebirdEventos();
 
         if (!f.registro(
@@ -387,24 +383,22 @@ public final class frmLogin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(
                     null,
                     "Error a registrar los eventos...",
-                    "Validación de procesos", 
+                    "Validación de procesos",
                     JOptionPane.ERROR_MESSAGE
             );
             return;
         }
-        
+
         txtClave.setText("");
 
-        //Reconectarse con el rol seleccionado por el usuario. 
-        if (!existeIdMaquina(idMaquina)) {
-            //Ver si la maquina esta Registrada si no esta Entra
+        if (!accesoSistema) {
             int num = JOptionPane.showConfirmDialog(
                     null,
                     "Este equipo no esta Autorizado! \nDesea Registrar?",
-                    "No Autorizado", 
+                    "No Autorizado",
                     JOptionPane.YES_NO_OPTION
             );
-            if (num == 0) {
+            if (num == JOptionPane.YES_OPTION) {
                 registro();
                 return;
             } else {
@@ -420,7 +414,7 @@ public final class frmLogin extends javax.swing.JFrame {
                     "Desea registrar el producto",
                     "Auto Registros",
                     JOptionPane.YES_NO_OPTION);
-            if (resp == 0) {
+            if (resp == JOptionPane.OK_OPTION) {
                 registro();
             }
             return;
@@ -474,17 +468,17 @@ public final class frmLogin extends javax.swing.JFrame {
 
     private void registro() {
         //Implementar logistica para registrar producto en linea
-        frmRegistros miRegistros = new frmRegistros(this, true, idMaquina);
+        //TODO Pasar idMaquina a este metodo.
+        frmRegistros miRegistros = new frmRegistros(this, true, "");
         miRegistros.setVisible(true);
 
         if (miRegistros.txtIdMaquina.getText().equalsIgnoreCase("cancelado")) {
             return;
         }
 
-        String claveServidor = new String(miRegistros.txtClaveServidor.getPassword());
+//        String claveServidor = new String(miRegistros.txtClaveServidor.getPassword());
 
         //Conexion.getInstance("None", "SYSDBA", claveServidor, "", "", "");
-
         if (setLicencia(new Date(miRegistros.dchFecha.getDate().getTime()),
                 miRegistros.txtIdMaquina.getText().trim(),
                 new String(miRegistros.txtClave1.getPassword()).trim(),
@@ -527,7 +521,3 @@ public final class frmLogin extends javax.swing.JFrame {
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }
-
-/**
- *
- */

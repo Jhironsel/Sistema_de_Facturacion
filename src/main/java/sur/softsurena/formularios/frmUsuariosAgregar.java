@@ -3,9 +3,9 @@ package sur.softsurena.formularios;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import sur.softsurena.entidades.Roles;
-import sur.softsurena.entidades.Usuarios;
-import static sur.softsurena.entidades.Usuarios.*;
-import static sur.softsurena.entidades.Usuarios.existeUsuarioByUserName;
+import sur.softsurena.entidades.Usuario;
+import static sur.softsurena.entidades.Usuario.*;
+import static sur.softsurena.entidades.Usuario.existeUsuarioByUserName;
 import sur.softsurena.utilidades.Utilidades;
 import static sur.softsurena.utilidades.Utilidades.showTooltip;
 
@@ -24,7 +24,7 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
 
     /*Este constructor es utilizado para cuando se vá a modificar un usuario,
     en el se inicianlizan todos los campos de formulario*/
-    public frmUsuariosAgregar(java.awt.Frame parent, boolean modal, Usuarios usuario) {
+    public frmUsuariosAgregar(java.awt.Frame parent, boolean modal, Usuario usuario) {
         super(parent, modal);
         initComponents();
 
@@ -614,7 +614,7 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
             );
 
             if (r == JOptionPane.YES_OPTION) {
-
+                //TODO Crear el proceso de recuperacion del usuario en esta parte.
             }
 
             txtClave1.setText("");
@@ -624,7 +624,7 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
         }
 
         //Creamos el Objeto Usuario y los agregamos a Datos
-        Usuarios miUsuario = Usuarios.builder().
+        Usuario miUsuario = Usuario.builder().
                 user_name(txtUserName.getText()).
                 pnombre(txtPNombre.getText()).
                 snombre(txtSNombre.getText()).

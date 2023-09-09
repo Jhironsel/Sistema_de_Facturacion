@@ -10,20 +10,20 @@ import static sur.softsurena.entidades.Facturas.getFacturas;
 import sur.softsurena.utilidades.Utilidades;
 
 public class frmReporteFacturas extends javax.swing.JInternalFrame {
-    
+
     public frmReporteFacturas() {
 
         initComponents();
-        
+
         JTextField editorFecha = (JTextField) dchFechaInicial.getDateEditor();
-        
+
         editorFecha.setBorder(
                 javax.swing.BorderFactory.createTitledBorder(
                         javax.swing.BorderFactory.createLineBorder(
                                 new java.awt.Color(0, 0, 255)), "Fecha inicial"));
-        
+
         editorFecha = (JTextField) dchFechaFinal.getDateEditor();
-        
+
         editorFecha.setBorder(
                 javax.swing.BorderFactory.createTitledBorder(
                         javax.swing.BorderFactory.createLineBorder(
@@ -195,7 +195,7 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame {
             El campo o ComboBox de cliente debe de estar habilitado cuando es
         seleccionado y quiera buscarse los numero o identificador de factura. 
         
-        */
+         */
         //Cargamos Clientes
         Clientes cli = Clientes.builder().
                 id_persona(-1).
@@ -205,7 +205,7 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame {
 
         cmbCliente.addItem(cli);
 
-        getClientesTablaSBCombo().stream().forEach(cliente ->{
+        getClientesTablaSBCombo().stream().forEach(cliente -> {
             cmbCliente.addItem(cliente);
         });
 
@@ -249,61 +249,56 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame {
 
         String filtro = "";
 
-        //Si todo es seleccionado
-            filtro = "";
-        //De lo contrario
-            //Para Realizar la Consulta por Nombre del Cliente...
+        filtro = "";
+        if (cmbCliente.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(null, "Debe Selecionar un Cliente...");
+            cmbCliente.requestFocusInWindow();
+            return;
+        }
+        filtro = "WHERE factura.idCliente = '"
+                + ((Clientes) cmbCliente.getSelectedItem()).getId_persona() + "'";
 
-            //Si la lista de cliente es seleccionada
-                if (cmbCliente.getSelectedIndex() == 0) {
-                    JOptionPane.showMessageDialog(null, "Debe Selecionar un Cliente...");
-                    cmbCliente.requestFocusInWindow();
-                    return;
-                }
-                filtro = "WHERE factura.idCliente = '"
-                        + ((Clientes) cmbCliente.getSelectedItem()).getId_persona()+ "'";
+        //Para Realizar la Consulta por Numero de Factura...
+        //Si las factura es seleccionada.
+        if (cmbFacturaInicial.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(null, "Debe Selecionar una Factura Inicial...");
+            cmbFacturaInicial.requestFocusInWindow();
+            return;
+        }
+        if (cmbFacturaFinal.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(null, "Debe Selecionar una Factura Final...");
+            cmbFacturaFinal.requestFocusInWindow();
+            return;
+        }
 
-            //Para Realizar la Consulta por Numero de Factura...
-            //Si las factura es seleccionada.
-                if (cmbFacturaInicial.getSelectedIndex() == 0) {
-                    JOptionPane.showMessageDialog(null, "Debe Selecionar una Factura Inicial...");
-                    cmbFacturaInicial.requestFocusInWindow();
-                    return;
-                }
-                if (cmbFacturaFinal.getSelectedIndex() == 0) {
-                    JOptionPane.showMessageDialog(null, "Debe Selecionar una Factura Final...");
-                    cmbFacturaFinal.requestFocusInWindow();
-                    return;
-                }
+        if (cmbFacturaInicial.getSelectedIndex() > cmbFacturaFinal.getSelectedIndex()) {
+            JOptionPane.showMessageDialog(null, "Factura Inicial Maryor que la Final");
+            cmbFacturaInicial.requestFocusInWindow();
+            return;
+        }
 
-                if (cmbFacturaInicial.getSelectedIndex() > cmbFacturaFinal.getSelectedIndex()) {
-                    JOptionPane.showMessageDialog(null, "Factura Inicial Maryor que la Final");
-                    cmbFacturaInicial.requestFocusInWindow();
-                    return;
-                }
+        filtro = "WHERE factura.idFactura >= "
+                + ((Facturas) cmbFacturaInicial.getSelectedItem()).getId()
+                + " and factura.idFactura <= "
+                + ((Facturas) cmbFacturaFinal.getSelectedItem()).getId();
 
-                filtro = "WHERE factura.idFactura >= "
-                        + ((Facturas) cmbFacturaInicial.getSelectedItem()).getId()
-                        + " and factura.idFactura <= "
-                        + ((Facturas) cmbFacturaFinal.getSelectedItem()).getId();
+        //Para Realizar la Consulta por Fecha...
+        //Si la fecha es seleccionada.
+        if (dchFechaInicial.getDate() == null) {
+            JOptionPane.showMessageDialog(null, "Debe Selecionar una Fecha Inicial...");
+            dchFechaInicial.requestFocusInWindow();
+            return;
+        }
+        if (dchFechaFinal.getDate() == null) {
+            JOptionPane.showMessageDialog(null, "Debe Selecionar una Fecha Final...");
+            dchFechaFinal.requestFocusInWindow();
+            return;
+        }
 
-            //Para Realizar la Consulta por Fecha...
-            //Si la fecha es seleccionada.
-                if (dchFechaInicial.getDate() == null) {
-                    JOptionPane.showMessageDialog(null, "Debe Selecionar una Fecha Inicial...");
-                    dchFechaInicial.requestFocusInWindow();
-                    return;
-                }
-                if (dchFechaFinal.getDate() == null) {
-                    JOptionPane.showMessageDialog(null, "Debe Selecionar una Fecha Final...");
-                    dchFechaFinal.requestFocusInWindow();
-                    return;
-                }
-
-                filtro = "WHERE fecha >= '"
-                        + Utilidades.formatDate(dchFechaInicial.getDate(), "MM-dd-yyyy")
-                        + "' and fecha <= '"
-                        + Utilidades.formatDate(dchFechaFinal.getDate(), "MM-dd-yyyy") + "'";
+        filtro = "WHERE fecha >= '"
+                + Utilidades.formatDate(dchFechaInicial.getDate(), "MM-dd-yyyy")
+                + "' and fecha <= '"
+                + Utilidades.formatDate(dchFechaFinal.getDate(), "MM-dd-yyyy") + "'";
 
         //Adicionamos el fitro a la Consulta....
         sql = sql + filtro;
@@ -311,47 +306,40 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame {
 //            Reporte.reporteFacturas(archivo, getConsulta(sql));
         JOptionPane.showMessageDialog(null, "Reporte Generado...");
         dispose();
-        
+
     }//GEN-LAST:event_btnGenerarActionPerformed
     private void habilitarCampos() {
-        //Si todo es seleccionado
+        dchFechaInicial.setEnabled(false);
+        dchFechaFinal.setEnabled(false);
 
-            dchFechaInicial.setEnabled(false);
-            dchFechaFinal.setEnabled(false);
+        cmbCliente.setEnabled(false);
 
-            cmbCliente.setEnabled(false);
+        cmbFacturaInicial.setEnabled(false);
+        cmbFacturaFinal.setEnabled(false);
 
-            cmbFacturaInicial.setEnabled(false);
-            cmbFacturaFinal.setEnabled(false);
+        dchFechaInicial.setEnabled(true);
+        dchFechaFinal.setEnabled(true);
 
-        //De lo contrario
+        cmbCliente.setEnabled(false);
 
-            //Si fecha es seleccionada
-                dchFechaInicial.setEnabled(true);
-                dchFechaFinal.setEnabled(true);
+        cmbFacturaInicial.setEnabled(false);
+        cmbFacturaFinal.setEnabled(false);
 
-                cmbCliente.setEnabled(false);
+        dchFechaInicial.setEnabled(false);
+        dchFechaFinal.setEnabled(false);
 
-                cmbFacturaInicial.setEnabled(false);
-                cmbFacturaFinal.setEnabled(false);
-            
-            //Se las factura es seleccionada
-                dchFechaInicial.setEnabled(false);
-                dchFechaFinal.setEnabled(false);
+        cmbCliente.setEnabled(false);
 
-                cmbCliente.setEnabled(false);
+        cmbFacturaInicial.setEnabled(true);
+        cmbFacturaFinal.setEnabled(true);
 
-                cmbFacturaInicial.setEnabled(true);
-                cmbFacturaFinal.setEnabled(true);
-            
-            //Si el listado de cliente es seleccionado
-                dchFechaInicial.setEnabled(false);
-                dchFechaFinal.setEnabled(false);
+        dchFechaInicial.setEnabled(false);
+        dchFechaFinal.setEnabled(false);
 
-                cmbCliente.setEnabled(true);
+        cmbCliente.setEnabled(true);
 
-                cmbFacturaInicial.setEnabled(false);
-                cmbFacturaFinal.setEnabled(false);
+        cmbFacturaInicial.setEnabled(false);
+        cmbFacturaFinal.setEnabled(false);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private RSMaterialComponent.RSButtonMaterialIconOne btnGenerar;

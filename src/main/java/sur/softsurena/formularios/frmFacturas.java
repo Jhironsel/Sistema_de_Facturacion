@@ -51,7 +51,7 @@ import static sur.softsurena.entidades.Facturas.modificarFactura;
 import sur.softsurena.entidades.HeaderFactura;
 import static sur.softsurena.entidades.Productos.existeProducto;
 import static sur.softsurena.entidades.Turnos.idTurnoActivo;
-import sur.softsurena.entidades.Usuarios;
+import sur.softsurena.entidades.Usuario;
 import static sur.softsurena.formularios.frmPrincipal.mnuMovimientosNuevaFactura;
 import sur.softsurena.hilos.hiloImpresionFactura;
 import sur.softsurena.metodos.Imagenes;
@@ -91,7 +91,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
 
     private ArrayList<DetalleFactura> detalleFacturaList;
 
-    private Usuarios usuario;
+    private Usuario usuario;
     
     private static final String PROCESO_DE_CREACION_DE_FACTURA = "Proceso de creación de factura.";
 
@@ -133,7 +133,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
         
         txtCriterio.requestFocusInWindow();
 
-        usuario = Usuarios.getUsuarioActual();
+        usuario = Usuario.getUsuarioActual();
 
         tcr = new DefaultTableCellHeaderRenderer();
 
@@ -1060,7 +1060,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
                 "¿Esta Seguro de Borrar el detalle de la Factura?",
                 "Eliminando Detalle de la factura",
                 JOptionPane.YES_NO_OPTION);
-        if (rta == 1) {
+        if (rta == JOptionPane.NO_OPTION) {
             return;
         }
         nueva();
@@ -1379,7 +1379,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
         int resp = JOptionPane.showConfirmDialog(null,
                 "Desea Imprimir la Ultima Factura?",
                 "Confirmacion de impresion", JOptionPane.YES_NO_OPTION);
-        if (resp == 1) {
+        if (resp == JOptionPane.NO_OPTION) {
             return;
         }
         frmPrintFacturaConReporte2 miPrint = new frmPrintFacturaConReporte2(null, true);
@@ -1420,7 +1420,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Run
             int resp = JOptionPane.showConfirmDialog(null,
                     "Limite de credito Excedido! \nDesea continuar?",
                     "Autorización de venta sobre el credito", JOptionPane.YES_NO_OPTION);
-            if (resp == 1) {
+            if (resp == JOptionPane.NO_OPTION) {
                 return;
             } else {
                 frmAutorizacion miAut = new frmAutorizacion(null, true);

@@ -8,11 +8,15 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import sur.softsurena.entidades.DefaultTableCellHeaderRenderer;
 import sur.softsurena.entidades.Roles;
+import static sur.softsurena.entidades.Roles.comprobandoRol;
+import static sur.softsurena.entidades.Roles.comprobandoRolesDisponibles;
 import static sur.softsurena.entidades.Roles.getPermisosRoles;
 import static sur.softsurena.entidades.Roles.getRoles;
-import static sur.softsurena.entidades.Usuarios.borrarUsuario;
-import static sur.softsurena.entidades.Usuarios.getUsuario;
-import static sur.softsurena.entidades.Usuarios.getUsuarios;
+import static sur.softsurena.entidades.Roles.getRolesDisponibles;
+import sur.softsurena.entidades.Usuario;
+import static sur.softsurena.entidades.Usuario.borrarUsuario;
+import static sur.softsurena.entidades.Usuario.getNombresUsuarios;
+import static sur.softsurena.entidades.Usuario.getUsuarios;
 import static sur.softsurena.utilidades.Utilidades.columnasCheckBox;
 import static sur.softsurena.utilidades.Utilidades.repararColumnaTable;
 
@@ -353,6 +357,11 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         });
         tblListadoUsuarios.setToolTipText("");
         tblListadoUsuarios.setName("tblRoles"); // NOI18N
+        tblListadoUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblListadoUsuariosMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(tblListadoUsuarios);
 
         tblRolesUsuario.setModel(new javax.swing.table.DefaultTableModel(
@@ -501,25 +510,25 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         if (jtpPrivilegios.getSelectedComponent() == jpDefRoles) {
 
         } else if (jtpPrivilegios.getSelectedComponent() == jpMantRoles) {
-            if(tblRoles.getSelectedRow() == -1){
+            if (tblRoles.getSelectedRow() == -1) {
                 JOptionPane.showMessageDialog(
-                        null, 
-                        "Debe seleccionar un registros.", 
-                        "Comprobacion de proceso.", 
+                        null,
+                        "Debe seleccionar un registros.",
+                        "Comprobacion de proceso.",
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            
+
             String rolActual = tblRoles.getValueAt(
                     tblRoles.getSelectedRow(), 0).toString();
-            
+
             String rolNuevo = JOptionPane.showInternalInputDialog(
-                    this, 
-                    "Ingrese nombre del nuevo rol:", 
-                    "Cambio de nombre de roles.", 
+                    this,
+                    "Ingrese nombre del nuevo rol:",
+                    "Cambio de nombre de roles.",
                     JOptionPane.QUESTION_MESSAGE
             );
-            
+
             Roles.modificarRol(rolActual, rolNuevo);
             llenarTblRoles();
         } else if (jtpPrivilegios.getSelectedComponent() == jpMantUsuarios) {
@@ -536,7 +545,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             frmUsuariosAgregar user = new frmUsuariosAgregar(
                     null,
                     true,
-                    getUsuario(userName)
+                    Usuario.getUsuario(userName)
             );
 
             user.setLocationRelativeTo(this);
@@ -647,30 +656,40 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         } else if (jtpPrivilegios.getSelectedComponent() == jpMantRoles) {
             llenarTblRoles();
         } else if (jtpPrivilegios.getSelectedComponent() == jpDefRoles) {
-
+            llenarTblListadoUsuarios();
         }
     }//GEN-LAST:event_jtpPrivilegiosStateChanged
 
     private void btnAsignarRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarRolActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnAsignarRolActionPerformed
 
     private void btnNuevo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevo1ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnNuevo1ActionPerformed
 
     private void btnNuevo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevo2ActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_btnNuevo2ActionPerformed
 
     private void tblRolesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblRolesMouseClicked
         String rol = tblRoles.getValueAt(tblRoles.getSelectedRow(), 0).toString();
-        if(rol.equalsIgnoreCase("ADMINISTRADOR")){
+        if (rol.equalsIgnoreCase("ADMINISTRADOR")) {
             rol = "RDB$ADMIN";
         }
         llenarTblPermisos(rol);
+        llenarTblPermisosDisponibles(rol);
     }//GEN-LAST:event_tblRolesMouseClicked
 
+    private void tblListadoUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblListadoUsuariosMouseClicked
+        String usuario = tblListadoUsuarios.getValueAt(tblListadoUsuarios.getSelectedRow(), 0).toString();
+        llenarTblRolesUsuarios(usuario);
+        llenarTblRolesDisponibles(usuario);
+    }//GEN-LAST:event_tblListadoUsuariosMouseClicked
+
+    /**
+     * 
+     */
     public static void llenarTabla() {
         tblUsuarios.removeAll();
         String titulos[] = {"Nombre usuario", "Primer Nombre",
@@ -713,6 +732,9 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
 
     }
 
+    /**
+     * 
+     */
     private void llenarTblRoles() {
         tblRoles.removeAll();
         String[] titulos = {"Listado de roles"};
@@ -740,8 +762,12 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         tblRoles.setModel(miTabla);
         repararColumnaTable(tblRoles);
     }
-    
-    private void llenarTblPermisos(String rolee){
+
+    /**
+     * 
+     * @param rolee 
+     */
+    private void llenarTblPermisos(String rolee) {
         tblPermisosAsignados.removeAll();
         String[] titulos = {"Permisos asignados", "Descripcion del permiso"};
         Object[] registro = new Object[titulos.length];
@@ -754,7 +780,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
 
         getPermisosRoles(rolee).stream().forEach(rol -> {
             registro[0] = rol.getNombreProcedimiento().strip();
-            registro[1] = (Objects.isNull(rol.getDescripcion()) ? "":rol.getDescripcion().strip());
+            registro[1] = (Objects.isNull(rol.getDescripcion()) ? "" : rol.getDescripcion().strip());
             miTabla.addRow(registro);
         });
 
@@ -763,6 +789,108 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         repararColumnaTable(tblPermisosAsignados);
     }
 
+    /**
+     * 
+     * @param rolee 
+     */
+    private void llenarTblPermisosDisponibles(String rolee) {
+        tblPermisosDisponibles.removeAll();
+        String[] titulos = {"Permisos Disponibles", "Descripcion del permiso"};
+        Object[] registro = new Object[titulos.length];
+        DefaultTableModel miTabla = new DefaultTableModel(null, titulos) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        getRolesDisponibles(rolee).stream().forEach(rol -> {
+            registro[0] = rol.getNombreProcedimiento().strip();
+            registro[1] = (Objects.isNull(rol.getDescripcion()) ? "" : rol.getDescripcion().strip());
+            miTabla.addRow(registro);
+        });
+
+        tblPermisosDisponibles.setModel(miTabla);
+
+        repararColumnaTable(tblPermisosDisponibles);
+    }
+
+    /**
+     * 
+     */
+    private void llenarTblListadoUsuarios() {
+        tblListadoUsuarios.removeAll();
+        String[] titulos = {"Listado de Usuarios"};
+        Object[] registro = new Object[titulos.length];
+        DefaultTableModel miTabla = new DefaultTableModel(null, titulos) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        getNombresUsuarios().stream().forEach(usuario -> {
+            registro[0] = usuario.getUser_name().strip();
+            miTabla.addRow(registro);
+        });
+
+        tblListadoUsuarios.setModel(miTabla);
+
+        repararColumnaTable(tblListadoUsuarios);
+    }
+    
+    /**
+     * 
+     * @param userName 
+     */
+    private void llenarTblRolesUsuarios(String userName) {
+        tblRolesUsuario.removeAll();
+        String[] titulos = {"Roles del usuarios", "Descripcion del rol"};
+        Object[] registro = new Object[titulos.length];
+        DefaultTableModel miTabla = new DefaultTableModel(null, titulos) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        comprobandoRol(userName).stream().forEach(rol -> {
+            registro[0] = rol.getRoleName().strip();
+            registro[1] = Objects.isNull(rol.getDescripcion()) ? "":rol.getDescripcion().strip();
+            miTabla.addRow(registro);
+        });
+
+        tblRolesUsuario.setModel(miTabla);
+
+        repararColumnaTable(tblRolesUsuario);
+    }
+    
+    /**
+     * 
+     * @param userName 
+     */
+    private void llenarTblRolesDisponibles(String userName) {
+        tblRolesDisponibles.removeAll();
+        String[] titulos = {"Roles del usuarios", "Descripcion del rol"};
+        Object[] registro = new Object[titulos.length];
+        DefaultTableModel miTabla = new DefaultTableModel(null, titulos) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        comprobandoRolesDisponibles(userName).stream().forEach(rol -> {
+            registro[0] = rol.getRoleName().strip();
+            registro[1] = Objects.isNull(rol.getDescripcion()) ? "":rol.getDescripcion().strip();
+            miTabla.addRow(registro);
+        });
+
+        tblRolesDisponibles.setModel(miTabla);
+
+        repararColumnaTable(tblRolesDisponibles);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private RSMaterialComponent.RSButtonMaterialIconOne btnAsignarRol;
     private RSMaterialComponent.RSButtonMaterialIconOne btnBorrar;

@@ -82,12 +82,12 @@
         </repository>
     </repositories-->
     
-<!--    <repositories>
+    <repositories>
         <repository>
             <id>pentaho-releases</id>
             <url>file:///home/jhironsel/.m2/repository</url>
         </repository>
-    </repositories>-->
+    </repositories>
     
     
 </project>

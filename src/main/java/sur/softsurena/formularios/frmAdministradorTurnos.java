@@ -19,7 +19,7 @@ import sur.softsurena.entidades.Turnos;
 import static sur.softsurena.entidades.Turnos.cerrarTurno;
 import static sur.softsurena.entidades.Turnos.habilitarTurno;
 import static sur.softsurena.entidades.Turnos.usuarioTurnoActivo;
-import sur.softsurena.entidades.Usuarios;
+import sur.softsurena.entidades.Usuario;
 import sur.softsurena.utilidades.Utilidades;
 
 /**
@@ -264,7 +264,7 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
         }
 
         //Obtenemos el cajero seleccionado.
-        String userName = ((Usuarios) tblCajerosDisponible.getValueAt(
+        String userName = ((Usuario) tblCajerosDisponible.getValueAt(
                 userSelected, 0)).getUser_name();
 
         //Si el objeto idUsuario es igual a N/A.
@@ -410,7 +410,7 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
         }
         int cajeroSelectRow = tblCajerosDisponible.getSelectedRow();
 
-        String userName = ((Usuarios) tblCajerosDisponible.getValueAt(cajeroSelectRow, 0)).getUser_name();
+        String userName = ((Usuario) tblCajerosDisponible.getValueAt(cajeroSelectRow, 0)).getUser_name();
 
         crearReporte(userName);
     }//GEN-LAST:event_tblCajerosDisponibleMouseClicked

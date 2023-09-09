@@ -421,7 +421,7 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
                 "Confirmacion de Pago",
                 JOptionPane.YES_NO_OPTION);
 
-        if (num == 1) {
+        if (num == JOptionPane.NO_OPTION) {
             return;
         }
 

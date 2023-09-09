@@ -859,7 +859,7 @@ public class frmDeudas extends javax.swing.JInternalFrame {
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
         llenarTabla();
-        mostrarRegistro();// TODO add your handling code here:
+        mostrarRegistro();
     }//GEN-LAST:event_formInternalFrameOpened
 
     private void btnGetTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGetTotalActionPerformed
@@ -1076,11 +1076,15 @@ public class frmDeudas extends javax.swing.JInternalFrame {
             return;
         }
         String idDeuda = tblClientes.getValueAt(tblClientes.getSelectedRow(), 0).toString();
-        int rta = JOptionPane.showConfirmDialog(null,
+        int rta = JOptionPane.showConfirmDialog(
+                null,
                 "¿Esta Seguro de Eliminar Deuda #" + idDeuda,
-                "Borrar Deuda", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                "Borrar Deuda", 
+                JOptionPane.YES_NO_OPTION, 
+                JOptionPane.QUESTION_MESSAGE
+        );
 
-        if (rta == 1) {
+        if (rta == JOptionPane.NO_OPTION) {
             return;
         }
 

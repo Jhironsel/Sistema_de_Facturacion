@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
-import static sur.softsurena.entidades.Usuarios.cambioClave;
+import static sur.softsurena.entidades.Usuario.cambioClave;
 import sur.softsurena.metodos.Imagenes;
 
 public class frmCambioClave extends javax.swing.JDialog {

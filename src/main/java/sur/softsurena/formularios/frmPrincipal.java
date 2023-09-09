@@ -22,9 +22,15 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
-import sur.softsurena.entidades.Roles;
-import sur.softsurena.entidades.Usuarios;
+import static sur.softsurena.conexion.Conexion.getCnn;
 import sur.softsurena.entidades.DesktopConFondo;
+import static sur.softsurena.entidades.E_S_SYS.getLogo;
+import static sur.softsurena.entidades.E_S_SYS.insertLogo;
+import sur.softsurena.entidades.Roles;
+import static sur.softsurena.entidades.Roles.comprobandoRol;
+import static sur.softsurena.entidades.Turnos.usuarioTurnoActivo;
+import sur.softsurena.entidades.Usuario;
+import static sur.softsurena.entidades.Usuario.getUsuarioActual;
 import sur.softsurena.hilos.hiloIp;
 import sur.softsurena.hilos.hiloRestaurar;
 import sur.softsurena.jfilechooser.ImageFileView;
@@ -32,13 +38,6 @@ import sur.softsurena.jfilechooser.ImageFilter;
 import sur.softsurena.jfilechooser.ImagePreview;
 import sur.softsurena.metodos.Imagenes;
 import sur.softsurena.utilidades.Utilidades;
-//Conexiones a la base de datos.
-import static sur.softsurena.conexion.Conexion.getCnn;
-import static sur.softsurena.entidades.E_S_SYS.getLogo;
-import static sur.softsurena.entidades.E_S_SYS.insertLogo;
-import static sur.softsurena.entidades.Roles.comprobandoRol;
-import static sur.softsurena.entidades.Turnos.usuarioTurnoActivo;
-import static sur.softsurena.entidades.Usuarios.getUsuarioActual;
 
 public final class frmPrincipal extends javax.swing.JFrame {
 
@@ -53,7 +52,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
         //Hacemos la consulta a la base de datos, para saber cual es el usuario
         //y el rol del usuario conectado a la base de datos.
-        Usuarios u = getUsuarioActual();        
+        Usuario u = getUsuarioActual();        
         jlUser.setText(u.getUser_name());
         
         //Proceso para cargar los roles del usuario al sistema.
@@ -901,6 +900,8 @@ public final class frmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jlRespaldarMouseClicked
 
     private void jlRestaurarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlRestaurarMouseClicked
+        //TODO Realizar el procedimiento de restaurar una base de datos.
+        
         JFileChooser miFile = new JFileChooser(System.getProperty("user.dir") + "/Data");
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Base de Datos",
                 "fbk", "FBK");
@@ -925,7 +926,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
                 "Inserte el nombre de Usuario: ", JOptionPane.OK_CANCEL_OPTION,
                 JOptionPane.INFORMATION_MESSAGE);
         pf.requestFocusInWindow();
-        if (claveMaster == JOptionPane.CANCEL_OPTION || claveMaster == null) {
+        if (claveMaster == JOptionPane.CANCEL_OPTION) {
             return;
         }//Obtener la clave del usuario a realizar el backup
 
@@ -935,6 +936,8 @@ public final class frmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jlRestaurarMouseClicked
 
     private void jlMovimientoESMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlMovimientoESMouseEntered
+        int button = evt.getButton();
+        System.out.println("button = " + button);
         jlMovimientoES.setText("Reporte");
     }//GEN-LAST:event_jlMovimientoESMouseEntered
 
@@ -1101,7 +1104,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuArchivosSalirActionPerformed
 
     private void mnuMovimientosNuevaFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMovimientosNuevaFacturaActionPerformed
-        Usuarios usuarioActual = getUsuarioActual();
+        Usuario usuarioActual = getUsuarioActual();
 
         if (!usuarioTurnoActivo(usuarioActual.getUser_name())) {
             JOptionPane.showMessageDialog(
@@ -1162,7 +1165,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         
         Roles.setRole(rol);
         
-        Usuarios u = getUsuarioActual();
+        Usuario u = getUsuarioActual();
         
         jlUser.setText(u.getUser_name());
         

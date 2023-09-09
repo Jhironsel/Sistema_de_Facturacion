@@ -425,7 +425,7 @@ public class frmCobrosClientes extends javax.swing.JDialog {
                 "Esta seguro de realizar Cobro?",
                 "Confirmacion de Pago",
                 JOptionPane.YES_NO_OPTION);
-        if (num == 1) {
+        if (num == JOptionPane.NO_OPTION) {
             return;
         }
         //idFactura idTurno, double montoPago

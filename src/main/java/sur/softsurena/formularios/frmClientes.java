@@ -304,16 +304,6 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
         txtCedula1.setFocusTraversalPolicyProvider(true);
         txtCedula1.setFont(new java.awt.Font("FreeMono", 1, 14)); // NOI18N
         txtCedula1.setName("txtCedula"); // NOI18N
-        txtCedula1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCedula1ActionPerformed(evt);
-            }
-        });
-        txtCedula1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtCedula1KeyPressed(evt);
-            }
-        });
 
         setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         setClosable(true);
@@ -1163,7 +1153,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
             .addGroup(jpGeneralLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jtpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+                    .addComponent(jtpPrincipal)
                     .addComponent(jpBotones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -1171,7 +1161,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
             jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpGeneralLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jtpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 513, Short.MAX_VALUE)
+                .addComponent(jtpPrincipal)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jpBotones, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15))
@@ -2139,14 +2129,6 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
         }
     }//GEN-LAST:event_jtpDireccionContactosKeyPressed
 
-    private void txtCedula1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedula1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCedula1ActionPerformed
-
-    private void txtCedula1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedula1KeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCedula1KeyPressed
-
     private void jcbProvinciasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcbProvinciasKeyPressed
         if (evt.isControlDown()) {
             if (evt.isAltDown()) {
@@ -2296,8 +2278,6 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
             );
             return true;
         }
-
-        //Si todo esta bien enviamos un false para que el proceso se permita..
         return false;
     }
 
