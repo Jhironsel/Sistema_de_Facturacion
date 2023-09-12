@@ -315,7 +315,7 @@ public final class frmLogin extends javax.swing.JFrame {
 
         if (!Conexion.verificar()) {
             JOptionPane.showMessageDialog(
-                    this,
+                    null,
                     "Usuario y clave incorrectos! \nVuelva intentarlo.!!!",
                     "Validación de usuario.",
                     JOptionPane.ERROR_MESSAGE

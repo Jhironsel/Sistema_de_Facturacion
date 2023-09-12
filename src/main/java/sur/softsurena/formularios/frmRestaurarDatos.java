@@ -362,7 +362,6 @@ public final class frmRestaurarDatos extends javax.swing.JInternalFrame implemen
         }
     }
 
-    /*método para iniciar el hilo*/
     public void iniciarHilo() {
         procesar = true;
         hilo = new Thread(this);
