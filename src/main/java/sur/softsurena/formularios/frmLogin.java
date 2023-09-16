@@ -263,7 +263,6 @@ public final class frmLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-
         //Validación de campos del login. 
         if (txtUsuario.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null,
@@ -322,6 +321,7 @@ public final class frmLogin extends javax.swing.JFrame {
             );
             txtClave.setText("");
             txtUsuario.setText("");
+            txtUsuario.requestFocus();
             return;
         }
 

@@ -208,6 +208,7 @@
                         <Column editable="true" title="Title 4" type="java.lang.Object"/>
                       </Table>
                     </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="Aqui se muestran la lista de usuarios y los atributos mas importante."/>
                   </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
@@ -238,8 +239,8 @@
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="1" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <EmptySpace pref="12" max="32767" attributes="0"/>
-                                      <Component id="btnQuitarPermisoAdministrativo" min="-2" pref="117" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                                      <Component id="btnQuitarPermisoAdministrativo" pref="117" max="32767" attributes="0"/>
                                       <EmptySpace min="-2" max="-2" attributes="0"/>
                                       <Component id="btnBorrarPermiso" min="-2" pref="152" max="-2" attributes="0"/>
                                   </Group>
@@ -258,7 +259,7 @@
                           </Group>
                           <Component id="jScrollPane11" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -277,10 +278,10 @@
                                   <Component id="jScrollPane7" pref="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="btnBorrarPermiso" alignment="1" min="-2" max="-2" attributes="0"/>
                                   <Component id="btnQuitarPermisoAdministrativo" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="btnAsignarPermiso" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnAsignarPermiso" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jScrollPane11" min="-2" pref="206" max="-2" attributes="0"/>
@@ -305,7 +306,7 @@
                         <Column editable="false" title="Listado de Roles" type="java.lang.Object"/>
                       </Table>
                     </Property>
-                    <Property name="toolTipText" type="java.lang.String" value=""/>
+                    <Property name="toolTipText" type="java.lang.String" value="Aqui se muestran los roles del sistema."/>
                     <Property name="name" type="java.lang.String" value="tblRoles" noResource="true"/>
                   </Properties>
                   <Events>
@@ -328,7 +329,7 @@
                         <Column editable="false" title="Permisos disponibles" type="java.lang.Object"/>
                       </Table>
                     </Property>
-                    <Property name="toolTipText" type="java.lang.String" value=""/>
+                    <Property name="toolTipText" type="java.lang.String" value="Los permisos disponibles para el seleccionado"/>
                     <Property name="name" type="java.lang.String" value="tblRoles" noResource="true"/>
                   </Properties>
                   <Events>
@@ -351,7 +352,7 @@
                         <Column editable="false" title="Permisos asignados" type="java.lang.Object"/>
                       </Table>
                     </Property>
-                    <Property name="toolTipText" type="java.lang.String" value=""/>
+                    <Property name="toolTipText" type="java.lang.String" value="Aqui se muentran los permisos asignado del role seleccionado con su atributo de administracion marcado o no."/>
                     <Property name="name" type="java.lang.String" value="tblRoles" noResource="true"/>
                   </Properties>
                   <Events>
@@ -364,7 +365,7 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Borrar Permiso"/>
                 <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
-                  <Value id="ADD"/>
+                  <Value id="DELETE"/>
                 </Property>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[100, 40]"/>
@@ -402,7 +403,7 @@
                   <Dimension value="[80, 0]"/>
                 </Property>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[100, 40]"/>
+                  <Dimension value="[150, 40]"/>
                 </Property>
                 <Property name="round" type="int" value="40"/>
               </Properties>
@@ -426,6 +427,7 @@
                       </Border>
                     </Property>
                     <Property name="contentType" type="java.lang.String" value="text/html" noResource="true"/>
+                    <Property name="toolTipText" type="java.lang.String" value="Aqui se muestran las descripcion del rol seleccionado."/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -487,10 +489,10 @@
                                   <Component id="jScrollPane6" pref="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="btnQuitarRolUsuario" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="btnQuitarPermisoAdministrativoUsuario" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="btnAsignarRol" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnAsignarRol" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jScrollPane12" min="-2" pref="206" max="-2" attributes="0"/>
