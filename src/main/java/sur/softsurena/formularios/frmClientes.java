@@ -221,6 +221,10 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
                 return false; //Las celdas no son editables.
             }
         };
+        jLabel1 = new javax.swing.JLabel();
+        jsnCantidadFilas = new javax.swing.JSpinner();
+        jLabel2 = new javax.swing.JLabel();
+        jsnPaginaNro = new javax.swing.JSpinner();
         jspMantenimiento = new javax.swing.JScrollPane();
         jpMantenimiento = new javax.swing.JPanel();
         jpMantenimiento2 = new javax.swing.JPanel();
@@ -346,6 +350,11 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
         btnImprimirInforme1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.PRINT);
         btnImprimirInforme1.setName("btnImprimirInforme"); // NOI18N
         btnImprimirInforme1.setRound(40);
+        btnImprimirInforme1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirInforme1ActionPerformed(evt);
+            }
+        });
         jPanel16.add(btnImprimirInforme1);
 
         btnHistorial1.setText("Historial de Cliente");
@@ -378,6 +387,24 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
         tblClientes.setFontRowSelect(new java.awt.Font("FreeMono", 1, 14)); // NOI18N
         jScrollPane6.setViewportView(tblClientes);
 
+        jLabel1.setText("Cantidad Reg.");
+
+        jsnCantidadFilas.setModel(new javax.swing.SpinnerNumberModel(20, 10, null, 1));
+        jsnCantidadFilas.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jsnCantidadFilasStateChanged(evt);
+            }
+        });
+
+        jLabel2.setText("Pagina No.");
+
+        jsnPaginaNro.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        jsnPaginaNro.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jsnPaginaNroStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jpClientesLayout = new javax.swing.GroupLayout(jpClientes);
         jpClientes.setLayout(jpClientesLayout);
         jpClientesLayout.setHorizontalGroup(
@@ -385,16 +412,30 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
             .addGroup(jpClientesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jpClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE)
-                    .addComponent(jScrollPane6))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 821, Short.MAX_VALUE)
+                    .addComponent(jScrollPane6)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpClientesLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(5, 5, 5)
+                        .addComponent(jsnCantidadFilas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2)
+                        .addGap(4, 4, 4)
+                        .addComponent(jsnPaginaNro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jpClientesLayout.setVerticalGroup(
             jpClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpClientesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
-                .addGap(6, 6, 6)
+                .addGroup(jpClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel1)
+                    .addComponent(jsnCantidadFilas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(jsnPaginaNro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -1154,7 +1195,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
                 .addContainerGap()
                 .addGroup(jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jtpPrincipal)
-                    .addComponent(jpBotones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jpBotones, javax.swing.GroupLayout.DEFAULT_SIZE, 841, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jpGeneralLayout.setVerticalGroup(
@@ -1173,7 +1214,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jspGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, 820, Short.MAX_VALUE)
+            .addComponent(jspGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, 861, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1218,7 +1259,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
-        //Validamos que todo está correcto en la tabla.
+        //Validamos que está correcto en la tabla.
         //Si el metodo devuelve true devolvemos el proceso.
         if (validarRegistro()) {
             return;
@@ -1275,14 +1316,21 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.INFORMATION_MESSAGE);
 
-        v_hilo.interrupt();
-
         if (resp == JOptionPane.NO_OPTION) {
+            v_hilo.interrupt();
             return;
         }
 
         if (validaCampoCedula(txtCedula1)) {
-            return;
+            resp = JOptionPane.showConfirmDialog(
+                    null,
+                    "Cedula de identidad no valida.\nDesea consultar la base de dato?",
+                    "Validacion de cedula",
+                    JOptionPane.WARNING_MESSAGE
+            );
+            if (resp == JOptionPane.NO_OPTION) {
+                return;
+            }
         }
 
         if (existeCliente(txtCedula1.getValue().toString()) == -1) {
@@ -2176,6 +2224,19 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
             }
         }
     }//GEN-LAST:event_jcbMunicipiosKeyPressed
+
+    private void btnImprimirInforme1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirInforme1ActionPerformed
+        // TODO Trabajando en la impresion del listado de los clientes.
+
+    }//GEN-LAST:event_btnImprimirInforme1ActionPerformed
+
+    private void jsnCantidadFilasStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jsnCantidadFilasStateChanged
+        llenarTablaClientes();
+    }//GEN-LAST:event_jsnCantidadFilasStateChanged
+
+    private void jsnPaginaNroStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jsnPaginaNroStateChanged
+        llenarTablaClientes();
+    }//GEN-LAST:event_jsnPaginaNroStateChanged
     private void eliminarRegistro(JTable tabla, DefaultTableModel modelo) {
         if (tabla.getSelectedRow() == -1) {
             JOptionPane.showInternalMessageDialog(null,
@@ -2193,14 +2254,19 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
      *
      */
     public synchronized static void llenarTablaClientes() {
-        final String titulos[] = {"Cedulas", "Persona", "Primer Nombre", "Segundo Nombre",
-            "Apellidos", "Sexo", "Fecha nacimiento", "Fecha Ingreso", "Estado"};
+        final String titulos[] = {"Cedulas", "Persona", "Primer Nombre",
+            "Segundo Nombre", "Apellidos", "Sexo", "Fecha nacimiento",
+            "Fecha Ingreso", "Estado"
+        };
 
         Object registro[] = new Object[titulos.length];
 
         DefaultTableModel dtmClientes = new DefaultTableModel(null, titulos);
 
-        getClientesTablaSB().stream().forEach(cliente -> {
+        getClientesTablaSB(
+                Integer.valueOf(jsnPaginaNro.getValue().toString()),
+                Integer.valueOf(jsnCantidadFilas.getValue().toString())
+        ).stream().forEach(cliente -> {
             registro[0] = Clientes.
                     builder().
                     id_persona(cliente.getId_persona()).
@@ -2597,7 +2663,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
         v_dtmCorreo = new DefaultTableModel(null, TITULOS_CORREO);
         tblCorreos.setModel(v_dtmCorreo);
     }
-    
+
     @Override
     public void run() {
         /*
@@ -2653,6 +2719,8 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
     private RSMaterialComponent.RSButtonMaterialIconOne btnNuevo;
     private javax.swing.JCheckBox cbEstado;
     private com.toedter.calendar.JDateChooser dchFechaNacimiento;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel5;
@@ -2684,6 +2752,8 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
     private javax.swing.JPanel jpTelefonos;
     private javax.swing.JRadioButton jrbMovil;
     private javax.swing.JRadioButton jrbResidencial;
+    private static javax.swing.JSpinner jsnCantidadFilas;
+    private static javax.swing.JSpinner jsnPaginaNro;
     private javax.swing.JScrollPane jspClientes;
     private javax.swing.JScrollPane jspGeneral;
     private javax.swing.JScrollPane jspMantenimiento;

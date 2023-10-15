@@ -145,7 +145,7 @@ public class frmMovimientoEntradaSalida extends javax.swing.JInternalFrame {
         year = formatoDeFecha.format(jCalendar1.getDate());
         
     }
-
+    //TODO Metodos de jasperReport
     private void reporte(String fecha) {
         try {
             JasperReport masterReporte = 

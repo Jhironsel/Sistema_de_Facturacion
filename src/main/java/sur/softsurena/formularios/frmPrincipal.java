@@ -71,12 +71,10 @@ public final class frmPrincipal extends javax.swing.JFrame {
         });
         
         for (int i = 0; i < cbRoles.getItemCount(); i++) {
-            if(cbRoles.getItemAt(i).toString().strip().equalsIgnoreCase(u.getRol())){
-                cbRoles.setSelectedIndex(i);
-                break;
-            }
-            if(u.getRol().strip().equalsIgnoreCase("RDB$ADMIN") & 
-                    cbRoles.getItemAt(i).toString().strip().equalsIgnoreCase("ADMINISTRADOR")){
+            
+            if(cbRoles.getItemAt(i).toString().strip().
+                    equalsIgnoreCase(u.getRol())){
+                
                 cbRoles.setSelectedIndex(i);
                 break;
             }
@@ -1171,7 +1169,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         
         cbRoles.setToolTipText("Rol actual: "+u.getRol());
     }//GEN-LAST:event_cbRolesPopupMenuWillBecomeInvisible
-
+    //Todo Metodo de JasperReport
     private void imprimirReporte(Date fecha) {
         try {
             String miFile = "sur.softsurena.reportes.repSistemaDeBebida.jasper";
@@ -1193,6 +1191,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         }
     }
 
+    //TODO analizar este lineas comentadas. 
     //Funciones que estan en el panel de la Ventana Principal
 //    private void estado() {
 //        pEstatus.setVisible(true);

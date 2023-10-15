@@ -501,42 +501,8 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
 
         miTabla = new DefaultTableModel(null, titulos);
 
-        List<Clientes> clientesList = null;
+        List<Clientes> clientesList = Clientes.getClientesTablaSB(1, 50);
 
-        String sql = "";
-        if (txtCriterio.getText().equals("")) {
-            sql = "SELECT r.IDCLIENTE, r.NOMBRES, r.APELLIDOS, r.CREDITO, "
-                    + "r.DEUDAACTUAL "
-                    + "FROM Tabla_Clientes r ";
-        } else {
-            if (rbtNombes.isSelected()) {
-                sql = "SELECT r.IDCLIENTE, r.NOMBRES, r.APELLIDOS, r.CREDITO, "
-                        + "r.DEUDAACTUAL "
-                        + "FROM Tabla_Clientes r "
-                        + "where nombres CONTAINING '" + txtCriterio.getText() + "'";
-            }
-            if (rbtApellidos.isSelected()) {
-                sql = "SELECT r.IDCLIENTE, r.NOMBRES, r.APELLIDOS, r.CREDITO, "
-                        + "r.DEUDAACTUAL "
-                        + "FROM Tabla_Clientes r "
-                        + "where apellidos CONTAINING '" + txtCriterio.getText() + "'";
-            }
-            if (rbtID.isSelected()) {
-                sql = "SELECT r.IDCLIENTE, r.NOMBRES, r.APELLIDOS, r.CREDITO, "
-                        + "r.DEUDAACTUAL "
-                        + "FROM Tabla_Clientes r "
-                        + "where idCliente CONTAINING '" + txtCriterio.getText() + "'";
-            }
-            if (rbtIdFactura.isSelected()) {
-                sql = "SELECT f.IDCLIENTE, c.NOMBRES, c.Apellidos, c.credito, "
-                        + "c.deudaactual "
-                        + "FROM tabla_Facturas f "
-                        + "    left join tabla_Clientes c "
-                        + "        on c.IDCLIENTE = f.IDCLIENTE "
-                        + "where f.IDFACTURA = " + txtCriterio.getText() + "";
-            }
-        }
-        //llenar Tabla con el Query        
 
         clientesList.forEach(c ->{
             registro[0] = c;
@@ -545,12 +511,6 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
         });
         
         tblClientes.setModel(miTabla);
-
-        //**************************Para Alinear el Texto de la Table a la Derecha...
-//        tcr.setHorizontalAlignment(SwingConstants.RIGHT);
-//        tblClientes.getColumnModel().getColumn(2).setCellRenderer(tcr);
-//        tblClientes.getColumnModel().getColumn(3).setCellRenderer(tcr);
-        /////////////////////////////////////////////////////////////////Finn
 
         /*Ancho de Columnas de Clientes*/
         Utilidades.repararColumnaTable(tblClientes);

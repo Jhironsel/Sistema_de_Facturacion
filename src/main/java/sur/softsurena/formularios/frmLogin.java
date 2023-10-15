@@ -3,19 +3,16 @@ package sur.softsurena.formularios;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.Scanner;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import sur.softsurena.FirebirdEventos.FirebirdEventos;
 import sur.softsurena.conexion.Conexion;
-import static sur.softsurena.entidades.BaseDeDatos.existeIdMaquina;
 import static sur.softsurena.entidades.BaseDeDatos.periodoMaquina;
 import static sur.softsurena.entidades.BaseDeDatos.setLicencia;
+import sur.softsurena.entidades.Resultados;
 import sur.softsurena.metodos.Imagenes;
 
 public final class frmLogin extends javax.swing.JFrame {
@@ -24,7 +21,9 @@ public final class frmLogin extends javax.swing.JFrame {
     private final ResourceBundle bundle;
 
     private static final String VALIDACION_DE_PROCESO_DE_USUARIO = "Validacion de proceso de usuario";
-    private boolean accesoSistema;
+    private Boolean accesoSistema;
+    private static String sistema;
+    private static String idMaquina;
 
     public frmLogin(String language) {
         bundle = ResourceBundle.getBundle("sur.softsurena.idioma.mensaje", new Locale(language));
@@ -255,9 +254,6 @@ public final class frmLogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-
-    }//GEN-LAST:event_formWindowOpened
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         btnCancelarActionPerformed(null);
     }//GEN-LAST:event_formWindowClosing
@@ -268,7 +264,7 @@ public final class frmLogin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,
                     "Ingrese un usuario",
                     VALIDACION_DE_PROCESO_DE_USUARIO,
-                    JOptionPane.WARNING_MESSAGE
+                    JOptionPane.ERROR_MESSAGE
             );
             txtUsuario.requestFocusInWindow();
             return;
@@ -279,7 +275,7 @@ public final class frmLogin extends javax.swing.JFrame {
                     null,
                     "Inserte una clave",
                     VALIDACION_DE_PROCESO_DE_USUARIO,
-                    JOptionPane.WARNING_MESSAGE
+                    JOptionPane.ERROR
             );
             txtClave.requestFocusInWindow();
             return;
@@ -305,6 +301,9 @@ public final class frmLogin extends javax.swing.JFrame {
             puerto = p.cargarParamentos("").getPuerto();
         }
 
+        Process pp;
+        BufferedReader stdInput;
+        
         Conexion.getInstance(
                 txtUsuario.getText(),
                 new String(txtClave.getPassword()),
@@ -312,66 +311,67 @@ public final class frmLogin extends javax.swing.JFrame {
                 dominio,
                 puerto);
 
-        if (!Conexion.verificar()) {
-            JOptionPane.showMessageDialog(
-                    null,
-                    "Usuario y clave incorrectos! \nVuelva intentarlo.!!!",
-                    "Validación de usuario.",
-                    JOptionPane.ERROR_MESSAGE
-            );
-            txtClave.setText("");
-            txtUsuario.setText("");
-            txtUsuario.requestFocus();
-            return;
-        }
-
-        String sistema = System.getProperty("os.name").strip();
-        JLSystema.setText("Usted se encuentra en el SO: " + sistema);
-
-        Process pp;
-
-        if (sistema.equals("Linux")) {
-            try {
-                //pp = Runtime.getRuntime().exec("lsblk -o UUID /dev/sda1");
-                pp = Runtime.getRuntime().exec("ls /dev/disk/by-uuid/");
-                //pp = Runtime.getRuntime().exec("lsblk -o NAME,UUID");
-                //pp = Runtime.getRuntime().exec("pkexec lsblk -o NAME,UUID");
-
-                BufferedReader stdInput = new BufferedReader(new InputStreamReader(
-                        pp.getInputStream()));
-                while (stdInput.ready()) {
-                    accesoSistema = existeIdMaquina(stdInput.readLine());
-                    if (accesoSistema) {
-                        break;
-                    }
-                }
-            } catch (IOException ex) {
-                //TODO Poner Log aqui.
-            }
-        } else {
-            /*TODO analizar este proceso para adatarlo mejor en Windows. */
-            Scanner sc;
-            String comando = "";
-
-            if (sistema.equalsIgnoreCase("Windows 7")) {
-                comando = "C:\\Windows\\System32\\wbem\\wmic csproduct get uuid";
-            } else {
-                comando = "wmic csproduct get uuid";
-            }
-
-            try {
-                pp = Runtime.getRuntime().exec(comando);
-                sc = new Scanner(pp.getInputStream());
-                pp.getOutputStream().close();
-            } catch (IOException ex) {
-                //Instalar Logger
+        Resultados<Object> resultado = Conexion.verificar();
+        
+        switch (resultado.getMensaje()) {
+            case Conexion.E_FECHA_INICIAL_INCORRECTA:
+                JOptionPane.showMessageDialog(null,
+                        "Error de configuracion de la fecha inicial del producto.", 
+                        VALIDACIÓN_DE_FECHAS,
+                        JOptionPane.ERROR_MESSAGE
+                );
+                txtClave.setText("");
+                txtUsuario.setText("");
+                txtUsuario.requestFocus();
                 return;
-            }
-            String trim = sc.nextLine().trim();
+            case Conexion.E_FECHA_ACTUAL_INCORRECTA:
+                JOptionPane.showMessageDialog(null,
+                        "Error de configuracion de la fecha actual del producto.", 
+                        VALIDACIÓN_DE_FECHAS,
+                        JOptionPane.ERROR_MESSAGE
+                );
+                txtClave.setText("");
+                txtUsuario.setText("");
+                txtUsuario.requestFocus();
+                return;
+                
+            case Conexion.E_FECHA_VENCIMIENTO:
+                int num = JOptionPane.showConfirmDialog(null,
+                        "Este equipo no esta Autorizado! \nDesea Registrar?", 
+                        VALIDACIÓN_DE_FECHAS,
+                        JOptionPane.YES_NO_OPTION
+                );
+                if (num == JOptionPane.YES_OPTION) {
+                    registro();
+                }
+                return;
+            case Conexion.JAVASQL_SQL_INVALID_AUTHORIZATION_SPEC_EXCEPTI:
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Usuario y clave no validas.!",
+                        "Validación de usuario.",
+                        JOptionPane.ERROR_MESSAGE
+                );
+                txtClave.setText("");
+                txtUsuario.setText("");
+                txtUsuario.requestFocus();
+                return;
+            
+            case Conexion.LIBRERIA_DEL_DRIVER_NO_ENCONTRADA:
+                JOptionPane.showMessageDialog(
+                        null,
+                        Conexion.LIBRERIA_DEL_DRIVER_NO_ENCONTRADA,
+                        "Validación de usuario.",
+                        JOptionPane.ERROR_MESSAGE
+                );
+                return;
         }
-        //-----------------------------------------------------
+        
+        
         
         FirebirdEventos f = new FirebirdEventos();
+        
+        
 
         if (!f.registro(
                 txtUsuario.getText(),
@@ -387,23 +387,6 @@ public final class frmLogin extends javax.swing.JFrame {
                     JOptionPane.ERROR_MESSAGE
             );
             return;
-        }
-
-        txtClave.setText("");
-
-        if (!accesoSistema) {
-            int num = JOptionPane.showConfirmDialog(
-                    null,
-                    "Este equipo no esta Autorizado! \nDesea Registrar?",
-                    "No Autorizado",
-                    JOptionPane.YES_NO_OPTION
-            );
-            if (num == JOptionPane.YES_OPTION) {
-                registro();
-                return;
-            } else {
-                return;
-            }
         }
 
         //Comprobación de los dias restante de la licencia.
@@ -434,6 +417,7 @@ public final class frmLogin extends javax.swing.JFrame {
 
         dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
+    public static final String VALIDACIÓN_DE_FECHAS = "Validación de fechas.";
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         System.exit(0);
@@ -466,10 +450,14 @@ public final class frmLogin extends javax.swing.JFrame {
         btnAceptarActionPerformed(null);
     }//GEN-LAST:event_txtClaveActionPerformed
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        JLSystema.setText("Usted se encuentra en el SO: " + sistema);
+    }//GEN-LAST:event_formWindowOpened
+
     private void registro() {
         //Implementar logistica para registrar producto en linea
         //TODO Pasar idMaquina a este metodo.
-        frmRegistros miRegistros = new frmRegistros(this, true, "");
+        frmRegistros miRegistros = new frmRegistros(this, true, idMaquina);
         miRegistros.setVisible(true);
 
         if (miRegistros.txtIdMaquina.getText().equalsIgnoreCase("cancelado")) {
@@ -477,7 +465,6 @@ public final class frmLogin extends javax.swing.JFrame {
         }
 
 //        String claveServidor = new String(miRegistros.txtClaveServidor.getPassword());
-
         //Conexion.getInstance("None", "SYSDBA", claveServidor, "", "", "");
         if (setLicencia(new Date(miRegistros.dchFecha.getDate().getTime()),
                 miRegistros.txtIdMaquina.getText().trim(),
@@ -496,6 +483,7 @@ public final class frmLogin extends javax.swing.JFrame {
             frmLogin.setVisible(true);
             frmLogin.setLocationRelativeTo(null);
         });
+        sistema = System.getProperty("os.name").strip();
     }
 
     private void cargarIconos() {
@@ -505,7 +493,7 @@ public final class frmLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel JLSystema;
+    private static javax.swing.JLabel JLSystema;
     private RSMaterialComponent.RSButtonMaterialIconOne btnAceptar;
     private RSMaterialComponent.RSButtonMaterialIconOne btnCancelar;
     private RSMaterialComponent.RSButtonMaterialIconOne btnParametros;

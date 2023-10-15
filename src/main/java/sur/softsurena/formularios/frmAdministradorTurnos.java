@@ -1,19 +1,8 @@
 package sur.softsurena.formularios;
 
-import java.awt.GraphicsEnvironment;
-import java.awt.Rectangle;
-import java.io.File;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
-import org.pentaho.reporting.engine.classic.core.MasterReport;
-import org.pentaho.reporting.engine.classic.core.modules.gui.base.PreviewFrame;
-import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.SQLReportDataFactory;
-import org.pentaho.reporting.libraries.resourceloader.Resource;
-import org.pentaho.reporting.libraries.resourceloader.ResourceException;
-import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
-import sur.softsurena.conexion.Conexion;
 import sur.softsurena.entidades.Cajeros;
 import sur.softsurena.entidades.Turnos;
 import static sur.softsurena.entidades.Turnos.cerrarTurno;
@@ -443,46 +432,7 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
             + "WHERE ID = ${id};";
     
     private void imprimirReporte(Integer idTurno) {
-        ClassicEngineBoot.getInstance().start();
         
-        MasterReport report = null;
-        
-        try {
-            // Using the classloader, get the URL to the reportDefinition file
-            // NOTE: We will re-use the report definition from SAMPLE1
-            File file = new File(REPORTE_CORTO_PATH);
-            
-            // Parse the report file
-            final ResourceManager resourceManager = new ResourceManager();
-            
-            final Resource directly = resourceManager.createDirectly(file, 
-                    MasterReport.class);
-            
-            report = (MasterReport) directly.getResource();
-        } catch (ResourceException e) {
-            e.printStackTrace();
-        }
-        
-        report.getParameterValues().put("id", idTurno);        
-
-        // Defining the queries.
-        final var dataFactory = new SQLReportDataFactory(Conexion.getProvider());
-        dataFactory.setQuery("default", SQL_REPORTE_CORTO);
-        
-        report.setDataFactory(dataFactory);
-
-        report.setQuery("default");
-        
-        Rectangle bounds 
-                = GraphicsEnvironment.getLocalGraphicsEnvironment().
-                        getMaximumWindowBounds();
-        
-        // Generate the swing preview dialog
-        final PreviewFrame dialog = new PreviewFrame(report);
-        dialog.setBounds(bounds);
-        dialog.setLocationRelativeTo(null);
-        dialog.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        dialog.setVisible(true);
     }
     
     private void tblTurnosActivosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTurnosActivosMouseClicked

@@ -1,18 +1,20 @@
 package sur.softsurena.formularios;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import sur.softsurena.entidades.Roles;
 import sur.softsurena.entidades.Usuario;
 import static sur.softsurena.entidades.Usuario.*;
-import static sur.softsurena.entidades.Usuario.existeUsuarioByUserName;
+import sur.softsurena.utilidades.PalabrasReservadasFirebird;
 import sur.softsurena.utilidades.Utilidades;
 import static sur.softsurena.utilidades.Utilidades.showTooltip;
 
 public class frmUsuariosAgregar extends javax.swing.JDialog {
 
     private boolean nuevo;//Si el suario es nuevo o no
-    
+
     private static final String PROCESO_DE_VALIDACION = "Proceso de validacion.";
 
     /*Este constructor es utilizado para agregar nuevos usuarios*/
@@ -31,7 +33,7 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
         //Cargar los atributos basico
         txtUserName.setText(usuario.getUser_name());
         txtUserName.setEditable(false);
-        
+
         txtPNombre.setText(usuario.getPnombre());
         txtSNombre.setText(usuario.getSnombre());
         txtApellidos.setText(usuario.getApellidos());
@@ -46,9 +48,8 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
 
         nuevo = false;
 
-        //Cargar los Roles
-        
-        //Cargar las Tags
+        //TODO Cargar los Roles
+        //TODO Cargar las Tags
     }
 
     @SuppressWarnings("unchecked")
@@ -537,8 +538,8 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(
                         null,
                         "Debe Ingresar clave.",
-                    PROCESO_DE_VALIDACION,
-                    JOptionPane.ERROR_MESSAGE
+                        PROCESO_DE_VALIDACION,
+                        JOptionPane.ERROR_MESSAGE
                 );
                 txtClave1.requestFocus();
                 return;
@@ -548,8 +549,8 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(
                         null,
                         "Debe Ingresar confirmacion.",
-                    PROCESO_DE_VALIDACION,
-                    JOptionPane.ERROR_MESSAGE
+                        PROCESO_DE_VALIDACION,
+                        JOptionPane.ERROR_MESSAGE
                 );
                 txtClave2.requestFocus();
                 return;
@@ -561,7 +562,7 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
                     null,
                     "Claves no coinciden.",
                     PROCESO_DE_VALIDACION,
-                    JOptionPane.WARNING_MESSAGE
+                    JOptionPane.ERROR_MESSAGE
             );
             txtClave2.setText("");
             txtClave1.setText("");
@@ -585,13 +586,31 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
             Preparando el mensaje que verá el usuario para aceptar la información 
         que se ingresará a la base de datos.
          */
-        String mensaje = "<html><big>"
-                + "<b>Se va a agregar el Usuario: </b>" + txtUserName.getText() + "<br>"
-                + "<b>Con Nombre y Apellido: </b>" + txtPNombre.getText() + " " + txtApellidos.getText() + "<br>"
-                + "<b>Delegar: </b>" + (cbAdministrador.isSelected() ? "Activado" : "NO Activado") + "<br>"
-                + "<b>Estado del Usuario: </b>" + (cbEstado.isSelected() ? "Activo" : "No Activo") + "<br>"
-                + "<b>Desea continuar? </b>"
-                + "</big></html>";
+        List<Roles> rolesList = new ArrayList<>();
+
+        for (int i = 0; i < tblRoles.getRowCount(); i++) {
+            rolesList.add(Roles.builder().
+                    roleName(tblRoles.getValueAt(i, 0).toString()).
+                    conAdmin((boolean) tblRoles.getValueAt(i, 1)).
+                    build());
+        }
+        
+        String etiquetas = "";
+        for (int i = 0; i < tblEtiquetas.getRowCount(); i++) {
+            etiquetas = etiquetas + tblEtiquetas.getValueAt(i, 0).toString() + " = " +
+                    "'"+tblEtiquetas.getValueAt(i, 1).toString()+"'"+
+                    ((i == tblEtiquetas.getRowCount()-1) ? "":", ");
+        }
+        
+        etiquetas = "TAGS("+etiquetas+")";
+        
+        String mensaje = "<html>"
+                + "<h1>Se va a agregar el Usuario: </h1><h2>" + txtUserName.getText() + "</h2></br>"
+                + "<h1>Con Nombre y Apellido: </h1><h2>" + txtPNombre.getText() + " " + txtApellidos.getText() + "</h2></br>"
+                + "<h1>Delegar: </h1><h2>" + (cbAdministrador.isSelected() ? "Activado" : "NO Activado") + "</h2></br>"
+                + "<h1>Estado del Usuario: </h1><h2>" + (cbEstado.isSelected() ? "Activo" : "No Activo") + "</h2></br>"
+                + "<h2>Desea continuar? </h2>"
+                + "</html>";
 
         int resp = JOptionPane.showConfirmDialog(
                 null,
@@ -624,20 +643,21 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
         }
 
         //Creamos el Objeto Usuario y los agregamos a Datos
-        Usuario miUsuario = Usuario.builder().
-                user_name(txtUserName.getText()).
-                pnombre(txtPNombre.getText()).
-                snombre(txtSNombre.getText()).
-                apellidos(txtApellidos.getText()).
-                descripcion(txtDescripcion.getText()).
-                clave(clave1).
-                estado(cbEstado.isSelected()).
-                administrador(cbAdministrador.isSelected()).
-                build();
-
         JOptionPane.showMessageDialog(
                 null,
-                (agregarModificarUsuario(miUsuario, nuevo))
+                (agregarModificarUsuario(
+                        Usuario.builder().
+                                user_name(txtUserName.getText()).
+                                pnombre(txtPNombre.getText()).
+                                snombre(txtSNombre.getText()).
+                                apellidos(txtApellidos.getText()).
+                                descripcion(txtDescripcion.getText()).
+                                clave(clave1).
+                                tags(etiquetas).
+                                estado(cbEstado.isSelected()).
+                                administrador(cbAdministrador.isSelected()).
+                                roles(rolesList).
+                                build(), nuevo))
         );
 
         dispose();
@@ -671,7 +691,34 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
         if (!e.aceptar) {
             return;
         }
+        
+        boolean palabra = PalabrasReservadasFirebird.
+                palabrasReservadasFirebird().
+                contains(e.txtPropiedad.getText());
 
+        if(palabra){
+            JOptionPane.showMessageDialog(
+                    null, 
+                    "Esta propiedad no puede ser usada.", 
+                    PROCESO_DE_VALIDACION, 
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+        
+        for (int i = 0; i < tblEtiquetas.getRowCount(); i++) {
+            if(e.txtPropiedad.getText().equalsIgnoreCase(
+                    tblEtiquetas.getValueAt(i, 0).toString())){
+                JOptionPane.showMessageDialog(
+                        null, 
+                        "Esta propiedad ya se encuentra registrada.", 
+                        PROCESO_DE_VALIDACION, 
+                        JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            }
+        }
+        
         Object registro[] = new Object[2];
         DefaultTableModel miTabla = (DefaultTableModel) tblEtiquetas.getModel();
 
@@ -679,9 +726,9 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
         registro[1] = e.txtValor.getText();
 
         miTabla.addRow(registro);
-        
+
         tblEtiquetas.setModel(miTabla);
-        
+
         Utilidades.repararColumnaTable(tblEtiquetas);
     }//GEN-LAST:event_btnAgregarTagActionPerformed
 
@@ -698,21 +745,47 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
                 null,
                 "Seleccione un rol para el usuario",
                 "Proceso de seleccion.",
-                JOptionPane.INFORMATION_MESSAGE,
+                JOptionPane.PLAIN_MESSAGE,
                 null,
                 Roles.getRoles().stream().toArray(Roles[]::new),
-                "CAJERO"
+                null
         );
-
-        Object registro[] = new Object[2];
+        
+        for (int i = 0; i < tblRoles.getRowCount(); i++) {
+            if(rol.toString().equalsIgnoreCase(
+                    tblRoles.getValueAt(i, 0).toString())){
+                JOptionPane.showMessageDialog(
+                        null, 
+                        "Este role ya se encuentra en la lista.", 
+                        PROCESO_DE_VALIDACION, 
+                        JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            }
+        }
+        
+        int resp = JOptionPane.showConfirmDialog(
+                null, 
+                "Desea permitir administracion de rol al usuario?", 
+                PROCESO_DE_VALIDACION, 
+                JOptionPane.YES_NO_OPTION, 
+                JOptionPane.QUESTION_MESSAGE
+        );
+        
+        String cabeceras[] = {"Rol de usuario", "Con Admin", "Descripcion"};
+        Object registro[] = new Object[cabeceras.length];
+        
         DefaultTableModel miTabla = (DefaultTableModel) tblRoles.getModel();
+        miTabla.setColumnIdentifiers(cabeceras);
 
         registro[0] = rol;
-        registro[1] = rol.getDescripcion();
+        registro[1] = (resp == JOptionPane.YES_OPTION);
+        registro[2] = rol.getDescripcion();
 
         miTabla.addRow(registro);
 
         tblRoles.setModel(miTabla);
+        
         Utilidades.repararColumnaTable(tblRoles);
     }//GEN-LAST:event_btnAgregarRolActionPerformed
 

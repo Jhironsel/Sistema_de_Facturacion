@@ -16,6 +16,7 @@
     </xy.ui.testing.action.CallMainMethodAction>
     <xy.ui.testing.action.component.SendKeysAction>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
         <componentName>txtUsuario</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
@@ -23,13 +24,14 @@
       <disabled>false</disabled>
       <keyboardInteractions>
         <xy.ui.testing.action.component.SendKeysAction_-WriteText>
-          <text>jhironsel</text>
+          <text>sysdba</text>
         </xy.ui.testing.action.component.SendKeysAction_-WriteText>
       </keyboardInteractions>
       <requestToFocusOnTheComponent>true</requestToFocusOnTheComponent>
     </xy.ui.testing.action.component.SendKeysAction>
     <xy.ui.testing.action.component.SendKeysAction>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
         <componentName>txtClave</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
@@ -37,7 +39,7 @@
       <disabled>false</disabled>
       <keyboardInteractions>
         <xy.ui.testing.action.component.SendKeysAction_-WriteText>
-          <text>123uasd</text>
+          <text>Seguridad43210</text>
         </xy.ui.testing.action.component.SendKeysAction_-WriteText>
       </keyboardInteractions>
       <requestToFocusOnTheComponent>true</requestToFocusOnTheComponent>
@@ -45,6 +47,7 @@
     <xy.ui.testing.action.component.ClickAction>
       <button>LEFT_BUTTON</button>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
         <componentName>btnAceptar</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
@@ -52,6 +55,7 @@
       <disabled>false</disabled>
       <doubleClick>false</doubleClick>
       <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <locationOnComponent class="null"/>
       <poupTrigger>false</poupTrigger>
     </xy.ui.testing.action.component.ClickAction>
     <xy.ui.testing.action.component.SendKeysAction>
@@ -73,5 +77,450 @@
       </keyboardInteractions>
       <requestToFocusOnTheComponent>true</requestToFocusOnTheComponent>
     </xy.ui.testing.action.component.SendKeysAction>
+    <xy.ui.testing.action.component.ClickAction>
+      <button>LEFT_BUTTON</button>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
+        <componentName>btnNuevo</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>0</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <doubleClick>false</doubleClick>
+      <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <locationOnComponent class="null"/>
+      <poupTrigger>false</poupTrigger>
+    </xy.ui.testing.action.component.ClickAction>
+    <xy.ui.testing.action.component.SendKeysAction>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
+        <componentName>txtUserName</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>1</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <keyboardInteractions>
+        <xy.ui.testing.action.component.SendKeysAction_-WriteText>
+          <text>PRUEBA</text>
+        </xy.ui.testing.action.component.SendKeysAction_-WriteText>
+      </keyboardInteractions>
+      <requestToFocusOnTheComponent>true</requestToFocusOnTheComponent>
+    </xy.ui.testing.action.component.SendKeysAction>
+    <xy.ui.testing.action.component.SendKeysAction>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
+        <componentName>txtPNombre</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>1</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <keyboardInteractions>
+        <xy.ui.testing.action.component.SendKeysAction_-WriteText>
+          <text>PRUEBA</text>
+        </xy.ui.testing.action.component.SendKeysAction_-WriteText>
+      </keyboardInteractions>
+      <requestToFocusOnTheComponent>true</requestToFocusOnTheComponent>
+    </xy.ui.testing.action.component.SendKeysAction>
+    <xy.ui.testing.action.component.SendKeysAction>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
+        <componentName>txtSNombre</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>1</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <keyboardInteractions>
+        <xy.ui.testing.action.component.SendKeysAction_-WriteText>
+          <text>PRUEBA</text>
+        </xy.ui.testing.action.component.SendKeysAction_-WriteText>
+      </keyboardInteractions>
+      <requestToFocusOnTheComponent>true</requestToFocusOnTheComponent>
+    </xy.ui.testing.action.component.SendKeysAction>
+    <xy.ui.testing.action.component.SendKeysAction>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
+        <componentName>txtApellidos</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>1</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <keyboardInteractions>
+        <xy.ui.testing.action.component.SendKeysAction_-WriteText>
+          <text>PRUEBA PRUEBA</text>
+        </xy.ui.testing.action.component.SendKeysAction_-WriteText>
+      </keyboardInteractions>
+      <requestToFocusOnTheComponent>true</requestToFocusOnTheComponent>
+    </xy.ui.testing.action.component.SendKeysAction>
+    <xy.ui.testing.action.component.SendKeysAction>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
+        <componentName>txtClave1</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>1</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <keyboardInteractions>
+        <xy.ui.testing.action.component.SendKeysAction_-WriteText>
+          <text>123uasd</text>
+        </xy.ui.testing.action.component.SendKeysAction_-WriteText>
+      </keyboardInteractions>
+      <requestToFocusOnTheComponent>true</requestToFocusOnTheComponent>
+    </xy.ui.testing.action.component.SendKeysAction>
+    <xy.ui.testing.action.component.SendKeysAction>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
+        <componentName>txtClave2</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>1</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <keyboardInteractions>
+        <xy.ui.testing.action.component.SendKeysAction_-WriteText>
+          <text>123uasd1</text>
+        </xy.ui.testing.action.component.SendKeysAction_-WriteText>
+      </keyboardInteractions>
+      <requestToFocusOnTheComponent>true</requestToFocusOnTheComponent>
+    </xy.ui.testing.action.component.SendKeysAction>
+    <xy.ui.testing.action.component.ClickAction>
+      <button>LEFT_BUTTON</button>
+      <componentFinder class="xy.ui.testing.finder.DisplayedStringComponentFinder">
+        <componentClassName class="null"/>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <visibleString>Inactivo</visibleString>
+        <visibleStringInTree>false</visibleStringInTree>
+        <windowIndex>1</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <doubleClick>false</doubleClick>
+      <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <locationOnComponent class="null"/>
+      <poupTrigger>false</poupTrigger>
+    </xy.ui.testing.action.component.ClickAction>
+    <xy.ui.testing.action.component.CheckVisibleStringsAction>
+      <completenessChecked>false</completenessChecked>
+      <componentFinder class="xy.ui.testing.finder.DisplayedStringComponentFinder">
+        <componentClassName class="null"/>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <visibleString>Activo</visibleString>
+        <visibleStringInTree>false</visibleStringInTree>
+        <windowIndex>1</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <negated>false</negated>
+      <orderChecked>false</orderChecked>
+      <visibleStrings>
+        <string>Activo</string>
+      </visibleStrings>
+    </xy.ui.testing.action.component.CheckVisibleStringsAction>
+    <xy.ui.testing.action.component.SendKeysAction>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
+        <componentName>txtDescripcion</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>1</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <keyboardInteractions>
+        <xy.ui.testing.action.component.SendKeysAction_-WriteText>
+          <text>Realizando pruebas a los componentes del sistema.</text>
+        </xy.ui.testing.action.component.SendKeysAction_-WriteText>
+      </keyboardInteractions>
+      <requestToFocusOnTheComponent>true</requestToFocusOnTheComponent>
+    </xy.ui.testing.action.component.SendKeysAction>
+    <xy.ui.testing.action.component.ClickAction>
+      <button>LEFT_BUTTON</button>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
+        <componentName>btnAgregarRol</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>1</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <doubleClick>false</doubleClick>
+      <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <locationOnComponent class="null"/>
+      <poupTrigger>false</poupTrigger>
+    </xy.ui.testing.action.component.ClickAction>
+    <xy.ui.testing.action.component.specific.SelectComboBoxItemAction>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
+        <componentName>OptionPane.comboBox</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>2</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <knownOptions>
+        <string>ADMINISTRADOR</string>
+        <string>CAJERO</string>
+        <string>DOCTOR</string>
+        <string>GERENTE</string>
+        <string>PADRE</string>
+        <string>RRHH</string>
+        <string>SECRETARIA</string>
+        <string>VENDEDOR</string>
+      </knownOptions>
+      <optionListChecked>true</optionListChecked>
+      <optionToSelect>CAJERO</optionToSelect>
+      <selectionMode>BY_LABEL_TEXT</selectionMode>
+    </xy.ui.testing.action.component.specific.SelectComboBoxItemAction>
+    <xy.ui.testing.action.component.ClickAction>
+      <button>LEFT_BUTTON</button>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
+        <componentName>OptionPane.button</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>2</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <doubleClick>false</doubleClick>
+      <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <locationOnComponent class="null"/>
+      <poupTrigger>false</poupTrigger>
+    </xy.ui.testing.action.component.ClickAction>
+    <xy.ui.testing.action.component.ClickAction>
+      <button>LEFT_BUTTON</button>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
+        <componentName>OptionPane.button</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>2</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <doubleClick>false</doubleClick>
+      <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <locationOnComponent class="null"/>
+      <poupTrigger>false</poupTrigger>
+    </xy.ui.testing.action.component.ClickAction>
+    <xy.ui.testing.action.component.ClickAction>
+      <button>LEFT_BUTTON</button>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
+        <componentName>btnAgregarRol</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>1</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <doubleClick>false</doubleClick>
+      <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <locationOnComponent class="null"/>
+      <poupTrigger>false</poupTrigger>
+    </xy.ui.testing.action.component.ClickAction>
+    <xy.ui.testing.action.component.specific.SelectComboBoxItemAction>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
+        <componentName>OptionPane.comboBox</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>2</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <knownOptions>
+        <string>ADMINISTRADOR</string>
+        <string>CAJERO</string>
+        <string>DOCTOR</string>
+        <string>GERENTE</string>
+        <string>PADRE</string>
+        <string>RRHH</string>
+        <string>SECRETARIA</string>
+        <string>VENDEDOR</string>
+      </knownOptions>
+      <optionListChecked>true</optionListChecked>
+      <optionToSelect>PADRE</optionToSelect>
+      <selectionMode>BY_LABEL_TEXT</selectionMode>
+    </xy.ui.testing.action.component.specific.SelectComboBoxItemAction>
+    <xy.ui.testing.action.component.ClickAction>
+      <button>LEFT_BUTTON</button>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
+        <componentName>OptionPane.button</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>2</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <doubleClick>false</doubleClick>
+      <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <locationOnComponent class="null"/>
+      <poupTrigger>false</poupTrigger>
+    </xy.ui.testing.action.component.ClickAction>
+    <xy.ui.testing.action.component.ClickAction>
+      <button>LEFT_BUTTON</button>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
+        <componentName>OptionPane.button</componentName>
+        <occurrencesToSkip>1</occurrencesToSkip>
+        <windowIndex>2</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <doubleClick>false</doubleClick>
+      <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <locationOnComponent class="null"/>
+      <poupTrigger>false</poupTrigger>
+    </xy.ui.testing.action.component.ClickAction>
+    <xy.ui.testing.action.component.ClickAction>
+      <button>LEFT_BUTTON</button>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
+        <componentName>btnAgregarTag</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>1</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <doubleClick>false</doubleClick>
+      <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <locationOnComponent class="null"/>
+      <poupTrigger>false</poupTrigger>
+    </xy.ui.testing.action.component.ClickAction>
+    <xy.ui.testing.action.component.SendKeysAction>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
+        <componentName>txtPropiedad</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>2</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <keyboardInteractions>
+        <xy.ui.testing.action.component.SendKeysAction_-WriteText>
+          <text>PROP 1</text>
+        </xy.ui.testing.action.component.SendKeysAction_-WriteText>
+      </keyboardInteractions>
+      <requestToFocusOnTheComponent>true</requestToFocusOnTheComponent>
+    </xy.ui.testing.action.component.SendKeysAction>
+    <xy.ui.testing.action.component.SendKeysAction>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
+        <componentName>txtValor</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>2</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <keyboardInteractions>
+        <xy.ui.testing.action.component.SendKeysAction_-WriteText>
+          <text>VALOR 1</text>
+        </xy.ui.testing.action.component.SendKeysAction_-WriteText>
+      </keyboardInteractions>
+      <requestToFocusOnTheComponent>true</requestToFocusOnTheComponent>
+    </xy.ui.testing.action.component.SendKeysAction>
+    <xy.ui.testing.action.component.ClickAction>
+      <button>LEFT_BUTTON</button>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
+        <componentName>btnAceptar</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>2</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <doubleClick>false</doubleClick>
+      <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <locationOnComponent class="null"/>
+      <poupTrigger>false</poupTrigger>
+    </xy.ui.testing.action.component.ClickAction>
+    <xy.ui.testing.action.component.ClickAction>
+      <button>LEFT_BUTTON</button>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
+        <componentName>OptionPane.button</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>3</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <doubleClick>false</doubleClick>
+      <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <locationOnComponent class="null"/>
+      <poupTrigger>false</poupTrigger>
+    </xy.ui.testing.action.component.ClickAction>
+    <xy.ui.testing.action.component.SendKeysAction>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
+        <componentName>txtPropiedad</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>2</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <keyboardInteractions>
+        <xy.ui.testing.action.component.SendKeysAction_-SpecialKey_-CtrlA>
+          <altDown>false</altDown>
+          <altGrtDown>false</altGrtDown>
+          <ctrlDown>true</ctrlDown>
+          <keyName>KEY_A</keyName>
+          <metaDown>false</metaDown>
+          <shiftDown>false</shiftDown>
+        </xy.ui.testing.action.component.SendKeysAction_-SpecialKey_-CtrlA>
+        <xy.ui.testing.action.component.SendKeysAction_-WriteText>
+          <text>PROP1</text>
+        </xy.ui.testing.action.component.SendKeysAction_-WriteText>
+      </keyboardInteractions>
+      <requestToFocusOnTheComponent>true</requestToFocusOnTheComponent>
+    </xy.ui.testing.action.component.SendKeysAction>
+    <xy.ui.testing.action.component.ClickAction>
+      <button>LEFT_BUTTON</button>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
+        <componentName>btnAceptar</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>2</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <doubleClick>false</doubleClick>
+      <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <locationOnComponent class="null"/>
+      <poupTrigger>false</poupTrigger>
+    </xy.ui.testing.action.component.ClickAction>
+    <xy.ui.testing.action.component.ClickAction>
+      <button>LEFT_BUTTON</button>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
+        <componentName>btnAgregarTag</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>1</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <doubleClick>false</doubleClick>
+      <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <locationOnComponent class="null"/>
+      <poupTrigger>false</poupTrigger>
+    </xy.ui.testing.action.component.ClickAction>
+    <xy.ui.testing.action.component.SendKeysAction>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
+        <componentName>txtPropiedad</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>2</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <keyboardInteractions>
+        <xy.ui.testing.action.component.SendKeysAction_-WriteText>
+          <text>PROP2</text>
+        </xy.ui.testing.action.component.SendKeysAction_-WriteText>
+      </keyboardInteractions>
+      <requestToFocusOnTheComponent>true</requestToFocusOnTheComponent>
+    </xy.ui.testing.action.component.SendKeysAction>
+    <xy.ui.testing.action.component.SendKeysAction>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
+        <componentName>txtValor</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>2</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <keyboardInteractions>
+        <xy.ui.testing.action.component.SendKeysAction_-WriteText>
+          <text>Valor2</text>
+        </xy.ui.testing.action.component.SendKeysAction_-WriteText>
+      </keyboardInteractions>
+      <requestToFocusOnTheComponent>true</requestToFocusOnTheComponent>
+    </xy.ui.testing.action.component.SendKeysAction>
+    <xy.ui.testing.action.component.ClickAction>
+      <button>LEFT_BUTTON</button>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
+        <componentName>btnAceptar</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>2</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <doubleClick>false</doubleClick>
+      <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <locationOnComponent class="null"/>
+      <poupTrigger>false</poupTrigger>
+    </xy.ui.testing.action.component.ClickAction>
   </testActions>
 </xy.ui.testing.Tester>

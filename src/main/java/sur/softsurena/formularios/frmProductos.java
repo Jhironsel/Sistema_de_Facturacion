@@ -7,22 +7,24 @@ import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.*;
-import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
+import static sur.softsurena.conexion.Conexion.getCnn;
 import sur.softsurena.entidades.Categorias;
+import static sur.softsurena.entidades.Categorias.getCategirias;
 import sur.softsurena.entidades.Productos;
+import static sur.softsurena.entidades.Productos.agregarProducto;
+import static sur.softsurena.entidades.Productos.borrarProductoPorID;
+import static sur.softsurena.entidades.Productos.existeProducto;
+import static sur.softsurena.entidades.Productos.getProductos;
+import static sur.softsurena.entidades.Productos.modificarProducto;
 import sur.softsurena.utilidades.Utilidades;
 import static sur.softsurena.utilidades.Utilidades.columnasCheckBox;
 import static sur.softsurena.utilidades.Utilidades.repararColumnaTable;
-//Importe de consultas de base de datos.
-import static sur.softsurena.conexion.Conexion.getCnn;
-import static sur.softsurena.entidades.Categorias.getCategirias;//X
-import static sur.softsurena.entidades.Productos.agregarProducto;//X
-import static sur.softsurena.entidades.Productos.existeProducto;//X
-import static sur.softsurena.entidades.Productos.getProductos;//X
-import static sur.softsurena.entidades.Productos.modificarProducto;//X
-import static sur.softsurena.entidades.Productos.borrarProductoPorID;
 
 public class frmProductos extends javax.swing.JInternalFrame {
 
@@ -78,6 +80,10 @@ public class frmProductos extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jScrollPane5 = new javax.swing.JScrollPane();
         tblProducto = new RSMaterialComponent.RSTableMetro();
+        jLabel1 = new javax.swing.JLabel();
+        jsnCantidadFilas = new javax.swing.JSpinner();
+        jLabel2 = new javax.swing.JLabel();
+        jsnPaginaNro = new javax.swing.JSpinner();
         jpMantenimiento = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
@@ -239,17 +245,51 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
         jScrollPane1.setViewportView(jScrollPane5);
 
+        jLabel1.setText("Cantidad Reg.");
+
+        jsnCantidadFilas.setModel(new javax.swing.SpinnerNumberModel(20, 10, null, 1));
+        jsnCantidadFilas.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jsnCantidadFilasStateChanged(evt);
+            }
+        });
+
+        jLabel2.setText("Pagina No.");
+
+        jsnPaginaNro.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        jsnPaginaNro.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jsnPaginaNroStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 683, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 695, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(5, 5, 5)
+                .addComponent(jsnCantidadFilas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addGap(4, 4, 4)
+                .addComponent(jsnPaginaNro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel1)
+                    .addComponent(jsnCantidadFilas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(jsnPaginaNro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jpProductosLayout = new javax.swing.GroupLayout(jpProductos);
@@ -259,7 +299,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
             .addGroup(jpProductosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(0, 0, 0))
         );
         jpProductosLayout.setVerticalGroup(
             jpProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -482,7 +522,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         );
         jpESProductosLayout.setVerticalGroup(
             jpESProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 533, Short.MAX_VALUE)
+            .addGap(0, 562, Short.MAX_VALUE)
         );
 
         jtpPrincipal.addTab("E/S Productos", jpESProductos);
@@ -495,7 +535,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         );
         jpESHistorialLayout.setVerticalGroup(
             jpESHistorialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 533, Short.MAX_VALUE)
+            .addGap(0, 562, Short.MAX_VALUE)
         );
 
         jtpPrincipal.addTab("E/S Historial", jpESHistorial);
@@ -1076,7 +1116,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "No hay producto registrado");
             return;
         }
-
+        //TODO llevar esto a un metodo de jasperreport
         try {
             String miFile = System.getProperty("user.dir")
                     + "/Reportes/Productos.jasper";
@@ -1209,6 +1249,14 @@ public class frmProductos extends javax.swing.JInternalFrame {
             btnAgregarFoto.requestFocus();
     }//GEN-LAST:event_txtNotasKeyTyped
 
+    private void jsnCantidadFilasStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jsnCantidadFilasStateChanged
+        llenarTabla();
+    }//GEN-LAST:event_jsnCantidadFilasStateChanged
+
+    private void jsnPaginaNroStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jsnPaginaNroStateChanged
+        llenarTabla();
+    }//GEN-LAST:event_jsnPaginaNroStateChanged
+
     /**
      * Metodo utilizado para controla el comportamiento de los botones del
      * formulario.
@@ -1270,7 +1318,8 @@ public class frmProductos extends javax.swing.JInternalFrame {
         //Modelo que se pasará a la tablas de productos.
         DefaultTableModel miTabla = new DefaultTableModel(null, titulos);
 
-        getProductos().stream().forEach(producto -> {
+        getProductos(Integer.valueOf(jsnPaginaNro.getValue().toString()), 
+                Integer.valueOf(jsnCantidadFilas.getValue().toString())).stream().forEach(producto -> {
             registro[0] = producto.getCodigo();
             registro[1] = Categorias.builder().
                     id_categoria(producto.getCategoria().getId_categoria()).
@@ -1478,6 +1527,8 @@ public class frmProductos extends javax.swing.JInternalFrame {
     private RSMaterialComponent.RSButtonMaterialIconOne btnSalidaProducto;
     private javax.swing.JCheckBox cbActivo;
     private javax.swing.JComboBox cbCategoria;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
@@ -1494,6 +1545,8 @@ public class frmProductos extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jpMantenimiento;
     private javax.swing.JPanel jpOpciones;
     private javax.swing.JPanel jpProductos;
+    private static javax.swing.JSpinner jsnCantidadFilas;
+    private static javax.swing.JSpinner jsnPaginaNro;
     private javax.swing.JTabbedPane jtpPrincipal;
     public static RSMaterialComponent.RSTableMetro tblProducto;
     private javax.swing.JTextField txtCodigoBarra;

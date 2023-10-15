@@ -18,14 +18,14 @@ public class FirebirdEventos extends FBEventManager{
         setUser(user);
         setPassword(clave);
         
-        //setHost(dominio); Han sido sustituido para futura versiones de JayBird
-        setServerName(dominio);
+        setHost(dominio); //Han sido sustituido para futura versiones de JayBird
+//        setServerName(dominio);
         
-        //setDatabase(pathBaseDatos);
-        setDatabaseName(pathBaseDatos);
+        setDatabase(pathBaseDatos);
+//        setDatabaseName(pathBaseDatos);
         
-        //setPort(puerto);
-        setPortNumber(puerto);
+        setPort(puerto);
+//        setPortNumber(puerto);
         
         try {
             if(isConnected()){

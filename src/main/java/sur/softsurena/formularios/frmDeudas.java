@@ -669,7 +669,9 @@ public class frmDeudas extends javax.swing.JInternalFrame {
         /*
             Validamos si el cliente existe en la base de datos.
          */
-        if (existeCliente(cedula) != -1) {
+        int idCliente = existeCliente(cedula);
+        
+        if ( idCliente != -1) {
 
             nuevo();
 
