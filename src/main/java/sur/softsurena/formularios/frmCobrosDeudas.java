@@ -389,12 +389,12 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
 
     private void btnPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarActionPerformed
         if (cmbCliente.getSelectedIndex() <= 0) {
-            JOptionPane.showMessageDialog(rootPane, "Debe Selecionar un Cliente...");
+            JOptionPane.showMessageDialog(null, "Debe Selecionar un Cliente...");
             cmbCliente.requestFocusInWindow();
             return;
         }
         if (tblDeudas.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(rootPane, "Debe seleccionar una factura");
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una factura");
             return;
         }
 
@@ -403,14 +403,14 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
         //float montoDeuda = Utilidades.controlDouble(txtMontoDeuda.getValue());//Total de lo que debe...
 
         if (monto.compareTo(BigDecimal.ZERO) <= 0) {
-            JOptionPane.showMessageDialog(rootPane, "Debe ingresar un valor mayor a cero(0)");
+            JOptionPane.showMessageDialog(null, "Debe ingresar un valor mayor a cero(0)");
             txtMonto.setValue(0.0);
             txtMonto.requestFocusInWindow();
             return;
         }
 
         if (monto.compareTo(montoSaldo) > 1) {
-            JOptionPane.showMessageDialog(rootPane, "Monto excede el saldo");
+            JOptionPane.showMessageDialog(null, "Monto excede el saldo");
             txtMonto.setValue(0.0);
             txtMonto.requestFocusInWindow();
             return;
@@ -429,7 +429,7 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
 //                Utilidades.objectToInt(tblDeudas.getValueAt(tblDeudas.getSelectedRow(), 0)),
 //                getIdTurno(), 
 //                monto);
-        JOptionPane.showMessageDialog(rootPane, "Pago realizado con Exito...");
+        JOptionPane.showMessageDialog(null, "Pago realizado con Exito...");
 
         //imprimirPago();
         dispose();

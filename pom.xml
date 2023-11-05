@@ -56,8 +56,9 @@
     </build>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.release>11</maven.compiler.release>
+<!--        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>-->
     </properties>
     <name>SistemaFacturacion</name>
     <dependencies>
@@ -82,12 +83,12 @@
         </repository>
     </repositories-->
     
-    <repositories>
+<!--    <repositories>
         <repository>
             <id>pentaho-releases</id>
             <url>file:///home/jhironsel/.m2/repository</url>
         </repository>
-    </repositories>
+    </repositories>-->
     
     
 </project>

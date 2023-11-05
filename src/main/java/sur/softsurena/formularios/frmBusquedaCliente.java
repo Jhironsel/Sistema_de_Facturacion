@@ -145,7 +145,6 @@ public class frmBusquedaCliente extends javax.swing.JDialog {
         }
         
         cliente = (Clientes) tblTabla.getValueAt(tblTabla.getSelectedRow(), 0);
-        //cliente = (Clientes) tblTabla.getValueAt(0, 0);
         dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 

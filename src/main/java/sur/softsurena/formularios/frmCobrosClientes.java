@@ -389,12 +389,12 @@ public class frmCobrosClientes extends javax.swing.JDialog {
     }//GEN-LAST:event_formWindowOpened
     private void btnPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarActionPerformed
         if (cmbCliente.getSelectedIndex() <= 0) {
-            JOptionPane.showMessageDialog(rootPane, "Debe selecionar un Cliente...");
+            JOptionPane.showMessageDialog(null, "Debe selecionar un Cliente...");
             cmbCliente.requestFocusInWindow();
             return;
         }
         if (tblFacturas.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(rootPane, "Debe seleccionar una factura");
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una factura");
             return;
         }
 
@@ -403,22 +403,22 @@ public class frmCobrosClientes extends javax.swing.JDialog {
         BigDecimal montoDeuda = new BigDecimal(txtMontoDeuda.getValue().toString());
 
         if (Monto.compareTo(BigDecimal.ZERO) == 0) {
-            JOptionPane.showMessageDialog(rootPane, "Debe Ingresar un Valor Para Realizar Pago...");
+            JOptionPane.showMessageDialog(null, "Debe Ingresar un Valor Para Realizar Pago...");
             txtMonto.setValue(0.0);
             txtMonto.requestFocusInWindow();
             return;
         }
         if (Monto.compareTo(montoTotal) == 1) {
-            JOptionPane.showMessageDialog(rootPane, "No se permite Monto a pagar MAYOR QUE '>' Deuda del Cliente");
+            JOptionPane.showMessageDialog(null, "No se permite Monto a pagar MAYOR QUE '>' Deuda del Cliente");
             return;
         }
         if (Monto.compareTo(BigDecimal.ZERO) <= 0) {
-            JOptionPane.showMessageDialog(rootPane, "No se permite monto NEGATIVO");
+            JOptionPane.showMessageDialog(null, "No se permite monto NEGATIVO");
             return;
         }
         if (Monto.compareTo(montoDeuda) > 0
                 && montoDeuda.compareTo(BigDecimal.ZERO) > 0) {
-            JOptionPane.showMessageDialog(rootPane, "No se permite monto MAYOR a la DEUDA");
+            JOptionPane.showMessageDialog(null, "No se permite monto MAYOR a la DEUDA");
             return;
         }
         int num = JOptionPane.showConfirmDialog(null,
@@ -438,7 +438,7 @@ public class frmCobrosClientes extends javax.swing.JDialog {
 //                getIdTurno());
 
         //Constancia de pago de Factura....
-        JOptionPane.showMessageDialog(rootPane, "Pago realizado con Exito...");
+        JOptionPane.showMessageDialog(null, "Pago realizado con Exito...");
 
         Map parametros = new HashMap();
         parametros.put("nombreCajero", getNombreCajero());

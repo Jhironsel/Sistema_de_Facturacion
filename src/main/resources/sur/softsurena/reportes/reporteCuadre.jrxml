@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.1.final using JasperReports Library version 6.20.1-7584acb244139816654f64e2fd57a00d3e31921e  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="factura" pageWidth="190" pageHeight="297" whenNoDataType="BlankPage" columnWidth="178" leftMargin="5" rightMargin="7" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="49847925-fad1-4a52-97a4-d67f215c04a1">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.callouts" value="##Sat Nov 12 17:08:28 AST 2016"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="FIREBIRD4"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="529"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="460"/>
+	<parameter name="id_Turno" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT TURNO_USUARIO, FECHA_HORA_INICIO, FECHA_HORA_FINAL, ESTADO,
+	MONTO_FACTURADO, MONTO_DEVUELTO, MONTO_EFECTIVO, MONTO_CREDITO
+FROM V_TURNOS 
+WHERE
+     ID = $P{id_Turno}]]>
+	</queryString>
+	<field name="TURNO_USUARIO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TURNO_USUARIO"/>
+		<property name="com.jaspersoft.studio.field.label" value="TURNO_USUARIO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="V_TURNOS"/>
+	</field>
+	<field name="FECHA_HORA_INICIO" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="FECHA_HORA_INICIO"/>
+		<property name="com.jaspersoft.studio.field.label" value="FECHA_HORA_INICIO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="V_TURNOS"/>
+	</field>
+	<field name="FECHA_HORA_FINAL" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="FECHA_HORA_FINAL"/>
+		<property name="com.jaspersoft.studio.field.label" value="FECHA_HORA_FINAL"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="V_TURNOS"/>
+	</field>
+	<field name="ESTADO" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="ESTADO"/>
+		<property name="com.jaspersoft.studio.field.label" value="ESTADO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="V_TURNOS"/>
+	</field>
+	<field name="MONTO_FACTURADO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="MONTO_FACTURADO"/>
+		<property name="com.jaspersoft.studio.field.label" value="MONTO_FACTURADO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="V_TURNOS"/>
+	</field>
+	<field name="MONTO_DEVUELTO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="MONTO_DEVUELTO"/>
+		<property name="com.jaspersoft.studio.field.label" value="MONTO_DEVUELTO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="V_TURNOS"/>
+	</field>
+	<field name="MONTO_EFECTIVO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="MONTO_EFECTIVO"/>
+		<property name="com.jaspersoft.studio.field.label" value="MONTO_EFECTIVO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="V_TURNOS"/>
+	</field>
+	<field name="MONTO_CREDITO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="MONTO_CREDITO"/>
+		<property name="com.jaspersoft.studio.field.label" value="MONTO_CREDITO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="V_TURNOS"/>
+	</field>
+	<title>
+		<band height="36" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="178" height="30" uuid="8f183060-3bee-4aeb-bc45-de0a9b01ba8c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Static Text]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="91">
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="79" y="0" width="99" height="10" uuid="d3be66c3-4bb5-44fa-8eab-49ac2612ba8c"/>
+				<textElement textAlignment="Center">
+					<font fontName="FreeMono" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="79" height="10" uuid="cc9e4190-1ee1-44f5-acca-7b461b8185e0"/>
+				<textElement textAlignment="Right">
+					<font fontName="FreeMono" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha -Hora:]]></text>
+			</staticText>
+			<textField pattern="h:mm a">
+				<reportElement x="79" y="10" width="99" height="10" uuid="fe0e97c9-6184-4de0-bb87-b087807081f4"/>
+				<textElement textAlignment="Right">
+					<font fontName="FreeMono" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="20" width="79" height="10" uuid="3ee87354-f4ad-4560-ac4c-274566dc0246"/>
+				<textElement textAlignment="Right">
+					<font fontName="FreeMono" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre Cajero:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="79" y="20" width="99" height="10" uuid="f83bf452-bccd-437a-8ac1-b5dd1409401c"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TURNO_USUARIO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="79" y="30" width="99" height="10" uuid="075931b3-5072-4800-b948-49e4c216b422"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECHA_HORA_INICIO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="30" width="79" height="10" uuid="32097ca7-7a67-4e90-bded-dbfda4eeb810"/>
+				<textElement textAlignment="Right">
+					<font fontName="FreeMono" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de inicio:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="40" width="79" height="10" uuid="1b7007d9-ca9b-4ae3-8671-0387b766a28f"/>
+				<textElement textAlignment="Right">
+					<font fontName="FreeMono" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de final:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="79" y="40" width="99" height="10" uuid="bead4e64-73dc-43aa-ad81-2e1b548f72a7"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECHA_HORA_FINAL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="79" y="50" width="99" height="10" uuid="a3c62fc3-0a8f-42cc-a682-3f23bee60fd4"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MONTO_FACTURADO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="50" width="79" height="10" uuid="52f95ba5-9a75-4c92-b32c-cb1a655f1e9c"/>
+				<textElement textAlignment="Right">
+					<font fontName="FreeMono" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Monto Facturado:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="60" width="79" height="10" uuid="95b987bf-1b80-4cfc-b145-68b7898e21e2"/>
+				<textElement textAlignment="Right">
+					<font fontName="FreeMono" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Monto Devuelto:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="70" width="79" height="10" uuid="52cba4f0-21b0-4dd9-b2be-cd3d4601df98"/>
+				<textElement textAlignment="Right">
+					<font fontName="FreeMono" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Monto a credito:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="80" width="79" height="10" uuid="e3fb9c20-ead0-4f94-9335-9606448f7aa2"/>
+				<textElement textAlignment="Right">
+					<font fontName="FreeMono" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Monto efectivo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="79" y="60" width="99" height="10" uuid="5ab87f57-8093-4871-a583-09275d591031"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MONTO_DEVUELTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="79" y="70" width="99" height="10" uuid="59b93dc7-153f-4803-8bb1-60b99f9ec3f6"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MONTO_CREDITO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="79" y="80" width="99" height="10" uuid="153f51b9-06b9-4b57-84ee-20c686c4f66e"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MONTO_EFECTIVO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<pageFooter>
+		<band height="38" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="10" width="178" height="18" uuid="56b8a253-53eb-47f9-a5ad-5e0ffc8d13f0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="FreeMono" size="8"/>
+				</textElement>
+				<text><![CDATA[Reporte Diario de Cuadre]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

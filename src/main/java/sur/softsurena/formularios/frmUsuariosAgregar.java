@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import sur.softsurena.entidades.Etiquetas;
 import sur.softsurena.entidades.Roles;
 import sur.softsurena.entidades.Usuario;
 import static sur.softsurena.entidades.Usuario.*;
 import sur.softsurena.utilidades.PalabrasReservadasFirebird;
 import sur.softsurena.utilidades.Utilidades;
+import static sur.softsurena.utilidades.Utilidades.repararColumnaTable;
 import static sur.softsurena.utilidades.Utilidades.showTooltip;
 
 public class frmUsuariosAgregar extends javax.swing.JDialog {
@@ -47,9 +49,54 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
         txtDescripcion.setText(usuario.getDescripcion());
 
         nuevo = false;
+        
+        //Cargando las Tags del usuario
+        String titulos[] = {"Propiedad", "Valor"};
 
+        Object registro[] = new Object[titulos.length];
+
+        DefaultTableModel dtmEtiquetas = new DefaultTableModel(null, titulos);
+        
+        tblEtiquetas.removeAll();
+        
+        Etiquetas.getEtiquetasUsuario(usuario.getUser_name()).stream().
+                forEach(etiqueta ->{
+                    registro[0]=etiqueta.getPropiedad();
+                    registro[1]=etiqueta.getValor();
+                    
+                    dtmEtiquetas.addRow(registro);
+        });
+        
+        tblEtiquetas.setModel(dtmEtiquetas);
+        
+        repararColumnaTable(tblEtiquetas);
+
+        tblEtiquetas.setBackgoundHover(new java.awt.Color(102, 102, 255));
+        
         //TODO Cargar los Roles
-        //TODO Cargar las Tags
+        String titulos2[] = {"Roles", "Descripción"};
+
+        Object registro2[] = new Object[titulos2.length];
+
+        DefaultTableModel dtmRoles = new DefaultTableModel(null, titulos2);
+        
+        tblRoles.removeAll();
+        
+        Roles.comprobandoRol(usuario.getUser_name()).stream().
+                forEach(rol ->{
+                    registro2[0] = rol.getRoleName();
+                    registro2[1] = rol.getDescripcion();
+                    
+                    dtmRoles.addRow(registro2);
+        });
+        
+        tblRoles.setModel(dtmRoles);
+        
+        repararColumnaTable(tblRoles);
+
+        tblRoles.setBackgoundHover(new java.awt.Color(102, 102, 255));
+        
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -94,7 +141,7 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
 
         jPanel5.setLayout(new java.awt.GridLayout(7, 1, 5, 5));
 
-        txtUserName.setToolTipText("Identificador del usuario en el sistema");
+        txtUserName.setToolTipText("Identificador del usuario en el sistema.\n\nNOTA: No colocar nombres de roles en este campo. ");
         txtUserName.setFont(new java.awt.Font("FreeMono", 1, 18)); // NOI18N
         txtUserName.setName("txtUserName"); // NOI18N
         txtUserName.setPlaceholder("ID Usuario");
@@ -591,7 +638,6 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
         for (int i = 0; i < tblRoles.getRowCount(); i++) {
             rolesList.add(Roles.builder().
                     roleName(tblRoles.getValueAt(i, 0).toString()).
-                    conAdmin((boolean) tblRoles.getValueAt(i, 1)).
                     build());
         }
         
@@ -641,12 +687,8 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
             txtClave1.requestFocus();
             return;
         }
-
-        //Creamos el Objeto Usuario y los agregamos a Datos
-        JOptionPane.showMessageDialog(
-                null,
-                (agregarModificarUsuario(
-                        Usuario.builder().
+        
+        Usuario u = Usuario.builder().
                                 user_name(txtUserName.getText()).
                                 pnombre(txtPNombre.getText()).
                                 snombre(txtSNombre.getText()).
@@ -657,7 +699,12 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
                                 estado(cbEstado.isSelected()).
                                 administrador(cbAdministrador.isSelected()).
                                 roles(rolesList).
-                                build(), nuevo))
+                                build();
+
+        //Creamos el Objeto Usuario y los agregamos a Datos
+        JOptionPane.showMessageDialog(
+                null,
+                (nuevo ? agregarUsuario(u) : modificarUsuario(u))
         );
 
         dispose();

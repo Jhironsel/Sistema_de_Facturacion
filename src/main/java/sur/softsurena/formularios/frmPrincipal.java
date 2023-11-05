@@ -66,7 +66,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
                 build()
         );
         
-        comprobandoRol(jlUser.getText().strip()).stream().forEach(rolItem ->{
+        comprobandoRol(u.getUser_name().strip()).stream().forEach(rolItem ->{
             cbRoles.addItem(rolItem);
         });
         
@@ -79,11 +79,11 @@ public final class frmPrincipal extends javax.swing.JFrame {
                 break;
             }
         }
-        
-        jMenuBar1.add(filler3,5);
-        jMenuBar1.add(jlUser, 6);
-        jMenuBar1.add(liWork, 7);
-        jMenuBar1.add(cbRoles, 8);
+        jMenuBar.add(btnOcultarPanel,0);
+        jMenuBar.add(filler3, 7);
+        jMenuBar.add(jlUser, 8);
+        jMenuBar.add(liWork,9);
+        jMenuBar.add(cbRoles, 10);
 
         jPanelImpresion.setVisible(false);
 
@@ -152,18 +152,29 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jlRestaurar = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         dpnEscritorio = new DesktopConFondo();
-        jMenuBar1 = new rojerusan.RSMenuBar();
-        mnuArchivos = new javax.swing.JMenu();
-        mnuArchivosCliente = new javax.swing.JMenuItem();
-        mnuArchivosProductos = new javax.swing.JMenuItem();
-        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        jpEstados = new rojeru_san.rspanel.RSPanelGradiente();
+        jpTiempo = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        rSLabelFecha1 = new rojeru_san.rsdate.RSLabelFecha();
+        rSLabelHora1 = new rojeru_san.rsdate.RSLabelHora();
+        jMenuBar = new rojerusan.RSMenuBar();
+        mnuOpciones = new javax.swing.JMenu();
         mnuCambioClave = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
-        mnuArchivosAdministracionPrivilegios = new javax.swing.JMenuItem();
         jSeparator12 = new javax.swing.JPopupMenu.Separator();
         mnuArchivosCambioUsuario = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         mnuArchivosSalir = new javax.swing.JMenuItem();
+        mnuArchivos = new javax.swing.JMenu();
+        mnuArchivosCliente = new javax.swing.JMenuItem();
+        mnuArchivosProductos = new javax.swing.JMenuItem();
+        mnuArchivosProveedores = new javax.swing.JMenuItem();
+        mnuArchivosAlmacenes = new javax.swing.JMenuItem();
+        mnuArchivosAdministracionPrivilegios = new javax.swing.JMenuItem();
+        mnuSistemas = new javax.swing.JMenu();
+        mnuArchivosNomina = new javax.swing.JMenuItem();
+        jSeparator6 = new javax.swing.JPopupMenu.Separator();
+        mnuMovimientosDeudas = new javax.swing.JMenuItem();
         mnuMovimientos = new javax.swing.JMenu();
         mnuMovimientosNuevaFactura = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
@@ -171,8 +182,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
         mnuMovimientosInventario = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         mnuMovimientosAbrirTurno = new javax.swing.JMenuItem();
-        jSeparator6 = new javax.swing.JPopupMenu.Separator();
-        mnuMovimientosDeudas = new javax.swing.JMenuItem();
         mnuAyuda = new javax.swing.JMenu();
         mnuAyudaAcercaDe = new javax.swing.JMenuItem();
         mnuAyudaAyuda = new javax.swing.JMenuItem();
@@ -628,14 +637,76 @@ public final class frmPrincipal extends javax.swing.JFrame {
         dpnEscritorio.setPreferredSize(new java.awt.Dimension(510, 531));
         jScrollPane4.setViewportView(dpnEscritorio);
 
-        jMenuBar1.setBackground(new java.awt.Color(58, 66, 226));
-        jMenuBar1.setForeground(new java.awt.Color(255, 255, 255));
+        jpEstados.setLayout(new java.awt.GridLayout(1, 4));
+
+        jpTiempo.setMinimumSize(new java.awt.Dimension(0, 35));
+        jpTiempo.setPreferredSize(new java.awt.Dimension(453, 40));
+        jpTiempo.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+
+        jLabel2.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel2.setText("Tiempo:");
+        jpTiempo.add(jLabel2);
+
+        rSLabelFecha1.setFont(new java.awt.Font("FreeMono", 1, 24)); // NOI18N
+        rSLabelFecha1.setPreferredSize(new java.awt.Dimension(180, 40));
+        jpTiempo.add(rSLabelFecha1);
+
+        rSLabelHora1.setFont(new java.awt.Font("FreeMono", 1, 24)); // NOI18N
+        rSLabelHora1.setPreferredSize(new java.awt.Dimension(180, 40));
+        jpTiempo.add(rSLabelHora1);
+
+        jpEstados.add(jpTiempo);
+
+        jMenuBar.setBackground(new java.awt.Color(58, 66, 226));
+        jMenuBar.setForeground(new java.awt.Color(255, 255, 255));
+
+        mnuOpciones.setForeground(new java.awt.Color(255, 255, 255));
+        mnuOpciones.setMnemonic('O');
+        mnuOpciones.setText("Opciones");
+        mnuOpciones.setFont(new java.awt.Font("FreeMono", 1, 18)); // NOI18N
+
+        mnuCambioClave.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
+        mnuCambioClave.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
+        mnuCambioClave.setMnemonic('m');
+        mnuCambioClave.setText("Cambio de Clave ...");
+        mnuCambioClave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuCambioClaveActionPerformed(evt);
+            }
+        });
+        mnuOpciones.add(mnuCambioClave);
+        mnuOpciones.add(jSeparator3);
+        mnuOpciones.add(jSeparator12);
+
+        mnuArchivosCambioUsuario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F6, 0));
+        mnuArchivosCambioUsuario.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
+        mnuArchivosCambioUsuario.setMnemonic('b');
+        mnuArchivosCambioUsuario.setText("Cambio de Usuario ...");
+        mnuArchivosCambioUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuArchivosCambioUsuarioActionPerformed(evt);
+            }
+        });
+        mnuOpciones.add(mnuArchivosCambioUsuario);
+        mnuOpciones.add(jSeparator2);
+
+        mnuArchivosSalir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        mnuArchivosSalir.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
+        mnuArchivosSalir.setText("Salir");
+        mnuArchivosSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuArchivosSalirActionPerformed(evt);
+            }
+        });
+        mnuOpciones.add(mnuArchivosSalir);
+
+        jMenuBar.add(mnuOpciones);
 
         mnuArchivos.setForeground(new java.awt.Color(255, 255, 255));
-        mnuArchivos.setMnemonic('A');
-        mnuArchivos.setText("Archivos");
-        mnuArchivos.setDoubleBuffered(true);
-        mnuArchivos.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        mnuArchivos.setMnemonic('M');
+        mnuArchivos.setText("Mantenimiento");
+        mnuArchivos.setFont(new java.awt.Font("FreeMono", 1, 18)); // NOI18N
 
         mnuArchivosCliente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
         mnuArchivosCliente.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
@@ -658,61 +729,71 @@ public final class frmPrincipal extends javax.swing.JFrame {
             }
         });
         mnuArchivos.add(mnuArchivosProductos);
-        mnuArchivos.add(jSeparator1);
 
-        mnuCambioClave.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
-        mnuCambioClave.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
-        mnuCambioClave.setMnemonic('m');
-        mnuCambioClave.setText("Cambio de Clave ...");
-        mnuCambioClave.addActionListener(new java.awt.event.ActionListener() {
+        mnuArchivosProveedores.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
+        mnuArchivosProveedores.setMnemonic('P');
+        mnuArchivosProveedores.setText("Proveedores ...");
+        mnuArchivosProveedores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuCambioClaveActionPerformed(evt);
+                mnuArchivosProveedoresActionPerformed(evt);
             }
         });
-        mnuArchivos.add(mnuCambioClave);
-        mnuArchivos.add(jSeparator3);
+        mnuArchivos.add(mnuArchivosProveedores);
+
+        mnuArchivosAlmacenes.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
+        mnuArchivosAlmacenes.setMnemonic('P');
+        mnuArchivosAlmacenes.setText("Almacenes ...");
+        mnuArchivosAlmacenes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuArchivosAlmacenesActionPerformed(evt);
+            }
+        });
+        mnuArchivos.add(mnuArchivosAlmacenes);
 
         mnuArchivosAdministracionPrivilegios.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         mnuArchivosAdministracionPrivilegios.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
-        mnuArchivosAdministracionPrivilegios.setText("Administración de Privilegios...");
+        mnuArchivosAdministracionPrivilegios.setText("Usuarios ...");
         mnuArchivosAdministracionPrivilegios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnuArchivosAdministracionPrivilegiosActionPerformed(evt);
             }
         });
         mnuArchivos.add(mnuArchivosAdministracionPrivilegios);
-        mnuArchivos.add(jSeparator12);
 
-        mnuArchivosCambioUsuario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F6, 0));
-        mnuArchivosCambioUsuario.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
-        mnuArchivosCambioUsuario.setMnemonic('b');
-        mnuArchivosCambioUsuario.setText("Cambio de Usuario ...");
-        mnuArchivosCambioUsuario.addActionListener(new java.awt.event.ActionListener() {
+        jMenuBar.add(mnuArchivos);
+
+        mnuSistemas.setForeground(new java.awt.Color(255, 255, 255));
+        mnuSistemas.setMnemonic('S');
+        mnuSistemas.setText("Sistemas");
+        mnuSistemas.setFont(new java.awt.Font("FreeMono", 1, 18)); // NOI18N
+
+        mnuArchivosNomina.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
+        mnuArchivosNomina.setMnemonic('P');
+        mnuArchivosNomina.setText("Nomina ...");
+        mnuArchivosNomina.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuArchivosCambioUsuarioActionPerformed(evt);
+                mnuArchivosNominaActionPerformed(evt);
             }
         });
-        mnuArchivos.add(mnuArchivosCambioUsuario);
-        mnuArchivos.add(jSeparator2);
+        mnuSistemas.add(mnuArchivosNomina);
+        mnuSistemas.add(jSeparator6);
 
-        mnuArchivosSalir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        mnuArchivosSalir.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
-        mnuArchivosSalir.setText("Salir");
-        mnuArchivosSalir.addActionListener(new java.awt.event.ActionListener() {
+        mnuMovimientosDeudas.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F12, 0));
+        mnuMovimientosDeudas.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
+        mnuMovimientosDeudas.setText("Deuda");
+        mnuMovimientosDeudas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuArchivosSalirActionPerformed(evt);
+                mnuMovimientosDeudasActionPerformed(evt);
             }
         });
-        mnuArchivos.add(mnuArchivosSalir);
+        mnuSistemas.add(mnuMovimientosDeudas);
 
-        jMenuBar1.add(btnOcultarPanel);
-
-        jMenuBar1.add(mnuArchivos);
+        jMenuBar.add(mnuSistemas);
 
         mnuMovimientos.setForeground(new java.awt.Color(255, 255, 255));
         mnuMovimientos.setMnemonic('M');
         mnuMovimientos.setText("Movimientos");
-        mnuMovimientos.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        mnuMovimientos.setFont(new java.awt.Font("FreeMono", 1, 18)); // NOI18N
 
         mnuMovimientosNuevaFactura.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F7, 0));
         mnuMovimientosNuevaFactura.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
@@ -755,24 +836,13 @@ public final class frmPrincipal extends javax.swing.JFrame {
             }
         });
         mnuMovimientos.add(mnuMovimientosAbrirTurno);
-        mnuMovimientos.add(jSeparator6);
 
-        mnuMovimientosDeudas.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F12, 0));
-        mnuMovimientosDeudas.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
-        mnuMovimientosDeudas.setText("Deuda");
-        mnuMovimientosDeudas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuMovimientosDeudasActionPerformed(evt);
-            }
-        });
-        mnuMovimientos.add(mnuMovimientosDeudas);
-
-        jMenuBar1.add(mnuMovimientos);
+        jMenuBar.add(mnuMovimientos);
 
         mnuAyuda.setForeground(new java.awt.Color(255, 255, 255));
         mnuAyuda.setMnemonic('y');
         mnuAyuda.setText("Ayuda");
-        mnuAyuda.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        mnuAyuda.setFont(new java.awt.Font("FreeMono", 1, 18)); // NOI18N
 
         mnuAyudaAcercaDe.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         mnuAyudaAcercaDe.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
@@ -795,21 +865,21 @@ public final class frmPrincipal extends javax.swing.JFrame {
         });
         mnuAyuda.add(mnuAyudaAyuda);
 
-        jMenuBar1.add(mnuAyuda);
+        jMenuBar.add(mnuAyuda);
 
         mnuLicencia.setBackground(new java.awt.Color(255, 255, 0));
         mnuLicencia.setForeground(new java.awt.Color(51, 255, 0));
         mnuLicencia.setMnemonic('L');
         mnuLicencia.setText("Licencia");
-        mnuLicencia.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        mnuLicencia.setFont(new java.awt.Font("FreeMono", 1, 18)); // NOI18N
         mnuLicencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnuLicenciaActionPerformed(evt);
             }
         });
-        jMenuBar1.add(mnuLicencia);
+        jMenuBar.add(mnuLicencia);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(jMenuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -819,11 +889,16 @@ public final class frmPrincipal extends javax.swing.JFrame {
                 .addComponent(jsEstatus, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE))
+            .addComponent(jpEstados, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jsEstatus, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
+                    .addComponent(jsEstatus, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(0, 0, 0)
+                .addComponent(jpEstados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -1165,10 +1240,20 @@ public final class frmPrincipal extends javax.swing.JFrame {
         
         Usuario u = getUsuarioActual();
         
-        jlUser.setText(u.getUser_name());
-        
         cbRoles.setToolTipText("Rol actual: "+u.getRol());
     }//GEN-LAST:event_cbRolesPopupMenuWillBecomeInvisible
+
+    private void mnuArchivosProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuArchivosProveedoresActionPerformed
+        abrirFormulario(new frmProveedores());
+    }//GEN-LAST:event_mnuArchivosProveedoresActionPerformed
+
+    private void mnuArchivosAlmacenesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuArchivosAlmacenesActionPerformed
+        abrirFormulario(new frmAlmacenes());
+    }//GEN-LAST:event_mnuArchivosAlmacenesActionPerformed
+
+    private void mnuArchivosNominaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuArchivosNominaActionPerformed
+        abrirFormulario(new frmNomina());
+    }//GEN-LAST:event_mnuArchivosNominaActionPerformed
     //Todo Metodo de JasperReport
     private void imprimirReporte(Date fecha) {
         try {
@@ -1228,6 +1313,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 //        //mensaje();
 //
 //    }
+    
 //    private void panorama() {
 //        ResultSet rs = getConsulta(
 //                "SELECT cast(r.VENTA as numeric(15,2)) as VENTA, "
@@ -1241,6 +1327,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 //            LOG.log(Level.SEVERE, "Error al crear ventana de cliente.", ex);
 //        }
 //    }
+    
 //    private void cajeros() {
 //        //Saber cuales cajeros estan Activo....
 //        String titulos[] = {"Cajero Activo"};
@@ -1262,6 +1349,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 //            LOG.log(Level.SEVERE, "Error al crear ventana de cliente.", ex);
 //        }
 //    }
+    
 //    private void mensaje() {
 //        ResultSet rs = getConsulta(
 //                "SELECT r.Ruta as mensaje, o.RUTA as nombreEmpresa, "
@@ -1287,6 +1375,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 //            LOG.log(Level.SEVERE, "Error al crear ventana de cliente.", ex);
 //        }
 //    }///--------------Hasta Aqui.......
+    
 //    public void menus() {
 //        Perfiles miPerfil = getAcceso(getPerfil());
 //        mnuArchivos.setEnabled(dime(miPerfil.getArchivos()));
@@ -1451,17 +1540,17 @@ public final class frmPrincipal extends javax.swing.JFrame {
     public static javax.swing.JDesktopPane dpnEscritorio;
     private javax.swing.Box.Filler filler3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel9;
     public static javax.swing.JLabel jLabelImpresion;
-    private rojerusan.RSMenuBar jMenuBar1;
+    private rojerusan.RSMenuBar jMenuBar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     public static javax.swing.JPanel jPanelImpresion;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator10;
     private javax.swing.JPopupMenu.Separator jSeparator11;
     private javax.swing.JPopupMenu.Separator jSeparator12;
@@ -1492,15 +1581,20 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmProductos;
     private javax.swing.JMenuItem jmReporteFactura;
     private javax.swing.JMenuItem jmSalir;
+    public static rojeru_san.rspanel.RSPanelGradiente jpEstados;
+    private javax.swing.JPanel jpTiempo;
     public static javax.swing.JProgressBar jprImpresion;
     private javax.swing.JScrollPane jsEstatus;
     private javax.swing.JTable jtCajero;
     private necesario.LabelIcon liWork;
     private javax.swing.JMenu mnuArchivos;
     private javax.swing.JMenuItem mnuArchivosAdministracionPrivilegios;
+    private javax.swing.JMenuItem mnuArchivosAlmacenes;
     private javax.swing.JMenuItem mnuArchivosCambioUsuario;
     private javax.swing.JMenuItem mnuArchivosCliente;
+    private javax.swing.JMenuItem mnuArchivosNomina;
     private javax.swing.JMenuItem mnuArchivosProductos;
+    private javax.swing.JMenuItem mnuArchivosProveedores;
     private javax.swing.JMenuItem mnuArchivosSalir;
     private javax.swing.JMenu mnuAyuda;
     private javax.swing.JMenuItem mnuAyudaAcercaDe;
@@ -1513,7 +1607,11 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuMovimientosInventario;
     public static javax.swing.JMenuItem mnuMovimientosNuevaFactura;
     private javax.swing.JMenuItem mnuMovimientosReporteFactura;
+    private javax.swing.JMenu mnuOpciones;
+    private javax.swing.JMenu mnuSistemas;
     private javax.swing.JPanel pEstatus;
+    private rojeru_san.rsdate.RSLabelFecha rSLabelFecha1;
+    private rojeru_san.rsdate.RSLabelHora rSLabelHora1;
     private javax.swing.JFormattedTextField txtCosto;
     private javax.swing.JFormattedTextField txtGanancia;
     private javax.swing.JFormattedTextField txtVenta;

@@ -17,7 +17,6 @@ import static sur.softsurena.entidades.Categorias.getCategorias;
 import static sur.softsurena.entidades.Categorias.modificarCategoria;
 import static sur.softsurena.entidades.Productos.existeCategoriaProductos;
 import sur.softsurena.entidades.Resultados;
-import sur.softsurena.metodos.Imagenes;
 import sur.softsurena.utilidades.Utilidades;
 
 public class frmCategorias extends javax.swing.JDialog {
@@ -212,8 +211,12 @@ public class frmCategorias extends javax.swing.JDialog {
         int idCategoria = ((Categorias) cbCategoria.getSelectedItem()).getId_categoria();
         
         if (existeCategoriaProductos(idCategoria)) {
-            JOptionPane.showMessageDialog(null, 
-                    "No se permite eliminar categoria porque existe producto Asociados");
+            JOptionPane.showMessageDialog(
+                    null, 
+                    "No se permite eliminar categoria porque existe producto Asociados.",
+                    "Proceso de validacion de categorias.",
+                    JOptionPane.ERROR_MESSAGE
+            );
             return;
         }
 
@@ -376,7 +379,7 @@ public class frmCategorias extends javax.swing.JDialog {
             String msj = agregarCategoria(
                     Categorias.
                             builder().
-                            descripcion(nombreCategoria.trim()).
+                            descripcion(nombreCategoria.strip()).
                             pathImage(new File(ruta)).
                             estado(estado)
                             .build()
@@ -405,10 +408,10 @@ public class frmCategorias extends javax.swing.JDialog {
             //Creamos el objeto categoria que tendra' los atributos.
             Categorias categoria = Categorias.builder().
                     id_categoria(idCategoria).
-                    descripcion(nombreCategoria.trim()).
+                    descripcion(nombreCategoria.strip()).
                     pathImage(new File(ruta)).build();
 
-            String msj = modificarCategoria(categoria);
+            String msj = modificarCategoria(categoria).getMensaje();
 
             JOptionPane.showMessageDialog(null, msj);
 

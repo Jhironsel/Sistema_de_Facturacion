@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,14 +27,15 @@ public class frmParametros extends javax.swing.JFrame {
         initComponents();
         propiedades = new Properties();
         
-        f = new File("properties/propiedades.properties");
-        
         try {
+            f = new File(getClass().getResource("/sur/softsurena/properties/propiedades.properties").toURI());
             propiedades.load(new FileReader(f));
         } catch (FileNotFoundException ex) {
             LOG.log(Level.SEVERE, "Archivo no encotrado", ex);
         } catch (IOException ex) {
             LOG.log(Level.SEVERE, "Error de entrada o salida del archivo propiedades.", ex);
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(frmParametros.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         cargarParamentos("todo");
@@ -350,7 +352,7 @@ public class frmParametros extends javax.swing.JFrame {
             }
 
             if (valor < 0 || valor > 255) {
-                JOptionPane.showMessageDialog(rootPane, "Valor incorrecto en el Ambito 1");
+                JOptionPane.showMessageDialog(null, "Valor incorrecto en el Ambito 1");
                 txtValor1.setText("");
                 txtValor1.requestFocusInWindow();
                 return;
@@ -362,7 +364,7 @@ public class frmParametros extends javax.swing.JFrame {
                 valor = -1;
             }
             if (valor < 0 || valor > 255) {
-                JOptionPane.showMessageDialog(rootPane, "Valor incorrecto en el Ambito 2");
+                JOptionPane.showMessageDialog(null, "Valor incorrecto en el Ambito 2");
                 txtValor2.setText("");
                 txtValor2.requestFocusInWindow();
                 return;
@@ -374,7 +376,7 @@ public class frmParametros extends javax.swing.JFrame {
                 valor = -1;
             }
             if (valor < 0 || valor > 255) {
-                JOptionPane.showMessageDialog(rootPane, "Valor incorrecto en el Ambito 3");
+                JOptionPane.showMessageDialog(null, "Valor incorrecto en el Ambito 3");
                 txtValor3.setText("");
                 txtValor3.requestFocusInWindow();
                 return;
@@ -386,7 +388,7 @@ public class frmParametros extends javax.swing.JFrame {
                 valor = -1;
             }
             if (valor < 0 || valor > 255) {
-                JOptionPane.showMessageDialog(rootPane, "Valor incorrecto en el Ambito 4");
+                JOptionPane.showMessageDialog(null, "Valor incorrecto en el Ambito 4");
                 txtValor4.setText("");
                 txtValor4.requestFocusInWindow();
                 return;
@@ -409,7 +411,7 @@ public class frmParametros extends javax.swing.JFrame {
                 valor = -1;
             }
             if (valor < 0 || valor > 65535) {
-                JOptionPane.showMessageDialog(rootPane, "Este Puerto no es valido");
+                JOptionPane.showMessageDialog(null, "Este Puerto no es valido");
                 txtPuerto.setText("");
                 txtPuerto.requestFocusInWindow();
                 return;
@@ -562,7 +564,7 @@ public class frmParametros extends javax.swing.JFrame {
 
             propiedades.store(
                     new FileWriter(f),
-                    "Parametros del Servidor"
+                    "Parametros del Servidor actual"
             );
         } catch (IOException ex) {
             LOG.log(Level.SEVERE, "Error al leer la propiedades del archivo.", ex);

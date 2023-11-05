@@ -1,9 +1,9 @@
 package sur.softsurena.formularios;
 
-import java.awt.Color;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
+import sur.softsurena.entidades.Usuario;
 import static sur.softsurena.entidades.Usuario.cambioClave;
 import sur.softsurena.metodos.Imagenes;
 
@@ -261,20 +261,21 @@ public class frmCambioClave extends javax.swing.JDialog {
         String confirmacion = new String(txtConfirmacion.getPassword());
         
         if (nueva.equals("")) {
-            JOptionPane.showMessageDialog(rootPane,
+            JOptionPane.showMessageDialog(null,
                     "Debe ingresar Clave Nueva...");
             txtNueva.requestFocusInWindow();
             return;
         }
+        
         if (confirmacion.equals("")) {
-            JOptionPane.showMessageDialog(rootPane,
+            JOptionPane.showMessageDialog(null,
                     "Debe de Ingresar Confirmacion...");
             txtConfirmacion.requestFocusInWindow();
             return;
         }
 
         if (!nueva.equals(confirmacion)) {
-            JOptionPane.showMessageDialog(rootPane,
+            JOptionPane.showMessageDialog(null,
                     "La Clave y la confirmacion no Coinciden...");
             txtConfirmacion.setText("");
             txtNueva.setText("");
@@ -282,9 +283,16 @@ public class frmCambioClave extends javax.swing.JDialog {
         }
 
         //Cambiamos la Clave
-        cambioClave(nueva);
-        JOptionPane.showMessageDialog(rootPane,
-                "Clave Cambiada...");
+        //r es la variable resultado que espera la operacion sea realizada. 
+        boolean r = cambioClave(
+                Usuario.getUsuarioActual().getUser_name().strip(), 
+                nueva
+        );
+        
+        JOptionPane.showMessageDialog(
+                null,
+                r ? "Clave Cambiada...":"Error al cambiar la clave.");
+        
         this.dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 

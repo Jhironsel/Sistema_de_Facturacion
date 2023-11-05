@@ -1,14 +1,17 @@
 package sur.softsurena.formularios;
 
-import RSMaterialComponent.RSButtonMaterialIconOne;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JFrame;
 import rojeru_san.efectos.ValoresEnum.ICONS;
 
 public class frmIconos extends javax.swing.JFrame {
 
     public frmIconos() {
+        
+        initComponents();
+        
+        //getClass().getResource("/sur/softsurena/properties/propiedades.properties").toURI()
+        System.out.println("<RECURSOS>: " + getClass().getResource("/sur/softsurena/").toString());
+        
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(400, 2147483647));
         setMinimumSize(new java.awt.Dimension(500, 500));
@@ -38,7 +41,7 @@ public class frmIconos extends javax.swing.JFrame {
                 btns.setMaximumSize(new java.awt.Dimension(200, 60));
                 btns.setMinimumSize(new java.awt.Dimension(200, 40));
                 btns.setPadding(10);
-                
+
                 jpCajaBotones.add(btns);
 
                 cantidadIcono++;
@@ -47,16 +50,16 @@ public class frmIconos extends javax.swing.JFrame {
 
                 cantidadIcono++;
                 jlLetra.setText(letra + " " + cantidadIcono);
-                
+
                 btns = new RSMaterialComponent.RSButtonMaterialIconOne();
                 btns.setIcons(iconos);
                 btns.setText(iconos.name());
                 btns.setMaximumSize(new java.awt.Dimension(200, 60));
                 btns.setMinimumSize(new java.awt.Dimension(200, 40));
                 btns.setPadding(10);
-                
+
                 jpCajaBotones.add(btns);
-                
+
                 jcpCajeBotones.setViewportView(jpCajaBotones);
 
                 javax.swing.GroupLayout jpComponenteLayout = new javax.swing.GroupLayout(jpComponente);
@@ -113,15 +116,13 @@ public class frmIconos extends javax.swing.JFrame {
 
                 jlLetra = new rojeru_san.rslabel.RSLabelSombra();
                 jlLetra.setFont(new java.awt.Font("Arial", 2, 70));
-                
+
                 cantidadIcono = 0;
-                
+
                 letra = "" + iconos.name().charAt(0);
             }
         }
         pack();
-        
-        System.out.println("El total es: "+rojeru_san.efectos.ValoresEnum.ICONS.values().length);
     }
 
     @SuppressWarnings("unchecked")
@@ -423,11 +424,14 @@ public class frmIconos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     *
+     * @param args
+     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> {
             new frmIconos().setVisible(true);
         });
-
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

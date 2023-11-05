@@ -99,7 +99,7 @@
           <SubComponents>
             <Component class="rojeru_san.rsfield.RSTextFullRound" name="txtUserName">
               <Properties>
-                <Property name="toolTipText" type="java.lang.String" value="Identificador del usuario en el sistema"/>
+                <Property name="toolTipText" type="java.lang.String" value="Identificador del usuario en el sistema.&#xa;&#xa;NOTA: No colocar nombres de roles en este campo. "/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="FreeMono" size="18" style="1"/>
                 </Property>
