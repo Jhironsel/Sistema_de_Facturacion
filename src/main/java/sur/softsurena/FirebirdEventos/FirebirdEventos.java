@@ -51,33 +51,33 @@ public class FirebirdEventos extends FBEventManager{
             //Evento para personas.
             addEventListener("ins_persona", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
-                frmClientes.llenarTablaClientes();
+                frmClientes.llenarTablaClientes("evento");
             });
             
             addEventListener("del_persona", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
-                frmClientes.llenarTablaClientes();
+                frmClientes.llenarTablaClientes("evento");
             });
             
             addEventListener("upd_persona", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
-                frmClientes.llenarTablaClientes();
+                frmClientes.llenarTablaClientes("evento");
             });    
             
             //Evento para personas clientes.
             addEventListener("ins_persona_clientes", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
-                frmClientes.llenarTablaClientes();
+                frmClientes.llenarTablaClientes("evento");
             });
             
             addEventListener("del_persona_clientes", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
-                frmClientes.llenarTablaClientes();
+                frmClientes.llenarTablaClientes("evento");
             });
             
             addEventListener("upd_persona_clientes", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
-                frmClientes.llenarTablaClientes();
+                frmClientes.llenarTablaClientes("evento");
             });
             
             //Eventos de usuario.

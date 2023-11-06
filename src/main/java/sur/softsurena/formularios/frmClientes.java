@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -93,6 +94,8 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
     private static final String[] TITULOS_CORREO = {"Correo", "Fecha"};
 
     private static final String[] TITULOS_TELEFONO = {"Numero", "Tipo", "Fecha"};
+    
+    private static String criterioBusqueda = "";
 
     /**
      * Para iniciar el modulo el usuario debe:
@@ -137,7 +140,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
 
         if (!privilegioTabla(v_privilegios)) {
 
-            String mensaje = "No cuenta con permisos para ver la información de"
+            final String mensaje = "No cuenta con permisos para ver la información de"
                     + " este módulo.";
 
             JOptionPane.showInternalMessageDialog(
@@ -214,6 +217,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
         jPanel16 = new javax.swing.JPanel();
         btnImprimirInforme1 = new RSMaterialComponent.RSButtonMaterialIconOne();
         btnHistorial1 = new RSMaterialComponent.RSButtonMaterialIconOne();
+        btnHistorial2 = new RSMaterialComponent.RSButtonMaterialIconOne();
         jScrollPane6 = new javax.swing.JScrollPane();
         tblClientes = new rojerusan.RSTableMetro1(){
             @Override
@@ -367,6 +371,17 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
             }
         });
         jPanel16.add(btnHistorial1);
+
+        btnHistorial2.setText("Actualizar registros");
+        btnHistorial2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.UPDATE);
+        btnHistorial2.setName("btnHistorial"); // NOI18N
+        btnHistorial2.setRound(40);
+        btnHistorial2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHistorial2ActionPerformed(evt);
+            }
+        });
+        jPanel16.add(btnHistorial2);
 
         jScrollPane2.setViewportView(jPanel16);
 
@@ -1296,64 +1311,32 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
                 "Proceso de borrado de cliente.",
                 icono);
 
-        //Actualizamos los cambios en la Tabla
-        //llenarTablaClientes(); La tabla se está llenando desde los postEvent de Firebird
         repararColumnaTable(tblClientes);
     }//GEN-LAST:event_btnBorrarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         //Hilo creado para ganar focus en la ventana de JopcionPane en buscar
         //cedula
-        v_hilo = new Thread(this);
-        v_hilo.start();
+//        v_hilo = new Thread(this);
+//        v_hilo.start();
+//        v_hilo.interrupt();
 
-        txtCedula1.setValue("");
+//        txtCedula1.setValue("");
 
-        int resp = JOptionPane.showInternalConfirmDialog(
-                null,
-                txtCedula1,
-                "Buscar cliente por cedula: ",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.INFORMATION_MESSAGE);
+        String resp = JOptionPane.showInternalInputDialog(
+                this,
+                "Ingrese su criterio de busqueda.\n[Cedula, nombres o apellidos]",
+                "Busqueda de registros de clientes",
+                JOptionPane.QUESTION_MESSAGE
+        );
+        
+        criterioBusqueda = resp;
 
-        if (resp == JOptionPane.NO_OPTION) {
-            v_hilo.interrupt();
+        if (Objects.isNull(resp)) {
             return;
         }
 
-        if (validaCampoCedula(txtCedula1)) {
-            resp = JOptionPane.showConfirmDialog(
-                    null,
-                    "Cedula de identidad no valida.\nDesea consultar la base de dato?",
-                    "Validacion de cedula",
-                    JOptionPane.WARNING_MESSAGE
-            );
-            if (resp == JOptionPane.NO_OPTION) {
-                return;
-            }
-        }
-
-        if (existeCliente(txtCedula1.getValue().toString()) == -1) {
-            JOptionPane.showMessageDialog(
-                    null,
-                    "El Cliente No Existe!",
-                    "Proceso de busqueda terminado",
-                    JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        for (int i = 0; i < tblClientes.getRowCount(); i++) {
-
-            if (tblClientes.getValueAt(i, 0).toString().contains(
-                    txtCedula1.getText())) {
-                tblClientes.setRowSelectionInterval(i, i);
-                break;
-            }
-
-            if (txtCedula1.getText().isBlank()) {
-                break;
-            }
-        }
+        llenarTablaClientes(criterioBusqueda);
     }//GEN-LAST:event_btnBuscarActionPerformed
     /**
      * Proceso de validación.
@@ -2051,7 +2034,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
         //1) Llenar la lista de clientes en el sistema.
-        llenarTablaClientes();
+        llenarTablaClientes("");
 
         //2) Llenar los comboBox de las provincias.
         jcbProvincias.removeAllItems();
@@ -2231,12 +2214,17 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
     }//GEN-LAST:event_btnImprimirInforme1ActionPerformed
 
     private void jsnCantidadFilasStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jsnCantidadFilasStateChanged
-        llenarTablaClientes();
+        llenarTablaClientes(criterioBusqueda);
     }//GEN-LAST:event_jsnCantidadFilasStateChanged
 
     private void jsnPaginaNroStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jsnPaginaNroStateChanged
-        llenarTablaClientes();
+        llenarTablaClientes(criterioBusqueda);
     }//GEN-LAST:event_jsnPaginaNroStateChanged
+
+    private void btnHistorial2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorial2ActionPerformed
+        llenarTablaClientes("");
+        criterioBusqueda = "";
+    }//GEN-LAST:event_btnHistorial2ActionPerformed
     private void eliminarRegistro(JTable tabla, DefaultTableModel modelo) {
         if (tabla.getSelectedRow() == -1) {
             JOptionPane.showInternalMessageDialog(null,
@@ -2251,19 +2239,26 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
 
     /**
      * Metodo utilizado para llenar la tabla de cliente del sistema.
-     *
+     * Nota: Este evento Debe ser publico porque este es llamado desde los eventos de
+     * Firebird.
      */
-    public synchronized static void llenarTablaClientes() {
+    public synchronized static void llenarTablaClientes(String criterioBusqueda) {
+        
         final String titulos[] = {"Cedulas", "Persona", "Primer Nombre",
             "Segundo Nombre", "Apellidos", "Sexo", "Fecha nacimiento",
             "Fecha Ingreso", "Estado"
         };
+        
+        if(criterioBusqueda.equalsIgnoreCase("evento")){
+            criterioBusqueda = frmClientes.criterioBusqueda;
+        }
 
         Object registro[] = new Object[titulos.length];
 
         DefaultTableModel dtmClientes = new DefaultTableModel(null, titulos);
 
         getClientesTablaSB(
+                criterioBusqueda,
                 Integer.valueOf(jsnPaginaNro.getValue().toString()),
                 Integer.valueOf(jsnCantidadFilas.getValue().toString())
         ).stream().forEach(cliente -> {
@@ -2670,11 +2665,11 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
             El siguiente blucle tiene la intension de vigilar que 
         el componente txtCedula1 obtenga focus cuando se este mostrando.
          */
-        while (!txtCedula1.hasFocus()) {
-            if (txtCedula1.isShowing()) {
-                txtCedula1.requestFocus();
-            }
-        }
+//        while (!txtCedula1.hasFocus()) {
+//            if (txtCedula1.isShowing()) {
+//                txtCedula1.requestFocus();
+//            }
+//        }
     }
 
     private boolean validaCampoCedula(javax.swing.JFormattedTextField campo) {
@@ -2714,6 +2709,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
     private javax.swing.ButtonGroup btnGMovilTelefono;
     private RSMaterialComponent.RSButtonMaterialIconOne btnGuardar;
     private RSMaterialComponent.RSButtonMaterialIconOne btnHistorial1;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnHistorial2;
     private RSMaterialComponent.RSButtonMaterialIconOne btnImprimirInforme1;
     private RSMaterialComponent.RSButtonMaterialIconOne btnModificar;
     private RSMaterialComponent.RSButtonMaterialIconOne btnNuevo;

@@ -233,6 +233,19 @@
                                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnHistorial1ActionPerformed"/>
                                   </Events>
                                 </Component>
+                                <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnHistorial2">
+                                  <Properties>
+                                    <Property name="text" type="java.lang.String" value="Actualizar registros"/>
+                                    <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                      <Value id="UPDATE"/>
+                                    </Property>
+                                    <Property name="name" type="java.lang.String" value="btnHistorial" noResource="true"/>
+                                    <Property name="round" type="int" value="40"/>
+                                  </Properties>
+                                  <Events>
+                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnHistorial2ActionPerformed"/>
+                                  </Events>
+                                </Component>
                               </SubComponents>
                             </Container>
                           </SubComponents>

@@ -501,7 +501,7 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
 
         miTabla = new DefaultTableModel(null, titulos);
 
-        List<Clientes> clientesList = Clientes.getClientesTablaSB(1, 50);
+        List<Clientes> clientesList = Clientes.getClientesTablaSB("",1, 50);
 
 
         clientesList.forEach(c ->{

@@ -3,6 +3,7 @@ package sur.softsurena.formularios;
 import java.awt.Component;
 import java.awt.Image;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -49,6 +50,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
     private static final String PROCESO_DE_VALIDACION_DEL_SISTEMA = "Proceso de validacion del sistema.";
     private int v_fila = 0;
     private static final int SCALA_ICONO = 155;
+    private static String criterioBusqueda="";
 
     public frmProductos() {
 
@@ -77,13 +79,13 @@ public class frmProductos extends javax.swing.JInternalFrame {
         jtpPrincipal = new javax.swing.JTabbedPane();
         jpProductos = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        tblProducto = new RSMaterialComponent.RSTableMetro();
         jLabel1 = new javax.swing.JLabel();
         jsnCantidadFilas = new javax.swing.JSpinner();
         jLabel2 = new javax.swing.JLabel();
         jsnPaginaNro = new javax.swing.JSpinner();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tblProducto = new RSMaterialComponent.RSTableMetro();
+        btnActualizarLista = new newscomponents.RSButtonGradientIcon_new();
         jpMantenimiento = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
@@ -228,23 +230,6 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
         jtpPrincipal.setName("jtpPrincipal"); // NOI18N
 
-        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Detalle de Productos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 12))); // NOI18N
-
-        tblProducto.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane5.setViewportView(tblProducto);
-
-        jScrollPane1.setViewportView(jScrollPane5);
-
         jLabel1.setText("Cantidad Reg.");
 
         jsnCantidadFilas.setModel(new javax.swing.SpinnerNumberModel(20, 10, null, 1));
@@ -263,20 +248,48 @@ public class frmProductos extends javax.swing.JInternalFrame {
             }
         });
 
+        tblProducto.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane5.setViewportView(tblProducto);
+
+        btnActualizarLista.setText("Actualizar lista");
+        btnActualizarLista.setGradiente(newscomponents.RSButtonGradientIcon_new.Gradiente.HORIZONTAL);
+        btnActualizarLista.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.UPDATE);
+        btnActualizarLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarListaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 695, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(5, 5, 5)
-                .addComponent(jsnCantidadFilas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addGap(4, 4, 4)
-                .addComponent(jsnPaginaNro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                        .addGap(0, 233, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(5, 5, 5)
+                        .addComponent(jsnCantidadFilas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2)
+                        .addGap(4, 4, 4)
+                        .addComponent(jsnPaginaNro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addComponent(btnActualizarLista, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane5))
                 .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
@@ -289,7 +302,10 @@ public class frmProductos extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2)
                     .addComponent(jsnPaginaNro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE))
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnActualizarLista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jpProductosLayout = new javax.swing.GroupLayout(jpProductos);
@@ -522,7 +538,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         );
         jpESProductosLayout.setVerticalGroup(
             jpESProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 562, Short.MAX_VALUE)
+            .addGap(0, 600, Short.MAX_VALUE)
         );
 
         jtpPrincipal.addTab("E/S Productos", jpESProductos);
@@ -535,7 +551,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         );
         jpESHistorialLayout.setVerticalGroup(
             jpESHistorialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 562, Short.MAX_VALUE)
+            .addGap(0, 600, Short.MAX_VALUE)
         );
 
         jtpPrincipal.addTab("E/S Historial", jpESHistorial);
@@ -895,34 +911,27 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
     private void btnBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProductoActionPerformed
         if (jtpPrincipal.getSelectedComponent() == jpProductos) {
+            
             if (tblProducto.getRowCount() == 0) {
-                JOptionPane.showMessageDialog(null, "No hay producto registrado");
+                JOptionPane.showMessageDialog(
+                        null, 
+                        "No hay producto registrado",
+                        "Validacion de registros de productos.",
+                        JOptionPane.WARNING_MESSAGE
+                );
                 return;
             }
+            
             String producto = JOptionPane.showInputDialog(
                     null,
-                    "Ingrese el Codigo ID Producto...",
+                    "Ingrese el criterio de busqueda.\n[Codigo de Barra, Descripcion, Categoria]",
                     "Busqueda de producto del sistema",
-                    JOptionPane.QUESTION_MESSAGE);
+                    JOptionPane.QUESTION_MESSAGE
+            );
 
-            if (!producto.isBlank()) {
-                if (!existeProducto(producto)) {
-                    JOptionPane.showMessageDialog(
-                            null,
-                            "El Producto No Existe...",
-                            "Consulta de productos en el sistema.",
-                            JOptionPane.INFORMATION_MESSAGE);
-                    return;
-                }
-                //Detalle de Factura
-                int num = tblProducto.getRowCount();
-                for (int i = 0; i < num; i++) {
-                    if (tblProducto.getValueAt(i, 0).toString().equals(producto)) {
-                        tblProducto.setRowSelectionInterval(tblProducto.getSelectedRow(),
-                                tblProducto.getSelectedRow());
-                        break;
-                    }
-                }
+            if (!Objects.isNull(producto)) {
+                criterioBusqueda = producto.strip();
+                llenarTabla(criterioBusqueda);
                 reOrdenar();
             }
         } else if (jtpPrincipal.getSelectedComponent() == jpMantenimiento) {
@@ -1161,7 +1170,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
         //Se llena la tabla de producto por primera vez. 
-        llenarTabla();
+        llenarTabla(criterioBusqueda);
         reOrdenar();
         updateCategoria();
     }//GEN-LAST:event_formInternalFrameOpened
@@ -1250,12 +1259,17 @@ public class frmProductos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtNotasKeyTyped
 
     private void jsnCantidadFilasStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jsnCantidadFilasStateChanged
-        llenarTabla();
+        llenarTabla(criterioBusqueda);
     }//GEN-LAST:event_jsnCantidadFilasStateChanged
 
     private void jsnPaginaNroStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jsnPaginaNroStateChanged
-        llenarTabla();
+        llenarTabla(criterioBusqueda);
     }//GEN-LAST:event_jsnPaginaNroStateChanged
+
+    private void btnActualizarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarListaActionPerformed
+        criterioBusqueda = "";
+        llenarTabla(criterioBusqueda);
+    }//GEN-LAST:event_btnActualizarListaActionPerformed
 
     /**
      * Metodo utilizado para controla el comportamiento de los botones del
@@ -1303,7 +1317,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
      * Es llamado tambien cuando el modulo de producto se abre por primera vez.
      *
      */
-    public static void llenarTabla() {
+    public static void llenarTabla(String criterioBusqueda) {
         // Array de String que dan nombre a las columnas de la tabla.
         String titulos[] = {"Codigo Producto", "Categoria", "Descripcion",
             "Fecha creación", "Estado", "Nota"};
@@ -1318,8 +1332,11 @@ public class frmProductos extends javax.swing.JInternalFrame {
         //Modelo que se pasará a la tablas de productos.
         DefaultTableModel miTabla = new DefaultTableModel(null, titulos);
 
-        getProductos(Integer.valueOf(jsnPaginaNro.getValue().toString()), 
-                Integer.valueOf(jsnCantidadFilas.getValue().toString())).stream().forEach(producto -> {
+        getProductos(
+                criterioBusqueda,
+                Integer.valueOf(jsnPaginaNro.getValue().toString()), 
+                Integer.valueOf(jsnCantidadFilas.getValue().toString())
+        ).stream().forEach(producto -> {
             registro[0] = producto.getCodigo();
             registro[1] = Categorias.builder().
                     id_categoria(producto.getCategoria().getId_categoria()).
@@ -1512,6 +1529,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private newscomponents.RSButtonGradientIcon_new btnActualizarLista;
     private RSMaterialComponent.RSButtonMaterialIconOne btnAdmCategorias;
     private newscomponents.RSButtonGradientIcon_new btnAgregarFoto;
     private RSMaterialComponent.RSButtonMaterialIconOne btnBorrar;
@@ -1533,7 +1551,6 @@ public class frmProductos extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;

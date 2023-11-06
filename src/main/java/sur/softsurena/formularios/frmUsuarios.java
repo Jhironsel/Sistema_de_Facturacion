@@ -26,7 +26,8 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
     public String[] procedimientos = {
         "SP_DELETE_USUARIO",
         "SP_INSERT_USUARIO",
-        "SP_UPDATE_USUARIO"
+        "SP_UPDATE_USUARIO",
+        "SP_SELECT_USUARIOS"
     };
 
     public String[] vista = {
