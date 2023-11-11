@@ -36,10 +36,6 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="rSLabelAnimated1" alignment="0" max="32767" attributes="0"/>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      <Component id="btnImprimirReporte" min="-2" max="-2" attributes="0"/>
-                  </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Group type="102" attributes="0">
@@ -50,17 +46,7 @@
                           <Component id="jScrollPane3" min="-2" pref="245" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="0" pref="275" max="32767" attributes="0"/>
-                              <Component id="btnActualizarTurnosActivos" min="-2" pref="50" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btnCerrarTurno" min="-2" pref="154" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="jScrollPane1" alignment="1" max="32767" attributes="0"/>
-                          <Component id="rSLabelTextIcon1" alignment="1" max="32767" attributes="0"/>
-                          <Component id="jScrollPane4" alignment="0" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="jTabbedPane1" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -73,20 +59,7 @@
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="rSLabelAnimated1" min="-2" pref="58" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="jScrollPane4" pref="139" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="btnActualizarTurnosActivos" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnCerrarTurno" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="rSLabelTextIcon1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="184" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                       <Component id="jScrollPane3" pref="0" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -95,10 +68,12 @@
                           <Component id="btnActualizarCajerosDisponibles" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jTabbedPane1" max="32767" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="btnImprimirReporte" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -140,34 +115,6 @@
         </Component>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JScrollPane" name="jScrollPane4">
-      <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Turnos Activos"/>
-          </Border>
-        </Property>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-      </AuxValues>
-
-      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-      <SubComponents>
-        <Component class="RSMaterialComponent.RSTableMetro" name="tblTurnosActivos">
-          <Properties>
-            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="1" rowCount="4">
-                <Column editable="true" title="Turnos activos" type="java.lang.Object"/>
-              </Table>
-            </Property>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblTurnosActivosMouseClicked"/>
-          </Events>
-        </Component>
-      </SubComponents>
-    </Container>
     <Component class="newscomponents.RSButtonGradientIcon_new" name="btnActualizarCajerosDisponibles">
       <Properties>
         <Property name="toolTipText" type="java.lang.String" value="Actualizar Lista"/>
@@ -190,80 +137,201 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAbrirTurnoActionPerformed"/>
       </Events>
     </Component>
-    <Component class="newscomponents.RSButtonGradientIcon_new" name="btnActualizarTurnosActivos">
-      <Properties>
-        <Property name="toolTipText" type="java.lang.String" value="Actualizar Lista"/>
-        <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
-          <Value id="REFRESH"/>
-        </Property>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnActualizarTurnosActivosActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="newscomponents.RSButtonGradientIcon_new" name="btnCerrarTurno">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Cerrar Turno"/>
-        <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
-          <Value id="CLOSE"/>
-        </Property>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCerrarTurnoActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="RSMaterialComponent.RSLabelTextIcon" name="rSLabelTextIcon1">
-      <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="c0" green="70" red="0" type="rgb"/>
-        </Property>
-        <Property name="horizontalAlignment" type="int" value="2"/>
-        <Property name="text" type="java.lang.String" value="Reporte de cajeros"/>
-        <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
-          <Value id="EQUALIZER"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
-      <AuxValues>
-        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-      </AuxValues>
+    <Container class="javax.swing.JTabbedPane" name="jTabbedPane1">
 
-      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
-        <Component class="RSMaterialComponent.RSTableMetro" name="tblReporteTurnos">
-          <Properties>
-            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="9" rowCount="4">
-                <Column editable="true" title="# ID" type="java.lang.Object"/>
-                <Column editable="true" title="Cajero" type="java.lang.Object"/>
-                <Column editable="true" title="Fecha Hora Inicio" type="java.lang.Object"/>
-                <Column editable="true" title="Estado" type="java.lang.Object"/>
-                <Column editable="true" title="Creador Turno" type="java.lang.Object"/>
-                <Column editable="true" title="Monto facturado" type="java.lang.Object"/>
-                <Column editable="true" title="Monto Devuelto" type="java.lang.Object"/>
-                <Column editable="true" title="Monto Efectivo" type="java.lang.Object"/>
-                <Column editable="true" title="Monto Credito" type="java.lang.Object"/>
-              </Table>
-            </Property>
-            <Property name="autoResizeMode" type="int" value="0"/>
-            <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
-              <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
-            </Property>
-          </Properties>
-        </Component>
+        <Container class="rojeru_san.rspanel.RSPanelGradiente" name="rSPanelGradiente1">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="Turnos">
+                <Property name="tabTitle" type="java.lang.String" value="Turnos"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jScrollPane4" alignment="0" pref="819" max="32767" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="btnActualizarTurnosActivos" min="-2" pref="50" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnCerrarTurno" min="-2" pref="154" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jScrollPane4" pref="414" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="btnCerrarTurno" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnActualizarTurnosActivos" alignment="1" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Container class="javax.swing.JScrollPane" name="jScrollPane4">
+              <Properties>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                    <TitledBorder title="Turnos Activos"/>
+                  </Border>
+                </Property>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+              </AuxValues>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="RSMaterialComponent.RSTableMetro" name="tblTurnosActivos">
+                  <Properties>
+                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                      <Table columnCount="1" rowCount="4">
+                        <Column editable="true" title="Turnos activos" type="java.lang.Object"/>
+                      </Table>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblTurnosActivosMouseClicked"/>
+                  </Events>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Component class="newscomponents.RSButtonGradientIcon_new" name="btnActualizarTurnosActivos">
+              <Properties>
+                <Property name="toolTipText" type="java.lang.String" value="Actualizar Lista"/>
+                <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
+                  <Value id="REFRESH"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnActualizarTurnosActivosActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="newscomponents.RSButtonGradientIcon_new" name="btnCerrarTurno">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Cerrar Turno"/>
+                <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
+                  <Value id="CLOSE"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCerrarTurnoActionPerformed"/>
+              </Events>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="rojeru_san.rspanel.RSPanelGradiente" name="rSPanelGradiente2">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="Reportes">
+                <Property name="tabTitle" type="java.lang.String" value="Reportes"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jScrollPane1" max="32767" attributes="0"/>
+                          <Component id="rSLabelTextIcon1" alignment="0" pref="795" max="32767" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <Component id="btnImprimirReporte" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="rSLabelTextIcon1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" pref="356" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnImprimirReporte" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+              <AuxValues>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+              </AuxValues>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="RSMaterialComponent.RSTableMetro" name="tblReporteTurnos">
+                  <Properties>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                        <TitledBorder/>
+                      </Border>
+                    </Property>
+                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                      <Table columnCount="9" rowCount="4">
+                        <Column editable="true" title="# ID" type="java.lang.Object"/>
+                        <Column editable="true" title="Cajero" type="java.lang.Object"/>
+                        <Column editable="true" title="Fecha Hora Inicio" type="java.lang.Object"/>
+                        <Column editable="true" title="Estado" type="java.lang.Object"/>
+                        <Column editable="true" title="Creador Turno" type="java.lang.Object"/>
+                        <Column editable="true" title="Monto facturado" type="java.lang.Object"/>
+                        <Column editable="true" title="Monto Devuelto" type="java.lang.Object"/>
+                        <Column editable="true" title="Monto Efectivo" type="java.lang.Object"/>
+                        <Column editable="true" title="Monto Credito" type="java.lang.Object"/>
+                      </Table>
+                    </Property>
+                    <Property name="autoResizeMode" type="int" value="4"/>
+                    <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+                      <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
+                    </Property>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Component class="RSMaterialComponent.RSLabelTextIcon" name="rSLabelTextIcon1">
+              <Properties>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="c0" green="70" red="0" type="rgb"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="2"/>
+                <Property name="text" type="java.lang.String" value="Reporte de cajeros"/>
+                <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
+                  <Value id="EQUALIZER"/>
+                </Property>
+              </Properties>
+            </Component>
+            <Component class="newscomponents.RSButtonGradientIcon_new" name="btnImprimirReporte">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Imprimir reporte"/>
+                <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
+                  <Value id="PRINT"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnImprimirReporteActionPerformed"/>
+              </Events>
+            </Component>
+          </SubComponents>
+        </Container>
       </SubComponents>
     </Container>
-    <Component class="newscomponents.RSButtonGradientIcon_new" name="btnImprimirReporte">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Imprimir reporte"/>
-        <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
-          <Value id="PRINT"/>
-        </Property>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnImprimirReporteActionPerformed"/>
-      </Events>
-    </Component>
   </SubComponents>
 </Form>

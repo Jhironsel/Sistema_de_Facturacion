@@ -6,6 +6,7 @@ import java.beans.PropertyVetoException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -15,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 import lombok.NonNull;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -30,6 +32,7 @@ import sur.softsurena.entidades.Privilegios;
 import static sur.softsurena.entidades.Privilegios.privilegioTabla;
 import sur.softsurena.entidades.Roles;
 import static sur.softsurena.entidades.Roles.comprobandoRol;
+import sur.softsurena.entidades.Turnos;
 import static sur.softsurena.entidades.Turnos.usuarioTurnoActivo;
 import sur.softsurena.entidades.Usuario;
 import static sur.softsurena.entidades.Usuario.getUsuarioActual;
@@ -44,60 +47,137 @@ import sur.softsurena.utilidades.Utilidades;
 public final class frmPrincipal extends javax.swing.JFrame {
 
     private static final Logger LOG = Logger.getLogger(frmPrincipal.class.getName());
-    private Imagenes icono;
+    private static Imagenes icono;
 
     //Formularios Modales
-    private frmFechaReporte fechaReporte;
+    private static frmFechaReporte fechaReporte;
+    private static Usuario usuario;
 
     public frmPrincipal() {
+        //Objeto utilizado para cargar icono de la aplicacion.
+        icono = new Imagenes();
+
+        //Obteniendo el usuario actual.
+        usuario = getUsuarioActual();
+
         initComponents();
-        
+
         mnuMantenimientoClientes.setVisible(privilegioTabla(
                 Privilegios.builder().
+                        privilegio(Privilegios.PRIVILEGIO_SELECT).
+                        nombre_relacion("GET_CLIENTES_SB").build())
+        );
+        mnuMantenimientoProductos.setVisible(privilegioTabla(Privilegios.builder().
                 privilegio(Privilegios.PRIVILEGIO_EXECUTE).
-                nombre_relacion("SP_SELECT_GET_CLIENTES_SB").build()
-        ));
-                
+                nombre_relacion("SP_SELECT_GET_PRODUCTOS").build())
+        );
+        mnuMantenimientoProveedores.setVisible(privilegioTabla(Privilegios.builder().
+                privilegio(Privilegios.PRIVILEGIO_EXECUTE).
+                nombre_relacion("SP_SELECT_GET_PROVEEDORES").build())
+        );
+        mnuMantenimientoAlmacenes.setVisible(privilegioTabla(Privilegios.builder().
+                privilegio(Privilegios.PRIVILEGIO_SELECT).
+                nombre_relacion("V_ALMACENES").build())
+        );
+        mnuMantenimientoUsuarios.setVisible(privilegioTabla(Privilegios.builder().
+                privilegio(Privilegios.PRIVILEGIO_EXECUTE).
+                nombre_relacion("SP_SELECT_USUARIOS").build())
+        );
+        mnuMantenimiento.setVisible(
+                mnuMantenimientoClientes.isVisible()
+                || mnuMantenimientoProductos.isVisible()
+                || mnuMantenimientoProveedores.isVisible()
+                || mnuMantenimientoAlmacenes.isVisible()
+                || mnuMantenimientoUsuarios.isVisible()
+        );
+        ///////////////////////////////////////////////////////////////////////
+        
+        mnuSistemaNomina.setVisible(privilegioTabla(Privilegios.builder().
+                privilegio(Privilegios.PRIVILEGIO_EXECUTE).
+                nombre_relacion("").build())
+        );
+        mnuSistemaGestorGastos.setVisible(privilegioTabla(Privilegios.builder().
+                privilegio(Privilegios.PRIVILEGIO_EXECUTE).
+                nombre_relacion("").build())
+        );
+        mnuSistemas.setVisible(
+                mnuSistemaNomina.isVisible()
+                || mnuSistemaGestorGastos.isVisible()
+        );
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        mnuMovimientosNuevaFactura.setVisible(privilegioTabla(Privilegios.builder().
+                privilegio(Privilegios.PRIVILEGIO_EXECUTE).
+                nombre_relacion("PERM_CREAR_FACTURAS").build())
+        );
+        mnuMovimientosReporteFactura.setVisible(privilegioTabla(Privilegios.builder().
+                privilegio(Privilegios.PRIVILEGIO_EXECUTE).
+                nombre_relacion("").build())
+        );
+        mnuMovimientosInventario.setVisible(privilegioTabla(Privilegios.builder().
+                privilegio(Privilegios.PRIVILEGIO_EXECUTE).
+                nombre_relacion("").build())
+        );
+        mnuMovimientosDeudas.setVisible(privilegioTabla(Privilegios.builder().
+                privilegio(Privilegios.PRIVILEGIO_EXECUTE).
+                nombre_relacion("").build())
+        );
+        mnuMovimientosAbrirTurno.setVisible(privilegioTabla(Privilegios.builder().
+                privilegio(Privilegios.PRIVILEGIO_EXECUTE).
+                nombre_relacion("SP_SELECT_GET_CAJEROS").build())
+        );
+        mnuMovimientos.setVisible(
+                mnuMovimientosNuevaFactura.isVisible()
+                || mnuMovimientosReporteFactura.isVisible()
+                || mnuMovimientosInventario.isVisible()
+                || mnuMovimientosDeudas.isVisible()
+                || mnuMovimientosAbrirTurno.isVisible()
+        );
+
+        ///////////////////////////////////////////////////////////////////////////
+        
         //Hacemos la consulta a la base de datos, para saber cual es el usuario
         //y el rol del usuario conectado a la base de datos.
-        Usuario u = getUsuarioActual();        
-        jlUser.setText(u.getUser_name());
-        
+        jlUser.setText(usuario.getUser_name());
+
         //Proceso para cargar los roles del usuario al sistema.
         cbRoles.removeAllItems();
-        cbRoles.setToolTipText("Rol actual: "+u.getRol());
-        
+        cbRoles.setToolTipText("Rol actual: " + usuario.getRol());
+
         cbRoles.addItem(Roles.builder().
                 propietario("SYSDBA").
                 roleName("None").
                 descripcion("Rol que indica que no ha sido establecido").
                 build()
         );
-        
-        comprobandoRol(u.getUser_name().strip()).stream().forEach(rolItem ->{
+
+        //Se carga los roles del usuario en el comboBox.
+        comprobandoRol(usuario.getUser_name().strip()).stream().forEach(rolItem -> {
             cbRoles.addItem(rolItem);
         });
-        
+
+        //Se busca cual es el rol actual del usuario y se selecciona.
         for (int i = 0; i < cbRoles.getItemCount(); i++) {
-            
-            if(cbRoles.getItemAt(i).toString().strip().
-                    equalsIgnoreCase(u.getRol())){
-                
+            if (cbRoles.getItemAt(i).toString().strip().
+                    equalsIgnoreCase(usuario.getRol())) {
+
                 cbRoles.setSelectedIndex(i);
                 break;
             }
         }
-        jMenuBar.add(btnOcultarPanel,0);
-        jMenuBar.add(filler3, 6);
-        jMenuBar.add(jlUser, 7);
-        jMenuBar.add(liWork,8);
-        jMenuBar.add(cbRoles, 9);
 
-        jPanelImpresion.setVisible(false);
+        jMenuBar.add(btnOcultarPanel, 0);//Es el primer boton que se encuentra en la barra de menu.
+        jMenuBar.add(filler3, 6);//Expande los componente entre si.
+        jMenuBar.add(jlUser, 7);// jlUser es el icono de usuario con su nombre.
+        jMenuBar.add(liWork, 8);//liwork es el LabelIcon del Maletin Ventana principal.
+        jMenuBar.add(cbRoles, 9);//ComboBox que contienen los roles asignado al usuario.
 
-        icono = new Imagenes();
+        jPanelImpresion.setVisible(false);//Una barra de progreso que se muestra cuando hay impresion.
 
+        //Se cargan los iconos de los menuIten de la barra de menu. 
         cargarIconos();
+
+        //Metodo que carga el logo de la empresa.
         cargarLogo();
     }
 
@@ -105,30 +185,32 @@ public final class frmPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel6 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
         jPanelImpresion = new javax.swing.JPanel();
         jLabelImpresion = new javax.swing.JLabel();
         jprImpresion = new javax.swing.JProgressBar();
         jPopupMenu1 = new javax.swing.JPopupMenu();
-        Archivos = new javax.swing.JMenu();
-        jmClientes = new javax.swing.JMenuItem();
-        jmProductos = new javax.swing.JMenuItem();
-        jSeparator7 = new javax.swing.JPopupMenu.Separator();
+        jmOpciones = new javax.swing.JMenu();
         jmCambioClave = new javax.swing.JMenuItem();
         jmCambioUsuario = new javax.swing.JMenuItem();
-        jSeparator8 = new javax.swing.JPopupMenu.Separator();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jmSalir = new javax.swing.JMenuItem();
+        jmMantenimientos = new javax.swing.JMenu();
+        jmClientes = new javax.swing.JMenuItem();
+        jmProductos = new javax.swing.JMenuItem();
+        jmProveedores = new javax.swing.JMenuItem();
+        jmAlmacenes = new javax.swing.JMenuItem();
+        jmUsuarios = new javax.swing.JMenuItem();
+        jmSistemas = new javax.swing.JMenu();
+        jmNomina = new javax.swing.JMenuItem();
+        jmGestorGastos = new javax.swing.JMenuItem();
         Movimientos = new javax.swing.JMenu();
         jmNuevaFactura = new javax.swing.JMenuItem();
         jSeparator9 = new javax.swing.JPopupMenu.Separator();
         jmReporteFactura = new javax.swing.JMenuItem();
         jmInventario = new javax.swing.JMenuItem();
+        jmDeuda = new javax.swing.JMenuItem();
         jSeparator10 = new javax.swing.JPopupMenu.Separator();
         jmAbrirTurno = new javax.swing.JMenuItem();
-        jmCerrarTurno = new javax.swing.JMenuItem();
-        jSeparator11 = new javax.swing.JPopupMenu.Separator();
-        jmDeuda = new javax.swing.JMenuItem();
         btnOcultarPanel = new javax.swing.JButton();
         filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
         jlUser = new RSMaterialComponent.RSLabelTextIcon();
@@ -179,6 +261,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         mnuMantenimientoUsuarios = new javax.swing.JMenuItem();
         mnuSistemas = new javax.swing.JMenu();
         mnuSistemaNomina = new javax.swing.JMenuItem();
+        mnuSistemaGestorGastos = new javax.swing.JMenuItem();
         mnuMovimientos = new javax.swing.JMenu();
         mnuMovimientosNuevaFactura = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
@@ -190,13 +273,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
         mnuAyuda = new javax.swing.JMenu();
         mnuAyudaAcercaDe = new javax.swing.JMenuItem();
         mnuAyudaAyuda = new javax.swing.JMenuItem();
-
-        jLabel6.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel6.setText("Quireo verlo");
-
-        jLabel9.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        jLabel9.setText("jLabel9");
 
         jPanelImpresion.setMaximumSize(new java.awt.Dimension(32767, 30));
         jPanelImpresion.setMinimumSize(new java.awt.Dimension(0, 30));
@@ -217,27 +293,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jprImpresion.setStringPainted(true);
         jPanelImpresion.add(jprImpresion);
 
-        Archivos.setText("Archivos");
-        Archivos.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-
-        jmClientes.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        jmClientes.setText("Clientes");
-        jmClientes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmClientesActionPerformed(evt);
-            }
-        });
-        Archivos.add(jmClientes);
-
-        jmProductos.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        jmProductos.setText("Productos");
-        jmProductos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmProductosActionPerformed(evt);
-            }
-        });
-        Archivos.add(jmProductos);
-        Archivos.add(jSeparator7);
+        jmOpciones.setText("jMenu1");
 
         jmCambioClave.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         jmCambioClave.setText("Cambio de Clave");
@@ -246,7 +302,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
                 jmCambioClaveActionPerformed(evt);
             }
         });
-        Archivos.add(jmCambioClave);
+        jmOpciones.add(jmCambioClave);
 
         jmCambioUsuario.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         jmCambioUsuario.setText("Cambio de Usuario");
@@ -255,8 +311,8 @@ public final class frmPrincipal extends javax.swing.JFrame {
                 jmCambioUsuarioActionPerformed(evt);
             }
         });
-        Archivos.add(jmCambioUsuario);
-        Archivos.add(jSeparator8);
+        jmOpciones.add(jmCambioUsuario);
+        jmOpciones.add(jSeparator1);
 
         jmSalir.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         jmSalir.setText("Salir");
@@ -265,9 +321,51 @@ public final class frmPrincipal extends javax.swing.JFrame {
                 jmSalirActionPerformed(evt);
             }
         });
-        Archivos.add(jmSalir);
+        jmOpciones.add(jmSalir);
 
-        jPopupMenu1.add(Archivos);
+        jPopupMenu1.add(jmOpciones);
+
+        jmMantenimientos.setText("Archivos");
+        jmMantenimientos.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+
+        jmClientes.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        jmClientes.setText("Clientes");
+        jmClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmClientesActionPerformed(evt);
+            }
+        });
+        jmMantenimientos.add(jmClientes);
+
+        jmProductos.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        jmProductos.setText("Productos");
+        jmProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmProductosActionPerformed(evt);
+            }
+        });
+        jmMantenimientos.add(jmProductos);
+
+        jmProveedores.setText("jMenuItem1");
+        jmMantenimientos.add(jmProveedores);
+
+        jmAlmacenes.setText("jMenuItem1");
+        jmMantenimientos.add(jmAlmacenes);
+
+        jmUsuarios.setText("jMenuItem1");
+        jmMantenimientos.add(jmUsuarios);
+
+        jPopupMenu1.add(jmMantenimientos);
+
+        jmSistemas.setText("jMenu1");
+
+        jmNomina.setText("jMenuItem1");
+        jmSistemas.add(jmNomina);
+
+        jmGestorGastos.setText("jMenuItem2");
+        jmSistemas.add(jmGestorGastos);
+
+        jPopupMenu1.add(jmSistemas);
 
         Movimientos.setText("Movimientos");
         Movimientos.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
@@ -299,6 +397,15 @@ public final class frmPrincipal extends javax.swing.JFrame {
             }
         });
         Movimientos.add(jmInventario);
+
+        jmDeuda.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        jmDeuda.setText("Deuda");
+        jmDeuda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmDeudaActionPerformed(evt);
+            }
+        });
+        Movimientos.add(jmDeuda);
         Movimientos.add(jSeparator10);
 
         jmAbrirTurno.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
@@ -309,25 +416,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
             }
         });
         Movimientos.add(jmAbrirTurno);
-
-        jmCerrarTurno.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        jmCerrarTurno.setText("Cerrar Turno");
-        jmCerrarTurno.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmCerrarTurnoActionPerformed(evt);
-            }
-        });
-        Movimientos.add(jmCerrarTurno);
-        Movimientos.add(jSeparator11);
-
-        jmDeuda.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        jmDeuda.setText("Deuda");
-        jmDeuda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmDeudaActionPerformed(evt);
-            }
-        });
-        Movimientos.add(jmDeuda);
 
         jPopupMenu1.add(Movimientos);
 
@@ -368,6 +456,9 @@ public final class frmPrincipal extends javax.swing.JFrame {
         setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png"));
         setMinimumSize(new java.awt.Dimension(640, 480));
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
@@ -606,10 +697,10 @@ public final class frmPrincipal extends javax.swing.JFrame {
                 .addGroup(pEstatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jlLogoEmpresa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnEstablecerEncabezado, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
+                    .addComponent(btnEstablecerEncabezado, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
                     .addComponent(btnSeleccionarImpresora, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(12, 12, 12))
         );
@@ -622,7 +713,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
@@ -707,7 +798,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
         mnuMantenimiento.setForeground(new java.awt.Color(255, 255, 255));
         mnuMantenimiento.setMnemonic('M');
-        mnuMantenimiento.setText("Mantenimiento");
+        mnuMantenimiento.setText("Mantenimientos");
         mnuMantenimiento.setFont(new java.awt.Font("FreeMono", 1, 18)); // NOI18N
 
         mnuMantenimientoClientes.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
@@ -778,6 +869,16 @@ public final class frmPrincipal extends javax.swing.JFrame {
             }
         });
         mnuSistemas.add(mnuSistemaNomina);
+
+        mnuSistemaGestorGastos.setFont(new java.awt.Font("FreeSans", 0, 14)); // NOI18N
+        mnuSistemaGestorGastos.setMnemonic('P');
+        mnuSistemaGestorGastos.setText("Gestor de gastos ...");
+        mnuSistemaGestorGastos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuSistemaGestorGastosActionPerformed(evt);
+            }
+        });
+        mnuSistemas.add(mnuSistemaGestorGastos);
 
         jMenuBar.add(mnuSistemas);
 
@@ -877,14 +978,14 @@ public final class frmPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jsEstatus, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE))
+                .addComponent(jScrollPane4))
             .addComponent(jpEstados, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 675, Short.MAX_VALUE)
                     .addComponent(jsEstatus, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(0, 0, 0)
                 .addComponent(jpEstados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -896,7 +997,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         if (mnuOpcionesSalir.isEnabled()) {
             mnuOpcionesCambioUsuarioActionPerformed(null);
-            
+
         } else {
             frmAutorizacion miAut = new frmAutorizacion(null, true);
             miAut.setLocationRelativeTo(null);
@@ -964,7 +1065,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
     private void jlRestaurarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlRestaurarMouseClicked
         //TODO Realizar el procedimiento de restaurar una base de datos.
-        
         JFileChooser miFile = new JFileChooser(System.getProperty("user.dir") + "/Data");
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Base de Datos",
                 "fbk", "FBK");
@@ -972,7 +1072,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
         Integer respuesta = miFile.showOpenDialog(this);
 
-        if (respuesta == JFileChooser.CANCEL_OPTION || respuesta == null) {
+        if (Objects.isNull(respuesta) || respuesta == JFileChooser.CANCEL_OPTION ) {
             return;
         }//Elegir el backup de la base de datos a restaurar...
 
@@ -1054,6 +1154,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         ((DesktopConFondo) dpnEscritorio).setImagen("/sur/softsurena/imagenes/Fondo 1024 x 723.jpg");
+
     }//GEN-LAST:event_formWindowOpened
     private void jlGraficaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlGraficaMouseClicked
         abrirFormulario(new frmGraficos());
@@ -1103,10 +1204,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
         mnuMovimientosAbrirTurnoActionPerformed(evt);
     }//GEN-LAST:event_jmAbrirTurnoActionPerformed
 
-    private void jmCerrarTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmCerrarTurnoActionPerformed
-
-    }//GEN-LAST:event_jmCerrarTurnoActionPerformed
-
     private void jmDeudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmDeudaActionPerformed
         mnuMovimientosDeudasActionPerformed(evt);
     }//GEN-LAST:event_jmDeudaActionPerformed
@@ -1137,11 +1234,11 @@ public final class frmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnOcultarPanelActionPerformed
 
     private void mnuMantenimientoClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMantenimientoClientesActionPerformed
-        abrirFormulario(new frmClientes());
+        abrirFormulario(frmClientes.getInstance());
     }//GEN-LAST:event_mnuMantenimientoClientesActionPerformed
 
     private void mnuMantenimientoProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMantenimientoProductosActionPerformed
-        abrirFormulario(new frmProductos());
+        abrirFormulario(frmProductos.getInstance());
     }//GEN-LAST:event_mnuMantenimientoProductosActionPerformed
 
     private void mnuOpcionesCambioClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuOpcionesCambioClaveActionPerformed
@@ -1151,7 +1248,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuOpcionesCambioClaveActionPerformed
 
     private void mnuMantenimientoUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMantenimientoUsuariosActionPerformed
-        abrirFormulario(new frmUsuarios());
+        abrirFormulario(frmUsuarios.getInstance());
     }//GEN-LAST:event_mnuMantenimientoUsuariosActionPerformed
 
     private void mnuOpcionesCambioUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuOpcionesCambioUsuarioActionPerformed
@@ -1167,18 +1264,16 @@ public final class frmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuOpcionesSalirActionPerformed
 
     private void mnuMovimientosNuevaFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMovimientosNuevaFacturaActionPerformed
-        Usuario usuarioActual = getUsuarioActual();
-
-        if (!usuarioTurnoActivo(usuarioActual.getUser_name())) {
+        if (!usuarioTurnoActivo(usuario.getUser_name())) {
             JOptionPane.showMessageDialog(
-                null,
-                "Usuario no cuenta con Turno para Facturar...!",
-                "Validación de usuario.",
-                JOptionPane.WARNING_MESSAGE);
+                    null,
+                    "Usuario no cuenta con Turno para Facturar...!",
+                    "Validación de usuario.",
+                    JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        abrirFormulario(new frmFacturas());
+        abrirFormulario(frmFacturas.getInstance());
     }//GEN-LAST:event_mnuMovimientosNuevaFacturaActionPerformed
 
     private void mnuMovimientosReporteFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMovimientosReporteFacturaActionPerformed
@@ -1200,11 +1295,11 @@ public final class frmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuMovimientosInventarioActionPerformed
 
     private void mnuMovimientosAbrirTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMovimientosAbrirTurnoActionPerformed
-        abrirFormulario(new frmAdministradorTurnos());
+        abrirFormulario(frmAdministradorTurnos.getInstance());
     }//GEN-LAST:event_mnuMovimientosAbrirTurnoActionPerformed
 
     private void mnuMovimientosDeudasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMovimientosDeudasActionPerformed
-        abrirFormulario(new frmDeudas());
+        abrirFormulario(frmDeudas.getInstance());
     }//GEN-LAST:event_mnuMovimientosDeudasActionPerformed
 
     private void mnuAyudaAcercaDeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAyudaAcercaDeActionPerformed
@@ -1219,27 +1314,33 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
     private void cbRolesPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cbRolesPopupMenuWillBecomeInvisible
         String rol = ((Roles) cbRoles.getItemAt(cbRoles.getSelectedIndex())).getRoleName();
-        
-        rol = (rol.equalsIgnoreCase("ADMINISTRADOR") ? "RDB$ADMIN":rol);
-        
+
+        rol = (rol.equalsIgnoreCase("ADMINISTRADOR") ? "RDB$ADMIN" : rol);
+
         Roles.setRole(rol);
-        
-        Usuario u = getUsuarioActual();
-        
-        cbRoles.setToolTipText("Rol actual: "+u.getRol());
+
+        cbRoles.setToolTipText("Rol actual: " + usuario.getRol());
     }//GEN-LAST:event_cbRolesPopupMenuWillBecomeInvisible
 
     private void mnuMantenimientoProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMantenimientoProveedoresActionPerformed
-        abrirFormulario(new frmProveedores());
+        abrirFormulario(frmProveedores.getInstance());
     }//GEN-LAST:event_mnuMantenimientoProveedoresActionPerformed
 
     private void mnuMantenimientoAlmacenesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMantenimientoAlmacenesActionPerformed
-        abrirFormulario(new frmAlmacenes());
+        abrirFormulario(frmAlmacenes.getInstance());
     }//GEN-LAST:event_mnuMantenimientoAlmacenesActionPerformed
 
     private void mnuSistemaNominaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSistemaNominaActionPerformed
-        abrirFormulario(new frmNomina());
+        abrirFormulario(frmNomina.getInstance());
     }//GEN-LAST:event_mnuSistemaNominaActionPerformed
+
+    private void mnuSistemaGestorGastosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSistemaGestorGastosActionPerformed
+        abrirFormulario(frmGestorGastos.getInstance());
+    }//GEN-LAST:event_mnuSistemaGestorGastosActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        panelUsuario();
+    }//GEN-LAST:event_formWindowActivated
     //Todo Metodo de JasperReport
     private void imprimirReporte(Date fecha) {
         try {
@@ -1264,42 +1365,34 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
     //TODO analizar este lineas comentadas. 
     //Funciones que estan en el panel de la Ventana Principal
-//    private void estado() {
-//        pEstatus.setVisible(true);
-//        //Trabajando con Imagen
-//        ImageIcon imagen = new ImageIcon();
-//        Icon icon;
-//
-//        ResultSet rs = getConsulta("SELECT RUTA FROM GET_LOGO");
-//
-//        try {
-//            rs.next();
-//            imagen = new ImageIcon(rs.getString(1));
-//        } catch (SQLException ex) {
-//            LOG.log(Level.SEVERE, "Error al crear ventana de cliente.", ex);
-//        }
-//
-//        if (imagen.getIconHeight() == -1) {
-//            imagen = new ImageIcon("sur/softsurena/imagenes/NoImageTransp 96 x 96.png");
-//            icon = new ImageIcon(imagen.getImage().getScaledInstance(180, 120,
-//                    Image.SCALE_DEFAULT));
-//            imagen.getImage().flush();
-//            jlImagen.setIcon(icon);
-//            jlImagen.validate();
-//        } else {
-//            icon = new ImageIcon(imagen.getImage().getScaledInstance(180, 120,
-//                    Image.SCALE_DEFAULT));
-//            imagen.getImage().flush();
-//            jlImagen.setIcon(icon);
-//            jlImagen.validate();
-//        }//Terminado Aqui
-//
-//        //panorama();
-//        //cajeros();
-//        //mensaje();
-//
-//    }
-    
+    private void panelUsuario() {
+        jsEstatus.setVisible(false);
+        btnOcultarPanel.setVisible(false);
+        if (privilegioTabla(
+                Privilegios.builder().
+                        privilegio(Privilegios.PRIVILEGIO_EXECUTE).
+                        nombre_relacion("PERM_PANEL_USUARIO").build())) {
+            jsEstatus.setVisible(true);
+            btnOcultarPanel.setVisible(true);
+            String[] columnas2 = {"Cajeros"};
+            DefaultTableModel modelo2 = new DefaultTableModel(null, columnas2) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+            Object[] rowData2 = new Object[columnas2.length];
+
+            Turnos.getTurnosActivos().forEach(turno -> {
+                rowData2[0] = "Ident. Turno: " + turno.getId() + " Cajero: " + turno.getTurno_usuario() + " Fecha inicio" + turno.getFecha_hora_inicio();
+
+                modelo2.addRow(rowData2);
+            });
+
+            jtCajero.setModel(modelo2);
+        }
+
+    }
 //    private void panorama() {
 //        ResultSet rs = getConsulta(
 //                "SELECT cast(r.VENTA as numeric(15,2)) as VENTA, "
@@ -1313,114 +1406,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 //            LOG.log(Level.SEVERE, "Error al crear ventana de cliente.", ex);
 //        }
 //    }
-    
-//    private void cajeros() {
-//        //Saber cuales cajeros estan Activo....
-//        String titulos[] = {"Cajero Activo"};
-//        Object registro[] = new Object[1];
-//        DefaultTableModel miTabla = new DefaultTableModel(null, titulos);
-//        ResultSet rs = getConsulta(
-//                "SELECT r.IDUSUARIO, r.FECHA, r.HORA FROM ESTADO_USUARIO r");
-//        try {
-//            while (rs.next()) {
-//                registro[0] = rs.getString("idUsuario") + " : "
-//                        + Utilidades.formatDate(rs.getDate("Fecha"), "dd-MM-yyyy")
-//                        + " , "
-//                        + rs.getString("Hora").substring(0, 5);
-//                miTabla.addRow(registro);
-//            }
-//            jtCajero.setModel(miTabla);
-//
-//        } catch (SQLException ex) {
-//            LOG.log(Level.SEVERE, "Error al crear ventana de cliente.", ex);
-//        }
-//    }
-    
-//    private void mensaje() {
-//        ResultSet rs = getConsulta(
-//                "SELECT r.Ruta as mensaje, o.RUTA as nombreEmpresa, "
-//                + "o2.RUTA as direccionEmpresa, "
-//                + "o3.RUTA as telefonoEmpresa  "
-//                + "FROM OPCIONES r "
-//                + "join OPCIONES o "
-//                + "on o.OPCION like 'nombreEmpresa' "
-//                + "join OPCIONES o2 "
-//                + "on o2.OPCION like 'direccionEmpresa' "
-//                + "join OPCIONES o3 "
-//                + "on o3.OPCION like 'telefonoEmpresa' "
-//                + "where r.OPCION like 'MensajeTickes'");
-//
-//        try {
-//            rs.next();
-//            encabezado = new Encabezado(
-//                    rs.getString("nombreEmpresa"),
-//                    rs.getString("direccionEmpresa"),
-//                    rs.getString("telefonoEmpresa"),
-//                    rs.getString("mensaje"));
-//        } catch (SQLException ex) {
-//            LOG.log(Level.SEVERE, "Error al crear ventana de cliente.", ex);
-//        }
-//    }///--------------Hasta Aqui.......
-    
-//    public void menus() {
-//        Perfiles miPerfil = getAcceso(getPerfil());
-//        mnuArchivos.setEnabled(dime(miPerfil.getArchivos()));
-//        mnuArchivosCliente.setEnabled(dime(miPerfil.getArchivosClientes()));
-//        mnuArchivosProductos.setEnabled(dime(miPerfil.getArchivosProductos()));
-//        mnuArchivosUsuario.setEnabled(dime(miPerfil.getArchivosUsuarios()));
-//        mnuArchivosCambioClave.setEnabled(dime(miPerfil.getArchivosCambioClave()));
-//        mnuArchivosCambioUsuario.setEnabled(dime(miPerfil.getArchivosCambioUsuario()));
-//        mnuArchivosSalir.setEnabled(dime(miPerfil.getArchivosSalir()));
-//
-//        mnuMovimientos.setEnabled(dime(miPerfil.getMovimientos()));
-//        mnuMovimientosNuevaFactura.setEnabled(dime(miPerfil.getMovimientosNuevaFactura()));
-//        mnuMovimientosReporteFactura.setEnabled(dime(miPerfil.getMovimientosReporteFactura()));
-//        mnuMovimientosInventario.setEnabled(dime(miPerfil.getMovimientosInventarios()));
-//        mnuMovimientosAbrirTurno.setEnabled(dime(miPerfil.getMovimientosAbrirTurno()));
-//        mnuMovimientosCerrarTurno.setEnabled(dime(miPerfil.getMovimientosCerrarTurno()));
-//        mnuMovimientosDeudas.setEnabled(dime(miPerfil.getMovimientosDeuda()));
-//
-//        jLabel6.setText("Usuario actual: " + getIdUsuario());
-//
-//        jMenuBar1.add(filler1);
-//        jMenuBar1.add(jLabel6);
-//
-//        ResultSet rs = getConsulta(
-//                "SELECT CURRENT_ROLE, b.D "
-//                + "FROM V_FCH_LC a "
-//                + "JOIN V_TIME_LIC b on 1=1"
-//        );
-//        try {
-//            rs.next();
-//            if (rs.getString(1).equals("NONE")) {
-//                jLabel9.setText("Tiempo de periodo de Licencia: " + rs.getString(2));
-//                jMenuBar1.add(filler1);
-//                jMenuBar1.add(jLabel9);
-//            }
-//        } catch (SQLException ex) {
-//            LOG.log(Level.SEVERE, "Error al crear ventana de cliente.", ex);
-//        }
-//
-//        if (getPerfil() == 1) {
-////            estado();
-//        } else {
-//            pEstatus.setVisible(false);
-//        }
-//        //Ocultamiento del administrador
-//        if (getIdUsuario().equals("Jhironsel")) {
-//            jlRestauracion.setVisible(true);
-//            jlRespaldar.setVisible(true);
-//            jlRestaurar.setVisible(true);
-//            mnuLicencia.setVisible(true);
-//        } else {
-//            jlRestauracion.setVisible(false);
-//            jlRespaldar.setVisible(false);
-//            jlRestaurar.setVisible(false);
-//            mnuLicencia.setVisible(false);
-//        }
-//        jMenuBar1.add(jPanelImpresion);
-//    }
-    
+
     protected void cerrarTodos() {
         for (JInternalFrame allFrame : dpnEscritorio.getAllFrames()) {
             if (allFrame != null) {
@@ -1447,16 +1433,16 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
         System.gc();
     }
-    
-    protected void abrirFormularioCentralizado(@NonNull JInternalFrame formulario) {
+
+    protected static void abrirFormularioCentralizado(JInternalFrame formulario) {
         if (!dpnEscritorio.isAncestorOf(formulario)) {
             dpnEscritorio.add(formulario);
         }
-        
-        if(formulario instanceof frmReporteFacturas){
-            ((frmReporteFacturas) formulario).centralizar();
+
+        if (formulario instanceof frmReporteFacturas) {
+            Utilidades.centralizar(formulario);
         }
-        
+
         formulario.setVisible(true);
     }
 
@@ -1469,8 +1455,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         mnuOpcionesCambioClave.setIcon(icono.getIcono("Cambiar Contraseña 32 x 32.png"));
         mnuOpcionesCambioUsuario.setIcon(icono.getIcono("Cambio de Usuario 32 x 32.png"));
         mnuOpcionesSalir.setIcon(icono.getIcono("Salir 32 x 32.png"));
-        
-        
+
         //Menu Mantenimiento
         mnuMantenimiento.setIcon(icono.getIcono("Archivos 32 x 32.png"));
         mnuMantenimientoClientes.setIcon(icono.getIcono("Clientes 32 x 32.png"));
@@ -1483,7 +1468,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         //TODO En esta parte se debe indentificar que sistema se esta ejecutando y aplicar icono.
         mnuSistemas.setIcon(icono.getIcono("Linux 32 x 32.png"));
         mnuSistemaNomina.setIcon(icono.getIcono("Nomina 32 x 32.png"));
-        
+
         //Menu Movimiento
         mnuMovimientos.setIcon(icono.getIcono("Movimiento 32 x 32.png"));
         mnuMovimientosNuevaFactura.setIcon(icono.getIcono("Factura 32 x 32.png"));
@@ -1493,10 +1478,10 @@ public final class frmPrincipal extends javax.swing.JFrame {
         mnuMovimientosDeudas.setIcon(icono.getIcono("Money 32 x 32.png"));
 
         //Iconos de subMenus
-        Archivos.setIcon(icono.getIcono("Archivos 32 x 32.png"));
-        Archivos.setIcon(icono.getIcono("Archivos 32 x 32.png"));
-        Archivos.setIcon(icono.getIcono("Archivos 32 x 32.png"));
-        
+        jmMantenimientos.setIcon(icono.getIcono("Archivos 32 x 32.png"));
+//        Archivos.setIcon(icono.getIcono("Archivos 32 x 32.png"));
+//        Archivos.setIcon(icono.getIcono("Archivos 32 x 32.png"));
+
         jmClientes.setIcon(icono.getIcono("Clientes 32 x 32.png"));
         jmProductos.setIcon(icono.getIcono("Productos 32 x 32.png"));
         jmCambioClave.setIcon(icono.getIcono("Cambiar Contraseña 32 x 32.png"));
@@ -1531,7 +1516,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu Archivos;
     private javax.swing.JMenu Movimientos;
     private javax.swing.JButton btnEstablecerEncabezado;
     private javax.swing.JButton btnOcultarPanel;
@@ -1541,8 +1525,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.Box.Filler filler3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel9;
     public static javax.swing.JLabel jLabelImpresion;
     private rojerusan.RSMenuBar jMenuBar;
     private javax.swing.JPanel jPanel1;
@@ -1551,13 +1533,11 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator10;
-    private javax.swing.JPopupMenu.Separator jSeparator11;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
-    private javax.swing.JPopupMenu.Separator jSeparator7;
-    private javax.swing.JPopupMenu.Separator jSeparator8;
     private javax.swing.JPopupMenu.Separator jSeparator9;
     private javax.swing.JLabel jlGetIP;
     private javax.swing.JLabel jlGrafica;
@@ -1568,16 +1548,23 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jlRestaurar;
     private RSMaterialComponent.RSLabelTextIcon jlUser;
     private javax.swing.JMenuItem jmAbrirTurno;
+    private javax.swing.JMenuItem jmAlmacenes;
     private javax.swing.JMenuItem jmCambioClave;
     private javax.swing.JMenuItem jmCambioUsuario;
-    private javax.swing.JMenuItem jmCerrarTurno;
     private javax.swing.JMenuItem jmClientes;
     private javax.swing.JMenuItem jmDeuda;
+    private javax.swing.JMenuItem jmGestorGastos;
     private javax.swing.JMenuItem jmInventario;
+    private javax.swing.JMenu jmMantenimientos;
+    private javax.swing.JMenuItem jmNomina;
     private javax.swing.JMenuItem jmNuevaFactura;
+    private javax.swing.JMenu jmOpciones;
     private javax.swing.JMenuItem jmProductos;
+    private javax.swing.JMenuItem jmProveedores;
     private javax.swing.JMenuItem jmReporteFactura;
     private javax.swing.JMenuItem jmSalir;
+    private javax.swing.JMenu jmSistemas;
+    private javax.swing.JMenuItem jmUsuarios;
     public static rojeru_san.rspanel.RSPanelGradiente jpEstados;
     private javax.swing.JPanel jpTiempo;
     public static javax.swing.JProgressBar jprImpresion;
@@ -1603,6 +1590,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuOpcionesCambioClave;
     private javax.swing.JMenuItem mnuOpcionesCambioUsuario;
     private javax.swing.JMenuItem mnuOpcionesSalir;
+    private javax.swing.JMenuItem mnuSistemaGestorGastos;
     private javax.swing.JMenuItem mnuSistemaNomina;
     private javax.swing.JMenu mnuSistemas;
     private javax.swing.JPanel pEstatus;

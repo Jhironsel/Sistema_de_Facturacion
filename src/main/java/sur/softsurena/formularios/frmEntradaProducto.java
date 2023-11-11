@@ -482,8 +482,11 @@ public class frmEntradaProducto extends javax.swing.JDialog {
         }
 
         if (miBusqueda == null) {
-            JOptionPane.showInternalMessageDialog(null,
-                    "Vuelva a buscar el articulo.");
+            //TODO determinar cual es el icono de este dialog.
+            JOptionPane.showInternalMessageDialog(
+                    null,
+                    "Vuelva a buscar el articulo."
+            );
             return;
         }
 

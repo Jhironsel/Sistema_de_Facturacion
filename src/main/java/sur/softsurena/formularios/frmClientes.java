@@ -17,7 +17,6 @@ import sur.softsurena.entidades.Clientes;
 import static sur.softsurena.entidades.Clientes.agregarCliente;
 import static sur.softsurena.entidades.Clientes.borrarCliente;
 import static sur.softsurena.entidades.Clientes.existeCliente;
-import static sur.softsurena.entidades.Clientes.getClienteByID;
 import static sur.softsurena.entidades.Clientes.getClientesTablaSB;
 import static sur.softsurena.entidades.Clientes.modificarCliente;
 import sur.softsurena.entidades.ContactosEmail;
@@ -47,25 +46,24 @@ import static sur.softsurena.utilidades.Utilidades.repararColumnaTable;
 
 public class frmClientes extends javax.swing.JInternalFrame implements Runnable {
 
-    public static final String[] v_vistasList = {
-        "V_GENERALES",
-        "V_PERSONAS",
-        "V_PERSONAS_CLIENTES",
-        "V_CONTACTOS_DIRECCIONES",
-        "V_CONTACTOS_EMAIL",
-        "V_CONTACTOS_TEL",
-        "GET_PERSONAS_ID",
-        "GET_CLIENTES_SB",
-        "GET_DIRECCION_BY_ID"
-    };
-
-    public static final String[] v_procedimientosList = {
-        "SP_SELECT_GET_CLIENTES_SB",
-        "SP_INSERT_CLIENTE_SB",
-        "SP_DELETE_CLIENTE_SB",
-        "SP_UPDATE_CLIENTE_SB"
-    };
-
+//    public static final String[] v_vistasList = {
+//        "V_GENERALES",
+//        "V_PERSONAS",
+//        "V_PERSONAS_CLIENTES",
+//        "V_CONTACTOS_DIRECCIONES",
+//        "V_CONTACTOS_EMAIL",
+//        "V_CONTACTOS_TEL",
+//        "GET_PERSONAS_ID",
+//        "GET_CLIENTES_SB",
+//        "GET_DIRECCION_BY_ID"
+//    };
+//
+//    public static final String[] v_procedimientosList = {
+//        "SP_SELECT_GET_CLIENTES_SB",
+//        "SP_INSERT_CLIENTE_SB",
+//        "SP_DELETE_CLIENTE_SB",
+//        "SP_UPDATE_CLIENTE_SB"
+//    };
     private boolean v_nuevo = false;
 
     private JTextFieldDateEditor v_editor = null;
@@ -94,7 +92,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
     private static final String[] TITULOS_CORREO = {"Correo", "Fecha"};
 
     private static final String[] TITULOS_TELEFONO = {"Numero", "Tipo", "Fecha"};
-    
+
     private static String criterioBusqueda = "";
 
     /**
@@ -128,17 +126,25 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
      * nuevo, modificar y borrar el usuario cuenta con los permisos necesarios.
      *
      */
-    public frmClientes() {
+    
+    public static frmClientes getInstance() {
+        return NewSingletonHolder.INSTANCE;
+    }
+    
+    private static class NewSingletonHolder {
+
+        private static final frmClientes INSTANCE = new frmClientes();
+    }
+    
+    private frmClientes() {
         /*
             Si un permiso a las vistas consultada anteriormente es negado, se 
         lanza una excepcion y la venta no se iniciará.
          */
 
-        v_privilegios = Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_EXECUTE).
-                nombre_relacion("SP_SELECT_GET_CLIENTES_SB").build();
-
-        if (!privilegioTabla(v_privilegios)) {
+        if (!privilegioTabla(Privilegios.builder().
+                privilegio(Privilegios.PRIVILEGIO_SELECT).
+                nombre_relacion("GET_CLIENTES_SB").build())) {
 
             final String mensaje = "No cuenta con permisos para ver la información de"
                     + " este módulo.";
@@ -217,7 +223,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
         jPanel16 = new javax.swing.JPanel();
         btnImprimirInforme1 = new RSMaterialComponent.RSButtonMaterialIconOne();
         btnHistorial1 = new RSMaterialComponent.RSButtonMaterialIconOne();
-        btnHistorial2 = new RSMaterialComponent.RSButtonMaterialIconOne();
+        btnActializarRegistrosCliente = new RSMaterialComponent.RSButtonMaterialIconOne();
         jScrollPane6 = new javax.swing.JScrollPane();
         tblClientes = new rojerusan.RSTableMetro1(){
             @Override
@@ -372,16 +378,16 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
         });
         jPanel16.add(btnHistorial1);
 
-        btnHistorial2.setText("Actualizar registros");
-        btnHistorial2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.UPDATE);
-        btnHistorial2.setName("btnHistorial"); // NOI18N
-        btnHistorial2.setRound(40);
-        btnHistorial2.addActionListener(new java.awt.event.ActionListener() {
+        btnActializarRegistrosCliente.setText("Actualizar registros");
+        btnActializarRegistrosCliente.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.UPDATE);
+        btnActializarRegistrosCliente.setName("btnHistorial"); // NOI18N
+        btnActializarRegistrosCliente.setRound(40);
+        btnActializarRegistrosCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHistorial2ActionPerformed(evt);
+                btnActializarRegistrosClienteActionPerformed(evt);
             }
         });
-        jPanel16.add(btnHistorial2);
+        jPanel16.add(btnActializarRegistrosCliente);
 
         jScrollPane2.setViewportView(jPanel16);
 
@@ -1306,10 +1312,12 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
         int icono = mensaje.equals(Clientes.CLIENTE_BORRADO_CORRECTAMENTE)
                 ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.WARNING_MESSAGE;
 
-        JOptionPane.showInternalMessageDialog(null,
+        JOptionPane.showInternalMessageDialog(
+                null,
                 mensaje,
                 "Proceso de borrado de cliente.",
-                icono);
+                icono
+        );
 
         repararColumnaTable(tblClientes);
     }//GEN-LAST:event_btnBorrarActionPerformed
@@ -1322,21 +1330,20 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
 //        v_hilo.interrupt();
 
 //        txtCedula1.setValue("");
-
         String resp = JOptionPane.showInternalInputDialog(
                 this,
                 "Ingrese su criterio de busqueda.\n[Cedula, nombres o apellidos]",
                 "Busqueda de registros de clientes",
                 JOptionPane.QUESTION_MESSAGE
         );
-        
+
         criterioBusqueda = resp;
 
         if (Objects.isNull(resp)) {
             return;
         }
 
-        llenarTablaClientes(criterioBusqueda);
+        llenarTablaClientes(-1, criterioBusqueda);
     }//GEN-LAST:event_btnBuscarActionPerformed
     /**
      * Proceso de validación.
@@ -1541,7 +1548,12 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
             icono = msg.equals(Clientes.CLIENTE__AGREGADO__CORRECTAMENTE)
                     ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE;
 
-            JOptionPane.showInternalMessageDialog(null, msg, "Agregando cliente", icono);
+            JOptionPane.showInternalMessageDialog(
+                    null,
+                    msg,
+                    "Agregando cliente",
+                    icono
+            );
 
         } else {
             msg = modificarCliente(miCliente).getMensaje();
@@ -1549,7 +1561,12 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
             icono = msg.equals(Clientes.CLIENTE__MODIFICADO__CORRECTAMENTE)
                     ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE;
 
-            JOptionPane.showInternalMessageDialog(null, msg, "Modificando cliente", icono);
+            JOptionPane.showInternalMessageDialog(
+                    null,
+                    msg,
+                    "Modificando cliente",
+                    icono
+            );
         }
 
         btnCancelarActionPerformed(null);
@@ -1824,10 +1841,12 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
             //Que el campo de telefono o movil no sea nulo para poder registrarlo.
             txtTelelfonoMovil.commitEdit();
         } catch (ParseException ex) {
-            JOptionPane.showInternalMessageDialog(null,
+            JOptionPane.showInternalMessageDialog(
+                    null,
                     "Debe digitar numero telefonico.",
                     "Validacción de contacto.",
-                    JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.INFORMATION_MESSAGE
+            );
             txtTelelfonoMovil.setValue("");
             txtTelelfonoMovil.requestFocus();
             return;
@@ -1835,10 +1854,12 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
 
         //Esta validacion deberia de ser si el cliente en nacional
         if (!ContactosTel.telefono(txtTelelfonoMovil.getValue().toString())) {
-            JOptionPane.showInternalMessageDialog(null,
+            JOptionPane.showInternalMessageDialog(
+                    null,
                     "Debe digitar numero telefonico valido.",
                     "Validacción de contacto.",
-                    JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.INFORMATION_MESSAGE
+            );
             txtTelelfonoMovil.setValue("");
             return;
         }
@@ -2007,10 +2028,12 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
                     btnCancelarActionPerformed(evt);
                 }
             } else {
-                JOptionPane.showInternalMessageDialog(null,
+                JOptionPane.showInternalMessageDialog(
+                        null,
                         "Cedula valida, puede continuar.",
                         V_PROCESO_DE_VALIDACION,
-                        JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.INFORMATION_MESSAGE
+                );
                 jcbPersona.requestFocus();
             }
         } else {//Condicion para cuando se va a modificar un registro.
@@ -2034,7 +2057,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
         //1) Llenar la lista de clientes en el sistema.
-        llenarTablaClientes("");
+        llenarTablaClientes(-1, "");
 
         //2) Llenar los comboBox de las provincias.
         jcbProvincias.removeAllItems();
@@ -2214,23 +2237,25 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
     }//GEN-LAST:event_btnImprimirInforme1ActionPerformed
 
     private void jsnCantidadFilasStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jsnCantidadFilasStateChanged
-        llenarTablaClientes(criterioBusqueda);
+        llenarTablaClientes(-1, criterioBusqueda);
     }//GEN-LAST:event_jsnCantidadFilasStateChanged
 
     private void jsnPaginaNroStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jsnPaginaNroStateChanged
-        llenarTablaClientes(criterioBusqueda);
+        llenarTablaClientes(-1, criterioBusqueda);
     }//GEN-LAST:event_jsnPaginaNroStateChanged
 
-    private void btnHistorial2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorial2ActionPerformed
-        llenarTablaClientes("");
+    private void btnActializarRegistrosClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActializarRegistrosClienteActionPerformed
+        llenarTablaClientes(-1, "");
         criterioBusqueda = "";
-    }//GEN-LAST:event_btnHistorial2ActionPerformed
+    }//GEN-LAST:event_btnActializarRegistrosClienteActionPerformed
     private void eliminarRegistro(JTable tabla, DefaultTableModel modelo) {
         if (tabla.getSelectedRow() == -1) {
-            JOptionPane.showInternalMessageDialog(null,
+            JOptionPane.showInternalMessageDialog(
+                    null,
                     "Debe seleccionar un registro de la tabla",
                     "Validaccion de proceso",
-                    JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.INFORMATION_MESSAGE
+            );
             return;
         }
         modelo.removeRow(tabla.getSelectedRow());
@@ -2238,18 +2263,18 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
     }
 
     /**
-     * Metodo utilizado para llenar la tabla de cliente del sistema.
-     * Nota: Este evento Debe ser publico porque este es llamado desde los eventos de
+     * Metodo utilizado para llenar la tabla de cliente del sistema. Nota: Este
+     * evento Debe ser publico porque este es llamado desde los eventos de
      * Firebird.
      */
-    public synchronized static void llenarTablaClientes(String criterioBusqueda) {
-        
+    public synchronized static void llenarTablaClientes(int id, String criterioBusqueda) {
+
         final String titulos[] = {"Cedulas", "Persona", "Primer Nombre",
             "Segundo Nombre", "Apellidos", "Sexo", "Fecha nacimiento",
             "Fecha Ingreso", "Estado"
         };
-        
-        if(criterioBusqueda.equalsIgnoreCase("evento")){
+
+        if (criterioBusqueda.equalsIgnoreCase("evento")) {
             criterioBusqueda = frmClientes.criterioBusqueda;
         }
 
@@ -2258,10 +2283,13 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
         DefaultTableModel dtmClientes = new DefaultTableModel(null, titulos);
 
         getClientesTablaSB(
+                id,
                 criterioBusqueda,
                 Integer.valueOf(jsnPaginaNro.getValue().toString()),
                 Integer.valueOf(jsnCantidadFilas.getValue().toString())
         ).stream().forEach(cliente -> {
+            //Construyo otro objecto para que el campo pnombre sea nulo y 
+            //me devuelva la cedula el toString.
             registro[0] = Clientes.
                     builder().
                     id_persona(cliente.getId_persona()).
@@ -2355,51 +2383,53 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
     private void mostrarRegistro(Integer idCliente) {
 
         //Obteniendo el objeto cliente.
-        Clientes cliente = getClienteByID(idCliente);
+        List<Clientes> cliente = getClientesTablaSB(idCliente, "^", 1, 1);
 
-        //Llenar los compos basicos.
-        txtCedula.setValue(cliente.getGenerales().getCedula());
-        txtPNombre.setText(cliente.getPnombre());
-        txtSNombre.setText(cliente.getSnombre());
-        txtApellidos.setText(cliente.getApellidos());
-        dchFechaNacimiento.setDate(cliente.getFecha_nacimiento());
+        cliente.stream().forEach(cli -> {
+            //Llenar los compos basicos.
+            txtCedula.setValue(cli.getGenerales().getCedula());
+            txtPNombre.setText(cli.getPnombre());
+            txtSNombre.setText(cli.getSnombre());
+            txtApellidos.setText(cli.getApellidos());
+            dchFechaNacimiento.setDate(cli.getFecha_nacimiento());
 
-        cbEstado.setSelected(cliente.getEstado());
-        cbEstado.setText(cliente.getEstado() ? "Activo" : "Inactivo");
+            cbEstado.setSelected(cli.getEstado());
+            cbEstado.setText(cli.getEstado() ? "Activo" : "Inactivo");
 
-        jlFechaCreacion.setText("Fecha de Ingreso: " + cliente.getFecha_ingreso());
+            jlFechaCreacion.setText("Fecha de Ingreso: " + cli.getFecha_ingreso());
 
-        //Buscando la combinacion del tipo persona con el registro de la 
-        //base de datos.
-        for (int i = 0; i < jcbPersona.getItemCount(); i++) {
-            if (cliente.getPersona()
-                    == ((TipoPersona) jcbPersona.getItemAt(i)).getAbreviatura()) {
-                jcbPersona.setSelectedIndex(i);
-                break;
+            //Buscando la combinacion del tipo persona con el registro de la 
+            //base de datos.
+            for (int i = 0; i < jcbPersona.getItemCount(); i++) {
+                if (cli.getPersona()
+                        == ((TipoPersona) jcbPersona.getItemAt(i)).getAbreviatura()) {
+                    jcbPersona.setSelectedIndex(i);
+                    break;
 
+                }
             }
-        }
 
-        //Buscando la combinacion del sexo con el registro de la base de datos.
-        for (int i = 0; i < jcbSexo.getItemCount(); i++) {
-            if (cliente.getSexo().equals(
-                    ((Sexo) jcbSexo.getItemAt(i)).getAbreviatura())) {
-                jcbSexo.setSelectedIndex(i);
-                break;
+            //Buscando la combinacion del sexo con el registro de la base de datos.
+            for (int i = 0; i < jcbSexo.getItemCount(); i++) {
+                if (cli.getSexo().equals(
+                        ((Sexo) jcbSexo.getItemAt(i)).getAbreviatura())) {
+                    jcbSexo.setSelectedIndex(i);
+                    break;
 
+                }
             }
-        }
 
-        //Buscando la combinacion del estado civil con el registro de la 
-        //base de datos.
-        for (int i = 0; i < jcbEstadoCivil.getItemCount(); i++) {
-            if (cliente.getGenerales().getEstado_civil()
-                    == ((EstadoCivil) jcbEstadoCivil.getItemAt(i)).getAbreviatura()) {
-                jcbEstadoCivil.setSelectedIndex(i);
-                break;
+            //Buscando la combinacion del estado civil con el registro de la 
+            //base de datos.
+            for (int i = 0; i < jcbEstadoCivil.getItemCount(); i++) {
+                if (cli.getGenerales().getEstado_civil()
+                        == ((EstadoCivil) jcbEstadoCivil.getItemAt(i)).getAbreviatura()) {
+                    jcbEstadoCivil.setSelectedIndex(i);
+                    break;
 
+                }
             }
-        }
+        });
 
         //Datos basicos listos. 
         //Obteniendo direcciones.
@@ -2695,6 +2725,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private RSMaterialComponent.RSButtonMaterialIconOne btnActializarRegistrosCliente;
     private RSMaterialComponent.RSButtonMaterialIconOne btnAgregarCorreo;
     private RSMaterialComponent.RSButtonMaterialIconOne btnAgregarDirecciones;
     private RSMaterialComponent.RSButtonMaterialIconOne btnAgregarTelefonoMovil;
@@ -2709,7 +2740,6 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
     private javax.swing.ButtonGroup btnGMovilTelefono;
     private RSMaterialComponent.RSButtonMaterialIconOne btnGuardar;
     private RSMaterialComponent.RSButtonMaterialIconOne btnHistorial1;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnHistorial2;
     private RSMaterialComponent.RSButtonMaterialIconOne btnImprimirInforme1;
     private RSMaterialComponent.RSButtonMaterialIconOne btnModificar;
     private RSMaterialComponent.RSButtonMaterialIconOne btnNuevo;

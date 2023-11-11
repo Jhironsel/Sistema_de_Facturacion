@@ -1,17 +1,20 @@
 package sur.softsurena.formularios;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import javax.swing.JFrame;
 import rojeru_san.efectos.ValoresEnum.ICONS;
 
 public class frmIconos extends javax.swing.JFrame {
 
+    private ExecutorService executorService = Executors.newSingleThreadExecutor();
+
     public frmIconos() {
-        
-        initComponents();
-        
+
+//        initComponents();
         //getClass().getResource("/sur/softsurena/properties/propiedades.properties").toURI()
         System.out.println("<RECURSOS>: " + getClass().getResource("/sur/softsurena/").toString());
-        
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(400, 2147483647));
         setMinimumSize(new java.awt.Dimension(500, 500));
@@ -27,101 +30,110 @@ public class frmIconos extends javax.swing.JFrame {
         jpCajaBotones.setLayout(new java.awt.GridLayout(-1, 3, 10, 10));
         jpListaComponente.setLayout(new java.awt.GridLayout(0, 1));
 
-        Integer cantidadIcono = 0;
+        
 
-        jlLetra.setText("A " + cantidadIcono);
-        jlLetra.setFont(new java.awt.Font("Arial", 2, 50));
+        
 
-        String letra = "A";
-        for (ICONS iconos : rojeru_san.efectos.ValoresEnum.ICONS.values()) {
-            if (iconos.name().startsWith(letra)) {
-                btns = new RSMaterialComponent.RSButtonMaterialIconOne();
-                btns.setIcons(iconos);
-                btns.setText(iconos.name());
-                btns.setMaximumSize(new java.awt.Dimension(200, 60));
-                btns.setMinimumSize(new java.awt.Dimension(200, 40));
-                btns.setPadding(10);
+        executorService.submit(new Runnable() {
+            @Override
+            public void run() {
+                Integer cantidadIcono = 0;
+                jlLetra.setText("A " + cantidadIcono);
+                jlLetra.setFont(new java.awt.Font("Arial", 2, 50));
+                
+                String letra = "A";
+                for (ICONS iconos : rojeru_san.efectos.ValoresEnum.ICONS.values()) {
+                    if (iconos.name().startsWith(letra)) {
+                        btns = new RSMaterialComponent.RSButtonMaterialIconOne();
+                        btns.setIcons(iconos);
+                        btns.setText(iconos.name());
+                        btns.setMaximumSize(new java.awt.Dimension(200, 60));
+                        btns.setMinimumSize(new java.awt.Dimension(200, 40));
+                        btns.setPadding(10);
 
-                jpCajaBotones.add(btns);
+                        jpCajaBotones.add(btns);
 
-                cantidadIcono++;
-                jlLetra.setText(letra + " " + cantidadIcono);
-            } else {
+                        cantidadIcono++;
+                        jlLetra.setText(letra + " " + cantidadIcono);
+                    } else {
 
-                cantidadIcono++;
-                jlLetra.setText(letra + " " + cantidadIcono);
+                        cantidadIcono++;
+                        jlLetra.setText(letra + " " + cantidadIcono);
 
-                btns = new RSMaterialComponent.RSButtonMaterialIconOne();
-                btns.setIcons(iconos);
-                btns.setText(iconos.name());
-                btns.setMaximumSize(new java.awt.Dimension(200, 60));
-                btns.setMinimumSize(new java.awt.Dimension(200, 40));
-                btns.setPadding(10);
+                        btns = new RSMaterialComponent.RSButtonMaterialIconOne();
+                        btns.setIcons(iconos);
+                        btns.setText(iconos.name());
+                        btns.setMaximumSize(new java.awt.Dimension(200, 60));
+                        btns.setMinimumSize(new java.awt.Dimension(200, 40));
+                        btns.setPadding(10);
 
-                jpCajaBotones.add(btns);
+                        jpCajaBotones.add(btns);
 
-                jcpCajeBotones.setViewportView(jpCajaBotones);
+                        jcpCajeBotones.setViewportView(jpCajaBotones);
 
-                javax.swing.GroupLayout jpComponenteLayout = new javax.swing.GroupLayout(jpComponente);
-                jpComponente.setLayout(jpComponenteLayout);
-                jpComponenteLayout.setHorizontalGroup(
-                        jpComponenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jpComponenteLayout.createSequentialGroup()
-                                        .addContainerGap()
-                                        .addGroup(jpComponenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jlLetra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addGroup(jpComponenteLayout.createSequentialGroup()
-                                                        .addComponent(jcpCajeBotones)
-                                                        .addGap(2, 2, 2)))
-                                        .addContainerGap())
-                );
-                jpComponenteLayout.setVerticalGroup(
-                        jpComponenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jpComponenteLayout.createSequentialGroup()
-                                        .addContainerGap()
-                                        .addComponent(jlLetra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jcpCajeBotones, javax.swing.GroupLayout.DEFAULT_SIZE, 548, Short.MAX_VALUE)
-                                        .addContainerGap())
-                );
+                        javax.swing.GroupLayout jpComponenteLayout = new javax.swing.GroupLayout(jpComponente);
+                        jpComponente.setLayout(jpComponenteLayout);
+                        jpComponenteLayout.setHorizontalGroup(
+                                jpComponenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jpComponenteLayout.createSequentialGroup()
+                                                .addContainerGap()
+                                                .addGroup(jpComponenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jlLetra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addGroup(jpComponenteLayout.createSequentialGroup()
+                                                                .addComponent(jcpCajeBotones)
+                                                                .addGap(2, 2, 2)))
+                                                .addContainerGap())
+                        );
+                        jpComponenteLayout.setVerticalGroup(
+                                jpComponenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jpComponenteLayout.createSequentialGroup()
+                                                .addContainerGap()
+                                                .addComponent(jlLetra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jcpCajeBotones, javax.swing.GroupLayout.DEFAULT_SIZE, 548, Short.MAX_VALUE)
+                                                .addContainerGap())
+                        );
 
-                jpListaComponente.add(jpComponente);
+                        jpListaComponente.add(jpComponente);
 
-                jspListaComponente.setViewportView(jpListaComponente);
+                        jspListaComponente.setViewportView(jpListaComponente);
 
-                javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-                getContentPane().setLayout(layout);
-                layout.setHorizontalGroup(
-                        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                        .addContainerGap()
-                                        .addComponent(jspListaComponente, javax.swing.GroupLayout.DEFAULT_SIZE, 781, Short.MAX_VALUE)
-                                        .addContainerGap())
-                );
-                layout.setVerticalGroup(
-                        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                        .addContainerGap()
-                                        .addComponent(jspListaComponente)
-                                        .addContainerGap())
-                );
+                        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+                        getContentPane().setLayout(layout);
+                        layout.setHorizontalGroup(
+                                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addContainerGap()
+                                                .addComponent(jspListaComponente, javax.swing.GroupLayout.DEFAULT_SIZE, 781, Short.MAX_VALUE)
+                                                .addContainerGap())
+                        );
+                        layout.setVerticalGroup(
+                                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addContainerGap()
+                                                .addComponent(jspListaComponente)
+                                                .addContainerGap())
+                        );
 
-                jpCajaBotones = new javax.swing.JPanel();
+                        jpCajaBotones = new javax.swing.JPanel();
 
-                jpCajaBotones.setLayout(new java.awt.GridLayout(-1, 3, 10, 10));
+                        jpCajaBotones.setLayout(new java.awt.GridLayout(-1, 3, 10, 10));
 
-                jpComponente = new javax.swing.JPanel();
+                        jpComponente = new javax.swing.JPanel();
 
-                jcpCajeBotones = new javax.swing.JScrollPane();
+                        jcpCajeBotones = new javax.swing.JScrollPane();
 
-                jlLetra = new rojeru_san.rslabel.RSLabelSombra();
-                jlLetra.setFont(new java.awt.Font("Arial", 2, 70));
+                        jlLetra = new rojeru_san.rslabel.RSLabelSombra();
+                        jlLetra.setFont(new java.awt.Font("Arial", 2, 70));
 
-                cantidadIcono = 0;
+                        cantidadIcono = 0;
 
-                letra = "" + iconos.name().charAt(0);
+                        letra = "" + iconos.name().charAt(0);
+                    }
+                }
             }
-        }
+        });
+
         pack();
     }
 

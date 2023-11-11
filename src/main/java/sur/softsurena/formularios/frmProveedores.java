@@ -2,7 +2,16 @@ package sur.softsurena.formularios;
 
 public class frmProveedores extends javax.swing.JInternalFrame {
 
-    public frmProveedores() {
+    public static frmProveedores getInstance() {
+        return NewSingletonHolder.INSTANCE;
+    }
+    
+    private static class NewSingletonHolder {
+
+        private static final frmProveedores INSTANCE = new frmProveedores();
+    }
+    
+    private frmProveedores() {
         initComponents();
     }
 

@@ -33,12 +33,15 @@
           <Dimension value="[0, 35]"/>
         </Property>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
+      </AuxValues>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
         <Property name="alignment" type="int" value="0"/>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="jLabel3">
+        <Component class="javax.swing.JLabel" name="jlFacturaNo">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Ubuntu" size="18" style="0"/>
@@ -64,18 +67,6 @@
             <Property name="name" type="java.lang.String" value="" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel10">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Ubuntu" size="18" style="0"/>
-            </Property>
-            <Property name="horizontalAlignment" type="int" value="4"/>
-            <Property name="text" type="java.lang.String" value="Turno:"/>
-            <Property name="verticalAlignment" type="int" value="1"/>
-            <Property name="horizontalTextPosition" type="int" value="4"/>
-            <Property name="verticalTextPosition" type="int" value="1"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JTextField" name="txtTurno">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
@@ -89,15 +80,13 @@
             <Property name="focusTraversalPolicyProvider" type="boolean" value="true"/>
           </Properties>
         </Component>
+        <Component class="rojeru_san.rslabel.RSLabelAnimated" name="jlAlmacen">
+          <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="Indica que el cajero actual, esta realizando facturas desde este almacen."/>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
-    <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
-      <Properties>
-        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[0, 0]"/>
-        </Property>
-      </Properties>
-    </Menu>
   </NonVisualComponents>
   <Properties>
     <Property name="closable" type="boolean" value="true"/>
@@ -111,11 +100,11 @@
     <Property name="doubleBuffered" type="boolean" value="true"/>
   </Properties>
   <SyntheticProperties>
-    <SyntheticProperty name="menuBar" type="java.lang.String" value="jMenuBar1"/>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
   </SyntheticProperties>
   <Events>
     <EventHandler event="internalFrameActivated" listener="javax.swing.event.InternalFrameListener" parameters="javax.swing.event.InternalFrameEvent" handler="formInternalFrameActivated"/>
+    <EventHandler event="internalFrameClosed" listener="javax.swing.event.InternalFrameListener" parameters="javax.swing.event.InternalFrameEvent" handler="formInternalFrameClosed"/>
     <EventHandler event="internalFrameClosing" listener="javax.swing.event.InternalFrameListener" parameters="javax.swing.event.InternalFrameEvent" handler="formInternalFrameClosing"/>
     <EventHandler event="internalFrameDeiconified" listener="javax.swing.event.InternalFrameListener" parameters="javax.swing.event.InternalFrameEvent" handler="formInternalFrameDeiconified"/>
     <EventHandler event="internalFrameIconified" listener="javax.swing.event.InternalFrameListener" parameters="javax.swing.event.InternalFrameEvent" handler="formInternalFrameIconified"/>
@@ -136,7 +125,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jScrollPane3" max="32767" attributes="0"/>
+          <Component id="jScrollPane3" pref="1272" max="32767" attributes="0"/>
           <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
@@ -144,8 +133,8 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-              <Component id="jScrollPane3" pref="532" max="32767" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Component id="jScrollPane3" pref="459" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -158,7 +147,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jPanel5" pref="871" max="32767" attributes="0"/>
+                  <Component id="jPanel5" pref="0" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jPanel6" min="-2" pref="381" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -373,9 +362,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cbTodosItemStateChanged"/>
-                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="cbTodosStateChanged"/>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbTodosActionPerformed"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="cbTodosMouseClicked"/>
               </Events>
             </Component>
             <Component class="javax.swing.JCheckBox" name="cbTodosProductos">
@@ -428,9 +415,6 @@
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[381, 100]"/>
         </Property>
-        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[0, 100]"/>
-        </Property>
         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[381, 100]"/>
         </Property>
@@ -452,12 +436,12 @@
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="jPanel10" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jpFacturas" max="32767" attributes="0"/>
+                          <Component id="jpFacturas" alignment="0" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                      <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -483,9 +467,9 @@
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
                           <Component id="jpCliente" min="-2" pref="147" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Component id="jScrollPane5" pref="0" max="32767" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -802,6 +786,12 @@
                         <LineBorder roundedCorners="true"/>
                       </Border>
                     </Property>
+                    <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[452, 300]"/>
+                    </Property>
+                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[452, 200]"/>
+                    </Property>
                   </Properties>
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
@@ -953,7 +943,7 @@
                       <Group type="102" attributes="0">
                           <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jpBusqueda" pref="795" max="32767" attributes="0"/>
+                              <Component id="jpBusqueda" pref="797" max="32767" attributes="0"/>
                               <Component id="jpCategoria" max="32767" attributes="0"/>
                               <Component id="jScrollPane4" max="32767" attributes="0"/>
                           </Group>
@@ -964,13 +954,13 @@
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
                           <Component id="jpCategoria" min="-2" pref="123" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Component id="jpBusqueda" min="-2" pref="78" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane4" pref="311" max="32767" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Component id="jScrollPane4" pref="229" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>

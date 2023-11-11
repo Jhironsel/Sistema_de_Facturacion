@@ -2,25 +2,6 @@
 
 <Form version="1.9" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
-    <Component class="javax.swing.JLabel" name="jLabel6">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Ubuntu" size="24" style="1"/>
-        </Property>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="ff" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Quireo verlo"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel9">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Ubuntu" size="14" style="1"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="jLabel9"/>
-      </Properties>
-    </Component>
     <Container class="javax.swing.JPanel" name="jPanelImpresion">
       <Properties>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -87,7 +68,49 @@
         <Property name="useNullLayout" type="boolean" value="true"/>
       </Layout>
       <SubComponents>
-        <Menu class="javax.swing.JMenu" name="Archivos">
+        <Menu class="javax.swing.JMenu" name="jmOpciones">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="jMenu1"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jmCambioClave">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Ubuntu" size="18" style="1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Cambio de Clave"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmCambioClaveActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jmCambioUsuario">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Ubuntu" size="18" style="1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Cambio de Usuario"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmCambioUsuarioActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator1">
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jmSalir">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Ubuntu" size="18" style="1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Salir"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmSalirActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="jmMantenimientos">
           <Properties>
             <Property name="text" type="java.lang.String" value="Archivos"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -117,42 +140,37 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmProductosActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator7">
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jmCambioClave">
+            <MenuItem class="javax.swing.JMenuItem" name="jmProveedores">
               <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Ubuntu" size="18" style="1"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Cambio de Clave"/>
+                <Property name="text" type="java.lang.String" value="jMenuItem1"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmCambioClaveActionPerformed"/>
-              </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jmCambioUsuario">
+            <MenuItem class="javax.swing.JMenuItem" name="jmAlmacenes">
               <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Ubuntu" size="18" style="1"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Cambio de Usuario"/>
+                <Property name="text" type="java.lang.String" value="jMenuItem1"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmCambioUsuarioActionPerformed"/>
-              </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator8">
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jmSalir">
+            <MenuItem class="javax.swing.JMenuItem" name="jmUsuarios">
               <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Ubuntu" size="18" style="1"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Salir"/>
+                <Property name="text" type="java.lang.String" value="jMenuItem1"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmSalirActionPerformed"/>
-              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="jmSistemas">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="jMenu1"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jmNomina">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="jMenuItem1"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jmGestorGastos">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="jMenuItem2"/>
+              </Properties>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -199,6 +217,17 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmInventarioActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jmDeuda">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Ubuntu" size="18" style="1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Deuda"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmDeudaActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator10">
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmAbrirTurno">
@@ -210,30 +239,6 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmAbrirTurnoActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jmCerrarTurno">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Ubuntu" size="18" style="1"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Cerrar Turno"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmCerrarTurnoActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator11">
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jmDeuda">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Ubuntu" size="18" style="1"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Deuda"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmDeudaActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -381,7 +386,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="mnemonic" type="int" value="77"/>
-            <Property name="text" type="java.lang.String" value="Mantenimiento"/>
+            <Property name="text" type="java.lang.String" value="Mantenimientos"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="FreeMono" size="18" style="1"/>
             </Property>
@@ -479,6 +484,18 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuSistemaNominaActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnuSistemaGestorGastos">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="FreeSans" size="14" style="0"/>
+                </Property>
+                <Property name="mnemonic" type="int" value="80"/>
+                <Property name="text" type="java.lang.String" value="Gestor de gastos ..."/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuSistemaGestorGastosActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -636,6 +653,7 @@
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
   <Events>
+    <EventHandler event="windowActivated" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowActivated"/>
     <EventHandler event="windowClosing" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosing"/>
     <EventHandler event="windowOpened" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowOpened"/>
   </Events>
@@ -657,7 +675,7 @@
           <Group type="102" attributes="0">
               <Component id="jsEstatus" min="-2" pref="374" max="-2" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="jScrollPane4" pref="420" max="32767" attributes="0"/>
+              <Component id="jScrollPane4" max="32767" attributes="0"/>
           </Group>
           <Component id="jpEstados" alignment="1" pref="0" max="32767" attributes="0"/>
       </Group>
@@ -666,7 +684,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane4" pref="356" max="32767" attributes="0"/>
+                  <Component id="jScrollPane4" pref="675" max="32767" attributes="0"/>
                   <Component id="jsEstatus" pref="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
@@ -703,10 +721,10 @@
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="jlLogoEmpresa" max="32767" attributes="0"/>
                           <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jScrollPane1" alignment="0" pref="332" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" alignment="0" pref="342" max="32767" attributes="0"/>
                           <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
                           <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btnEstablecerEncabezado" alignment="0" pref="335" max="32767" attributes="0"/>
+                          <Component id="btnEstablecerEncabezado" alignment="0" pref="342" max="32767" attributes="0"/>
                           <Component id="btnSeleccionarImpresora" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
@@ -722,7 +740,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jPanel2" min="-2" pref="163" max="-2" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="104" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="115" max="32767" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="jPanel1" min="-2" pref="111" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>

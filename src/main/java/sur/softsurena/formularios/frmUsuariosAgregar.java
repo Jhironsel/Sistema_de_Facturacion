@@ -50,7 +50,6 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
 
         nuevo = false;
         
-        //Cargando las Tags del usuario
         String titulos[] = {"Propiedad", "Valor"};
 
         Object registro[] = new Object[titulos.length];
@@ -73,7 +72,6 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
 
         tblEtiquetas.setBackgoundHover(new java.awt.Color(102, 102, 255));
         
-        //TODO Cargar los Roles
         String titulos2[] = {"Roles", "Descripción"};
 
         Object registro2[] = new Object[titulos2.length];
@@ -701,7 +699,6 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
                                 roles(rolesList).
                                 build();
 
-        //Creamos el Objeto Usuario y los agregamos a Datos
         JOptionPane.showMessageDialog(
                 null,
                 (nuevo ? agregarUsuario(u) : modificarUsuario(u))

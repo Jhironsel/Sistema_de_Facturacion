@@ -3,7 +3,10 @@ package sur.softsurena.formularios;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import rojerusan.RSComboBox;
+import sur.softsurena.entidades.Almacen;
 import sur.softsurena.entidades.Cajeros;
+import sur.softsurena.entidades.Resultados;
 import sur.softsurena.entidades.Turnos;
 import static sur.softsurena.entidades.Turnos.cerrarTurno;
 import static sur.softsurena.entidades.Turnos.habilitarTurno;
@@ -20,7 +23,16 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
 
     private static final String PROCESO_DE_VALIDACION_DE_USUARIO = "Proceso de validación de usuario.";
 
-    public frmAdministradorTurnos() {
+    public static frmAdministradorTurnos getInstance() {
+        return NewSingletonHolder.INSTANCE;
+    }
+    
+    private static class NewSingletonHolder {
+
+        private static final frmAdministradorTurnos INSTANCE = new frmAdministradorTurnos();
+    }
+    
+    private frmAdministradorTurnos() {
         /*
             Validar si el usuario es un usuario autorizado para manejar este 
         formulario.
@@ -36,15 +48,18 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
         rSLabelAnimated1 = new rojeru_san.rslabel.RSLabelAnimated();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblCajerosDisponible = new RSMaterialComponent.RSTableMetro();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        tblTurnosActivos = new RSMaterialComponent.RSTableMetro();
         btnActualizarCajerosDisponibles = new newscomponents.RSButtonGradientIcon_new();
         btnAbrirTurno = new newscomponents.RSButtonGradientIcon_new();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        rSPanelGradiente1 = new rojeru_san.rspanel.RSPanelGradiente();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tblTurnosActivos = new RSMaterialComponent.RSTableMetro();
         btnActualizarTurnosActivos = new newscomponents.RSButtonGradientIcon_new();
         btnCerrarTurno = new newscomponents.RSButtonGradientIcon_new();
-        rSLabelTextIcon1 = new RSMaterialComponent.RSLabelTextIcon();
+        rSPanelGradiente2 = new rojeru_san.rspanel.RSPanelGradiente();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblReporteTurnos = new RSMaterialComponent.RSTableMetro();
+        rSLabelTextIcon1 = new RSMaterialComponent.RSLabelTextIcon();
         btnImprimirReporte = new newscomponents.RSButtonGradientIcon_new();
 
         setClosable(true);
@@ -94,6 +109,22 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
         });
         jScrollPane3.setViewportView(tblCajerosDisponible);
 
+        btnActualizarCajerosDisponibles.setToolTipText("Actualizar Lista");
+        btnActualizarCajerosDisponibles.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.REFRESH);
+        btnActualizarCajerosDisponibles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarCajerosDisponiblesActionPerformed(evt);
+            }
+        });
+
+        btnAbrirTurno.setText("Abrir Turno");
+        btnAbrirTurno.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.OPEN_IN_NEW);
+        btnAbrirTurno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAbrirTurnoActionPerformed(evt);
+            }
+        });
+
         jScrollPane4.setBorder(javax.swing.BorderFactory.createTitledBorder("Turnos Activos"));
 
         tblTurnosActivos.setModel(new javax.swing.table.DefaultTableModel(
@@ -114,22 +145,6 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
         });
         jScrollPane4.setViewportView(tblTurnosActivos);
 
-        btnActualizarCajerosDisponibles.setToolTipText("Actualizar Lista");
-        btnActualizarCajerosDisponibles.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.REFRESH);
-        btnActualizarCajerosDisponibles.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnActualizarCajerosDisponiblesActionPerformed(evt);
-            }
-        });
-
-        btnAbrirTurno.setText("Abrir Turno");
-        btnAbrirTurno.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.OPEN_IN_NEW);
-        btnAbrirTurno.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAbrirTurnoActionPerformed(evt);
-            }
-        });
-
         btnActualizarTurnosActivos.setToolTipText("Actualizar Lista");
         btnActualizarTurnosActivos.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.REFRESH);
         btnActualizarTurnosActivos.addActionListener(new java.awt.event.ActionListener() {
@@ -146,11 +161,32 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
             }
         });
 
-        rSLabelTextIcon1.setForeground(new java.awt.Color(0, 112, 192));
-        rSLabelTextIcon1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        rSLabelTextIcon1.setText("Reporte de cajeros");
-        rSLabelTextIcon1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.EQUALIZER);
+        javax.swing.GroupLayout rSPanelGradiente1Layout = new javax.swing.GroupLayout(rSPanelGradiente1);
+        rSPanelGradiente1.setLayout(rSPanelGradiente1Layout);
+        rSPanelGradiente1Layout.setHorizontalGroup(
+            rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 819, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rSPanelGradiente1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnActualizarTurnosActivos, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCerrarTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        rSPanelGradiente1Layout.setVerticalGroup(
+            rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rSPanelGradiente1Layout.createSequentialGroup()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnCerrarTurno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnActualizarTurnosActivos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
 
+        jTabbedPane1.addTab("Turnos", rSPanelGradiente1);
+
+        tblReporteTurnos.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         tblReporteTurnos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null},
@@ -162,9 +198,14 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
                 "# ID", "Cajero", "Fecha Hora Inicio", "Estado", "Creador Turno", "Monto facturado", "Monto Devuelto", "Monto Efectivo", "Monto Credito"
             }
         ));
-        tblReporteTurnos.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        tblReporteTurnos.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         tblReporteTurnos.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblReporteTurnos);
+
+        rSLabelTextIcon1.setForeground(new java.awt.Color(0, 112, 192));
+        rSLabelTextIcon1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        rSLabelTextIcon1.setText("Reporte de cajeros");
+        rSLabelTextIcon1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.EQUALIZER);
 
         btnImprimirReporte.setText("Imprimir reporte");
         btnImprimirReporte.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.PRINT);
@@ -174,6 +215,34 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
             }
         });
 
+        javax.swing.GroupLayout rSPanelGradiente2Layout = new javax.swing.GroupLayout(rSPanelGradiente2);
+        rSPanelGradiente2.setLayout(rSPanelGradiente2Layout);
+        rSPanelGradiente2Layout.setHorizontalGroup(
+            rSPanelGradiente2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rSPanelGradiente2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(rSPanelGradiente2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addComponent(rSLabelTextIcon1, javax.swing.GroupLayout.DEFAULT_SIZE, 795, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rSPanelGradiente2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnImprimirReporte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        rSPanelGradiente2Layout.setVerticalGroup(
+            rSPanelGradiente2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rSPanelGradiente2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(rSLabelTextIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnImprimirReporte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Reportes", rSPanelGradiente2);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -182,9 +251,6 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(rSLabelAnimated1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnImprimirReporte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -193,15 +259,7 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
                                 .addComponent(btnAbrirTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 275, Short.MAX_VALUE)
-                                .addComponent(btnActualizarTurnosActivos, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnCerrarTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1)
-                            .addComponent(rSLabelTextIcon1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING))))
+                        .addComponent(jTabbedPane1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -211,25 +269,15 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
                 .addComponent(rSLabelAnimated1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnActualizarTurnosActivos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnCerrarTurno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rSLabelTextIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnAbrirTurno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnActualizarCajerosDisponibles, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnImprimirReporte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnActualizarCajerosDisponibles, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTabbedPane1)))
                 .addContainerGap())
         );
 
@@ -272,24 +320,52 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
         if (usuarioTurnoActivo(userName)) {
             JOptionPane.showMessageDialog(
                     null,
-                    "Usuario con Turno Abierto...",
+                    "Usuario cuenta con turno abierto...",
                     PROCESO_DE_VALIDACION_DE_USUARIO,
                     JOptionPane.WARNING_MESSAGE
             );
             return;
         }
 
-        //Si el usuario no tiene turno abierto, procedemos habilitar turno.
-        if (habilitarTurno(userName)) {
-            JOptionPane.showMessageDialog(
-                    null,
-                    "Turno Habilitado"
-            );
-        } else {
-            JOptionPane.showMessageDialog(
-                    null,
-                    "Problema para habilitar el Turno");
+        RSComboBox comboAlmacenes = new RSComboBox();
+
+        comboAlmacenes.removeAllItems();
+
+        comboAlmacenes.addItem(
+                Almacen.
+                        builder().
+                        nombre("Seleccione un almacen.").
+                        id(-1).
+                        build()
+        );
+
+        Almacen.getAlmacenesList(-1, "").stream().forEach(almacen -> {
+            comboAlmacenes.addItem(almacen);
+        });
+
+        JOptionPane.showInternalMessageDialog(
+                null,
+                comboAlmacenes,
+                "Seleccione un almacen para crear el turno.",
+                JOptionPane.INFORMATION_MESSAGE
+        );
+
+        int id_almacen = ((Almacen) comboAlmacenes.getSelectedItem()).getId();
+
+        if (id_almacen == -1) {
+            return;
         }
+
+        Resultados resultado = habilitarTurno(id_almacen, userName);
+
+        //Si el usuario no tiene turno abierto, procedemos habilitar turno.
+        JOptionPane.showMessageDialog(
+                null,
+                resultado.getMensaje(),
+                "Estado de proceso de turno.",
+                resultado.getIcono()
+        );
+
     }//GEN-LAST:event_btnAbrirTurnoActionPerformed
 
     private void btnCerrarTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarTurnoActionPerformed
@@ -418,23 +494,14 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
         }
 
         Integer idTurno = (Integer) tblReporteTurnos.getValueAt(rowSelected, 0);
-        
+
         imprimirReporte(idTurno);
     }//GEN-LAST:event_btnImprimirReporteActionPerformed
-    private static final String REPORTE_CORTO_PATH 
-            = "reportes/ReporteCorto.prpt";
-    
-    private static final String SQL_REPORTE_CORTO
-            = "SELECT TURNO_USUARIO, FECHA_HORA_INICIO, FECHA_HORA_FINAL, "
-            + "     ESTADO, MONTO_FACTURADO, MONTO_DEVUELTO, MONTO_EFECTIVO, "
-            + "     MONTO_CREDITO "
-            + "FROM SP_SELECT_TURNOS "
-            + "WHERE ID = ${id};";
-    
+
     private void imprimirReporte(Integer idTurno) {
-        
+
     }
-    
+
     private void tblTurnosActivosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTurnosActivosMouseClicked
         if (tblTurnosActivos.getRowCount() <= 0) {
             return;
@@ -458,7 +525,6 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
 //
 //        miHilo.start();
 //    }
-
     private void crearReporte(String userName) {
         //Columnas de la tabla....
         String[] columnas2 = {"ID Turno", "Fecha de inicio", "Fecha final",
@@ -499,8 +565,11 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private rojeru_san.rslabel.RSLabelAnimated rSLabelAnimated1;
     private RSMaterialComponent.RSLabelTextIcon rSLabelTextIcon1;
+    private rojeru_san.rspanel.RSPanelGradiente rSPanelGradiente1;
+    private rojeru_san.rspanel.RSPanelGradiente rSPanelGradiente2;
     private RSMaterialComponent.RSTableMetro tblCajerosDisponible;
     private RSMaterialComponent.RSTableMetro tblReporteTurnos;
     private RSMaterialComponent.RSTableMetro tblTurnosActivos;

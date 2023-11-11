@@ -275,7 +275,7 @@ public final class frmLogin extends javax.swing.JFrame {
                     null,
                     "Inserte una clave",
                     VALIDACION_DE_PROCESO_DE_USUARIO,
-                    JOptionPane.ERROR
+                    JOptionPane.ERROR_MESSAGE
             );
             txtClave.requestFocusInWindow();
             return;

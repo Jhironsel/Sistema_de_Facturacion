@@ -1,17 +1,17 @@
 package sur.softsurena.formularios;
 
-public class frmNomina extends javax.swing.JInternalFrame {
-    
-    public static frmNomina getInstance() {
+public class frmGestorGastos extends javax.swing.JInternalFrame {
+
+    public static frmGestorGastos getInstance() {
         return NewSingletonHolder.INSTANCE;
     }
     
     private static class NewSingletonHolder {
 
-        private static final frmNomina INSTANCE = new frmNomina();
+        private static final frmGestorGastos INSTANCE = new frmGestorGastos();
     }
     
-    public frmNomina() {
+    private frmGestorGastos() {
         initComponents();
     }
 
@@ -19,21 +19,15 @@ public class frmNomina extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setClosable(true);
-        setIconifiable(true);
-        setMaximizable(true);
-        setResizable(true);
-        setTitle("Sistema de nomina Jhaslinne");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 929, Short.MAX_VALUE)
+            .addGap(0, 394, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 618, Short.MAX_VALUE)
+            .addGap(0, 274, Short.MAX_VALUE)
         );
 
         pack();

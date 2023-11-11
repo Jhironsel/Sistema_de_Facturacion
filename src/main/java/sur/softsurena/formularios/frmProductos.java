@@ -52,7 +52,16 @@ public class frmProductos extends javax.swing.JInternalFrame {
     private static final int SCALA_ICONO = 155;
     private static String criterioBusqueda="";
 
-    public frmProductos() {
+    public static frmProductos getInstance() {
+        return NewSingletonHolder.INSTANCE;
+    }
+    
+    private static class NewSingletonHolder {
+
+        private static final frmProductos INSTANCE = new frmProductos();
+    }
+    
+    private frmProductos() {
 
         initComponents();
         jpOpciones.setVisible(false);

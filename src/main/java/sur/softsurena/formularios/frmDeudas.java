@@ -31,8 +31,17 @@ public class frmDeudas extends javax.swing.JInternalFrame {
     private DefaultTableModel miTabla;
     private final JButton button;
     private final DefaultTableCellRenderer tcr;
+    
+    public static frmDeudas getInstance() {
+        return NewSingletonHolder.INSTANCE;
+    }
+    
+    private static class NewSingletonHolder {
 
-    public frmDeudas() {
+        private static final frmDeudas INSTANCE = new frmDeudas();
+    }
+    
+    private frmDeudas() {
 
         initComponents();
         tcr = new DefaultTableCellHeaderRenderer();

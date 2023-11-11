@@ -18,14 +18,14 @@ public class FirebirdEventos extends FBEventManager{
         setUser(user);
         setPassword(clave);
         
-        setHost(dominio); //Han sido sustituido para futura versiones de JayBird
-//        setServerName(dominio);
+//        setHost(dominio); //Han sido sustituido para futura versiones de JayBird
+        setServerName(dominio);
         
-        setDatabase(pathBaseDatos);
-//        setDatabaseName(pathBaseDatos);
+//        setDatabase(pathBaseDatos);
+        setDatabaseName(pathBaseDatos);
         
-        setPort(puerto);
-//        setPortNumber(puerto);
+//        setPort(puerto);
+        setPortNumber(puerto);
         
         try {
             if(isConnected()){
@@ -35,49 +35,49 @@ public class FirebirdEventos extends FBEventManager{
             //Evento para productos.
             addEventListener("addProducto", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
-                frmProductos.llenarTabla();
+                frmProductos.llenarTabla("");
             });
             
             addEventListener("del_Producto", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
-                frmProductos.llenarTabla();
+                frmProductos.llenarTabla("");
             });
             
             addEventListener("upd_Producto", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
-                frmProductos.llenarTabla();
+                frmProductos.llenarTabla("");
             });
             
             //Evento para personas.
             addEventListener("ins_persona", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
-                frmClientes.llenarTablaClientes("evento");
+                frmClientes.llenarTablaClientes(-1,"evento");
             });
             
             addEventListener("del_persona", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
-                frmClientes.llenarTablaClientes("evento");
+                frmClientes.llenarTablaClientes(-1, "evento");
             });
             
             addEventListener("upd_persona", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
-                frmClientes.llenarTablaClientes("evento");
+                frmClientes.llenarTablaClientes(-1, "evento");
             });    
             
             //Evento para personas clientes.
             addEventListener("ins_persona_clientes", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
-                frmClientes.llenarTablaClientes("evento");
+                frmClientes.llenarTablaClientes(-1, "evento");
             });
             
             addEventListener("del_persona_clientes", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
-                frmClientes.llenarTablaClientes("evento");
+                frmClientes.llenarTablaClientes(-1, "evento");
             });
             
             addEventListener("upd_persona_clientes", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
-                frmClientes.llenarTablaClientes("evento");
+                frmClientes.llenarTablaClientes(-1, "evento");
             });
             
             //Eventos de usuario.

@@ -35,7 +35,16 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
     };
 
     private static final Logger LOG = Logger.getLogger(frmUsuarios.class.getName());
+    
+    public static frmUsuarios getInstance() {
+        return NewSingletonHolder.INSTANCE;
+    }
+    
+    private static class NewSingletonHolder {
 
+        private static final frmUsuarios INSTANCE = new frmUsuarios();
+    }
+    
     public frmUsuarios() {
         initComponents();
 
@@ -648,7 +657,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             //Validar que exista un rol seleccionado
             if (tblRoles.getSelectedRow() == -1) {
                 JOptionPane.showInternalMessageDialog(
-                        this,
+                        null,
                         "Debe seleccionar un rol de la lista.",
                         "Proceso de validacion de roles.",
                         JOptionPane.ERROR_MESSAGE
@@ -680,7 +689,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
 
             if (usuario.equalsIgnoreCase("sysdba")) {
                 JOptionPane.showInternalMessageDialog(
-                        this,
+                        null,
                         "Usuario sysdba no está permitido eliminar.",
                         "Validación de usuario a eliminar.",
                         JOptionPane.ERROR_MESSAGE
@@ -689,7 +698,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             }
 
             int rta = JOptionPane.showConfirmDialog(
-                    this,
+                    null,
                     "Esta seguro de eliminar Usuario?",
                     "Confirmacion!!!",
                     JOptionPane.YES_NO_OPTION);
@@ -1094,7 +1103,8 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tblPermisosDisponiblesMouseClicked
 
     /**
-     *
+     * Metodo que entraga el listado de los usuarios del sistema. 
+     * 
      */
     public static void llenarTabla() {
         tblUsuarios.removeAll();
@@ -1349,7 +1359,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         //Validar que tenga un rol seleccionado.
         if (tblRoles.getSelectedRow() == -1) {
             JOptionPane.showInternalMessageDialog(
-                    this,
+                    null,
                     "Debe selecionar un rol.",
                     "Validación de rol",
                     JOptionPane.ERROR_MESSAGE
@@ -1359,7 +1369,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         //Validamos que el procedimiento esta seleccionado.
         if (tblPermisosAsignados.getSelectedRow() == -1) {
             JOptionPane.showInternalMessageDialog(
-                    this,
+                    null,
                     "Debe selecionar un permiso para el rol.",
                     "Validación de rol",
                     JOptionPane.ERROR_MESSAGE
@@ -1373,7 +1383,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         //Validar que tenga un rol seleccionado.
         if (tblListadoUsuarios.getSelectedRow() == -1) {
             JOptionPane.showInternalMessageDialog(
-                    this,
+                    null,
                     "Debe selecionar un usuario de la lista.",
                     "Validación de usuario",
                     JOptionPane.ERROR_MESSAGE
@@ -1383,7 +1393,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         //Validamos que el procedimiento esta seleccionado.
         if (tblRolesUsuario.getSelectedRow() == -1) {
             JOptionPane.showInternalMessageDialog(
-                    this,
+                    null,
                     "Debe selecionar un rol asignado al usuario.",
                     "Validación de rol",
                     JOptionPane.ERROR_MESSAGE

@@ -1,6 +1,5 @@
 package sur.softsurena.formularios;
 
-import java.awt.Dimension;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import sur.softsurena.entidades.Clientes;
@@ -9,7 +8,8 @@ import sur.softsurena.entidades.Facturas;
 import static sur.softsurena.entidades.Facturas.getFacturas;
 import sur.softsurena.utilidades.Utilidades;
 
-public class frmReporteFacturas extends javax.swing.JInternalFrame {
+public class frmReporteFacturas extends javax.swing.JInternalFrame
+       {
 
     public frmReporteFacturas() {
 
@@ -30,10 +30,8 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame {
                                 new java.awt.Color(0, 0, 255)), "Fecha final"));
     }
 
-    public void centralizar() {
-        Dimension d = this.getDesktopPane().getSize();
-        this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
-    }
+    
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
