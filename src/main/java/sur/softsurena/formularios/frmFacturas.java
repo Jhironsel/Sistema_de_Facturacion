@@ -40,17 +40,18 @@ import sur.softsurena.entidades.Categorias;
 import static sur.softsurena.entidades.Categorias.getCategoriaActivas;
 import static sur.softsurena.entidades.Categorias.getCategorias;
 import sur.softsurena.entidades.Clientes;
-import static sur.softsurena.entidades.Clientes.getClientesCombo;
 import sur.softsurena.entidades.DefaultTableCellHeaderRenderer;
 import sur.softsurena.entidades.DetalleFactura;
 import static sur.softsurena.entidades.DetalleFactura.agregarDetalleFactura;
 import sur.softsurena.entidades.Facturas;
 import static sur.softsurena.entidades.Facturas.agregarFacturaNombre;
 import static sur.softsurena.entidades.Facturas.modificarFactura;
+import sur.softsurena.entidades.FiltroBusqueda;
 import sur.softsurena.entidades.HeaderFactura;
-import sur.softsurena.entidades.Productos;
 import static sur.softsurena.entidades.Productos.existeProducto;
+import static sur.softsurena.entidades.Productos.getProductosByCategoria;
 import sur.softsurena.entidades.Resultados;
+import sur.softsurena.entidades.Turnos;
 import static sur.softsurena.entidades.Turnos.turnosActivoByUsuario;
 import sur.softsurena.entidades.Usuario;
 import static sur.softsurena.formularios.frmPrincipal.mnuMovimientosNuevaFactura;
@@ -69,7 +70,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
     private String nombreCliente = "";
 
     private final String titulos[] = {"Cantidad", "Descripcion", "Montos"};
-    
+
     private JButton btn, boton;
 
     private Facturas facturas;
@@ -85,6 +86,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
     private List<DetalleFactura> detalleFacturaList;
 
     private static Imagenes icono;
+    private static Turnos turno;
 
     private Properties getPropiedad() {
         return propiedad;
@@ -110,11 +112,11 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
     public void setIdCliente(Integer idCliente) {
         this.idCliente = idCliente;
     }
-    
+
     public static frmFacturas getInstance() {
         return NewSingletonHolder.INSTANCE;
     }
-    
+
     private static class NewSingletonHolder {
 
         private static final frmFacturas INSTANCE = new frmFacturas();
@@ -124,9 +126,11 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
         icono = new Imagenes();
         initComponents();
 
-        txtCriterio.requestFocusInWindow();
-
         usuario = Usuario.getUsuarioActual();
+
+        turno = turnosActivoByUsuario(usuario.getUser_name());
+
+        txtCriterio.requestFocusInWindow();
 
         tcr = new DefaultTableCellHeaderRenderer();
 
@@ -763,8 +767,10 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
         pack();
     }// </editor-fold>//GEN-END:initComponents
     private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
-        txtTurno.setText("Turno: " + turnosActivoByUsuario(usuario.getUser_name()).getId());
-        jlAlmacen.setText("Almacen: " + turnosActivoByUsuario(usuario.getUser_name()).getAlmacen().getNombre());
+        turno = turnosActivoByUsuario(usuario.getUser_name());
+        txtTurno.setText("Turno: " + turno.getId());
+        jlAlmacen.setText("Almacen: " + turno.getAlmacen().getNombre());
+        txtIdFactura.setText(turno.getFactura().getId().toString());
         txtCriterio.requestFocusInWindow();
     }//GEN-LAST:event_formInternalFrameActivated
 
@@ -815,6 +821,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
             jpProductos.repaint();
             jpProductos.setLayout(new FlowLayout());
 
+            //TODO Crear la consulta que trae los productos que cumpla los crterios.
             try {
                 while (rs.next()) {
                     boton = new JButton(rs.getString("Descripcion").concat("                   ").substring(0, 17));
@@ -871,14 +878,25 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
                 return;
             }
             if (!existeProducto(txtCriterio.getText().trim())) {
-                JOptionPane.showMessageDialog(null, "El Producto No Existe...");
+                JOptionPane.showInternalMessageDialog(
+                        this,
+                        "El Producto No Existe...",
+                        "",
+                        JOptionPane.ERROR_MESSAGE
+                );
+
                 txtCriterio.setText("");
                 return;
             }
             //Detalle de Factura
             int num = tblDetalle.getRowCount();
             if (num == 0) {
-                JOptionPane.showMessageDialog(null, "No existe producto en detalle!!!");
+                JOptionPane.showInternalMessageDialog(
+                        this,
+                        "No existe producto en detalle!!!",
+                        "",
+                        JOptionPane.ERROR_MESSAGE
+                );
                 txtCriterio.setText("");
                 return;
             }
@@ -895,7 +913,12 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
 
             if (dime) {
                 txtCriterio.setText("");
-                JOptionPane.showMessageDialog(null, "Producto no encontrado");
+                JOptionPane.showInternalMessageDialog(
+                        this,
+                        "Producto no encontrado",
+                        "",
+                        JOptionPane.ERROR_MESSAGE
+                );
             }
 
         }
@@ -930,10 +953,14 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
     }//GEN-LAST:event_rbtContadoActionPerformed
 
     private void opcion1() {
-        int rta = JOptionPane.showConfirmDialog(null,
+        int rta = JOptionPane.showInternalConfirmDialog(
+                this,
                 "¿Esta Seguro de Borrar el detalle de la Factura?",
-                "Eliminando Detalle de la factura",
-                JOptionPane.YES_NO_OPTION);
+                "",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+        );
+
         if (rta == JOptionPane.NO_OPTION) {
             return;
         }
@@ -942,10 +969,12 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
 
     private void opcion2() {
         if (facturas.getHeaderFactura().getEstado() == 'T') {
-            JOptionPane.showMessageDialog(null,
+            JOptionPane.showInternalMessageDialog(
+                    this,
                     "Es una factura temporal no se permite eliminar",
-                    "Negacion a eliminar producto...",
-                    JOptionPane.ERROR_MESSAGE);
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             return;
         }
 
@@ -953,8 +982,12 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
             DefaultTableModel modelo = (DefaultTableModel) tblDetalle.getModel();
             int fila = tblDetalle.getSelectedRow();
             if (fila == -1) {
-                JOptionPane.showMessageDialog(null,
-                        "Debe seleccionar un articulo del detalle factura");
+                JOptionPane.showInternalMessageDialog(
+                        this,
+                        "Debe seleccionar un articulo del detalle factura",
+                        "",
+                        JOptionPane.ERROR_MESSAGE
+                );
                 return;
             }
 
@@ -976,10 +1009,19 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
 
         jpProductos.setBackground(new java.awt.Color(255, 102, 51));
 
-        jpProductos.setBorder(javax.swing.BorderFactory.createTitledBorder(null,
-                "Productos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-                javax.swing.border.TitledBorder.DEFAULT_POSITION,
-                new java.awt.Font("Ubuntu", 0, 14)));
+        jpProductos.setBorder(
+                javax.swing.BorderFactory.createTitledBorder(
+                        null,
+                        "Productos",
+                        javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+                        javax.swing.border.TitledBorder.DEFAULT_POSITION,
+                        new java.awt.Font(
+                                "Ubuntu",
+                                0,
+                                14
+                        )
+                )
+        );
 
         jpProductos.setMaximumSize(new java.awt.Dimension(350, 1500));
 
@@ -1014,10 +1056,13 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
     private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
         if (tblDetalle.getRowCount() != 0) {
             int resp = JOptionPane.showInternalConfirmDialog(
-                    null,
+                    this,
                     "Existe una factura, Desea Salir?",
-                    "Advertencia, Factura existente",
-                    JOptionPane.YES_NO_OPTION);
+                    "",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE
+            );
+
             if (resp == JOptionPane.YES_OPTION) {
                 dispose();
             }
@@ -1031,7 +1076,8 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
         if (!cmbCliente.isEnabled()) {
             return;
         }
-        //estadoCliente();
+        //TODO Analizar el siguiente metodo para ser descomentado.
+//        estadoCliente();
     }//GEN-LAST:event_cmbClienteActionPerformed
 
     private void cmbClienteItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbClienteItemStateChanged
@@ -1055,34 +1101,55 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
 
     private void btnEsperaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsperaActionPerformed
         if (tblDetalle.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(null, "Factura Vacia...");
+            JOptionPane.showInternalMessageDialog(
+                    this,
+                    "Factura Vacia...",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             return;
         }
 
         if (facturas.getDetalleFactura().get(0) == null) {
-            JOptionPane.showMessageDialog(null,
+            JOptionPane.showInternalMessageDialog(
+                    this,
                     "Ha ocurrido un error de factura realice de nuevo...",
-                    "Validación de procesos", JOptionPane.ERROR_MESSAGE);
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             return;
         }
 
+        //TODO Se necesita analisis en este parte. 
         if (cmbCliente.getSelectedIndex() > 0) {
             nombreCliente = ((Clientes) cmbCliente.getSelectedItem()).toString();
         } else {
-            if ("".equals(nombreCliente)) {
-                nombreCliente = JOptionPane.showInputDialog(null, "Inserte Nombre Cliente: ",
-                        "Inserte nombre del Cliente...",
-                        JOptionPane.INFORMATION_MESSAGE);
-                if (nombreCliente == null || nombreCliente.equals("")) {
-                    JOptionPane.showMessageDialog(null,
-                            "Nombre vacio, Seleccione un cliente\n para guardarla en temporal... ",
-                            "Advertencia", JOptionPane.ERROR_MESSAGE);
+
+            if (Objects.isNull(nombreCliente) || nombreCliente.isBlank()) {
+
+                nombreCliente = JOptionPane.showInternalInputDialog(
+                        this,
+                        "Cual es el nombre del cliente?: ",
+                        "",
+                        JOptionPane.QUESTION_MESSAGE
+                );
+
+                if (Objects.isNull(nombreCliente) || nombreCliente.isBlank()) {
+                    JOptionPane.showInternalMessageDialog(
+                            this,
+                            "Seleccione un cliente para guardarla en temporal... ",
+                            "",
+                            JOptionPane.ERROR_MESSAGE
+                    );
                     return;
                 }
             }
         }
 
-        frmTemporal miTemporal = new frmTemporal(null, true);
+        frmTemporal miTemporal = new frmTemporal(
+                null,
+                true
+        );
 
 //        miTemporal.setFactura(Integer.parseInt(txtIdFactura.getText()));
 //        miTemporal.setMiTabla(miTabla);
@@ -1116,7 +1183,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
             btnBuscarCliente.setEnabled(false);
 
             setTitle("[Nueva Factura: " + miTempo.getFactura()
-                    + "] - [Turno No.: " + turnosActivoByUsuario(usuario.getUser_name()).getId()
+                    + "] - [Turno No.: " + turno.getId()
                     + "] - [Factura Temporarl activa, Cliente: " + nombreCliente + "]");
 
             txtIdFactura.setText("" + miTempo.getFactura());
@@ -1188,11 +1255,16 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
     }//GEN-LAST:event_btnBuscarEsperaActionPerformed
 
     private void btnGastosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGastosActionPerformed
-        int resp = JOptionPane.showOptionDialog(null, "<html><big>Que desea registrar?</big></html",
-                "Elija una accion!!!",
+        int resp = JOptionPane.showInternalOptionDialog(
+                this,
+                "<html><big>Que desea registrar?</big></html>",
+                "",
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
-                null, new String[]{"<html><big>Gasto</big></html>", "<html><big>Deuda</big></html", "<html><big>Cancelar</big></html"}, 0);
+                null,
+                new String[]{"<html><big>Gasto</big></html>", "<html><big>Deuda</big></html", "<html><big>Cancelar</big></html"},
+                0
+        );
 
         if (resp == 0) {
             frmAutorizacion miAut = new frmAutorizacion(null, true);
@@ -1200,12 +1272,11 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
             miAut.setVisible(true);
 
             if (!miAut.isAceptado()) {
-                JOptionPane.showMessageDialog(null, "Usuario no valido");
                 return;
             }
 
             frmGasto miGasto = new frmGasto(null, true);
-            miGasto.setIdTurno(turnosActivoByUsuario(usuario.getUser_name()).getId());
+            miGasto.setIdTurno(turno.getId());
             miGasto.setUsuario(usuario.getUser_name());
             miGasto.setLocationRelativeTo(null);
             miGasto.setVisible(true);
@@ -1217,20 +1288,21 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
     }//GEN-LAST:event_btnGastosActionPerformed
 
     private void btnPagoDeudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagoDeudaActionPerformed
-        int resp = JOptionPane.showOptionDialog(
-                null,
+        int resp = JOptionPane.showInternalOptionDialog(
+                this,
                 "<html><big>Tipo de Deuda?</big></html",
-                "Elegir el tipo de deuda!!!",
+                "",
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
-                null, new String[]{"<html><big>Credito</big></html>",
-                    "<html><big>Externa</big></html",
-                    "<html><big>Cancelar</big></html"}, 0);
+                null,
+                new String[]{"<html><big>Credito</big></html>", "<html><big>Externa</big></html", "<html><big>Cancelar</big></html"},
+                0
+        );
 
         if (resp == 0) {
             frmCobrosClientes miPagoCliente = new frmCobrosClientes(null, closable);
             miPagoCliente.setNombreCajero(usuario.getUser_name());
-            miPagoCliente.setIdTurno(turnosActivoByUsuario(usuario.getUser_name()).getId());
+            miPagoCliente.setIdTurno(turno.getId());
             miPagoCliente.setLocationRelativeTo(null);
             miPagoCliente.setVisible(true);
 
@@ -1240,7 +1312,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
 
             frmCobrosDeudas miPagoDeuda = new frmCobrosDeudas(null, closable);
             miPagoDeuda.setNombreCajero(usuario.getUser_name());
-            miPagoDeuda.setIdTurno(turnosActivoByUsuario(usuario.getUser_name()).getId());
+            miPagoDeuda.setIdTurno(turno.getId());
             miPagoDeuda.setLocationRelativeTo(null);
             miPagoDeuda.setVisible(true);
 
@@ -1248,12 +1320,18 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
     }//GEN-LAST:event_btnPagoDeudaActionPerformed
 
     private void btnImpresionUltimaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImpresionUltimaActionPerformed
-        int resp = JOptionPane.showConfirmDialog(null,
+        int resp = JOptionPane.showInternalConfirmDialog(
+                this,
                 "Desea Imprimir la Ultima Factura?",
-                "Confirmacion de impresion", JOptionPane.YES_NO_OPTION);
+                "",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.ERROR_MESSAGE
+        );
+
         if (resp == JOptionPane.NO_OPTION) {
             return;
         }
+
         frmPrintFacturaConReporte2 miPrint = new frmPrintFacturaConReporte2(null, true);
         miPrint.setCopia(false);
         miPrint.setLocationRelativeTo(null);
@@ -1269,8 +1347,12 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
          * debe seleccionar un cliente de la lista.
          */
         if (rbtCredito.isSelected() && cmbCliente.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(null,
-                    "Debe Seleccinar un Cliente...");
+            JOptionPane.showInternalMessageDialog(
+                    this,
+                    "Debe Seleccinar un Cliente...",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             cmbCliente.requestFocusInWindow();
             return;
         }
@@ -1280,8 +1362,12 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
          * digitar en el.
          */
         if (Utilidades.controlDouble(txtTotalCantidad.getValue()) == 0.0) {
-            JOptionPane.showMessageDialog(null,
-                    "Debe Ingresar Detalle de la Factura...");
+            JOptionPane.showInternalMessageDialog(
+                    this,
+                    "Debe Ingresar Detalle de la Factura...",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             txtCriterio.requestFocusInWindow();
             return;
         }
@@ -1289,9 +1375,14 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
         double total = Utilidades.controlDouble(txtTotalValor.getValue());
 
         if (total > 0 && rbtCredito.isSelected()) {
-            int resp = JOptionPane.showConfirmDialog(null,
+            int resp = JOptionPane.showInternalConfirmDialog(
+                    this,
                     "Limite de credito Excedido! \nDesea continuar?",
-                    "Autorización de venta sobre el credito", JOptionPane.YES_NO_OPTION);
+                    "",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE
+            );
+
             if (resp == JOptionPane.NO_OPTION) {
                 return;
             } else {
@@ -1299,7 +1390,6 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
                 miAut.setLocationRelativeTo(null);
                 miAut.setVisible(true);
                 if (!miAut.isAceptado()) {
-                    JOptionPane.showMessageDialog(null, "Usuario no valido");
                     return;
                 }
             }
@@ -1325,7 +1415,12 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
             Facturas f = Facturas.builder().id(idFactura).headerFactura(hf).build();
 
             if (!modificarFactura(f)) {
-                JOptionPane.showMessageDialog(null, "Ocurrio un error factura Temporal");
+                JOptionPane.showInternalMessageDialog(
+                        this,
+                        "Ocurrio un error factura Temporal",
+                        "",
+                        JOptionPane.ERROR_MESSAGE
+                );
                 return;
             } else {
                 for (int i = 1; i <= facturas.getDetalleFactura().size(); i++) {
@@ -1338,9 +1433,10 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
 //
 //                        borrarFactura(idFactura);
 //
-//                        JOptionPane.showMessageDialog(null,
-//                                "Ocurrio un error Temporal Detallle");
-//
+//                        JOptionPane.showInternalMessageDialog(
+//                              this,
+//                              "Ocurrio un error Temporal Detallle"
+//                        );
 //                        return;
 //                    }
                 }
@@ -1349,7 +1445,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
 
             HeaderFactura hf = HeaderFactura.builder().
                     idCliente(((Clientes) cmbCliente.getSelectedItem()).getId_persona()).
-                    idTurno(turnosActivoByUsuario(usuario.getUser_name()).getId()).
+                    idTurno(turno.getId()).
                     efectivo(new BigDecimal(miEfe.txtEfectivo.getValue().toString())).
                     cambio(new BigDecimal(miEfe.txtDevuelta.getValue().toString())).
                     credito(rbtCredito.isSelected()).build();
@@ -1360,15 +1456,25 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
 
             detalleFacturaList.add(objDF);
 
-            Facturas f = Facturas.builder().
+            Facturas factura = Facturas.builder().
                     id(idFactura).headerFactura(hf).detalleFactura(detalleFacturaList).build();
 
-            if (agregarFacturaNombre(f) < 1) {
-                JOptionPane.showMessageDialog(null, "Esta compra no se ha registrado...");
+            if (agregarFacturaNombre(factura) < 1) {
+                JOptionPane.showInternalMessageDialog(
+                        this,
+                        "Esta compra no se ha registrado...",
+                        "",
+                        JOptionPane.ERROR_MESSAGE
+                );
             } else {
                 for (int i = 0; i < facturas.getDetalleFactura().size(); i++) {
-                    if (agregarDetalleFactura(f) < 1) {
-                        JOptionPane.showMessageDialog(null, "Esta compra no se ha registrado...");
+                    if (agregarDetalleFactura(factura) < 1) {
+                        JOptionPane.showInternalMessageDialog(
+                                this,
+                                "Esta compra no se ha registrado...",
+                                "",
+                                JOptionPane.ERROR_MESSAGE
+                        );
                         return;
                     }
                 }
@@ -1431,12 +1537,12 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
     }//GEN-LAST:event_btnBuscarClienteActionPerformed
 
     private void formInternalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameDeiconified
-        if(frmPrincipal.jpEstados.getComponent(0) != jpInfoFactura)
+        if (frmPrincipal.jpEstados.getComponent(0) != jpInfoFactura)
             frmPrincipal.jpEstados.add(jpInfoFactura, 0);
     }//GEN-LAST:event_formInternalFrameDeiconified
 
     private void formInternalFrameIconified(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameIconified
-        if(frmPrincipal.jpEstados.getComponent(0) == jpInfoFactura)
+        if (frmPrincipal.jpEstados.getComponent(0) == jpInfoFactura)
             frmPrincipal.jpEstados.remove(jpInfoFactura);
     }//GEN-LAST:event_formInternalFrameIconified
 
@@ -1467,6 +1573,10 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
     }//GEN-LAST:event_formInternalFrameClosed
 
     /**
+     * Es el metodo Sobre escrito que me permite hacer varias acciones en el.
+     *
+     * Este metodo detecta varias acciones que realiza el usuario al crear una
+     * factura.
      *
      * @param actionEvent
      */
@@ -1561,11 +1671,13 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
         jpProductos.repaint();
         jpProductos.setLayout(new FlowLayout());
 
-        Productos.getProductosByCategoria(
+        getProductosByCategoria(
                 idCategoria,
                 cbTodosProductos.isSelected()).stream().forEach(producto -> {
+
             boton = new JButton(producto.getDescripcion());
             boton.setToolTipText(producto.getId().toString());
+
             boton.setMnemonic('P');
 
             ImageIcon imagen = null;
@@ -1634,7 +1746,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
     }
 
     private void categoriaR() {
-        List<Categorias> categoriasList = null;
+        List<Categorias> categoriasList;
 
         //Mandamos a buscar todas las categorias del sistema.
         //TODO No se está obteniendo todas las categorias.
@@ -1716,7 +1828,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
 //                    + Utilidades.priceWithDecimal(rs.getDouble("deudaActual")));
 //            valorCredito = rs.getDouble("credito");
 //            if (idPersona != 0 && rbtCredito.isSelected()) {
-//                resp = JOptionPane.showConfirmDialog(null, "Cliente: " + rs.getString("nombres")
+//                resp = JOptionPane.showInternalConfirmDialog(this, "Cliente: " + rs.getString("nombres")
 //                        + "\nSu credito es de: " + "RD$" + rs.getString("credito")
 //                        + "\nDesea Continuar?",
 //                        "Credito insuficiente", JOptionPane.YES_NO_OPTION);
@@ -1735,7 +1847,6 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
 //
 ////Si la Autenticacion falla emitimos un mensaje de Usuario no valido.
 //                if (!miAut.isAceptado()) {
-//                    JOptionPane.showMessageDialog(null, "Usuario no valido");
 //                    rbtContadoActionPerformed(null);
 //                }
 //
@@ -1749,26 +1860,31 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
 //                break;
 //        }
 //    }
+    /**
+     * Este metodo se esta ejecutando en dos metodos, son:
+     * formInternalFrameOpened: Permite cargar la lista de los clientes en el
+     * JComboBox al abrirse el Formulario.
+     *
+     * btnBuscarClienteActionPerformed: Actualiza el combo para que un bucl
+     * busque si un cliente existe.
+     *
+     */
     private void getClientes() {
         cmbCliente.removeAllItems();
         cmbCliente.repaint();
 
-        List<Clientes> clientesList = getClientesCombo();
+        List<Clientes> clientesList = Clientes.getClientes(
+                FiltroBusqueda
+                        .builder()
+                        .estado(true)
+                        .build()
+        );
 
         clientesList.stream().forEach(cliente -> {
             cmbCliente.addItem(cliente);
         });
 
         cmbCliente.setSelectedIndex(0);
-
-        if (facturas.getHeaderFactura().getEstado() == 'T') {
-            for (int i = 0; i < cmbCliente.getItemCount(); i++) {
-                if (((Clientes) cmbCliente.getItemAt(i)).getId_persona() == getIdCliente()) {
-                    cmbCliente.setSelectedIndex(i);
-                    return;
-                }
-            }
-        }
     }
 
     private void limpiarTabla() {
@@ -1895,10 +2011,12 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
         do {
             bandera = false;
             try {
-                String cantidadPro = JOptionPane.showInputDialog(null,
+                String cantidadPro = JOptionPane.showInternalInputDialog(
+                        this,
                         "Cantidad: ",
-                        PROCESO_DE_CREACION_DE_FACTURA,
-                        JOptionPane.QUESTION_MESSAGE);
+                        "",
+                        JOptionPane.QUESTION_MESSAGE
+                );
 
                 if (Objects.isNull(cantidadPro)) {
                     bandera = true;
@@ -1908,20 +2026,22 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
                 cantidad = Float.valueOf(cantidadPro);
 
             } catch (NumberFormatException ex) {
-                javax.swing.JOptionPane.showMessageDialog(
-                        null,
+                javax.swing.JOptionPane.showInternalMessageDialog(
+                        this,
                         "Ingrese una cantidad numerica: ",
-                        PROCESO_DE_CREACION_DE_FACTURA,
-                        JOptionPane.WARNING_MESSAGE);
+                        "",
+                        JOptionPane.WARNING_MESSAGE
+                );
+
                 bandera = true;
                 continue;
             }
 
             if (cantidad <= 0) {
-                javax.swing.JOptionPane.showMessageDialog(
-                        null,
+                javax.swing.JOptionPane.showInternalMessageDialog(
+                        this,
                         "Ingrese una cantidad positiva y diferente de cero: ",
-                        PROCESO_DE_CREACION_DE_FACTURA,
+                        "",
                         JOptionPane.WARNING_MESSAGE);
                 bandera = true;
             }
@@ -1933,5 +2053,4 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
                 estado(bandera)
                 .build();
     }
-    private static final String PROCESO_DE_CREACION_DE_FACTURA = "Proceso de creación de factura.";
 }

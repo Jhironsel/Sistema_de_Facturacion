@@ -2,7 +2,6 @@ package sur.softsurena.Test.Grafico;
 
 import java.io.File;
 import java.io.IOException;
-
 import xy.ui.testing.Tester;
 import xy.ui.testing.editor.TestEditor;
 
@@ -36,7 +35,7 @@ public class TestSwingConexion {
         Tester tester = new Tester();
 
         //Ejecutar una sola prueba
-        tester.loadFromFile(new File(parametros));
+        tester.loadFromFile(new File(moduloClientes[2]));
         
         //Asserts that the given test specification file gets load and executed successfully.
 //        for (String file : moduloUsuario) {

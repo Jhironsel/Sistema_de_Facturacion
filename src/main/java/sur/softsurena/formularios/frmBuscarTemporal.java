@@ -1,12 +1,8 @@
 package sur.softsurena.formularios;
 
-import java.awt.Color;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -168,7 +164,12 @@ public final class frmBuscarTemporal extends java.awt.Dialog {
     private void btnImprimirCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirCuentaActionPerformed
         //Debe haber una factura selecciona
         if (tblDetalle.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(null, "No ha seleccionado Factura");
+            JOptionPane.showMessageDialog(
+                    this, 
+                    "No ha seleccionado Factura",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             return;
         }
 
@@ -198,7 +199,12 @@ public final class frmBuscarTemporal extends java.awt.Dialog {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         if (tblDetalle.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(null, "Debe selecionar una Factura...");
+            JOptionPane.showMessageDialog(
+                    this, 
+                    "Debe selecionar una Factura...",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             return;
         }
         setAceptar(true);

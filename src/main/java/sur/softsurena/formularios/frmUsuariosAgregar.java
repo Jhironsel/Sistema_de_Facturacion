@@ -5,6 +5,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import sur.softsurena.entidades.Etiquetas;
+import sur.softsurena.entidades.Resultados;
 import sur.softsurena.entidades.Roles;
 import sur.softsurena.entidades.Usuario;
 import static sur.softsurena.entidades.Usuario.*;
@@ -16,8 +17,6 @@ import static sur.softsurena.utilidades.Utilidades.showTooltip;
 public class frmUsuariosAgregar extends javax.swing.JDialog {
 
     private boolean nuevo;//Si el suario es nuevo o no
-
-    private static final String PROCESO_DE_VALIDACION = "Proceso de validacion.";
 
     /*Este constructor es utilizado para agregar nuevos usuarios*/
     public frmUsuariosAgregar(java.awt.Frame parent, boolean modal) {
@@ -49,52 +48,51 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
         txtDescripcion.setText(usuario.getDescripcion());
 
         nuevo = false;
-        
+
         String titulos[] = {"Propiedad", "Valor"};
 
         Object registro[] = new Object[titulos.length];
 
         DefaultTableModel dtmEtiquetas = new DefaultTableModel(null, titulos);
-        
+
         tblEtiquetas.removeAll();
-        
+
         Etiquetas.getEtiquetasUsuario(usuario.getUser_name()).stream().
-                forEach(etiqueta ->{
-                    registro[0]=etiqueta.getPropiedad();
-                    registro[1]=etiqueta.getValor();
-                    
+                forEach(etiqueta -> {
+                    registro[0] = etiqueta.getPropiedad();
+                    registro[1] = etiqueta.getValor();
+
                     dtmEtiquetas.addRow(registro);
-        });
-        
+                });
+
         tblEtiquetas.setModel(dtmEtiquetas);
-        
+
         repararColumnaTable(tblEtiquetas);
 
         tblEtiquetas.setBackgoundHover(new java.awt.Color(102, 102, 255));
-        
+
         String titulos2[] = {"Roles", "Descripción"};
 
         Object registro2[] = new Object[titulos2.length];
 
         DefaultTableModel dtmRoles = new DefaultTableModel(null, titulos2);
-        
+
         tblRoles.removeAll();
-        
+
         Roles.comprobandoRol(usuario.getUser_name()).stream().
-                forEach(rol ->{
+                forEach(rol -> {
                     registro2[0] = rol.getRoleName();
                     registro2[1] = rol.getDescripcion();
-                    
+
                     dtmRoles.addRow(registro2);
-        });
-        
+                });
+
         tblRoles.setModel(dtmRoles);
-        
+
         repararColumnaTable(tblRoles);
 
         tblRoles.setBackgoundHover(new java.awt.Color(102, 102, 255));
-        
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -510,27 +508,27 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtUserNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserNameActionPerformed
-        txtPNombre.requestFocus();
+        txtPNombre.requestFocusInWindow();
     }//GEN-LAST:event_txtUserNameActionPerformed
 
     private void txtPNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPNombreActionPerformed
-        txtSNombre.requestFocus();
+        txtSNombre.requestFocusInWindow();
     }//GEN-LAST:event_txtPNombreActionPerformed
 
     private void txtApellidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidosActionPerformed
-        txtClave1.requestFocus();
+        txtClave1.requestFocusInWindow();
     }//GEN-LAST:event_txtApellidosActionPerformed
 
     private void txtClave1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtClave1ActionPerformed
-        txtClave2.requestFocus();
+        txtClave2.requestFocusInWindow();
     }//GEN-LAST:event_txtClave1ActionPerformed
 
     private void txtClave2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtClave2ActionPerformed
-        txtDescripcion.requestFocus();
+        txtDescripcion.requestFocusInWindow();
     }//GEN-LAST:event_txtClave2ActionPerformed
 
     private void txtSNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSNombreActionPerformed
-        txtApellidos.requestFocus();
+        txtApellidos.requestFocusInWindow();
     }//GEN-LAST:event_txtSNombreActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
@@ -538,36 +536,36 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
             Validando la informacion que el usuario trata de ingresar o 
         actualizar a la base de datos.
          */
-        if (txtUserName.getText().equals("")) {
+        if (txtUserName.getText().isBlank()) {
             JOptionPane.showMessageDialog(
-                    null,
+                    this,
                     "Debe Digitar un ID.",
-                    PROCESO_DE_VALIDACION,
+                    "",
                     JOptionPane.ERROR_MESSAGE
             );
-            txtUserName.requestFocus();
+            txtUserName.requestFocusInWindow();
             return;
         }
 
-        if (txtPNombre.getText().equals("")) {
+        if (txtPNombre.getText().isBlank()) {
             JOptionPane.showMessageDialog(
-                    null,
+                    this,
                     "Debe Digitar nombres.",
-                    PROCESO_DE_VALIDACION,
+                    "",
                     JOptionPane.ERROR_MESSAGE
             );
-            txtPNombre.requestFocus();
+            txtPNombre.requestFocusInWindow();
             return;
         }
 
-        if (txtApellidos.getText().equals("")) {
+        if (txtApellidos.getText().isBlank()) {
             JOptionPane.showMessageDialog(
-                    null,
+                    this,
                     "Debe Digitar un apellidos.",
-                    PROCESO_DE_VALIDACION,
+                    "",
                     JOptionPane.ERROR_MESSAGE
             );
-            txtApellidos.requestFocus();
+            txtApellidos.requestFocusInWindow();
             return;
         }
 
@@ -581,48 +579,48 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
         if (nuevo) {//Si es nuevo se realizan las verificaciones de las claves..
             if (clave1.isBlank()) {
                 JOptionPane.showMessageDialog(
-                        null,
+                        this,
                         "Debe Ingresar clave.",
-                        PROCESO_DE_VALIDACION,
+                        "",
                         JOptionPane.ERROR_MESSAGE
                 );
-                txtClave1.requestFocus();
+                txtClave1.requestFocusInWindow();
                 return;
             }
 
             if (clave2.isBlank()) {
                 JOptionPane.showMessageDialog(
-                        null,
+                        this,
                         "Debe Ingresar confirmacion.",
-                        PROCESO_DE_VALIDACION,
+                        "",
                         JOptionPane.ERROR_MESSAGE
                 );
-                txtClave2.requestFocus();
+                txtClave2.requestFocusInWindow();
                 return;
             }
         }
 
         if (!clave1.equals(clave2)) {
             JOptionPane.showMessageDialog(
-                    null,
+                    this,
                     "Claves no coinciden.",
-                    PROCESO_DE_VALIDACION,
+                    "",
                     JOptionPane.ERROR_MESSAGE
             );
             txtClave2.setText("");
             txtClave1.setText("");
-            txtClave1.requestFocus();
+            txtClave1.requestFocusInWindow();
             return;
         }
 
         if (tblRoles.getRowCount() <= 0) {
             JOptionPane.showMessageDialog(
-                    null,
+                    this,
                     "Debe agregar un rol para el usuario",
-                    "Proceso de validacion de usuario",
+                    "",
                     JOptionPane.WARNING_MESSAGE
             );
-            btnAgregarRol.requestFocus();
+            btnAgregarRol.requestFocusInWindow();
             showTooltip(btnAgregarRol);
             return;
         }
@@ -638,16 +636,16 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
                     roleName(tblRoles.getValueAt(i, 0).toString()).
                     build());
         }
-        
+
         String etiquetas = "";
         for (int i = 0; i < tblEtiquetas.getRowCount(); i++) {
-            etiquetas = etiquetas + tblEtiquetas.getValueAt(i, 0).toString() + " = " +
-                    "'"+tblEtiquetas.getValueAt(i, 1).toString()+"'"+
-                    ((i == tblEtiquetas.getRowCount()-1) ? "":", ");
+            etiquetas = etiquetas + tblEtiquetas.getValueAt(i, 0).toString() + " = "
+                    + "'" + tblEtiquetas.getValueAt(i, 1).toString() + "'"
+                    + ((i == tblEtiquetas.getRowCount() - 1) ? "" : ", ");
         }
-        
-        etiquetas = "TAGS("+etiquetas+")";
-        
+
+        etiquetas = "TAGS(" + etiquetas + ")";
+
         String mensaje = "<html>"
                 + "<h1>Se va a agregar el Usuario: </h1><h2>" + txtUserName.getText() + "</h2></br>"
                 + "<h1>Con Nombre y Apellido: </h1><h2>" + txtPNombre.getText() + " " + txtApellidos.getText() + "</h2></br>"
@@ -657,9 +655,9 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
                 + "</html>";
 
         int resp = JOptionPane.showConfirmDialog(
-                null,
+                this,
                 mensaje,
-                "Confirmacion de Usuario",
+                "",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE);
 
@@ -669,9 +667,9 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
 
         if (existeUsuarioByUserName(txtUserName.getText()) & nuevo) {
             int r = JOptionPane.showConfirmDialog(
-                    null,
+                    this,
                     "Usuario ya existe. \n\nDesea recuperar el usuario?",
-                    "Proceso de verificación",
+                    "",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.QUESTION_MESSAGE
             );
@@ -682,26 +680,28 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
 
             txtClave1.setText("");
             txtClave2.setText("");
-            txtClave1.requestFocus();
+            txtClave1.requestFocusInWindow();
             return;
         }
-        
-        Usuario u = Usuario.builder().
-                                user_name(txtUserName.getText()).
-                                pnombre(txtPNombre.getText()).
-                                snombre(txtSNombre.getText()).
-                                apellidos(txtApellidos.getText()).
-                                descripcion(txtDescripcion.getText()).
-                                clave(clave1).
-                                tags(etiquetas).
-                                estado(cbEstado.isSelected()).
-                                administrador(cbAdministrador.isSelected()).
-                                roles(rolesList).
-                                build();
 
+        Usuario usuario = Usuario.builder().
+                user_name(txtUserName.getText()).
+                pnombre(txtPNombre.getText()).
+                snombre(txtSNombre.getText()).
+                apellidos(txtApellidos.getText()).
+                descripcion(txtDescripcion.getText()).
+                clave(clave1).
+                tags(etiquetas).
+                estado(cbEstado.isSelected()).
+                administrador(cbAdministrador.isSelected()).
+                roles(rolesList).
+                build();
+        Resultados resultado = (nuevo ? agregarUsuario(usuario) : modificarUsuario(usuario));
         JOptionPane.showMessageDialog(
-                null,
-                (nuevo ? agregarUsuario(u) : modificarUsuario(u))
+                this,
+                resultado,
+                "",
+                resultado.getIcono()
         );
 
         dispose();
@@ -735,34 +735,34 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
         if (!e.aceptar) {
             return;
         }
-        
+
         boolean palabra = PalabrasReservadasFirebird.
                 palabrasReservadasFirebird().
                 contains(e.txtPropiedad.getText());
 
-        if(palabra){
+        if (palabra) {
             JOptionPane.showMessageDialog(
-                    null, 
-                    "Esta propiedad no puede ser usada.", 
-                    PROCESO_DE_VALIDACION, 
+                    this,
+                    "Esta propiedad no puede ser usada.",
+                    "",
                     JOptionPane.ERROR_MESSAGE
             );
             return;
         }
-        
+
         for (int i = 0; i < tblEtiquetas.getRowCount(); i++) {
-            if(e.txtPropiedad.getText().equalsIgnoreCase(
-                    tblEtiquetas.getValueAt(i, 0).toString())){
+            if (e.txtPropiedad.getText().equalsIgnoreCase(
+                    tblEtiquetas.getValueAt(i, 0).toString())) {
                 JOptionPane.showMessageDialog(
-                        null, 
-                        "Esta propiedad ya se encuentra registrada.", 
-                        PROCESO_DE_VALIDACION, 
+                        this,
+                        "Esta propiedad ya se encuentra registrada.",
+                        "",
                         JOptionPane.ERROR_MESSAGE
                 );
                 return;
             }
         }
-        
+
         Object registro[] = new Object[2];
         DefaultTableModel miTabla = (DefaultTableModel) tblEtiquetas.getModel();
 
@@ -786,39 +786,39 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
 
     private void btnAgregarRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarRolActionPerformed
         Roles rol = (Roles) JOptionPane.showInputDialog(
-                null,
+                this,
                 "Seleccione un rol para el usuario",
-                "Proceso de seleccion.",
+                "",
                 JOptionPane.PLAIN_MESSAGE,
                 null,
                 Roles.getRoles().stream().toArray(Roles[]::new),
                 null
         );
-        
+
         for (int i = 0; i < tblRoles.getRowCount(); i++) {
-            if(rol.toString().equalsIgnoreCase(
-                    tblRoles.getValueAt(i, 0).toString())){
+            if (rol.toString().equalsIgnoreCase(
+                    tblRoles.getValueAt(i, 0).toString())) {
                 JOptionPane.showMessageDialog(
-                        null, 
-                        "Este role ya se encuentra en la lista.", 
-                        PROCESO_DE_VALIDACION, 
+                        this,
+                        "Este role ya se encuentra en la lista.",
+                        "",
                         JOptionPane.ERROR_MESSAGE
                 );
                 return;
             }
         }
-        
+
         int resp = JOptionPane.showConfirmDialog(
-                null, 
-                "Desea permitir administracion de rol al usuario?", 
-                PROCESO_DE_VALIDACION, 
-                JOptionPane.YES_NO_OPTION, 
+                this,
+                "Desea permitir administracion de rol al usuario?",
+                "",
+                JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE
         );
-        
+
         String cabeceras[] = {"Rol de usuario", "Con Admin", "Descripcion"};
         Object registro[] = new Object[cabeceras.length];
-        
+
         DefaultTableModel miTabla = (DefaultTableModel) tblRoles.getModel();
         miTabla.setColumnIdentifiers(cabeceras);
 
@@ -829,7 +829,7 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
         miTabla.addRow(registro);
 
         tblRoles.setModel(miTabla);
-        
+
         Utilidades.repararColumnaTable(tblRoles);
     }//GEN-LAST:event_btnAgregarRolActionPerformed
 

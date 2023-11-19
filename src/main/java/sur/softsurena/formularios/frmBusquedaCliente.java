@@ -5,7 +5,8 @@ import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import sur.softsurena.entidades.Clientes;
-import static sur.softsurena.entidades.Clientes.getClientesCombo;
+import static sur.softsurena.entidades.Clientes.getClientes;
+import sur.softsurena.entidades.FiltroBusqueda;
 
 public class frmBusquedaCliente extends javax.swing.JDialog {
 
@@ -161,7 +162,12 @@ public class frmBusquedaCliente extends javax.swing.JDialog {
         String titulos[] = {"Lista de Clientes"};
         miTabla = new DefaultTableModel(null, titulos);
 
-        List<Clientes> clientesList = getClientesCombo();
+        List<Clientes> clientesList = getClientes(
+                FiltroBusqueda.
+                        builder().
+                        criterioBusqueda(txtCriterio.getText().strip()).
+                        build()
+        );
 
         Object registro[] = new Object[1];
 

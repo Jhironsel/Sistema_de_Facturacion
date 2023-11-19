@@ -31,7 +31,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="jpBotones" alignment="0" pref="872" max="32767" attributes="0"/>
           <Group type="102" attributes="0">
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="jtpPrincipal" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
@@ -46,7 +46,7 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="rSLabelAnimated1" pref="60" max="32767" attributes="0"/>
                   <Component id="labelIcon1" max="32767" attributes="0"/>
@@ -212,7 +212,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="844" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="850" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -220,7 +220,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="360" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="369" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -310,7 +310,7 @@
                           <Component id="rSPanelShadow1" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="rSPanelShadow2" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="107" max="32767" attributes="0"/>
+                      <EmptySpace pref="116" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -340,7 +340,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jScrollPane2" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
-                                  <Component id="txtNombreAlmacen" pref="300" max="32767" attributes="0"/>
+                                  <Component id="txtNombreAlmacen" pref="303" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="rsEstado" min="-2" pref="73" max="-2" attributes="0"/>
                               </Group>
@@ -439,7 +439,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="rSCheckBox1" max="32767" attributes="0"/>
-                              <Component id="rSCheckBox3" alignment="0" pref="379" max="32767" attributes="0"/>
+                              <Component id="rSCheckBox3" alignment="0" pref="382" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>

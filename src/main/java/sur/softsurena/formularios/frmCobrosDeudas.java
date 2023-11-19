@@ -389,12 +389,22 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
 
     private void btnPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarActionPerformed
         if (cmbCliente.getSelectedIndex() <= 0) {
-            JOptionPane.showMessageDialog(null, "Debe Selecionar un Cliente...");
+            JOptionPane.showMessageDialog(
+                    this, 
+                    "Debe Selecionar un Cliente...",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             cmbCliente.requestFocusInWindow();
             return;
         }
         if (tblDeudas.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar una factura");
+            JOptionPane.showMessageDialog(
+                    this, 
+                    "Debe seleccionar una factura",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             return;
         }
 
@@ -403,23 +413,36 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
         //float montoDeuda = Utilidades.controlDouble(txtMontoDeuda.getValue());//Total de lo que debe...
 
         if (monto.compareTo(BigDecimal.ZERO) <= 0) {
-            JOptionPane.showMessageDialog(null, "Debe ingresar un valor mayor a cero(0)");
+            JOptionPane.showMessageDialog(
+                    this, 
+                    "Debe ingresar un valor mayor a cero(0)",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             txtMonto.setValue(0.0);
             txtMonto.requestFocusInWindow();
             return;
         }
 
         if (monto.compareTo(montoSaldo) > 1) {
-            JOptionPane.showMessageDialog(null, "Monto excede el saldo");
+            JOptionPane.showMessageDialog(
+                    this, 
+                    "Monto excede el saldo",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             txtMonto.setValue(0.0);
             txtMonto.requestFocusInWindow();
             return;
         }
 
-        int num = JOptionPane.showConfirmDialog(null,
+        int num = JOptionPane.showConfirmDialog(
+                this,
                 "Esta seguro de realizar Cobro?",
-                "Confirmacion de Pago",
-                JOptionPane.YES_NO_OPTION);
+                "",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+        );
 
         if (num == JOptionPane.NO_OPTION) {
             return;
@@ -429,7 +452,12 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
 //                Utilidades.objectToInt(tblDeudas.getValueAt(tblDeudas.getSelectedRow(), 0)),
 //                getIdTurno(), 
 //                monto);
-        JOptionPane.showMessageDialog(null, "Pago realizado con Exito...");
+        JOptionPane.showMessageDialog(
+                this,
+                "Pago realizado con Exito...",
+                "",
+                JOptionPane.INFORMATION_MESSAGE
+        );
 
         //imprimirPago();
         dispose();

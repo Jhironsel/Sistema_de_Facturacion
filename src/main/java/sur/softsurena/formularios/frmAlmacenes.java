@@ -27,7 +27,7 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
     
     private frmAlmacenes() {
         if (!privilegioTabla(Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_EXECUTE).
+                privilegio(Privilegios.PRIVILEGIO_SELECT).
                 nombre_relacion("V_ALMACENES").build())) {
 
             final String mensaje = "No cuenta con permisos para ver la información de"
@@ -36,7 +36,7 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
             JOptionPane.showInternalMessageDialog(
                     null,
                     mensaje,
-                    "Validación de proceso",
+                    "",
                     JOptionPane.WARNING_MESSAGE
             );
 
@@ -214,13 +214,13 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
             jpAlmacenesTblLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpAlmacenesTblLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 844, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 850, Short.MAX_VALUE))
         );
         jpAlmacenesTblLayout.setVerticalGroup(
             jpAlmacenesTblLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpAlmacenesTblLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE))
         );
 
         jtpPrincipal.addTab("Lista de Almacen", jpAlmacenesTbl);
@@ -253,7 +253,7 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
                 .addGroup(rSPanelShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2)
                     .addGroup(rSPanelShadow1Layout.createSequentialGroup()
-                        .addComponent(txtNombreAlmacen, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                        .addComponent(txtNombreAlmacen, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(rsEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -287,7 +287,7 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(rSPanelShadow2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(rSCheckBox1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(rSCheckBox3, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE))
+                    .addComponent(rSCheckBox3, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE))
                 .addContainerGap())
         );
         rSPanelShadow2Layout.setVerticalGroup(
@@ -317,7 +317,7 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
                 .addGroup(RSPGMantenimientoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rSPanelShadow1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rSPanelShadow2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(107, Short.MAX_VALUE))
+                .addContainerGap(116, Short.MAX_VALUE))
         );
 
         jtpPrincipal.addTab("Mantenimiento", RSPGMantenimiento);
@@ -340,10 +340,10 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jpBotones, javax.swing.GroupLayout.DEFAULT_SIZE, 872, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jtpPrincipal)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(labelIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(rSLabelAnimated1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -351,7 +351,7 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(rSLabelAnimated1, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
                     .addComponent(labelIcon1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -405,9 +405,9 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
 //
 //        //Mostramos un mensaje de advertencia si el usuario desea continuar con
 //        //la eliminación del registro.
-//        int rta = JOptionPane.showConfirmDialog(null,
+//        int rta = JOptionPane.showConfirmDialog(this,
 //            "¿Esta Seguro de Eliminar Registro del Cliente?",
-//            "Eliminar Cliente",
+//            "",
 //            JOptionPane.YES_NO_OPTION,
 //            JOptionPane.QUESTION_MESSAGE);
 //
@@ -423,15 +423,17 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
 //
 //    //Mandamos a borrar el cliente y obtenemos el resultado de la operacion
 //    //y almacenamos en una variable.
-//    String mensaje = borrarCliente(idCliente).getMensaje();
+//    TODO recibir aqui el objecto resultados.
+//    String mensaje = borrarCliente(idCliente);
 //
 //    //Posibles icono a utilizar en el JOpcionPane
 //    int icono = mensaje.equals(Clientes.CLIENTE_BORRADO_CORRECTAMENTE)
 //    ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.WARNING_MESSAGE;
 //
-//    JOptionPane.showInternalMessageDialog(null,
+//    JOptionPane.showInternalMessageDialog(
+//        this,
 //        mensaje,
-//        "Proceso de borrado de cliente.",
+//        "",
 //        icono);
 //
 //        repararColumnaTable(tblClientes);
@@ -448,7 +450,7 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
         String resp = JOptionPane.showInternalInputDialog(
                 this,
                 "Ingrese su criterio de busqueda.\n[Cedula, nombres o apellidos]",
-                "Busqueda de registros de clientes",
+                "",
                 JOptionPane.QUESTION_MESSAGE
         );
 
@@ -465,10 +467,10 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
 
         if (txtNombreAlmacen.getText().isBlank()) {
             JOptionPane.showInternalMessageDialog(
-                null,
+                this,
                 "Debe digitar el nombre del almacen...",
-                "Validacion de campo",
-                JOptionPane.INFORMATION_MESSAGE
+                "",
+                JOptionPane.ERROR_MESSAGE
             );
             txtNombreAlmacen.requestFocusInWindow();
             return;
@@ -476,10 +478,10 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
 
         if (txtDetalleUbicacion.getText().isBlank()) {
             int resp = JOptionPane.showInternalConfirmDialog(
-                    null,
+                    this,
                     "Es importante agregar un detalle de la ubicacion del almacen."
                             + "\nDesea continuar?",
-                    "Validacion de campo",
+                    "",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.WARNING_MESSAGE
             );
@@ -492,10 +494,10 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
         
         if(!rsEstado.isActivado()){
             int resp = JOptionPane.showInternalConfirmDialog(
-                    null,
+                    this,
                     "Se esta creando un almacen de estado inactivo."
                             + "\nDesea continuar?",
-                    "Validacion de campo",
+                    "",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.WARNING_MESSAGE
             );
@@ -518,12 +520,13 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
                             build()
             );
         } else {
-            
+            //TODO Crear proceso para modificar almacen.
         }
         
-        JOptionPane.showMessageDialog(null, 
-                resultado.getMensaje(), 
-                "Proceso de validación.", 
+        JOptionPane.showInternalMessageDialog(
+                this, 
+                resultado, 
+                "", 
                 resultado.getIcono()
         );
         
@@ -620,9 +623,10 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
         //Si la tabla de registro de los cliente está vacia devolvemos true
         //para que el proceso no continue.
         if (tblAlmacenes.getRowCount() <= 0) {
-            JOptionPane.showInternalMessageDialog(null,
+            JOptionPane.showInternalMessageDialog(
+                    this,
                     "Debe contar con registros de almacen, agregue nuevo almacen.",
-                    PROCESO_DE_VALIDACION,
+                    "",
                     JOptionPane.ERROR_MESSAGE
             );
             return true;
@@ -631,17 +635,16 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
         //Si no existe un registro seleccionado devolvemos true para que el 
         //proceso no continue
         if (tblAlmacenes.getSelectedRow() < 0) {
-            JOptionPane.showInternalMessageDialog(null,
+            JOptionPane.showInternalMessageDialog(
+                    this,
                     "Debe de seleccionar un cliente",
-                    PROCESO_DE_VALIDACION,
+                    "",
                     JOptionPane.ERROR_MESSAGE
             );
             return true;
         }
         return false;
     }
-
-    public static final String PROCESO_DE_VALIDACION = "Proceso de validación.";
 
     /**
      *

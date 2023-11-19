@@ -158,16 +158,24 @@ public class frmTemporal extends java.awt.Dialog {
         Facturas f = Facturas.builder().id(idFactura).headerFactura(hf).build();
         
         if (agregarFacturaNombre(f) < 1) {
-            JOptionPane.showMessageDialog(null, 
-                    "Esta compra no se ha registrado...");
+            JOptionPane.showMessageDialog(
+                    this, 
+                    "Esta compra no se ha registrado...",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             return;
         } else {
             for (int i = 0; i < facturas.getDetalleFactura().size(); i++) {
                 
                 if (agregarDetalleFactura(f) < -1) {
                     borrarFactura(idFactura);
-                    JOptionPane.showMessageDialog(null, 
-                            "Esta compra no se ha registrado...");
+                    JOptionPane.showMessageDialog(
+                            this, 
+                            "Esta compra no se ha registrado...",
+                            "",
+                            JOptionPane.ERROR_MESSAGE
+                    );
                     return;
                 }
             }

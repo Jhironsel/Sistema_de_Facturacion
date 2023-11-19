@@ -1,9 +1,9 @@
 package sur.softsurena.formularios;
 
-import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.Objects;
 import javax.swing.JOptionPane;
 import sur.softsurena.entidades.Usuario;
 import sur.softsurena.utilidades.Utilidades;
@@ -12,7 +12,7 @@ public class frmSolicitudFecha extends javax.swing.JDialog {
 
     public frmSolicitudFecha(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        
+
         initComponents();
     }
 
@@ -249,19 +249,19 @@ public class frmSolicitudFecha extends javax.swing.JDialog {
                 pnombre("").
                 snombre("").
                 apellidos("").build();
-        
+
         jcbUsuarios.addItem(user);
-        
+
         ResultSet rs = null;
 
         try {
             while (rs.next()) {
                 user = Usuario.builder().
-                user_name("").
-                pnombre("").
-                snombre("").
-                apellidos("").build();
-                
+                        user_name("").
+                        pnombre("").
+                        snombre("").
+                        apellidos("").build();
+
                 jcbUsuarios.addItem(user);
             }
         } catch (SQLException ex) {
@@ -323,13 +323,13 @@ public class frmSolicitudFecha extends javax.swing.JDialog {
     }//GEN-LAST:event_cbSinFechaActionPerformed
 
     private void cbFechaRangoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFechaRangoActionPerformed
-        if(!cbFechaFacturasDia.isSelected()){
-            cbFechaRango.doClick();            
+        if (!cbFechaFacturasDia.isSelected()) {
+            cbFechaRango.doClick();
             return;
         }
-        if(cbFechaRango.isSelected()){
+        if (cbFechaRango.isSelected()) {
             jdDiaRango.setEnabled(true);
-        }else{
+        } else {
             jdDiaRango.setEnabled(false);
         }
     }//GEN-LAST:event_cbFechaRangoActionPerformed
@@ -341,46 +341,60 @@ public class frmSolicitudFecha extends javax.swing.JDialog {
     private void btnCancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelar1ActionPerformed
         if (cbCajeros.isSelected()) {
             if (jcbUsuarios.getSelectedIndex() == 0) {
-                JOptionPane.showMessageDialog(null,
+                JOptionPane.showMessageDialog(
+                        this,
                         "Debe seleccionar un usuario",
-                        "Problema de Usuario!!!", JOptionPane.ERROR_MESSAGE);
+                        "",
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             }
         }
-        
+
         if (cbFechaFacturasDia.isSelected()) {
-            if (jdDia.getDate()== null) {
-                JOptionPane.showMessageDialog(null,
+            if (Objects.isNull(jdDia.getDate())) {
+                JOptionPane.showMessageDialog(
+                        this,
                         "Digiste una fecha",
-                        "Problema de Fecha!!!", JOptionPane.ERROR_MESSAGE);
+                        "",
+                        JOptionPane.ERROR_MESSAGE
+                );
                 return;
             }
             if (jdDia.getDate().after(new Date())) {
-                JOptionPane.showMessageDialog(null,
+                JOptionPane.showMessageDialog(
+                        this,
                         "Fecha futura, incorrecta!!!",
-                        "Problema de Fecha!!!", JOptionPane.ERROR_MESSAGE);
+                        "", 
+                        JOptionPane.ERROR_MESSAGE
+                );
                 return;
             }
         }
-        
+
         if (cbIntervalosFactura.isSelected()) {
             if (Utilidades.objectToInt(jsInicio.getValue())
                     > Utilidades.objectToInt(jsFin.getValue())) {
-                JOptionPane.showMessageDialog(null,
+                JOptionPane.showMessageDialog(
+                        this,
                         "Intervalo de factura, incorrecto!!!",
-                        "Problema de intervalos!!!", JOptionPane.ERROR_MESSAGE);
+                        "", 
+                        JOptionPane.ERROR_MESSAGE
+                );
                 return;
             }
         }
-        
-        if(cbEstados.isSelected()){
-            if(jcEstados.getSelectedIndex() == 0){
-                JOptionPane.showMessageDialog(null,
+
+        if (cbEstados.isSelected()) {
+            if (jcEstados.getSelectedIndex() == 0) {
+                JOptionPane.showMessageDialog(
+                        null,
                         "Debe seleccionar un estado",
-                        "Problema de estado!!!", JOptionPane.ERROR_MESSAGE);
-                return;
+                        "", 
+                        JOptionPane.ERROR_MESSAGE
+                );
             }
         }
+        //TODO Hay que analizar que sigue despues de las lineas de arriba.
     }//GEN-LAST:event_btnCancelar1ActionPerformed
 
 

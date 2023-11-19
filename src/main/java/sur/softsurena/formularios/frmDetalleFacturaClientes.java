@@ -12,7 +12,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import sur.softsurena.entidades.Clientes;
+import static sur.softsurena.entidades.Clientes.getClientes;
 import sur.softsurena.entidades.DefaultTableCellHeaderRenderer;
+import sur.softsurena.entidades.FiltroBusqueda;
 import sur.softsurena.hilos.hiloImpresionFactura;
 import sur.softsurena.utilidades.Utilidades;
 
@@ -48,11 +50,6 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
         txtTotal = new javax.swing.JFormattedTextField();
         jPanel6 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
-        rbtID = new javax.swing.JRadioButton();
-        rbtNombes = new javax.swing.JRadioButton();
-        rbtApellidos = new javax.swing.JRadioButton();
-        rbtIdFactura = new javax.swing.JRadioButton();
         txtCriterio = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblClientes = new JTable(){
@@ -147,8 +144,8 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,56 +158,7 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
 
         jScrollPane4.setViewportView(jPanel1);
 
-        jPanel5.setLayout(new java.awt.GridLayout(2, 0));
-
-        jPanel4.setLayout(new java.awt.GridLayout(1, 4));
-
-        bgrTipoBusqueda.add(rbtID);
-        rbtID.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        rbtID.setMnemonic('i');
-        rbtID.setSelected(true);
-        rbtID.setText("Cedula");
-        rbtID.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbtIDActionPerformed(evt);
-            }
-        });
-        jPanel4.add(rbtID);
-
-        bgrTipoBusqueda.add(rbtNombes);
-        rbtNombes.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        rbtNombes.setMnemonic('n');
-        rbtNombes.setText("Nombres");
-        rbtNombes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbtNombesActionPerformed(evt);
-            }
-        });
-        jPanel4.add(rbtNombes);
-
-        bgrTipoBusqueda.add(rbtApellidos);
-        rbtApellidos.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        rbtApellidos.setMnemonic('a');
-        rbtApellidos.setText("Apellidos");
-        rbtApellidos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbtApellidosActionPerformed(evt);
-            }
-        });
-        jPanel4.add(rbtApellidos);
-
-        bgrTipoBusqueda.add(rbtIdFactura);
-        rbtIdFactura.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        rbtIdFactura.setMnemonic('a');
-        rbtIdFactura.setText("Factura");
-        rbtIdFactura.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbtIdFacturaActionPerformed(evt);
-            }
-        });
-        jPanel4.add(rbtIdFactura);
-
-        jPanel5.add(jPanel4);
+        jPanel5.setLayout(new java.awt.GridLayout(1, 1));
 
         txtCriterio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -273,7 +221,7 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)
                     .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(0, 0, 0))
         );
@@ -282,9 +230,9 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
 
@@ -293,9 +241,9 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
+                .addComponent(jScrollPane4)
                 .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
@@ -364,20 +312,6 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_tblFacturaMouseClicked
 
-    private void rbtIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtIDActionPerformed
-        txtCriterio.setText("");
-        txtCriterio.requestFocusInWindow();
-        tablaClientes();
-    }//GEN-LAST:event_rbtIDActionPerformed
-
-    private void rbtApellidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtApellidosActionPerformed
-        rbtIDActionPerformed(evt);
-    }//GEN-LAST:event_rbtApellidosActionPerformed
-
-    private void rbtNombesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtNombesActionPerformed
-        rbtIDActionPerformed(evt);
-    }//GEN-LAST:event_rbtNombesActionPerformed
-
     private void txtCriterioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCriterioActionPerformed
         tablaClientes();
     }//GEN-LAST:event_txtCriterioActionPerformed
@@ -386,7 +320,7 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
         if (evt.getClickCount() == 1) {
             return;
         }
-
+        //TODO Se obtiene un error al dar doble click en la tabla de cliente.
         frmSolicitudFecha miFecha = new frmSolicitudFecha(null, true);
         miFecha.setLocationRelativeTo(null);
         miFecha.setVisible(true);
@@ -397,30 +331,6 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
 
         String idCliente = tblClientes.getValueAt(tblClientes.getSelectedRow(), 0).toString();
 
-        String sql = "SELECT f.idFactura, f.estado , f.fecha, f.USUARIO, "
-                + "COALESCE(SUM(d.precio * d.cantidad), 0.00) AS Valor "
-                + "FROM factura f "
-                + "LEFT JOIN cliente c "
-                + "    ON f.idCliente = c.idCliente "
-                + "LEFT JOIN detalleFactura d "
-                + "    ON f.idFactura = d.idFactura "
-                + "WHERE f.idCliente = '" + idCliente + "' "
-                + "GROUP BY f.idFactura, f.estado , f.fecha, f.USUARIO "
-                + "order by 1";
-
-        if (rbtIdFactura.isSelected()) {
-            sql = "SELECT f.idFactura, f.estado , f.fecha, f.USUARIO, "
-                    + "COALESCE(SUM(d.precio * d.cantidad), 0.00) AS Valor "
-                    + "FROM factura f "
-                    + "LEFT JOIN cliente c "
-                    + "    ON f.idCliente = c.idCliente "
-                    + "LEFT JOIN detalleFactura d "
-                    + "    ON f.idFactura = d.idFactura "
-                    + "WHERE f.idCliente = '" + idCliente + "' "
-                    + "and f.idFactura = " + txtCriterio.getText()
-                    + "GROUP BY f.idFactura, f.estado , f.fecha, f.USUARIO "
-                    + "order by 1";
-        }
 
         try {
             DefaultTableModel modelo = (DefaultTableModel) tblFactura.getModel();
@@ -467,21 +377,23 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
         tablaClientes();
     }//GEN-LAST:event_txtCriterioKeyReleased
 
-    private void rbtIdFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtIdFacturaActionPerformed
-        rbtIDActionPerformed(evt);
-    }//GEN-LAST:event_rbtIdFacturaActionPerformed
-
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
         if (tblDetalleFactura.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(null, "No ha seleccionado Factura");
+            JOptionPane.showInternalMessageDialog(
+                    this, 
+                    "No ha seleccionado Factura",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             return;
         }
+        
         Map parametros = new HashMap();
-        parametros.put("idFactura", Integer.parseInt(
+        parametros.put("idFactura", Integer.valueOf(
                 tblFactura.getValueAt(
                         tblFactura.getSelectedRow(), 0).toString()));
         hiloImpresionFactura impresionFactura = new hiloImpresionFactura(
@@ -500,8 +412,18 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
         Object registro[] = new Object[titulos.length];
 
         miTabla = new DefaultTableModel(null, titulos);
-
-        List<Clientes> clientesList = Clientes.getClientesTablaSB(-1, "^",1, 50);
+        
+        //ID,CRITERIO,PAG,REG
+        //-1, "^",1, 50
+        
+        List<Clientes> clientesList = getClientes(
+                FiltroBusqueda.
+                        builder().
+                        filas(false).
+                        criterioBusqueda(txtCriterio.getText().strip()).
+                        build()
+        
+        );
 
 
         clientesList.forEach(c ->{
@@ -571,17 +493,12 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane7;
-    private javax.swing.JRadioButton rbtApellidos;
-    private javax.swing.JRadioButton rbtID;
-    private javax.swing.JRadioButton rbtIdFactura;
-    private javax.swing.JRadioButton rbtNombes;
     private javax.swing.JTable tblClientes;
     private javax.swing.JTable tblDetalleFactura;
     private javax.swing.JTable tblFactura;

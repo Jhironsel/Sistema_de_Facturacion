@@ -21,8 +21,6 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
 
     private static final Logger LOG = Logger.getLogger(frmAdministradorTurnos.class.getName());
 
-    private static final String PROCESO_DE_VALIDACION_DE_USUARIO = "Proceso de validación de usuario.";
-
     public static frmAdministradorTurnos getInstance() {
         return NewSingletonHolder.INSTANCE;
     }
@@ -292,10 +290,10 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
         if (userSelected < 0) {
             //En dado caso mostramos el siguiente mensaje.
             JOptionPane.showInternalMessageDialog(
-                    null,
+                    this,
                     "Debe seleccionar un cajero",
-                    "Proceso de creacion de turno.",
-                    JOptionPane.WARNING_MESSAGE
+                    "",
+                    JOptionPane.ERROR_MESSAGE
             );
             return;
         }
@@ -307,22 +305,22 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
         //Si el objeto idUsuario es igual a N/A.
         if (userName.equals("N/A")) {
             //Mostramos mensaje de error siguiente.
-            JOptionPane.showMessageDialog(
-                    null,
+            JOptionPane.showInternalMessageDialog(
+                    this,
                     "Debe Seleccionar un Usuario",
-                    PROCESO_DE_VALIDACION_DE_USUARIO,
-                    JOptionPane.WARNING_MESSAGE
+                    "",
+                    JOptionPane.ERROR_MESSAGE
             );
             return;
         }
 
         //Verificamos si el usuario tiene turno abierto
         if (usuarioTurnoActivo(userName)) {
-            JOptionPane.showMessageDialog(
-                    null,
-                    "Usuario cuenta con turno abierto...",
-                    PROCESO_DE_VALIDACION_DE_USUARIO,
-                    JOptionPane.WARNING_MESSAGE
+            JOptionPane.showInternalMessageDialog(
+                    this,
+                    "Usuario cuenta con turno abierto.",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
             );
             return;
         }
@@ -344,10 +342,10 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
         });
 
         JOptionPane.showInternalMessageDialog(
-                null,
+                this,
                 comboAlmacenes,
-                "Seleccione un almacen para crear el turno.",
-                JOptionPane.INFORMATION_MESSAGE
+                "De que almacen se va a facturar?",
+                JOptionPane.QUESTION_MESSAGE
         );
 
         int id_almacen = ((Almacen) comboAlmacenes.getSelectedItem()).getId();
@@ -359,10 +357,10 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
         Resultados resultado = habilitarTurno(id_almacen, userName);
 
         //Si el usuario no tiene turno abierto, procedemos habilitar turno.
-        JOptionPane.showMessageDialog(
-                null,
-                resultado.getMensaje(),
-                "Estado de proceso de turno.",
+        JOptionPane.showInternalMessageDialog(
+                this,
+                resultado,
+                "",
                 resultado.getIcono()
         );
 
@@ -373,10 +371,10 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
 
         if (rowSelected < 0) {
             JOptionPane.showInternalMessageDialog(
-                    null,
+                    this,
                     "Debe seleccionar un turno.",
-                    PROCESO_DE_VALIDACION_DE_USUARIO,
-                    JOptionPane.WARNING_MESSAGE
+                    "",
+                    JOptionPane.ERROR_MESSAGE
             );
             return;
         }
@@ -385,33 +383,31 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
         String userName = tblTurnosActivos.getValueAt(rowSelected, 1).toString();
 
         if (!usuarioTurnoActivo(userName)) {
-            JOptionPane.showMessageDialog(
-                    null,
+            JOptionPane.showInternalMessageDialog(
+                    this,
                     "Usuario sin Turno Abierto...",
-                    PROCESO_DE_VALIDACION_DE_USUARIO,
-                    JOptionPane.WARNING_MESSAGE
+                    "",
+                    JOptionPane.ERROR_MESSAGE
             );
             return;
         }
 
 //        setIdTurno(idTurnoActivo(userName));
         if (cerrarTurno(idTurno)) {
-            JOptionPane.showMessageDialog(
-                    null,
+            JOptionPane.showInternalMessageDialog(
+                    this,
                     "Turno Cerrado",
-                    PROCESO_DE_VALIDACION_DE_USUARIO,
+                    "",
                     JOptionPane.INFORMATION_MESSAGE
             );
         } else {
-            JOptionPane.showMessageDialog(
-                    null,
+            JOptionPane.showInternalMessageDialog(
+                    this,
                     "Problema para cerrar Turno",
-                    PROCESO_DE_VALIDACION_DE_USUARIO,
+                    "",
                     JOptionPane.ERROR_MESSAGE
             );
         }
-
-        System.out.println("Reporte: " + idTurno);
 
         imprimirReporte(idTurno);
     }//GEN-LAST:event_btnCerrarTurnoActionPerformed
@@ -485,10 +481,10 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
 
         if (rowSelected < 0) {
             JOptionPane.showInternalMessageDialog(
-                    null,
+                    this,
                     "Debe seleccionar un reporte.",
-                    PROCESO_DE_VALIDACION_DE_USUARIO,
-                    JOptionPane.WARNING_MESSAGE
+                    "",
+                    JOptionPane.ERROR_MESSAGE
             );
             return;
         }

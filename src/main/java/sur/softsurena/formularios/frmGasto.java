@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 import sur.softsurena.entidades.Gastos;
 import static sur.softsurena.entidades.Gastos.agregarGastosPorTurno;
+import sur.softsurena.entidades.Resultados;
 import sur.softsurena.hilos.hiloImpresionFactura;
 
 @Getter
@@ -17,8 +18,6 @@ public class frmGasto extends java.awt.Dialog {
 
     private int idTurno;
     private String usuario;
-
-    public static final String PROCESO_DE_VALIDACION = "Proceso de validación";
 
     public frmGasto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -48,7 +47,7 @@ public class frmGasto extends java.awt.Dialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtMonto = new javax.swing.JFormattedTextField();
-        rSButtonMaterialOne1 = new RSMaterialComponent.RSButtonMaterialOne();
+        btnCancelar = new RSMaterialComponent.RSButtonMaterialOne();
         btnAceptar = new RSMaterialComponent.RSButtonMaterialOne();
 
         setResizable(false);
@@ -94,10 +93,10 @@ public class frmGasto extends java.awt.Dialog {
             }
         });
 
-        rSButtonMaterialOne1.setText("Cancelar");
-        rSButtonMaterialOne1.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonMaterialOne1ActionPerformed(evt);
+                btnCancelarActionPerformed(evt);
             }
         });
 
@@ -115,20 +114,15 @@ public class frmGasto extends java.awt.Dialog {
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, contenedorLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(contenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(contenedorLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(168, 168, 168))
-                    .addComponent(txtDescripcion, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(contenedorLayout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(168, 168, 168))
-                    .addGroup(contenedorLayout.createSequentialGroup()
-                        .addGap(83, 83, 83)
-                        .addComponent(rSButtonMaterialOne1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(contenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtDescripcion)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, contenedorLayout.createSequentialGroup()
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
                         .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txtMonto))
+                    .addComponent(txtMonto, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         contenedorLayout.setVerticalGroup(
@@ -147,9 +141,11 @@ public class frmGasto extends java.awt.Dialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(contenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rSButtonMaterialOne1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        contenedorLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txtDescripcion, txtMonto});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -194,18 +190,22 @@ public class frmGasto extends java.awt.Dialog {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         if (txtDescripcion.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null,
+            JOptionPane.showMessageDialog(
+                    this,
                     "Debe ingresar un Concepto",
-                    PROCESO_DE_VALIDACION,
-                    JOptionPane.WARNING_MESSAGE);
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             txtDescripcion.requestFocusInWindow();
             return;
         }
         if (txtMonto.getValue() == null) {
-            JOptionPane.showMessageDialog(null,
-                    "Monto Vacio debe proporsionarlo",
-                    PROCESO_DE_VALIDACION,
-                    JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Ingrese monto.",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             txtMonto.setValue(0.0);
             txtMonto.requestFocusInWindow();
             return;
@@ -214,10 +214,12 @@ public class frmGasto extends java.awt.Dialog {
         BigDecimal monto = new BigDecimal(txtMonto.getValue().toString());
 
         if (monto.compareTo(BigDecimal.ZERO) <= 0) {
-            JOptionPane.showMessageDialog(null,
+            JOptionPane.showMessageDialog(
+                    this,
                     "Monto debe ser mayor a 0",
-                    PROCESO_DE_VALIDACION,
-                    JOptionPane.WARNING_MESSAGE);
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             txtMonto.setValue(0.0);
             txtMonto.requestFocusInWindow();
             return;
@@ -230,21 +232,21 @@ public class frmGasto extends java.awt.Dialog {
             descripcion = txtDescripcion.getText();
         }
 
-        Gastos g = Gastos.builder().
-                id_turno(getIdTurno()).
-                descripcion(descripcion).
-                monto(monto).build();
-
-        String msj = agregarGastosPorTurno(g);
-
-        int icono = msj.equals(Gastos.GASTO_REGISTRADOS_CORRECTAMENTE)
-                ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE;
+        Resultados resultado = agregarGastosPorTurno(
+                Gastos
+                        .builder()
+                        .id_turno(getIdTurno())
+                        .descripcion(descripcion)
+                        .monto(monto)
+                        .build()
+        );
 
         JOptionPane.showMessageDialog(
-                null,
-                msj,
-                "Proceso de registro de gasto",
-                icono);
+                this,
+                resultado,
+                "",
+                resultado.getIcono()
+        );
 
         //Constancia de Gasto a imprimir
         Map parametros = new HashMap();
@@ -259,21 +261,21 @@ public class frmGasto extends java.awt.Dialog {
                 parametros,
                 frmPrincipal.jPanelImpresion,
                 frmPrincipal.jprImpresion).start();
-        
+
         this.dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
-    private void rSButtonMaterialOne1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonMaterialOne1ActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         this.dispose();
-    }//GEN-LAST:event_rSButtonMaterialOne1ActionPerformed
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private RSMaterialComponent.RSButtonMaterialOne btnAceptar;
+    private RSMaterialComponent.RSButtonMaterialOne btnCancelar;
     private javax.swing.JPanel contenedor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private RSMaterialComponent.RSButtonMaterialOne rSButtonMaterialOne1;
     private javax.swing.JTextField txtDescripcion;
     private javax.swing.JFormattedTextField txtMonto;
     // End of variables declaration//GEN-END:variables

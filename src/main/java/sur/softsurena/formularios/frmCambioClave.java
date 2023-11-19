@@ -260,23 +260,35 @@ public class frmCambioClave extends javax.swing.JDialog {
         String nueva = new String(txtNueva.getPassword());
         String confirmacion = new String(txtConfirmacion.getPassword());
         
-        if (nueva.equals("")) {
-            JOptionPane.showMessageDialog(null,
-                    "Debe ingresar Clave Nueva...");
+        if (nueva.isBlank()) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Debe ingresar Clave Nueva...",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             txtNueva.requestFocusInWindow();
             return;
         }
         
-        if (confirmacion.equals("")) {
-            JOptionPane.showMessageDialog(null,
-                    "Debe de Ingresar Confirmacion...");
+        if (confirmacion.isBlank()) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Debe de Ingresar Confirmacion...",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             txtConfirmacion.requestFocusInWindow();
             return;
         }
 
         if (!nueva.equals(confirmacion)) {
-            JOptionPane.showMessageDialog(null,
-                    "La Clave y la confirmacion no Coinciden...");
+            JOptionPane.showMessageDialog(
+                    this,
+                    "La Clave y la confirmacion no Coinciden...",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             txtConfirmacion.setText("");
             txtNueva.setText("");
             return;
@@ -284,14 +296,17 @@ public class frmCambioClave extends javax.swing.JDialog {
 
         //Cambiamos la Clave
         //r es la variable resultado que espera la operacion sea realizada. 
-        boolean r = cambioClave(
+        boolean resultado = cambioClave(
                 Usuario.getUsuarioActual().getUser_name().strip(), 
                 nueva
         );
         
         JOptionPane.showMessageDialog(
-                null,
-                r ? "Clave Cambiada...":"Error al cambiar la clave.");
+                this,
+                (resultado ? "Clave Cambiada..." : "Error al cambiar la clave."),
+                "",
+                (resultado ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE)
+        );
         
         this.dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed

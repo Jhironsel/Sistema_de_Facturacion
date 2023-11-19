@@ -352,7 +352,12 @@ public class frmParametros extends javax.swing.JFrame {
             }
 
             if (valor < 0 || valor > 255) {
-                JOptionPane.showMessageDialog(null, "Valor incorrecto en el Ambito 1");
+                JOptionPane.showMessageDialog(
+                        this, 
+                        "Valor incorrecto en el Ambito 1",
+                        "",
+                        JOptionPane.ERROR_MESSAGE
+                );
                 txtValor1.setText("");
                 txtValor1.requestFocusInWindow();
                 return;
@@ -364,7 +369,12 @@ public class frmParametros extends javax.swing.JFrame {
                 valor = -1;
             }
             if (valor < 0 || valor > 255) {
-                JOptionPane.showMessageDialog(null, "Valor incorrecto en el Ambito 2");
+                JOptionPane.showMessageDialog(
+                        this, 
+                        "Valor incorrecto en el Ambito 2",
+                        "",
+                        JOptionPane.ERROR_MESSAGE
+                );
                 txtValor2.setText("");
                 txtValor2.requestFocusInWindow();
                 return;
@@ -376,7 +386,12 @@ public class frmParametros extends javax.swing.JFrame {
                 valor = -1;
             }
             if (valor < 0 || valor > 255) {
-                JOptionPane.showMessageDialog(null, "Valor incorrecto en el Ambito 3");
+                JOptionPane.showMessageDialog(
+                        this, 
+                        "Valor incorrecto en el Ambito 3",
+                        "",
+                        JOptionPane.ERROR_MESSAGE
+                );
                 txtValor3.setText("");
                 txtValor3.requestFocusInWindow();
                 return;
@@ -388,7 +403,12 @@ public class frmParametros extends javax.swing.JFrame {
                 valor = -1;
             }
             if (valor < 0 || valor > 255) {
-                JOptionPane.showMessageDialog(null, "Valor incorrecto en el Ambito 4");
+                JOptionPane.showMessageDialog(
+                        this, 
+                        "Valor incorrecto en el Ambito 4",
+                        "",
+                        JOptionPane.ERROR_MESSAGE
+                );
                 txtValor4.setText("");
                 txtValor4.requestFocusInWindow();
                 return;
@@ -397,7 +417,12 @@ public class frmParametros extends javax.swing.JFrame {
 
         if (rbtnNombreServidor.isSelected()) {
             if (txtHost.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Nombre del servidor vacio");
+                JOptionPane.showMessageDialog(
+                        this, 
+                        "Nombre del servidor vacio",
+                        "",
+                        JOptionPane.ERROR_MESSAGE
+                );
                 txtHost.requestFocusInWindow();
                 return;
             }
@@ -411,7 +436,12 @@ public class frmParametros extends javax.swing.JFrame {
                 valor = -1;
             }
             if (valor < 0 || valor > 65535) {
-                JOptionPane.showMessageDialog(null, "Este Puerto no es valido");
+                JOptionPane.showMessageDialog(
+                        this, 
+                        "Este Puerto no es valido",
+                        "",
+                        JOptionPane.ERROR_MESSAGE
+                );
                 txtPuerto.setText("");
                 txtPuerto.requestFocusInWindow();
                 return;

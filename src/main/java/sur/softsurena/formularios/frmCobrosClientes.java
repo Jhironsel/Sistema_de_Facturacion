@@ -10,7 +10,8 @@ import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import sur.softsurena.entidades.Clientes;
-import static sur.softsurena.entidades.Clientes.getClientesTablaSBCombo;
+import static sur.softsurena.entidades.Clientes.getClientes;
+import sur.softsurena.entidades.FiltroBusqueda;
 import sur.softsurena.hilos.hiloImpresionFactura;
 import sur.softsurena.utilidades.Utilidades;
 
@@ -382,19 +383,35 @@ public class frmCobrosClientes extends javax.swing.JDialog {
                 apellidos("").build();
         cmbCliente.removeAllItems();
         cmbCliente.addItem(c);
-        
-        getClientesTablaSBCombo().stream().forEach(cliente ->{
+        //TODO Probar o hacer test
+        getClientes(
+                FiltroBusqueda.
+                        builder().
+                        estado(true).
+                        build()
+        ).stream().forEach(cliente ->{
             cmbCliente.addItem(cliente);
         });
     }//GEN-LAST:event_formWindowOpened
     private void btnPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarActionPerformed
         if (cmbCliente.getSelectedIndex() <= 0) {
-            JOptionPane.showMessageDialog(null, "Debe selecionar un Cliente...");
+            JOptionPane.showMessageDialog(
+                    this, 
+                    "Debe selecionar un Cliente...",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             cmbCliente.requestFocusInWindow();
             return;
         }
+        
         if (tblFacturas.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar una factura");
+            JOptionPane.showMessageDialog(
+                    this, 
+                    "Debe seleccionar una factura",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             return;
         }
 
@@ -403,28 +420,52 @@ public class frmCobrosClientes extends javax.swing.JDialog {
         BigDecimal montoDeuda = new BigDecimal(txtMontoDeuda.getValue().toString());
 
         if (Monto.compareTo(BigDecimal.ZERO) == 0) {
-            JOptionPane.showMessageDialog(null, "Debe Ingresar un Valor Para Realizar Pago...");
+            JOptionPane.showMessageDialog(
+                    this, 
+                    "Debe Ingresar un Valor Para Realizar Pago...",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             txtMonto.setValue(0.0);
             txtMonto.requestFocusInWindow();
             return;
         }
         if (Monto.compareTo(montoTotal) == 1) {
-            JOptionPane.showMessageDialog(null, "No se permite Monto a pagar MAYOR QUE '>' Deuda del Cliente");
+            JOptionPane.showMessageDialog(
+                    this, 
+                    "No se permite Monto a pagar MAYOR QUE '>' Deuda del Cliente",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             return;
         }
         if (Monto.compareTo(BigDecimal.ZERO) <= 0) {
-            JOptionPane.showMessageDialog(null, "No se permite monto NEGATIVO");
+            JOptionPane.showMessageDialog(
+                    this, 
+                    "No se permite monto NEGATIVO",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             return;
         }
         if (Monto.compareTo(montoDeuda) > 0
                 && montoDeuda.compareTo(BigDecimal.ZERO) > 0) {
-            JOptionPane.showMessageDialog(null, "No se permite monto MAYOR a la DEUDA");
+            JOptionPane.showMessageDialog(
+                    this, 
+                    "No se permite monto MAYOR a la DEUDA",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             return;
         }
-        int num = JOptionPane.showConfirmDialog(null,
+        int num = JOptionPane.showConfirmDialog(
+                this,
                 "Esta seguro de realizar Cobro?",
-                "Confirmacion de Pago",
-                JOptionPane.YES_NO_OPTION);
+                "",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+        );
+        
         if (num == JOptionPane.NO_OPTION) {
             return;
         }
@@ -438,7 +479,12 @@ public class frmCobrosClientes extends javax.swing.JDialog {
 //                getIdTurno());
 
         //Constancia de pago de Factura....
-        JOptionPane.showMessageDialog(null, "Pago realizado con Exito...");
+        JOptionPane.showMessageDialog(
+                this, 
+                "Pago realizado con Exito...",
+                "",
+                JOptionPane.INFORMATION_MESSAGE
+        );
 
         Map parametros = new HashMap();
         parametros.put("nombreCajero", getNombreCajero());

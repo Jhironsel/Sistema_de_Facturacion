@@ -212,10 +212,12 @@ public final class frmRestaurarDatos extends javax.swing.JInternalFrame implemen
         }
         if (txtBaseActual.getText().equals(miFile.getSelectedFile().getAbsolutePath())) {
 
-            JOptionPane.showMessageDialog(null,
+            JOptionPane.showInternalMessageDialog(
+                    this,
                     "No se debe seleccionar la misma base de datos",
-                    "Coencidencias entre bases",
-                    JOptionPane.INFORMATION_MESSAGE);
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             txtBaseFuente.setText("");
             return;
         }
@@ -225,23 +227,32 @@ public final class frmRestaurarDatos extends javax.swing.JInternalFrame implemen
 
     private void btnProcederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcederActionPerformed
         if (txtBaseFuente.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Selecione una base de datos",
-                    "No encontrado el Archivo",
-                    JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showInternalMessageDialog(
+                    this, 
+                    "Selecione una base de datos",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             btnBuscar.requestFocusInWindow();
             return;
         }
         if (txtUsuario.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Inserte el usuario",
-                    "Usuario vacio",
-                    JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showInternalMessageDialog(
+                    this, 
+                    "Ingrese el usuario: ",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             txtUsuario.requestFocusInWindow();
             return;
         }
         if (txtClave.getPassword().length == 0) {
-            JOptionPane.showMessageDialog(null, "Inserte la clave",
-                    "Clave vacia",
-                    JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showInternalMessageDialog(
+                    this, 
+                    "Ingrese la clave: ",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             txtClave.requestFocusInWindow();
             return;
         }
@@ -272,11 +283,11 @@ public final class frmRestaurarDatos extends javax.swing.JInternalFrame implemen
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
-        txtClave.requestFocus();
+        txtClave.requestFocusInWindow();
     }//GEN-LAST:event_txtUsuarioActionPerformed
 
     private void txtClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtClaveActionPerformed
-        btnProceder.requestFocus();
+        btnProceder.requestFocusInWindow();
     }//GEN-LAST:event_txtClaveActionPerformed
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened

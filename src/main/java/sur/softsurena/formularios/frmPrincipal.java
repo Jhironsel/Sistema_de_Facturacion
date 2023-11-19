@@ -61,6 +61,8 @@ public final class frmPrincipal extends javax.swing.JFrame {
         usuario = getUsuarioActual();
 
         initComponents();
+        ((DesktopConFondo) dpnEscritorio).setImagen("/sur/softsurena/imagenes/Fondo 1024 x 723.jpg");
+        
 
         mnuMantenimientoClientes.setVisible(privilegioTabla(
                 Privilegios.builder().
@@ -68,20 +70,20 @@ public final class frmPrincipal extends javax.swing.JFrame {
                         nombre_relacion("GET_CLIENTES_SB").build())
         );
         mnuMantenimientoProductos.setVisible(privilegioTabla(Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_EXECUTE).
-                nombre_relacion("SP_SELECT_GET_PRODUCTOS").build())
+                privilegio(Privilegios.PRIVILEGIO_SELECT).
+                nombre_relacion("GET_PRODUCTOS").build())
         );
         mnuMantenimientoProveedores.setVisible(privilegioTabla(Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_EXECUTE).
-                nombre_relacion("SP_SELECT_GET_PROVEEDORES").build())
+                privilegio(Privilegios.PRIVILEGIO_SELECT).
+                nombre_relacion("GET_PROVEEDORES").build())
         );
         mnuMantenimientoAlmacenes.setVisible(privilegioTabla(Privilegios.builder().
                 privilegio(Privilegios.PRIVILEGIO_SELECT).
                 nombre_relacion("V_ALMACENES").build())
         );
         mnuMantenimientoUsuarios.setVisible(privilegioTabla(Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_EXECUTE).
-                nombre_relacion("SP_SELECT_USUARIOS").build())
+                privilegio(Privilegios.PRIVILEGIO_SELECT).
+                nombre_relacion("GET_USUARIOS").build())
         );
         mnuMantenimiento.setVisible(
                 mnuMantenimientoClientes.isVisible()
@@ -91,7 +93,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
                 || mnuMantenimientoUsuarios.isVisible()
         );
         ///////////////////////////////////////////////////////////////////////
-        
+
         mnuSistemaNomina.setVisible(privilegioTabla(Privilegios.builder().
                 privilegio(Privilegios.PRIVILEGIO_EXECUTE).
                 nombre_relacion("").build())
@@ -106,25 +108,51 @@ public final class frmPrincipal extends javax.swing.JFrame {
         );
 
         ////////////////////////////////////////////////////////////////////////////////////
-        mnuMovimientosNuevaFactura.setVisible(privilegioTabla(Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_EXECUTE).
-                nombre_relacion("PERM_CREAR_FACTURAS").build())
+        mnuMovimientosNuevaFactura.setVisible(
+                privilegioTabla(
+                        Privilegios
+                                .builder()
+                                .privilegio(Privilegios.PRIVILEGIO_EXECUTE)
+                                .nombre_relacion("PERM_CREAR_FACTURAS")
+                                .build()
+                )
         );
-        mnuMovimientosReporteFactura.setVisible(privilegioTabla(Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_EXECUTE).
-                nombre_relacion("").build())
+        mnuMovimientosReporteFactura.setVisible(
+                privilegioTabla(
+                        Privilegios
+                                .builder()
+                                .privilegio(Privilegios.PRIVILEGIO_EXECUTE)
+                                .nombre_relacion("")
+                                .build()
+                )
         );
-        mnuMovimientosInventario.setVisible(privilegioTabla(Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_EXECUTE).
-                nombre_relacion("").build())
+        mnuMovimientosInventario.setVisible(
+                privilegioTabla(
+                        Privilegios
+                                .builder()
+                                .privilegio(Privilegios.PRIVILEGIO_EXECUTE)
+                                .nombre_relacion("")
+                                .build()
+                )
         );
-        mnuMovimientosDeudas.setVisible(privilegioTabla(Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_EXECUTE).
-                nombre_relacion("").build())
+        mnuMovimientosDeudas.setVisible(
+                privilegioTabla(
+                        Privilegios
+                                .builder()
+                                .privilegio(Privilegios.PRIVILEGIO_EXECUTE)
+                                .nombre_relacion("")
+                                .build()
+                )
         );
-        mnuMovimientosAbrirTurno.setVisible(privilegioTabla(Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_EXECUTE).
-                nombre_relacion("SP_SELECT_GET_CAJEROS").build())
+        mnuMovimientosAbrirTurno.setVisible(
+                privilegioTabla(
+                        Privilegios
+                                .builder()
+                                .privilegio(Privilegios.PRIVILEGIO_EXECUTE)
+                                .nombre_relacion("SP_SELECT_GET_CAJEROS")
+                                .
+                                build()
+                )
         );
         mnuMovimientos.setVisible(
                 mnuMovimientosNuevaFactura.isVisible()
@@ -135,7 +163,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
         );
 
         ///////////////////////////////////////////////////////////////////////////
-        
         //Hacemos la consulta a la base de datos, para saber cual es el usuario
         //y el rol del usuario conectado a la base de datos.
         jlUser.setText(usuario.getUser_name());
@@ -179,6 +206,9 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
         //Metodo que carga el logo de la empresa.
         cargarLogo();
+        
+        //Poner Paner usuario.
+        panelUsuario();
     }
 
     @SuppressWarnings("unchecked")
@@ -436,6 +466,8 @@ public final class frmPrincipal extends javax.swing.JFrame {
         liWork.setOpaque(true);
         liWork.setLayout(new java.awt.GridLayout(1, 0));
 
+        cbRoles.setForeground(new java.awt.Color(37, 45, 223));
+        cbRoles.setColorSeleccionTXT(new java.awt.Color(37, 45, 223));
         cbRoles.setItemHeight(20);
         cbRoles.setMaximumSize(new java.awt.Dimension(200, 40));
         cbRoles.setMinimumSize(new java.awt.Dimension(50, 30));
@@ -456,9 +488,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
         setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png"));
         setMinimumSize(new java.awt.Dimension(640, 480));
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowActivated(java.awt.event.WindowEvent evt) {
-                formWindowActivated(evt);
-            }
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
@@ -997,29 +1026,27 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         if (mnuOpcionesSalir.isEnabled()) {
             mnuOpcionesCambioUsuarioActionPerformed(null);
-
         } else {
             frmAutorizacion miAut = new frmAutorizacion(null, true);
             miAut.setLocationRelativeTo(null);
             miAut.setVisible(true);
             if (miAut.isAceptado()) {
                 mnuOpcionesCambioUsuarioActionPerformed(null);
-            } else {
-                JOptionPane.showMessageDialog(null, "Usuario no valido");
             }
         }
-
     }//GEN-LAST:event_formWindowClosing
     private void jlLogoEmpresaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlLogoEmpresaMouseClicked
         if (evt.getClickCount() == 1) {
             return;
         }
 
-        int resp = JOptionPane.showConfirmDialog(null,
+        int resp = JOptionPane.showConfirmDialog(
+                this,
                 "Desea cambiar el logo de la empresa?",
-                "Confirmacion!!!",
+                "",
                 JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE);
+                JOptionPane.QUESTION_MESSAGE
+        );
 
         if (resp == JOptionPane.NO_OPTION) {
             return;
@@ -1072,27 +1099,35 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
         Integer respuesta = miFile.showOpenDialog(this);
 
-        if (Objects.isNull(respuesta) || respuesta == JFileChooser.CANCEL_OPTION ) {
+        if (Objects.isNull(respuesta) || respuesta == JFileChooser.CANCEL_OPTION) {
             return;
         }//Elegir el backup de la base de datos a restaurar...
 
-        String usuarioMaster = JOptionPane.showInputDialog(null,
-                "Inserte el nombre de Usuario: ", "Usuario...",
-                JOptionPane.INFORMATION_MESSAGE);
+        String usuarioMaster = JOptionPane.showInputDialog(
+                this,
+                "Nombre de Usuario: ", 
+                "",
+                JOptionPane.INFORMATION_MESSAGE
+        );
 
-        if (usuarioMaster == null || usuarioMaster.equals("")) {
+        if ( usuarioMaster.isBlank()) {
             return;
         }//Coner el usuario que va a realizar la operacion de back up...
         JPasswordField pf = new JPasswordField();
 
-        Integer claveMaster = JOptionPane.showConfirmDialog(null, pf,
-                "Inserte el nombre de Usuario: ", JOptionPane.OK_CANCEL_OPTION,
-                JOptionPane.INFORMATION_MESSAGE);
+        Integer claveMaster = JOptionPane.showConfirmDialog(
+                this, 
+                pf,
+                "Ingrese la Clave: ", 
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.INFORMATION_MESSAGE
+        );
+        
         pf.requestFocusInWindow();
         if (claveMaster == JOptionPane.CANCEL_OPTION) {
             return;
         }//Obtener la clave del usuario a realizar el backup
-
+        //TODO Completar esta tarea.
 //        BDR = miFile.getSelectedFile();
 //        RGBAK = System.getProperty("user.dir") + "/respaldo/gbak";
 
@@ -1153,8 +1188,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jlRestauracionMouseEntered
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        ((DesktopConFondo) dpnEscritorio).setImagen("/sur/softsurena/imagenes/Fondo 1024 x 723.jpg");
-
+        
     }//GEN-LAST:event_formWindowOpened
     private void jlGraficaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlGraficaMouseClicked
         abrirFormulario(new frmGraficos());
@@ -1266,10 +1300,11 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private void mnuMovimientosNuevaFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMovimientosNuevaFacturaActionPerformed
         if (!usuarioTurnoActivo(usuario.getUser_name())) {
             JOptionPane.showMessageDialog(
-                    null,
+                    this,
                     "Usuario no cuenta con Turno para Facturar...!",
-                    "Validación de usuario.",
-                    JOptionPane.WARNING_MESSAGE);
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             return;
         }
 
@@ -1337,10 +1372,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private void mnuSistemaGestorGastosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSistemaGestorGastosActionPerformed
         abrirFormulario(frmGestorGastos.getInstance());
     }//GEN-LAST:event_mnuSistemaGestorGastosActionPerformed
-
-    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        panelUsuario();
-    }//GEN-LAST:event_formWindowActivated
     //Todo Metodo de JasperReport
     private void imprimirReporte(Date fecha) {
         try {

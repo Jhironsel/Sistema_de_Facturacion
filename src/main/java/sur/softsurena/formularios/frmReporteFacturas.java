@@ -3,9 +3,10 @@ package sur.softsurena.formularios;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import sur.softsurena.entidades.Clientes;
-import static sur.softsurena.entidades.Clientes.getClientesTablaSBCombo;
+import static sur.softsurena.entidades.Clientes.getClientes;
 import sur.softsurena.entidades.Facturas;
 import static sur.softsurena.entidades.Facturas.getFacturas;
+import sur.softsurena.entidades.FiltroBusqueda;
 import sur.softsurena.utilidades.Utilidades;
 
 public class frmReporteFacturas extends javax.swing.JInternalFrame
@@ -195,15 +196,22 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame
         
          */
         //Cargamos Clientes
-        Clientes cli = Clientes.builder().
-                id_persona(-1).
-                pnombre("Seleccione un cliente").
-                snombre("").
-                apellidos("").build();
+        Clientes cli = Clientes
+                .builder()
+                .id_persona(-1)
+                .pnombre("Seleccione un cliente")
+                .snombre("")
+                .apellidos("")
+                .build();
 
         cmbCliente.addItem(cli);
 
-        getClientesTablaSBCombo().stream().forEach(cliente -> {
+        getClientes(
+                FiltroBusqueda
+                        .builder()
+                        .estado(true)
+                        .build()
+        ).stream().forEach(cliente -> {
             cmbCliente.addItem(cliente);
         });
 
@@ -226,16 +234,22 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame
         miArchivo.setLocationRelativeTo(null);
         miArchivo.setVisible(true);
         String archivo = miArchivo.getArchivo();
-        if (!archivo.equals("")) {
+        if (!archivo.isBlank()) {
             txtArchivo.setText(archivo);
         }
     }//GEN-LAST:event_btnSeleccionArchivoActionPerformed
 
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
-        if (txtArchivo.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Debe ingresar o Selecionar un Nombre de Archivo...");
+        if (txtArchivo.getText().isBlank()) {
+            JOptionPane.showInternalMessageDialog(
+                    this, 
+                    "Debe ingresar o Selecionar un Nombre de Archivo...",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             return;
         }
+        //TODO Investigar que hace esta variable.
         String archivo = txtArchivo.getText();
         String sql = "SELECT factura.idFactura, factura.idCliente, "
                 + " (nombres||' '||apellidos) AS nombreFull, "
@@ -245,32 +259,50 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame
                 + "INNER JOIN cliente ON factura.idCliente = cliente.idCliente "
                 + "INNER JOIN detalleFactura ON factura.idFactura = detalleFactura.idFactura ";
 
-        String filtro = "";
-
-        filtro = "";
         if (cmbCliente.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(null, "Debe Selecionar un Cliente...");
+            JOptionPane.showInternalMessageDialog(
+                    this, 
+                    "Debe Selecionar un Cliente.",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             cmbCliente.requestFocusInWindow();
             return;
         }
-        filtro = "WHERE factura.idCliente = '"
+        
+        String filtro = "WHERE factura.idCliente = '"
                 + ((Clientes) cmbCliente.getSelectedItem()).getId_persona() + "'";
 
         //Para Realizar la Consulta por Numero de Factura...
         //Si las factura es seleccionada.
         if (cmbFacturaInicial.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(null, "Debe Selecionar una Factura Inicial...");
+            JOptionPane.showInternalMessageDialog(
+                    this, 
+                    "Debe Selecionar una Factura Inicial...",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             cmbFacturaInicial.requestFocusInWindow();
             return;
         }
         if (cmbFacturaFinal.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(null, "Debe Selecionar una Factura Final...");
+            JOptionPane.showInternalMessageDialog(
+                    this, 
+                    "Debe Selecionar una Factura Final...",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             cmbFacturaFinal.requestFocusInWindow();
             return;
         }
 
         if (cmbFacturaInicial.getSelectedIndex() > cmbFacturaFinal.getSelectedIndex()) {
-            JOptionPane.showMessageDialog(null, "Factura Inicial Maryor que la Final");
+            JOptionPane.showInternalMessageDialog(
+                    this, 
+                    "Factura Inicial Maryor que la Final",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             cmbFacturaInicial.requestFocusInWindow();
             return;
         }
@@ -283,12 +315,22 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame
         //Para Realizar la Consulta por Fecha...
         //Si la fecha es seleccionada.
         if (dchFechaInicial.getDate() == null) {
-            JOptionPane.showMessageDialog(null, "Debe Selecionar una Fecha Inicial...");
+            JOptionPane.showInternalMessageDialog(
+                    this, 
+                    "Debe Selecionar una Fecha Inicial...",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             dchFechaInicial.requestFocusInWindow();
             return;
         }
         if (dchFechaFinal.getDate() == null) {
-            JOptionPane.showMessageDialog(null, "Debe Selecionar una Fecha Final...");
+            JOptionPane.showInternalMessageDialog(
+                    this, 
+                    "Debe Selecionar una Fecha Final...",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             dchFechaFinal.requestFocusInWindow();
             return;
         }
@@ -302,7 +344,12 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame
         sql = sql + filtro;
 
 //            Reporte.reporteFacturas(archivo, getConsulta(sql));
-        JOptionPane.showMessageDialog(null, "Reporte Generado...");
+        JOptionPane.showInternalMessageDialog(
+                this, 
+                "Reporte Generado...",
+                "",
+                JOptionPane.INFORMATION_MESSAGE
+        );
         dispose();
 
     }//GEN-LAST:event_btnGenerarActionPerformed
@@ -315,29 +362,6 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame
         cmbFacturaInicial.setEnabled(false);
         cmbFacturaFinal.setEnabled(false);
 
-        dchFechaInicial.setEnabled(true);
-        dchFechaFinal.setEnabled(true);
-
-        cmbCliente.setEnabled(false);
-
-        cmbFacturaInicial.setEnabled(false);
-        cmbFacturaFinal.setEnabled(false);
-
-        dchFechaInicial.setEnabled(false);
-        dchFechaFinal.setEnabled(false);
-
-        cmbCliente.setEnabled(false);
-
-        cmbFacturaInicial.setEnabled(true);
-        cmbFacturaFinal.setEnabled(true);
-
-        dchFechaInicial.setEnabled(false);
-        dchFechaFinal.setEnabled(false);
-
-        cmbCliente.setEnabled(true);
-
-        cmbFacturaInicial.setEnabled(false);
-        cmbFacturaFinal.setEnabled(false);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private RSMaterialComponent.RSButtonMaterialIconOne btnGenerar;

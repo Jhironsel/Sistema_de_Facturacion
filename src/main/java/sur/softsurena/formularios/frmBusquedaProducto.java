@@ -2,7 +2,8 @@ package sur.softsurena.formularios;
 
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
-import static sur.softsurena.entidades.Productos.buscarProducto;
+import sur.softsurena.entidades.FiltroBusqueda;
+import sur.softsurena.entidades.Productos;
 import sur.softsurena.utilidades.Utilidades;
 
 public class frmBusquedaProducto extends javax.swing.JDialog {
@@ -169,7 +170,7 @@ public class frmBusquedaProducto extends javax.swing.JDialog {
 
         Object registro[] = new Object[titulos.length];
 
-        miTabla = new DefaultTableModel(null, titulos){
+        miTabla = new DefaultTableModel(null, titulos) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -182,13 +183,17 @@ public class frmBusquedaProducto extends javax.swing.JDialog {
             return;
         }
 
-        buscarProducto(txtCriterio.getText()).stream().forEach(producto -> {
+        Productos.getProductos(
+                FiltroBusqueda
+                        .builder()
+                        .build()
+        ).stream().forEach(producto -> {
             registro[0] = producto.getId();
             registro[1] = producto.getCodigo();
             registro[2] = producto;
             miTabla.addRow(registro);
         });
-        
+
         tblTabla.setModel(miTabla);
 
         if (tblTabla.getRowCount() >= 1) {
@@ -197,7 +202,7 @@ public class frmBusquedaProducto extends javax.swing.JDialog {
         } else {
             btnAceptar.setEnabled(false);
         }
-        
+
         Utilidades.repararColumnaTable(tblTabla);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

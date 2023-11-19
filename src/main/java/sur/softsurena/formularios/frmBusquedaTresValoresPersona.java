@@ -10,7 +10,7 @@ public class frmBusquedaTresValoresPersona extends javax.swing.JDialog {
         initComponents();
         jPanel2.removeAll();
         jPanel2.add(txtTodo);
-        txtTodo.requestFocus();
+        txtTodo.requestFocusInWindow();
     }
 
     @SuppressWarnings("unchecked")
@@ -233,16 +233,16 @@ public class frmBusquedaTresValoresPersona extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void txtTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTodoActionPerformed
-//      txtApellidos.requestFocus();
+//      txtApellidos.requestFocusInWindow();
     }//GEN-LAST:event_txtTodoActionPerformed
 
     private void txtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaActionPerformed
-        txtTodo.requestFocus();
+        txtTodo.requestFocusInWindow();
     }//GEN-LAST:event_txtCedulaActionPerformed
 
     private void jrbTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbTodoActionPerformed
         txtTodo.setText("");
-        txtTodo.requestFocus();
+        txtTodo.requestFocusInWindow();
         
         
         jPanel2.removeAll();
@@ -257,7 +257,7 @@ public class frmBusquedaTresValoresPersona extends javax.swing.JDialog {
 
     private void jrbNombresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbNombresActionPerformed
         txtTodo.setText("");
-        txtTodo.requestFocus();
+        txtTodo.requestFocusInWindow();
         
         jPanel2.removeAll();
         jPanel2.add(txtTodo);
@@ -271,7 +271,7 @@ public class frmBusquedaTresValoresPersona extends javax.swing.JDialog {
 
     private void jrbCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbCedulaActionPerformed
         txtCedula.setValue(null);
-        txtCedula.requestFocus();
+        txtCedula.requestFocusInWindow();
         
         jPanel2.removeAll();
         jPanel2.add(txtCedula);
@@ -285,7 +285,7 @@ public class frmBusquedaTresValoresPersona extends javax.swing.JDialog {
 
     private void jrbApellidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbApellidosActionPerformed
         txtTodo.setText("");
-        txtTodo.requestFocus();
+        txtTodo.requestFocusInWindow();
         
         
         jPanel2.removeAll();

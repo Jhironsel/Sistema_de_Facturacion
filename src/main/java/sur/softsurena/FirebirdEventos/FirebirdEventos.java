@@ -35,17 +35,17 @@ public class FirebirdEventos extends FBEventManager{
             //Evento para productos.
             addEventListener("addProducto", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
-                frmProductos.llenarTabla("");
+                frmProductos.llenarTabla("evento");
             });
             
             addEventListener("del_Producto", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
-                frmProductos.llenarTabla("");
+                frmProductos.llenarTabla("evento");
             });
             
             addEventListener("upd_Producto", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
-                frmProductos.llenarTabla("");
+                frmProductos.llenarTabla("evento");
             });
             
             //Evento para personas.

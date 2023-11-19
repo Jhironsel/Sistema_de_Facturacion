@@ -10,6 +10,7 @@ import sur.softsurena.entidades.DefaultTableCellHeaderRenderer;
 import sur.softsurena.entidades.Permiso;
 import static sur.softsurena.entidades.Permiso.getPermisosAsignados;
 import static sur.softsurena.entidades.Permiso.getPermisosDisponibles;
+import sur.softsurena.entidades.Resultados;
 import sur.softsurena.entidades.Roles;
 import static sur.softsurena.entidades.Roles.comprobandoRol;
 import static sur.softsurena.entidades.Roles.comprobandoRolesDisponibles;
@@ -22,17 +23,6 @@ import static sur.softsurena.utilidades.Utilidades.columnasCheckBox;
 import static sur.softsurena.utilidades.Utilidades.repararColumnaTable;
 
 public class frmUsuarios extends javax.swing.JInternalFrame {
-
-    public String[] procedimientos = {
-        "SP_DELETE_USUARIO",
-        "SP_INSERT_USUARIO",
-        "SP_UPDATE_USUARIO",
-        "SP_SELECT_USUARIOS"
-    };
-
-    public String[] vista = {
-        "GET_ROLES"
-    };
 
     private static final Logger LOG = Logger.getLogger(frmUsuarios.class.getName());
     
@@ -113,7 +103,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             }
         });
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Botones"));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 45, 223), 2, true), "Botones de acción"));
 
         jPanel4.setLayout(new java.awt.GridLayout(1, 0, 4, 0));
 
@@ -189,6 +179,8 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             }
         });
 
+        jScrollPane4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 45, 223), 2, true));
+
         tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -209,19 +201,21 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         jpMantUsuariosLayout.setHorizontalGroup(
             jpMantUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpMantUsuariosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 941, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(6, 6, 6)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 953, Short.MAX_VALUE)
+                .addGap(6, 6, 6))
         );
         jpMantUsuariosLayout.setVerticalGroup(
             jpMantUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpMantUsuariosLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addComponent(jScrollPane4)
-                .addContainerGap())
+                .addGap(6, 6, 6))
         );
 
         jtpPrivilegios.addTab("<html><center><b>Mantenimiento<br>Usuarios</b><center></html>", null, jpMantUsuarios, "Permite definir los roles del sistema que agrupan a un conjuto de usuarios.");
+
+        jScrollPane2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(37, 45, 223), 2));
 
         tblRoles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -248,6 +242,8 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         });
         jScrollPane2.setViewportView(tblRoles);
 
+        jScrollPane7.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 45, 223), 2, true));
+
         tblPermisosDisponibles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -272,6 +268,8 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane7.setViewportView(tblPermisosDisponibles);
+
+        jScrollPane8.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 45, 223), 2, true));
 
         tblPermisosAsignados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -333,7 +331,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         });
 
         txtDescripcion.setEditable(false);
-        txtDescripcion.setBorder(javax.swing.BorderFactory.createTitledBorder(" Descripcion del permiso "));
+        txtDescripcion.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 45, 223), 2, true), " Descripcion del permiso "));
         txtDescripcion.setContentType("text/html"); // NOI18N
         txtDescripcion.setToolTipText("Aqui se muestran las descripcion del rol seleccionado.");
         txtDescripcion.setName("txtDescripcion"); // NOI18N
@@ -344,14 +342,14 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         jpMantRolesLayout.setHorizontalGroup(
             jpMantRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpMantRolesLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpMantRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane11)
                     .addGroup(jpMantRolesLayout.createSequentialGroup()
                         .addGroup(jpMantRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
+                            .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
                             .addComponent(btnBorrarPermiso, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jpMantRolesLayout.createSequentialGroup()
                                 .addComponent(btnQuitarAgregarPermisoAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -362,17 +360,15 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
                                 .addComponent(btnAsignarPermiso, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jpMantRolesLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)))))
-                .addContainerGap())
+                                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)))))
+                .addGap(6, 6, 6))
         );
         jpMantRolesLayout.setVerticalGroup(
             jpMantRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpMantRolesLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(jpMantRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpMantRolesLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE)
-                        .addContainerGap())
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE)
                     .addGroup(jpMantRolesLayout.createSequentialGroup()
                         .addGroup(jpMantRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
@@ -384,10 +380,13 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
                                 .addComponent(btnBorrarPermiso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(btnQuitarAgregarPermisoAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane11))))
+                        .addComponent(jScrollPane11)))
+                .addGap(6, 6, 6))
         );
 
         jtpPrivilegios.addTab("<html><center><b>Mantenimiento<br>Roles</b><center></html>", null, jpMantRoles, "Permite definir los roles del sistema que agrupan a un conjuto de usuarios.");
+
+        jScrollPane3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 45, 223), 2, true));
 
         tblListadoUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -414,6 +413,8 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         });
         jScrollPane3.setViewportView(tblListadoUsuarios);
 
+        jScrollPane5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 45, 223), 2, true));
+
         tblRolesUsuario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -438,6 +439,8 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane5.setViewportView(tblRolesUsuario);
+
+        jScrollPane6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 45, 223), 2, true));
 
         tblRolesDisponibles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -503,7 +506,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         });
 
         txtDescripcion1.setEditable(false);
-        txtDescripcion1.setBorder(javax.swing.BorderFactory.createTitledBorder(" Descripcion del rol "));
+        txtDescripcion1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 45, 223), 2, true), " Descripcion del rol "));
         txtDescripcion1.setContentType("text/html"); // NOI18N
         jScrollPane12.setViewportView(txtDescripcion1);
 
@@ -589,9 +592,9 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             
             String rol = JOptionPane.showInternalInputDialog(
                     this,
-                    "Ingrese nombre del rol.",
-                    "Agregando rol al sistema",
-                    JOptionPane.PLAIN_MESSAGE
+                    "Cual es el nombre del rol?: ",
+                    "",
+                    JOptionPane.QUESTION_MESSAGE
             );
             
             if (Objects.isNull(rol)) {
@@ -608,11 +611,12 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
 
         } else if (jtpPrivilegios.getSelectedComponent() == jpMantRoles) {
             if (tblRoles.getSelectedRow() == -1) {
-                JOptionPane.showMessageDialog(
-                        null,
+                JOptionPane.showInternalMessageDialog(
+                        this,
                         "Debe seleccionar un registros.",
-                        "Comprobacion de proceso.",
-                        JOptionPane.ERROR_MESSAGE);
+                        "",
+                        JOptionPane.ERROR_MESSAGE
+                );
                 return;
             }
 
@@ -621,18 +625,25 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
 
             String rolNuevo = JOptionPane.showInternalInputDialog(
                     this,
-                    "Ingrese nombre del nuevo rol:",
-                    "Cambio de nombre de roles.",
+                    "Cual es el nombre del nuevo rol?:",
+                    "",
                     JOptionPane.QUESTION_MESSAGE
             );
+            
+            if(Objects.isNull(rolNuevo) || rolNuevo.isBlank()){
+                return;
+            }
 
             Roles.modificarRol(rolActual, rolNuevo);
             llenarTblRoles();
         } else if (jtpPrivilegios.getSelectedComponent() == jpMantUsuarios) {
             if (tblUsuarios.getSelectedRow() == -1) {
                 JOptionPane.showInternalMessageDialog(
-                        null,
-                        "Debes seleccionar un usuario.");
+                        this,
+                        "Debes seleccionar un usuario.",
+                        "",
+                        JOptionPane.ERROR_MESSAGE
+                );
                 return;
             }
             String userName = tblUsuarios.getValueAt(
@@ -657,9 +668,9 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             //Validar que exista un rol seleccionado
             if (tblRoles.getSelectedRow() == -1) {
                 JOptionPane.showInternalMessageDialog(
-                        null,
+                        this,
                         "Debe seleccionar un rol de la lista.",
-                        "Proceso de validacion de roles.",
+                        "",
                         JOptionPane.ERROR_MESSAGE
                 );
                 return;
@@ -669,8 +680,10 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             int rta = JOptionPane.showInternalConfirmDialog(
                     this,
                     "Esta seguro de eliminar role?",
-                    "Confirmacion!!!",
-                    JOptionPane.YES_NO_OPTION);
+                    "",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE
+            );
 
             if (rta == JOptionPane.NO_OPTION) {
                 return;
@@ -689,19 +702,21 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
 
             if (usuario.equalsIgnoreCase("sysdba")) {
                 JOptionPane.showInternalMessageDialog(
-                        null,
+                        this,
                         "Usuario sysdba no está permitido eliminar.",
-                        "Validación de usuario a eliminar.",
+                        "",
                         JOptionPane.ERROR_MESSAGE
                 );
                 return;
             }
 
-            int rta = JOptionPane.showConfirmDialog(
-                    null,
+            int rta = JOptionPane.showInternalConfirmDialog(
+                    this,
                     "Esta seguro de eliminar Usuario?",
-                    "Confirmacion!!!",
-                    JOptionPane.YES_NO_OPTION);
+                    "",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE
+            );
 
             if (rta == JOptionPane.NO_OPTION) {
                 return;
@@ -712,22 +727,22 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             c.setVisible(true);
 
             if (!c.aceptar) {
-                JOptionPane.showMessageDialog(
-                        null,
+                JOptionPane.showInternalMessageDialog(
+                        this,
                         "Ingrese corretamente el codigo.",
-                        "Proceso de validacion.",
-                        JOptionPane.WARNING_MESSAGE
+                        "",
+                        JOptionPane.ERROR_MESSAGE
                 );
                 return;
             }
 
-            String msg;
+            Resultados resultados = borrarUsuario(usuario.strip());
 
-            msg = borrarUsuario(usuario.strip());
-
-            JOptionPane.showMessageDialog(
-                    null,
-                    msg
+            JOptionPane.showInternalMessageDialog(
+                    this,
+                    resultados,
+                    "",
+                    resultados.getIcono()
             );
 
         } else {
@@ -738,16 +753,20 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnBorrarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        String usuario = JOptionPane.showInputDialog(
-                "Escriba criterio de busqueda:");
+        String usuario = JOptionPane.showInternalInputDialog(
+                this,
+                "Escriba criterio de busqueda:",
+                "",
+                JOptionPane.QUESTION_MESSAGE
+        );
 
-        if (usuario == null || usuario.isBlank()) {
+        if (Objects.isNull(usuario) || usuario.isBlank()) {
             return;
         }
 
         if (jtpPrivilegios.getSelectedComponent() == jpMantUsuarios) {
             //            if (!existeUsuarioByUserName(usuario)) {
-//                JOptionPane.showMessageDialog(null, "El Usuario No Existe");
+//                JOptionPane.showInternalMessageDialog(this, "El Usuario No Existe");
 //                return;
 //            }
             //Detalle de Factura
@@ -794,20 +813,20 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
 
     private void btnAsignarRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarRolActionPerformed
         if (tblListadoUsuarios.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(
-                    null,
+            JOptionPane.showInternalMessageDialog(
+                    this,
                     "Debe seleccionar un usuario de la lista.",
-                    "Validacion de procedimiento.",
+                    "",
                     JOptionPane.ERROR_MESSAGE
             );
             return;
         }
 
         if (tblRolesDisponibles.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(
-                    null,
+            JOptionPane.showInternalMessageDialog(
+                    this,
                     "Debe seleccionar un rol de la lista",
-                    "Validacion de procedimiento.",
+                    "",
                     JOptionPane.ERROR_MESSAGE
             );
             return;
@@ -822,7 +841,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         int repuesta = JOptionPane.showInternalConfirmDialog(
                 this,
                 "Desea permitir administracion de este rol?",
-                "Proceso de validacion de asignacion!",
+                "",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE
         );
@@ -841,7 +860,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         int resp = JOptionPane.showInternalConfirmDialog(
                 this,
                 "Desea eliminar permiso al usuario?",
-                "Proceso de validación de usuario.",
+                "",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE
         );
@@ -864,19 +883,19 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
 
     private void btnAsignarPermisoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarPermisoActionPerformed
         if (tblRoles.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(
-                    null,
+            JOptionPane.showInternalMessageDialog(
+                    this,
                     "Debe seleccionar un rol de la lista",
-                    "Validacion de procedimiento.",
+                    "",
                     JOptionPane.ERROR_MESSAGE
             );
             return;
         }
         if (tblPermisosDisponibles.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(
-                    null,
+            JOptionPane.showInternalMessageDialog(
+                    this,
                     "Debe seleccionar permiso de la lista",
-                    "Validacion de procedimiento.",
+                    "",
                     JOptionPane.ERROR_MESSAGE
             );
             return;
@@ -895,7 +914,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         int repuesta = JOptionPane.showInternalConfirmDialog(
                 this,
                 "Desea agregar rol administrador?",
-                "Creación de rol.",
+                "",
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE
         );
@@ -951,7 +970,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         int resp = JOptionPane.showInternalConfirmDialog(
                 this,
                 mensaje,
-                "Proceso de validación de usuario.",
+                "",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE
         );
@@ -999,7 +1018,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         int resp = JOptionPane.showInternalConfirmDialog(
                 this,
                 mensaje,
-                "Proceso de validación de usuario.",
+                "",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE
         );
@@ -1063,7 +1082,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         int resp = JOptionPane.showInternalConfirmDialog(
                 this,
                 "Desea quitar el rol al usuario?",
-                "Proceso de validación de usuario.",
+                "",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE
         );
@@ -1359,9 +1378,9 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         //Validar que tenga un rol seleccionado.
         if (tblRoles.getSelectedRow() == -1) {
             JOptionPane.showInternalMessageDialog(
-                    null,
+                    this,
                     "Debe selecionar un rol.",
-                    "Validación de rol",
+                    "",
                     JOptionPane.ERROR_MESSAGE
             );
             return true;
@@ -1369,9 +1388,9 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         //Validamos que el procedimiento esta seleccionado.
         if (tblPermisosAsignados.getSelectedRow() == -1) {
             JOptionPane.showInternalMessageDialog(
-                    null,
+                    this,
                     "Debe selecionar un permiso para el rol.",
-                    "Validación de rol",
+                    "",
                     JOptionPane.ERROR_MESSAGE
             );
             return true;
@@ -1383,9 +1402,9 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         //Validar que tenga un rol seleccionado.
         if (tblListadoUsuarios.getSelectedRow() == -1) {
             JOptionPane.showInternalMessageDialog(
-                    null,
+                    this,
                     "Debe selecionar un usuario de la lista.",
-                    "Validación de usuario",
+                    "",
                     JOptionPane.ERROR_MESSAGE
             );
             return true;
@@ -1393,9 +1412,9 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         //Validamos que el procedimiento esta seleccionado.
         if (tblRolesUsuario.getSelectedRow() == -1) {
             JOptionPane.showInternalMessageDialog(
-                    null,
+                    this,
                     "Debe selecionar un rol asignado al usuario.",
-                    "Validación de rol",
+                    "",
                     JOptionPane.ERROR_MESSAGE
             );
             return true;

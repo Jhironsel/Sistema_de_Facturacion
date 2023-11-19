@@ -16,6 +16,7 @@
     </xy.ui.testing.action.CallMainMethodAction>
     <xy.ui.testing.action.component.SendKeysAction>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
         <componentName>txtUsuario</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
@@ -23,13 +24,14 @@
       <disabled>false</disabled>
       <keyboardInteractions>
         <xy.ui.testing.action.component.SendKeysAction_-WriteText>
-          <text>jhironsel</text>
+          <text>sysdba</text>
         </xy.ui.testing.action.component.SendKeysAction_-WriteText>
       </keyboardInteractions>
       <requestToFocusOnTheComponent>true</requestToFocusOnTheComponent>
     </xy.ui.testing.action.component.SendKeysAction>
     <xy.ui.testing.action.component.SendKeysAction>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
         <componentName>txtClave</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
@@ -37,7 +39,7 @@
       <disabled>false</disabled>
       <keyboardInteractions>
         <xy.ui.testing.action.component.SendKeysAction_-WriteText>
-          <text>123uasd</text>
+          <text>1</text>
         </xy.ui.testing.action.component.SendKeysAction_-WriteText>
       </keyboardInteractions>
       <requestToFocusOnTheComponent>true</requestToFocusOnTheComponent>
@@ -45,6 +47,7 @@
     <xy.ui.testing.action.component.ClickAction>
       <button>LEFT_BUTTON</button>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
         <componentName>btnAceptar</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
@@ -52,40 +55,7 @@
       <disabled>false</disabled>
       <doubleClick>false</doubleClick>
       <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
-      <poupTrigger>false</poupTrigger>
-    </xy.ui.testing.action.component.ClickAction>
-    <xy.ui.testing.action.component.specific.SelectComboBoxItemAction>
-      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
-        <componentName>jcbRoles</componentName>
-        <occurrencesToSkip>0</occurrencesToSkip>
-        <windowIndex>1</windowIndex>
-      </componentFinder>
-      <disabled>false</disabled>
-      <knownOptions>
-        <string>ADMINISTRADOR</string>
-        <string>RRR_CAJERO</string>
-        <string>RRR_DOCTOR</string>
-        <string>RRR_GERENTE</string>
-        <string>RRR_PADRE</string>
-        <string>RRR_RRHH</string>
-        <string>RRR_SECRETARIA</string>
-        <string>RRR_SOFTSURENA</string>
-        <string>RRR_VENDEDOR</string>
-      </knownOptions>
-      <optionListChecked>false</optionListChecked>
-      <optionToSelect>ADMINISTRADOR</optionToSelect>
-      <selectionMode>BY_LABEL_TEXT</selectionMode>
-    </xy.ui.testing.action.component.specific.SelectComboBoxItemAction>
-    <xy.ui.testing.action.component.ClickAction>
-      <button>LEFT_BUTTON</button>
-      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
-        <componentName>OptionPane.button</componentName>
-        <occurrencesToSkip>0</occurrencesToSkip>
-        <windowIndex>1</windowIndex>
-      </componentFinder>
-      <disabled>false</disabled>
-      <doubleClick>false</doubleClick>
-      <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <locationOnComponent class="null"/>
       <poupTrigger>false</poupTrigger>
     </xy.ui.testing.action.component.ClickAction>
     <xy.ui.testing.action.component.SendKeysAction>
@@ -110,6 +80,7 @@
     <xy.ui.testing.action.component.ClickAction>
       <button>LEFT_BUTTON</button>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
         <componentName>btnNuevo</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
@@ -117,10 +88,12 @@
       <disabled>false</disabled>
       <doubleClick>false</doubleClick>
       <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <locationOnComponent class="null"/>
       <poupTrigger>false</poupTrigger>
     </xy.ui.testing.action.component.ClickAction>
     <xy.ui.testing.action.component.SendKeysAction>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
         <componentName>txtCedula</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
@@ -141,6 +114,7 @@
     <xy.ui.testing.action.component.ClickAction>
       <button>LEFT_BUTTON</button>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
         <componentName>btnCedulaValidad</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
@@ -148,39 +122,26 @@
       <disabled>false</disabled>
       <doubleClick>false</doubleClick>
       <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <locationOnComponent class="null"/>
       <poupTrigger>false</poupTrigger>
     </xy.ui.testing.action.component.ClickAction>
-    <xy.ui.testing.action.component.CheckVisibleStringsAction>
-      <completenessChecked>false</completenessChecked>
-      <componentFinder class="xy.ui.testing.finder.DisplayedStringComponentFinder">
-        <componentClassName>javax.swing.JOptionPane</componentClassName>
-        <occurrencesToSkip>0</occurrencesToSkip>
-        <visibleString>Cedula valida, puede continuar.</visibleString>
-        <visibleStringInTree>true</visibleStringInTree>
-        <windowIndex>1</windowIndex>
-      </componentFinder>
-      <disabled>false</disabled>
-      <negated>false</negated>
-      <orderChecked>false</orderChecked>
-      <visibleStrings>
-        <string>Cedula valida, puede continuar.</string>
-        <string>Aceptar</string>
-      </visibleStrings>
-    </xy.ui.testing.action.component.CheckVisibleStringsAction>
     <xy.ui.testing.action.component.ClickAction>
       <button>LEFT_BUTTON</button>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
         <componentName>OptionPane.button</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
-        <windowIndex>1</windowIndex>
+        <windowIndex>0</windowIndex>
       </componentFinder>
       <disabled>false</disabled>
       <doubleClick>false</doubleClick>
       <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <locationOnComponent class="null"/>
       <poupTrigger>false</poupTrigger>
     </xy.ui.testing.action.component.ClickAction>
     <xy.ui.testing.action.component.specific.SelectComboBoxItemAction>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
         <componentName>jcbPersona</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
@@ -197,6 +158,7 @@
     </xy.ui.testing.action.component.specific.SelectComboBoxItemAction>
     <xy.ui.testing.action.component.SendKeysAction>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
         <componentName>txtPNombre</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
@@ -211,6 +173,7 @@
     </xy.ui.testing.action.component.SendKeysAction>
     <xy.ui.testing.action.component.SendKeysAction>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
         <componentName>txtApellidos</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
@@ -236,6 +199,7 @@
     </xy.ui.testing.action.component.property.ChangeComponentPropertyAction>
     <xy.ui.testing.action.component.specific.SelectComboBoxItemAction>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
         <componentName>jcbEstadoCivil</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
@@ -255,6 +219,7 @@
     </xy.ui.testing.action.component.specific.SelectComboBoxItemAction>
     <xy.ui.testing.action.component.specific.SelectComboBoxItemAction>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
         <componentName>jcbSexo</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
@@ -271,6 +236,7 @@
     </xy.ui.testing.action.component.specific.SelectComboBoxItemAction>
     <xy.ui.testing.action.component.specific.SelectTabAction>
       <componentFinder class="xy.ui.testing.finder.DisplayedStringComponentFinder">
+        <componentClassName class="null"/>
         <occurrencesToSkip>0</occurrencesToSkip>
         <visibleString>Dirección</visibleString>
         <visibleStringInTree>false</visibleStringInTree>
@@ -281,6 +247,7 @@
     </xy.ui.testing.action.component.specific.SelectTabAction>
     <xy.ui.testing.action.component.SendKeysAction>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
         <componentName>jcbProvincia</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
@@ -300,6 +267,7 @@
     </xy.ui.testing.action.component.SendKeysAction>
     <xy.ui.testing.action.component.SendKeysAction>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
         <componentName>jcbMunicipios</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
@@ -319,6 +287,7 @@
     </xy.ui.testing.action.component.SendKeysAction>
     <xy.ui.testing.action.component.SendKeysAction>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
         <componentName>jcbDistritoMunicipal</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
@@ -338,6 +307,7 @@
     </xy.ui.testing.action.component.SendKeysAction>
     <xy.ui.testing.action.component.SendKeysAction>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
         <componentName>txtDireccion</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
@@ -353,6 +323,7 @@
     <xy.ui.testing.action.component.ClickAction>
       <button>LEFT_BUTTON</button>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
         <componentName>btnAgregarDirecciones</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
@@ -360,10 +331,12 @@
       <disabled>false</disabled>
       <doubleClick>false</doubleClick>
       <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <locationOnComponent class="null"/>
       <poupTrigger>false</poupTrigger>
     </xy.ui.testing.action.component.ClickAction>
     <xy.ui.testing.action.component.specific.SelectTabAction>
       <componentFinder class="xy.ui.testing.finder.DisplayedStringComponentFinder">
+        <componentClassName class="null"/>
         <occurrencesToSkip>0</occurrencesToSkip>
         <visibleString>Contactos</visibleString>
         <visibleStringInTree>false</visibleStringInTree>
@@ -374,6 +347,7 @@
     </xy.ui.testing.action.component.specific.SelectTabAction>
     <xy.ui.testing.action.component.specific.SelectTabAction>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
         <componentName>telefonoCorreos</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
@@ -384,6 +358,7 @@
     <xy.ui.testing.action.component.ClickAction>
       <button>LEFT_BUTTON</button>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
         <componentName>jrbMovil</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
@@ -391,10 +366,12 @@
       <disabled>false</disabled>
       <doubleClick>false</doubleClick>
       <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <locationOnComponent class="null"/>
       <poupTrigger>false</poupTrigger>
     </xy.ui.testing.action.component.ClickAction>
     <xy.ui.testing.action.component.SendKeysAction>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
         <componentName>txtTelefonoMovil</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
@@ -415,6 +392,7 @@
     <xy.ui.testing.action.component.ClickAction>
       <button>LEFT_BUTTON</button>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
         <componentName>btnAgregarTelefono</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
@@ -422,11 +400,13 @@
       <disabled>false</disabled>
       <doubleClick>false</doubleClick>
       <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <locationOnComponent class="null"/>
       <poupTrigger>false</poupTrigger>
     </xy.ui.testing.action.component.ClickAction>
     <xy.ui.testing.action.component.ClickAction>
       <button>LEFT_BUTTON</button>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
         <componentName>jrbTelefonoResidencial</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
@@ -434,10 +414,12 @@
       <disabled>false</disabled>
       <doubleClick>false</doubleClick>
       <eventsIntervalMilliseconds>500</eventsIntervalMilliseconds>
+      <locationOnComponent class="null"/>
       <poupTrigger>false</poupTrigger>
     </xy.ui.testing.action.component.ClickAction>
     <xy.ui.testing.action.component.SendKeysAction>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
         <componentName>txtTelefonoMovil</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
@@ -458,6 +440,7 @@
     <xy.ui.testing.action.component.ClickAction>
       <button>LEFT_BUTTON</button>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
         <componentName>btnAgregarTelefono</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
@@ -465,10 +448,12 @@
       <disabled>false</disabled>
       <doubleClick>false</doubleClick>
       <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <locationOnComponent class="null"/>
       <poupTrigger>false</poupTrigger>
     </xy.ui.testing.action.component.ClickAction>
     <xy.ui.testing.action.component.specific.SelectTabAction>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
         <componentName>telefonoCorreos</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
@@ -478,6 +463,7 @@
     </xy.ui.testing.action.component.specific.SelectTabAction>
     <xy.ui.testing.action.component.SendKeysAction>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
         <componentName>txtCorreo</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
@@ -498,6 +484,7 @@
     <xy.ui.testing.action.component.ClickAction>
       <button>LEFT_BUTTON</button>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
         <componentName>btnAgregarCorreo</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
@@ -505,10 +492,12 @@
       <disabled>false</disabled>
       <doubleClick>false</doubleClick>
       <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <locationOnComponent class="null"/>
       <poupTrigger>false</poupTrigger>
     </xy.ui.testing.action.component.ClickAction>
     <xy.ui.testing.action.component.SendKeysAction>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
         <componentName>txtCorreo</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
@@ -529,6 +518,7 @@
     <xy.ui.testing.action.component.ClickAction>
       <button>LEFT_BUTTON</button>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
         <componentName>btnAgregarCorreo</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
@@ -536,11 +526,13 @@
       <disabled>false</disabled>
       <doubleClick>false</doubleClick>
       <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <locationOnComponent class="null"/>
       <poupTrigger>false</poupTrigger>
     </xy.ui.testing.action.component.ClickAction>
     <xy.ui.testing.action.component.ClickAction>
       <button>LEFT_BUTTON</button>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
         <componentName>btnGuardar</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
         <windowIndex>0</windowIndex>
@@ -548,46 +540,35 @@
       <disabled>false</disabled>
       <doubleClick>false</doubleClick>
       <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <locationOnComponent class="null"/>
       <poupTrigger>false</poupTrigger>
     </xy.ui.testing.action.component.ClickAction>
     <xy.ui.testing.action.component.ClickAction>
       <button>LEFT_BUTTON</button>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
         <componentName>OptionPane.button</componentName>
-        <occurrencesToSkip>0</occurrencesToSkip>
-        <windowIndex>1</windowIndex>
+        <occurrencesToSkip>1</occurrencesToSkip>
+        <windowIndex>0</windowIndex>
       </componentFinder>
       <disabled>false</disabled>
       <doubleClick>false</doubleClick>
       <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <locationOnComponent class="null"/>
       <poupTrigger>false</poupTrigger>
     </xy.ui.testing.action.component.ClickAction>
-    <xy.ui.testing.action.component.CheckVisibleStringsAction>
-      <completenessChecked>false</completenessChecked>
-      <componentFinder class="xy.ui.testing.finder.DisplayedStringComponentFinder">
-        <componentClassName>javax.swing.JOptionPane</componentClassName>
-        <occurrencesToSkip>0</occurrencesToSkip>
-        <visibleString>Cliente Agregado Correctamente</visibleString>
-        <visibleStringInTree>true</visibleStringInTree>
-        <windowIndex>1</windowIndex>
-      </componentFinder>
-      <disabled>false</disabled>
-      <negated>false</negated>
-      <orderChecked>false</orderChecked>
-      <visibleStrings>
-        <string>Cliente Agregado Correctamente</string>
-      </visibleStrings>
-    </xy.ui.testing.action.component.CheckVisibleStringsAction>
     <xy.ui.testing.action.component.ClickAction>
       <button>LEFT_BUTTON</button>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
         <componentName>OptionPane.button</componentName>
         <occurrencesToSkip>0</occurrencesToSkip>
-        <windowIndex>1</windowIndex>
+        <windowIndex>0</windowIndex>
       </componentFinder>
       <disabled>false</disabled>
       <doubleClick>false</doubleClick>
       <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <locationOnComponent class="null"/>
       <poupTrigger>false</poupTrigger>
     </xy.ui.testing.action.component.ClickAction>
   </testActions>

@@ -367,11 +367,11 @@ public class frmEntradaProducto extends javax.swing.JDialog {
     }//GEN-LAST:event_cbEstadoItemStateChanged
 
     private void txtPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioActionPerformed
-        btnAgregar.requestFocus();
+        btnAgregar.requestFocusInWindow();
     }//GEN-LAST:event_txtPrecioActionPerformed
 
     private void txtEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEntradaActionPerformed
-        txtCosto.requestFocus();
+        txtCosto.requestFocusInWindow();
     }//GEN-LAST:event_txtEntradaActionPerformed
 
     private void txtCodigoProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoProductoActionPerformed
@@ -385,7 +385,12 @@ public class frmEntradaProducto extends javax.swing.JDialog {
         BufferedImage img = null;
         try {
             if (!rs.next()) {
-                JOptionPane.showMessageDialog(null, "Producto no encontrado...!!!!");
+                JOptionPane.showMessageDialog(
+                        this, 
+                        "Producto no encontrado...!!!!",
+                        "",
+                        JOptionPane.ERROR_MESSAGE
+                );
                 txtCodigoProducto.setText("");
                 txtCodigoProducto.requestFocusInWindow();
                 return;
@@ -415,9 +420,7 @@ public class frmEntradaProducto extends javax.swing.JDialog {
             cbEstado.setSelected((rs.getBoolean("estado")));
 
             txtEntrada.requestFocusInWindow();
-        } catch (SQLException ex) {
-            LOG.log(Level.SEVERE, ex.getMessage(), ex);
-        } catch (IOException ex) {
+        } catch (SQLException | IOException ex) {
             LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }//GEN-LAST:event_txtCodigoProductoActionPerformed
@@ -427,7 +430,7 @@ public class frmEntradaProducto extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNumeroFacturaActionPerformed
 
     private void txtCostoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCostoActionPerformed
-        txtPrecio.requestFocus();
+        txtPrecio.requestFocusInWindow();
     }//GEN-LAST:event_txtCostoActionPerformed
 
     private void txtNumeroFacturaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroFacturaKeyReleased
@@ -435,7 +438,7 @@ public class frmEntradaProducto extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNumeroFacturaKeyReleased
 
     private void txtImpuestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtImpuestoActionPerformed
-        btnAgregar.requestFocus();
+        btnAgregar.requestFocusInWindow();
     }//GEN-LAST:event_txtImpuestoActionPerformed
 
     private void txtCostoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCostoFocusGained
@@ -467,89 +470,134 @@ public class frmEntradaProducto extends javax.swing.JDialog {
     }//GEN-LAST:event_txtDescripcionProductoFocusGained
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        if (txtNumeroFactura.getText().equals("")) {
-            JOptionPane.showMessageDialog(null,
-                    "Debe Proporcional la factura asociada a este "
-                    + "registros de productos");
+        if (txtNumeroFactura.getText().isBlank()) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Debe Proporcional la factura asociada a este registros de productos",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             txtNumeroFactura.requestFocusInWindow();
             return;
         }
 
-        if (txtCodigoProducto.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Id Producto esta vacio....!!!");
+        if (txtCodigoProducto.getText().isBlank()) {
+            JOptionPane.showMessageDialog(
+                    this, 
+                    "Id Producto esta vacio....!!!",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             txtCodigoProducto.requestFocusInWindow();
             return;
         }
 
         if (miBusqueda == null) {
             //TODO determinar cual es el icono de este dialog.
-            JOptionPane.showInternalMessageDialog(
-                    null,
-                    "Vuelva a buscar el articulo."
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Vuelva a buscar el articulo.",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
             );
             return;
         }
 
         if (txtEntrada.getText().isBlank()) {
-            JOptionPane.showMessageDialog(null,
-                    "Debe de ingrar valores en entrada.");
-            txtEntrada.requestFocus();
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Debe de ingrar valores en entrada.",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            txtEntrada.requestFocusInWindow();
             return;
         }
 
         BigDecimal entrada = new BigDecimal(txtEntrada.getText().trim());
 
         if (entrada.compareTo(new BigDecimal(0)) <= 0) {
-            JOptionPane.showMessageDialog(null,
-                    "No se permite numero negativo o cero...!!!");
+            JOptionPane.showMessageDialog(
+                    this,
+                    "No se permite numero negativo o cero...!!!",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             return;
         }
 
         if (txtCosto.getText().isBlank()) {
-            JOptionPane.showMessageDialog(null,
-                    "Debe ingresar el costo del producto.");
-            txtCosto.requestFocus();
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Debe ingresar el costo del producto.",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            txtCosto.requestFocusInWindow();
             return;
         }
 
-        if (Double.valueOf(txtCosto.getText()) <= 0) {
-            JOptionPane.showMessageDialog(null,
-                    "Debe de ingresar costo del Art. mayor que cero(0).");
+        if (Double.parseDouble(txtCosto.getText()) <= 0) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Debe de ingresar costo del Art. mayor que cero(0).",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             return;
         }
 
         if (txtPrecio.getText().isBlank()) {
-            JOptionPane.showMessageDialog(null,
-                    "Debe ingresar el precio del producto.");
-            txtPrecio.requestFocus();
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Debe ingresar el precio del producto.",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            txtPrecio.requestFocusInWindow();
             return;
         }
 
-        if (Double.valueOf(txtPrecio.getText()) <= 0) {
-            JOptionPane.showMessageDialog(null,
-                    "Debe de ingresar precio del Art. mayor que cero(0).");
+        if (Double.parseDouble(txtPrecio.getText()) <= 0) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Debe de ingresar precio del Art. mayor que cero(0).",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             return;
         }
 
         if (Double.valueOf(txtCosto.getText())
                 >= Double.valueOf(txtPrecio.getText())) {
-            JOptionPane.showMessageDialog(null,
-                    "El costo no puede ser mayor al precio.");
+            
+            JOptionPane.showMessageDialog(
+                    this,
+                    "El costo no puede ser mayor al precio.",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            
             txtCosto.setText("");
             txtPrecio.setText("");
-            txtCosto.requestFocus();
+            txtCosto.requestFocusInWindow();
+            
             return;
         }
 
         if (!impuesto) {
-            int resp = JOptionPane.showConfirmDialog(null,
+            int resp = JOptionPane.showConfirmDialog(
+                    this,
                     "Este articulo tiene impuesto?",
-                    "Proceso de verificacion.",
-                    JOptionPane.YES_NO_OPTION);
+                    "",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE
+            );
+            
             if (resp == JOptionPane.YES_OPTION) {
                 txtImpuesto.setEditable(true);
                 txtImpuesto.setText("0.00");
-                txtImpuesto.requestFocus();
+                txtImpuesto.requestFocusInWindow();
                 txtImpuesto.setSelectionStart(0);
                 txtImpuesto.setSelectionEnd(txtImpuesto.getText().length());
                 impuesto = true;
@@ -562,18 +610,26 @@ public class frmEntradaProducto extends javax.swing.JDialog {
 
         if (impuesto) {
             if (txtImpuesto.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null,
-                        "Debe de ingresar un valor en impuesto.");
-                txtImpuesto.requestFocus();
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Debe de ingresar un valor en impuesto.",
+                        "",
+                        JOptionPane.ERROR_MESSAGE
+                );
+                txtImpuesto.requestFocusInWindow();
                 return;
             }
             BigDecimal c = new BigDecimal(txtImpuesto.getText());
 
             if (c.compareTo(BigDecimal.ZERO) <= 0) {
-                JOptionPane.showMessageDialog(null,
-                        "Debe de ingresar una cantidad mayor a cero.");
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Debe de ingresar una cantidad mayor a cero.",
+                        "",
+                        JOptionPane.ERROR_MESSAGE
+                );
                 txtImpuesto.setText("");
-                txtImpuesto.requestFocus();
+                txtImpuesto.requestFocusInWindow();
                 return;
             }
         }
@@ -593,7 +649,7 @@ public class frmEntradaProducto extends javax.swing.JDialog {
         txtNumeroFactura.setEditable(false);
         quitarImagen();
         limpiar();
-        txtCodigoProducto.requestFocus();
+        txtCodigoProducto.requestFocusInWindow();
 
         impuesto = false;
     }//GEN-LAST:event_btnAgregarActionPerformed
@@ -622,7 +678,7 @@ public class frmEntradaProducto extends javax.swing.JDialog {
 //                    new BigDecimal(tbArticulos.getValueAt(i, 6).toString())
 //                )
 //            )) {
-//                JOptionPane.showMessageDialog(null, "No se pudo registrar producto");
+//                JOptionPane.showMessageDialog(this, "No se pudo registrar producto");
 //                return;
 //            }
         }

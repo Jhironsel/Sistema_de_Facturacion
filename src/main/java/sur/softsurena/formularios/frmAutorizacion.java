@@ -1,10 +1,9 @@
 package sur.softsurena.formularios;
 
 import javax.swing.JOptionPane;
-import sur.softsurena.conexion.Conexion;
 
 public class frmAutorizacion extends javax.swing.JDialog {
-    private boolean aceptar = false;
+    private final boolean aceptar = false;
 
     public boolean isAceptado() {
         return aceptar;
@@ -29,8 +28,6 @@ public class frmAutorizacion extends javax.swing.JDialog {
         txtUsuario = new javax.swing.JTextField();
         txtPass = new javax.swing.JPasswordField();
         jLabel3 = new javax.swing.JLabel();
-        jcbRoles = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
         btnCancelar = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
         jbFoto = new javax.swing.JLabel();
@@ -68,11 +65,6 @@ public class frmAutorizacion extends javax.swing.JDialog {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Solo Personas Autorizada");
 
-        jcbRoles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel4.setText("Rol de usuario: ");
-
         btnCancelar.setText("Cancelar");
 
         btnAceptar.setText("Aceptar");
@@ -87,18 +79,15 @@ public class frmAutorizacion extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jcbRoles, 0, 195, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtPass)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
                     .addComponent(txtUsuario)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCancelar))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(22, 22, 22)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnCancelar, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnAceptar, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addComponent(btnAceptar)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -124,32 +113,36 @@ public class frmAutorizacion extends javax.swing.JDialog {
                         .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jbFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4)
-                    .addComponent(btnAceptar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jcbRoles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCancelar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                    .addComponent(btnAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnAceptar, btnCancelar, jLabel1, jLabel2, jLabel4, jcbRoles, txtPass, txtUsuario});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel1, jLabel2, txtPass, txtUsuario});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassActionPerformed
-        if(txtUsuario.getText().equals("") || txtUsuario.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Campo Usuario vacio", 
-                    "Campo Vacio", JOptionPane.ERROR_MESSAGE);
-            txtUsuario.requestFocus();
+        if(txtUsuario.getText().isBlank()){
+            JOptionPane.showMessageDialog(
+                    this, 
+                    "Campo Usuario vacio", 
+                    "", 
+                    JOptionPane.ERROR_MESSAGE
+            );
+            txtUsuario.requestFocusInWindow();
             return;
         }
         
-        if(txtPass.getPassword().equals("") || txtPass.getPassword().length == 0){
-            JOptionPane.showMessageDialog(null, "Campo clave vacio", 
-                    "Campo Vacio", JOptionPane.ERROR_MESSAGE);
+        if(txtPass.getPassword().length == 0){
+            JOptionPane.showMessageDialog(
+                    this, 
+                    "Campo clave vacio", 
+                    "", 
+                    JOptionPane.ERROR_MESSAGE
+            );
             txtPass.requestFocusInWindow();
             return;
         }
@@ -170,9 +163,7 @@ public class frmAutorizacion extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jbFoto;
-    private javax.swing.JComboBox<String> jcbRoles;
     private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables

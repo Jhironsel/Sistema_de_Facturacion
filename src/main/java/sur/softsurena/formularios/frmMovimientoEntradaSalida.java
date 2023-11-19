@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
@@ -172,7 +173,7 @@ public class frmMovimientoEntradaSalida extends javax.swing.JInternalFrame {
     }
 
     private void llenarTabla() {
-        if(mes == null || year == null){
+        if(Objects.isNull(mes)  || Objects.isNull(year)){
             mes="01";
             year="00";
         }
