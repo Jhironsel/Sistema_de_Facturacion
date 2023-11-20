@@ -936,7 +936,9 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
         btnBuscarCliente.setEnabled(true);
 
         //Se seleccionan el primero Item del comboBox.
-        cmbCliente.setSelectedIndex(0);
+        if (cmbCliente.getItemCount() > 0) {
+            cmbCliente.setSelectedIndex(0);
+        }
     }//GEN-LAST:event_rbtCreditoActionPerformed
     private void rbtContadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtContadoActionPerformed
 
@@ -946,7 +948,9 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
 
         cmbCliente.setEnabled(false);
 
-        cmbCliente.setSelectedIndex(0);
+        if (cmbCliente.getItemCount() > 0) {
+            cmbCliente.setSelectedIndex(0);
+        }
 
         JlCantidad1.setText("Limt Cred.:$0.00");
         JlCantidad2.setText("Deud Actu.:$0.00");
@@ -1884,7 +1888,9 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
             cmbCliente.addItem(cliente);
         });
 
-        cmbCliente.setSelectedIndex(0);
+        if (cmbCliente.getItemCount() > 0) {
+            cmbCliente.setSelectedIndex(0);
+        }
     }
 
     private void limpiarTabla() {
@@ -1897,7 +1903,9 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
-        cmbCliente.setSelectedIndex(0);
+        if (cmbCliente.getItemCount() > 0) {
+            cmbCliente.setSelectedIndex(0);
+        }
     }
 
     private void totales() {

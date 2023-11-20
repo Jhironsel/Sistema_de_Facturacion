@@ -488,7 +488,7 @@ public final class frmLogin extends javax.swing.JFrame {
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Metal".equals(info.getName())) {
+                if ("GTK+".equals(info.getName())) {
                     //GTK+, Nimbus, Metal, CDE/Motif
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     System.out.println("L&F: " + info.getName());

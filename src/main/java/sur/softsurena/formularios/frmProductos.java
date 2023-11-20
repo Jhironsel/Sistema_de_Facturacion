@@ -793,7 +793,9 @@ public class frmProductos extends javax.swing.JInternalFrame {
             txtCodigoBarra.setText("");
             txtNotas.setText("");
 
-            cbCategoria.setSelectedIndex(0);
+            if (cbCategoria.getItemCount() > 0) {
+                cbCategoria.setSelectedIndex(0);
+            }
 
             txtDescripcion.requestFocusInWindow();
         } else if (jtpPrincipal.getSelectedComponent() == jpMantenimiento) {

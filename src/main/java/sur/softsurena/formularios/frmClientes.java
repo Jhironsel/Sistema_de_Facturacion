@@ -1754,9 +1754,17 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
         tblDireccion.setModel(v_dtmDireccion);
 
         //Colocamos los jcb en la posicion cero
-        jcbProvincias.setSelectedIndex(0);
-        jcbMunicipios.setSelectedIndex(0);
-        jcbDistritoMunicipal.setSelectedIndex(0);
+        if (jcbProvincias.getItemCount() > 0) {
+            jcbProvincias.setSelectedIndex(0);
+        }
+        
+        if (jcbMunicipios.getItemCount() > 0) {
+            jcbMunicipios.setSelectedIndex(0);
+        }
+        
+        if (jcbDistritoMunicipal.getItemCount() > 0) {
+            jcbDistritoMunicipal.setSelectedIndex(0);
+        }
 
         //Deshabilitamos los dos jcb por defecto.
         jcbMunicipios.setEnabled(false);
@@ -2607,13 +2615,30 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
         cbEstado.setSelected(activo);
         cbEstado.setText(activo ? "Activo" : "Inactivo");
 
-        jcbPersona.setSelectedIndex(0);
-        jcbEstadoCivil.setSelectedIndex(0);
-        jcbSexo.setSelectedIndex(0);
+        if (jcbPersona.getItemCount() > 0) {
+            jcbPersona.setSelectedIndex(0);
+        }
+        
+        if (jcbEstadoCivil.getItemCount() > 0) {
+            jcbEstadoCivil.setSelectedIndex(0);
+        }
+        
+        if (jcbSexo.getItemCount() > 0) {
+            jcbSexo.setSelectedIndex(0);
+        }
 
-        jcbProvincias.setSelectedIndex(0);
-        jcbMunicipios.setSelectedIndex(0);
-        jcbDistritoMunicipal.setSelectedIndex(0);
+        if (jcbProvincias.getItemCount() > 0) {
+            jcbProvincias.setSelectedIndex(0);
+        }
+        
+        if (jcbMunicipios.getItemCount() > 0) {
+            jcbMunicipios.setSelectedIndex(0);
+        }
+        
+        if (jcbDistritoMunicipal.getItemCount() > 0) {
+            jcbDistritoMunicipal.setSelectedIndex(0);
+        }
+        
         txtDireccion.setText(null);
 
         jrbMovil.setSelected(true);

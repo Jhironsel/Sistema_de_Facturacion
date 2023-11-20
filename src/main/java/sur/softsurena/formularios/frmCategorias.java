@@ -229,7 +229,7 @@ public class frmCategorias extends javax.swing.JDialog {
                 resultados.getIcono()
         );
 
-        if (cbCategoria.getItemCount() != 0) {
+        if (cbCategoria.getItemCount() > 0) {
             cbCategoria.setSelectedIndex(0);
         }
 
@@ -445,7 +445,10 @@ public class frmCategorias extends javax.swing.JDialog {
                             build()
             );
         });
-        cbCategoria.setSelectedIndex(0);
+        
+        if (cbCategoria.getItemCount() > 0) {
+            cbCategoria.setSelectedIndex(0);
+        }
     }
 
     private boolean buscarImagen() {
