@@ -49,20 +49,20 @@ public final class frmRestaurarDatos extends javax.swing.JInternalFrame implemen
         setRequestFocusEnabled(false);
         setVerifyInputWhenFocusTarget(false);
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
-            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
-                formInternalFrameOpened(evt);
-            }
-            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
             }
-            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
             }
-            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
             }
-            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
             }
         });
 
@@ -81,7 +81,6 @@ public final class frmRestaurarDatos extends javax.swing.JInternalFrame implemen
         txtBaseFuente.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
 
         btnBuscar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Buscar3 32 x 32.png"))); // NOI18N
         btnBuscar.setMnemonic('p');
         btnBuscar.setText("Buscar");
         btnBuscar.setToolTipText("Busca un Producto Por su descripcion o por otras caracteristicas");
@@ -92,7 +91,6 @@ public final class frmRestaurarDatos extends javax.swing.JInternalFrame implemen
         });
 
         btnProceder.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        btnProceder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/update 32x32.png"))); // NOI18N
         btnProceder.setMnemonic('p');
         btnProceder.setText("Proceder");
         btnProceder.setToolTipText("Busca un Producto Por su descripcion o por otras caracteristicas");
@@ -103,7 +101,6 @@ public final class frmRestaurarDatos extends javax.swing.JInternalFrame implemen
         });
 
         btnCancelar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Cancelar 32 x 32.png"))); // NOI18N
         btnCancelar.setMnemonic('p');
         btnCancelar.setText("Cancelar");
         btnCancelar.setToolTipText("Busca un Producto Por su descripcion o por otras caracteristicas");

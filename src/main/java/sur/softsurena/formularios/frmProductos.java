@@ -37,7 +37,6 @@ public class frmProductos extends javax.swing.JInternalFrame {
     private final JFileChooser file;
     private final FileNameExtensionFilter filter;
     private int v_fila = 0;
-    private static final int SCALA_ICONO = 155;
     private static String criterioBusqueda = "";
 
     public static frmProductos getInstance() {
@@ -1396,7 +1395,13 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
         int id = ((Productos) tblProducto.getValueAt(v_fila, 2)).getId();
 
-        Productos producto = Productos.getProductoById(id, "^");
+        Productos producto = Productos.getProductos(
+        FiltroBusqueda
+                .builder()
+                .id(id)
+                .build()
+        
+        ).get(0);
 
         txtCodigoBarra.setText(producto.getCodigo());
 
@@ -1406,13 +1411,8 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
         cbActivo.setSelected(producto.getEstado());
 
-        ImageIcon imagen = Utilidades.imagenDecode64(producto.getImagenProducto());
 
-        Icon icon = new ImageIcon(imagen.getImage().getScaledInstance(SCALA_ICONO, SCALA_ICONO, Image.SCALE_SMOOTH));
-
-        imagen.getImage().flush();
-
-        jlImagenProducto.setIcon(icon);
+        jlImagenProducto.setIcon(Utilidades.imagenDecode64(producto.getImagenProducto(), 155, 155));
 
         for (int i = 0; i < cbCategoria.getItemCount(); i++) {
             int idCategoria = ((Categorias) cbCategoria.getItemAt(i)).getId_categoria();
@@ -1536,7 +1536,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
     private void ponerImagenProducto(String file) {
         ImageIcon imagen = new ImageIcon(file);
 
-        Icon icon = new ImageIcon(imagen.getImage().getScaledInstance(SCALA_ICONO, SCALA_ICONO, Image.SCALE_SMOOTH));
+        Icon icon = new ImageIcon(imagen.getImage().getScaledInstance(155, 155, Image.SCALE_SMOOTH));
 
         imagen.getImage().flush();
 

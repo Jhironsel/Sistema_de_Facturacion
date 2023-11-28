@@ -16,7 +16,6 @@ import javax.swing.table.DefaultTableModel;
 import sur.softsurena.entidades.Clientes;
 import static sur.softsurena.entidades.Clientes.agregarCliente;
 import static sur.softsurena.entidades.Clientes.borrarCliente;
-import static sur.softsurena.entidades.Clientes.existeCliente;
 import static sur.softsurena.entidades.Clientes.getClientes;
 import static sur.softsurena.entidades.Clientes.modificarCliente;
 import sur.softsurena.entidades.ContactosEmail;
@@ -64,7 +63,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
 
     private Thread v_hilo;
 
-    private final static String[] v_TITULOS_DIRECCION = {"Provincia", "Municipio",
+    private final static String[] TITULOS_DIRECCION = {"Provincia", "Municipio",
         "Distrito M.", "Calle y No. Casa", "Fecha", "Estado", "Por defecto"};
 
     private static final String[] TITULOS_CORREO = {"Correo", "Fecha"};
@@ -1327,7 +1326,6 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
      */
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         if (validaCampoCedula(txtCedula)) {
-            jtpDireccionContactos.setSelectedComponent(jpGenerales);
             return;
         }// Validacion 1
 
@@ -1356,7 +1354,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
             return;
         }//Validacion 3
 
-        if (dchFechaNacimiento.getDate() == null) {
+        if (Objects.isNull(dchFechaNacimiento.getDate())) {
             JOptionPane.showInternalMessageDialog(
                     this,
                     "Debe indicar una fecha de nacimiento.",
@@ -1388,9 +1386,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
                     JOptionPane.ERROR_MESSAGE
             );
             jtpDireccionContactos.setSelectedComponent(jpDireccion);
-
             txtDireccion.requestFocusInWindow();
-
             return;
         }//Validacion 6
 
@@ -1402,13 +1398,17 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
                     "",
                     JOptionPane.ERROR_MESSAGE
             );
-
             jtpDireccionContactos.setSelectedComponent(jpContactos);
             jtpContactos.setSelectedComponent(jpTelefonos);
             return;
         }//Validacion 7
 
-        Integer idCliente = existeCliente(txtCedula.getValue().toString()); //Validacion 8
+        Integer idCliente = getClientes(
+                FiltroBusqueda
+                        .builder()
+                        .criterioBusqueda(txtCedula.getValue().toString())
+                        .build()
+        ).get(0).getId_persona(); //Validacion 8
 
         // si es nuevo validamos que el Cliente no exista
         if (v_nuevo) {
@@ -1587,7 +1587,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
     }//GEN-LAST:event_txtCedulaKeyPressed
 
     private void jcbPersonaPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jcbPersonaPopupMenuWillBecomeInvisible
-        txtPNombre.requestFocusInWindow();
+        dchFechaNacimiento.requestFocusInWindow();
     }//GEN-LAST:event_jcbPersonaPopupMenuWillBecomeInvisible
 
     private void cbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEstadoActionPerformed
@@ -1727,7 +1727,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
             Se crea un array de objecto para agregarlo a la tabla como un
             registro.
          */
-        Object registroDireccion[] = new Object[v_TITULOS_DIRECCION.length];
+        Object registroDireccion[] = new Object[TITULOS_DIRECCION.length];
 
         /*
             Se rellena los objetos del array con cada jcb que componen una dire-
@@ -1757,11 +1757,11 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
         if (jcbProvincias.getItemCount() > 0) {
             jcbProvincias.setSelectedIndex(0);
         }
-        
+
         if (jcbMunicipios.getItemCount() > 0) {
             jcbMunicipios.setSelectedIndex(0);
         }
-        
+
         if (jcbDistritoMunicipal.getItemCount() > 0) {
             jcbDistritoMunicipal.setSelectedIndex(0);
         }
@@ -1954,83 +1954,53 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
             return;
         }
 
-        String cedula = (String) txtCedula.getValue();
+        List<Clientes> clientes = getClientes(
+                FiltroBusqueda
+                        .builder()
+                        .criterioBusqueda(txtCedula.getValue().toString())
+                        .build()
+        );
 
-        Integer idCliente = existeCliente(cedula);
+        if (Objects.isNull(clientes) || clientes.isEmpty()) {
+            JOptionPane.showInternalMessageDialog(
+                    this,
+                    "Cedula valida, puede continuar.",
+                    "",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+        } else {
+            Integer idCliente = clientes.get(0).getId_persona();
 
-        if (v_nuevo) {//Condicion para cuando el proceso es un nuevo registro.
-            if (idCliente != -1) {
-                int resp = JOptionPane.showInternalConfirmDialog(
-                        this,
-                        "Esta cedula está registrada. \nProcede a habilitar la información?",
-                        "",
-                        JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE
-                );
+            if (v_nuevo) {
+                if (idCliente > 0) {
+                    int resp = JOptionPane.showInternalConfirmDialog(
+                            this,
+                            "Esta cedula está registrada. \nProcede a habilitar el cliente?",
+                            "",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE
+                    );
 
-                //Preguntamos si desea cargar la informacion del cliente.
-                if (resp == JOptionPane.YES_OPTION) {
+                    //Preguntamos si desea cargar la informacion del cliente.
+                    if (resp == JOptionPane.NO_OPTION) {
+                        btnCancelarActionPerformed(evt);
+                        return;
+                    }
 
                     /**
                      * Al insertar un cliente ya registrado el siguiente metodo
                      * devuelve falso, es por ello se valida la negacion de
                      * false, para obtener true.
                      */
-                    if (!Clientes.agregarClienteById(idCliente)) {
-                        JOptionPane.showInternalMessageDialog(
-                                this,
-                                "Cliente agregado correctamente",
-                                "",
-                                JOptionPane.INFORMATION_MESSAGE
-                        );
+                    Resultados resultado = Clientes.agregarClienteById(idCliente);
 
-                        for (int i = 0; i < tblClientes.getRowCount(); i++) {
-
-                            if (((Clientes) tblClientes.getValueAt(i, 0)).getId_persona() == idCliente) {
-                                tblClientes.setRowSelectionInterval(i, i);
-                                break;
-                            }
-
-                            if (txtCedula.getText().isBlank()) {
-                                break;
-                            }
-                        }
-                    } else {
-                        JOptionPane.showInternalMessageDialog(
-                                this,
-                                "Cliente no pudo ser agreado al sistema.",
-                                "",
-                                JOptionPane.INFORMATION_MESSAGE
-                        );
-                    }
-
-                    btnCancelarActionPerformed(evt);
-                }
-            } else {
-                JOptionPane.showInternalMessageDialog(
-                        this,
-                        "Cedula valida, puede continuar.",
-                        "",
-                        JOptionPane.INFORMATION_MESSAGE
-                );
-
-                jcbPersona.requestFocusInWindow();
-            }
-        } else {//Condicion para cuando se va a modificar un registro.
-            /*
-            Si se va a actualizar un registro, la cedula debe de existir en la
-            Base de datos.
-             */
-            if (idCliente == -1) {
-                int resp = JOptionPane.showInternalConfirmDialog(
-                        this,
-                        "Esta cedula no está registrada, desea continuar",
-                        "",
-                        JOptionPane.INFORMATION_MESSAGE
-                );
-
-                if (resp == JOptionPane.NO_OPTION) {
-                    txtCedula.setValue(null);
+                    //!resultado.getEstado();
+                    JOptionPane.showInternalMessageDialog(
+                            this,
+                            resultado.getMensaje(),
+                            "",
+                            resultado.getIcono()
+                    );
                 }
             }
         }
@@ -2421,7 +2391,6 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
             txtPNombre.setText(cli.getPnombre());
             txtSNombre.setText(cli.getSnombre());
             txtApellidos.setText(cli.getApellidos());
-            
 
             dchFechaNacimiento.setDate(sqlDateToUtilDate(cli.getFecha_nacimiento()));
 
@@ -2465,13 +2434,13 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
 
         //Datos basicos listos. 
         //Obteniendo direcciones.
-        v_dtmDireccion = new DefaultTableModel(null, v_TITULOS_DIRECCION);
+        v_dtmDireccion = new DefaultTableModel(null, TITULOS_DIRECCION);
 
         //Se limpia la lista de direcciones para agregar la del cliente.
         v_direccionesList.clear();
 
         getDireccionByID(idCliente).stream().forEach(direccione -> {
-            Object registroDireccion[] = new Object[v_TITULOS_DIRECCION.length];
+            Object registroDireccion[] = new Object[TITULOS_DIRECCION.length];
 
             registroDireccion[0] = direccione.getProvincia();
             registroDireccion[1] = direccione.getMunicipio();
@@ -2537,11 +2506,6 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
         tblCorreos.setModel(v_dtmCorreo);
         //--------------------------FIN con la lista de correo.
 
-        if (v_nuevo) {
-            txtCedula.requestFocusInWindow();
-        } else {
-            txtPNombre.requestFocusInWindow();
-        }
     }
 
     /**
@@ -2618,11 +2582,11 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
         if (jcbPersona.getItemCount() > 0) {
             jcbPersona.setSelectedIndex(0);
         }
-        
+
         if (jcbEstadoCivil.getItemCount() > 0) {
             jcbEstadoCivil.setSelectedIndex(0);
         }
-        
+
         if (jcbSexo.getItemCount() > 0) {
             jcbSexo.setSelectedIndex(0);
         }
@@ -2630,15 +2594,15 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
         if (jcbProvincias.getItemCount() > 0) {
             jcbProvincias.setSelectedIndex(0);
         }
-        
+
         if (jcbMunicipios.getItemCount() > 0) {
             jcbMunicipios.setSelectedIndex(0);
         }
-        
+
         if (jcbDistritoMunicipal.getItemCount() > 0) {
             jcbDistritoMunicipal.setSelectedIndex(0);
         }
-        
+
         txtDireccion.setText(null);
 
         jrbMovil.setSelected(true);
@@ -2666,7 +2630,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
         v_dtmTelefono = new DefaultTableModel(null, TITULOS_TELEFONO);
         tblTelefonos.setModel(v_dtmTelefono);
 
-        v_dtmDireccion = new DefaultTableModel(null, v_TITULOS_DIRECCION);
+        v_dtmDireccion = new DefaultTableModel(null, TITULOS_DIRECCION);
         tblDireccion.setModel(v_dtmDireccion);
 
         v_dtmCorreo = new DefaultTableModel(null, TITULOS_CORREO);
@@ -2687,22 +2651,19 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
     }
 
     private boolean validaCampoCedula(javax.swing.JFormattedTextField campo) {
+        System.out.println("sur.softsurena.formularios.frmClientes.validaCampoCedula()");
         try {
             campo.commitEdit();
         } catch (ParseException ex) {
-
             JOptionPane.showInternalMessageDialog(
                     this,
                     "Debe digitar la cedula del cliente",
                     "",
                     JOptionPane.WARNING_MESSAGE
             );
-
+            jtpDireccionContactos.setSelectedComponent(jpGenerales);
             campo.requestFocusInWindow();
             campo.selectAll();
-
-            LOGGER.log(Level.INFO, "El formato de la cedula no es el correcto.");
-
             return true;
         }
         return false;

@@ -16,11 +16,12 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import static sur.softsurena.entidades.Clientes.existeCliente;
+import static sur.softsurena.entidades.Clientes.getClientes;
 import sur.softsurena.entidades.DefaultTableCellHeaderRenderer;
 import sur.softsurena.entidades.Deudas;
 import static sur.softsurena.entidades.Deudas.insertDeudas;
 import static sur.softsurena.entidades.Deudas.modificarDeuda;
+import sur.softsurena.entidades.FiltroBusqueda;
 import sur.softsurena.utilidades.Utilidades;
 
 public class frmDeudas extends javax.swing.JInternalFrame {
@@ -683,7 +684,12 @@ public class frmDeudas extends javax.swing.JInternalFrame {
         /*
             Validamos si el cliente existe en la base de datos.
          */
-        int idCliente = existeCliente(cedula);
+        Integer idCliente = getClientes(
+                FiltroBusqueda
+                        .builder()
+                        .criterioBusqueda(cedula)
+                        .build()
+        ).get(0).getId_persona();
 
         if (idCliente != -1) {
 

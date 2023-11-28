@@ -1,27 +1,22 @@
 package sur.softsurena.formularios;
 
 import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.math.BigDecimal;
-import java.sql.Blob;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
+import java.util.List;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import sur.softsurena.entidades.FiltroBusqueda;
 import sur.softsurena.entidades.Productos;
-import static sur.softsurena.entidades.Productos.getProductoById;
+import static sur.softsurena.entidades.Productos.getProductos;
+import static sur.softsurena.utilidades.Utilidades.imagenDecode64;
 
 public class frmEntradaProducto extends javax.swing.JDialog {
 
     private static final Logger LOG = Logger.getLogger(frmEntradaProducto.class.getName());
-    
+
     private frmBusquedaProducto miBusqueda;
     private Boolean impuesto = false;
     private DefaultTableModel miTabla;
@@ -375,54 +370,41 @@ public class frmEntradaProducto extends javax.swing.JDialog {
     }//GEN-LAST:event_txtEntradaActionPerformed
 
     private void txtCodigoProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoProductoActionPerformed
-        if (txtCodigoProducto.getText().isEmpty()) {
+        if (txtCodigoProducto.getText().isBlank()) {
             btnBuscarProducto.doClick();
             return;
         }
 
-        Productos productoById = getProductoById(null, txtCodigoProducto.getText());
-        ResultSet rs = null;
-        BufferedImage img = null;
-        try {
-            if (!rs.next()) {
-                JOptionPane.showMessageDialog(
-                        this, 
-                        "Producto no encontrado...!!!!",
-                        "",
-                        JOptionPane.ERROR_MESSAGE
-                );
-                txtCodigoProducto.setText("");
-                txtCodigoProducto.requestFocusInWindow();
-                return;
-            }
+        List<Productos> productos = getProductos(
+                FiltroBusqueda
+                        .builder()
+                        .criterioBusqueda(txtCodigoProducto.getText().strip())
+                        .build()
+        );
 
-            Blob blob = rs.getBlob("image");
-            if (blob != null) {
-                byte[] data = blob.getBytes(1, (int) blob.length());
-                img = ImageIO.read(new ByteArrayInputStream(data));
-            }
-
-            ImageIcon imagen;
-
-            if (img != null) {
-                imagen = new ImageIcon(img);
-            } else {
-                imagen = new ImageIcon("sur/softsurena/imagenes/NoImageTransp 96 x 96.png");
-
-            }
-            Icon icon = new ImageIcon(imagen.getImage().getScaledInstance(72, 72,
-                    Image.SCALE_DEFAULT));
-            imagen.getImage().flush();
-            jlImagen.setIcon(icon);
-            jlImagen.validate();
-
-            txtDescripcionProducto.setText(rs.getString("descripcion"));
-            cbEstado.setSelected((rs.getBoolean("estado")));
-
-            txtEntrada.requestFocusInWindow();
-        } catch (SQLException | IOException ex) {
-            LOG.log(Level.SEVERE, ex.getMessage(), ex);
+        if (productos.isEmpty()) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Producto no encontrado...!!!!",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            txtCodigoProducto.setText("");
+            txtCodigoProducto.requestFocusInWindow();
+            return;
         }
+
+        productos.stream().forEach(producto -> {
+            
+            jlImagen.setIcon(imagenDecode64(producto.getImagenProducto(), 72, 72));
+            //imagen.getImage().flush();
+            
+            txtDescripcionProducto.setText(producto.getDescripcion());
+            cbEstado.setSelected(producto.getEstado());
+        });
+
+        jlImagen.validate();
+        txtEntrada.requestFocusInWindow();
     }//GEN-LAST:event_txtCodigoProductoActionPerformed
 
     private void txtNumeroFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumeroFacturaActionPerformed
@@ -483,7 +465,7 @@ public class frmEntradaProducto extends javax.swing.JDialog {
 
         if (txtCodigoProducto.getText().isBlank()) {
             JOptionPane.showMessageDialog(
-                    this, 
+                    this,
                     "Id Producto esta vacio....!!!",
                     "",
                     JOptionPane.ERROR_MESSAGE
@@ -570,18 +552,18 @@ public class frmEntradaProducto extends javax.swing.JDialog {
 
         if (Double.valueOf(txtCosto.getText())
                 >= Double.valueOf(txtPrecio.getText())) {
-            
+
             JOptionPane.showMessageDialog(
                     this,
                     "El costo no puede ser mayor al precio.",
                     "",
                     JOptionPane.ERROR_MESSAGE
             );
-            
+
             txtCosto.setText("");
             txtPrecio.setText("");
             txtCosto.requestFocusInWindow();
-            
+
             return;
         }
 
@@ -593,7 +575,7 @@ public class frmEntradaProducto extends javax.swing.JDialog {
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.QUESTION_MESSAGE
             );
-            
+
             if (resp == JOptionPane.YES_OPTION) {
                 txtImpuesto.setEditable(true);
                 txtImpuesto.setText("0.00");
@@ -686,13 +668,13 @@ public class frmEntradaProducto extends javax.swing.JDialog {
         //        Map<String, Object> parametros = new HashMap<>();
         //        parametros.put("operacion", Integer.parseInt(txtNumero.getText()));
         //        hiloImpresionFactura miHilo = new hiloImpresionFactura(
-            //                true, //Mostrar Reporte
-            //                false, //Con Copia
-            //                "Reportes/entrada.jasper",
-            //                parametros);
+        //                true, //Mostrar Reporte
+        //                false, //Con Copia
+        //                "Reportes/entrada.jasper",
+        //                parametros);
         //        miHilo.start();
         btnCancelar.doClick();
-        
+
     }//GEN-LAST:event_btnFinalizarActionPerformed
 
     private void btnBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProductoActionPerformed
@@ -705,7 +687,7 @@ public class frmEntradaProducto extends javax.swing.JDialog {
             txtCodigoProducto.setText(miBusqueda.getRespuesta());
             txtCodigoProductoActionPerformed(evt);
         }
-        
+
     }//GEN-LAST:event_btnBuscarProductoActionPerformed
 
     private void limpiar() {

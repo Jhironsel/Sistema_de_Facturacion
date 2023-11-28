@@ -352,11 +352,11 @@ public class frmCategorias extends javax.swing.JDialog {
             LOG.info("Fecha no proporcionada");
         }
 
-        ImageIcon imagen = Utilidades.imagenDecode64(((Categorias) cbCategoria.getSelectedItem()).getImage_texto());
+        jlImagen.setIcon(Utilidades.imagenDecode64(
+                ((Categorias) cbCategoria.getSelectedItem()).getImage_texto(), 96, 96));
+        
 
-        Boolean estadoCategoria = ((Categorias) cbCategoria.getSelectedItem()).getEstado();
-
-        if (estadoCategoria) {
+        if (((Categorias) cbCategoria.getSelectedItem()).getEstado()) {
             jlEstado.setForeground(new java.awt.Color(37, 45, 223));
             jlEstado.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
             jlEstado.setText("Activo");
@@ -368,7 +368,6 @@ public class frmCategorias extends javax.swing.JDialog {
             jlEstado.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CHECK_BOX_OUTLINE_BLANK);
         }
 
-        jlImagen.setIcon(imagen);
         jlfecha.setText("Fecha de creacción: " + fechaCreacion);
     }//GEN-LAST:event_cbCategoriaPopupMenuWillBecomeInvisible
 

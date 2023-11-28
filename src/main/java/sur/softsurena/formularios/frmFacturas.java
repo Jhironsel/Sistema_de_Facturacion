@@ -58,6 +58,7 @@ import static sur.softsurena.formularios.frmPrincipal.mnuMovimientosNuevaFactura
 import sur.softsurena.hilos.hiloImpresionFactura;
 import sur.softsurena.metodos.Imagenes;
 import sur.softsurena.utilidades.Utilidades;
+import static sur.softsurena.utilidades.Utilidades.imagenDecode64;
 
 public final class frmFacturas extends javax.swing.JInternalFrame implements ActionListener {
 
@@ -874,9 +875,11 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
         }
 
         if (cbCriterio.getSelectedIndex() == 3) {
-            if (txtCriterio.getText().trim().isEmpty()) {
+            
+            if (txtCriterio.getText().isBlank()) {
                 return;
             }
+            
             if (!existeProducto(txtCriterio.getText().trim())) {
                 JOptionPane.showInternalMessageDialog(
                         this,
@@ -920,7 +923,6 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
                         JOptionPane.ERROR_MESSAGE
                 );
             }
-
         }
     }//GEN-LAST:event_txtCriterioActionPerformed
     private void rbtCreditoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtCreditoActionPerformed
@@ -1689,8 +1691,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
             if (Objects.isNull(producto.getImagenProducto())) {
                 imagen = new ImageIcon("sur/softsurena/imagenes/NoImageTransp 96 x 96.png");
             } else {
-                imagen = new ImageIcon(
-                        Utilidades.imagenDecode64(producto.getImagenProducto()).getImage());
+                imagen = imagenDecode64(producto.getImagenProducto(), 96, 96);
             }
 
             Icon icon = new ImageIcon(imagen.getImage().getScaledInstance(
@@ -1776,7 +1777,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
             boton.setMnemonic('c');
 
             //Obteniendo la imagen de la categoria.
-            ImageIcon imagen = Utilidades.imagenDecode64(categoria.getImage_texto());
+            ImageIcon imagen = Utilidades.imagenDecode64(categoria.getImage_texto(), 96, 96);
 
             if (imagen.getIconHeight() == -1) {
                 imagen = new Imagenes().getIcono("NoImageTransp 96 x 96.png");

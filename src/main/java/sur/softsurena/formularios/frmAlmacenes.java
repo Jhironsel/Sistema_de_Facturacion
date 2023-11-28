@@ -76,6 +76,7 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
         rSLabelAnimated1 = new rojeru_san.rslabel.RSLabelAnimated();
         labelIcon1 = new necesario.LabelIcon();
 
+        setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 45, 223), 2, true));
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
@@ -99,7 +100,7 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
             }
         });
 
-        jpBotones.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 45, 223), 2, true), " Botones de Acción ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("DejaVu Sans", 0, 14), new java.awt.Color(37, 45, 223))); // NOI18N
+        jpBotones.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 45, 223), 2, true), " Botones de Acción ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("DejaVu Sans", 0, 14), new java.awt.Color(0, 0, 0))); // NOI18N
         jpBotones.setMaximumSize(new java.awt.Dimension(787, 81));
         jpBotones.setMinimumSize(new java.awt.Dimension(787, 81));
         jpBotones.setName("jpBotones"); // NOI18N
@@ -192,8 +193,11 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
 
         jtpPrincipal.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 45, 223), 2, true));
 
+        jpAlmacenesTbl.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 45, 223), 2, true));
+
         jScrollPane1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 45, 223), 2, true));
 
+        tblAlmacenes.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 45, 223), 2, true));
         tblAlmacenes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -216,16 +220,16 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
         jpAlmacenesTbl.setLayout(jpAlmacenesTblLayout);
         jpAlmacenesTblLayout.setHorizontalGroup(
             jpAlmacenesTblLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpAlmacenesTblLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpAlmacenesTblLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 830, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 833, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jpAlmacenesTblLayout.setVerticalGroup(
             jpAlmacenesTblLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpAlmacenesTblLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -259,7 +263,7 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
                 .addGroup(rSPanelShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2)
                     .addGroup(rSPanelShadow1Layout.createSequentialGroup()
-                        .addComponent(txtNombreAlmacen, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
+                        .addComponent(txtNombreAlmacen, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(rsEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -293,7 +297,7 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(rSPanelShadow2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(rSCheckBox1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(rSCheckBox3, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE))
+                    .addComponent(rSCheckBox3, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE))
                 .addContainerGap())
         );
         rSPanelShadow2Layout.setVerticalGroup(
@@ -323,11 +327,12 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
                 .addGroup(RSPGMantenimientoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rSPanelShadow1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rSPanelShadow2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
 
         jtpPrincipal.addTab("Mantenimiento", RSPGMantenimiento);
 
+        rSLabelAnimated1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 45, 223), 2, true));
         rSLabelAnimated1.setText("Mantenimiento de Almacenes");
         rSLabelAnimated1.setDoubleBuffered(true);
         rSLabelAnimated1.setFont(new java.awt.Font("FreeMono", 3, 36)); // NOI18N
@@ -347,8 +352,8 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jpBotones, javax.swing.GroupLayout.DEFAULT_SIZE, 860, Short.MAX_VALUE)
-                    .addComponent(jtpPrincipal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 860, Short.MAX_VALUE)
+                    .addComponent(jpBotones, javax.swing.GroupLayout.DEFAULT_SIZE, 867, Short.MAX_VALUE)
+                    .addComponent(jtpPrincipal, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(labelIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -363,7 +368,7 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
                     .addComponent(rSLabelAnimated1, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
                     .addComponent(labelIcon1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jtpPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jtpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jpBotones, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6))

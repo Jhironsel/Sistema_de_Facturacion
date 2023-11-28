@@ -1,6 +1,5 @@
 package sur.softsurena.formularios;
 
-import java.awt.Image;
 import java.awt.Toolkit;
 import java.beans.PropertyVetoException;
 import java.util.Date;
@@ -9,7 +8,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
@@ -539,13 +537,36 @@ public final class frmPrincipal extends javax.swing.JFrame {
         txtVenta.setToolTipText("");
         jPanel2.add(txtVenta);
 
-        jScrollPane1.setMinimumSize(new java.awt.Dimension(267, 70));
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(267, 77));
-
         jtCajero.setFont(new java.awt.Font("DejaVu Sans", 0, 12)); // NOI18N
         jtCajero.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null}
             },
             new String [] {
                 "Cajeros Activo"
@@ -559,8 +580,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jtCajero.setMinimumSize(new java.awt.Dimension(267, 70));
-        jtCajero.setPreferredSize(new java.awt.Dimension(267, 77));
         jScrollPane1.setViewportView(jtCajero);
 
         btnEstablecerEncabezado.setText("Encabezado de Factura");
@@ -581,6 +600,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
         jlMovimientoES.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         jlMovimientoES.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlMovimientoES.setText(".");
         jlMovimientoES.setToolTipText("Reporte e impresion de Entrada y Salida");
         jlMovimientoES.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jlMovimientoES.setDoubleBuffered(true);
@@ -604,6 +624,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
         jlGrafica.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         jlGrafica.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlGrafica.setText(".");
         jlGrafica.setToolTipText("Obtener la IP Publica del Equipo cuando esta conectada a Internet");
         jlGrafica.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jlGrafica.setDoubleBuffered(true);
@@ -627,6 +648,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
         jlGetIP.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         jlGetIP.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlGetIP.setText(".");
         jlGetIP.setToolTipText("Obtener la IP Publica del Equipo cuando esta conectada a Internet");
         jlGetIP.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jlGetIP.setDoubleBuffered(true);
@@ -650,6 +672,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
         jlRestauracion.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         jlRestauracion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlRestauracion.setText(".");
         jlRestauracion.setToolTipText("Restaurar una base de datos anterior...");
         jlRestauracion.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jlRestauracion.setDoubleBuffered(true);
@@ -673,6 +696,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
         jlRespaldar.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         jlRespaldar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlRespaldar.setText(".");
         jlRespaldar.setToolTipText("Hacer un Respaldo de la Base de Datos...");
         jlRespaldar.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jlRespaldar.setDoubleBuffered(true);
@@ -696,6 +720,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
         jlRestaurar.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         jlRestaurar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlRestaurar.setText(".");
         jlRestaurar.setToolTipText("Retaurar la Base de Datos desde un Respaldo");
         jlRestaurar.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jlRestaurar.setDoubleBuffered(true);
@@ -726,7 +751,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
                 .addGroup(pEstatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jlLogoEmpresa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnEstablecerEncabezado, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
@@ -742,7 +767,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
@@ -1123,10 +1148,10 @@ public final class frmPrincipal extends javax.swing.JFrame {
                 JOptionPane.INFORMATION_MESSAGE
         );
         
-        pf.requestFocusInWindow();
         if (claveMaster == JOptionPane.CANCEL_OPTION) {
             return;
-        }//Obtener la clave del usuario a realizar el backup
+        }
+        
         //TODO Completar esta tarea.
 //        BDR = miFile.getSelectedFile();
 //        RGBAK = System.getProperty("user.dir") + "/respaldo/gbak";
@@ -1134,8 +1159,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jlRestaurarMouseClicked
 
     private void jlMovimientoESMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlMovimientoESMouseEntered
-        int button = evt.getButton();
-        System.out.println("button = " + button);
         jlMovimientoES.setText("Reporte");
     }//GEN-LAST:event_jlMovimientoESMouseEntered
 
@@ -1537,13 +1560,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     }
 
     private void cargarLogo() {
-
-        ImageIcon img = new ImageIcon(
-                Utilidades.imagenDecode64(getLogo())
-                        .getImage()
-                        .getScaledInstance(330, 155, Image.SCALE_AREA_AVERAGING));
-
-        jlLogoEmpresa.setIcon(img);
+        jlLogoEmpresa.setIcon(Utilidades.imagenDecode64(getLogo(), 320, 145));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
