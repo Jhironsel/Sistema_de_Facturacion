@@ -6,7 +6,7 @@ import javax.swing.table.DefaultTableModel;
 import sur.softsurena.entidades.Almacen;
 import static sur.softsurena.entidades.Almacen.getAlmacenesList;
 import sur.softsurena.entidades.Privilegios;
-import static sur.softsurena.entidades.Privilegios.privilegioTabla;
+import static sur.softsurena.entidades.Privilegios.privilegio;
 import sur.softsurena.entidades.Resultados;
 import static sur.softsurena.utilidades.Utilidades.columnasCheckBox;
 import static sur.softsurena.utilidades.Utilidades.repararColumnaTable;
@@ -15,20 +15,25 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
 
     private static boolean v_nuevo;
     private static String criterioBusqueda;
-    
+
     public static frmAlmacenes getInstance() {
         return NewSingletonHolder.INSTANCE;
     }
-    
+
     private static class NewSingletonHolder {
 
         private static final frmAlmacenes INSTANCE = new frmAlmacenes();
     }
-    
+
     private frmAlmacenes() {
-        if (!privilegioTabla(Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_SELECT).
-                nombre_relacion("V_ALMACENES").build())) {
+        if (!privilegio(
+                Privilegios
+                        .builder()
+                        .privilegio(Privilegios.PRIVILEGIO_SELECT)
+                        .nombre_relacion("V_ALMACENES")
+                        .nombre_campo("^")
+                        .build()
+        )) {
 
             final String mensaje = "No cuenta con permisos para ver la información de"
                     + " este módulo.";
@@ -480,10 +485,10 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
 
         if (txtNombreAlmacen.getText().isBlank()) {
             JOptionPane.showInternalMessageDialog(
-                this,
-                "Debe digitar el nombre del almacen...",
-                "",
-                JOptionPane.ERROR_MESSAGE
+                    this,
+                    "Debe digitar el nombre del almacen...",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
             );
             txtNombreAlmacen.requestFocusInWindow();
             return;
@@ -493,36 +498,36 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
             int resp = JOptionPane.showInternalConfirmDialog(
                     this,
                     "Es importante agregar un detalle de la ubicacion del almacen."
-                            + "\nDesea continuar?",
+                    + "\nDesea continuar?",
                     "",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.WARNING_MESSAGE
             );
-            
-            if(resp == JOptionPane.NO_OPTION){
+
+            if (resp == JOptionPane.NO_OPTION) {
                 txtDetalleUbicacion.requestFocusInWindow();
                 return;
             }
         }//Validacion 2
-        
-        if(!rsEstado.isActivado()){
+
+        if (!rsEstado.isActivado()) {
             int resp = JOptionPane.showInternalConfirmDialog(
                     this,
                     "Se esta creando un almacen de estado inactivo."
-                            + "\nDesea continuar?",
+                    + "\nDesea continuar?",
                     "",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.WARNING_MESSAGE
             );
-            
-            if(resp == JOptionPane.NO_OPTION){
+
+            if (resp == JOptionPane.NO_OPTION) {
                 txtDetalleUbicacion.requestFocusInWindow();
                 return;
             }
         }
-        
+
         Resultados resultado = null;
-        
+
         if (v_nuevo) {
             resultado = Almacen.agregarAlmacen(
                     Almacen.
@@ -535,14 +540,14 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
         } else {
             //TODO Crear proceso para modificar almacen.
         }
-        
+
         JOptionPane.showInternalMessageDialog(
-                this, 
-                resultado, 
-                "", 
+                this,
+                resultado,
+                "",
                 resultado.getIcono()
         );
-        
+
         llenarTabla(-1, "");
         btnCancelarActionPerformed(evt);
     }//GEN-LAST:event_btnGuardarActionPerformed
@@ -673,19 +678,19 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
 
         Object registro[] = new Object[titulos.length];
 
-        DefaultTableModel dtm = new DefaultTableModel(null, titulos){
+        DefaultTableModel dtm = new DefaultTableModel(null, titulos) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
-        
-            Class[] types = new Class [] {
+
+            Class[] types = new Class[]{
                 java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
             };
 
             @Override
             public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+                return types[columnIndex];
             }
         };
 
@@ -695,11 +700,10 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
             registro[2] = almacen.getEstado();
             dtm.addRow(registro);
         });
-        
+
         tblAlmacenes.removeAll();
 
         tblAlmacenes.setModel(dtm);
-        
 
         int[] indices = {2};
 

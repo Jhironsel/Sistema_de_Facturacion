@@ -27,7 +27,7 @@ import sur.softsurena.entidades.DesktopConFondo;
 import static sur.softsurena.entidades.E_S_SYS.getLogo;
 import static sur.softsurena.entidades.E_S_SYS.insertLogo;
 import sur.softsurena.entidades.Privilegios;
-import static sur.softsurena.entidades.Privilegios.privilegioTabla;
+import static sur.softsurena.entidades.Privilegios.privilegio;
 import sur.softsurena.entidades.Roles;
 import static sur.softsurena.entidades.Roles.comprobandoRol;
 import sur.softsurena.entidades.Turnos;
@@ -60,28 +60,56 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
         initComponents();
         ((DesktopConFondo) dpnEscritorio).setImagen("/sur/softsurena/imagenes/Fondo 1024 x 723.jpg");
-        
 
-        mnuMantenimientoClientes.setVisible(privilegioTabla(
-                Privilegios.builder().
-                        privilegio(Privilegios.PRIVILEGIO_SELECT).
-                        nombre_relacion("GET_CLIENTES_SB").build())
+        mnuMantenimientoClientes.setVisible(
+                privilegio(
+                        Privilegios
+                                .builder()
+                                .privilegio(Privilegios.PRIVILEGIO_SELECT)
+                                .nombre_relacion("GET_CLIENTES_SB")
+                                .nombre_campo("^")
+                                .build()
+                )
         );
-        mnuMantenimientoProductos.setVisible(privilegioTabla(Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_SELECT).
-                nombre_relacion("GET_PRODUCTOS").build())
+        mnuMantenimientoProductos.setVisible(
+                privilegio(
+                        Privilegios
+                                .builder()
+                                .privilegio(Privilegios.PRIVILEGIO_SELECT)
+                                .nombre_relacion("GET_PRODUCTOS")
+                                .nombre_campo("^")
+                                .build()
+                )
         );
-        mnuMantenimientoProveedores.setVisible(privilegioTabla(Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_SELECT).
-                nombre_relacion("GET_PROVEEDORES").build())
+        mnuMantenimientoProveedores.setVisible(
+                privilegio(
+                        Privilegios
+                                .builder()
+                                .privilegio(Privilegios.PRIVILEGIO_SELECT)
+                                .nombre_relacion("GET_PROVEEDORES")
+                                .nombre_campo("^")
+                                .build()
+                )
         );
-        mnuMantenimientoAlmacenes.setVisible(privilegioTabla(Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_SELECT).
-                nombre_relacion("V_ALMACENES").build())
+        mnuMantenimientoAlmacenes.setVisible(
+                privilegio(
+                        Privilegios
+                                .builder()
+                                .privilegio(Privilegios.PRIVILEGIO_SELECT)
+                                .nombre_relacion("V_ALMACENES")
+                                .nombre_campo("^")
+                                .build()
+                )
         );
-        mnuMantenimientoUsuarios.setVisible(privilegioTabla(Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_SELECT).
-                nombre_relacion("GET_USUARIOS").build())
+        mnuMantenimientoUsuarios.setVisible(
+                privilegio(
+                        Privilegios
+                                .builder()
+                                .privilegio(Privilegios.PRIVILEGIO_SELECT)
+                                .nombre_relacion("VS_USUARIOS")
+                                .nombre_campo("^")
+                                .build()
+                )
         );
         mnuMantenimiento.setVisible(
                 mnuMantenimientoClientes.isVisible()
@@ -92,13 +120,25 @@ public final class frmPrincipal extends javax.swing.JFrame {
         );
         ///////////////////////////////////////////////////////////////////////
 
-        mnuSistemaNomina.setVisible(privilegioTabla(Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_EXECUTE).
-                nombre_relacion("").build())
+        mnuSistemaNomina.setVisible(
+                privilegio(
+                        Privilegios
+                                .builder()
+                                .privilegio(Privilegios.PRIVILEGIO_EXECUTE)
+                                .nombre_relacion("")
+                                .nombre_campo("^")
+                                .build()
+                )
         );
-        mnuSistemaGestorGastos.setVisible(privilegioTabla(Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_EXECUTE).
-                nombre_relacion("").build())
+        mnuSistemaGestorGastos.setVisible(
+                privilegio(
+                        Privilegios
+                                .builder()
+                                .privilegio(Privilegios.PRIVILEGIO_EXECUTE)
+                                .nombre_relacion("^")
+                                .nombre_campo("^")
+                                .build()
+                )
         );
         mnuSistemas.setVisible(
                 mnuSistemaNomina.isVisible()
@@ -107,49 +147,53 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
         ////////////////////////////////////////////////////////////////////////////////////
         mnuMovimientosNuevaFactura.setVisible(
-                privilegioTabla(
+                privilegio(
                         Privilegios
                                 .builder()
                                 .privilegio(Privilegios.PRIVILEGIO_EXECUTE)
                                 .nombre_relacion("PERM_CREAR_FACTURAS")
+                                .nombre_campo("^")
                                 .build()
                 )
         );
         mnuMovimientosReporteFactura.setVisible(
-                privilegioTabla(
+                privilegio(
                         Privilegios
                                 .builder()
                                 .privilegio(Privilegios.PRIVILEGIO_EXECUTE)
-                                .nombre_relacion("")
+                                .nombre_relacion("^")
+                                .nombre_campo("^")
                                 .build()
                 )
         );
         mnuMovimientosInventario.setVisible(
-                privilegioTabla(
+                privilegio(
                         Privilegios
                                 .builder()
                                 .privilegio(Privilegios.PRIVILEGIO_EXECUTE)
-                                .nombre_relacion("")
+                                .nombre_relacion("^")
+                                .nombre_campo("^")
                                 .build()
                 )
         );
         mnuMovimientosDeudas.setVisible(
-                privilegioTabla(
+                privilegio(
                         Privilegios
                                 .builder()
                                 .privilegio(Privilegios.PRIVILEGIO_EXECUTE)
-                                .nombre_relacion("")
+                                .nombre_relacion("^")
+                                .nombre_campo("^")
                                 .build()
                 )
         );
         mnuMovimientosAbrirTurno.setVisible(
-                privilegioTabla(
+                privilegio(
                         Privilegios
                                 .builder()
                                 .privilegio(Privilegios.PRIVILEGIO_EXECUTE)
                                 .nombre_relacion("SP_SELECT_GET_CAJEROS")
-                                .
-                                build()
+                                .nombre_campo("^")
+                                .build()
                 )
         );
         mnuMovimientos.setVisible(
@@ -169,17 +213,22 @@ public final class frmPrincipal extends javax.swing.JFrame {
         cbRoles.removeAllItems();
         cbRoles.setToolTipText("Rol actual: " + usuario.getRol());
 
-        cbRoles.addItem(Roles.builder().
-                propietario("SYSDBA").
-                roleName("None").
-                descripcion("Rol que indica que no ha sido establecido").
-                build()
+        cbRoles.addItem(
+                Roles
+                        .builder()
+                        .propietario("SYSDBA")
+                        .roleName("None")
+                        .descripcion("Rol que indica que no ha sido establecido")
+                        .build()
         );
 
         //Se carga los roles del usuario en el comboBox.
-        comprobandoRol(usuario.getUser_name().strip()).stream().forEach(rolItem -> {
-            cbRoles.addItem(rolItem);
-        });
+        comprobandoRol(
+                usuario.getUser_name().strip()).stream().forEach(
+                rolItem -> {
+                    cbRoles.addItem(rolItem);
+                }
+        );
 
         //Se busca cual es el rol actual del usuario y se selecciona.
         for (int i = 0; i < cbRoles.getItemCount(); i++) {
@@ -204,7 +253,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
         //Metodo que carga el logo de la empresa.
         cargarLogo();
-        
+
         //Poner Paner usuario.
         panelUsuario();
     }
@@ -1130,28 +1179,28 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
         String usuarioMaster = JOptionPane.showInputDialog(
                 this,
-                "Nombre de Usuario: ", 
+                "Nombre de Usuario: ",
                 "",
                 JOptionPane.INFORMATION_MESSAGE
         );
 
-        if ( usuarioMaster.isBlank()) {
+        if (usuarioMaster.isBlank()) {
             return;
         }//Coner el usuario que va a realizar la operacion de back up...
         JPasswordField pf = new JPasswordField();
 
         Integer claveMaster = JOptionPane.showConfirmDialog(
-                this, 
+                this,
                 pf,
-                "Ingrese la Clave: ", 
+                "Ingrese la Clave: ",
                 JOptionPane.OK_CANCEL_OPTION,
                 JOptionPane.INFORMATION_MESSAGE
         );
-        
+
         if (claveMaster == JOptionPane.CANCEL_OPTION) {
             return;
         }
-        
+
         //TODO Completar esta tarea.
 //        BDR = miFile.getSelectedFile();
 //        RGBAK = System.getProperty("user.dir") + "/respaldo/gbak";
@@ -1422,10 +1471,14 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private void panelUsuario() {
         jsEstatus.setVisible(false);
         btnOcultarPanel.setVisible(false);
-        if (privilegioTabla(
-                Privilegios.builder().
-                        privilegio(Privilegios.PRIVILEGIO_EXECUTE).
-                        nombre_relacion("PERM_PANEL_USUARIO").build())) {
+        if (privilegio(
+                Privilegios
+                        .builder()
+                        .privilegio(Privilegios.PRIVILEGIO_EXECUTE)
+                        .nombre_relacion("PERM_PANEL_USUARIO")
+                        .nombre_campo("^")
+                        .build()
+        )) {
             jsEstatus.setVisible(true);
             btnOcultarPanel.setVisible(true);
             String[] columnas2 = {"Cajeros"};

@@ -33,7 +33,7 @@ import sur.softsurena.entidades.Municipios;
 import static sur.softsurena.entidades.Municipios.getMunicipio;
 import sur.softsurena.entidades.Personas;
 import sur.softsurena.entidades.Privilegios;
-import static sur.softsurena.entidades.Privilegios.privilegioTabla;
+import static sur.softsurena.entidades.Privilegios.privilegio;
 import sur.softsurena.entidades.Provincias;
 import sur.softsurena.entidades.Resultados;
 import sur.softsurena.entidades.Sexo;
@@ -118,9 +118,14 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
         lanza una excepcion y la venta no se iniciará.
          */
 
-        if (!privilegioTabla(Privilegios.builder().
-                privilegio(Privilegios.PRIVILEGIO_SELECT).
-                nombre_relacion("GET_CLIENTES_SB").build())) {
+        if (!privilegio(
+                Privilegios
+                        .builder()
+                        .privilegio(Privilegios.PRIVILEGIO_SELECT)
+                        .nombre_relacion("GET_CLIENTES_SB")
+                        .nombre_campo("^")
+                        .build()
+        )) {
 
             final String mensaje = "No cuenta con permisos para ver la información de"
                     + " este módulo.";
@@ -2203,31 +2208,35 @@ public class frmClientes extends javax.swing.JInternalFrame implements Runnable 
     private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
         //Permiso para el boton de nuevo
         btnNuevo.setEnabled(
-                privilegioTabla(
+                privilegio(
                         Privilegios
                                 .builder()
                                 .privilegio(Privilegios.PRIVILEGIO_EXECUTE)
                                 .nombre_relacion("SP_INSERT_CLIENTE_SB")
+                                .nombre_campo("^")
                                 .build()
                 )
         );
         //Permiso para el boton de Borrar
         btnBorrar.setEnabled(
-                privilegioTabla(
+                privilegio(
                         Privilegios
                                 .builder()
                                 .privilegio(Privilegios.PRIVILEGIO_EXECUTE)
                                 .nombre_relacion("SP_DELETE_CLIENTE_SB")
+                                .nombre_campo("^")
                                 .build()
-                ));
+                )
+        );
 
         //Permiso para el boton de Modificar
         btnModificar.setEnabled(
-                privilegioTabla(
+                privilegio(
                         Privilegios
                                 .builder()
                                 .privilegio(Privilegios.PRIVILEGIO_EXECUTE)
                                 .nombre_relacion("SP_UPDATE_CLIENTE_SB")
+                                .nombre_campo("^")
                                 .build()
                 )
         );
