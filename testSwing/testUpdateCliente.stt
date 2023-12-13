@@ -1,7 +1,7 @@
 <xy.ui.testing.Tester>
   <editingOptions>
     <analyticsEnabled>true</analyticsEnabled>
-    <controlsTheme>classic</controlsTheme>
+    <controlsTheme>gradient</controlsTheme>
     <testableModalWindowsForcedToDocumentModality>true</testableModalWindowsForcedToDocumentModality>
     <testableWindowsAlwaysOnTopFeatureDisabled>true</testableWindowsAlwaysOnTopFeatureDisabled>
   </editingOptions>
@@ -134,6 +134,122 @@
       </keyboardInteractions>
       <requestToFocusOnTheComponent>true</requestToFocusOnTheComponent>
     </xy.ui.testing.action.component.SendKeysAction>
+    <xy.ui.testing.action.component.specific.SelectComboBoxItemAction>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
+        <componentName>jcbSexo</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>0</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <knownOptions>
+        <string>Seleccione sexo</string>
+        <string>FEMENINA</string>
+        <string>MASCULINO</string>
+      </knownOptions>
+      <optionListChecked>true</optionListChecked>
+      <optionToSelect>MASCULINO</optionToSelect>
+      <selectionMode>BY_LABEL_TEXT</selectionMode>
+    </xy.ui.testing.action.component.specific.SelectComboBoxItemAction>
+    <xy.ui.testing.action.component.specific.SelectTabAction>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
+        <componentName>jtpDireccionContactos</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>0</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <tabToSelect>Dirección</tabToSelect>
+    </xy.ui.testing.action.component.specific.SelectTabAction>
+    <xy.ui.testing.action.component.SendKeysAction>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
+        <componentName>jcbProvincia</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>0</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <keyboardInteractions>
+        <xy.ui.testing.action.component.SendKeysAction_-SpecialKey>
+          <altDown>true</altDown>
+          <altGrtDown>true</altGrtDown>
+          <ctrlDown>true</ctrlDown>
+          <keyName>KEY_UNDEFINED</keyName>
+          <metaDown>false</metaDown>
+          <shiftDown>true</shiftDown>
+        </xy.ui.testing.action.component.SendKeysAction_-SpecialKey>
+      </keyboardInteractions>
+      <requestToFocusOnTheComponent>true</requestToFocusOnTheComponent>
+    </xy.ui.testing.action.component.SendKeysAction>
+    <xy.ui.testing.action.component.SendKeysAction>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
+        <componentName>jcbMunicipios</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>0</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <keyboardInteractions>
+        <xy.ui.testing.action.component.SendKeysAction_-SpecialKey>
+          <altDown>true</altDown>
+          <altGrtDown>true</altGrtDown>
+          <ctrlDown>true</ctrlDown>
+          <keyName>KEY_UNDEFINED</keyName>
+          <metaDown>false</metaDown>
+          <shiftDown>true</shiftDown>
+        </xy.ui.testing.action.component.SendKeysAction_-SpecialKey>
+      </keyboardInteractions>
+      <requestToFocusOnTheComponent>true</requestToFocusOnTheComponent>
+    </xy.ui.testing.action.component.SendKeysAction>
+    <xy.ui.testing.action.component.SendKeysAction>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
+        <componentName>jcbDistritoMunicipal</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>0</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <keyboardInteractions>
+        <xy.ui.testing.action.component.SendKeysAction_-SpecialKey>
+          <altDown>true</altDown>
+          <altGrtDown>true</altGrtDown>
+          <ctrlDown>true</ctrlDown>
+          <keyName>KEY_UNDEFINED</keyName>
+          <metaDown>false</metaDown>
+          <shiftDown>true</shiftDown>
+        </xy.ui.testing.action.component.SendKeysAction_-SpecialKey>
+      </keyboardInteractions>
+      <requestToFocusOnTheComponent>true</requestToFocusOnTheComponent>
+    </xy.ui.testing.action.component.SendKeysAction>
+    <xy.ui.testing.action.component.SendKeysAction>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
+        <componentName>txtDireccion</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>0</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <keyboardInteractions>
+        <xy.ui.testing.action.component.SendKeysAction_-WriteText>
+          <text>Prueba desde TestSwing.</text>
+        </xy.ui.testing.action.component.SendKeysAction_-WriteText>
+      </keyboardInteractions>
+      <requestToFocusOnTheComponent>true</requestToFocusOnTheComponent>
+    </xy.ui.testing.action.component.SendKeysAction>
+    <xy.ui.testing.action.component.ClickAction>
+      <button>LEFT_BUTTON</button>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
+        <componentName>btnAgregarDirecciones</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>0</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <doubleClick>false</doubleClick>
+      <eventsIntervalMilliseconds>100</eventsIntervalMilliseconds>
+      <locationOnComponent class="null"/>
+      <poupTrigger>false</poupTrigger>
+    </xy.ui.testing.action.component.ClickAction>
     <xy.ui.testing.action.component.ClickAction>
       <button>LEFT_BUTTON</button>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
@@ -148,27 +264,12 @@
       <locationOnComponent class="null"/>
       <poupTrigger>false</poupTrigger>
     </xy.ui.testing.action.component.ClickAction>
-    <xy.ui.testing.action.component.CheckVisibleStringsAction>
-      <completenessChecked>false</completenessChecked>
-      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
-        <componentClassName class="null"/>
-        <componentName>OptionPane.body</componentName>
-        <occurrencesToSkip>0</occurrencesToSkip>
-        <windowIndex>1</windowIndex>
-      </componentFinder>
-      <disabled>false</disabled>
-      <negated>false</negated>
-      <orderChecked>false</orderChecked>
-      <visibleStrings>
-        <string>Cliente Modificado Correctamente.</string>
-      </visibleStrings>
-    </xy.ui.testing.action.component.CheckVisibleStringsAction>
     <xy.ui.testing.action.component.ClickAction>
       <button>LEFT_BUTTON</button>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
         <componentClassName class="null"/>
         <componentName>OptionPane.button</componentName>
-        <occurrencesToSkip>0</occurrencesToSkip>
+        <occurrencesToSkip>1</occurrencesToSkip>
         <windowIndex>0</windowIndex>
       </componentFinder>
       <disabled>false</disabled>
@@ -177,6 +278,21 @@
       <locationOnComponent class="null"/>
       <poupTrigger>false</poupTrigger>
     </xy.ui.testing.action.component.ClickAction>
+    <xy.ui.testing.action.component.CheckVisibleStringsAction>
+      <completenessChecked>false</completenessChecked>
+      <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">
+        <componentClassName class="null"/>
+        <componentName>OptionPane.body</componentName>
+        <occurrencesToSkip>0</occurrencesToSkip>
+        <windowIndex>0</windowIndex>
+      </componentFinder>
+      <disabled>false</disabled>
+      <negated>false</negated>
+      <orderChecked>false</orderChecked>
+      <visibleStrings>
+        <string>Cliente Modificado Correctamente.</string>
+      </visibleStrings>
+    </xy.ui.testing.action.component.CheckVisibleStringsAction>
     <xy.ui.testing.action.component.ClickAction>
       <button>LEFT_BUTTON</button>
       <componentFinder class="xy.ui.testing.finder.NameBasedComponentFinder">

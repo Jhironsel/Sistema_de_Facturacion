@@ -45,13 +45,17 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="jtpPrincipal" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane3" min="-2" pref="80" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jlOpcionesMostrar" alignment="1" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jtpPrincipal" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jScrollPane3" min="-2" pref="80" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="jpOpciones" alignment="1" max="32767" attributes="0"/>
+              </Group>
           </Group>
-          <Component id="jpOpciones" max="32767" attributes="0"/>
-          <Component id="jlOpcionesMostrar" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -89,7 +93,6 @@
             <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnNuevo">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Nuevo"/>
-                <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="iconTextGap" type="int" value="0"/>
                 <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                   <Value id="INPUT"/>
@@ -113,7 +116,6 @@
             <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnModificar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Editar"/>
-                <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="iconTextGap" type="int" value="0"/>
                 <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                   <Value id="EDIT"/>
@@ -131,7 +133,6 @@
             <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnBorrar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Borrar"/>
-                <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="iconTextGap" type="int" value="0"/>
                 <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                   <Value id="DELETE"/>
@@ -149,7 +150,6 @@
             <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnBuscarProducto">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Buscar"/>
-                <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="iconTextGap" type="int" value="0"/>
                 <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                   <Value id="FIND_IN_PAGE"/>
@@ -168,7 +168,6 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Guardar"/>
                 <Property name="enabled" type="boolean" value="false"/>
-                <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="iconTextGap" type="int" value="0"/>
                 <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                   <Value id="SAVE"/>
@@ -187,7 +186,6 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Cancelar"/>
                 <Property name="enabled" type="boolean" value="false"/>
-                <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="iconTextGap" type="int" value="0"/>
                 <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                   <Value id="CANCEL"/>
@@ -292,7 +290,7 @@
                               <Component id="jsPaginaNro" alignment="2" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane5" pref="501" max="32767" attributes="0"/>
+                          <Component id="jScrollPane5" pref="507" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btnActualizarLista" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -530,9 +528,6 @@
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Ubuntu" size="14" style="0"/>
                             </Property>
-                            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                              <Color blue="0" green="0" red="0" type="rgb"/>
-                            </Property>
                             <Property name="lineWrap" type="boolean" value="true"/>
                             <Property name="wrapStyleWord" type="boolean" value="true"/>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -586,9 +581,6 @@
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Ubuntu" size="14" style="0"/>
-                        </Property>
-                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="0" green="0" id="Text Text" palette="2" red="0" type="palette"/>
                         </Property>
                         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -647,9 +639,6 @@
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Ubuntu" size="14" style="0"/>
-                        </Property>
-                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="0" green="0" id="Text Text" palette="2" red="0" type="palette"/>
                         </Property>
                         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -725,7 +714,7 @@
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="598" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="621" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -747,7 +736,7 @@
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="598" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="621" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>

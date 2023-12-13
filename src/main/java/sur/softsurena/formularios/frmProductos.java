@@ -18,6 +18,8 @@ import static sur.softsurena.conexion.Conexion.getCnn;
 import sur.softsurena.entidades.Categorias;
 import static sur.softsurena.entidades.Categorias.getCategirias;
 import sur.softsurena.entidades.FiltroBusqueda;
+import sur.softsurena.entidades.Privilegios;
+import static sur.softsurena.entidades.Privilegios.privilegio;
 import sur.softsurena.entidades.Productos;
 import static sur.softsurena.entidades.Productos.agregarProducto;
 import static sur.softsurena.entidades.Productos.borrarProductoPorID;
@@ -40,11 +42,31 @@ public class frmProductos extends javax.swing.JInternalFrame {
     private static String criterioBusqueda = "";
 
     public static frmProductos getInstance() {
+        /*
+            Si un permiso a las vistas consultada anteriormente es negado, se 
+        lanza una excepcion y la venta no se iniciará.
+         */
+        if (!privilegio(
+                Privilegios
+                        .builder()
+                        .privilegio(Privilegios.PRIVILEGIO_SELECT)
+                        .nombre_relacion("GET_PRODUCTOS")
+                        .nombre_campo("^")
+                        .build()
+        )) {
+            final String mensaje = "No cuenta con permisos para ver la información de este módulo.";
+            JOptionPane.showInternalMessageDialog(
+                    null,
+                    mensaje,
+                    "",
+                    JOptionPane.WARNING_MESSAGE
+            );
+            throw new ExceptionInInitializerError(mensaje);
+        }
         return NewSingletonHolder.INSTANCE;
     }
 
     private static class NewSingletonHolder {
-
         private static final frmProductos INSTANCE = new frmProductos();
     }
 
@@ -135,7 +157,6 @@ public class frmProductos extends javax.swing.JInternalFrame {
         jPanel2.setLayout(new java.awt.GridLayout(1, 0, 6, 12));
 
         btnNuevo.setText("Nuevo");
-        btnNuevo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnNuevo.setIconTextGap(0);
         btnNuevo.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.INPUT);
         btnNuevo.setMaximumSize(new java.awt.Dimension(50, 17));
@@ -151,7 +172,6 @@ public class frmProductos extends javax.swing.JInternalFrame {
         jPanel2.add(btnNuevo);
 
         btnModificar.setText("Editar");
-        btnModificar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnModificar.setIconTextGap(0);
         btnModificar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.EDIT);
         btnModificar.setName("btnModificar"); // NOI18N
@@ -165,7 +185,6 @@ public class frmProductos extends javax.swing.JInternalFrame {
         jPanel2.add(btnModificar);
 
         btnBorrar.setText("Borrar");
-        btnBorrar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnBorrar.setIconTextGap(0);
         btnBorrar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DELETE);
         btnBorrar.setName("btnBorrar"); // NOI18N
@@ -179,7 +198,6 @@ public class frmProductos extends javax.swing.JInternalFrame {
         jPanel2.add(btnBorrar);
 
         btnBuscarProducto.setText("Buscar");
-        btnBuscarProducto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnBuscarProducto.setIconTextGap(0);
         btnBuscarProducto.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.FIND_IN_PAGE);
         btnBuscarProducto.setName("btnBuscar"); // NOI18N
@@ -194,7 +212,6 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
         btnGuardar.setText("Guardar");
         btnGuardar.setEnabled(false);
-        btnGuardar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnGuardar.setIconTextGap(0);
         btnGuardar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SAVE);
         btnGuardar.setName("btnGuardar"); // NOI18N
@@ -209,7 +226,6 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
         btnCancelar.setText("Cancelar");
         btnCancelar.setEnabled(false);
-        btnCancelar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnCancelar.setIconTextGap(0);
         btnCancelar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CANCEL);
         btnCancelar.setName("btnCancelar"); // NOI18N
@@ -301,7 +317,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2)
                     .addComponent(jsPaginaNro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 507, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnActualizarLista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -334,7 +350,6 @@ public class frmProductos extends javax.swing.JInternalFrame {
 
         txtNotas.setColumns(20);
         txtNotas.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        txtNotas.setForeground(new java.awt.Color(0, 0, 0));
         txtNotas.setLineWrap(true);
         txtNotas.setWrapStyleWord(true);
         txtNotas.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 45, 223), 2, true), "Nota:"));
@@ -362,7 +377,6 @@ public class frmProductos extends javax.swing.JInternalFrame {
         });
 
         txtCodigoBarra.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        txtCodigoBarra.setForeground(java.awt.SystemColor.textText);
         txtCodigoBarra.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 45, 223), 2, true), "*Codigo de barra"));
         txtCodigoBarra.setName("txtCodigoBarra"); // NOI18N
         txtCodigoBarra.addActionListener(new java.awt.event.ActionListener() {
@@ -407,7 +421,6 @@ public class frmProductos extends javax.swing.JInternalFrame {
         });
 
         txtDescripcion.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        txtDescripcion.setForeground(java.awt.SystemColor.textText);
         txtDescripcion.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 45, 223), 2, true), "*Descripcion el producto"));
         txtDescripcion.setName("txtDescripcion"); // NOI18N
         txtDescripcion.addActionListener(new java.awt.event.ActionListener() {
@@ -534,7 +547,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         );
         jpESProductosLayout.setVerticalGroup(
             jpESProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 598, Short.MAX_VALUE)
+            .addGap(0, 621, Short.MAX_VALUE)
         );
 
         jtpPrincipal.addTab("E/S Productos", jpESProductos);
@@ -547,7 +560,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         );
         jpESHistorialLayout.setVerticalGroup(
             jpESHistorialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 598, Short.MAX_VALUE)
+            .addGap(0, 621, Short.MAX_VALUE)
         );
 
         jtpPrincipal.addTab("E/S Historial", jpESHistorial);
@@ -689,11 +702,13 @@ public class frmProductos extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jtpPrincipal)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(jpOpciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jlOpcionesMostrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlOpcionesMostrar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jtpPrincipal)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jpOpciones, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         pack();
@@ -701,7 +716,6 @@ public class frmProductos extends javax.swing.JInternalFrame {
     private void txtCodigoBarraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoBarraActionPerformed
         cbCategoria.requestFocusInWindow();
         cbCategoria.showPopup();
-
     }//GEN-LAST:event_txtCodigoBarraActionPerformed
     private void txtCodigoBarraKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoBarraKeyReleased
         String replaceAll = txtCodigoBarra.getText();
@@ -830,10 +844,12 @@ public class frmProductos extends javax.swing.JInternalFrame {
             //Pasamos false para habilitar los botones guardar y cancelar.
             cancelar(false, false);
 
-            //Agregamos el jpMantenimiento y seleccionamos jTapPane
+            //Agregamos el jpMantenimiento y seleccionamos jTapPane de Mantenimiento
             jtpPrincipal.addTab("Mantenimiento", jpMantenimiento);
 
             jtpPrincipal.setSelectedIndex(jtpPrincipal.indexOfComponent(jpMantenimiento));
+            
+            jtpPrincipal.setEnabledAt(jtpPrincipal.indexOfComponent(jpProductos), false);
 
             //Desactivamos el Flag de registro Nuevo para realizar actualizaciones.
             v_nuevo = false;
@@ -997,7 +1013,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
             int id = ((Productos) tblProducto.getValueAt(tblProducto.getSelectedRow(), 2)).getId();
 
             //Creando el objecto producto.
-            Productos p = Productos
+            Productos producto = Productos
                     .builder()
                     .id(id)
                     .categoria(
@@ -1050,7 +1066,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
                 return;
             }
 
-            Resultados resultados = (v_nuevo ? agregarProducto(p) : modificarProducto(p));
+            Resultados resultados = (v_nuevo ? agregarProducto(producto) : modificarProducto(producto));
             JOptionPane.showInternalMessageDialog(
                     this,
                     resultados,
@@ -1167,6 +1183,40 @@ public class frmProductos extends javax.swing.JInternalFrame {
         llenarTabla(criterioBusqueda);
         reOrdenar();
         updateCategoria();
+        
+        btnNuevo.setEnabled(
+                privilegio(
+                        Privilegios
+                                .builder()
+                                .privilegio(Privilegios.PRIVILEGIO_EXECUTE)
+                                .nombre_relacion("SP_INSERT_PRODUCTO")
+                                .nombre_campo("^")
+                                .build()
+                )
+        );
+        
+        btnModificar.setEnabled(
+                privilegio(
+                        Privilegios
+                                .builder()
+                                .privilegio(Privilegios.PRIVILEGIO_EXECUTE)
+                                .nombre_relacion("SP_UPDATE_PRODUCTO")
+                                .nombre_campo("^")
+                                .build()
+                )
+        );
+        
+        btnBorrar.setEnabled(
+                privilegio(
+                        Privilegios
+                                .builder()
+                                .privilegio(Privilegios.PRIVILEGIO_EXECUTE)
+                                .nombre_relacion("SP_DELETE_PRODUCTO")
+                                .nombre_campo("^")
+                                .build()
+                )
+        );
+        
     }//GEN-LAST:event_formInternalFrameOpened
 
     private void jlOpcionesMostrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlOpcionesMostrarMouseClicked
@@ -1314,7 +1364,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         }
 
         jtpPrincipal.setSelectedIndex(jtpPrincipal.indexOfComponent(jpProductos));
-
+        jtpPrincipal.setEnabledAt(jtpPrincipal.indexOfComponent(jpProductos), true);
     }
 
     /**
@@ -1399,6 +1449,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         FiltroBusqueda
                 .builder()
                 .id(id)
+                .criterioBusqueda("^")
                 .build()
         
         ).get(0);

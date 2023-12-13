@@ -17,15 +17,6 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
     private static String criterioBusqueda;
 
     public static frmAlmacenes getInstance() {
-        return NewSingletonHolder.INSTANCE;
-    }
-
-    private static class NewSingletonHolder {
-
-        private static final frmAlmacenes INSTANCE = new frmAlmacenes();
-    }
-
-    private frmAlmacenes() {
         if (!privilegio(
                 Privilegios
                         .builder()
@@ -47,9 +38,15 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
 
             throw new ExceptionInInitializerError(mensaje);
         }
+        return NewSingletonHolder.INSTANCE;
+    }
 
+    private static class NewSingletonHolder {
+        private static final frmAlmacenes INSTANCE = new frmAlmacenes();
+    }
+
+    private frmAlmacenes() {
         initComponents();
-
         jtpPrincipal.remove(RSPGMantenimiento);
     }
 
@@ -89,6 +86,7 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
         setTitle("Almacenes");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameActivated(evt);
             }
             public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
             }
@@ -467,14 +465,14 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
         //        txtCedula1.setValue("");
         String resp = JOptionPane.showInternalInputDialog(
                 this,
-                "Ingrese su criterio de busqueda.\n[Cedula, nombres o apellidos]",
+                "Ingrese su criterio de busqueda.\n[Nombre]",
                 "",
                 JOptionPane.QUESTION_MESSAGE
         );
 
         criterioBusqueda = resp;
 
-        if (Objects.isNull(resp)) {
+        if (Objects.isNull(resp) || resp.isBlank()) {
             return;
         }
 
@@ -564,6 +562,41 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
     private void labelIcon1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelIcon1MouseClicked
         llenarTabla(-1, "");
     }//GEN-LAST:event_labelIcon1MouseClicked
+
+    private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
+        btnNuevo.setEnabled(
+                privilegio(
+                        Privilegios
+                                .builder()
+                                .privilegio(Privilegios.PRIVILEGIO_EXECUTE)
+                                .nombre_relacion("SP_INSERT_ALMACEN")
+                                .nombre_campo("^")
+                                .build()
+                )
+        );
+        
+        btnModificar.setEnabled(
+                privilegio(
+                        Privilegios
+                                .builder()
+                                .privilegio(Privilegios.PRIVILEGIO_EXECUTE)
+                                .nombre_relacion("SP_UPDATE_ALMACEN")
+                                .nombre_campo("^")
+                                .build()
+                )
+        );
+        
+        btnBorrar.setEnabled(
+                privilegio(
+                        Privilegios
+                                .builder()
+                                .privilegio(Privilegios.PRIVILEGIO_EXECUTE)
+                                .nombre_relacion("SP_DELETE_ALMACEN")
+                                .nombre_campo("^")
+                                .build()
+                )
+        );
+    }//GEN-LAST:event_formInternalFrameActivated
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

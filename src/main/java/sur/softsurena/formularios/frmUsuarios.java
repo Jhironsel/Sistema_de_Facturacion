@@ -31,13 +31,11 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
     }
     
     private static class NewSingletonHolder {
-
         private static final frmUsuarios INSTANCE = new frmUsuarios();
     }
     
     public frmUsuarios() {
         initComponents();
-
     }
 
     @SuppressWarnings("unchecked")

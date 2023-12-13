@@ -125,7 +125,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
                         Privilegios
                                 .builder()
                                 .privilegio(Privilegios.PRIVILEGIO_EXECUTE)
-                                .nombre_relacion("")
+                                .nombre_relacion("^")
                                 .nombre_campo("^")
                                 .build()
                 )
@@ -507,6 +507,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jlUser.setSizeIcon(32.0F);
 
         liWork.setForeground(new java.awt.Color(255, 255, 255));
+        liWork.setFont(new java.awt.Font("FreeMono", 1, 18)); // NOI18N
         liWork.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.WORK);
         liWork.setMaximumSize(new java.awt.Dimension(40, 40));
         liWork.setName("liWork"); // NOI18N

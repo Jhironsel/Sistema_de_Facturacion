@@ -257,6 +257,10 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
         jpInfoFactura.add(txtTurno);
 
         jlAlmacen.setToolTipText("Indica que el cajero actual, esta realizando facturas desde este almacen.");
+        jlAlmacen.setFont(new java.awt.Font("FreeMono", 1, 24)); // NOI18N
+        jlAlmacen.setMaximumSize(new java.awt.Dimension(500, 40));
+        jlAlmacen.setMinimumSize(new java.awt.Dimension(100, 40));
+        jlAlmacen.setPreferredSize(new java.awt.Dimension(400, 40));
         jpInfoFactura.add(jlAlmacen);
 
         setClosable(true);
@@ -264,7 +268,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Sistema de Facturacion Sophia");
+        setTitle("Facturacion Sophia & Sophie");
         setToolTipText("");
         setAutoscrolls(true);
         setDoubleBuffered(true);
@@ -1777,14 +1781,15 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
             boton.setMnemonic('c');
 
             //Obteniendo la imagen de la categoria.
-            ImageIcon imagen = Utilidades.imagenDecode64(categoria.getImage_texto(), 96, 96);
+            ImageIcon imagen = Utilidades.imagenDecode64(categoria.getImage_texto(), 64, 64);
 
             if (imagen.getIconHeight() == -1) {
                 imagen = new Imagenes().getIcono("NoImageTransp 96 x 96.png");
             }
 
             Icon icon = new ImageIcon(
-                    imagen.getImage().getScaledInstance(72, 72, Image.SCALE_DEFAULT));
+                    imagen.getImage().getScaledInstance(
+                            64, 64, Image.SCALE_DEFAULT));
 
             //imagen.getImage().flush();
             //Personalizamos el boton. 
