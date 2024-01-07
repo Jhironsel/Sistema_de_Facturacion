@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.sql.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import sur.softsurena.FirebirdEventos.FirebirdEventos;
@@ -13,6 +14,7 @@ import static sur.softsurena.entidades.BaseDeDatos.periodoMaquina;
 import static sur.softsurena.entidades.BaseDeDatos.setLicencia;
 import sur.softsurena.entidades.Resultados;
 import sur.softsurena.metodos.Imagenes;
+import sur.softsurena.utilidades.Utilidades;
 
 public final class frmLogin extends javax.swing.JFrame {
 
@@ -21,24 +23,13 @@ public final class frmLogin extends javax.swing.JFrame {
 
     private static String sistema;
     private static String idMaquina;
-
+    
     public frmLogin(String language) {
         bundle = ResourceBundle.getBundle("sur.softsurena.idioma.mensaje", new Locale(language));
         initComponents();
-
         cargarIconos();
-
         btnParametros.setVisible(false);//Boton parametros Invisible
-
         this.setLocationRelativeTo(null);
-    }
-
-    public frmLogin(String user, String clave) {
-        bundle = ResourceBundle.getBundle("sur.softsurena.idioma.mensaje", new Locale("es"));
-        initComponents();
-        txtUsuario.setText(user);
-        txtClave.setText(clave);
-        btnAceptar.doClick();
     }
 
     @SuppressWarnings("unchecked")
@@ -258,28 +249,32 @@ public final class frmLogin extends javax.swing.JFrame {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         //Validación de campos del login. 
         if (txtUsuario.getText().isBlank()) {
+            final String msg = "Ingrese un usuario";
             JOptionPane.showMessageDialog(
                     this,
-                    "Ingrese un usuario",
+                    msg,
                     "",
                     JOptionPane.ERROR_MESSAGE
             );
+            Utilidades.LOGGER.log(Level.SEVERE, msg);
             txtUsuario.requestFocusInWindow();
             return;
         }
 
         if (txtClave.getPassword().length == 0) {
+            final String msg = "Inserte una clave";
             JOptionPane.showMessageDialog(
                     this,
-                    "Inserte una clave",
+                    msg,
                     "",
                     JOptionPane.ERROR_MESSAGE
             );
+            Utilidades.LOGGER.log(Level.SEVERE, msg);
             txtClave.requestFocusInWindow();
             return;
         }//Fin de validaciones de campos
 
-        //Cargar los valores de la conexion desde el properties
+        Utilidades.LOGGER.fine("Cargar los valores de la conexion desde el properties");
         frmParametros p = new frmParametros();
 
         String dominio = "localhost", puerto = "3050";
@@ -298,7 +293,7 @@ public final class frmLogin extends javax.swing.JFrame {
         if (p.cargarParamentos("").getConPuerto()) {
             puerto = p.cargarParamentos("").getPuerto();
         }
-
+        
         Conexion.getInstance(
                 txtUsuario.getText(),
                 new String(txtClave.getPassword()),
@@ -362,7 +357,7 @@ public final class frmLogin extends javax.swing.JFrame {
                 );
                 return;
         }
-
+        Utilidades.LOGGER.fine("Conectando a los evento.");
         FirebirdEventos f = new FirebirdEventos();
 
         if (!f.registro(
@@ -371,13 +366,16 @@ public final class frmLogin extends javax.swing.JFrame {
                 dominio,
                 p.cargarParamentos("").getPathBaseDatos(),
                 Integer.parseInt(puerto))) {
+            final String msg = "Error a registrar los eventos...";
             JOptionPane.showMessageDialog(
                     this,
-                    "Error a registrar los eventos...",
+                    msg,
                     "",
                     JOptionPane.ERROR_MESSAGE
             );
+            Utilidades.LOGGER.log(Level.SEVERE, msg);
             return;
+            
         }
 
         //Comprobación de los dias restante de la licencia.

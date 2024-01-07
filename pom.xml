@@ -21,10 +21,10 @@
                 <version>3.3.0</version>
                 <configuration>
                     <archive>
-                        <index>true</index>
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <mainClass>sur.softsurena.formularios.frmLogin</mainClass>
+                            <classpathPrefix>lib/</classpathPrefix>
                         </manifest>
                     </archive>
                 </configuration>
@@ -76,19 +76,4 @@
         </dependency>
         
     </dependencies>
-    <!--repositories>
-        <repository>
-            <id>pentaho-releases</id>
-            <url>http://repository.pentaho.org/artifactory/repo/</url>
-        </repository>
-    </repositories-->
-    
-<!--    <repositories>
-        <repository>
-            <id>pentaho-releases</id>
-            <url>file:///home/jhironsel/.m2/repository</url>
-        </repository>
-    </repositories>-->
-    
-    
 </project>

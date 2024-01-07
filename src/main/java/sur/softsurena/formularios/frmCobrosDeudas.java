@@ -124,7 +124,6 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
         });
 
         btnPagar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        btnPagar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Dinero 32 x 32.png"))); // NOI18N
         btnPagar.setText("Pago");
         btnPagar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -133,7 +132,6 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
         });
 
         btnCancelar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Cancelar 32 x 32.png"))); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -142,7 +140,6 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
         });
 
         btnBuscarCliente.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        btnBuscarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Buscar3 32 x 32.png"))); // NOI18N
         btnBuscarCliente.setMnemonic('c');
         btnBuscarCliente.setText("Cliente");
         btnBuscarCliente.setToolTipText("Busca un Cliente");

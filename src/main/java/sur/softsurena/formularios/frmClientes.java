@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -39,13 +40,14 @@ import sur.softsurena.entidades.Resultados;
 import sur.softsurena.entidades.Sexo;
 import sur.softsurena.entidades.TipoPersona;
 import static sur.softsurena.formularios.frmPrincipal.dpnEscritorio;
+import sur.softsurena.interfaces.ICliente;
 import sur.softsurena.utilidades.Utilidades;
 import static sur.softsurena.utilidades.Utilidades.LOGGER;
 import static sur.softsurena.utilidades.Utilidades.columnasCheckBox;
 import static sur.softsurena.utilidades.Utilidades.repararColumnaTable;
 import static sur.softsurena.utilidades.Utilidades.sqlDateToUtilDate;
 
-public class frmClientes extends javax.swing.JInternalFrame {
+public class frmClientes extends javax.swing.JInternalFrame implements ICliente{
 
     private boolean v_nuevo = false;
 
@@ -61,15 +63,12 @@ public class frmClientes extends javax.swing.JInternalFrame {
 
     private final List<ContactosTel> v_contactosTelsList;
 
-    private final static String[] TITULOS_DIRECCION = {"Provincia", "Municipio",
-        "Distrito M.", "Calle y No. Casa", "Fecha", "Estado", "Por defecto"};
-
-    private static final String[] TITULOS_CORREO = {"Correo", "Fecha"};
-
-    private static final String[] TITULOS_TELEFONO = {"Numero", "Tipo", "Fecha"};
+    
 
     private static String criterioBusqueda = "";
-
+    
+    private static final Logger LOG = Logger.getLogger(frmClientes.class.getName());
+    
     public static frmClientes getInstance() {
         /*
             Si un permiso a las vistas consultada anteriormente es negado, se 
@@ -1388,12 +1387,12 @@ public class frmClientes extends javax.swing.JInternalFrame {
 
         if (!clientes.isEmpty()) {
             idCliente = clientes.get(0).getId_persona(); //Validacion 8
-            System.out.println("La lista no esta vacia y idCliente es: " + idCliente);
+            LOGGER.log(Level.INFO, "La lista no esta vacia y idCliente es: {0}", idCliente);
         }
 
         if (idCliente == 0) {
             idCliente = ((Clientes) tblClientes.getValueAt(tblClientes.getSelectedRow(), 0)).getId_persona();
-            System.out.println("Identificador del cliente es 0. Buscar idCliente en la tabla es: " + idCliente);
+            LOGGER.log(Level.INFO, "Identificador del cliente es 0. Buscar idCliente en la tabla es: {0}", idCliente);
         }
 
         // si es nuevo validamos que el Cliente no exista
@@ -2262,7 +2261,7 @@ public class frmClientes extends javax.swing.JInternalFrame {
         final String titulos[] = {"Cedulas", "Persona", "Primer Nombre",
             "Segundo Nombre", "Apellidos", "Sexo", "Fecha nacimiento",
             "Fecha Ingreso", "Estado"
-        };
+        };  
 
         if (Objects.isNull(criterioBusqueda)) {
             criterioBusqueda = "";

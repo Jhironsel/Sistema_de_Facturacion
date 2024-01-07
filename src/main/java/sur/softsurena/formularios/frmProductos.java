@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.Image;
 import java.sql.SQLException;
 import java.util.Objects;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -27,11 +28,12 @@ import static sur.softsurena.entidades.Productos.existeProducto;
 import static sur.softsurena.entidades.Productos.getProductos;
 import static sur.softsurena.entidades.Productos.modificarProducto;
 import sur.softsurena.entidades.Resultados;
+import sur.softsurena.interfaces.IProducto;
 import sur.softsurena.utilidades.Utilidades;
 import static sur.softsurena.utilidades.Utilidades.columnasCheckBox;
 import static sur.softsurena.utilidades.Utilidades.repararColumnaTable;
 
-public class frmProductos extends javax.swing.JInternalFrame {
+public class frmProductos extends javax.swing.JInternalFrame implements IProducto{
 
     private static final Logger LOG = Logger.getLogger(frmProductos.class.getName());
 
@@ -61,6 +63,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
                     "",
                     JOptionPane.WARNING_MESSAGE
             );
+            LOG.log(Level.SEVERE, mensaje);
             throw new ExceptionInInitializerError(mensaje);
         }
         return NewSingletonHolder.INSTANCE;

@@ -1,24 +1,36 @@
 package sur.softsurena.formularios;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import sur.softsurena.conexion.Conexion;
 
 public class frmAutorizacion extends javax.swing.JDialog {
-    private final boolean aceptar = false;
+
+    private static boolean aceptar = false;
+    private static final Logger LOG = Logger.getLogger(frmAutorizacion.class.getName());
+    
 
     public boolean isAceptado() {
         return aceptar;
     }
 
     public void setAceptar(String idUsuario, String clave) {
-        
-//        this.aceptar = Conexion.getInstance().
-//                validarUsuarioPro(idUsuario, clave, "none");
+        Conexion.getInstance(
+                txtUsuario.getText(),
+                String.valueOf(txtPass.getPassword()),
+                "",
+                "localhost",
+                "3050"
+        );
+        this.aceptar = Conexion.verificar().getEstado();
     }
-    
-    public frmAutorizacion(java.awt.Frame parent, boolean modal ) {
+
+    public frmAutorizacion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -125,38 +137,42 @@ public class frmAutorizacion extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassActionPerformed
-        if(txtUsuario.getText().isBlank()){
+        if (txtUsuario.getText().isBlank()) {
+            final String msg = "Campo Usuario vacio";
             JOptionPane.showMessageDialog(
-                    this, 
-                    "Campo Usuario vacio", 
-                    "", 
+                    this,
+                    msg,
+                    "",
                     JOptionPane.ERROR_MESSAGE
             );
             txtUsuario.requestFocusInWindow();
+            LOG.log(Level.SEVERE, msg);
             return;
         }
-        
-        if(txtPass.getPassword().length == 0){
+
+        if (txtPass.getPassword().length == 0) {
+            final String msg = "Campo clave vacio";
             JOptionPane.showMessageDialog(
-                    this, 
-                    "Campo clave vacio", 
-                    "", 
+                    this,
+                    msg,
+                    "",
                     JOptionPane.ERROR_MESSAGE
             );
             txtPass.requestFocusInWindow();
+            LOG.log(Level.SEVERE, msg);
             return;
         }
-        
+
         setAceptar(txtUsuario.getText(), new String(txtPass.getPassword()));
-        
+
         this.dispose();
-        
+
     }//GEN-LAST:event_txtPassActionPerformed
 
     private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
         txtPass.requestFocusInWindow();
     }//GEN-LAST:event_txtUsuarioActionPerformed
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;

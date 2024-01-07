@@ -52,15 +52,11 @@ public class Trabajo extends SwingWorker<Double, Integer> {
     
     @Override
     protected Double doInBackground() throws Exception {
-        
-        
         publish(4);
         estado = "Cargando Formulario principal";
         
-        
         publish(10);
         estado = "Cargando Clientes";
-        
         
         publish(13);
         estado = "Cargando Productos";
@@ -85,7 +81,6 @@ public class Trabajo extends SwingWorker<Double, Integer> {
         
         publish(59);
         estado = "Inventario y Categoria Listo";
-        
         
         publish(74);
         estado = "Cargando Sistema Bebida Factura...";

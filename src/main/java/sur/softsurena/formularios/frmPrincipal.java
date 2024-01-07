@@ -60,7 +60,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
         initComponents();
         ((DesktopConFondo) dpnEscritorio).setImagen("/sur/softsurena/imagenes/Fondo 1024 x 723.jpg");
-
+        
         mnuMantenimientoClientes.setVisible(
                 privilegio(
                         Privilegios
@@ -832,7 +832,11 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jsEstatus.setViewportView(pEstatus);
 
         dpnEscritorio.setBackground(new java.awt.Color(0, 102, 102));
+        dpnEscritorio.setToolTipText("Espacio virtual de ventanas.");
+        dpnEscritorio.setAutoscrolls(true);
         dpnEscritorio.setComponentPopupMenu(jPopupMenu1);
+        dpnEscritorio.setDoubleBuffered(true);
+        dpnEscritorio.setOpaque(false);
         dpnEscritorio.setPreferredSize(new java.awt.Dimension(510, 531));
         jScrollPane4.setViewportView(dpnEscritorio);
 
@@ -1245,11 +1249,10 @@ public final class frmPrincipal extends javax.swing.JFrame {
         dpnEscritorio.add(restaurar);
         try {
             restaurar.setMaximum(true);
-
+            restaurar.show();
         } catch (PropertyVetoException ex) {
-            LOG.log(Level.SEVERE, "Error al crear ventana de cliente.", ex);
+            LOG.log(Level.SEVERE, "Error al crear ventana de restaurar base de datos.", ex);
         }
-        restaurar.show();
     }//GEN-LAST:event_jlRestauracionMouseClicked
 
     private void jlRestauracionMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlRestauracionMouseExited
