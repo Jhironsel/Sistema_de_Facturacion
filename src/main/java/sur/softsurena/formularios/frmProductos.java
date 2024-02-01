@@ -922,7 +922,6 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
 
     private void btnBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProductoActionPerformed
         if (jtpPrincipal.getSelectedComponent() == jpProductos) {
-
             if (tblProducto.getRowCount() == 0) {
                 JOptionPane.showInternalMessageDialog(
                         this,

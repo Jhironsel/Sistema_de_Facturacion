@@ -97,6 +97,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente{
         return NewSingletonHolder.INSTANCE;
     }
 
+
     private static class NewSingletonHolder {
         private static final frmClientes INSTANCE = new frmClientes();
     }
@@ -233,7 +234,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente{
             ex.printStackTrace();
         }
         txtCedula1.setText("012-0089344-8");
-        txtCedula1.setToolTipText("Cedula del Cliente");
+        txtCedula1.setToolTipText("Ingrese su criterio de busqueda.\\n[Cedula, nombres o apellidos]");
         txtCedula1.setFocusLostBehavior(javax.swing.JFormattedTextField.COMMIT);
         txtCedula1.setFocusTraversalPolicyProvider(true);
         txtCedula1.setFont(new java.awt.Font("FreeMono", 1, 14)); // NOI18N
@@ -1199,7 +1200,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente{
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         //Se valida que exista un campo seleccionado
-        if (validarRegistro()) {
+        if (validarRegistro("modificar.")) {
             return;
         }
 
@@ -1226,7 +1227,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente{
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
         //Validamos que está correcto en la tabla.
         //Si el metodo devuelve true devolvemos el proceso.
-        if (validarRegistro()) {
+        if (validarRegistro("eliminar.")) {
             return;
         }
 
@@ -1265,22 +1266,38 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente{
     }//GEN-LAST:event_btnBorrarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        String resp = JOptionPane.showInternalInputDialog(
+        txtCedula1.setValue(null);
+        //Utilidades.showTooltip(txtCedula1);
+        JOptionPane.showInternalMessageDialog(
                 this,
-                "Ingrese su criterio de busqueda.\n[Cedula, nombres o apellidos]",
+                txtCedula1,
                 "",
                 JOptionPane.QUESTION_MESSAGE
         );
-
-        criterioBusqueda = resp;
-
-        if (Objects.isNull(resp)) {
+        
+        
+        try {
+            txtCedula1.commitEdit();
+        } catch (ParseException ex) {
+            LOG.info("No se ingreso criterios de busquedas.");
             return;
         }
+        
+        criterioBusqueda = txtCedula1.getText();
 
         jsPaginaNro.setValue(1);
 
         llenarTablaClientes(-1, criterioBusqueda);
+        
+        if(tblClientes.getRowCount() == 0){
+            JOptionPane.showInternalMessageDialog(
+                    this, 
+                    "No se encontro registros con dichos criterios.", 
+                    "", 
+                    JOptionPane.WARNING_MESSAGE
+            );
+            btnActializarRegistrosCliente.doClick();
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
     /**
      * Proceso de validación.
@@ -2327,7 +2344,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente{
      * restriccion de las mensionadas, de lo contrario devuelve falso <br>
      * indicando que no existe restriciones.
      */
-    private boolean validarRegistro() {
+    private boolean validarRegistro(String accion) {
         //Si la tabla de registro de los cliente está vacia devolvemos true
         //para que el proceso no continue.
         if (tblClientes.getRowCount() <= 0) {
@@ -2358,7 +2375,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente{
                 tblClientes.getSelectedRow(), 0)).getId_persona() == 0) {
             JOptionPane.showInternalMessageDialog(
                     this,
-                    "Cliente GENERICO no puede ser modificado",
+                    "Cliente GENERICO no puede ser %s".formatted(accion),
                     "",
                     JOptionPane.ERROR_MESSAGE
             );

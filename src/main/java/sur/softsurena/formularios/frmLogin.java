@@ -375,7 +375,6 @@ public final class frmLogin extends javax.swing.JFrame {
             );
             Utilidades.LOGGER.log(Level.SEVERE, msg);
             return;
-            
         }
 
         //Comprobación de los dias restante de la licencia.

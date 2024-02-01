@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
+<Form version="1.8" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
   <NonVisualComponents>
     <Component class="javax.swing.ButtonGroup" name="btnGMovilTelefono">
     </Component>
@@ -22,7 +22,7 @@
           <Format format="###-#######-#" subtype="-1" type="5"/>
         </Property>
         <Property name="text" type="java.lang.String" value="012-0089344-8"/>
-        <Property name="toolTipText" type="java.lang.String" value="Cedula del Cliente"/>
+        <Property name="toolTipText" type="java.lang.String" value="Ingrese su criterio de busqueda.\u005cn[Cedula, nombres o apellidos]" containsInvalidXMLChars="true"/>
         <Property name="focusLostBehavior" type="int" value="0"/>
         <Property name="focusTraversalPolicyProvider" type="boolean" value="true"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">

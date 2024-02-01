@@ -28,10 +28,9 @@ public class FirebirdEventos extends FBEventManager{
         setPortNumber(puerto);
         
         try {
-            if(isConnected()){
-                disconnect();
+            if(!isConnected()){
+                connect();
             }
-            connect();
             //Evento para productos.
             addEventListener("addProducto", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
