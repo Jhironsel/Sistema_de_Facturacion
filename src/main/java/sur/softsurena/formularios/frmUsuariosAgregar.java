@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import sur.softsurena.entidades.Etiquetas;
-import sur.softsurena.entidades.Resultados;
-import sur.softsurena.entidades.Roles;
+import sur.softsurena.utilidades.Resultados;
+import sur.softsurena.entidades.Role;
 import sur.softsurena.entidades.Usuario;
-import static sur.softsurena.entidades.Usuario.*;
+import static sur.softsurena.metodos.M_Etiqueta.getEtiquetasUsuario;
+import static sur.softsurena.metodos.M_Role.comprobandoRol;
+import static sur.softsurena.metodos.M_Role.getRoles;
+import static sur.softsurena.metodos.M_Usuario.agregarUsuario;
+import static sur.softsurena.metodos.M_Usuario.existeUsuarioByUserName;
+import static sur.softsurena.metodos.M_Usuario.modificarUsuario;
 import sur.softsurena.utilidades.PalabrasReservadasFirebird;
 import sur.softsurena.utilidades.Utilidades;
 import static sur.softsurena.utilidades.Utilidades.repararColumnaTable;
@@ -57,13 +61,14 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
 
         tblEtiquetas.removeAll();
 
-        Etiquetas.getEtiquetasUsuario(usuario.getUser_name()).stream().
-                forEach(etiqueta -> {
+        getEtiquetasUsuario(usuario.getUser_name()).stream().forEach(
+                etiqueta -> {
                     registro[0] = etiqueta.getPropiedad();
                     registro[1] = etiqueta.getValor();
 
                     dtmEtiquetas.addRow(registro);
-                });
+                }
+        );
 
         tblEtiquetas.setModel(dtmEtiquetas);
 
@@ -79,7 +84,7 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
 
         tblRoles.removeAll();
 
-        Roles.comprobandoRol(usuario.getUser_name()).stream().
+        comprobandoRol(usuario.getUser_name()).stream().
                 forEach(rol -> {
                     registro2[0] = rol.getRoleName();
                     registro2[1] = rol.getDescripcion();
@@ -629,10 +634,10 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
             Preparando el mensaje que verá el usuario para aceptar la información 
         que se ingresará a la base de datos.
          */
-        List<Roles> rolesList = new ArrayList<>();
+        List<Role> rolesList = new ArrayList<>();
 
         for (int i = 0; i < tblRoles.getRowCount(); i++) {
-            rolesList.add(Roles.builder().
+            rolesList.add(Role.builder().
                     roleName(tblRoles.getValueAt(i, 0).toString()).
                     build());
         }
@@ -696,7 +701,9 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
                 administrador(cbAdministrador.isSelected()).
                 roles(rolesList).
                 build();
+
         Resultados resultado = (nuevo ? agregarUsuario(usuario) : modificarUsuario(usuario));
+
         JOptionPane.showMessageDialog(
                 this,
                 resultado,
@@ -785,13 +792,12 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
     }//GEN-LAST:event_btnBorrarTagActionPerformed
 
     private void btnAgregarRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarRolActionPerformed
-        Roles rol = (Roles) JOptionPane.showInputDialog(
-                this,
+        Role rol = (Role) JOptionPane.showInputDialog(this,
                 "Seleccione un rol para el usuario",
                 "",
                 JOptionPane.PLAIN_MESSAGE,
                 null,
-                Roles.getRoles().stream().toArray(Roles[]::new),
+                getRoles().stream().toArray(Role[]::new),
                 null
         );
 

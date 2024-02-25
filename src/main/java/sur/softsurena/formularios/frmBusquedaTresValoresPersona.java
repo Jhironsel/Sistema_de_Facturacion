@@ -1,7 +1,7 @@
 package sur.softsurena.formularios;
 
 import java.awt.Color;
-import sur.softsurena.entidades.CustomFont;
+import sur.softsurena.utilidades.CustomFont;
 
 public class frmBusquedaTresValoresPersona extends javax.swing.JDialog {
 

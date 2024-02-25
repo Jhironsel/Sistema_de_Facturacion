@@ -10,10 +10,10 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import sur.softsurena.entidades.DefaultTableCellHeaderRenderer;
-import sur.softsurena.entidades.Temporales;
-import static sur.softsurena.entidades.Temporales.getTemporales;
+import sur.softsurena.entidades.Temporal;
 import sur.softsurena.hilos.hiloImpresionFactura;
+import static sur.softsurena.metodos.M_Temporal.getTemporales;
+import sur.softsurena.utilidades.DefaultTableCellHeaderRenderer;
 
 public final class frmBuscarTemporal extends java.awt.Dialog {
 
@@ -220,7 +220,7 @@ public final class frmBuscarTemporal extends java.awt.Dialog {
             "Cajero", "Monto"};
         miTabla = new DefaultTableModel(null, titulos);
         //Consulta a la base de datos que trae los registros
-        List<Temporales> temporalesList = getTemporales();
+        List<Temporal> temporalesList = getTemporales();
         //Objecto utlizado en la construción de la tabla.
         Object registro[] = new Object[6];
         

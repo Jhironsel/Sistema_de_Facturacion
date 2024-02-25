@@ -16,12 +16,12 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import static sur.softsurena.entidades.Clientes.getClientes;
-import sur.softsurena.entidades.DefaultTableCellHeaderRenderer;
-import sur.softsurena.entidades.Deudas;
-import static sur.softsurena.entidades.Deudas.insertDeudas;
-import static sur.softsurena.entidades.Deudas.modificarDeuda;
-import sur.softsurena.entidades.FiltroBusqueda;
+import sur.softsurena.utilidades.DefaultTableCellHeaderRenderer;
+import sur.softsurena.entidades.Deuda;
+import sur.softsurena.utilidades.FiltroBusqueda;
+import static sur.softsurena.metodos.M_Cliente.getClientes;
+import static sur.softsurena.metodos.M_Deuda.insertDeudas;
+import static sur.softsurena.metodos.M_Deuda.modificarDeuda;
 import sur.softsurena.utilidades.Utilidades;
 
 public class frmDeudas extends javax.swing.JInternalFrame {
@@ -767,7 +767,6 @@ public class frmDeudas extends javax.swing.JInternalFrame {
 
     private void btnVerPagosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerPagosActionPerformed
         if (tblClientes.getRowCount() == 0) {
-
             return;
         }
 
@@ -1013,7 +1012,7 @@ public class frmDeudas extends javax.swing.JInternalFrame {
         }
 
         //Creamos el Objeto Cliente y los agregamos a Datos
-        Deudas miDeuda = Deudas.builder().id_persona(-1).build();
+        Deuda miDeuda = Deuda.builder().id_persona(-1).build();
 
 //                new Deudas(idCliente, getIdUsuario(),
 //                txtConcepto.getText(), monto);
@@ -1240,7 +1239,7 @@ public class frmDeudas extends javax.swing.JInternalFrame {
         Object registro[] = new Object[titulos.length];
         miTabla = new DefaultTableModel(null, titulos);
 
-        List<Deudas> deudasList = new ArrayList<>();
+        List<Deuda> deudasList = new ArrayList<>();
 
         deudasList.stream().forEach(x -> {
             registro[0] = x.getGenerales().getCedula();

@@ -2,7 +2,6 @@ package sur.softsurena.formularios;
 
 import java.awt.Component;
 import java.awt.Image;
-import java.sql.SQLException;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,24 +15,26 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import static sur.softsurena.conexion.Conexion.getCnn;
-import sur.softsurena.entidades.Categorias;
-import static sur.softsurena.entidades.Categorias.getCategirias;
-import sur.softsurena.entidades.FiltroBusqueda;
-import sur.softsurena.entidades.Privilegios;
-import static sur.softsurena.entidades.Privilegios.privilegio;
-import sur.softsurena.entidades.Productos;
-import static sur.softsurena.entidades.Productos.agregarProducto;
-import static sur.softsurena.entidades.Productos.borrarProductoPorID;
-import static sur.softsurena.entidades.Productos.existeProducto;
-import static sur.softsurena.entidades.Productos.getProductos;
-import static sur.softsurena.entidades.Productos.modificarProducto;
-import sur.softsurena.entidades.Resultados;
+import sur.softsurena.entidades.Categoria;
+import sur.softsurena.entidades.Privilegio;
+import sur.softsurena.entidades.Producto;
+import sur.softsurena.utilidades.Resultados;
 import sur.softsurena.interfaces.IProducto;
+import static sur.softsurena.metodos.M_Categoria.getCategorias;
+import static sur.softsurena.metodos.M_Privilegio.privilegio;
+import static sur.softsurena.metodos.M_Producto.agregarProducto;
+import static sur.softsurena.metodos.M_Producto.borrarProductoPorID;
+import static sur.softsurena.metodos.M_Producto.existeProducto;
+import static sur.softsurena.metodos.M_Producto.generarCodigoBarra;
+import static sur.softsurena.metodos.M_Producto.generarProducto;
+import static sur.softsurena.metodos.M_Producto.getProductos;
+import static sur.softsurena.metodos.M_Producto.modificarProducto;
+import sur.softsurena.utilidades.FiltroBusqueda;
 import sur.softsurena.utilidades.Utilidades;
 import static sur.softsurena.utilidades.Utilidades.columnasCheckBox;
 import static sur.softsurena.utilidades.Utilidades.repararColumnaTable;
 
-public class frmProductos extends javax.swing.JInternalFrame implements IProducto{
+public class frmProductos extends javax.swing.JInternalFrame implements IProducto {
 
     private static final Logger LOG = Logger.getLogger(frmProductos.class.getName());
 
@@ -48,10 +49,9 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
             Si un permiso a las vistas consultada anteriormente es negado, se 
         lanza una excepcion y la venta no se iniciará.
          */
-        if (!privilegio(
-                Privilegios
+        if (!privilegio(Privilegio
                         .builder()
-                        .privilegio(Privilegios.PRIVILEGIO_SELECT)
+                        .privilegio(Privilegio.PRIVILEGIO_SELECT)
                         .nombre_relacion("GET_PRODUCTOS")
                         .nombre_campo("^")
                         .build()
@@ -70,6 +70,7 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
     }
 
     private static class NewSingletonHolder {
+
         private static final frmProductos INSTANCE = new frmProductos();
     }
 
@@ -763,7 +764,7 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
                     break;
                 }
                 if (tblProducto.getValueAt(tblProducto.getSelectedRow(), 9).
-                        toString().equals(((Categorias) cbCategoria.getItemAt(i)).getDescripcion())) {
+                        toString().equals(((Categoria) cbCategoria.getItemAt(i)).getDescripcion())) {
                     cbCategoria.setSelectedIndex(i);
                     break;
                 }
@@ -851,7 +852,7 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
             jtpPrincipal.addTab("Mantenimiento", jpMantenimiento);
 
             jtpPrincipal.setSelectedIndex(jtpPrincipal.indexOfComponent(jpMantenimiento));
-            
+
             jtpPrincipal.setEnabledAt(jtpPrincipal.indexOfComponent(jpProductos), false);
 
             //Desactivamos el Flag de registro Nuevo para realizar actualizaciones.
@@ -875,8 +876,8 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
         if (jtpPrincipal.getSelectedComponent() == jpProductos) {
-            Integer id = ((Productos) tblProducto.getValueAt(tblProducto.getSelectedRow(), 2)).getId();
-            String descripcion = ((Productos) tblProducto.getValueAt(tblProducto.getSelectedRow(), 2)).getDescripcion();
+            Integer id = ((Producto) tblProducto.getValueAt(tblProducto.getSelectedRow(), 2)).getId();
+            String descripcion = ((Producto) tblProducto.getValueAt(tblProducto.getSelectedRow(), 2)).getDescripcion();
 
             if (Objects.isNull(id)) {
                 JOptionPane.showInternalMessageDialog(
@@ -1012,16 +1013,15 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
                 }
             }
 
-            int id = ((Productos) tblProducto.getValueAt(tblProducto.getSelectedRow(), 2)).getId();
+            int id = ((Producto) tblProducto.getValueAt(tblProducto.getSelectedRow(), 2)).getId();
 
             //Creando el objecto producto.
-            Productos producto = Productos
+            Producto producto = Producto
                     .builder()
                     .id(id)
-                    .categoria(
-                            Categorias
+                    .categoria(Categoria
                                     .builder()
-                                    .id_categoria(((Categorias) cbCategoria.getSelectedItem()).getId_categoria())
+                                    .id_categoria(((Categoria) cbCategoria.getSelectedItem()).getId_categoria())
                                     .build()
                     )
                     .codigo(txtCodigoBarra.getText().strip())
@@ -1051,11 +1051,10 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
                 msg = txtNotas.getText();
             }
 
-            int resp = JOptionPane.showInternalConfirmDialog(
-                    this,
+            int resp = JOptionPane.showInternalConfirmDialog(this,
                     "<html><b><big>Se va a " + accion + " el Producto: </big></b><big>" + txtDescripcion.getText() + "</big></html>"
                     + "\n<html><b><big>Codigo no: </big></b><big>" + txtCodigoBarra.getText() + "</big></html>"
-                    + "\n<html><b><big>Categoria: </big></b><big>" + ((Categorias) cbCategoria.getSelectedItem()).getDescripcion() + "</big></html>"
+                    + "\n<html><b><big>Categoria: </big></b><big>" + ((Categoria) cbCategoria.getSelectedItem()).getDescripcion() + "</big></html>"
                     + "\n<html><b><big>Estado: </big></b><big>" + (cbActivo.isSelected() ? "Activo" : "Inactivo") + "</big></html>"
                     + "\n<html><b><big>Notas: </big></b><big>" + msg + "</big></html>"
                     + "\n<html><b><big>Desea continuar? </big></b></html>",
@@ -1185,40 +1184,34 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
         llenarTabla(criterioBusqueda);
         reOrdenar();
         updateCategoria();
-        
-        btnNuevo.setEnabled(
-                privilegio(
-                        Privilegios
+
+        btnNuevo.setEnabled(privilegio(Privilegio
                                 .builder()
-                                .privilegio(Privilegios.PRIVILEGIO_EXECUTE)
+                                .privilegio(Privilegio.PRIVILEGIO_EXECUTE)
                                 .nombre_relacion("SP_INSERT_PRODUCTO")
                                 .nombre_campo("^")
                                 .build()
                 )
         );
-        
-        btnModificar.setEnabled(
-                privilegio(
-                        Privilegios
+
+        btnModificar.setEnabled(privilegio(Privilegio
                                 .builder()
-                                .privilegio(Privilegios.PRIVILEGIO_EXECUTE)
+                                .privilegio(Privilegio.PRIVILEGIO_EXECUTE)
                                 .nombre_relacion("SP_UPDATE_PRODUCTO")
                                 .nombre_campo("^")
                                 .build()
                 )
         );
-        
-        btnBorrar.setEnabled(
-                privilegio(
-                        Privilegios
+
+        btnBorrar.setEnabled(privilegio(Privilegio
                                 .builder()
-                                .privilegio(Privilegios.PRIVILEGIO_EXECUTE)
+                                .privilegio(Privilegio.PRIVILEGIO_EXECUTE)
                                 .nombre_relacion("SP_DELETE_PRODUCTO")
                                 .nombre_campo("^")
                                 .build()
                 )
         );
-        
+
     }//GEN-LAST:event_formInternalFrameOpened
 
     private void jlOpcionesMostrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlOpcionesMostrarMouseClicked
@@ -1236,7 +1229,7 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
             if (evt.isAltDown()) {
                 if (evt.isShiftDown()) {
                     if (evt.isAltGraphDown()) {
-                        txtDescripcion.setText(Productos.generarProducto());
+                        txtDescripcion.setText(generarProducto());
                     }
                 }
             }
@@ -1248,7 +1241,7 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
             if (evt.isAltDown()) {
                 if (evt.isShiftDown()) {
                     if (evt.isAltGraphDown()) {
-                        txtCodigoBarra.setText(Productos.generarCodigoBarra());
+                        txtCodigoBarra.setText(generarCodigoBarra());
                     }
                 }
             }
@@ -1271,7 +1264,7 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
                                 append(" Con el codigo de barra ").
                                 append(txtCodigoBarra.getText()).
                                 append(" pertenece a la categoria de producto llamado ").
-                                append(((Categorias) cbCategoria.getSelectedItem()).getDescripcion()).
+                                append(((Categoria) cbCategoria.getSelectedItem()).getDescripcion()).
                                 append(" con el estado actual ").
                                 append((cbActivo.isSelected() ? "Activo" : "Inactivo"));
 
@@ -1412,10 +1405,10 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
                         .build()
         ).stream().forEach(producto -> {
             registro[0] = producto.getCodigo();
-            registro[1] = Categorias.builder().
+            registro[1] = Categoria.builder().
                     id_categoria(producto.getCategoria().getId_categoria()).
                     descripcion(producto.getCategoria().getDescripcion()).build();
-            registro[2] = Productos.builder().
+            registro[2] = Producto.builder().
                     id(producto.getId()).
                     descripcion(producto.getDescripcion()).build();
             registro[3] = producto.getFechaCreacion();
@@ -1445,15 +1438,14 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
             return;
         }
 
-        int id = ((Productos) tblProducto.getValueAt(v_fila, 2)).getId();
+        int id = ((Producto) tblProducto.getValueAt(v_fila, 2)).getId();
 
-        Productos producto = Productos.getProductos(
-        FiltroBusqueda
-                .builder()
-                .id(id)
-                .criterioBusqueda("^")
-                .build()
-        
+        Producto producto = getProductos(
+                FiltroBusqueda
+                        .builder()
+                        .id(id)
+                        .criterioBusqueda("^")
+                        .build()
         ).get(0);
 
         txtCodigoBarra.setText(producto.getCodigo());
@@ -1464,11 +1456,10 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
 
         cbActivo.setSelected(producto.getEstado());
 
-
         jlImagenProducto.setIcon(Utilidades.imagenDecode64(producto.getImagenProducto(), 155, 155));
 
         for (int i = 0; i < cbCategoria.getItemCount(); i++) {
-            int idCategoria = ((Categorias) cbCategoria.getItemAt(i)).getId_categoria();
+            int idCategoria = ((Categoria) cbCategoria.getItemAt(i)).getId_categoria();
             if (idCategoria == producto.getCategoria().getId_categoria()) {
                 cbCategoria.setSelectedIndex(i);
             }
@@ -1546,27 +1537,23 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
 
         //Agregar primer elemento con id negativo
         //Lo agregamos al comboBox.
-        cbCategoria.addItem(
-                Categorias.
-                        builder().
-                        id_categoria(-1).
-                        descripcion("Seleccione categoria").
-                        build()
+        cbCategoria.addItem(Categoria
+                        .builder()
+                        .id_categoria(-1)
+                        .descripcion("Seleccione categoria")
+                        .build()
         );
-        try {
-            getCategirias().stream().forEach(categoria -> {
-                cbCategoria.addItem(
-                        Categorias.
-                                builder().
-                                id_categoria(categoria.getId_categoria()).
-                                descripcion(categoria.getDescripcion()).
-                                fecha_creacion(categoria.getFecha_creacion()).
-                                build()
-                );
-            });
-        } catch (SQLException i) {
-            System.out.println("No hay categorias por permisos.");
-        }
+        
+        getCategorias(true, false).stream().forEach(categoria -> {
+            cbCategoria.addItem(Categoria
+                            .builder()
+                            .id_categoria(categoria.getId_categoria())
+                            .descripcion(categoria.getDescripcion())
+                            .fecha_creacion(categoria.getFecha_creacion())
+                            .build()
+            );
+        });
+        
         if (cbCategoria.getItemCount() < 2) {
             btnModificar.setEnabled(false);
             String toolTip = btnModificar.getToolTipText();

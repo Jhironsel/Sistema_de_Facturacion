@@ -9,10 +9,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
-import sur.softsurena.entidades.Clientes;
-import static sur.softsurena.entidades.Clientes.getClientes;
-import sur.softsurena.entidades.FiltroBusqueda;
+import sur.softsurena.entidades.Cliente;
+import sur.softsurena.utilidades.FiltroBusqueda;
 import sur.softsurena.hilos.hiloImpresionFactura;
+import static sur.softsurena.metodos.M_Cliente.getClientes;
 import sur.softsurena.utilidades.Utilidades;
 
 public class frmCobrosClientes extends javax.swing.JDialog {
@@ -375,28 +375,29 @@ public class frmCobrosClientes extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-
-        Clientes c = Clientes.builder().
-                id_persona(-1).
-                pnombre("Seleccione un Cliente...").
-                snombre("").
-                apellidos("").build();
         cmbCliente.removeAllItems();
-        cmbCliente.addItem(c);
-        //TODO Probar o hacer test
+        cmbCliente.addItem(Cliente
+                        .builder()
+                        .id_persona(-1)
+                        .pnombre("Seleccione un Cliente...")
+                        .snombre("")
+                        .apellidos("")
+                        .build()
+        );
+
         getClientes(
-                FiltroBusqueda.
-                        builder().
-                        estado(true).
-                        build()
-        ).stream().forEach(cliente ->{
-            cmbCliente.addItem(cliente);
-        });
+                FiltroBusqueda
+                        .builder()
+                        .estado(true)
+                        .build()
+        ).stream().forEach(
+                cliente -> cmbCliente.addItem(cliente)
+        );
     }//GEN-LAST:event_formWindowOpened
     private void btnPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarActionPerformed
         if (cmbCliente.getSelectedIndex() <= 0) {
             JOptionPane.showMessageDialog(
-                    this, 
+                    this,
                     "Debe selecionar un Cliente...",
                     "",
                     JOptionPane.ERROR_MESSAGE
@@ -404,10 +405,10 @@ public class frmCobrosClientes extends javax.swing.JDialog {
             cmbCliente.requestFocusInWindow();
             return;
         }
-        
+
         if (tblFacturas.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(
-                    this, 
+                    this,
                     "Debe seleccionar una factura",
                     "",
                     JOptionPane.ERROR_MESSAGE
@@ -421,7 +422,7 @@ public class frmCobrosClientes extends javax.swing.JDialog {
 
         if (Monto.compareTo(BigDecimal.ZERO) == 0) {
             JOptionPane.showMessageDialog(
-                    this, 
+                    this,
                     "Debe Ingresar un Valor Para Realizar Pago...",
                     "",
                     JOptionPane.ERROR_MESSAGE
@@ -432,7 +433,7 @@ public class frmCobrosClientes extends javax.swing.JDialog {
         }
         if (Monto.compareTo(montoTotal) == 1) {
             JOptionPane.showMessageDialog(
-                    this, 
+                    this,
                     "No se permite Monto a pagar MAYOR QUE '>' Deuda del Cliente",
                     "",
                     JOptionPane.ERROR_MESSAGE
@@ -441,7 +442,7 @@ public class frmCobrosClientes extends javax.swing.JDialog {
         }
         if (Monto.compareTo(BigDecimal.ZERO) <= 0) {
             JOptionPane.showMessageDialog(
-                    this, 
+                    this,
                     "No se permite monto NEGATIVO",
                     "",
                     JOptionPane.ERROR_MESSAGE
@@ -451,7 +452,7 @@ public class frmCobrosClientes extends javax.swing.JDialog {
         if (Monto.compareTo(montoDeuda) > 0
                 && montoDeuda.compareTo(BigDecimal.ZERO) > 0) {
             JOptionPane.showMessageDialog(
-                    this, 
+                    this,
                     "No se permite monto MAYOR a la DEUDA",
                     "",
                     JOptionPane.ERROR_MESSAGE
@@ -465,7 +466,7 @@ public class frmCobrosClientes extends javax.swing.JDialog {
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE
         );
-        
+
         if (num == JOptionPane.NO_OPTION) {
             return;
         }
@@ -480,7 +481,7 @@ public class frmCobrosClientes extends javax.swing.JDialog {
 
         //Constancia de pago de Factura....
         JOptionPane.showMessageDialog(
-                this, 
+                this,
                 "Pago realizado con Exito...",
                 "",
                 JOptionPane.INFORMATION_MESSAGE
@@ -490,8 +491,8 @@ public class frmCobrosClientes extends javax.swing.JDialog {
         parametros.put("nombreCajero", getNombreCajero());
         parametros.put("idFactura", Utilidades.objectToInt(tblFacturas.getValueAt(tblFacturas.getSelectedRow(), 0)));
         parametros.put("idTurno", "" + getIdTurno());
-        parametros.put("idCliente", ((Clientes) cmbCliente.getItemAt(cmbCliente.getSelectedIndex())).getId_persona());
-        parametros.put("nombreCliente", ((Clientes) cmbCliente.getItemAt(cmbCliente.getSelectedIndex())).toString());
+        parametros.put("idCliente", ((Cliente) cmbCliente.getItemAt(cmbCliente.getSelectedIndex())).getId_persona());
+        parametros.put("nombreCliente", ((Cliente) cmbCliente.getItemAt(cmbCliente.getSelectedIndex())).toString());
         parametros.put("montoFactura", Utilidades.objectToDouble(tblFacturas.getValueAt(tblFacturas.getSelectedRow(), 1)));
 
         hiloImpresionFactura miHilo = new hiloImpresionFactura(
@@ -511,14 +512,14 @@ public class frmCobrosClientes extends javax.swing.JDialog {
         miBusqueda.setLocationRelativeTo(null);
         miBusqueda.setVisible(true);
 
-        Clientes cliente = miBusqueda.getCliente();
-        
+        Cliente cliente = miBusqueda.getCliente();
+
         if (cliente == null) {
             return;
         }
-        
+
         for (int i = 0; i < cmbCliente.getItemCount(); i++) {
-            if (((Clientes) cmbCliente.getItemAt(i)).getGenerales().getCedula().equals(cliente.getGenerales().getCedula())) {
+            if (((Cliente) cmbCliente.getItemAt(i)).getGenerales().getCedula().equals(cliente.getGenerales().getCedula())) {
                 cmbCliente.setSelectedIndex(i);
                 return;
             }

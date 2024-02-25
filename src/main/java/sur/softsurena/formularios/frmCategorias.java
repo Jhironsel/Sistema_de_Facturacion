@@ -8,14 +8,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import sur.softsurena.entidades.Categorias;
-import static sur.softsurena.entidades.Categorias.agregarCategoria;
-import static sur.softsurena.entidades.Categorias.borrarCategoria;
-import static sur.softsurena.entidades.Categorias.existeCategoria;
-import static sur.softsurena.entidades.Categorias.getCategorias;
-import static sur.softsurena.entidades.Categorias.modificarCategoria;
-import static sur.softsurena.entidades.Productos.existeCategoriaProductos;
-import sur.softsurena.entidades.Resultados;
+import sur.softsurena.entidades.Categoria;
+import sur.softsurena.utilidades.Resultados;
+import static sur.softsurena.metodos.M_Categoria.agregarCategoria;
+import static sur.softsurena.metodos.M_Categoria.borrarCategoria;
+import static sur.softsurena.metodos.M_Categoria.existeCategoria;
+import static sur.softsurena.metodos.M_Categoria.getCategorias;
+import static sur.softsurena.metodos.M_Categoria.modificarCategoria;
+import static sur.softsurena.metodos.M_Producto.existeCategoriaProductos;
 import sur.softsurena.utilidades.Utilidades;
 
 public class frmCategorias extends javax.swing.JDialog {
@@ -191,7 +191,7 @@ public class frmCategorias extends javax.swing.JDialog {
             return;
         }
 
-        String categoria = ((Categorias) cbCategoria.getSelectedItem()).getDescripcion();
+        String categoria = ((Categoria) cbCategoria.getSelectedItem()).getDescripcion();
 
         int rta = JOptionPane.showConfirmDialog(
                 this,
@@ -208,7 +208,7 @@ public class frmCategorias extends javax.swing.JDialog {
         /*
             Verificamos que la categoria no cuente con productos asociados.
          */
-        idCategoria = ((Categorias) cbCategoria.getSelectedItem()).getId_categoria();
+        idCategoria = ((Categoria) cbCategoria.getSelectedItem()).getId_categoria();
 
         if (existeCategoriaProductos(idCategoria)) {
             JOptionPane.showMessageDialog(
@@ -249,11 +249,11 @@ public class frmCategorias extends javax.swing.JDialog {
 
         nuevo = false;
 
-        idCategoria = ((Categorias) cbCategoria.getSelectedItem()).getId_categoria();
+        idCategoria = ((Categoria) cbCategoria.getSelectedItem()).getId_categoria();
 
-        nombreCategoria = ((Categorias) cbCategoria.getSelectedItem()).getDescripcion();
+        nombreCategoria = ((Categoria) cbCategoria.getSelectedItem()).getDescripcion();
 
-        estado = ((Categorias) cbCategoria.getSelectedItem()).getEstado();
+        estado = ((Categoria) cbCategoria.getSelectedItem()).getEstado();
 
         frmCategoriasAdmin miCategoria = new frmCategoriasAdmin(nombreCategoria, estado, false);
         miCategoria.setLocationRelativeTo(null);
@@ -346,17 +346,16 @@ public class frmCategorias extends javax.swing.JDialog {
     private void cbCategoriaPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cbCategoriaPopupMenuWillBecomeInvisible
         String fechaCreacion;
         try {
-            fechaCreacion = ((Categorias) cbCategoria.getSelectedItem()).getFecha_creacion().toString();
+            fechaCreacion = ((Categoria) cbCategoria.getSelectedItem()).getFecha_creacion().toString();
         } catch (java.lang.NullPointerException e) {
             fechaCreacion = "01.01.2000";
             LOG.info("Fecha no proporcionada");
         }
 
-        jlImagen.setIcon(Utilidades.imagenDecode64(
-                ((Categorias) cbCategoria.getSelectedItem()).getImage_texto(), 96, 96));
+        jlImagen.setIcon(Utilidades.imagenDecode64(((Categoria) cbCategoria.getSelectedItem()).getImage_texto(), 96, 96));
         
 
-        if (((Categorias) cbCategoria.getSelectedItem()).getEstado()) {
+        if (((Categoria) cbCategoria.getSelectedItem()).getEstado()) {
             jlEstado.setForeground(new java.awt.Color(37, 45, 223));
             jlEstado.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
             jlEstado.setText("Activo");
@@ -377,7 +376,7 @@ public class frmCategorias extends javax.swing.JDialog {
 
     private void guardar() {
         Resultados resultado;
-        Categorias categoria = Categorias
+        Categoria categoria = Categoria
                             .builder()
                             .id_categoria(nuevo ? -1 : idCategoria)
                             .descripcion(nombreCategoria.strip())
@@ -425,23 +424,25 @@ public class frmCategorias extends javax.swing.JDialog {
 
         cbCategoria.removeAllItems();
 
-        cbCategoria.addItem(Categorias.builder().
-                id_categoria(-1).
-                descripcion("Seleccione una categoria").
-                image_texto("").
-                fecha_creacion(null).
-                estado(false).
-                build());
-
-        getCategorias().stream().forEach(x -> {
-            cbCategoria.addItem(
-                    Categorias.builder().
-                            id_categoria(x.getId_categoria()).
-                            descripcion(x.getDescripcion()).
-                            image_texto(x.getImage_texto()).
-                            fecha_creacion(x.getFecha_creacion()).
-                            estado(x.getEstado()).
-                            build()
+        cbCategoria.addItem(Categoria
+                        .builder()
+                        .id_categoria(-1)
+                        .descripcion("Seleccione una categoria")
+                        .image_texto("")
+                        .fecha_creacion(null)
+                        .estado(false)
+                        .build()
+        );
+        
+        getCategorias(null, true).stream().forEach(categoria -> {
+            cbCategoria.addItem(Categoria
+                            .builder()
+                            .id_categoria(categoria.getId_categoria())
+                            .descripcion(categoria.getDescripcion())
+                            .image_texto(categoria.getImage_texto())
+                            .fecha_creacion(categoria.getFecha_creacion())
+                            .estado(categoria.getEstado())
+                            .build()
             );
         });
         

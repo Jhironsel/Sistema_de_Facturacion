@@ -5,13 +5,15 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import rojerusan.RSComboBox;
 import sur.softsurena.entidades.Almacen;
-import sur.softsurena.entidades.Cajeros;
-import sur.softsurena.entidades.Resultados;
-import sur.softsurena.entidades.Turnos;
-import static sur.softsurena.entidades.Turnos.cerrarTurno;
-import static sur.softsurena.entidades.Turnos.habilitarTurno;
-import static sur.softsurena.entidades.Turnos.usuarioTurnoActivo;
+import sur.softsurena.utilidades.Resultados;
 import sur.softsurena.entidades.Usuario;
+import static sur.softsurena.metodos.M_Almacen.getAlmacenesList;
+import static sur.softsurena.metodos.M_Cajero.getCajeros;
+import static sur.softsurena.metodos.M_Turno.cerrarTurno;
+import static sur.softsurena.metodos.M_Turno.getTurnosActivos;
+import static sur.softsurena.metodos.M_Turno.getTurnosByUserName;
+import static sur.softsurena.metodos.M_Turno.habilitarTurno;
+import static sur.softsurena.metodos.M_Turno.usuarioTurnoActivo;
 import sur.softsurena.utilidades.Utilidades;
 
 /**
@@ -330,14 +332,14 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
         comboAlmacenes.removeAllItems();
 
         comboAlmacenes.addItem(
-                Almacen.
-                        builder().
-                        nombre("Seleccione un almacen.").
-                        id(-1).
-                        build()
+                Almacen
+                        .builder()
+                        .nombre("Seleccione un almacen.")
+                        .id(-1)
+                        .build()
         );
 
-        Almacen.getAlmacenesList(-1, "").stream().forEach(almacen -> {
+        getAlmacenesList(-1, "").stream().forEach(almacen -> {
             comboAlmacenes.addItem(almacen);
         });
 
@@ -422,7 +424,7 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
         };
         Object[] rowData = new Object[columnas.length];
 
-        Cajeros.getCajeros().stream().forEach(cajero -> {
+        getCajeros().stream().forEach(cajero -> {
             rowData[0] = cajero;
             modelo.addRow(rowData);
         });
@@ -440,7 +442,7 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
         };
         Object[] rowData2 = new Object[columnas2.length];
 
-        Turnos.getTurnosActivos().forEach(turno -> {
+        getTurnosActivos().forEach(turno -> {
             rowData2[0] = turno.getId();
             rowData2[1] = turno.getTurno_usuario();
             rowData2[2] = turno.getFecha_hora_inicio();
@@ -536,7 +538,7 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
 
         var rowData2 = new Object[columnas2.length];
 
-        Turnos.getTurnosByUserName(userName).stream().forEach(turnos -> {
+        getTurnosByUserName(userName).stream().forEach(turnos -> {
             rowData2[0] = turnos.getId();
             rowData2[1] = turnos.getFecha_hora_inicio();
             rowData2[2] = turnos.getFecha_hora_final();

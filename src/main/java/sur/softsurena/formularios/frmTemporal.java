@@ -7,19 +7,19 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import sur.softsurena.entidades.DefaultTableCellHeaderRenderer;
-import static sur.softsurena.entidades.DetalleFactura.agregarDetalleFactura;
-import sur.softsurena.entidades.Facturas;
-import static sur.softsurena.entidades.Facturas.agregarFacturaNombre;
-import static sur.softsurena.entidades.Facturas.borrarFactura;
+import sur.softsurena.entidades.Factura;
 import sur.softsurena.entidades.HeaderFactura;
+import static sur.softsurena.metodos.M_D_Factura.agregarDetalleFactura;
+import static sur.softsurena.metodos.M_Factura.agregarFacturaNombre;
+import static sur.softsurena.metodos.M_Factura.borrarFactura;
+import sur.softsurena.utilidades.DefaultTableCellHeaderRenderer;
 
 public class frmTemporal extends java.awt.Dialog {
 
     private String nombreCliente, userName;
     private Integer idFactura, idCliente, idTurno;
     private DefaultTableModel miTabla;
-    private Facturas facturas;
+    private Factura facturas;
     private final DefaultTableCellRenderer tcr;
 
     public frmTemporal(java.awt.Frame parent, boolean modal) {
@@ -155,7 +155,7 @@ public class frmTemporal extends java.awt.Dialog {
                 //nombreTemp(nombreCliente)
                 .build();
                 
-        Facturas f = Facturas.builder().id(idFactura).headerFactura(hf).build();
+        Factura f = Factura.builder().id(idFactura).headerFactura(hf).build();
         
         if (agregarFacturaNombre(f) < 1) {
             JOptionPane.showMessageDialog(

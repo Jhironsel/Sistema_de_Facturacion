@@ -36,27 +36,29 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import sur.softsurena.entidades.Categorias;
-import static sur.softsurena.entidades.Categorias.getCategoriaActivas;
-import static sur.softsurena.entidades.Categorias.getCategorias;
-import sur.softsurena.entidades.Clientes;
-import sur.softsurena.entidades.DefaultTableCellHeaderRenderer;
-import sur.softsurena.entidades.DetalleFactura;
-import static sur.softsurena.entidades.DetalleFactura.agregarDetalleFactura;
-import sur.softsurena.entidades.Facturas;
-import static sur.softsurena.entidades.Facturas.agregarFacturaNombre;
-import static sur.softsurena.entidades.Facturas.modificarFactura;
-import sur.softsurena.entidades.FiltroBusqueda;
+import sur.softsurena.entidades.Categoria;
+import sur.softsurena.entidades.Cliente;
+import sur.softsurena.entidades.D_Factura;
+import sur.softsurena.entidades.Factura;
 import sur.softsurena.entidades.HeaderFactura;
-import static sur.softsurena.entidades.Productos.existeProducto;
-import static sur.softsurena.entidades.Productos.getProductosByCategoria;
-import sur.softsurena.entidades.Resultados;
-import sur.softsurena.entidades.Turnos;
-import static sur.softsurena.entidades.Turnos.turnosActivoByUsuario;
+import sur.softsurena.utilidades.Resultados;
+import sur.softsurena.entidades.Turno;
 import sur.softsurena.entidades.Usuario;
 import static sur.softsurena.formularios.frmPrincipal.mnuMovimientosNuevaFactura;
 import sur.softsurena.hilos.hiloImpresionFactura;
 import sur.softsurena.metodos.Imagenes;
+import static sur.softsurena.metodos.M_Categoria.getCategoriaActivas;
+import static sur.softsurena.metodos.M_Categoria.getCategorias;
+import static sur.softsurena.metodos.M_Cliente.getClientes;
+import static sur.softsurena.metodos.M_D_Factura.agregarDetalleFactura;
+import static sur.softsurena.metodos.M_Factura.agregarFacturaNombre;
+import static sur.softsurena.metodos.M_Factura.modificarFactura;
+import static sur.softsurena.metodos.M_Producto.existeProducto;
+import static sur.softsurena.metodos.M_Producto.getProductosByCategoria;
+import static sur.softsurena.metodos.M_Turno.turnosActivoByUsuario;
+import static sur.softsurena.metodos.M_Usuario.getUsuarioActual;
+import sur.softsurena.utilidades.DefaultTableCellHeaderRenderer;
+import sur.softsurena.utilidades.FiltroBusqueda;
 import sur.softsurena.utilidades.Utilidades;
 import static sur.softsurena.utilidades.Utilidades.imagenDecode64;
 
@@ -74,7 +76,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
 
     private JButton btn, boton;
 
-    private Facturas facturas;
+    private Factura facturas;
 
     private DefaultTableModel miTabla = new DefaultTableModel(null, titulos);
 
@@ -84,10 +86,10 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
 
     private final DefaultTableCellRenderer tcr;
 
-    private List<DetalleFactura> detalleFacturaList;
+    private List<D_Factura> detalleFacturaList;
 
     private static Imagenes icono;
-    private static Turnos turno;
+    private static Turno turno;
 
     private Properties getPropiedad() {
         return propiedad;
@@ -95,16 +97,16 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
 
     private void setPropiedad() {
         File file = new File("target/classes/sur/softsurena/properties/proFacturas.prop");
-
         try (InputStream is = new FileInputStream(file);) {
             getPropiedad().load(is);
         } catch (FileNotFoundException ex) {
-            LOG.log(Level.SEVERE, "Archivo proFacturas.prop no ha sido encontrado.", ex);
+            LOG.log(Level.SEVERE, ARCHIVO_PRO_FACTURASPROP_NO_HA_SIDO_ENCONT, ex);
         } catch (IOException ex) {
-            LOG.log(Level.SEVERE, "Error al cargar el archivos de propiedades proFacturas.prop", ex);
+            LOG.log(Level.SEVERE, ERROR_AL_CARGAR_EL_ARCHIVOS_DE_PROPIEDADE, ex);
         }
-
     }
+    public static final String ERROR_AL_CARGAR_EL_ARCHIVOS_DE_PROPIEDADE = "Error al cargar el archivos de propiedades proFacturas.prop";
+    public static final String ARCHIVO_PRO_FACTURASPROP_NO_HA_SIDO_ENCONT = "Archivo proFacturas.prop no ha sido encontrado.";
 
     public Integer getIdCliente() {
         return idCliente;
@@ -119,7 +121,6 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
     }
 
     private static class NewSingletonHolder {
-
         private static final frmFacturas INSTANCE = new frmFacturas();
     }
 
@@ -127,7 +128,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
         icono = new Imagenes();
         initComponents();
 
-        usuario = Usuario.getUsuarioActual();
+        usuario = getUsuarioActual();
 
         turno = turnosActivoByUsuario(usuario.getUser_name());
 
@@ -1055,7 +1056,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
 
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
-        getClientes();
+        getClientesCombo();
 //        txtIdFactura.setText("" + getNumFac(getIdUsuario(), getTurno()));
         repararRegistro();
         totales();
@@ -1132,7 +1133,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
 
         //TODO Se necesita analisis en este parte. 
         if (cmbCliente.getSelectedIndex() > 0) {
-            nombreCliente = ((Clientes) cmbCliente.getSelectedItem()).toString();
+            nombreCliente = ((Cliente) cmbCliente.getSelectedItem()).toString();
         } else {
 
             if (Objects.isNull(nombreCliente) || nombreCliente.isBlank()) {
@@ -1255,7 +1256,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
 
             for (int i = 0; i <= cmbCliente.getItemCount() + 1; i++) {
 
-                if (((Clientes) cmbCliente.getItemAt(i)).getId_persona() == getIdCliente()) {
+                if (((Cliente) cmbCliente.getItemAt(i)).getId_persona() == getIdCliente()) {
                     cmbCliente.setSelectedIndex(i);
                     totales();
                     break;
@@ -1422,7 +1423,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
             HeaderFactura hf = HeaderFactura.builder().
                     estado(estado).build();
 
-            Facturas f = Facturas.builder().id(idFactura).headerFactura(hf).build();
+            Factura f = Factura.builder().id(idFactura).headerFactura(hf).build();
 
             if (!modificarFactura(f)) {
                 JOptionPane.showInternalMessageDialog(
@@ -1454,19 +1455,19 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
         } else {
 
             HeaderFactura hf = HeaderFactura.builder().
-                    idCliente(((Clientes) cmbCliente.getSelectedItem()).getId_persona()).
+                    idCliente(((Cliente) cmbCliente.getSelectedItem()).getId_persona()).
                     idTurno(turno.getId()).
                     efectivo(new BigDecimal(miEfe.txtEfectivo.getValue().toString())).
                     cambio(new BigDecimal(miEfe.txtDevuelta.getValue().toString())).
                     credito(rbtCredito.isSelected()).build();
 
-            DetalleFactura objDF = null;
+            D_Factura objDF = null;
 
-            detalleFacturaList = new ArrayList<DetalleFactura>();
+            detalleFacturaList = new ArrayList<D_Factura>();
 
             detalleFacturaList.add(objDF);
 
-            Facturas factura = Facturas.builder().
+            Factura factura = Factura.builder().
                     id(idFactura).headerFactura(hf).detalleFactura(detalleFacturaList).build();
 
             if (agregarFacturaNombre(factura) < 1) {
@@ -1531,15 +1532,15 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
         miBusqueda.setLocationRelativeTo(null);
         miBusqueda.setVisible(true);
 
-        Clientes cliente = miBusqueda.getCliente();
+        Cliente cliente = miBusqueda.getCliente();
 
         if (cliente == null) {
             return;
         }
-        getClientes();
+        getClientesCombo();
 
         for (int i = 0; i < cmbCliente.getItemCount(); i++) {
-            if (((Clientes) cmbCliente.getItemAt(i)).getId_persona() == cliente.getId_persona()) {
+            if (((Cliente) cmbCliente.getItemAt(i)).getId_persona() == cliente.getId_persona()) {
                 cmbCliente.setSelectedIndex(i);
                 break;
             }
@@ -1755,12 +1756,12 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
     }
 
     private void categoriaR() {
-        List<Categorias> categoriasList;
+        List<Categoria> categoriasList;
 
         //Mandamos a buscar todas las categorias del sistema.
         //TODO No se está obteniendo todas las categorias.
         if (cbTodos.isSelected()) {
-            categoriasList = getCategorias();
+            categoriasList = getCategorias(null,true);
         } else {
             categoriasList = getCategoriaActivas();
         }
@@ -1879,11 +1880,11 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
      * busque si un cliente existe.
      *
      */
-    private void getClientes() {
+    private void getClientesCombo() {
         cmbCliente.removeAllItems();
         cmbCliente.repaint();
 
-        List<Clientes> clientesList = Clientes.getClientes(
+        List<Cliente> clientesList = getClientes(
                 FiltroBusqueda
                         .builder()
                         .estado(true)

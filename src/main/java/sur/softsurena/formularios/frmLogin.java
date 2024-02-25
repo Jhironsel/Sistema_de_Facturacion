@@ -10,10 +10,10 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import sur.softsurena.FirebirdEventos.FirebirdEventos;
 import sur.softsurena.conexion.Conexion;
-import static sur.softsurena.entidades.BaseDeDatos.periodoMaquina;
-import static sur.softsurena.entidades.BaseDeDatos.setLicencia;
-import sur.softsurena.entidades.Resultados;
 import sur.softsurena.metodos.Imagenes;
+import static sur.softsurena.metodos.M_BaseDeDatos.periodoMaquina;
+import static sur.softsurena.metodos.M_BaseDeDatos.setLicencia;
+import sur.softsurena.utilidades.Resultados;
 import sur.softsurena.utilidades.Utilidades;
 
 public final class frmLogin extends javax.swing.JFrame {
@@ -497,7 +497,7 @@ public final class frmLogin extends javax.swing.JFrame {
                 | InstantiationException
                 | IllegalAccessException
                 | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            Utilidades.LOGGER.log(Level.SEVERE, "Error al iniciar el main", ex);
         }
 
         java.awt.EventQueue.invokeLater(() -> {
@@ -508,11 +508,18 @@ public final class frmLogin extends javax.swing.JFrame {
 
         sistema = System.getProperty("os.name").strip();
     }
-
+    
     private void cargarIconos() {
         Imagenes imagen = new Imagenes();
         jlLogoSistema.setIcon(imagen.getIcono("Panel de Control 128 x 128.png"));
         lamina.setImagen(imagen.getIcono("FondoLogin 626 x 386.jpg"));
+    }
+    
+    public Boolean testClase(){
+        txtUsuario.setText("sysdba");
+        txtClave.setText("1");
+        btnAceptarActionPerformed(null);
+        return true;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

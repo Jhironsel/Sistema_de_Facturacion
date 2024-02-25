@@ -14,7 +14,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import rojeru_san.RSMTextFull;
-import sur.softsurena.entidades.Servidor;
+import sur.softsurena.utilidades.Servidor;
 
 public class frmParametros extends javax.swing.JFrame {
 
@@ -35,7 +35,7 @@ public class frmParametros extends javax.swing.JFrame {
         } catch (IOException ex) {
             LOG.log(Level.SEVERE, "Error de entrada o salida del archivo propiedades.", ex);
         } catch (URISyntaxException ex) {
-            Logger.getLogger(frmParametros.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.getLogger(frmParametros.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         cargarParamentos("todo");
@@ -511,38 +511,39 @@ public class frmParametros extends javax.swing.JFrame {
     }
 
     public Servidor cargarParamentos(String zona) {
-        Servidor s = Servidor.builder().
-                conServidor(Boolean.valueOf(propiedades.getProperty("NombreActivo", "false"))).
-                uriServidor(propiedades.getProperty("Nombre_del_Servidor", "")).
-                conPuerto(Boolean.valueOf(propiedades.getProperty("Con_Puerto", "false"))).
-                puerto(propiedades.getProperty("Puerto_del_Servidor", "3050")).
-                conIpServidor(Boolean.valueOf(propiedades.getProperty("ProtocoloActivo", "false"))).
-                ipServidor1(propiedades.getProperty("Ip_Servidor1", "127")).
-                ipServidor2(propiedades.getProperty("Ip_Servidor2", "0")).
-                ipServidor3(propiedades.getProperty("Ip_Servidor3", "0")).
-                ipServidor4(propiedades.getProperty("Ip_Servidor4", "1")).
-                pathBaseDatos(propiedades.getProperty("PathBaseDatos", "/"))
+        Servidor servidor = Servidor
+                .builder()
+                .conServidor(Boolean.valueOf(propiedades.getProperty("NombreActivo", "false")))
+                .uriServidor(propiedades.getProperty("Nombre_del_Servidor", ""))
+                .conPuerto(Boolean.valueOf(propiedades.getProperty("Con_Puerto", "false")))
+                .puerto(propiedades.getProperty("Puerto_del_Servidor", "3050"))
+                .conIpServidor(Boolean.valueOf(propiedades.getProperty("ProtocoloActivo", "false")))
+                .ipServidor1(propiedades.getProperty("Ip_Servidor1", "127"))
+                .ipServidor2(propiedades.getProperty("Ip_Servidor2", "0"))
+                .ipServidor3(propiedades.getProperty("Ip_Servidor3", "0"))
+                .ipServidor4(propiedades.getProperty("Ip_Servidor4", "1"))
+                .pathBaseDatos(propiedades.getProperty("PathBaseDatos", "/"))
                 .build();
 
         if (zona.equals("todo") || zona.equals("nombre")) {
-            if (s.getConServidor()) {
-                txtHost.setText(s.getUriServidor());
+            if (servidor.getConServidor()) {
+                txtHost.setText(servidor.getUriServidor());
                 rbtnNombreServidor.doClick();
             }
         }
 
         if (zona.equals("todo") || zona.equals("puerto")) {
-            if (s.getConPuerto()) {
+            if (servidor.getConPuerto()) {
                 if (zona.equals("todo")) {
-                    txtPuerto.setText(s.getPuerto());
+                    txtPuerto.setText(servidor.getPuerto());
                     chbPuerto.doClick();
                 }
 
                 if (zona.equals("puerto")) {
                     if (chbPuerto.isSelected()) {
                         txtPuerto.setEnabled(true);
-                        if (s.getConPuerto()) {
-                            txtPuerto.setText(s.getPuerto());
+                        if (servidor.getConPuerto()) {
+                            txtPuerto.setText(servidor.getPuerto());
                         }
                         txtPuerto.requestFocusInWindow();
                     } else {
@@ -562,20 +563,20 @@ public class frmParametros extends javax.swing.JFrame {
         }
 
         if (zona.equals("todo") || zona.equals("ipv4")) {
-            if (s.getConIpServidor()) {
-                txtValor1.setText(s.getIpServidor1());
-                txtValor2.setText(s.getIpServidor2());
-                txtValor3.setText(s.getIpServidor3());
-                txtValor4.setText(s.getIpServidor4());
+            if (servidor.getConIpServidor()) {
+                txtValor1.setText(servidor.getIpServidor1());
+                txtValor2.setText(servidor.getIpServidor2());
+                txtValor3.setText(servidor.getIpServidor3());
+                txtValor4.setText(servidor.getIpServidor4());
                 rbtnProtocoloIPV4.doClick();
             }
         }
 
         if (zona.equals("todo") || zona.equals("PathBaseDatos")) {
-            txtPathBaseDatos.setText(s.getPathBaseDatos());
+            txtPathBaseDatos.setText(servidor.getPathBaseDatos());
         }
 
-        return s;
+        return servidor;
     }
 
     private void escribirParametros() {

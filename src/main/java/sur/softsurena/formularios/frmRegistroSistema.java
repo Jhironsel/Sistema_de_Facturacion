@@ -1,6 +1,6 @@
 package sur.softsurena.formularios;
 
-import sur.softsurena.entidades.Sexo;
+import static sur.softsurena.metodos.M_Sexo.getSexoList;
 
 public class frmRegistroSistema extends javax.swing.JFrame {
 
@@ -9,7 +9,7 @@ public class frmRegistroSistema extends javax.swing.JFrame {
 
         jcbSexo.removeAllItems();
 
-        Sexo.getSexoList().stream().forEach(sexo -> jcbSexo.addItem(sexo));
+        getSexoList().stream().forEach(sexo -> jcbSexo.addItem(sexo));
     }
 
     @SuppressWarnings("unchecked")

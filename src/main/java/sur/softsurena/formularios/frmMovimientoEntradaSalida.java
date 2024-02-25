@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
@@ -20,8 +19,7 @@ public class frmMovimientoEntradaSalida extends javax.swing.JInternalFrame {
 
     private Object registro[] = new Object[3];
     private DefaultTableModel miTabla;
-    private String mes, year;
-
+    
     public frmMovimientoEntradaSalida() {
         initComponents();
         agregarOyente();
@@ -103,7 +101,7 @@ public class frmMovimientoEntradaSalida extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addComponent(jFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
@@ -132,31 +130,20 @@ public class frmMovimientoEntradaSalida extends javax.swing.JInternalFrame {
 
                     formatoDeFecha = new SimpleDateFormat("MM/dd/yyyy");
                     reporte(formatoDeFecha.format(jCalendar1.getDate()));
-                    fechas();
                     llenarTabla();
                 });
     }
 
-    private void fechas() {
-        SimpleDateFormat formatoDeFecha = new SimpleDateFormat("MM");
-        mes = formatoDeFecha.format(jCalendar1.getDate());
-        
-
-        formatoDeFecha = new SimpleDateFormat("YYYY");
-        year = formatoDeFecha.format(jCalendar1.getDate());
-        
-    }
     //TODO Metodos de jasperReport
     private void reporte(String fecha) {
         try {
             JasperReport masterReporte = 
                     (JasperReport) JRLoader.loadObjectFromFile(
-                            System.getProperty("user.dir") + 
                                     "/Reportes/MovimientoES.jasper");
-
+            
             Map parametros = new HashMap();
             parametros.put("fecha", fecha);
-
+            
             JasperPrint jp = JasperFillManager.fillReport(masterReporte, parametros);
             
             JRViewer jviewer = new JRViewer(jp);
@@ -173,11 +160,6 @@ public class frmMovimientoEntradaSalida extends javax.swing.JInternalFrame {
     }
 
     private void llenarTabla() {
-        if(Objects.isNull(mes)  || Objects.isNull(year)){
-            mes="01";
-            year="00";
-        }
-        
         try {
             String titulos[] = {"Fecha",  "Operacion", "Usuario"};
             jtFechas.removeAll();

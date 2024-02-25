@@ -32,7 +32,7 @@ public class FirebirdEventos extends FBEventManager{
                 connect();
             }
             //Evento para productos.
-            addEventListener("addProducto", (DatabaseEvent event) -> {
+            addEventListener("add_Producto", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
                 frmProductos.llenarTabla("evento");
             });

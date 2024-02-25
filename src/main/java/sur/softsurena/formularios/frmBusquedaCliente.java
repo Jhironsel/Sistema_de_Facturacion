@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import sur.softsurena.entidades.Clientes;
-import static sur.softsurena.entidades.Clientes.getClientes;
-import sur.softsurena.entidades.FiltroBusqueda;
+import sur.softsurena.entidades.Cliente;
+import sur.softsurena.utilidades.FiltroBusqueda;
+import static sur.softsurena.metodos.M_Cliente.getClientes;
 
 public class frmBusquedaCliente extends javax.swing.JDialog {
 
@@ -14,9 +14,9 @@ public class frmBusquedaCliente extends javax.swing.JDialog {
 
     private DefaultTableModel miTabla;
 
-    Clientes cliente;
+    Cliente cliente;
 
-    public Clientes getCliente() {
+    public Cliente getCliente() {
         return cliente;
     }
 
@@ -145,7 +145,7 @@ public class frmBusquedaCliente extends javax.swing.JDialog {
             return;
         }
         
-        cliente = (Clientes) tblTabla.getValueAt(tblTabla.getSelectedRow(), 0);
+        cliente = (Cliente) tblTabla.getValueAt(tblTabla.getSelectedRow(), 0);
         dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
@@ -162,7 +162,7 @@ public class frmBusquedaCliente extends javax.swing.JDialog {
         String titulos[] = {"Lista de Clientes"};
         miTabla = new DefaultTableModel(null, titulos);
 
-        List<Clientes> clientesList = getClientes(
+        List<Cliente> clientesList = getClientes(
                 FiltroBusqueda.
                         builder().
                         criterioBusqueda(txtCriterio.getText().strip()).

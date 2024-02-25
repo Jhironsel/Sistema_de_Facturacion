@@ -8,7 +8,7 @@ import java.util.Properties;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import static sur.softsurena.entidades.BaseDeDatos.pathBaseDeDatos;
+import static sur.softsurena.metodos.M_BaseDeDatos.pathBaseDeDatos;
 
 public final class frmRestaurarDatos extends javax.swing.JInternalFrame implements Runnable {
 
@@ -267,7 +267,6 @@ public final class frmRestaurarDatos extends javax.swing.JInternalFrame implemen
     }//GEN-LAST:event_btnProcederActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-
         try {
             if (cnn != null) {
                 cnn.close();
@@ -275,7 +274,6 @@ public final class frmRestaurarDatos extends javax.swing.JInternalFrame implemen
         } catch (SQLException ex) {
             //Instalar Logger
         }
-
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 

@@ -6,34 +6,42 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import sur.softsurena.entidades.DefaultTableCellHeaderRenderer;
-import sur.softsurena.entidades.Permiso;
-import static sur.softsurena.entidades.Permiso.getPermisosAsignados;
-import static sur.softsurena.entidades.Permiso.getPermisosDisponibles;
-import sur.softsurena.entidades.Resultados;
-import sur.softsurena.entidades.Roles;
-import static sur.softsurena.entidades.Roles.comprobandoRol;
-import static sur.softsurena.entidades.Roles.comprobandoRolesDisponibles;
-import static sur.softsurena.entidades.Roles.getRoles;
-import sur.softsurena.entidades.Usuario;
-import static sur.softsurena.entidades.Usuario.borrarUsuario;
-import static sur.softsurena.entidades.Usuario.getNombresUsuarios;
-import static sur.softsurena.entidades.Usuario.getUsuarios;
+import sur.softsurena.utilidades.Resultados;
+import sur.softsurena.entidades.Role;
+import static sur.softsurena.metodos.M_Permiso.agregarPermisoAdminRole;
+import static sur.softsurena.metodos.M_Permiso.getPermisosAsignados;
+import static sur.softsurena.metodos.M_Permiso.getPermisosDisponibles;
+import static sur.softsurena.metodos.M_Permiso.quitarPermisoAdminRole;
+import static sur.softsurena.metodos.M_Role.asignarRol;
+import static sur.softsurena.metodos.M_Role.asignarRolUsuario;
+import static sur.softsurena.metodos.M_Role.comprobandoRol;
+import static sur.softsurena.metodos.M_Role.comprobandoRolesDisponibles;
+import static sur.softsurena.metodos.M_Role.createRole;
+import static sur.softsurena.metodos.M_Role.dropRole;
+import static sur.softsurena.metodos.M_Role.getRoles;
+import static sur.softsurena.metodos.M_Role.modificarRol;
+import static sur.softsurena.metodos.M_Role.quitarRolUsuario;
+import static sur.softsurena.metodos.M_Usuario.borrarUsuario;
+import static sur.softsurena.metodos.M_Usuario.getNombresUsuarios;
+import static sur.softsurena.metodos.M_Usuario.getUsuario;
+import static sur.softsurena.metodos.M_Usuario.getUsuarios;
+import sur.softsurena.utilidades.DefaultTableCellHeaderRenderer;
 import static sur.softsurena.utilidades.Utilidades.columnasCheckBox;
 import static sur.softsurena.utilidades.Utilidades.repararColumnaTable;
 
 public class frmUsuarios extends javax.swing.JInternalFrame {
 
     private static final Logger LOG = Logger.getLogger(frmUsuarios.class.getName());
-    
+
     public static frmUsuarios getInstance() {
         return NewSingletonHolder.INSTANCE;
     }
-    
+
     private static class NewSingletonHolder {
+
         private static final frmUsuarios INSTANCE = new frmUsuarios();
     }
-    
+
     public frmUsuarios() {
         initComponents();
     }
@@ -581,25 +589,25 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         if (jtpPrivilegios.getSelectedComponent() == jpMantUsuarios
                 || jtpPrivilegios.getSelectedComponent() == jpDefRoles) {
-            
+
             frmUsuariosAgregar u = new frmUsuariosAgregar(null, true);
             u.setLocationRelativeTo(null);
             u.setVisible(true);
-            
+
         } else if (jtpPrivilegios.getSelectedComponent() == jpMantRoles) {
-            
+
             String rol = JOptionPane.showInternalInputDialog(
                     this,
                     "Cual es el nombre del rol?: ",
                     "",
                     JOptionPane.QUESTION_MESSAGE
             );
-            
+
             if (Objects.isNull(rol)) {
                 return;
             }
-            
-            Roles.createRole(rol);
+
+            createRole(rol);
             llenarTblRoles();
         }
     }//GEN-LAST:event_btnNuevoActionPerformed
@@ -627,12 +635,12 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
                     "",
                     JOptionPane.QUESTION_MESSAGE
             );
-            
-            if(Objects.isNull(rolNuevo) || rolNuevo.isBlank()){
+
+            if (Objects.isNull(rolNuevo) || rolNuevo.isBlank()) {
                 return;
             }
 
-            Roles.modificarRol(rolActual, rolNuevo);
+            modificarRol(rolActual, rolNuevo);
             llenarTblRoles();
         } else if (jtpPrivilegios.getSelectedComponent() == jpMantUsuarios) {
             if (tblUsuarios.getSelectedRow() == -1) {
@@ -647,11 +655,11 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             String userName = tblUsuarios.getValueAt(
                     tblUsuarios.getSelectedRow(), 0).
                     toString().strip();
-            
+
             frmUsuariosAgregar user = new frmUsuariosAgregar(
                     null,
                     true,
-                    Usuario.getUsuario(userName)
+                    getUsuario(userName)
             );
 
             user.setLocationRelativeTo(null);
@@ -690,7 +698,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             String role = tblRoles.getValueAt(
                     tblRoles.getSelectedRow(), 0).toString();
 
-            Roles.dropRole(role);
+            dropRole(role);
 
             llenarTblRoles();
             tblRolesMouseClicked(null);
@@ -846,7 +854,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
 
         boolean admin = repuesta == JOptionPane.YES_OPTION;
 
-        Roles.asignarRolUsuario(rol, usuario, admin);
+        asignarRolUsuario(rol, usuario, admin);
 
         tblListadoUsuariosMouseClicked(null);
     }//GEN-LAST:event_btnAsignarRolActionPerformed
@@ -869,11 +877,11 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
 
         String rol = tblRoles.getValueAt(
                 tblRoles.getSelectedRow(), 0).toString();
-        
+
         String procedimiento = tblPermisosAsignados.getValueAt(
                 tblPermisosAsignados.getSelectedRow(), 0).toString();
-        
-        Roles.asignarRol(procedimiento, rol, Boolean.FALSE, Boolean.FALSE);
+
+        asignarRol(procedimiento, rol, Boolean.FALSE, Boolean.FALSE);
 
         tblRolesMouseClicked(null);
 
@@ -923,7 +931,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
 
         boolean admin = repuesta == JOptionPane.YES_OPTION;
 
-        Roles.asignarRol(procedimiento, rol, admin, Boolean.TRUE);
+        asignarRol(procedimiento, rol, admin, Boolean.TRUE);
 
         tblRolesMouseClicked(null);
     }//GEN-LAST:event_btnAsignarPermisoActionPerformed
@@ -988,12 +996,8 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         if (rol.equalsIgnoreCase("ADMINISTRADOR")) {
             rol = "RDB$ADMIN";
         }
-
-        if (accesoAdmin) {
-            Roles.asignarRol(procedimiento, rol, Boolean.TRUE, Boolean.FALSE);
-        } else {
-            Roles.asignarRol(procedimiento, rol, Boolean.TRUE, Boolean.TRUE);
-        }
+        //TODO Porque accesoAdmin debe negarse.
+        asignarRol(procedimiento, rol, Boolean.TRUE, !accesoAdmin);
 
         tblRolesMouseClicked(null);
 
@@ -1031,9 +1035,9 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
                 tblListadoUsuarios.getSelectedRow(), 0).toString();
 
         if (accesoAdmin) {
-            Permiso.quitarPermisoAdminRole(rol, usuario);
+            quitarPermisoAdminRole(rol, usuario);
         } else {
-            Permiso.agregarPermisoAdminRole(rol, usuario);
+            agregarPermisoAdminRole(rol, usuario);
         }
         tblListadoUsuariosMouseClicked(null);
     }//GEN-LAST:event_btnQuitarPermisoAdministrativoUsuarioActionPerformed
@@ -1049,7 +1053,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             btnQuitarAgregarPermisoAdmin.setText("Agregar permiso administrativo");
         }
         txtDescripcion.setText("<html></html>");
-        txtDescripcion.setText(((Roles) tblPermisosAsignados.getValueAt(
+        txtDescripcion.setText(((Role) tblPermisosAsignados.getValueAt(
                 tblPermisosAsignados.getSelectedRow(), 0)).
                 getDescripcion()
         );
@@ -1067,7 +1071,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             btnQuitarPermisoAdministrativoUsuario.setText("Agregar permiso administrativo");
         }
         txtDescripcion1.setText("<html></html>");
-        txtDescripcion1.setText(((Roles) tblRolesUsuario.getValueAt(
+        txtDescripcion1.setText(((Role) tblRolesUsuario.getValueAt(
                 tblRolesUsuario.getSelectedRow(), 0)).
                 getDescripcion()
         );
@@ -1098,14 +1102,14 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             rol = "RDB$ADMIN";
         }
 
-        Roles.quitarRolUsuario(rol, usuario);
+        quitarRolUsuario(rol, usuario);
 
         tblListadoUsuariosMouseClicked(null);
     }//GEN-LAST:event_btnQuitarRolUsuarioActionPerformed
 
     private void tblRolesDisponiblesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblRolesDisponiblesMouseClicked
         txtDescripcion1.setText("<html></html>");
-        txtDescripcion1.setText(((Roles) tblRolesDisponibles.getValueAt(
+        txtDescripcion1.setText(((Role) tblRolesDisponibles.getValueAt(
                 tblRolesDisponibles.getSelectedRow(), 0)).
                 getDescripcion()
         );
@@ -1113,15 +1117,15 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
 
     private void tblPermisosDisponiblesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPermisosDisponiblesMouseClicked
         txtDescripcion.setText("<html></html>");
-        txtDescripcion.setText(((Roles) tblPermisosDisponibles.getValueAt(
+        txtDescripcion.setText(((Role) tblPermisosDisponibles.getValueAt(
                 tblPermisosDisponibles.getSelectedRow(), 0)).
                 getDescripcion()
         );
     }//GEN-LAST:event_tblPermisosDisponiblesMouseClicked
 
     /**
-     * Metodo que entraga el listado de los usuarios del sistema. 
-     * 
+     * Metodo que entraga el listado de los usuarios del sistema.
+     *
      */
     public static void llenarTabla() {
         tblUsuarios.removeAll();
@@ -1239,11 +1243,13 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
                 return false;
             }
         };
-        
-        getPermisosDisponibles(rolee).stream().forEach(rol -> {
-            registro[0] = rol;
-            miTabla.addRow(registro);
-        });
+
+        getPermisosDisponibles(rolee).stream().forEach(
+                rol -> {
+                    registro[0] = rol;
+                    miTabla.addRow(registro);
+                }
+        );
 
         tblPermisosDisponibles.setModel(miTabla);
 
@@ -1368,9 +1374,9 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
 
     /**
      * Metodo que valida que un rol y un permiso por asignar esten seleccionado.
-     * 
-     * @return Devuelve true si uno rol o un permiso no estan seleccionado, 
-     * caso contrario devuelve false.
+     *
+     * @return Devuelve true si uno rol o un permiso no estan seleccionado, caso
+     * contrario devuelve false.
      */
     private boolean validarSeleccionRolProcedimiento() {
         //Validar que tenga un rol seleccionado.

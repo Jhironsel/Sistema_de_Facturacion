@@ -7,10 +7,10 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import lombok.Getter;
 import lombok.Setter;
-import sur.softsurena.entidades.Gastos;
-import static sur.softsurena.entidades.Gastos.agregarGastosPorTurno;
-import sur.softsurena.entidades.Resultados;
+import sur.softsurena.entidades.Gasto;
+import sur.softsurena.utilidades.Resultados;
 import sur.softsurena.hilos.hiloImpresionFactura;
+import static sur.softsurena.metodos.M_Gasto.agregarGastosPorTurno;
 
 @Getter
 @Setter
@@ -232,8 +232,7 @@ public class frmGasto extends java.awt.Dialog {
             descripcion = txtDescripcion.getText();
         }
 
-        Resultados resultado = agregarGastosPorTurno(
-                Gastos
+        Resultados resultado = agregarGastosPorTurno(Gasto
                         .builder()
                         .id_turno(getIdTurno())
                         .descripcion(descripcion)

@@ -2,8 +2,8 @@ package sur.softsurena.formularios;
 
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
-import sur.softsurena.entidades.FiltroBusqueda;
-import sur.softsurena.entidades.Productos;
+import sur.softsurena.utilidades.FiltroBusqueda;
+import static sur.softsurena.metodos.M_Producto.getProductos;
 import sur.softsurena.utilidades.Utilidades;
 
 public class frmBusquedaProducto extends javax.swing.JDialog {
@@ -183,7 +183,7 @@ public class frmBusquedaProducto extends javax.swing.JDialog {
             return;
         }
 
-        Productos.getProductos(
+        getProductos(
                 FiltroBusqueda
                         .builder()
                         .build()

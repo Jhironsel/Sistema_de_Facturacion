@@ -3,9 +3,9 @@ package sur.softsurena.formularios;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
-import sur.softsurena.entidades.Usuario;
-import static sur.softsurena.entidades.Usuario.cambioClave;
 import sur.softsurena.metodos.Imagenes;
+import static sur.softsurena.metodos.M_Usuario.cambioClave;
+import static sur.softsurena.metodos.M_Usuario.getUsuarioActual;
 
 public class frmCambioClave extends javax.swing.JDialog {
 
@@ -296,8 +296,7 @@ public class frmCambioClave extends javax.swing.JDialog {
 
         //Cambiamos la Clave
         //r es la variable resultado que espera la operacion sea realizada. 
-        boolean resultado = cambioClave(
-                Usuario.getUsuarioActual().getUser_name().strip(), 
+        boolean resultado = cambioClave(getUsuarioActual().getUser_name().strip(), 
                 nueva
         );
         

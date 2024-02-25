@@ -4,10 +4,11 @@ import java.util.Objects;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import sur.softsurena.entidades.Almacen;
-import static sur.softsurena.entidades.Almacen.getAlmacenesList;
-import sur.softsurena.entidades.Privilegios;
-import static sur.softsurena.entidades.Privilegios.privilegio;
-import sur.softsurena.entidades.Resultados;
+import sur.softsurena.entidades.Privilegio;
+import sur.softsurena.utilidades.Resultados;
+import static sur.softsurena.metodos.M_Almacen.agregarAlmacen;
+import static sur.softsurena.metodos.M_Almacen.getAlmacenesList;
+import static sur.softsurena.metodos.M_Privilegio.privilegio;
 import static sur.softsurena.utilidades.Utilidades.columnasCheckBox;
 import static sur.softsurena.utilidades.Utilidades.repararColumnaTable;
 
@@ -18,9 +19,9 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
 
     public static frmAlmacenes getInstance() {
         if (!privilegio(
-                Privilegios
+                Privilegio
                         .builder()
-                        .privilegio(Privilegios.PRIVILEGIO_SELECT)
+                        .privilegio(Privilegio.PRIVILEGIO_SELECT)
                         .nombre_relacion("V_ALMACENES")
                         .nombre_campo("^")
                         .build()
@@ -42,6 +43,7 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
     }
 
     private static class NewSingletonHolder {
+
         private static final frmAlmacenes INSTANCE = new frmAlmacenes();
     }
 
@@ -412,6 +414,7 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
+        //TODO Crear proceso para borrar almacen.
 //        //Validamos que está correcto en la tabla.
 //        //Si el metodo devuelve true devolvemos el proceso.
 //        if (validarRegistro()) {
@@ -526,13 +529,12 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
         Resultados resultado = null;
 
         if (v_nuevo) {
-            resultado = Almacen.agregarAlmacen(
-                    Almacen.
-                            builder().
-                            nombre(txtNombreAlmacen.getText()).
-                            ubicacion(txtDetalleUbicacion.getText()).
-                            estado(rsEstado.isActivado()).
-                            build()
+            resultado = agregarAlmacen(Almacen.
+                    builder().
+                    nombre(txtNombreAlmacen.getText()).
+                    ubicacion(txtDetalleUbicacion.getText()).
+                    estado(rsEstado.isActivado()).
+                    build()
             );
         } else {
             //TODO Crear proceso para modificar almacen.
@@ -563,37 +565,31 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_labelIcon1MouseClicked
 
     private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
-        btnNuevo.setEnabled(
-                privilegio(
-                        Privilegios
-                                .builder()
-                                .privilegio(Privilegios.PRIVILEGIO_EXECUTE)
-                                .nombre_relacion("SP_INSERT_ALMACEN")
-                                .nombre_campo("^")
-                                .build()
-                )
+        btnNuevo.setEnabled(privilegio(Privilegio
+                .builder()
+                .privilegio(Privilegio.PRIVILEGIO_EXECUTE)
+                .nombre_relacion("SP_INSERT_ALMACEN")
+                .nombre_campo("^")
+                .build()
+        )
         );
-        
-        btnModificar.setEnabled(
-                privilegio(
-                        Privilegios
-                                .builder()
-                                .privilegio(Privilegios.PRIVILEGIO_EXECUTE)
-                                .nombre_relacion("SP_UPDATE_ALMACEN")
-                                .nombre_campo("^")
-                                .build()
-                )
+
+        btnModificar.setEnabled(privilegio(Privilegio
+                .builder()
+                .privilegio(Privilegio.PRIVILEGIO_EXECUTE)
+                .nombre_relacion("SP_UPDATE_ALMACEN")
+                .nombre_campo("^")
+                .build()
+        )
         );
-        
-        btnBorrar.setEnabled(
-                privilegio(
-                        Privilegios
-                                .builder()
-                                .privilegio(Privilegios.PRIVILEGIO_EXECUTE)
-                                .nombre_relacion("SP_DELETE_ALMACEN")
-                                .nombre_campo("^")
-                                .build()
-                )
+
+        btnBorrar.setEnabled(privilegio(Privilegio
+                .builder()
+                .privilegio(Privilegio.PRIVILEGIO_EXECUTE)
+                .nombre_relacion("SP_DELETE_ALMACEN")
+                .nombre_campo("^")
+                .build()
+        )
         );
     }//GEN-LAST:event_formInternalFrameActivated
 

@@ -11,8 +11,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
-import sur.softsurena.entidades.Clientes;
+import sur.softsurena.entidades.Cliente;
 import sur.softsurena.hilos.hiloImpresionFactura;
+import static sur.softsurena.metodos.M_Deuda.getDeudas;
 import sur.softsurena.utilidades.Utilidades;
 
 public class frmCobrosDeudas extends javax.swing.JDialog {
@@ -354,40 +355,32 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        try {
-            Clientes opc = Clientes.builder().
-                    id_persona(-1).
-                    pnombre("Seleccione un cliente").
-                    snombre("").
-                    apellidos("").build();
-            cmbCliente.addItem(opc);
-            ResultSet rsCli = null;
-//                    getConsulta(
-//                    "SELECT r.IDCLIENTE, (c.NOMBRES||' '||c.APELLIDOS) as nombres "
-//                    + "FROM TABLA_DEUDAS r "
-//                    + "LEFT JOIN TABLA_CLIENTES c"
-//                    + "    ON c.IDCLIENTE LIKE r.IDCLIENTE "
-//                    + "WHERE r.ESTADO IN('i', 'a') "
-//                    + "GROUP BY r.IDCLIENTE, c.NOMBRES, c.APELLIDOS ");
+        cmbCliente.removeAllItems();
+        cmbCliente.addItem(Cliente
+                        .builder()
+                        .id_persona(-1)
+                        .pnombre("Seleccione un cliente")
+                        .snombre("")
+                        .apellidos("")
+                        .build()
+        );
 
-            while (rsCli.next()) {
-                opc = Clientes.builder().
-                        id_persona(rsCli.getInt("id")).
-                        pnombre(rsCli.getString("PNOMBRE")).
-                        snombre(rsCli.getString("SNOMBRE")).
-                        apellidos(rsCli.getString("apellidos")).build();
-
-                cmbCliente.addItem(opc);
-            }
-        } catch (SQLException ex) {
-            LOG.log(Level.SEVERE, ex.getMessage(), ex);
-        }
+        getDeudas().stream().forEach(cliente -> {
+            cmbCliente.addItem(Cliente
+                            .builder()
+                            .id_persona(cliente.getId_persona())
+                            .pnombre(cliente.getPnombre())
+                            .snombre(cliente.getSnombre())
+                            .apellidos(cliente.getApellidos())
+                            .build()
+            );
+        });
     }//GEN-LAST:event_formWindowOpened
 
     private void btnPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarActionPerformed
         if (cmbCliente.getSelectedIndex() <= 0) {
             JOptionPane.showMessageDialog(
-                    this, 
+                    this,
                     "Debe Selecionar un Cliente...",
                     "",
                     JOptionPane.ERROR_MESSAGE
@@ -397,7 +390,7 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
         }
         if (tblDeudas.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(
-                    this, 
+                    this,
                     "Debe seleccionar una factura",
                     "",
                     JOptionPane.ERROR_MESSAGE
@@ -411,7 +404,7 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
 
         if (monto.compareTo(BigDecimal.ZERO) <= 0) {
             JOptionPane.showMessageDialog(
-                    this, 
+                    this,
                     "Debe ingresar un valor mayor a cero(0)",
                     "",
                     JOptionPane.ERROR_MESSAGE
@@ -423,7 +416,7 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
 
         if (monto.compareTo(montoSaldo) > 1) {
             JOptionPane.showMessageDialog(
-                    this, 
+                    this,
                     "Monto excede el saldo",
                     "",
                     JOptionPane.ERROR_MESSAGE
@@ -464,14 +457,14 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
         miBusqueda.setLocationRelativeTo(null);
         miBusqueda.setVisible(true);
 
-        Clientes cliente = miBusqueda.getCliente();
-        
+        Cliente cliente = miBusqueda.getCliente();
+
         if (cliente == null) {
             return;
         }
-        
+
         for (int i = 0; i < cmbCliente.getItemCount(); i++) {
-            if (((Clientes) cmbCliente.getItemAt(i)).getGenerales().getCedula().equals(cliente.getGenerales().getCedula())) {
+            if (((Cliente) cmbCliente.getItemAt(i)).getGenerales().getCedula().equals(cliente.getGenerales().getCedula())) {
                 cmbCliente.setSelectedIndex(i);
                 return;
             }
@@ -481,7 +474,7 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
     private void cmbClienteItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbClienteItemStateChanged
-        llenarTabla(((Clientes) cmbCliente.getItemAt(cmbCliente.getSelectedIndex())).getId_persona());
+        llenarTabla(((Cliente) cmbCliente.getItemAt(cmbCliente.getSelectedIndex())).getId_persona());
 
         txtMonto.setValue(0.0);
         txtDeuda.setValue(0.0);
@@ -537,17 +530,17 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
         parametros.put("idFactura", Utilidades.objectToInt(tblDeudas.getValueAt(tblDeudas.getSelectedRow(), 0)));
         parametros.put("montoFactura", Utilidades.objectToDouble(tblDeudas.getValueAt(tblDeudas.getSelectedRow(), 1)));
         parametros.put("idTurno", "" + getIdTurno());
-        parametros.put("idCliente", ((Clientes) cmbCliente.getItemAt(cmbCliente.getSelectedIndex())).getId_persona());
-        parametros.put("nombreCliente", ((Clientes) cmbCliente.getItemAt(cmbCliente.getSelectedIndex())).toString());
+        parametros.put("idCliente", ((Cliente) cmbCliente.getItemAt(cmbCliente.getSelectedIndex())).getId_persona());
+        parametros.put("nombreCliente", ((Cliente) cmbCliente.getItemAt(cmbCliente.getSelectedIndex())).toString());
 
         hiloImpresionFactura impresionFactura = new hiloImpresionFactura(
                 true,
                 false,
                 System.getProperty("user.dir") + "/Reportes/cobroFactura.jasper",
-                parametros, 
-                frmPrincipal.jPanelImpresion, 
+                parametros,
+                frmPrincipal.jPanelImpresion,
                 frmPrincipal.jprImpresion);
-        
+
         impresionFactura.start();
     }
 
@@ -589,17 +582,17 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
             String titulos[] = {"No° Pago", "Fecha", "Hora", "Monto Pagado"};
 
             DefaultTableModel miTabla = new DefaultTableModel(null, titulos);
-            
+
             String sql = "SELECT r.CODIGO, r.FECHA, r.HORA, r.MONTO "
                     + "FROM TABLA_PAGO_DEUDAS_EXTERNA r "
                     + "WHERE r.IDDEUDA = " + idDeuda;
-            
+
             ResultSet rs = null;
-            
+
             Object registro[] = new Object[4];
-            
+
             int i = 1;
-            
+
             while (rs.next()) {
                 registro[0] = i + ") Cod.:" + rs.getString("CODIGO");
                 registro[1] = rs.getString("Fecha");

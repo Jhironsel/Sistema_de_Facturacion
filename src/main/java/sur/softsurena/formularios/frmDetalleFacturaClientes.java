@@ -11,11 +11,11 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import sur.softsurena.entidades.Clientes;
-import static sur.softsurena.entidades.Clientes.getClientes;
-import sur.softsurena.entidades.DefaultTableCellHeaderRenderer;
-import sur.softsurena.entidades.FiltroBusqueda;
+import sur.softsurena.entidades.Cliente;
+import sur.softsurena.utilidades.DefaultTableCellHeaderRenderer;
+import sur.softsurena.utilidades.FiltroBusqueda;
 import sur.softsurena.hilos.hiloImpresionFactura;
+import static sur.softsurena.metodos.M_Cliente.getClientes;
 import sur.softsurena.utilidades.Utilidades;
 
 public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
@@ -416,7 +416,7 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
         //ID,CRITERIO,PAG,REG
         //-1, "^",1, 50
         
-        List<Clientes> clientesList = getClientes(
+        List<Cliente> clientesList = getClientes(
                 FiltroBusqueda.
                         builder().
                         filas(false).

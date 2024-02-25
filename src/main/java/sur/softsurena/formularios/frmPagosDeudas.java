@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import sur.softsurena.entidades.DefaultTableCellHeaderRenderer;
+import sur.softsurena.utilidades.DefaultTableCellHeaderRenderer;
 
 public class frmPagosDeudas extends javax.swing.JDialog {
 

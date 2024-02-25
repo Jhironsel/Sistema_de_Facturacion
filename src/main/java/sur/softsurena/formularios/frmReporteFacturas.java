@@ -2,11 +2,11 @@ package sur.softsurena.formularios;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import sur.softsurena.entidades.Clientes;
-import static sur.softsurena.entidades.Clientes.getClientes;
-import sur.softsurena.entidades.Facturas;
-import static sur.softsurena.entidades.Facturas.getFacturas;
-import sur.softsurena.entidades.FiltroBusqueda;
+import sur.softsurena.entidades.Cliente;
+import sur.softsurena.entidades.Factura;
+import sur.softsurena.utilidades.FiltroBusqueda;
+import static sur.softsurena.metodos.M_Cliente.getClientes;
+import static sur.softsurena.metodos.M_Factura.getFacturas;
 import sur.softsurena.utilidades.Utilidades;
 
 public class frmReporteFacturas extends javax.swing.JInternalFrame
@@ -196,7 +196,7 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame
         
          */
         //Cargamos Clientes
-        Clientes cli = Clientes
+        Cliente cli = Cliente
                 .builder()
                 .id_persona(-1)
                 .pnombre("Seleccione un cliente")
@@ -216,7 +216,7 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame
         });
 
         //Cargamos Facturas
-        Facturas fac = Facturas.builder().id(-1).build();
+        Factura fac = Factura.builder().id(-1).build();
 
         cmbFacturaInicial.addItem(cli);
 
@@ -271,7 +271,7 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame
         }
         
         String filtro = "WHERE factura.idCliente = '"
-                + ((Clientes) cmbCliente.getSelectedItem()).getId_persona() + "'";
+                + ((Cliente) cmbCliente.getSelectedItem()).getId_persona() + "'";
 
         //Para Realizar la Consulta por Numero de Factura...
         //Si las factura es seleccionada.
@@ -308,9 +308,9 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame
         }
 
         filtro = "WHERE factura.idFactura >= "
-                + ((Facturas) cmbFacturaInicial.getSelectedItem()).getId()
+                + ((Factura) cmbFacturaInicial.getSelectedItem()).getId()
                 + " and factura.idFactura <= "
-                + ((Facturas) cmbFacturaFinal.getSelectedItem()).getId();
+                + ((Factura) cmbFacturaFinal.getSelectedItem()).getId();
 
         //Para Realizar la Consulta por Fecha...
         //Si la fecha es seleccionada.

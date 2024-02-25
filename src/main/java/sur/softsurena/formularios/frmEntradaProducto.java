@@ -8,9 +8,9 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import sur.softsurena.entidades.FiltroBusqueda;
-import sur.softsurena.entidades.Productos;
-import static sur.softsurena.entidades.Productos.getProductos;
+import sur.softsurena.utilidades.FiltroBusqueda;
+import sur.softsurena.entidades.Producto;
+import static sur.softsurena.metodos.M_Producto.getProductos;
 import static sur.softsurena.utilidades.Utilidades.imagenDecode64;
 
 public class frmEntradaProducto extends javax.swing.JDialog {
@@ -375,7 +375,7 @@ public class frmEntradaProducto extends javax.swing.JDialog {
             return;
         }
 
-        List<Productos> productos = getProductos(
+        List<Producto> productos = getProductos(
                 FiltroBusqueda
                         .builder()
                         .criterioBusqueda(txtCodigoProducto.getText().strip())
@@ -616,7 +616,7 @@ public class frmEntradaProducto extends javax.swing.JDialog {
             }
         }
 
-        Productos p = Productos.builder().id(-1).descripcion("").build();
+        Producto p = Producto.builder().id(-1).descripcion("").build();
         registro[0] = miBusqueda.getRespuesta();//p
         registro[1] = txtDescripcionProducto.getText();
         registro[2] = entrada;

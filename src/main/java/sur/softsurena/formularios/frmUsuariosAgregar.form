@@ -233,9 +233,9 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jPanel3" alignment="1" pref="483" max="32767" attributes="0"/>
-                      <Component id="jPanel8" alignment="1" pref="483" max="32767" attributes="0"/>
-                      <Component id="jPanel4" alignment="0" pref="483" max="32767" attributes="0"/>
+                      <Component id="jPanel3" alignment="1" pref="472" max="32767" attributes="0"/>
+                      <Component id="jPanel8" alignment="1" pref="472" max="32767" attributes="0"/>
+                      <Component id="jPanel4" alignment="0" pref="472" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -250,7 +250,7 @@
                   <Component id="jPanel8" linkSize="3" min="-2" pref="195" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jPanel4" linkSize="3" min="-2" pref="195" max="-2" attributes="0"/>
-                  <EmptySpace pref="10" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -282,7 +282,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="157" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="145" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -342,7 +342,7 @@
                       <Component id="btnAgregarRol" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnBorrarRol" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="12" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <Component id="jScrollPane3" max="32767" attributes="0"/>
@@ -442,7 +442,7 @@
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace min="43" pref="77" max="32767" attributes="0"/>
+                              <EmptySpace min="43" pref="71" max="32767" attributes="0"/>
                               <Component id="btnAgregarTag" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="btnBorrarTag" min="-2" max="-2" attributes="0"/>

@@ -12,26 +12,26 @@ public class TestSwingConexion {
 
     public static void main(String[] args) throws IOException, Exception {
         final String parametros[] = {
-            "testSwing/testParametros.stt"
+            "testSwing/testParametros.stt" //0
         };
         final String moduloClientes[] = {
-            "testSwing/testProvinciaMunicipioDistrito.stt",
-            "testSwing/testInsertCliente.stt",
-            "testSwing/testUpdateCliente.stt",
-            "testSwing/testBorrarCliente.stt"
+            "testSwing/testProvinciaMunicipioDistrito.stt", // 0
+            "testSwing/testInsertCliente.stt", // 1
+            "testSwing/testUpdateCliente.stt", // 2
+            "testSwing/testBorrarCliente.stt" // 3
         };
         final String moduloProductos[] = {
-            "testSwing/testInsertProducto.stt",
-            "testSwing/testUpdateProducto.stt",
-            "testSwing/testDeleteProducto.stt"
+            "testSwing/testInsertProducto.stt", // 0
+            "testSwing/testUpdateProducto.stt", // 1
+            "testSwing/testDeleteProducto.stt" // 2
         };
         final String moduloUsuario[] = {
-            "testSwing/testInsertUsuario.stt"
+            "testSwing/testInsertUsuario.stt" // 0
         };
         //Crear un objecto de la clase Tester
         Tester tester = new Tester();
         //Ejecutar una sola prueba
-        tester.loadFromFile(new File(moduloClientes[2]));
+        tester.loadFromFile(new File(moduloClientes[1]));
         //Asserts that the given test specification file gets load and executed successfully.
 //        for (String file : moduloUsuario) {
 //            TestingUtils.assertSuccessfulReplay(new File(file));
