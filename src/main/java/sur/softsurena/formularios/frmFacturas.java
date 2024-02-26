@@ -26,7 +26,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -41,7 +40,6 @@ import sur.softsurena.entidades.Cliente;
 import sur.softsurena.entidades.D_Factura;
 import sur.softsurena.entidades.Factura;
 import sur.softsurena.entidades.HeaderFactura;
-import sur.softsurena.utilidades.Resultados;
 import sur.softsurena.entidades.Turno;
 import sur.softsurena.entidades.Usuario;
 import static sur.softsurena.formularios.frmPrincipal.mnuMovimientosNuevaFactura;
@@ -59,12 +57,12 @@ import static sur.softsurena.metodos.M_Turno.turnosActivoByUsuario;
 import static sur.softsurena.metodos.M_Usuario.getUsuarioActual;
 import sur.softsurena.utilidades.DefaultTableCellHeaderRenderer;
 import sur.softsurena.utilidades.FiltroBusqueda;
+import sur.softsurena.utilidades.Resultados;
 import sur.softsurena.utilidades.Utilidades;
+import static sur.softsurena.utilidades.Utilidades.LOG;
 import static sur.softsurena.utilidades.Utilidades.imagenDecode64;
 
 public final class frmFacturas extends javax.swing.JInternalFrame implements ActionListener {
-
-    private static final Logger LOG = Logger.getLogger(frmFacturas.class.getName());
 
     private final Usuario usuario;
 
@@ -1575,7 +1573,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
         } catch (IOException ex) {
             LOG.log(Level.SEVERE, ex.getMessage(), ex);
         } catch (URISyntaxException ex) {
-            Logger.getLogger(frmFacturas.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }//GEN-LAST:event_cbTodosMouseClicked
 

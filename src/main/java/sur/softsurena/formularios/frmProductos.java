@@ -4,7 +4,6 @@ import java.awt.Component;
 import java.awt.Image;
 import java.util.Objects;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.*;
@@ -18,7 +17,6 @@ import static sur.softsurena.conexion.Conexion.getCnn;
 import sur.softsurena.entidades.Categoria;
 import sur.softsurena.entidades.Privilegio;
 import sur.softsurena.entidades.Producto;
-import sur.softsurena.utilidades.Resultados;
 import sur.softsurena.interfaces.IProducto;
 import static sur.softsurena.metodos.M_Categoria.getCategorias;
 import static sur.softsurena.metodos.M_Privilegio.privilegio;
@@ -30,13 +28,13 @@ import static sur.softsurena.metodos.M_Producto.generarProducto;
 import static sur.softsurena.metodos.M_Producto.getProductos;
 import static sur.softsurena.metodos.M_Producto.modificarProducto;
 import sur.softsurena.utilidades.FiltroBusqueda;
+import sur.softsurena.utilidades.Resultados;
 import sur.softsurena.utilidades.Utilidades;
+import static sur.softsurena.utilidades.Utilidades.LOG;
 import static sur.softsurena.utilidades.Utilidades.columnasCheckBox;
 import static sur.softsurena.utilidades.Utilidades.repararColumnaTable;
 
 public class frmProductos extends javax.swing.JInternalFrame implements IProducto {
-
-    private static final Logger LOG = Logger.getLogger(frmProductos.class.getName());
 
     private Boolean v_nuevo = null;
     private final JFileChooser file;
@@ -1140,7 +1138,7 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
             miView.setLocationRelativeTo(this);//TODO En varias parte del proyecto es colocado esto. TESTEARLO.
             miView.setVisible(true);
         } catch (JRException ex) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }//GEN-LAST:event_btnImprimirListaActionPerformed
 

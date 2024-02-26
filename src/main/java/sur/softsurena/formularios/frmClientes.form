@@ -1009,6 +1009,7 @@
                                             </Component>
                                             <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnEditarDireccion">
                                               <Properties>
+                                                <Property name="enabled" type="boolean" value="false"/>
                                                 <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                                                   <Value id="EDIT"/>
                                                 </Property>
@@ -1020,6 +1021,7 @@
                                             </Component>
                                             <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnEliminarDirrecion">
                                               <Properties>
+                                                <Property name="enabled" type="boolean" value="false"/>
                                                 <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                                                   <Value id="DELETE"/>
                                                 </Property>
@@ -1099,6 +1101,9 @@
                                             <Property name="showGrid" type="boolean" value="true"/>
                                             <Property name="surrendersFocusOnKeystroke" type="boolean" value="true"/>
                                           </Properties>
+                                          <Events>
+                                            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblDireccionMouseClicked"/>
+                                          </Events>
                                           <AuxValues>
                                             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new rojerusan.RSTableMetro1(){&#xa;@Override&#xa;public boolean isCellEditable(int rowIndex, int colIndex) { &#xa;    return false; //Las celdas no son editables. &#xa;}&#xa;}"/>
                                           </AuxValues>

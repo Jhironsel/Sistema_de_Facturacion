@@ -8,10 +8,12 @@ import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import static sur.softsurena.utilidades.Utilidades.LOG;
 
 public class frmSalidaProducto extends javax.swing.JDialog {
 
@@ -286,7 +288,7 @@ public class frmSalidaProducto extends javax.swing.JDialog {
             txtSalida.requestFocusInWindow();
 
         } catch (SQLException | IOException ex) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }//GEN-LAST:event_txtCodigoActionPerformed
 

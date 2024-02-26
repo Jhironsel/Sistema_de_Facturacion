@@ -9,27 +9,25 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Properties;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import rojeru_san.RSMTextFull;
 import sur.softsurena.utilidades.Servidor;
+import static sur.softsurena.utilidades.Utilidades.LOG;
 
 public class frmParametros extends javax.swing.JFrame {
 
-    private static final Logger LOG = Logger.getLogger(frmParametros.class.getName());
-    
     private final Properties propiedades;
-    private File f = null;
+    private File filePropertie = null;
 
     public frmParametros() {
         initComponents();
         propiedades = new Properties();
         
         try {
-            f = new File(getClass().getResource("/sur/softsurena/properties/propiedades.properties").toURI());
-            propiedades.load(new FileReader(f));
+            filePropertie = new File(getClass().getResource("/sur/softsurena/properties/propiedades.properties").toURI());
+            propiedades.load(new FileReader(filePropertie));
         } catch (FileNotFoundException ex) {
             LOG.log(Level.SEVERE, "Archivo no encotrado", ex);
         } catch (IOException ex) {
@@ -594,7 +592,7 @@ public class frmParametros extends javax.swing.JFrame {
         try {
 
             propiedades.store(
-                    new FileWriter(f),
+                    new FileWriter(filePropertie),
                     "Parametros del Servidor actual"
             );
         } catch (IOException ex) {

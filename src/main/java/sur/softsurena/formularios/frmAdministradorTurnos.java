@@ -1,11 +1,9 @@
 package sur.softsurena.formularios;
 
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import rojerusan.RSComboBox;
 import sur.softsurena.entidades.Almacen;
-import sur.softsurena.utilidades.Resultados;
 import sur.softsurena.entidades.Usuario;
 import static sur.softsurena.metodos.M_Almacen.getAlmacenesList;
 import static sur.softsurena.metodos.M_Cajero.getCajeros;
@@ -14,14 +12,13 @@ import static sur.softsurena.metodos.M_Turno.getTurnosActivos;
 import static sur.softsurena.metodos.M_Turno.getTurnosByUserName;
 import static sur.softsurena.metodos.M_Turno.habilitarTurno;
 import static sur.softsurena.metodos.M_Turno.usuarioTurnoActivo;
+import sur.softsurena.utilidades.Resultados;
 import sur.softsurena.utilidades.Utilidades;
 
 /**
  * @author jhironsel
  */
 public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
-
-    private static final Logger LOG = Logger.getLogger(frmAdministradorTurnos.class.getName());
 
     public static frmAdministradorTurnos getInstance() {
         return NewSingletonHolder.INSTANCE;

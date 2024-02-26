@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.PrintWriter;
+import java.util.logging.Level;
+import static sur.softsurena.utilidades.Utilidades.LOG;
 
 public class frmEmpresaDatos extends javax.swing.JInternalFrame {
     
@@ -308,8 +308,8 @@ public class frmEmpresaDatos extends javax.swing.JInternalFrame {
                 
             }
 
-        } catch (Exception e1) {
-            //Instalar Logger
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         } finally {
             try {
                 if (fr != null) 
@@ -325,35 +325,35 @@ public class frmEmpresaDatos extends javax.swing.JInternalFrame {
             String Telefono, String Correo, String RNC,
             String Direccion, String TipoEmpresa,
             String PorCiento) {
-        FileWriter fw = null;
-        PrintWriter pw = null;
-        try {
-            if(System.getProperty("os.name").equals("Linux")){
-                fw = new FileWriter("/home/"+System.getProperty("user.name")+"/Empresa.ini");
-            }else{
-                fw = new FileWriter("c:\\Empresa.ini");
-            }
-            
-            pw = new PrintWriter(fw);
-
-            pw.println("[General]");
-            pw.println("Nombre =" + nombre);
-            pw.println("Telefono =" + Telefono);
-            pw.println("Correo =" + Correo);
-            pw.println("RNC =" + RNC);
-            pw.println("Direccion =" + Direccion);
-            pw.println("TipoEmpresa =" + TipoEmpresa);
-            pw.println("PorCiento =" + PorCiento);
-        } catch (Exception e1) {
-            //Instalar Logger
-        } finally {
-            try {
-                if (fw != null) {
-                    fw.close();
-                }
-            } catch (Exception e2) {
-                //Instalar Logger
-            }
-        }
+        
+        //TODO Tratar de usar el TRY WITH RESOURCES
+//        try (FileWriter fw ; PrintWriter pw = null;){
+//            if(System.getProperty("os.name").equals("Linux")){
+//                fw = new FileWriter("/home/"+System.getProperty("user.name")+"/Empresa.ini");
+//            }else{
+//                fw = new FileWriter("c:\\Empresa.ini");
+//            }
+//            
+//            pw = new PrintWriter(fw);
+//
+//            pw.println("[General]");
+//            pw.println("Nombre =" + nombre);
+//            pw.println("Telefono =" + Telefono);
+//            pw.println("Correo =" + Correo);
+//            pw.println("RNC =" + RNC);
+//            pw.println("Direccion =" + Direccion);
+//            pw.println("TipoEmpresa =" + TipoEmpresa);
+//            pw.println("PorCiento =" + PorCiento);
+//        } catch (Exception e1) {
+//            LOG.log(Level.SEVERE, e1.getMessage(), e1);
+//        } finally {
+//            try {
+//                if (fw != null) {
+//                    fw.close();
+//                }
+//            } catch (Exception e2) {
+//                LOG.log(Level.SEVERE, e2.getMessage(), e2);
+//            }
+//        }
     }
 }

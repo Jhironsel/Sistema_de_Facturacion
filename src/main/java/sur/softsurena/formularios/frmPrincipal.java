@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
@@ -24,7 +23,6 @@ import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import static sur.softsurena.conexion.Conexion.getCnn;
 import sur.softsurena.entidades.Privilegio;
-import sur.softsurena.utilidades.Resultados;
 import sur.softsurena.entidades.Role;
 import sur.softsurena.entidades.Usuario;
 import sur.softsurena.hilos.hiloIp;
@@ -42,11 +40,13 @@ import static sur.softsurena.metodos.M_Turno.getTurnosActivos;
 import static sur.softsurena.metodos.M_Turno.usuarioTurnoActivo;
 import static sur.softsurena.metodos.M_Usuario.getUsuarioActual;
 import sur.softsurena.utilidades.DesktopConFondo;
-import sur.softsurena.utilidades.Utilidades;
+import sur.softsurena.utilidades.Resultados;
+import static sur.softsurena.utilidades.Utilidades.LOG;
+import static sur.softsurena.utilidades.Utilidades.centralizar;
+import static sur.softsurena.utilidades.Utilidades.imagenDecode64;
 
 public final class frmPrincipal extends javax.swing.JFrame {
 
-    private static final Logger LOG = Logger.getLogger(frmPrincipal.class.getName());
     private static Imagenes icono;
 
     //Formularios Modales
@@ -1532,7 +1532,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         }
 
         if (formulario instanceof frmReporteFacturas) {
-            Utilidades.centralizar(formulario);
+            centralizar(formulario);
         }
 
         formulario.setVisible(true);
@@ -1599,7 +1599,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     }
 
     private void cargarLogo() {
-        jlLogoEmpresa.setIcon(Utilidades.imagenDecode64(getLogo(), 320, 145));
+        jlLogoEmpresa.setIcon(imagenDecode64(getLogo(), 320, 145));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -3,19 +3,16 @@ package sur.softsurena.formularios;
 import java.awt.Image;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import sur.softsurena.utilidades.FiltroBusqueda;
 import sur.softsurena.entidades.Producto;
 import static sur.softsurena.metodos.M_Producto.getProductos;
+import sur.softsurena.utilidades.FiltroBusqueda;
 import static sur.softsurena.utilidades.Utilidades.imagenDecode64;
 
 public class frmEntradaProducto extends javax.swing.JDialog {
-
-    private static final Logger LOG = Logger.getLogger(frmEntradaProducto.class.getName());
 
     private frmBusquedaProducto miBusqueda;
     private Boolean impuesto = false;

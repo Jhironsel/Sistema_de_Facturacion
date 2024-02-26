@@ -5,6 +5,7 @@ import com.toedter.calendar.JTextFieldDateEditor;
 import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -13,6 +14,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import sur.softsurena.utilidades.DefaultTableCellHeaderRenderer;
+import static sur.softsurena.utilidades.Utilidades.LOG;
 
 public class frmPagosDeudas extends javax.swing.JDialog {
 
@@ -45,7 +47,7 @@ public class frmPagosDeudas extends javax.swing.JDialog {
             rs.next();
             txtMontoPagado.setValue(rs.getDouble(1));
         } catch (SQLException ex) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
 
         this.txtIDCliente.setValue(txtIDCliente);
@@ -350,7 +352,7 @@ public class frmPagosDeudas extends javax.swing.JDialog {
         try {
             this.dispose();
         } catch (Throwable ex) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }//GEN-LAST:event_btnSalirActionPerformed
 
@@ -412,7 +414,7 @@ public class frmPagosDeudas extends javax.swing.JDialog {
                 tblDeudasPagas.setRowSelectionInterval(cliAct, cliAct);
             }
         } catch (SQLException ex) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
         //Para Alinear el Texto de la Table a la Derecha...
         tcr.setHorizontalAlignment(SwingConstants.RIGHT);

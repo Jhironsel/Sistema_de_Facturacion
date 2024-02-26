@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
@@ -15,10 +14,10 @@ import sur.softsurena.entidades.Cliente;
 import sur.softsurena.hilos.hiloImpresionFactura;
 import static sur.softsurena.metodos.M_Deuda.getDeudas;
 import sur.softsurena.utilidades.Utilidades;
+import static sur.softsurena.utilidades.Utilidades.LOG;
 
 public class frmCobrosDeudas extends javax.swing.JDialog {
 
-    private static final Logger LOG = Logger.getLogger(frmCobrosDeudas.class.getName());
     private int idTurno;
     private String nombreCajero;
 

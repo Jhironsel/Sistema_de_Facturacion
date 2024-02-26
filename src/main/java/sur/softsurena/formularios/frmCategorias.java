@@ -2,25 +2,23 @@ package sur.softsurena.formularios;
 
 import java.awt.Image;
 import java.io.File;
-import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import sur.softsurena.entidades.Categoria;
-import sur.softsurena.utilidades.Resultados;
 import static sur.softsurena.metodos.M_Categoria.agregarCategoria;
 import static sur.softsurena.metodos.M_Categoria.borrarCategoria;
 import static sur.softsurena.metodos.M_Categoria.existeCategoria;
 import static sur.softsurena.metodos.M_Categoria.getCategorias;
 import static sur.softsurena.metodos.M_Categoria.modificarCategoria;
 import static sur.softsurena.metodos.M_Producto.existeCategoriaProductos;
+import sur.softsurena.utilidades.Resultados;
 import sur.softsurena.utilidades.Utilidades;
+import static sur.softsurena.utilidades.Utilidades.LOG;
 
 public class frmCategorias extends javax.swing.JDialog {
-
-    private static final Logger LOG = Logger.getLogger(frmCategorias.class.getName());
 
     private Integer idCategoria;
     private boolean nuevo = false, estado;

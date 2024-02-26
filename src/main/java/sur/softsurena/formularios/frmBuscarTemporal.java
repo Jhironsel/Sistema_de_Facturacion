@@ -3,7 +3,6 @@ package sur.softsurena.formularios;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
@@ -16,8 +15,6 @@ import static sur.softsurena.metodos.M_Temporal.getTemporales;
 import sur.softsurena.utilidades.DefaultTableCellHeaderRenderer;
 
 public final class frmBuscarTemporal extends java.awt.Dialog {
-
-    private static final Logger LOG = Logger.getLogger(frmBuscarTemporal.class.getName());
 
     private DefaultTableModel miTabla;
     private boolean aceptar;

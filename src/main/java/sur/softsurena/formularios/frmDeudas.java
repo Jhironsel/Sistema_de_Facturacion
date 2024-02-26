@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.logging.Logger;
+import java.util.logging.Level;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -16,17 +16,16 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import sur.softsurena.utilidades.DefaultTableCellHeaderRenderer;
 import sur.softsurena.entidades.Deuda;
-import sur.softsurena.utilidades.FiltroBusqueda;
 import static sur.softsurena.metodos.M_Cliente.getClientes;
 import static sur.softsurena.metodos.M_Deuda.insertDeudas;
 import static sur.softsurena.metodos.M_Deuda.modificarDeuda;
+import sur.softsurena.utilidades.DefaultTableCellHeaderRenderer;
+import sur.softsurena.utilidades.FiltroBusqueda;
 import sur.softsurena.utilidades.Utilidades;
+import static sur.softsurena.utilidades.Utilidades.LOG;
 
 public class frmDeudas extends javax.swing.JInternalFrame {
-
-    private static final Logger LOG = Logger.getLogger(frmDeudas.class.getName());
 
     private int cliAct = 0;
     private boolean nuevo;
@@ -638,7 +637,7 @@ public class frmDeudas extends javax.swing.JInternalFrame {
                 txtNombres.setText(rs.getString(1));
                 txtApellidos.setText(rs.getString(2));
             } catch (SQLException ex) {
-                //Instalar Logger
+                LOG.log(Level.SEVERE, ex.getMessage(), ex);
             }
 
             btnGetCliente.setEnabled(false);
@@ -875,7 +874,7 @@ public class frmDeudas extends javax.swing.JInternalFrame {
                 msg = msg + (rs.getString(2)) + "       " + (rs.getString(1)) + " <BR>";
             }
         } catch (SQLException ex) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
         msg = "<html><big>" + msg + "</big></html>";
         JOptionPane.showInternalMessageDialog(

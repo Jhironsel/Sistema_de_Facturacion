@@ -1,16 +1,14 @@
 package sur.softsurena.formularios;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import sur.softsurena.conexion.Conexion;
+import static sur.softsurena.utilidades.Utilidades.LOG;
 
 public class frmAutorizacion extends javax.swing.JDialog {
 
     private static boolean aceptar = false;
-    private static final Logger LOG = Logger.getLogger(frmAutorizacion.class.getName());
     
-
     public boolean isAceptado() {
         return aceptar;
     }

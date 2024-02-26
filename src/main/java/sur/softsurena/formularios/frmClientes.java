@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -70,8 +69,6 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
     private final List<ContactoTel> v_contactosTelsList;
 
     private static String criterioBusqueda = "";
-
-    private static final Logger LOG = Logger.getLogger(frmClientes.class.getName());
 
     public static frmClientes getInstance() {
         /*
@@ -674,6 +671,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
         });
         jPanel7.add(btnAgregarDirecciones);
 
+        btnEditarDireccion.setEnabled(false);
         btnEditarDireccion.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.EDIT);
         btnEditarDireccion.setName("btnAgregarDirecciones"); // NOI18N
         btnEditarDireccion.addActionListener(new java.awt.event.ActionListener() {
@@ -683,6 +681,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
         });
         jPanel7.add(btnEditarDireccion);
 
+        btnEliminarDirrecion.setEnabled(false);
         btnEliminarDirrecion.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DELETE);
         btnEliminarDirrecion.setName("btnEliminarDirrecion"); // NOI18N
         btnEliminarDirrecion.addActionListener(new java.awt.event.ActionListener() {
@@ -748,6 +747,11 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
         tblDireccion.setFontRowSelect(new java.awt.Font("FreeMono", 1, 14)); // NOI18N
         tblDireccion.setShowGrid(true);
         tblDireccion.setSurrendersFocusOnKeystroke(true);
+        tblDireccion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblDireccionMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(tblDireccion);
 
         javax.swing.GroupLayout jpDireccionLayout = new javax.swing.GroupLayout(jpDireccion);
@@ -1281,7 +1285,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
         try {
             txtCedula1.commitEdit();
         } catch (ParseException ex) {
-            LOG.info("No se ingreso criterios de busquedas.");
+            Utilidades.LOG.info("No se ingreso criterios de busquedas.");
             return;
         }
 
@@ -1419,8 +1423,10 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
                 //Preguntar si desea carga la data desde la base de datos.
                 int resp = JOptionPane.showInternalConfirmDialog(
                         this,
-                        "Cliente se encuentra en la base de datos."
-                        + "\nDesea cargar el registro?",
+                        """
+                        Cliente se encuentra en la base de datos.
+                        Desea cargar el registro?
+                        """,
                         "",
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE
@@ -1530,9 +1536,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
 
         btnCancelarActionPerformed(evt);
 
-        v_contactosCorreosList.clear();
-        v_contactosTelsList.clear();
-        v_direccionesList.clear();
+        limpiarListas();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -1606,8 +1610,10 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
     private void jcbProvinciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbProvinciasActionPerformed
         jcbMunicipios.removeAllItems();
 
-        getMunicipio(jcbProvincias.getSelectedIndex() <= 0 ? 0
-                : ((Provincia) jcbProvincias.getSelectedItem()).getId()).stream().forEach(
+        getMunicipio(
+                jcbProvincias.getSelectedIndex() <= 0
+                ? 0 : ((Provincia) jcbProvincias.getSelectedItem()).getId()
+        ).stream().forEach(
                 municipio -> jcbMunicipios.addItem(municipio)
         );
 
@@ -1689,7 +1695,8 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
          */
         Provincia provincia = (Provincia) jcbProvincias.getSelectedItem();
         Municipio municipio = (Municipio) jcbMunicipios.getSelectedItem();
-        Distrito_municipal dm = (Distrito_municipal) jcbDistritoMunicipal.getSelectedItem();
+        Distrito_municipal distritoMunicipal
+                = (Distrito_municipal) jcbDistritoMunicipal.getSelectedItem();
 
         int resp = JOptionPane.showInternalConfirmDialog(
                 this,
@@ -1701,16 +1708,17 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
 
         Boolean por_defecto = resp == JOptionPane.YES_OPTION;
 
+        if (por_defecto) {
+            // TODO Quitar los otros valores por defecto en la tabla de direcciones.
+        }
+
         Direccion direccion = Direccion
                 .builder()
-                .id(v_nuevo ? -1 : (
-                        (Direccion) tblDireccion.getValueAt(
-                                tblDireccion.getSelectedRow(), 0)).getId()
-                )
+                .id(-1)
                 .id_persona(idCliente)
                 .provincia(provincia)
                 .municipio(municipio)
-                .distrito_municipal(dm)
+                .distrito_municipal(distritoMunicipal)
                 .direccion(txtDireccion.getText())
                 .estado(Boolean.TRUE)
                 .por_defecto(por_defecto)
@@ -1732,7 +1740,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
          */
         registroDireccion[0] = provincia;
         registroDireccion[1] = municipio;
-        registroDireccion[2] = dm;
+        registroDireccion[2] = distritoMunicipal;
         registroDireccion[3] = txtDireccion.getText();
         registroDireccion[4] = "";
         registroDireccion[5] = Boolean.TRUE;
@@ -1777,8 +1785,6 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
             Se reparan los anchos de la columnas de la tabla.
          */
         repararColumnaTable(tblDireccion);
-
-        btnEditarDireccion.setEnabled(true);
     }//GEN-LAST:event_btnAgregarDireccionesActionPerformed
 
     private void btnEliminarDirrecionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarDirrecionActionPerformed
@@ -1786,9 +1792,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
             return;
         }
 
-        v_direccionesList.remove(tblDireccion.getSelectedRow());
-
-        eliminarRegistro(tblDireccion, v_dtmDireccion);
+        eliminarRegistro(tblDireccion, v_dtmDireccion, v_direccionesList);
 
         repararColumnaTable(tblDireccion);
     }//GEN-LAST:event_btnEliminarDirrecionActionPerformed
@@ -1875,7 +1879,9 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
         } else {
 
         }
-        eliminarRegistro(tblTelefonos, v_dtmTelefono);
+        
+        eliminarRegistro(tblTelefonos, v_dtmTelefono, v_contactosTelsList);
+        
         repararColumnaTable(tblTelefonos);
     }//GEN-LAST:event_btnBorrarTelefonoMovilActionPerformed
 
@@ -1946,7 +1952,8 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
         } else {
 
         }
-        eliminarRegistro(tblCorreos, v_dtmCorreo);
+        
+        eliminarRegistro(tblCorreos, v_dtmCorreo, v_contactosCorreosList);
         repararColumnaTable(tblCorreos);
     }//GEN-LAST:event_btnEliminarCorreoActionPerformed
 
@@ -2155,15 +2162,12 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
     private void jtpDireccionContactosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtpDireccionContactosKeyPressed
         if (evt.isControlDown()) {
             if (evt.getKeyCode() == KeyEvent.VK_1) {
-                System.out.println("Estoy Aqui VK1");
                 jtpDireccionContactos.setSelectedIndex(jtpDireccionContactos.indexOfComponent(jpGenerales));
             }
             if (evt.getKeyCode() == KeyEvent.VK_2) {
-                System.out.println("Estoy Aqui VK2");
                 jtpDireccionContactos.setSelectedIndex(jtpDireccionContactos.indexOfComponent(jpDireccion));
             }
             if (evt.getKeyCode() == KeyEvent.VK_3) {
-                System.out.println("Estoy Aqui VK3");
                 jtpDireccionContactos.setSelectedIndex(jtpDireccionContactos.indexOfComponent(jpContactos));
             }
         }
@@ -2238,8 +2242,14 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
     private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
 
     }//GEN-LAST:event_formInternalFrameActivated
-    
-    private void eliminarRegistro(JTable tabla, DefaultTableModel modelo) {
+
+    private void tblDireccionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDireccionMouseClicked
+        boolean valor = tblDireccion.getSelectedRow() >= 0;
+        btnEditarDireccion.setEnabled(valor);
+        btnEliminarDirrecion.setEnabled(valor);
+    }//GEN-LAST:event_tblDireccionMouseClicked
+
+    private void eliminarRegistro(JTable tabla, DefaultTableModel modelo, List lista) {
         if (tabla.getSelectedRow() == -1) {
             JOptionPane.showInternalMessageDialog(
                     this,
@@ -2249,7 +2259,11 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
             );
             return;
         }
+        
+        lista.remove(tabla.getSelectedRow());
+        
         modelo.removeRow(tabla.getSelectedRow());
+        
         tabla.setModel(modelo);
     }
 
@@ -2263,12 +2277,8 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
      *
      * @return Devuelve la propiedades de un JTable para ser testeada.
      */
-    public synchronized static JTable llenarTablaClientes(int id, String criterioBusqueda) {
-
-        final String titulos[] = {"Cedulas", "Persona", "Primer Nombre",
-            "Segundo Nombre", "Apellidos", "Sexo", "Fecha nacimiento",
-            "Fecha Ingreso", "Estado"
-        };
+    public synchronized static JTable llenarTablaClientes(int id,
+            String criterioBusqueda) {
 
         if (Objects.isNull(criterioBusqueda)) {
             criterioBusqueda = "";
@@ -2277,6 +2287,11 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
         if (criterioBusqueda.equalsIgnoreCase("evento")) {
             criterioBusqueda = frmClientes.criterioBusqueda;
         }
+
+        final String titulos[] = {"Cedulas", "Persona", "Primer Nombre",
+            "Segundo Nombre", "Apellidos", "Sexo", "Fecha nacimiento",
+            "Fecha Ingreso", "Estado"
+        };
 
         Object registro[] = new Object[titulos.length];
 
@@ -2288,24 +2303,40 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
                         .id(id)
                         .criterioBusqueda(criterioBusqueda)
                         .filas(Boolean.TRUE)
-                        .nCantidadFilas(Integer.valueOf(jsCantidadFilas.getValue().toString()))
-                        .nPaginaNro(Integer.valueOf(jsPaginaNro.getValue().toString()))
+                        .nCantidadFilas(
+                                Integer.valueOf(
+                                        jsCantidadFilas.getValue().toString()
+                                )
+                        )
+                        .nPaginaNro(
+                                Integer.valueOf(
+                                        jsPaginaNro.getValue().toString()
+                                )
+                        )
                         .build()
         ).stream().forEach(cliente -> {
-            //Construyo otro objecto para que el campo pnombre sea nulo y 
-            //me devuelva la cedula el toString.
             registro[0] = Cliente
                     .builder()
                     .id_persona(cliente.getId_persona())
                     .generales(cliente.getGenerales())
                     .build();
-            registro[1] = String.valueOf(cliente.getPersona()).equalsIgnoreCase("j") ? "JURÍDICA" : "FÍSICA";
+            registro[1] = String.valueOf(
+                    cliente.getPersona()
+            ).equalsIgnoreCase("j") ? "JURÍDICA" : "FÍSICA";
             registro[2] = cliente.getPnombre();
             registro[3] = cliente.getSnombre();
             registro[4] = cliente.getApellidos();
-            registro[5] = String.valueOf(cliente.getSexo()).equalsIgnoreCase("M") ? "MASCULINO" : "FEMENINO";
-            registro[6] = Utilidades.formatDate(cliente.getFecha_nacimiento(), "dd/MM/yyyy");
-            registro[7] = Utilidades.formatDate(cliente.getFecha_ingreso(), "dd/MM/yyyy");
+            registro[5] = String.valueOf(
+                    cliente.getSexo()
+            ).equalsIgnoreCase("M") ? "MASCULINO" : "FEMENINO";
+            registro[6] = Utilidades.formatDate(
+                    cliente.getFecha_nacimiento(),
+                    "dd/MM/yyyy"
+            );
+            registro[7] = Utilidades.formatDate(
+                    cliente.getFecha_ingreso(),
+                    "dd/MM/yyyy"
+            );
             registro[8] = cliente.getEstado();
 
             dtmClientes.addRow(registro);
@@ -2378,165 +2409,140 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
 
     /**
      * Es el metodo encargado de llenar el formulario del cliente cuando este se
-     * va a modificar en la base de datos.
+     * va a modificar en la base de datos.<br>
      *
      * El mismo idCliente es utilizado para obtener la lista de direcciones,
-     * lista de correo y lista de telefonos del cliente.
+     * lista de correo y lista de telefonos del cliente.<br>
      *
      * @param idCliente El identificador del cliente en la base de datos.
      */
     private void mostrarRegistro(Integer idCliente) {
+        Utilidades.LOG.info("Se muestran los registro del cliente %s".formatted(idCliente));
         //Obteniendo el objeto cliente.
-        List<Cliente> cliente = getClientes(
+        getClientes(
                 FiltroBusqueda
                         .builder()
                         .criterioBusqueda("^")
                         .id(idCliente)
-                        .filas(true)
-                        .nCantidadFilas(1)
-                        .nPaginaNro(1)
                         .build()
+        ).stream().forEach(
+                p_cliente -> {
+                    //Llenar los compos basicos.
+                    txtCedula.setValue(p_cliente.getGenerales().getCedula());
+                    txtPNombre.setText(p_cliente.getPnombre());
+                    txtSNombre.setText(p_cliente.getSnombre());
+                    txtApellidos.setText(p_cliente.getApellidos());
+
+                    dchFechaNacimiento.setDate(sqlDateToUtilDate(p_cliente.getFecha_nacimiento()));
+
+                    cbEstado.setSelected(p_cliente.getEstado());
+                    cbEstado.setText(p_cliente.getEstado() ? "Activo" : "Inactivo");
+
+                    jlFechaCreacion.setText("Fecha de Ingreso: " + p_cliente.getFecha_ingreso());
+
+                    //Buscando la combinacion del tipo persona con el registro de la 
+                    //base de datos.
+                    for (int i = 0; i < jcbPersona.getItemCount(); i++) {
+                        if (p_cliente.getPersona() == ((TipoPersona) jcbPersona.getItemAt(i)).getAbreviatura()) {
+                            jcbPersona.setSelectedIndex(i);
+                            break;
+                        }
+                    }
+
+                    //Buscando la combinacion del sexo con el registro de la base de datos.
+                    for (int i = 0; i < jcbSexo.getItemCount(); i++) {
+                        if (p_cliente.getSexo() == ((Sexo) jcbSexo.getItemAt(i)).getAbreviatura()) {
+                            jcbSexo.setSelectedIndex(i);
+                            break;
+                        }
+                    }
+
+                    //Buscando la combinacion del estado civil con el registro de la 
+                    //base de datos.
+                    for (int i = 0; i < jcbEstadoCivil.getItemCount(); i++) {
+                        if (p_cliente.getGenerales().getEstado_civil() == ((EstadoCivil) jcbEstadoCivil.getItemAt(i)).getAbreviatura()) {
+                            jcbEstadoCivil.setSelectedIndex(i);
+                            break;
+                        }
+                    }
+                }
         );
 
-        cliente.stream().forEach(cli -> {
-            //Llenar los compos basicos.
-            txtCedula.setValue(cli.getGenerales().getCedula());
-            txtPNombre.setText(cli.getPnombre());
-            txtSNombre.setText(cli.getSnombre());
-            txtApellidos.setText(cli.getApellidos());
+        nuevasTablasDirTelCor();
+        limpiarListas();
 
-            dchFechaNacimiento.setDate(sqlDateToUtilDate(cli.getFecha_nacimiento()));
+        Object registroDireccion[] = new Object[TITULOS_DIRECCION.length];
+        getDireccionByID(idCliente).stream().forEach(
+                p_direccione -> {
 
-            cbEstado.setSelected(cli.getEstado());
-            cbEstado.setText(cli.getEstado() ? "Activo" : "Inactivo");
-
-            jlFechaCreacion.setText("Fecha de Ingreso: " + cli.getFecha_ingreso());
-
-            //Buscando la combinacion del tipo persona con el registro de la 
-            //base de datos.
-            for (int i = 0; i < jcbPersona.getItemCount(); i++) {
-                if (cli.getPersona()
-                        == ((TipoPersona) jcbPersona.getItemAt(i)).getAbreviatura()) {
-                    jcbPersona.setSelectedIndex(i);
-                    break;
-
+                    registroDireccion[0] = p_direccione.getProvincia();
+                    registroDireccion[1] = p_direccione.getMunicipio();
+                    registroDireccion[2] = p_direccione.getDistrito_municipal();
+                    registroDireccion[3] = Direccion
+                            .builder()
+                            .id(p_direccione.getId())
+                            .direccion(p_direccione.getDireccion())
+                            .build();
+                    registroDireccion[4] = p_direccione.getFecha();
+                    registroDireccion[5] = p_direccione.getEstado();
+                    registroDireccion[6] = p_direccione.getPor_defecto();
+                    v_direccionesList.add(p_direccione);
+                    v_dtmDireccion.addRow(registroDireccion);
                 }
-            }
-
-            //Buscando la combinacion del sexo con el registro de la base de datos.
-            for (int i = 0; i < jcbSexo.getItemCount(); i++) {
-                if (cli.getSexo() == ((Sexo) jcbSexo.getItemAt(i)).getAbreviatura()) {
-                    jcbSexo.setSelectedIndex(i);
-                    break;
-                }
-            }
-
-            //Buscando la combinacion del estado civil con el registro de la 
-            //base de datos.
-            for (int i = 0; i < jcbEstadoCivil.getItemCount(); i++) {
-                if (cli.getGenerales().getEstado_civil()
-                        == ((EstadoCivil) jcbEstadoCivil.getItemAt(i)).getAbreviatura()) {
-                    jcbEstadoCivil.setSelectedIndex(i);
-                    break;
-
-                }
-            }
-        });
-
-        //Datos basicos listos. 
-        //Obteniendo direcciones.
-        v_dtmDireccion = new DefaultTableModel(null, TITULOS_DIRECCION);
-
-        //Se limpia la lista de direcciones para agregar la del cliente.
-        v_direccionesList.clear();
-
-        getDireccionByID(idCliente).stream().forEach(direccione -> {
-            Object registroDireccion[] = new Object[TITULOS_DIRECCION.length];
-
-            registroDireccion[0] = direccione.getProvincia();
-            registroDireccion[1] = direccione.getMunicipio();
-            registroDireccion[2] = direccione.getDistrito_municipal();
-            registroDireccion[3] = Direccion.
-                    builder().
-                    id(direccione.getId()).
-                    direccion(direccione.getDireccion()).
-                    build();
-            registroDireccion[4] = direccione.getFecha();
-            registroDireccion[5] = direccione.getEstado();
-            registroDireccion[6] = direccione.getPor_defecto();
-
-            v_direccionesList.add(direccione);
-
-            v_dtmDireccion.addRow(registroDireccion);
-        });
-
+        );
         tblDireccion.setModel(v_dtmDireccion);
-
         int[] columnas = {5, 6};
-
         columnasCheckBox(tblDireccion, columnas);
         //------------------------FIN con la lista de direcciones.
 
         Object registroTel[] = new Object[TITULOS_TELEFONO.length];
+        getTelefonoByID(idCliente).stream().forEach(
+                p_telefono -> {
+                    registroTel[0] = p_telefono;
+                    registroTel[1] = p_telefono.getTipo();
+                    registroTel[2] = p_telefono.getFecha();
 
-        v_dtmTelefono = new DefaultTableModel(null, TITULOS_TELEFONO);
+                    v_contactosTelsList.add(p_telefono);
 
-        //Se limpia la lista telefonica del cliente.
-        v_contactosTelsList.clear();
-
-        getTelefonoByID(idCliente).stream().forEach(telefono -> {
-
-            registroTel[0] = telefono;
-            registroTel[1] = telefono.getTipo();
-            registroTel[2] = telefono.getFecha();
-
-            v_contactosTelsList.add(telefono);
-
-            v_dtmTelefono.addRow(registroTel);
-        });
+                    v_dtmTelefono.addRow(registroTel);
+                }
+        );
         tblTelefonos.setModel(v_dtmTelefono);
         //-------------------------FIN con la lista de telefono
 
         Object registroCorreo[] = new Object[TITULOS_CORREO.length];
+        getCorreoByID(idCliente).stream().forEach(
+                p_correo -> {
+                    registroCorreo[0] = p_correo;
+                    registroCorreo[1] = p_correo.getFecha();
 
-        v_dtmCorreo = new DefaultTableModel(null, TITULOS_CORREO);
+                    v_contactosCorreosList.add(p_correo);
 
-        //Se limpia la lista de correo del cliente.
-        v_contactosCorreosList.clear();
-
-        getCorreoByID(idCliente).stream().forEach(correo -> {
-            registroCorreo[0] = correo;
-            registroCorreo[1] = correo.getFecha();
-
-            v_contactosCorreosList.add(correo);
-
-            v_dtmCorreo.addRow(registroCorreo);
-        });
-
-        //Obteniendo los correos.
+                    v_dtmCorreo.addRow(registroCorreo);
+                }
+        );
         tblCorreos.setModel(v_dtmCorreo);
         //--------------------------FIN con la lista de correo.
     }
 
     /**
      * Este metodo debe cambiar el comportamiento de la ventana al pulsar sobre
-     * nuevo o editar.
+     * nuevo o editar.<br>
      *
      * @param activo Este parametro es utilizado cuando se va a ingresar o
-     * modificar registros a la base de datos.
+     * modificar registros a la base de datos.<br><br>
      *
-     * <b>Si su valor es verdadero:</b>
+     * <b>Si su valor es verdadero:</b><br>
      * 1) Los botones de nuevo, editar, borrar y buscar deben inhabilitarse.<br>
      * 2) Los botones de guardar y cancelar pasan habilitarse.<br>
      * <br>
      * <b>Si su valor es falso:</b>
      * Lo contrario de cuando su valor es verdadero. <br>
      * 1) Los botones de nuevo, editar, borrar y buscar deben habilitarse. <br>
-     * 2) Los botones de guardar y cancelar pasan inhabilitarse.<br>
+     * 2) Los botones de guardar y cancelar pasan inhabilitarse.<br><br>
      *
      * Al presionar nuevo o editar debe cambiarse en la vista Clientes a
-     * Mantenimiento.
-     *
+     * Mantenimiento.<br>
      * Este metodo se llama desde el boton nuevo y modificar con el valor del
      * parametros true y desde cancelar con el valor del parametro false.
      */
@@ -2619,8 +2625,6 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
 
         txtDireccion.setText("");
 
-        btnEditarDireccion.setEnabled(true);
-
         jrbMovil.setSelected(true);
 
         if (v_nuevo) {
@@ -2633,7 +2637,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
             txtCedula.setEditable(false);
             txtPNombre.requestFocusInWindow();
         }
-        nuevasTablasDirTelCor();
+        //nuevasTablasDirTelCor();
     }
 
     /**
@@ -2651,6 +2655,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
 
         v_dtmCorreo = new DefaultTableModel(null, TITULOS_CORREO);
         tblCorreos.setModel(v_dtmCorreo);
+        Utilidades.LOG.info("Tablas de telefono, correo y direcciones limpias.");
     }
 
     private boolean validaCampoCedula(javax.swing.JFormattedTextField campo) {
@@ -2669,6 +2674,17 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
             return true;
         }
         return false;
+    }
+    
+    /**
+     * Metodo que permite limpiar las lista de direcciones, contactos de
+     * telefono y correos.
+     */
+    private void limpiarListas() {
+        v_direccionesList.clear();
+        v_contactosTelsList.clear();
+        v_contactosCorreosList.clear();
+        Utilidades.LOG.info("Lista de direcciones, contactos de telefono y correo limpias.");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

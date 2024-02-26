@@ -5,10 +5,12 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.logging.Level;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import static sur.softsurena.metodos.M_BaseDeDatos.pathBaseDeDatos;
+import static sur.softsurena.utilidades.Utilidades.LOG;
 
 public final class frmRestaurarDatos extends javax.swing.JInternalFrame implements Runnable {
 
@@ -260,7 +262,7 @@ public final class frmRestaurarDatos extends javax.swing.JInternalFrame implemen
             props.setProperty("password", new String(txtClave.getPassword()));
             cnn = DriverManager.getConnection("jdbc:firebirdsql://localhost/" + txtBaseActual.getText(), props);
         } catch (SQLException ex) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
 
         iniciarHilo();
@@ -272,7 +274,7 @@ public final class frmRestaurarDatos extends javax.swing.JInternalFrame implemen
                 cnn.close();
             }
         } catch (SQLException ex) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -356,13 +358,13 @@ public final class frmRestaurarDatos extends javax.swing.JInternalFrame implemen
                     try {
                         Thread.sleep(10);
                     } catch (InterruptedException ex) {
-                        //Instalar Logger
+                        LOG.log(Level.SEVERE, ex.getMessage(), ex);
                     }
                     txtResultado.setCaretPosition(txtResultado.getDocument().getLength());
                 }
 
             } catch (SQLException ex) {
-                //Instalar Logger
+                LOG.log(Level.SEVERE, ex.getMessage(), ex);
             }
             procesar = false;
         }

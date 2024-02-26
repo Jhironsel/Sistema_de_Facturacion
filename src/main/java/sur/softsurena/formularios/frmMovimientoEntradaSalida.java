@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
@@ -14,6 +15,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.swing.JRViewer;
+import static sur.softsurena.utilidades.Utilidades.LOG;
 
 public class frmMovimientoEntradaSalida extends javax.swing.JInternalFrame {
 
@@ -155,7 +157,7 @@ public class frmMovimientoEntradaSalida extends javax.swing.JInternalFrame {
             jpReporte.repaint();
             jpReporte.revalidate();
         } catch (JRException ex) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }
 
@@ -182,7 +184,7 @@ public class frmMovimientoEntradaSalida extends javax.swing.JInternalFrame {
             }
             jtFechas.setModel(miTabla);
         } catch (SQLException ex) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

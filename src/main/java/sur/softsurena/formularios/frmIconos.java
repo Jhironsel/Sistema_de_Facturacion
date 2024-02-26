@@ -13,8 +13,7 @@ public class frmIconos extends javax.swing.JFrame {
 
 //        initComponents();
         //getClass().getResource("/sur/softsurena/properties/propiedades.properties").toURI()
-        System.out.println("<RECURSOS>: " + getClass().getResource("/sur/softsurena/").toString());
-
+        
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(400, 2147483647));
         setMinimumSize(new java.awt.Dimension(500, 500));

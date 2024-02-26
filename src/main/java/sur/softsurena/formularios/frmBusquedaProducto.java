@@ -1,14 +1,11 @@
 package sur.softsurena.formularios;
 
-import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
-import sur.softsurena.utilidades.FiltroBusqueda;
 import static sur.softsurena.metodos.M_Producto.getProductos;
+import sur.softsurena.utilidades.FiltroBusqueda;
 import sur.softsurena.utilidades.Utilidades;
 
 public class frmBusquedaProducto extends javax.swing.JDialog {
-
-    private static final Logger LOG = Logger.getLogger(frmBusquedaProducto.class.getName());
 
     private DefaultTableModel miTabla;
     private String respuesta = "";

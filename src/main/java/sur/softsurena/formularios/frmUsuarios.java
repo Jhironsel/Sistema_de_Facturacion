@@ -1,12 +1,10 @@
 package sur.softsurena.formularios;
 
 import java.util.Objects;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import sur.softsurena.utilidades.Resultados;
 import sur.softsurena.entidades.Role;
 import static sur.softsurena.metodos.M_Permiso.agregarPermisoAdminRole;
 import static sur.softsurena.metodos.M_Permiso.getPermisosAsignados;
@@ -26,12 +24,11 @@ import static sur.softsurena.metodos.M_Usuario.getNombresUsuarios;
 import static sur.softsurena.metodos.M_Usuario.getUsuario;
 import static sur.softsurena.metodos.M_Usuario.getUsuarios;
 import sur.softsurena.utilidades.DefaultTableCellHeaderRenderer;
+import sur.softsurena.utilidades.Resultados;
 import static sur.softsurena.utilidades.Utilidades.columnasCheckBox;
 import static sur.softsurena.utilidades.Utilidades.repararColumnaTable;
 
 public class frmUsuarios extends javax.swing.JInternalFrame {
-
-    private static final Logger LOG = Logger.getLogger(frmUsuarios.class.getName());
 
     public static frmUsuarios getInstance() {
         return NewSingletonHolder.INSTANCE;
@@ -669,7 +666,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
         if (jtpPrivilegios.getSelectedComponent() == jpDefRoles) {
-            System.out.println("Este es Definicion de roles");
+            //TODO Trabajo
         } else if (jtpPrivilegios.getSelectedComponent() == jpMantRoles) {
             //Validar que exista un rol seleccionado
             if (tblRoles.getSelectedRow() == -1) {
@@ -752,7 +749,8 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             );
 
         } else {
-            System.out.println("Ninguno.");
+            //TODO Trabajo
+            
         }
 
 

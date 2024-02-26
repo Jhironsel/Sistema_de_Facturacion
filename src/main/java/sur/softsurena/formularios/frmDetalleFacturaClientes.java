@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
@@ -12,11 +13,12 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import sur.softsurena.entidades.Cliente;
-import sur.softsurena.utilidades.DefaultTableCellHeaderRenderer;
-import sur.softsurena.utilidades.FiltroBusqueda;
 import sur.softsurena.hilos.hiloImpresionFactura;
 import static sur.softsurena.metodos.M_Cliente.getClientes;
+import sur.softsurena.utilidades.DefaultTableCellHeaderRenderer;
+import sur.softsurena.utilidades.FiltroBusqueda;
 import sur.softsurena.utilidades.Utilidades;
+import static sur.softsurena.utilidades.Utilidades.LOG;
 
 public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
 
@@ -304,7 +306,7 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
             txtTotal.setValue(suma);
             tblDetalleFactura.setModel(miTabla3);
         } catch (SQLException ex) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
 
         if (evt.getClickCount() == 2) {
@@ -369,7 +371,7 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
             }
             tblFactura.setModel(miTabla2);
         } catch (SQLException ex) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }//GEN-LAST:event_tblClientesMouseClicked
 

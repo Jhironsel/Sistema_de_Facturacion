@@ -5,15 +5,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import sur.softsurena.entidades.Cliente;
-import sur.softsurena.utilidades.FiltroBusqueda;
 import sur.softsurena.hilos.hiloImpresionFactura;
 import static sur.softsurena.metodos.M_Cliente.getClientes;
+import sur.softsurena.utilidades.FiltroBusqueda;
 import sur.softsurena.utilidades.Utilidades;
+import static sur.softsurena.utilidades.Utilidades.LOG;
 
 public class frmCobrosClientes extends javax.swing.JDialog {
 
@@ -541,7 +543,7 @@ public class frmCobrosClientes extends javax.swing.JDialog {
 //                txtCredito.setValue(rs.getDouble("credito"));
 //            }
 //        } catch (SQLException ex) {
-//            //Instalar Logger
+//            LOG.log(Level.SEVERE, ex.getMessage(), ex);
 //        }
     }//GEN-LAST:event_cmbClienteItemStateChanged
     private void cmbClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbClienteActionPerformed
@@ -615,7 +617,7 @@ public class frmCobrosClientes extends javax.swing.JDialog {
             tblFacturas.setModel(miTabla);
 
         } catch (SQLException ex) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }
 
@@ -641,7 +643,7 @@ public class frmCobrosClientes extends javax.swing.JDialog {
             }
             tblPagos.setModel(miTabla);
         } catch (SQLException ex) {
-            //Instalar Logger
+            LOG.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

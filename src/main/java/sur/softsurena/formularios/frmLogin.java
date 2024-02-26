@@ -14,7 +14,7 @@ import sur.softsurena.metodos.Imagenes;
 import static sur.softsurena.metodos.M_BaseDeDatos.periodoMaquina;
 import static sur.softsurena.metodos.M_BaseDeDatos.setLicencia;
 import sur.softsurena.utilidades.Resultados;
-import sur.softsurena.utilidades.Utilidades;
+import static sur.softsurena.utilidades.Utilidades.LOG;
 
 public final class frmLogin extends javax.swing.JFrame {
 
@@ -23,7 +23,7 @@ public final class frmLogin extends javax.swing.JFrame {
 
     private static String sistema;
     private static String idMaquina;
-    
+
     public frmLogin(String language) {
         bundle = ResourceBundle.getBundle("sur.softsurena.idioma.mensaje", new Locale(language));
         initComponents();
@@ -256,7 +256,7 @@ public final class frmLogin extends javax.swing.JFrame {
                     "",
                     JOptionPane.ERROR_MESSAGE
             );
-            Utilidades.LOGGER.log(Level.SEVERE, msg);
+            LOG.log(Level.SEVERE, msg);
             txtUsuario.requestFocusInWindow();
             return;
         }
@@ -269,12 +269,12 @@ public final class frmLogin extends javax.swing.JFrame {
                     "",
                     JOptionPane.ERROR_MESSAGE
             );
-            Utilidades.LOGGER.log(Level.SEVERE, msg);
+            LOG.log(Level.SEVERE, msg);
             txtClave.requestFocusInWindow();
             return;
         }//Fin de validaciones de campos
 
-        Utilidades.LOGGER.fine("Cargar los valores de la conexion desde el properties");
+        LOG.fine("Cargar los valores de la conexion desde el properties");
         frmParametros p = new frmParametros();
 
         String dominio = "localhost", puerto = "3050";
@@ -293,7 +293,7 @@ public final class frmLogin extends javax.swing.JFrame {
         if (p.cargarParamentos("").getConPuerto()) {
             puerto = p.cargarParamentos("").getPuerto();
         }
-        
+
         Conexion.getInstance(
                 txtUsuario.getText(),
                 new String(txtClave.getPassword()),
@@ -304,7 +304,7 @@ public final class frmLogin extends javax.swing.JFrame {
         Resultados<Object> resultado = Conexion.verificar();
 
         switch (resultado.toString()) {
-            case Conexion.E_FECHA_INICIAL_INCORRECTA:
+            case Conexion.E_FECHA_INICIAL_INCORRECTA -> {
                 JOptionPane.showMessageDialog(this,
                         "Error de configuracion de la fecha inicial del producto.",
                         "",
@@ -314,7 +314,8 @@ public final class frmLogin extends javax.swing.JFrame {
                 txtUsuario.setText("");
                 txtUsuario.requestFocusInWindow();
                 return;
-            case Conexion.E_FECHA_ACTUAL_INCORRECTA:
+            }
+            case Conexion.E_FECHA_ACTUAL_INCORRECTA -> {
                 JOptionPane.showMessageDialog(this,
                         "Error de configuracion de la fecha actual del producto.",
                         "",
@@ -324,8 +325,8 @@ public final class frmLogin extends javax.swing.JFrame {
                 txtUsuario.setText("");
                 txtUsuario.requestFocusInWindow();
                 return;
-
-            case Conexion.E_FECHA_VENCIMIENTO:
+            }
+            case Conexion.E_FECHA_VENCIMIENTO -> {
                 int num = JOptionPane.showConfirmDialog(this,
                         "Este equipo no esta Autorizado! \nDesea Registrar?",
                         "",
@@ -336,7 +337,8 @@ public final class frmLogin extends javax.swing.JFrame {
                     registro();
                 }
                 return;
-            case Conexion.JAVASQL_SQL_INVALID_AUTHORIZATION_SPEC_EXCEPTI:
+            }
+            case Conexion.JAVASQL_SQL_INVALID_AUTHORIZATION_SPEC_EXCEPTI -> {
                 JOptionPane.showMessageDialog(
                         this,
                         "Usuario y clave no validas.!",
@@ -347,8 +349,8 @@ public final class frmLogin extends javax.swing.JFrame {
                 txtUsuario.setText("");
                 txtUsuario.requestFocusInWindow();
                 return;
-
-            case Conexion.LIBRERIA_DEL_DRIVER_NO_ENCONTRADA:
+            }
+            case Conexion.LIBRERIA_DEL_DRIVER_NO_ENCONTRADA -> {
                 JOptionPane.showMessageDialog(
                         this,
                         Conexion.LIBRERIA_DEL_DRIVER_NO_ENCONTRADA,
@@ -356,8 +358,9 @@ public final class frmLogin extends javax.swing.JFrame {
                         JOptionPane.ERROR_MESSAGE
                 );
                 return;
+            }
         }
-        Utilidades.LOGGER.fine("Conectando a los evento.");
+        LOG.fine("Conectando a los evento.");
         FirebirdEventos f = new FirebirdEventos();
 
         if (!f.registro(
@@ -373,7 +376,7 @@ public final class frmLogin extends javax.swing.JFrame {
                     "",
                     JOptionPane.ERROR_MESSAGE
             );
-            Utilidades.LOGGER.log(Level.SEVERE, msg);
+            LOG.log(Level.SEVERE, msg);
             return;
         }
 
@@ -381,12 +384,12 @@ public final class frmLogin extends javax.swing.JFrame {
         int dia = periodoMaquina();
         if (dia < 1) {
             JOptionPane.showMessageDialog(
-                    this, 
+                    this,
                     "Licencia expirada...",
                     "",
                     JOptionPane.ERROR_MESSAGE
             );
-            
+
             int resp = JOptionPane.showConfirmDialog(
                     this,
                     "Desea registrar el producto?",
@@ -418,7 +421,7 @@ public final class frmLogin extends javax.swing.JFrame {
 
         dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
-    
+
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         System.exit(0);
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -471,7 +474,7 @@ public final class frmLogin extends javax.swing.JFrame {
                 new String(miRegistros.txtClave1.getPassword()).trim(),
                 new String(miRegistros.txtClave2.getPassword()).trim())) {
             JOptionPane.showMessageDialog(
-                    this, 
+                    this,
                     "Maquina Registradas",
                     "",
                     JOptionPane.WARNING_MESSAGE
@@ -488,8 +491,6 @@ public final class frmLogin extends javax.swing.JFrame {
                 if ("GTK+".equals(info.getName())) {
                     //GTK+, Nimbus, Metal, CDE/Motif
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    System.out.println("L&F: " + info.getName());
-                    System.out.println("ClassName: " + info.getClassName());
                     break;
                 }
             }
@@ -497,25 +498,29 @@ public final class frmLogin extends javax.swing.JFrame {
                 | InstantiationException
                 | IllegalAccessException
                 | javax.swing.UnsupportedLookAndFeelException ex) {
-            Utilidades.LOGGER.log(Level.SEVERE, "Error al iniciar el main", ex);
+            LOG.log(Level.SEVERE, "Error al iniciar el main", ex);
         }
 
+//        FlatLaf.registerCustomDefaultsSource( "sur.softsurena.themes" );
+//        FlatLightLaf.setup();
+        
         java.awt.EventQueue.invokeLater(() -> {
             frmLogin frmLogin = new frmLogin("es");
             frmLogin.setVisible(true);
             frmLogin.setLocationRelativeTo(null);
         });
-
+        
+        
         sistema = System.getProperty("os.name").strip();
     }
-    
+
     private void cargarIconos() {
         Imagenes imagen = new Imagenes();
         jlLogoSistema.setIcon(imagen.getIcono("Panel de Control 128 x 128.png"));
         lamina.setImagen(imagen.getIcono("FondoLogin 626 x 386.jpg"));
     }
-    
-    public Boolean testClase(){
+
+    public Boolean testClase() {
         txtUsuario.setText("sysdba");
         txtClave.setText("1");
         btnAceptarActionPerformed(null);

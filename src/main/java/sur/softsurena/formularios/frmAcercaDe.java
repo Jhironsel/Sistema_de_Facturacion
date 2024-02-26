@@ -7,12 +7,10 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import sur.softsurena.metodos.Imagenes;
+import static sur.softsurena.utilidades.Utilidades.LOG;
 
 public class frmAcercaDe extends javax.swing.JDialog {
-
-    private static final Logger LOG = Logger.getLogger(frmAcercaDe.class.getName());
 
     public frmAcercaDe(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -126,8 +124,8 @@ public class frmAcercaDe extends javax.swing.JDialog {
             URL url = new URL("https://www.facebook.com/jhironsel");
             try {
                 Desktop.getDesktop().browse(url.toURI());
-            } catch (IOException | URISyntaxException e) {
-                LOG.log(Level.SEVERE, e.getMessage(), e);
+            } catch (URISyntaxException | IOException ex) {
+                LOG.getLogger(frmAcercaDe.class.getName()).log(Level.SEVERE, null, ex);
             }
         } catch (MalformedURLException e1) {
             LOG.log(Level.SEVERE, e1.getMessage(), e1);

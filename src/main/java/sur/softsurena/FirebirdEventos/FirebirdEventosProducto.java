@@ -2,13 +2,12 @@ package sur.softsurena.FirebirdEventos;
 
 import java.sql.SQLException;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.firebirdsql.event.DatabaseEvent;
 import org.firebirdsql.event.FBEventManager;
 import sur.softsurena.formularios.frmProductos;
+import static sur.softsurena.utilidades.Utilidades.LOG;
 
 public class FirebirdEventosProducto extends FBEventManager{
-    private static final Logger LOG = Logger.getLogger(FirebirdEventosProducto.class.getName());
     
     //TODO Crear una clase para encapsular estos parametros.
     public synchronized boolean registro(String user, String clave, 
