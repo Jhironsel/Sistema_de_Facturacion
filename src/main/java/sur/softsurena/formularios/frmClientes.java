@@ -54,7 +54,7 @@ import static sur.softsurena.utilidades.Utilidades.sqlDateToUtilDate;
 
 public class frmClientes extends javax.swing.JInternalFrame implements ICliente {
 
-    private boolean v_nuevo = false;
+    private Boolean v_nuevo = false;
 
     private JTextFieldDateEditor v_editor = null;
 
@@ -1418,7 +1418,9 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
         }
 
         // si es nuevo validamos que el Cliente no exista
+        String accion = "editar";
         if (v_nuevo) {
+            accion = "crear";
             if (idCliente > 0) {
                 //Preguntar si desea carga la data desde la base de datos.
                 int resp = JOptionPane.showInternalConfirmDialog(
@@ -1440,11 +1442,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
                 mostrarRegistro(idCliente);
             }
         } else {
-            if (idCliente == -1) {
-                /*
-                    Si es una actualización de cliente validamos que la cedula exista
-                    en el sistema.
-                 */
+            if (idCliente <= 0) {
                 int resp = JOptionPane.showInternalConfirmDialog(
                         this,
                         "Desea editar la cedula de cliente.",
@@ -1456,19 +1454,16 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
                 if (resp == JOptionPane.YES_OPTION) {
                     return;
                 }
+
             }
         }
 
         /*
-        La general está compuesto solo del estado civil y el numero de
-        cedula.
-         */
- /*
-        Se obtiene el identificador del cliente si este se va a actualizar
-        de lo contrario se obtiene un valor 0 si se va a invertar. Ademas se
-        obtienen el tipo de persona si es fisica o juridica, el sexo, 
-        sus nombres, los apellidos, fecha de nacimiento, su estado por defecto 
-        es true.
+            Se obtiene el identificador del cliente si este se va a actualizar
+            de lo contrario se obtiene un valor 0 si se va a invertar. Ademas se
+            obtienen el tipo de persona si es fisica o juridica, el sexo, 
+            sus nombres, los apellidos, fecha de nacimiento, su estado por 
+            defecto es true.
          */
         Cliente miCliente = Cliente
                 .builder()
@@ -1498,12 +1493,6 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
         La variable accion es utilizado para ayudar al siguiente mensaje
         a mostrar los valores de editar o crear el cliente.
          */
-        String accion = "editar";
-
-        if (v_nuevo) {
-            accion = "crear";
-        }
-
         int resp = JOptionPane.showInternalConfirmDialog(
                 this,
                 "<html><b>Se va a " + accion + " el Cliente: </b>"
@@ -1537,6 +1526,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
         btnCancelarActionPerformed(evt);
 
         limpiarListas();
+        v_nuevo = null;
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -1879,9 +1869,9 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
         } else {
 
         }
-        
+
         eliminarRegistro(tblTelefonos, v_dtmTelefono, v_contactosTelsList);
-        
+
         repararColumnaTable(tblTelefonos);
     }//GEN-LAST:event_btnBorrarTelefonoMovilActionPerformed
 
@@ -1952,7 +1942,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
         } else {
 
         }
-        
+
         eliminarRegistro(tblCorreos, v_dtmCorreo, v_contactosCorreosList);
         repararColumnaTable(tblCorreos);
     }//GEN-LAST:event_btnEliminarCorreoActionPerformed
@@ -2259,11 +2249,11 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
             );
             return;
         }
-        
+
         lista.remove(tabla.getSelectedRow());
-        
+
         modelo.removeRow(tabla.getSelectedRow());
-        
+
         tabla.setModel(modelo);
     }
 
@@ -2314,33 +2304,35 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
                                 )
                         )
                         .build()
-        ).stream().forEach(cliente -> {
-            registro[0] = Cliente
-                    .builder()
-                    .id_persona(cliente.getId_persona())
-                    .generales(cliente.getGenerales())
-                    .build();
-            registro[1] = String.valueOf(
-                    cliente.getPersona()
-            ).equalsIgnoreCase("j") ? "JURÍDICA" : "FÍSICA";
-            registro[2] = cliente.getPnombre();
-            registro[3] = cliente.getSnombre();
-            registro[4] = cliente.getApellidos();
-            registro[5] = String.valueOf(
-                    cliente.getSexo()
-            ).equalsIgnoreCase("M") ? "MASCULINO" : "FEMENINO";
-            registro[6] = Utilidades.formatDate(
-                    cliente.getFecha_nacimiento(),
-                    "dd/MM/yyyy"
-            );
-            registro[7] = Utilidades.formatDate(
-                    cliente.getFecha_ingreso(),
-                    "dd/MM/yyyy"
-            );
-            registro[8] = cliente.getEstado();
+        ).stream().forEach(
+                cliente -> {
+                    registro[0] = Cliente
+                            .builder()
+                            .id_persona(cliente.getId_persona())
+                            .generales(cliente.getGenerales())
+                            .build();
+                    registro[1] = String.valueOf(
+                            cliente.getPersona()
+                    ).equalsIgnoreCase("j") ? "JURÍDICA" : "FÍSICA";
+                    registro[2] = cliente.getPnombre();
+                    registro[3] = cliente.getSnombre();
+                    registro[4] = cliente.getApellidos();
+                    registro[5] = String.valueOf(
+                            cliente.getSexo()
+                    ).equalsIgnoreCase("M") ? "MASCULINO" : "FEMENINO";
+                    registro[6] = Utilidades.formatDate(
+                            cliente.getFecha_nacimiento(),
+                            "dd/MM/yyyy"
+                    );
+                    registro[7] = Utilidades.formatDate(
+                            cliente.getFecha_ingreso(),
+                            "dd/MM/yyyy"
+                    );
+                    registro[8] = cliente.getEstado();
 
-            dtmClientes.addRow(registro);
-        });
+                    dtmClientes.addRow(registro);
+                }
+        );
 
         tblClientes.setModel(dtmClientes);
 
@@ -2468,7 +2460,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
                 }
         );
 
-        nuevasTablasDirTelCor();
+        limpiarTablasDirTelCor();
         limpiarListas();
 
         Object registroDireccion[] = new Object[TITULOS_DIRECCION.length];
@@ -2627,14 +2619,12 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
 
         jrbMovil.setSelected(true);
 
+        txtCedula.setEditable(v_nuevo);
+
         if (v_nuevo) {
-            //Nuevo registro
             txtCedula.setText("");
-            txtCedula.setEditable(true);
             txtCedula.requestFocusInWindow();
         } else {
-            //Modificar registro
-            txtCedula.setEditable(false);
             txtPNombre.requestFocusInWindow();
         }
         //nuevasTablasDirTelCor();
@@ -2646,7 +2636,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
      *
      * Se llama desde el constructor, y desde el metodo cambioBoton.
      */
-    private void nuevasTablasDirTelCor() {
+    private void limpiarTablasDirTelCor() {
         v_dtmTelefono = new DefaultTableModel(null, TITULOS_TELEFONO);
         tblTelefonos.setModel(v_dtmTelefono);
 
@@ -2675,7 +2665,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
         }
         return false;
     }
-    
+
     /**
      * Metodo que permite limpiar las lista de direcciones, contactos de
      * telefono y correos.
