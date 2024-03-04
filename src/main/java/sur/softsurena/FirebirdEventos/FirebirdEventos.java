@@ -4,9 +4,10 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import org.firebirdsql.event.DatabaseEvent;
 import org.firebirdsql.event.FBEventManager;
-import sur.softsurena.formularios.frmClientes;
-import sur.softsurena.formularios.frmProductos;
-import sur.softsurena.formularios.frmUsuarios;
+import static sur.softsurena.formularios.frmClientes.llenarTablaClientes;
+import static sur.softsurena.formularios.frmClientes.updateTablaDirreciones;
+import static sur.softsurena.formularios.frmProductos.llenarTablaProductos;
+import static sur.softsurena.formularios.frmUsuarios.llenarTablaUsuarios;
 import static sur.softsurena.utilidades.Utilidades.LOG;
 
 public class FirebirdEventos extends FBEventManager{
@@ -29,66 +30,72 @@ public class FirebirdEventos extends FBEventManager{
             if(!isConnected()){
                 connect();
             }
-            //Evento para productos.
+            //Evento para productos.********************************************
             addEventListener("add_Producto", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
-                frmProductos.llenarTabla("evento");
+                llenarTablaProductos("evento");
             });
             
             addEventListener("del_Producto", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
-                frmProductos.llenarTabla("evento");
+                llenarTablaProductos("evento");
             });
             
             addEventListener("upd_Producto", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
-                frmProductos.llenarTabla("evento");
+                llenarTablaProductos("evento");
             });
             
-            //Evento para personas.
+            //Evento para personas.*********************************************
             addEventListener("ins_persona", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
-                frmClientes.llenarTablaClientes(-1,"evento");
+                llenarTablaClientes(-1,"evento");
             });
             
             addEventListener("del_persona", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
-                frmClientes.llenarTablaClientes(-1, "evento");
+                llenarTablaClientes(-1, "evento");
             });
             
             addEventListener("upd_persona", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
-                frmClientes.llenarTablaClientes(-1, "evento");
+                llenarTablaClientes(-1, "evento");
             });    
             
-            //Evento para personas clientes.
+            //Evento para personas clientes.************************************
             addEventListener("ins_persona_clientes", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
-                frmClientes.llenarTablaClientes(-1, "evento");
+                llenarTablaClientes(-1, "evento");
             });
             
             addEventListener("del_persona_clientes", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
-                frmClientes.llenarTablaClientes(-1, "evento");
+                llenarTablaClientes(-1, "evento");
             });
             
             addEventListener("upd_persona_clientes", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
-                frmClientes.llenarTablaClientes(-1, "evento");
+                llenarTablaClientes(-1, "evento");
             });
             
-            //Eventos de usuario.
+            //Eventos de usuario.***********************************************
             addEventListener("INSERT_USUARIOS", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
-                frmUsuarios.llenarTabla();
+                llenarTablaUsuarios();
             });
             addEventListener("DELETE_USUARIOS", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
-                frmUsuarios.llenarTabla();
+                llenarTablaUsuarios();
             });
             addEventListener("UPDATE_USUARIOS", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
-                frmUsuarios.llenarTabla();
+                llenarTablaUsuarios();
+            });
+            
+            //Evento de direcciones de cliente.*********************************
+            addEventListener("SP_UPDATE_INSERT_DIRECCION", (DatabaseEvent event) -> {
+                LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
+                updateTablaDirreciones(null);
             });
         } catch (SQLException ex) {
             LOG.log(Level.SEVERE, ex.getMessage(), ex);

@@ -10,11 +10,11 @@ public class ExecuteCommand {
         try {
             Process process = Runtime.getRuntime().exec("lsblk -o NAME,UUID");
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            String line = "", aux = "\n";
+            String line, aux = "\n";
             while ((line = reader.readLine()) != null) {
                 aux += line + "\n";
             }
-            LOG.info(aux);
+            LOG.log(Level.INFO, "\n{0}", aux);
             
             process.waitFor(); // Espera a que termine el proceso
             

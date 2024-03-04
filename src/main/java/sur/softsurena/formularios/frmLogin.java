@@ -249,27 +249,23 @@ public final class frmLogin extends javax.swing.JFrame {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         //Validación de campos del login. 
         if (txtUsuario.getText().isBlank()) {
-            final String msg = "Ingrese un usuario";
             JOptionPane.showMessageDialog(
                     this,
-                    msg,
+                    "Ingrese un usuario",
                     "",
                     JOptionPane.ERROR_MESSAGE
             );
-            LOG.log(Level.SEVERE, msg);
             txtUsuario.requestFocusInWindow();
             return;
         }
 
         if (txtClave.getPassword().length == 0) {
-            final String msg = "Inserte una clave";
             JOptionPane.showMessageDialog(
                     this,
-                    msg,
+                    "Inserte una clave",
                     "",
                     JOptionPane.ERROR_MESSAGE
             );
-            LOG.log(Level.SEVERE, msg);
             txtClave.requestFocusInWindow();
             return;
         }//Fin de validaciones de campos
@@ -369,14 +365,12 @@ public final class frmLogin extends javax.swing.JFrame {
                 dominio,
                 p.cargarParamentos("").getPathBaseDatos(),
                 Integer.parseInt(puerto))) {
-            final String msg = "Error a registrar los eventos...";
             JOptionPane.showMessageDialog(
                     this,
-                    msg,
+                    "Error a registrar los eventos...",
                     "",
                     JOptionPane.ERROR_MESSAGE
             );
-            LOG.log(Level.SEVERE, msg);
             return;
         }
 

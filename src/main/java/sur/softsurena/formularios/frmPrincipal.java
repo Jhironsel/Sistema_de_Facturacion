@@ -1410,7 +1410,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         
         cbRoles.setToolTipText("Rol actual: " + usuario.getRol());
 
-        LOG.info("Rol del usuario cambiado %s".formatted(rol));
+        LOG.info("\nRol del usuario cambiado %s".formatted(rol));
     }//GEN-LAST:event_cbRolesPopupMenuWillBecomeInvisible
 
     private void mnuMantenimientoProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMantenimientoProveedoresActionPerformed

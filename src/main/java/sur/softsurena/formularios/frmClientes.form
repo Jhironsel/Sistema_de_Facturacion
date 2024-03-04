@@ -967,9 +967,9 @@
                                         <DimensionLayout dim="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="txtDireccion" min="-2" pref="550" max="-2" attributes="0"/>
+                                                  <Component id="txtDireccion" max="32767" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="jPanel7" pref="0" max="32767" attributes="0"/>
+                                                  <Component id="jPanel7" min="-2" pref="171" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
@@ -991,7 +991,7 @@
                                         <Container class="javax.swing.JPanel" name="jPanel7">
 
                                           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
-                                            <Property name="columns" type="int" value="3"/>
+                                            <Property name="columns" type="int" value="5"/>
                                             <Property name="horizontalGap" type="int" value="5"/>
                                             <Property name="rows" type="int" value="1"/>
                                           </Layout>
@@ -1002,6 +1002,9 @@
                                                   <Value id="PLUS_ONE"/>
                                                 </Property>
                                                 <Property name="name" type="java.lang.String" value="btnAgregarDirecciones" noResource="true"/>
+                                                <Property name="positionIcon" type="rojeru_san.efectos.ValoresEnum$POSITIONICON" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                                  <Value id="null"/>
+                                                </Property>
                                               </Properties>
                                               <Events>
                                                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarDireccionesActionPerformed"/>
@@ -1022,6 +1025,8 @@
                                             <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnEliminarDirrecion">
                                               <Properties>
                                                 <Property name="enabled" type="boolean" value="false"/>
+                                                <Property name="horizontalAlignment" type="int" value="0"/>
+                                                <Property name="horizontalTextPosition" type="int" value="0"/>
                                                 <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                                                   <Value id="DELETE"/>
                                                 </Property>
@@ -1106,6 +1111,7 @@
                                           </Events>
                                           <AuxValues>
                                             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new rojerusan.RSTableMetro1(){&#xa;@Override&#xa;public boolean isCellEditable(int rowIndex, int colIndex) { &#xa;    return false; //Las celdas no son editables. &#xa;}&#xa;}"/>
+                                            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
                                           </AuxValues>
                                         </Component>
                                       </SubComponents>
@@ -1334,6 +1340,7 @@
                                                   </Properties>
                                                   <AuxValues>
                                                     <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new rojerusan.RSTableMetro1(){&#xa;@Override&#xa;public boolean isCellEditable(int rowIndex, int colIndex) { &#xa;    return false; //Las celdas no son editables. &#xa;}&#xa;}"/>
+                                                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
                                                   </AuxValues>
                                                 </Component>
                                               </SubComponents>
@@ -1488,6 +1495,7 @@
                                                   </Properties>
                                                   <AuxValues>
                                                     <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new rojerusan.RSTableMetro1(){&#xa;@Override&#xa;public boolean isCellEditable(int rowIndex, int colIndex) { &#xa;    return false; //Las celdas no son editables. &#xa;}&#xa;}"/>
+                                                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
                                                   </AuxValues>
                                                 </Component>
                                               </SubComponents>

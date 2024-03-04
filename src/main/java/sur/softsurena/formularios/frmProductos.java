@@ -942,7 +942,7 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
                 v_fila = 1;
                 jsPaginaNro.setValue(1);
                 criterioBusqueda = producto.strip();
-                llenarTabla(criterioBusqueda);
+                llenarTablaProductos(criterioBusqueda);
                 reOrdenar();
             }
         } else if (jtpPrincipal.getSelectedComponent() == jpMantenimiento) {
@@ -1179,7 +1179,7 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
         //Se llena la tabla de producto por primera vez. 
-        llenarTabla(criterioBusqueda);
+        llenarTablaProductos(criterioBusqueda);
         reOrdenar();
         updateCategoria();
 
@@ -1296,16 +1296,16 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
     }//GEN-LAST:event_txtNotasKeyTyped
 
     private void jsCantidadFilasStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jsCantidadFilasStateChanged
-        llenarTabla(criterioBusqueda);
+        llenarTablaProductos(criterioBusqueda);
     }//GEN-LAST:event_jsCantidadFilasStateChanged
 
     private void jsPaginaNroStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jsPaginaNroStateChanged
-        llenarTabla(criterioBusqueda);
+        llenarTablaProductos(criterioBusqueda);
     }//GEN-LAST:event_jsPaginaNroStateChanged
 
     private void btnActualizarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarListaActionPerformed
         criterioBusqueda = "";
-        llenarTabla(criterioBusqueda);
+        llenarTablaProductos(criterioBusqueda);
         reOrdenar();
     }//GEN-LAST:event_btnActualizarListaActionPerformed
 
@@ -1369,7 +1369,7 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
      *
      * @param criterioBusqueda
      */
-    public static void llenarTabla(String criterioBusqueda) {
+    public static void llenarTablaProductos(String criterioBusqueda) {
 
         if (Objects.isNull(criterioBusqueda)) {
             criterioBusqueda = "";

@@ -580,7 +580,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
-        llenarTabla();
+        llenarTablaUsuarios();
     }//GEN-LAST:event_formInternalFrameOpened
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
@@ -807,7 +807,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
 
     private void jtpPrivilegiosStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jtpPrivilegiosStateChanged
         if (jtpPrivilegios.getSelectedComponent() == jpMantUsuarios) {
-            llenarTabla();
+            llenarTablaUsuarios();
         } else if (jtpPrivilegios.getSelectedComponent() == jpMantRoles) {
             llenarTblRoles();
         } else if (jtpPrivilegios.getSelectedComponent() == jpDefRoles) {
@@ -1125,7 +1125,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
      * Metodo que entraga el listado de los usuarios del sistema.
      *
      */
-    public static void llenarTabla() {
+    public static void llenarTablaUsuarios() {
         tblUsuarios.removeAll();
         String titulos[] = {"Nombre usuario", "Primer Nombre",
             "Segundo Nombre", "Apellidos", "Administrador", "Estado"};

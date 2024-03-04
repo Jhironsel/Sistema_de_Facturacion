@@ -34,7 +34,7 @@ public class FirebirdEventosProducto extends FBEventManager{
                         "Event [{0}] occured {1} time(s)", 
                         new Object[]{event.getEventName(), event.getEventCount()}
                 );
-                frmProductos.llenarTabla("evento");
+                frmProductos.llenarTablaProductos("evento");
             });
             
             addEventListener("del_Producto", (DatabaseEvent event) -> {
@@ -43,7 +43,7 @@ public class FirebirdEventosProducto extends FBEventManager{
                         "Event [{0}] occured {1} time(s)", 
                         new Object[]{event.getEventName(), event.getEventCount()}
                 );
-                frmProductos.llenarTabla("evento");
+                frmProductos.llenarTablaProductos("evento");
             });
             
             addEventListener("upd_Producto", (DatabaseEvent event) -> {
@@ -52,7 +52,7 @@ public class FirebirdEventosProducto extends FBEventManager{
                         "Event [{0}] occured {1} time(s)", 
                         new Object[]{event.getEventName(), event.getEventCount()}
                 );
-                frmProductos.llenarTabla("evento");
+                frmProductos.llenarTablaProductos("evento");
             });
         } catch (SQLException ex) {
             LOG.log(Level.SEVERE, ex.getMessage(), ex);

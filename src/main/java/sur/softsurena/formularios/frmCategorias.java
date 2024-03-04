@@ -347,7 +347,10 @@ public class frmCategorias extends javax.swing.JDialog {
             fechaCreacion = ((Categoria) cbCategoria.getSelectedItem()).getFecha_creacion().toString();
         } catch (java.lang.NullPointerException e) {
             fechaCreacion = "01.01.2000";
-            LOG.info("Fecha no proporcionada");
+            LOG.info("""
+                     
+                     Fecha no proporcionada.
+                     """);
         }
 
         jlImagen.setIcon(Utilidades.imagenDecode64(((Categoria) cbCategoria.getSelectedItem()).getImage_texto(), 96, 96));
