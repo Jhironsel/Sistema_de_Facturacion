@@ -8,7 +8,7 @@ import javax.swing.SwingUtilities;
 import lombok.Getter;
 import lombok.Setter;
 import sur.softsurena.entidades.Gasto;
-import sur.softsurena.utilidades.Resultados;
+import sur.softsurena.utilidades.Resultado;
 import sur.softsurena.hilos.hiloImpresionFactura;
 import static sur.softsurena.metodos.M_Gasto.agregarGastosPorTurno;
 
@@ -232,7 +232,7 @@ public class frmGasto extends java.awt.Dialog {
             descripcion = txtDescripcion.getText();
         }
 
-        Resultados resultado = agregarGastosPorTurno(Gasto
+        Resultado resultado = agregarGastosPorTurno(Gasto
                         .builder()
                         .id_turno(getIdTurno())
                         .descripcion(descripcion)

@@ -12,7 +12,7 @@ import static sur.softsurena.metodos.M_Turno.getTurnosActivos;
 import static sur.softsurena.metodos.M_Turno.getTurnosByUserName;
 import static sur.softsurena.metodos.M_Turno.habilitarTurno;
 import static sur.softsurena.metodos.M_Turno.usuarioTurnoActivo;
-import sur.softsurena.utilidades.Resultados;
+import sur.softsurena.utilidades.Resultado;
 import sur.softsurena.utilidades.Utilidades;
 
 /**
@@ -353,7 +353,7 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
             return;
         }
 
-        Resultados resultado = habilitarTurno(id_almacen, userName);
+        Resultado resultado = habilitarTurno(id_almacen, userName);
 
         //Si el usuario no tiene turno abierto, procedemos habilitar turno.
         JOptionPane.showInternalMessageDialog(

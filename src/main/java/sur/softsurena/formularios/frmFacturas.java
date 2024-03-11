@@ -57,7 +57,7 @@ import static sur.softsurena.metodos.M_Turno.turnosActivoByUsuario;
 import static sur.softsurena.metodos.M_Usuario.getUsuarioActual;
 import sur.softsurena.utilidades.DefaultTableCellHeaderRenderer;
 import sur.softsurena.utilidades.FiltroBusqueda;
-import sur.softsurena.utilidades.Resultados;
+import sur.softsurena.utilidades.Resultado;
 import sur.softsurena.utilidades.Utilidades;
 import static sur.softsurena.utilidades.Utilidades.LOG;
 import static sur.softsurena.utilidades.Utilidades.imagenDecode64;
@@ -873,7 +873,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
                     boton.requestFocusInWindow();
                 }
             } catch (SQLException ex) {
-                LOG.log(Level.SEVERE, ex.getMessage(), ex);
+                LOG.log(Level.SEVERE, "Error al cargar los productos.", ex);
             }
         }
 
@@ -1007,7 +1007,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
             totales();
 
         } catch (HeadlessException ex) {
-            LOG.log(Level.SEVERE, ex.getMessage(), ex);
+            LOG.log(Level.SEVERE, "Error al remover articulo.", ex);
         }
     }
 
@@ -1234,7 +1234,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
                     tblDetalle.setRowSelectionInterval(rs.getInt("idLinea") - 1, rs.getInt("idLinea") - 1);
                 }
             } catch (SQLException ex) {
-                LOG.log(Level.SEVERE, ex.getMessage(), ex);
+                LOG.log(Level.SEVERE, "Error al leer los detalles de la factura.", ex);
             }
 
             precio();//Precio porque acaba de ser creada
@@ -1249,7 +1249,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
                 setIdCliente(rs.getInt(1));
                 nombreCliente = rs.getString(2);
             } catch (SQLException ex) {
-                LOG.log(Level.SEVERE, ex.getMessage(), ex);
+                LOG.log(Level.SEVERE, "Error al cargar la factura.", ex);
             }
 
             for (int i = 0; i <= cmbCliente.getItemCount() + 1; i++) {
@@ -1503,7 +1503,6 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
                 frmPrincipal.jPanelImpresion,
                 frmPrincipal.jprImpresion).start();
 
-        limpiarTabla();
         totales();
 
         rbtContado.doClick();
@@ -1570,10 +1569,12 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
             getPropiedad().store(new FileWriter(
                     new File(getClass().getResource("/sur/softsurena/properties/frmFacturaPropiedades.properties").toURI())),
                     "Valor que permite obtener las categorias.");
-        } catch (IOException ex) {
-            LOG.log(Level.SEVERE, ex.getMessage(), ex);
-        } catch (URISyntaxException ex) {
-            LOG.log(Level.SEVERE, ex.getMessage(), ex);
+        } catch (IOException | URISyntaxException ex) {
+            LOG.log(
+                    Level.SEVERE, 
+                    "Error al cargar la URI de archivo properties frmFacturaPropiedades.properties", 
+                    ex
+            );
         }
     }//GEN-LAST:event_cbTodosMouseClicked
 
@@ -1635,7 +1636,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
                 rs.next();
                 precio = rs.getDouble("Precio");
             } catch (SQLException ex) {
-                LOG.log(Level.SEVERE, ex.getMessage(), ex);
+                LOG.log(Level.SEVERE, "Error al obtener precio.", ex);
             }//Fin de obtener el precio del producto
 
 //            facturas.add(
@@ -1898,20 +1899,6 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
         }
     }
 
-    private void limpiarTabla() {
-        try {
-            DefaultTableModel modelo = (DefaultTableModel) tblDetalle.getModel();
-            int filas = tblDetalle.getRowCount();
-            for (int i = 0; filas > i; i++) {
-                modelo.removeRow(0);
-            }
-        } catch (Exception ex) {
-            LOG.log(Level.SEVERE, ex.getMessage(), ex);
-        }
-        if (cmbCliente.getItemCount() > 0) {
-            cmbCliente.setSelectedIndex(0);
-        }
-    }
 
     private void totales() {
         int num = tblDetalle.getRowCount();
@@ -2018,7 +2005,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
      * @return retorna un objecto de la clase Resultados, la cual lleva consigo
      * el estado de la validacion true o false y la cantidad valida.
      */
-    private Resultados validarCantidad() {
+    private Resultado validarCantidad() {
         Float cantidad = 0.0f;
         boolean bandera;
         do {
@@ -2061,7 +2048,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
 
         } while (bandera);//Fin del bucle.
 
-        return Resultados.builder().
+        return Resultado.builder().
                 cantidadDecimal(cantidad).
                 estado(bandera)
                 .build();

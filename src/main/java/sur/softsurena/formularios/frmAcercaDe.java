@@ -128,7 +128,7 @@ public class frmAcercaDe extends javax.swing.JDialog {
                 LOG.getLogger(frmAcercaDe.class.getName()).log(Level.SEVERE, null, ex);
             }
         } catch (MalformedURLException e1) {
-            LOG.log(Level.SEVERE, e1.getMessage(), e1);
+            LOG.log(Level.SEVERE, "Error al dirigirse a facebook.", e1);
         }
     }//GEN-LAST:event_jlLogoMouseClicked
 

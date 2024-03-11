@@ -24,7 +24,7 @@ import static sur.softsurena.metodos.M_Usuario.getNombresUsuarios;
 import static sur.softsurena.metodos.M_Usuario.getUsuario;
 import static sur.softsurena.metodos.M_Usuario.getUsuarios;
 import sur.softsurena.utilidades.DefaultTableCellHeaderRenderer;
-import sur.softsurena.utilidades.Resultados;
+import sur.softsurena.utilidades.Resultado;
 import static sur.softsurena.utilidades.Utilidades.columnasCheckBox;
 import static sur.softsurena.utilidades.Utilidades.repararColumnaTable;
 
@@ -739,7 +739,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
                 return;
             }
 
-            Resultados resultados = borrarUsuario(usuario.strip());
+            Resultado resultados = borrarUsuario(usuario.strip());
 
             JOptionPane.showInternalMessageDialog(
                     this,

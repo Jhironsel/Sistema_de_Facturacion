@@ -5,7 +5,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import sur.softsurena.entidades.Almacen;
 import sur.softsurena.entidades.Privilegio;
-import sur.softsurena.utilidades.Resultados;
+import sur.softsurena.utilidades.Resultado;
 import static sur.softsurena.metodos.M_Almacen.agregarAlmacen;
 import static sur.softsurena.metodos.M_Almacen.getAlmacenesList;
 import static sur.softsurena.metodos.M_Privilegio.privilegio;
@@ -526,7 +526,7 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
             }
         }
 
-        Resultados resultado = null;
+        Resultado resultado = null;
 
         if (v_nuevo) {
             resultado = agregarAlmacen(Almacen.

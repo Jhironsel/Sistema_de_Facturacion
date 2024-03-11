@@ -169,16 +169,16 @@
                                       <Group type="102" alignment="1" attributes="0">
                                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jsCantidadFilas" min="-2" pref="60" max="-2" attributes="0"/>
+                                          <Component id="jsCantidadFilas" min="-2" pref="83" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jsPaginaNro" min="-2" pref="60" max="-2" attributes="0"/>
+                                          <Component id="jsPaginaNro" min="-2" pref="85" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="jScrollPane6" max="32767" attributes="0"/>
-                                              <Component id="jScrollPane2" pref="788" max="32767" attributes="0"/>
+                                              <Component id="jScrollPane2" pref="802" max="32767" attributes="0"/>
                                           </Group>
                                           <EmptySpace min="-2" max="-2" attributes="0"/>
                                       </Group>
@@ -434,7 +434,7 @@
                                   <Group type="102" attributes="0">
                                       <EmptySpace max="32767" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="jtpDireccionContactos" max="32767" attributes="0"/>
+                                          <Component id="jtpGeneralesDireccionContactos" max="32767" attributes="0"/>
                                           <Component id="jlFechaCreacion" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="32767" attributes="0"/>
@@ -447,14 +447,14 @@
                                       <EmptySpace max="32767" attributes="0"/>
                                       <Component id="jlFechaCreacion" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                                      <Component id="jtpDireccionContactos" max="32767" attributes="0"/>
+                                      <Component id="jtpGeneralesDireccionContactos" max="32767" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
                           </Layout>
                           <SubComponents>
-                            <Container class="javax.swing.JTabbedPane" name="jtpDireccionContactos">
+                            <Container class="javax.swing.JTabbedPane" name="jtpGeneralesDireccionContactos">
                               <Properties>
                                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                   <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -468,10 +468,10 @@
                                   </Border>
                                 </Property>
                                 <Property name="toolTipText" type="java.lang.String" value=""/>
-                                <Property name="name" type="java.lang.String" value="jtpDireccionContactos" noResource="true"/>
+                                <Property name="name" type="java.lang.String" value="jtpGeneralesDireccionContactos" noResource="true"/>
                               </Properties>
                               <Events>
-                                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtpDireccionContactosKeyPressed"/>
+                                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtpGeneralesDireccionContactosKeyPressed"/>
                               </Events>
 
                               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>

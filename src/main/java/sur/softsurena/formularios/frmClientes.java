@@ -3,7 +3,6 @@ package sur.softsurena.formularios;
 import com.toedter.calendar.JTextFieldDateEditor;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,12 +47,13 @@ import static sur.softsurena.metodos.M_Provincia.getProvincias;
 import static sur.softsurena.metodos.M_Sexo.getSexoList;
 import static sur.softsurena.metodos.M_TipoPersona.getTipoPersonaList;
 import sur.softsurena.utilidades.FiltroBusqueda;
-import sur.softsurena.utilidades.Resultados;
-import static sur.softsurena.utilidades.Utilidades.LOG;
+import sur.softsurena.utilidades.Resultado;
 import static sur.softsurena.utilidades.Utilidades.columnasCheckBox;
+import static sur.softsurena.utilidades.Utilidades.eliminarRegistroTabla;
 import static sur.softsurena.utilidades.Utilidades.formatDate;
 import static sur.softsurena.utilidades.Utilidades.repararColumnaTable;
 import static sur.softsurena.utilidades.Utilidades.sqlDateToUtilDate;
+import static sur.softsurena.utilidades.Utilidades.validarCampo;
 
 public class frmClientes extends javax.swing.JInternalFrame implements ICliente {
 
@@ -165,7 +165,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
         jspMantenimiento = new javax.swing.JScrollPane();
         jpMantenimiento = new javax.swing.JPanel();
         jpMantenimiento2 = new javax.swing.JPanel();
-        jtpDireccionContactos = new javax.swing.JTabbedPane();
+        jtpGeneralesDireccionContactos = new javax.swing.JTabbedPane();
         jpGenerales = new javax.swing.JPanel();
         jcbSexo = new javax.swing.JComboBox();
         txtSNombre = new javax.swing.JTextField();
@@ -377,15 +377,15 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpClientesLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jsCantidadFilas, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jsCantidadFilas, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jsPaginaNro, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jsPaginaNro, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jpClientesLayout.createSequentialGroup()
                         .addGroup(jpClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane6)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 802, Short.MAX_VALUE))
                         .addContainerGap())))
         );
         jpClientesLayout.setVerticalGroup(
@@ -414,12 +414,12 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
 
         jpMantenimiento2.setName("jpMantenimiento2"); // NOI18N
 
-        jtpDireccionContactos.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 45, 223), 2, true)));
-        jtpDireccionContactos.setToolTipText("");
-        jtpDireccionContactos.setName("jtpDireccionContactos"); // NOI18N
-        jtpDireccionContactos.addKeyListener(new java.awt.event.KeyAdapter() {
+        jtpGeneralesDireccionContactos.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 45, 223), 2, true)));
+        jtpGeneralesDireccionContactos.setToolTipText("");
+        jtpGeneralesDireccionContactos.setName("jtpGeneralesDireccionContactos"); // NOI18N
+        jtpGeneralesDireccionContactos.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtpDireccionContactosKeyPressed(evt);
+                jtpGeneralesDireccionContactosKeyPressed(evt);
             }
         });
 
@@ -604,7 +604,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
 
         jpGeneralesLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jcbEstadoCivil, jcbPersona, jcbSexo});
 
-        jtpDireccionContactos.addTab("Generales", jpGenerales);
+        jtpGeneralesDireccionContactos.addTab("Generales", jpGenerales);
 
         jpDireccion.setToolTipText("Acceso con Control + 2");
         jpDireccion.setName("jpDireccion"); // NOI18N
@@ -790,7 +790,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
                 .addGap(0, 0, 0))
         );
 
-        jtpDireccionContactos.addTab("Dirección", jpDireccion);
+        jtpGeneralesDireccionContactos.addTab("Dirección", jpDireccion);
 
         jpContactos.setToolTipText("Acceso con Control + 3");
         jpContactos.setName("jpContactos"); // NOI18N
@@ -1030,7 +1030,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
                 .addGap(0, 0, 0))
         );
 
-        jtpDireccionContactos.addTab("Contactos", jpContactos);
+        jtpGeneralesDireccionContactos.addTab("Contactos", jpContactos);
 
         jlFechaCreacion.setText("Fecha de creacion: ");
         jlFechaCreacion.setName("jlFechaCreacion"); // NOI18N
@@ -1042,7 +1042,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
             .addGroup(jpMantenimiento2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jpMantenimiento2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jtpDireccionContactos)
+                    .addComponent(jtpGeneralesDireccionContactos)
                     .addComponent(jlFechaCreacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -1052,7 +1052,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jlFechaCreacion)
                 .addGap(0, 0, 0)
-                .addComponent(jtpDireccionContactos)
+                .addComponent(jtpGeneralesDireccionContactos)
                 .addContainerGap())
         );
 
@@ -1225,9 +1225,9 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
 
         //Se agrega el panel de manteniento y se muestra.
         cambioBoton(true);
-        
+
         idCliente = ((Persona) tblClientes.getValueAt(
-                        tblClientes.getSelectedRow(), 0)).getId_persona();
+                tblClientes.getSelectedRow(), 0)).getId_persona();
 
         //Al mostrarse el modulo de mantenimiento se deberia mostrar la 
         //informacion del cliente.
@@ -1264,7 +1264,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
 
         //Mandamos a borrar el cliente y obtenemos el resultado de la operacion
         //y almacenamos en una variable.
-        Resultados resultados = borrarCliente(
+        Resultado resultados = borrarCliente(
                 ((Cliente) tblClientes.getValueAt(
                         tblClientes.getSelectedRow(), 0)).getId_persona()
         );
@@ -1289,14 +1289,12 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
                 JOptionPane.QUESTION_MESSAGE
         );
 
-        try {
-            txtCedula1.commitEdit();
-        } catch (ParseException ex) {
-            LOG.info(
-                    """
-                     
-            No se ingreso criterios de busquedas.
-            """
+        if (validarCampo(txtCedula1)) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Error en el campo de la cedula, Vuelva a digitarla de nuevo",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
             );
             return;
         }
@@ -1333,23 +1331,36 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
      * 6) Debe exitir una forma de contacto obligatorio.
      */
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        if (validaCampoCedula(txtCedula)) {
+        if (validarCampo(txtCedula)) {
+            JOptionPane.showInternalMessageDialog(
+                    this,
+                    "Error en el campo de la cedula, Vuelva a digitarla de nuevo",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
             return;
-        }// Validacion 1
+        }
 
         if (M_Generales.cedula(txtCedula.getValue().toString())) {
             int resp = JOptionPane.showInternalConfirmDialog(
                     this,
                     """
-                    Cedula no pasan las pruebas.
+                    Cedula no pasa la prueba de validacion.
                     Desea continuar?
                     """,
                     "",
                     JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE
+                    JOptionPane.WARNING_MESSAGE,
+                    null
             );
 
             if (resp == JOptionPane.NO_OPTION) {
+                jtpGeneralesDireccionContactos.setSelectedComponent(jpGenerales);
+                txtCedula.requestFocusInWindow();
+                txtCedula.setSelectionStart(0);
+                txtCedula.setSelectionEnd(
+                        txtCedula.getValue().toString().length()
+                );
                 return;
             }
         }
@@ -1362,7 +1373,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
                     JOptionPane.ERROR_MESSAGE
             );
 
-            jtpDireccionContactos.setSelectedComponent(jpGenerales);
+            jtpGeneralesDireccionContactos.setSelectedComponent(jpGenerales);
             txtPNombre.requestFocusInWindow();
             return;
         }//Validacion 2
@@ -1374,7 +1385,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
                     "",
                     JOptionPane.ERROR_MESSAGE
             );
-            jtpDireccionContactos.setSelectedComponent(jpGenerales);
+            jtpGeneralesDireccionContactos.setSelectedComponent(jpGenerales);
             txtApellidos.requestFocusInWindow();
             return;
         }//Validacion 2
@@ -1386,7 +1397,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
                     "",
                     JOptionPane.ERROR_MESSAGE
             );
-            jtpDireccionContactos.setSelectedComponent(jpGenerales);
+            jtpGeneralesDireccionContactos.setSelectedComponent(jpGenerales);
             dchFechaNacimiento.requestFocusInWindow();
             return;
         }//Validacion 3
@@ -1398,36 +1409,53 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
                     "",
                     JOptionPane.ERROR_MESSAGE
             );
-            jtpDireccionContactos.setSelectedComponent(jpGenerales);
+            jtpGeneralesDireccionContactos.setSelectedComponent(jpGenerales);
             dchFechaNacimiento.requestFocusInWindow();
             return;
         }//Validacion 4
 
         if (tblDireccion.getRowCount() < 1) {
-            JOptionPane.showInternalMessageDialog(
+            int resp = JOptionPane.showInternalConfirmDialog(
                     this,
-                    "Debe digitar una direccion del cliente.",
+                    """
+                    
+                    Cliente no cuenta con una dirrecion.
+                    Desea agregar una direccion?
+                    
+                    """,
                     "",
-                    JOptionPane.ERROR_MESSAGE
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE,
+                    null
             );
-            jtpDireccionContactos.setSelectedComponent(jpDireccion);
-            txtDireccion.requestFocusInWindow();
-            return;
+            if (resp == JOptionPane.YES_OPTION) {
+                jtpGeneralesDireccionContactos.setSelectedComponent(jpDireccion);
+                txtDireccion.requestFocusInWindow();
+                return;
+            }
         }//Validacion 5
 
         if (tblCorreos.getRowCount() < 1 & tblTelefonos.getRowCount() < 1) {
-            JOptionPane.showInternalMessageDialog(
+            int resp = JOptionPane.showInternalConfirmDialog(
                     this,
                     """
-                    No existe forma de contactar al cliente, 
-                    Agregue un numero de telefono o correo electronico.
+                    
+                    No existe forma de contactar al cliente.
+                    Desea agreguar un numero de telefono o correo electronico?
+                    
                     """,
                     "",
-                    JOptionPane.ERROR_MESSAGE
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE,
+                    null
             );
-            jtpDireccionContactos.setSelectedComponent(jpContactos);
-            jtpContactos.setSelectedComponent(jpTelefonos);
-            return;
+
+            if (resp == JOptionPane.YES_OPTION) {
+                jtpGeneralesDireccionContactos.setSelectedComponent(jpContactos);
+                jtpContactos.setSelectedComponent(jpTelefonos);
+                return;
+            }
+
         }//Validacion 6
 
         //Buscar la cedula en la base de datos.
@@ -1463,18 +1491,15 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
                         JOptionPane.QUESTION_MESSAGE
                 );
 
-                if (resp == JOptionPane.NO_OPTION) {
-                    return;
+                if (resp == JOptionPane.YES_OPTION) {
+                    mostrarRegistro(idCliente);
+                    v_nuevo = false;
                 }
-
-                //Carga la informacion del cliente que se trata de registrar
-                mostrarRegistro(idCliente);
-            }else{
-                
+                return;
             }
         } else {
-                idCliente = ((Cliente) tblClientes.getValueAt(
-                        tblClientes.getSelectedRow(), 0)).getId_persona();
+            idCliente = ((Cliente) tblClientes.getValueAt(
+                    tblClientes.getSelectedRow(), 0)).getId_persona();
         }
 
         int resp = JOptionPane.showInternalConfirmDialog(
@@ -1528,8 +1553,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
                 .estado(cbEstado.isSelected())
                 .build();
 
-        Resultados resultados = (v_nuevo ? agregarCliente(miCliente)
-                : modificarCliente(miCliente));
+        Resultado resultados = (v_nuevo ? agregarCliente(miCliente) : modificarCliente(miCliente));
 
         JOptionPane.showInternalMessageDialog(
                 this,
@@ -1538,10 +1562,11 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
                 resultados.getIcono()
         );
 
-        btnCancelarActionPerformed(evt);
-
-        limpiarListas();
-        v_nuevo = null;
+        if (resultados.getEstado()) {
+            btnCancelarActionPerformed(evt);
+            limpiarListas();
+            v_nuevo = null;
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -1785,11 +1810,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
     }//GEN-LAST:event_btnAgregarDireccionesActionPerformed
 
     private void btnEliminarDirrecionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarDirrecionActionPerformed
-        if (tblDireccion.getSelectedRow() == -1) {
-            return;
-        }
-
-        eliminarRegistro(tblDireccion, v_dtmDireccion, v_direccionesList);
+        eliminarRegistroTabla(tblDireccion, v_dtmDireccion, v_direccionesList);
 
         repararColumnaTable(tblDireccion);
     }//GEN-LAST:event_btnEliminarDirrecionActionPerformed
@@ -1818,15 +1839,10 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
     }//GEN-LAST:event_txtTelelfonoMovilKeyPressed
 
     private void btnAgregarTelefonoMovilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarTelefonoMovilActionPerformed
-
-        try {
-            //Validacion para agregar un telefono a la lista.
-            //Que el campo de telefono o movil no sea nulo para poder registrarlo.
-            txtTelelfonoMovil.commitEdit();
-        } catch (ParseException ex) {
+        if (validarCampo(txtTelelfonoMovil)) {
             JOptionPane.showInternalMessageDialog(
                     this,
-                    "Debe digitar numero telefonico.",
+                    "Debe digitar numero telefonico valido..",
                     "",
                     JOptionPane.ERROR_MESSAGE
             );
@@ -1877,7 +1893,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
 
         }
 
-        eliminarRegistro(tblTelefonos, v_dtmTelefono, v_contactosTelsList);
+        eliminarRegistroTabla(tblTelefonos, v_dtmTelefono, v_contactosTelsList);
 
         repararColumnaTable(tblTelefonos);
     }//GEN-LAST:event_btnBorrarTelefonoMovilActionPerformed
@@ -1950,12 +1966,20 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
 
         }
 
-        eliminarRegistro(tblCorreos, v_dtmCorreo, v_contactosCorreosList);
+        eliminarRegistroTabla(tblCorreos, v_dtmCorreo, v_contactosCorreosList);
         repararColumnaTable(tblCorreos);
     }//GEN-LAST:event_btnEliminarCorreoActionPerformed
 
     private void btnCedulaValidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCedulaValidadActionPerformed
-        if (validaCampoCedula(txtCedula)) {
+        if (validarCampo(txtCedula)) {
+            JOptionPane.showInternalMessageDialog(
+                    this,
+                    "Error en el campo de la cedula, Vuelva a digitarla de nuevo",
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            txtCedula.setValue(null);
+            txtCedula.requestFocusInWindow();
             return;
         }
 
@@ -1966,7 +1990,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
                         .build()
         );
 
-        if (Objects.isNull(clientes) || clientes.isEmpty()) {
+        if (clientes.isEmpty()) {
             JOptionPane.showInternalMessageDialog(
                     this,
                     "Cedula valida, puede continuar.",
@@ -1999,7 +2023,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
                      * devuelve falso, es por ello se valida la negacion de
                      * false, para obtener true.
                      */
-                    Resultados resultado = agregarClienteById(idCliente);
+                    Resultado resultado = agregarClienteById(idCliente);
 
                     //!resultado.getEstado();
                     JOptionPane.showInternalMessageDialog(
@@ -2007,6 +2031,14 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
                             resultado.getMensaje(),
                             "",
                             resultado.getIcono()
+                    );
+                } else {
+                    JOptionPane.showInternalMessageDialog(
+                            this,
+                            "Este usuario esta registrado y activo.",
+                            "",
+                            JOptionPane.INFORMATION_MESSAGE,
+                            null
                     );
                 }
             }
@@ -2043,33 +2075,39 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
 
         //Validando los botones por consultas. 
         //Permiso para el boton de nuevo
-        btnNuevo.setEnabled(privilegio(Privilegio
-                .builder()
-                .privilegio(Privilegio.PRIVILEGIO_EXECUTE)
-                .nombre_relacion("SP_INSERT_CLIENTE_SB")
-                .nombre_campo("^")
-                .build()
-        )
+        btnNuevo.setEnabled(
+                privilegio(
+                        Privilegio
+                                .builder()
+                                .privilegio(Privilegio.PRIVILEGIO_EXECUTE)
+                                .nombre_relacion("SP_INSERT_CLIENTE_SB")
+                                .nombre_campo("^")
+                                .build()
+                )
         );
 
         //Permiso para el boton de Borrar
-        btnBorrar.setEnabled(privilegio(Privilegio
-                .builder()
-                .privilegio(Privilegio.PRIVILEGIO_EXECUTE)
-                .nombre_relacion("SP_DELETE_CLIENTE_SB")
-                .nombre_campo("^")
-                .build()
-        )
+        btnBorrar.setEnabled(
+                privilegio(
+                        Privilegio
+                                .builder()
+                                .privilegio(Privilegio.PRIVILEGIO_EXECUTE)
+                                .nombre_relacion("SP_DELETE_CLIENTE_SB")
+                                .nombre_campo("^")
+                                .build()
+                )
         );
 
         //Permiso para el boton de Modificar
-        btnModificar.setEnabled(privilegio(Privilegio
-                .builder()
-                .privilegio(Privilegio.PRIVILEGIO_EXECUTE)
-                .nombre_relacion("SP_UPDATE_CLIENTE_SB")
-                .nombre_campo("^")
-                .build()
-        )
+        btnModificar.setEnabled(
+                privilegio(
+                        Privilegio
+                                .builder()
+                                .privilegio(Privilegio.PRIVILEGIO_EXECUTE)
+                                .nombre_relacion("SP_UPDATE_CLIENTE_SB")
+                                .nombre_campo("^")
+                                .build()
+                )
         );
     }//GEN-LAST:event_formInternalFrameOpened
 
@@ -2122,8 +2160,8 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
         String direccion = tblDireccion.getValueAt(
                 tblDireccion.getSelectedRow(), 3).toString();
 
-        int idRegistro = ((Direccion) tblDireccion.getValueAt(
-                tblDireccion.getSelectedRow(), 3)).getId();
+//        int idRegistro = ((Direccion) tblDireccion.getValueAt(
+//                tblDireccion.getSelectedRow(), 3)).getId();
 
         for (int i = 0; i < jcbProvincias.getItemCount(); i++) {
             int provinciaCombo = ((Provincia) jcbProvincias.getItemAt(i)).getId();
@@ -2154,19 +2192,19 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
         btnEliminarDirrecion.setEnabled(false);
     }//GEN-LAST:event_btnEditarDireccionActionPerformed
 
-    private void jtpDireccionContactosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtpDireccionContactosKeyPressed
+    private void jtpGeneralesDireccionContactosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtpGeneralesDireccionContactosKeyPressed
         if (evt.isControlDown()) {
             if (evt.getKeyCode() == KeyEvent.VK_1) {
-                jtpDireccionContactos.setSelectedIndex(jtpDireccionContactos.indexOfComponent(jpGenerales));
+                jtpGeneralesDireccionContactos.setSelectedIndex(jtpGeneralesDireccionContactos.indexOfComponent(jpGenerales));
             }
             if (evt.getKeyCode() == KeyEvent.VK_2) {
-                jtpDireccionContactos.setSelectedIndex(jtpDireccionContactos.indexOfComponent(jpDireccion));
+                jtpGeneralesDireccionContactos.setSelectedIndex(jtpGeneralesDireccionContactos.indexOfComponent(jpDireccion));
             }
             if (evt.getKeyCode() == KeyEvent.VK_3) {
-                jtpDireccionContactos.setSelectedIndex(jtpDireccionContactos.indexOfComponent(jpContactos));
+                jtpGeneralesDireccionContactos.setSelectedIndex(jtpGeneralesDireccionContactos.indexOfComponent(jpContactos));
             }
         }
-    }//GEN-LAST:event_jtpDireccionContactosKeyPressed
+    }//GEN-LAST:event_jtpGeneralesDireccionContactosKeyPressed
 
     private void jcbProvinciasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcbProvinciasKeyPressed
         if (evt.isControlDown()) {
@@ -2243,24 +2281,6 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
         btnEditarDireccion.setEnabled(valor);
         btnEliminarDirrecion.setEnabled(valor);
     }//GEN-LAST:event_tblDireccionMouseClicked
-
-    private void eliminarRegistro(JTable tabla, DefaultTableModel modelo, List lista) {
-        if (tabla.getSelectedRow() == -1) {
-            JOptionPane.showInternalMessageDialog(
-                    this,
-                    "Debe seleccionar un registro de la tabla",
-                    "",
-                    JOptionPane.ERROR_MESSAGE
-            );
-            return;
-        }
-
-        lista.remove(tabla.getSelectedRow());
-
-        modelo.removeRow(tabla.getSelectedRow());
-
-        tabla.setModel(modelo);
-    }
 
     /**
      * Metodo utilizado para llenar la tabla de cliente del sistema. Nota: Este
@@ -2417,7 +2437,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
         if (Objects.isNull(idCliente)) {
             idCliente = frmClientes.idCliente;
         }
-        LOG.info("\nSe muestran los registro del cliente %s".formatted(idCliente));
+
         //Obteniendo el objeto cliente.
         getClientes(
                 FiltroBusqueda
@@ -2593,7 +2613,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
         /*
             Seleccionamos las pestañas de direcciones por defecto.
          */
-        jtpDireccionContactos.setSelectedComponent(jpGenerales);
+        jtpGeneralesDireccionContactos.setSelectedComponent(jpGenerales);
 
         /*
             Si el valor de activo es true, quiere decir que se va a insertar o 
@@ -2679,25 +2699,6 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
 
         v_dtmCorreo = new DefaultTableModel(null, TITULOS_CORREO);
         tblCorreos.setModel(v_dtmCorreo);
-        LOG.info("\nTablas de telefono, correo y direcciones limpias.");
-    }
-
-    private boolean validaCampoCedula(javax.swing.JFormattedTextField campo) {
-        try {
-            campo.commitEdit();
-        } catch (ParseException ex) {
-            JOptionPane.showInternalMessageDialog(
-                    this,
-                    "Debe digitar la cedula del cliente",
-                    "",
-                    JOptionPane.ERROR_MESSAGE
-            );
-            jtpDireccionContactos.setSelectedComponent(jpGenerales);
-            campo.requestFocusInWindow();
-            campo.selectAll();
-            return true;
-        }
-        return false;
     }
 
     /**
@@ -2708,13 +2709,6 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
         v_direccionesList.clear();
         v_contactosTelsList.clear();
         v_contactosCorreosList.clear();
-        LOG.info(
-                """
-
-        Lista de direcciones, contactos de telefono y correo limpias.
-
-        """
-        );
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -2777,7 +2771,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
     private javax.swing.JScrollPane jspGeneral;
     private javax.swing.JScrollPane jspMantenimiento;
     private javax.swing.JTabbedPane jtpContactos;
-    private javax.swing.JTabbedPane jtpDireccionContactos;
+    private javax.swing.JTabbedPane jtpGeneralesDireccionContactos;
     public static javax.swing.JTabbedPane jtpPrincipal;
     private static rojerusan.RSTableMetro1 tblClientes;
     private static rojerusan.RSTableMetro1 tblCorreos;

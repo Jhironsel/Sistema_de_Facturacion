@@ -13,7 +13,7 @@ import sur.softsurena.conexion.Conexion;
 import sur.softsurena.metodos.Imagenes;
 import static sur.softsurena.metodos.M_BaseDeDatos.periodoMaquina;
 import static sur.softsurena.metodos.M_BaseDeDatos.setLicencia;
-import sur.softsurena.utilidades.Resultados;
+import sur.softsurena.utilidades.Resultado;
 import static sur.softsurena.utilidades.Utilidades.LOG;
 
 public final class frmLogin extends javax.swing.JFrame {
@@ -297,7 +297,7 @@ public final class frmLogin extends javax.swing.JFrame {
                 dominio,
                 puerto);
 
-        Resultados<Object> resultado = Conexion.verificar();
+        Resultado<Object> resultado = Conexion.verificar();
 
         switch (resultado.toString()) {
             case Conexion.E_FECHA_INICIAL_INCORRECTA -> {

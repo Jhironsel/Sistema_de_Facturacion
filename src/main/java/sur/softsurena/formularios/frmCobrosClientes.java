@@ -543,7 +543,7 @@ public class frmCobrosClientes extends javax.swing.JDialog {
 //                txtCredito.setValue(rs.getDouble("credito"));
 //            }
 //        } catch (SQLException ex) {
-//            LOG.log(Level.SEVERE, ex.getMessage(), ex);
+//            LOG.log(Level.SEVERE, "Error al llenar la tabla de clientes.", ex);
 //        }
     }//GEN-LAST:event_cmbClienteItemStateChanged
     private void cmbClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbClienteActionPerformed
@@ -617,7 +617,7 @@ public class frmCobrosClientes extends javax.swing.JDialog {
             tblFacturas.setModel(miTabla);
 
         } catch (SQLException ex) {
-            LOG.log(Level.SEVERE, ex.getMessage(), ex);
+            LOG.log(Level.SEVERE, "Error al llenar cabezares de facturas.", ex);
         }
     }
 
@@ -643,7 +643,7 @@ public class frmCobrosClientes extends javax.swing.JDialog {
             }
             tblPagos.setModel(miTabla);
         } catch (SQLException ex) {
-            LOG.log(Level.SEVERE, ex.getMessage(), ex);
+            LOG.log(Level.SEVERE, "Error al llenar los pagos en el sistema.", ex);
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

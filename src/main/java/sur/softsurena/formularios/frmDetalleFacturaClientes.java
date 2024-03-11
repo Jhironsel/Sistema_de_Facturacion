@@ -273,7 +273,8 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
                 modelo.removeRow(0);
             }
 
-            String sql = "SELECT factura.idFactura, factura.idCliente, nombres||' '||apellidos AS nombreFull, "
+            String sql 
+                    = "SELECT factura.idFactura, factura.idCliente, nombres||' '||apellidos AS nombreFull, "
                     + "        fecha, idLinea, (select p.Descripcion "
                     + "                            from PRODUCTOS p "
                     + "                            where p.idProducto = DETALLEFACTURA.IDPRODUCTO ) as Descripcion, "
@@ -306,7 +307,7 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
             txtTotal.setValue(suma);
             tblDetalleFactura.setModel(miTabla3);
         } catch (SQLException ex) {
-            LOG.log(Level.SEVERE, ex.getMessage(), ex);
+            LOG.log(Level.SEVERE, "Error al obtener facturas del cliente.", ex);
         }
 
         if (evt.getClickCount() == 2) {
@@ -371,7 +372,7 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
             }
             tblFactura.setModel(miTabla2);
         } catch (SQLException ex) {
-            LOG.log(Level.SEVERE, ex.getMessage(), ex);
+            LOG.log(Level.SEVERE, "Error al obtener los detalles del cliente.", ex);
         }
     }//GEN-LAST:event_tblClientesMouseClicked
 

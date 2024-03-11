@@ -28,7 +28,7 @@ import static sur.softsurena.metodos.M_Producto.generarProducto;
 import static sur.softsurena.metodos.M_Producto.getProductos;
 import static sur.softsurena.metodos.M_Producto.modificarProducto;
 import sur.softsurena.utilidades.FiltroBusqueda;
-import sur.softsurena.utilidades.Resultados;
+import sur.softsurena.utilidades.Resultado;
 import sur.softsurena.utilidades.Utilidades;
 import static sur.softsurena.utilidades.Utilidades.LOG;
 import static sur.softsurena.utilidades.Utilidades.columnasCheckBox;
@@ -899,7 +899,7 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
                 return;
             }
 
-            Resultados resultados = borrarProductoPorID(id);
+            Resultado resultados = borrarProductoPorID(id);
 
             JOptionPane.showInternalMessageDialog(
                     this,
@@ -1065,7 +1065,7 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
                 return;
             }
 
-            Resultados resultados = (v_nuevo ? agregarProducto(producto) : modificarProducto(producto));
+            Resultado resultados = (v_nuevo ? agregarProducto(producto) : modificarProducto(producto));
             JOptionPane.showInternalMessageDialog(
                     this,
                     resultados,

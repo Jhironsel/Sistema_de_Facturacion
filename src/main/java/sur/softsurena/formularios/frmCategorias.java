@@ -14,9 +14,8 @@ import static sur.softsurena.metodos.M_Categoria.existeCategoria;
 import static sur.softsurena.metodos.M_Categoria.getCategorias;
 import static sur.softsurena.metodos.M_Categoria.modificarCategoria;
 import static sur.softsurena.metodos.M_Producto.existeCategoriaProductos;
-import sur.softsurena.utilidades.Resultados;
+import sur.softsurena.utilidades.Resultado;
 import sur.softsurena.utilidades.Utilidades;
-import static sur.softsurena.utilidades.Utilidades.LOG;
 
 public class frmCategorias extends javax.swing.JDialog {
 
@@ -218,7 +217,7 @@ public class frmCategorias extends javax.swing.JDialog {
             return;
         }
 
-        Resultados resultados = borrarCategoria(idCategoria);
+        Resultado resultados = borrarCategoria(idCategoria);
 
         JOptionPane.showMessageDialog(
                 this,
@@ -347,10 +346,6 @@ public class frmCategorias extends javax.swing.JDialog {
             fechaCreacion = ((Categoria) cbCategoria.getSelectedItem()).getFecha_creacion().toString();
         } catch (java.lang.NullPointerException e) {
             fechaCreacion = "01.01.2000";
-            LOG.info("""
-                     
-                     Fecha no proporcionada.
-                     """);
         }
 
         jlImagen.setIcon(Utilidades.imagenDecode64(((Categoria) cbCategoria.getSelectedItem()).getImage_texto(), 96, 96));
@@ -376,7 +371,7 @@ public class frmCategorias extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void guardar() {
-        Resultados resultado;
+        Resultado resultado;
         Categoria categoria = Categoria
                             .builder()
                             .id_categoria(nuevo ? -1 : idCategoria)

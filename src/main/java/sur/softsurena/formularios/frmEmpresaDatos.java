@@ -309,7 +309,7 @@ public class frmEmpresaDatos extends javax.swing.JInternalFrame {
             }
 
         } catch (Exception ex) {
-            LOG.log(Level.SEVERE, ex.getMessage(), ex);
+            LOG.log(Level.SEVERE, "<Definir error.>", ex);
         } finally {
             try {
                 if (fr != null) 

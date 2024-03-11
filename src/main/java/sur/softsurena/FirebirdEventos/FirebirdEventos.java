@@ -31,74 +31,62 @@ public class FirebirdEventos extends FBEventManager{
                 connect();
             }
             //Evento para productos.********************************************
-            addEventListener("add_Producto", (DatabaseEvent event) -> {
+            addEventListener("ADD_PRODUCTO", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
                 llenarTablaProductos("evento");
             });
             
-            addEventListener("del_Producto", (DatabaseEvent event) -> {
+            addEventListener("DEL_PRODUCTO", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
                 llenarTablaProductos("evento");
             });
             
-            addEventListener("upd_Producto", (DatabaseEvent event) -> {
+            addEventListener("UPD_PRODUCTO", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
                 llenarTablaProductos("evento");
             });
-            
-            //Evento para personas.*********************************************
-            addEventListener("ins_persona", (DatabaseEvent event) -> {
-                LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
-                llenarTablaClientes(-1,"evento");
-            });
-            
-            addEventListener("del_persona", (DatabaseEvent event) -> {
-                LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
-                llenarTablaClientes(-1, "evento");
-            });
-            
-            addEventListener("upd_persona", (DatabaseEvent event) -> {
-                LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
-                llenarTablaClientes(-1, "evento");
-            });    
             
             //Evento para personas clientes.************************************
-            addEventListener("ins_persona_clientes", (DatabaseEvent event) -> {
+            addEventListener("ADD_CLIENTE", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
                 llenarTablaClientes(-1, "evento");
             });
             
-            addEventListener("del_persona_clientes", (DatabaseEvent event) -> {
+            addEventListener("DEL_CLIENTE", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
                 llenarTablaClientes(-1, "evento");
             });
             
-            addEventListener("upd_persona_clientes", (DatabaseEvent event) -> {
+            addEventListener("UPD_CLIENTE", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
                 llenarTablaClientes(-1, "evento");
             });
             
             //Eventos de usuario.***********************************************
-            addEventListener("INSERT_USUARIOS", (DatabaseEvent event) -> {
+            addEventListener("ADD_USUARIO", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
                 llenarTablaUsuarios();
             });
-            addEventListener("DELETE_USUARIOS", (DatabaseEvent event) -> {
+            addEventListener("DEL_USUARIO", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
                 llenarTablaUsuarios();
             });
-            addEventListener("UPDATE_USUARIOS", (DatabaseEvent event) -> {
+            addEventListener("UPD_USUARIO", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
                 llenarTablaUsuarios();
             });
             
             //Evento de direcciones de cliente.*********************************
-            addEventListener("SP_UPDATE_INSERT_DIRECCION", (DatabaseEvent event) -> {
+            addEventListener("ADD_DIRECCION", (DatabaseEvent event) -> {
                 LOG.log(Level.INFO, "Event [{0}] occured {1} time(s)", new Object[]{event.getEventName(), event.getEventCount()});
                 updateTablaDirreciones(null);
             });
         } catch (SQLException ex) {
-            LOG.log(Level.SEVERE, ex.getMessage(), ex);
+            LOG.log(
+                    Level.SEVERE, 
+                    "Error en los eventos de Firebird", 
+                    ex
+            );
             return false;
         }
         return true;

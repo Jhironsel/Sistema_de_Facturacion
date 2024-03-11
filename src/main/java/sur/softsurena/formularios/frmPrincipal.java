@@ -40,7 +40,7 @@ import static sur.softsurena.metodos.M_Turno.getTurnosActivos;
 import static sur.softsurena.metodos.M_Turno.usuarioTurnoActivo;
 import static sur.softsurena.metodos.M_Usuario.getUsuarioActual;
 import sur.softsurena.utilidades.DesktopConFondo;
-import sur.softsurena.utilidades.Resultados;
+import sur.softsurena.utilidades.Resultado;
 import static sur.softsurena.utilidades.Utilidades.LOG;
 import static sur.softsurena.utilidades.Utilidades.centralizar;
 import static sur.softsurena.utilidades.Utilidades.imagenDecode64;
@@ -1400,7 +1400,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
         rol = (rol.equalsIgnoreCase("ADMINISTRADOR") ? "RDB$ADMIN" : rol);
 
-        Resultados role = setRole(rol);
+        Resultado role = setRole(rol);
         
         if(!role.getEstado()){
             return;
@@ -1409,8 +1409,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
         usuario = getUsuarioActual();
         
         cbRoles.setToolTipText("Rol actual: " + usuario.getRol());
-
-        LOG.info("\nRol del usuario cambiado %s".formatted(rol));
     }//GEN-LAST:event_cbRolesPopupMenuWillBecomeInvisible
 
     private void mnuMantenimientoProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMantenimientoProveedoresActionPerformed

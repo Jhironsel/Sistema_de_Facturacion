@@ -157,7 +157,11 @@ public class frmMovimientoEntradaSalida extends javax.swing.JInternalFrame {
             jpReporte.repaint();
             jpReporte.revalidate();
         } catch (JRException ex) {
-            LOG.log(Level.SEVERE, ex.getMessage(), ex);
+            LOG.log(
+                    Level.SEVERE, 
+                    "Error al crear reporte de moviemientos de entrada y salida.", 
+                    ex
+            );
         }
     }
 
@@ -184,7 +188,11 @@ public class frmMovimientoEntradaSalida extends javax.swing.JInternalFrame {
             }
             jtFechas.setModel(miTabla);
         } catch (SQLException ex) {
-            LOG.log(Level.SEVERE, ex.getMessage(), ex);
+            LOG.log(
+                    Level.SEVERE, 
+                    "Error al consultar la tabla Entradas_Productos.", 
+                    ex
+            );
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -572,7 +572,7 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
             }
             tblDeudas.setModel(miTabla);
         } catch (SQLException ex) {
-            LOG.log(Level.SEVERE, ex.getMessage(), ex);
+            LOG.log(Level.SEVERE, "Error al llenar tabla de deudas.", ex);
         }
     }
 
@@ -602,7 +602,7 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
             }
             tblPago.setModel(miTabla);
         } catch (SQLException ex) {
-            LOG.log(Level.SEVERE, ex.getMessage(), ex);
+            LOG.log(Level.SEVERE, "Error al obtener pagos de deudas externas.", ex);
         }
         txtMonto.requestFocusInWindow();
     }

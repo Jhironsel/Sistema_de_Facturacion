@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import sur.softsurena.utilidades.Resultados;
+import sur.softsurena.utilidades.Resultado;
 import sur.softsurena.entidades.Role;
 import sur.softsurena.entidades.Usuario;
 import static sur.softsurena.metodos.M_Etiqueta.getEtiquetasUsuario;
@@ -702,7 +702,7 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
                 roles(rolesList).
                 build();
 
-        Resultados resultado = (nuevo ? agregarUsuario(usuario) : modificarUsuario(usuario));
+        Resultado resultado = (nuevo ? agregarUsuario(usuario) : modificarUsuario(usuario));
 
         JOptionPane.showMessageDialog(
                 this,

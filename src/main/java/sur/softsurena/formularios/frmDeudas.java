@@ -637,7 +637,7 @@ public class frmDeudas extends javax.swing.JInternalFrame {
                 txtNombres.setText(rs.getString(1));
                 txtApellidos.setText(rs.getString(2));
             } catch (SQLException ex) {
-                LOG.log(Level.SEVERE, ex.getMessage(), ex);
+                LOG.log(Level.SEVERE, "Error al cargar los datos de los clientes.", ex);
             }
 
             btnGetCliente.setEnabled(false);
@@ -874,7 +874,7 @@ public class frmDeudas extends javax.swing.JInternalFrame {
                 msg = msg + (rs.getString(2)) + "       " + (rs.getString(1)) + " <BR>";
             }
         } catch (SQLException ex) {
-            LOG.log(Level.SEVERE, ex.getMessage(), ex);
+            LOG.log(Level.SEVERE, "Error al cargar las sumas de las deudas.", ex);
         }
         msg = "<html><big>" + msg + "</big></html>";
         JOptionPane.showInternalMessageDialog(
