@@ -105,7 +105,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jpBotones" pref="820" max="32767" attributes="0"/>
+                          <Component id="jpBotones" pref="834" max="32767" attributes="0"/>
                           <Component id="jtpPrincipal" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -226,11 +226,16 @@
                             <Component class="rojerusan.RSTableMetro1" name="tblClientes">
                               <Properties>
                                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                                  <Table columnCount="4" rowCount="4">
-                                    <Column editable="true" title="Title 1" type="java.lang.Object"/>
-                                    <Column editable="true" title="Title 2" type="java.lang.Object"/>
-                                    <Column editable="true" title="Title 3" type="java.lang.Object"/>
-                                    <Column editable="true" title="Title 4" type="java.lang.Object"/>
+                                  <Table columnCount="9" rowCount="1">
+                                    <Column editable="true" title="Cedula" type="java.lang.String"/>
+                                    <Column editable="true" title="Persona" type="java.lang.String"/>
+                                    <Column editable="true" title="Primer Nombre" type="java.lang.String"/>
+                                    <Column editable="true" title="Segundo Nombre" type="java.lang.String"/>
+                                    <Column editable="true" title="Apellidos" type="java.lang.String"/>
+                                    <Column editable="true" title="Sexo" type="java.lang.String"/>
+                                    <Column editable="true" title="Fecha Nacimiento" type="java.lang.Object"/>
+                                    <Column editable="true" title="Fecha de Ingreso" type="java.lang.Object"/>
+                                    <Column editable="true" title="Estado" type="java.lang.Boolean"/>
                                   </Table>
                                 </Property>
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -547,7 +552,7 @@
                                                   </Group>
                                                   <Component id="dchFechaNacimiento" min="-2" pref="53" max="-2" attributes="0"/>
                                               </Group>
-                                              <EmptySpace pref="129" max="32767" attributes="0"/>
+                                              <EmptySpace pref="153" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                     </DimensionLayout>
@@ -575,6 +580,9 @@
                                         </Property>
                                         <Property name="name" type="java.lang.String" value="jcbSexo" noResource="true"/>
                                       </Properties>
+                                      <Events>
+                                        <EventHandler event="popupMenuWillBecomeInvisible" listener="javax.swing.event.PopupMenuListener" parameters="javax.swing.event.PopupMenuEvent" handler="jcbSexoPopupMenuWillBecomeInvisible"/>
+                                      </Events>
                                       <AuxValues>
                                         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
                                       </AuxValues>
@@ -869,7 +877,7 @@
                                               <EmptySpace min="-2" max="-2" attributes="0"/>
                                               <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" max="-2" attributes="0"/>
-                                              <Component id="jScrollPane3" pref="255" max="32767" attributes="0"/>
+                                              <Component id="jScrollPane3" pref="267" max="32767" attributes="0"/>
                                               <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
@@ -1022,7 +1030,7 @@
                                                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditarDireccionActionPerformed"/>
                                               </Events>
                                             </Component>
-                                            <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnEliminarDirrecion">
+                                            <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnBorrarDirrecion">
                                               <Properties>
                                                 <Property name="enabled" type="boolean" value="false"/>
                                                 <Property name="horizontalAlignment" type="int" value="0"/>
@@ -1030,10 +1038,10 @@
                                                 <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                                                   <Value id="DELETE"/>
                                                 </Property>
-                                                <Property name="name" type="java.lang.String" value="btnEliminarDirrecion" noResource="true"/>
+                                                <Property name="name" type="java.lang.String" value="btnBorrarDirrecion" noResource="true"/>
                                               </Properties>
                                               <Events>
-                                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarDirrecionActionPerformed"/>
+                                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBorrarDirrecionActionPerformed"/>
                                               </Events>
                                             </Component>
                                           </SubComponents>
@@ -1081,10 +1089,11 @@
                                         <Component class="rojerusan.RSTableMetro1" name="tblDireccion">
                                           <Properties>
                                             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                                              <Table columnCount="6" rowCount="0">
+                                              <Table columnCount="7" rowCount="1">
                                                 <Column editable="true" title="Provincia" type="java.lang.Object"/>
                                                 <Column editable="true" title="Municipio" type="java.lang.Object"/>
                                                 <Column editable="true" title="Distrito Municipal" type="java.lang.Object"/>
+                                                <Column editable="true" title="Calle y No. Casa" type="java.lang.Object"/>
                                                 <Column editable="true" title="Fecha" type="java.lang.Object"/>
                                                 <Column editable="true" title="Estado" type="java.lang.Boolean"/>
                                                 <Column editable="true" title="Por defecto" type="java.lang.Boolean"/>
@@ -1182,10 +1191,10 @@
                                             <DimensionLayout dim="1">
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Group type="102" alignment="1" attributes="0">
-                                                      <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
                                                       <Component id="jPanel8" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
-                                                      <Component id="jScrollPane5" pref="262" max="32767" attributes="0"/>
+                                                      <Component id="jScrollPane5" min="-2" pref="270" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
@@ -1198,18 +1207,17 @@
                                                 <DimensionLayout dim="0">
                                                   <Group type="103" groupAlignment="0" attributes="0">
                                                       <Group type="102" alignment="0" attributes="0">
-                                                          <EmptySpace max="-2" attributes="0"/>
+                                                          <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                                                           <Component id="txtTelelfonoMovil" min="-2" pref="212" max="-2" attributes="0"/>
                                                           <EmptySpace max="-2" attributes="0"/>
-                                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                              <Component id="jrbResidencial" alignment="0" max="32767" attributes="0"/>
-                                                              <Component id="jrbMovil" alignment="0" max="32767" attributes="0"/>
-                                                          </Group>
+                                                          <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                                                           <EmptySpace max="-2" attributes="0"/>
                                                           <Component id="btnAgregarTelefonoMovil" min="-2" pref="48" max="-2" attributes="0"/>
                                                           <EmptySpace max="-2" attributes="0"/>
-                                                          <Component id="btnBorrarTelefonoMovil" min="-2" pref="48" max="-2" attributes="0"/>
-                                                          <EmptySpace pref="300" max="32767" attributes="0"/>
+                                                          <Component id="btnEditarTelefono" min="-2" pref="49" max="-2" attributes="0"/>
+                                                          <EmptySpace max="-2" attributes="0"/>
+                                                          <Component id="btnBorrarTelefono" min="-2" pref="48" max="-2" attributes="0"/>
+                                                          <EmptySpace pref="254" max="32767" attributes="0"/>
                                                       </Group>
                                                   </Group>
                                                 </DimensionLayout>
@@ -1219,20 +1227,19 @@
                                                           <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                                               <Component id="txtTelelfonoMovil" max="32767" attributes="0"/>
-                                                              <Group type="102" attributes="0">
-                                                                  <Component id="jrbMovil" min="-2" max="-2" attributes="0"/>
-                                                                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                                                                  <Component id="jrbResidencial" min="-2" max="-2" attributes="0"/>
-                                                                  <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                                                              </Group>
-                                                              <Group type="102" attributes="0">
+                                                              <Group type="102" alignment="0" attributes="0">
                                                                   <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
                                                                   <Group type="103" groupAlignment="0" attributes="0">
-                                                                      <Component id="btnAgregarTelefonoMovil" max="32767" attributes="0"/>
-                                                                      <Component id="btnBorrarTelefonoMovil" max="32767" attributes="0"/>
+                                                                      <Component id="btnEditarTelefono" min="-2" pref="52" max="-2" attributes="0"/>
+                                                                      <Group type="103" groupAlignment="0" attributes="0">
+                                                                          <Component id="btnAgregarTelefonoMovil" max="32767" attributes="0"/>
+                                                                          <Component id="btnBorrarTelefono" max="32767" attributes="0"/>
+                                                                      </Group>
                                                                   </Group>
                                                               </Group>
+                                                              <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
                                                           </Group>
+                                                          <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                                                       </Group>
                                                   </Group>
                                                 </DimensionLayout>
@@ -1275,36 +1282,57 @@
                                                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarTelefonoMovilActionPerformed"/>
                                                   </Events>
                                                 </Component>
-                                                <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnBorrarTelefonoMovil">
+                                                <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnBorrarTelefono">
                                                   <Properties>
+                                                    <Property name="enabled" type="boolean" value="false"/>
                                                     <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                                                       <Value id="DELETE"/>
                                                     </Property>
                                                     <Property name="name" type="java.lang.String" value="btnBorrarTelefono" noResource="true"/>
                                                   </Properties>
                                                   <Events>
-                                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBorrarTelefonoMovilActionPerformed"/>
+                                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBorrarTelefonoActionPerformed"/>
                                                   </Events>
                                                 </Component>
-                                                <Component class="javax.swing.JRadioButton" name="jrbMovil">
+                                                <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnEditarTelefono">
                                                   <Properties>
-                                                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                                                      <ComponentRef name="btnGMovilTelefono"/>
+                                                    <Property name="enabled" type="boolean" value="false"/>
+                                                    <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                                      <Value id="EDIT"/>
                                                     </Property>
-                                                    <Property name="selected" type="boolean" value="true"/>
-                                                    <Property name="text" type="java.lang.String" value="Movil"/>
-                                                    <Property name="name" type="java.lang.String" value="jrbMovil" noResource="true"/>
+                                                    <Property name="name" type="java.lang.String" value="btnAgregarDirecciones" noResource="true"/>
                                                   </Properties>
+                                                  <Events>
+                                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditarTelefonoActionPerformed"/>
+                                                  </Events>
                                                 </Component>
-                                                <Component class="javax.swing.JRadioButton" name="jrbResidencial">
-                                                  <Properties>
-                                                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                                                      <ComponentRef name="btnGMovilTelefono"/>
-                                                    </Property>
-                                                    <Property name="text" type="java.lang.String" value="Telefono"/>
-                                                    <Property name="name" type="java.lang.String" value="jrbTelefonoResidencial" noResource="true"/>
-                                                  </Properties>
-                                                </Component>
+                                                <Container class="javax.swing.JPanel" name="jPanel1">
+
+                                                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout">
+                                                    <Property name="axis" type="int" value="3"/>
+                                                  </Layout>
+                                                  <SubComponents>
+                                                    <Component class="javax.swing.JRadioButton" name="jrbResidencial">
+                                                      <Properties>
+                                                        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                                                          <ComponentRef name="btnGMovilTelefono"/>
+                                                        </Property>
+                                                        <Property name="text" type="java.lang.String" value="Telefono"/>
+                                                        <Property name="name" type="java.lang.String" value="jrbTelefonoResidencial" noResource="true"/>
+                                                      </Properties>
+                                                    </Component>
+                                                    <Component class="javax.swing.JRadioButton" name="jrbMovil">
+                                                      <Properties>
+                                                        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                                                          <ComponentRef name="btnGMovilTelefono"/>
+                                                        </Property>
+                                                        <Property name="selected" type="boolean" value="true"/>
+                                                        <Property name="text" type="java.lang.String" value="Movil"/>
+                                                        <Property name="name" type="java.lang.String" value="jrbMovil" noResource="true"/>
+                                                      </Properties>
+                                                    </Component>
+                                                  </SubComponents>
+                                                </Container>
                                               </SubComponents>
                                             </Container>
                                             <Container class="javax.swing.JScrollPane" name="jScrollPane5">
@@ -1317,11 +1345,12 @@
                                                 <Component class="rojerusan.RSTableMetro1" name="tblTelefonos">
                                                   <Properties>
                                                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                                                      <Table columnCount="4" rowCount="4">
-                                                        <Column editable="true" title="Title 1" type="java.lang.Object"/>
-                                                        <Column editable="true" title="Title 2" type="java.lang.Object"/>
-                                                        <Column editable="true" title="Title 3" type="java.lang.Object"/>
-                                                        <Column editable="true" title="Title 4" type="java.lang.Object"/>
+                                                      <Table columnCount="5" rowCount="1">
+                                                        <Column editable="true" title="Numero" type="java.lang.String"/>
+                                                        <Column editable="true" title="Tipo" type="java.lang.String"/>
+                                                        <Column editable="true" title="Fecha" type="java.lang.Object"/>
+                                                        <Column editable="true" title="Estado" type="java.lang.Boolean"/>
+                                                        <Column editable="true" title="Por defecto" type="java.lang.Boolean"/>
                                                       </Table>
                                                     </Property>
                                                     <Property name="autoResizeMode" type="int" value="0"/>
@@ -1338,6 +1367,9 @@
                                                       <Font name="FreeMono" size="14" style="1"/>
                                                     </Property>
                                                   </Properties>
+                                                  <Events>
+                                                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblTelefonosMouseClicked"/>
+                                                  </Events>
                                                   <AuxValues>
                                                     <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new rojerusan.RSTableMetro1(){&#xa;@Override&#xa;public boolean isCellEditable(int rowIndex, int colIndex) { &#xa;    return false; //Las celdas no son editables. &#xa;}&#xa;}"/>
                                                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
@@ -1373,7 +1405,7 @@
                                                       <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                                                       <Component id="jPanel12" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
-                                                      <Component id="jScrollPane4" pref="250" max="32767" attributes="0"/>
+                                                      <Component id="jScrollPane4" pref="280" max="32767" attributes="0"/>
                                                       <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
@@ -1389,28 +1421,24 @@
                                                           <EmptySpace max="-2" attributes="0"/>
                                                           <Component id="txtCorreo" max="32767" attributes="0"/>
                                                           <EmptySpace max="-2" attributes="0"/>
-                                                          <Component id="btnAgregarCorreo" min="-2" pref="63" max="-2" attributes="0"/>
+                                                          <Component id="btnAgregarCorreo" min="-2" pref="51" max="-2" attributes="0"/>
                                                           <EmptySpace max="-2" attributes="0"/>
-                                                          <Component id="btnEliminarCorreo" min="-2" pref="60" max="-2" attributes="0"/>
+                                                          <Component id="btnEditarCorreo" min="-2" pref="53" max="-2" attributes="0"/>
+                                                          <EmptySpace max="-2" attributes="0"/>
+                                                          <Component id="btnBorrarCorreo" min="-2" pref="60" max="-2" attributes="0"/>
                                                           <EmptySpace max="-2" attributes="0"/>
                                                       </Group>
                                                   </Group>
                                                 </DimensionLayout>
                                                 <DimensionLayout dim="1">
                                                   <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Group type="102" alignment="1" attributes="0">
-                                                          <Group type="103" groupAlignment="1" attributes="0">
-                                                              <Group type="102" attributes="0">
-                                                                  <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                                                                  <Component id="txtCorreo" pref="56" max="32767" attributes="0"/>
-                                                              </Group>
-                                                              <Group type="102" alignment="0" attributes="0">
-                                                                  <EmptySpace max="-2" attributes="0"/>
-                                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                                      <Component id="btnAgregarCorreo" max="32767" attributes="0"/>
-                                                                      <Component id="btnEliminarCorreo" max="32767" attributes="0"/>
-                                                                  </Group>
-                                                              </Group>
+                                                      <Group type="102" alignment="0" attributes="0">
+                                                          <EmptySpace max="-2" attributes="0"/>
+                                                          <Group type="103" groupAlignment="0" attributes="0">
+                                                              <Component id="txtCorreo" max="32767" attributes="0"/>
+                                                              <Component id="btnBorrarCorreo" max="32767" attributes="0"/>
+                                                              <Component id="btnAgregarCorreo" alignment="1" pref="53" max="32767" attributes="0"/>
+                                                              <Component id="btnEditarCorreo" alignment="1" min="-2" pref="52" max="-2" attributes="0"/>
                                                           </Group>
                                                           <EmptySpace max="-2" attributes="0"/>
                                                       </Group>
@@ -1429,15 +1457,16 @@
                                                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarCorreoActionPerformed"/>
                                                   </Events>
                                                 </Component>
-                                                <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnEliminarCorreo">
+                                                <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnBorrarCorreo">
                                                   <Properties>
+                                                    <Property name="enabled" type="boolean" value="false"/>
                                                     <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                                                       <Value id="DELETE"/>
                                                     </Property>
                                                     <Property name="name" type="java.lang.String" value="btnBorrarCorreo" noResource="true"/>
                                                   </Properties>
                                                   <Events>
-                                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarCorreoActionPerformed"/>
+                                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBorrarCorreoActionPerformed"/>
                                                   </Events>
                                                 </Component>
                                                 <Component class="javax.swing.JTextField" name="txtCorreo">
@@ -1460,6 +1489,18 @@
                                                     <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCorreoKeyPressed"/>
                                                   </Events>
                                                 </Component>
+                                                <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnEditarCorreo">
+                                                  <Properties>
+                                                    <Property name="enabled" type="boolean" value="false"/>
+                                                    <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
+                                                      <Value id="EDIT"/>
+                                                    </Property>
+                                                    <Property name="name" type="java.lang.String" value="btnAgregarDirecciones" noResource="true"/>
+                                                  </Properties>
+                                                  <Events>
+                                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditarCorreoActionPerformed"/>
+                                                  </Events>
+                                                </Component>
                                               </SubComponents>
                                             </Container>
                                             <Container class="javax.swing.JScrollPane" name="jScrollPane4">
@@ -1472,11 +1513,13 @@
                                                 <Component class="rojerusan.RSTableMetro1" name="tblCorreos">
                                                   <Properties>
                                                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                                                      <Table columnCount="4" rowCount="4">
-                                                        <Column editable="true" title="Title 1" type="java.lang.Object"/>
-                                                        <Column editable="true" title="Title 2" type="java.lang.Object"/>
-                                                        <Column editable="true" title="Title 3" type="java.lang.Object"/>
-                                                        <Column editable="true" title="Title 4" type="java.lang.Object"/>
+                                                      <Table columnCount="4" rowCount="1">
+                                                        <Column editable="true" title="Correo" type="java.lang.String"/>
+                                                        <Column editable="true" title="Fecha" type="java.lang.Object">
+                                                          <Data value=""/>
+                                                        </Column>
+                                                        <Column editable="true" title="Estado" type="java.lang.Boolean"/>
+                                                        <Column editable="true" title="Por defecto" type="java.lang.Boolean"/>
                                                       </Table>
                                                     </Property>
                                                     <Property name="autoResizeMode" type="int" value="0"/>
@@ -1493,6 +1536,9 @@
                                                       <Font name="FreeMono" size="14" style="1"/>
                                                     </Property>
                                                   </Properties>
+                                                  <Events>
+                                                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblCorreosMouseClicked"/>
+                                                  </Events>
                                                   <AuxValues>
                                                     <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new rojerusan.RSTableMetro1(){&#xa;@Override&#xa;public boolean isCellEditable(int rowIndex, int colIndex) { &#xa;    return false; //Las celdas no son editables. &#xa;}&#xa;}"/>
                                                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
@@ -1576,43 +1622,43 @@
                     <Property name="rows" type="int" value="1"/>
                   </Layout>
                   <SubComponents>
-                    <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnNuevo">
+                    <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnNuevoCliente">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Nuevo"/>
                         <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                           <Value id="ADD"/>
                         </Property>
-                        <Property name="name" type="java.lang.String" value="btnNuevo" noResource="true"/>
+                        <Property name="name" type="java.lang.String" value="btnNuevoCliente" noResource="true"/>
                         <Property name="round" type="int" value="40"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNuevoActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNuevoClienteActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnModificar">
+                    <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnEditarCliente">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Modificar"/>
                         <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                           <Value id="MODE_EDIT"/>
                         </Property>
-                        <Property name="name" type="java.lang.String" value="btnModificar" noResource="true"/>
+                        <Property name="name" type="java.lang.String" value="btnEditarCliente" noResource="true"/>
                         <Property name="round" type="int" value="40"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnModificarActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditarClienteActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnBorrar">
+                    <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnBorrarCliente">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Borrar"/>
                         <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                           <Value id="DELETE"/>
                         </Property>
-                        <Property name="name" type="java.lang.String" value="btnBorrar" noResource="true"/>
+                        <Property name="name" type="java.lang.String" value="btnBorrarCliente" noResource="true"/>
                         <Property name="round" type="int" value="40"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBorrarActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBorrarClienteActionPerformed"/>
                       </Events>
                     </Component>
                     <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnBuscar">

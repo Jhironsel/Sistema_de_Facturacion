@@ -1160,11 +1160,8 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
 
         tblUsuarios.setModel(miTabla);
 
-        int[] indices = {4, 5};
-        columnasCheckBox(tblUsuarios, indices);
-
         repararColumnaTable(tblUsuarios);
-
+        columnasCheckBox(tblUsuarios, new int[]{4, 5});
     }
 
     /**

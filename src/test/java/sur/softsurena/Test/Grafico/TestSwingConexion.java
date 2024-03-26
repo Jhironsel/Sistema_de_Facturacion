@@ -31,7 +31,7 @@ public class TestSwingConexion {
         //Crear un objecto de la clase Tester
         Tester tester = new Tester();
         //Ejecutar una sola prueba
-        tester.loadFromFile(new File(moduloClientes[0]));
+        tester.loadFromFile(new File(moduloClientes[1]));
         //Asserts that the given test specification file gets load and executed successfully.
 //        for (String file : moduloUsuario) {
 //            TestingUtils.assertSuccessfulReplay(new File(file));

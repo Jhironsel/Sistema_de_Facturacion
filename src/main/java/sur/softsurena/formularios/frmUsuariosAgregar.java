@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import sur.softsurena.utilidades.Resultado;
 import sur.softsurena.entidades.Role;
 import sur.softsurena.entidades.Usuario;
 import static sur.softsurena.metodos.M_Etiqueta.getEtiquetasUsuario;
@@ -14,7 +13,9 @@ import static sur.softsurena.metodos.M_Usuario.agregarUsuario;
 import static sur.softsurena.metodos.M_Usuario.existeUsuarioByUserName;
 import static sur.softsurena.metodos.M_Usuario.modificarUsuario;
 import sur.softsurena.utilidades.PalabrasReservadasFirebird;
+import sur.softsurena.utilidades.Resultado;
 import sur.softsurena.utilidades.Utilidades;
+import static sur.softsurena.utilidades.Utilidades.columnasCheckBox;
 import static sur.softsurena.utilidades.Utilidades.repararColumnaTable;
 import static sur.softsurena.utilidades.Utilidades.showTooltip;
 
@@ -836,7 +837,8 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
 
         tblRoles.setModel(miTabla);
 
-        Utilidades.repararColumnaTable(tblRoles);
+        repararColumnaTable(tblRoles);
+        columnasCheckBox(tblRoles, new int[] {1});
     }//GEN-LAST:event_btnAgregarRolActionPerformed
 
     private void btnBorrarRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarRolActionPerformed

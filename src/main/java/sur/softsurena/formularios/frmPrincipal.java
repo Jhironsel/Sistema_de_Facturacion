@@ -63,7 +63,9 @@ public final class frmPrincipal extends javax.swing.JFrame {
         initComponents();
         ((DesktopConFondo) dpnEscritorio).setImagen("/sur/softsurena/imagenes/Fondo 1024 x 723.jpg");
 
-        mnuMantenimientoClientes.setVisible(privilegio(Privilegio
+        mnuMantenimientoClientes.setVisible(
+                privilegio(
+                        Privilegio
                                 .builder()
                                 .privilegio(Privilegio.PRIVILEGIO_SELECT)
                                 .nombre_relacion("GET_CLIENTES_SB")
@@ -71,7 +73,9 @@ public final class frmPrincipal extends javax.swing.JFrame {
                                 .build()
                 )
         );
-        mnuMantenimientoProductos.setVisible(privilegio(Privilegio
+        mnuMantenimientoProductos.setVisible(
+                privilegio(
+                        Privilegio
                                 .builder()
                                 .privilegio(Privilegio.PRIVILEGIO_SELECT)
                                 .nombre_relacion("GET_PRODUCTOS")
@@ -79,7 +83,9 @@ public final class frmPrincipal extends javax.swing.JFrame {
                                 .build()
                 )
         );
-        mnuMantenimientoProveedores.setVisible(privilegio(Privilegio
+        mnuMantenimientoProveedores.setVisible(
+                privilegio(
+                        Privilegio
                                 .builder()
                                 .privilegio(Privilegio.PRIVILEGIO_SELECT)
                                 .nombre_relacion("GET_PROVEEDORES")
@@ -87,7 +93,9 @@ public final class frmPrincipal extends javax.swing.JFrame {
                                 .build()
                 )
         );
-        mnuMantenimientoAlmacenes.setVisible(privilegio(Privilegio
+        mnuMantenimientoAlmacenes.setVisible(
+                privilegio(
+                        Privilegio
                                 .builder()
                                 .privilegio(Privilegio.PRIVILEGIO_SELECT)
                                 .nombre_relacion("V_ALMACENES")
@@ -95,7 +103,9 @@ public final class frmPrincipal extends javax.swing.JFrame {
                                 .build()
                 )
         );
-        mnuMantenimientoUsuarios.setVisible(privilegio(Privilegio
+        mnuMantenimientoUsuarios.setVisible(
+                privilegio(
+                        Privilegio
                                 .builder()
                                 .privilegio(Privilegio.PRIVILEGIO_SELECT)
                                 .nombre_relacion("VS_USUARIOS")
@@ -112,7 +122,9 @@ public final class frmPrincipal extends javax.swing.JFrame {
         );
         ///////////////////////////////////////////////////////////////////////
 
-        mnuSistemaNomina.setVisible(privilegio(Privilegio
+        mnuSistemaNomina.setVisible(
+                privilegio(
+                        Privilegio
                                 .builder()
                                 .privilegio(Privilegio.PRIVILEGIO_EXECUTE)
                                 .nombre_relacion("^")
@@ -120,7 +132,9 @@ public final class frmPrincipal extends javax.swing.JFrame {
                                 .build()
                 )
         );
-        mnuSistemaGestorGastos.setVisible(privilegio(Privilegio
+        mnuSistemaGestorGastos.setVisible(
+                privilegio(
+                        Privilegio
                                 .builder()
                                 .privilegio(Privilegio.PRIVILEGIO_EXECUTE)
                                 .nombre_relacion("^")
@@ -134,7 +148,9 @@ public final class frmPrincipal extends javax.swing.JFrame {
         );
 
         ////////////////////////////////////////////////////////////////////////////////////
-        mnuMovimientosNuevaFactura.setVisible(privilegio(Privilegio
+        mnuMovimientosNuevaFactura.setVisible(
+                privilegio(
+                        Privilegio
                                 .builder()
                                 .privilegio(Privilegio.PRIVILEGIO_EXECUTE)
                                 .nombre_relacion("PERM_CREAR_FACTURAS")
@@ -142,7 +158,9 @@ public final class frmPrincipal extends javax.swing.JFrame {
                                 .build()
                 )
         );
-        mnuMovimientosReporteFactura.setVisible(privilegio(Privilegio
+        mnuMovimientosReporteFactura.setVisible(
+                privilegio(
+                        Privilegio
                                 .builder()
                                 .privilegio(Privilegio.PRIVILEGIO_EXECUTE)
                                 .nombre_relacion("^")
@@ -150,7 +168,9 @@ public final class frmPrincipal extends javax.swing.JFrame {
                                 .build()
                 )
         );
-        mnuMovimientosInventario.setVisible(privilegio(Privilegio
+        mnuMovimientosInventario.setVisible(
+                privilegio(
+                        Privilegio
                                 .builder()
                                 .privilegio(Privilegio.PRIVILEGIO_EXECUTE)
                                 .nombre_relacion("^")
@@ -158,7 +178,9 @@ public final class frmPrincipal extends javax.swing.JFrame {
                                 .build()
                 )
         );
-        mnuMovimientosDeudas.setVisible(privilegio(Privilegio
+        mnuMovimientosDeudas.setVisible(
+                privilegio(
+                        Privilegio
                                 .builder()
                                 .privilegio(Privilegio.PRIVILEGIO_EXECUTE)
                                 .nombre_relacion("^")
@@ -166,7 +188,9 @@ public final class frmPrincipal extends javax.swing.JFrame {
                                 .build()
                 )
         );
-        mnuMovimientosAbrirTurno.setVisible(privilegio(Privilegio
+        mnuMovimientosAbrirTurno.setVisible(
+                privilegio(
+                        Privilegio
                                 .builder()
                                 .privilegio(Privilegio.PRIVILEGIO_EXECUTE)
                                 .nombre_relacion("GET_CAJEROS")
@@ -191,7 +215,8 @@ public final class frmPrincipal extends javax.swing.JFrame {
         cbRoles.removeAllItems();
         cbRoles.setToolTipText("Rol actual: " + usuario.getRol());
 
-        cbRoles.addItem(Role
+        cbRoles.addItem(
+                Role
                         .builder()
                         .propietario("SYSDBA")
                         .roleName("None")
@@ -201,12 +226,11 @@ public final class frmPrincipal extends javax.swing.JFrame {
         );
 
         //Se carga los roles del usuario en el comboBox.
-        comprobandoRol(usuario.getUser_name().strip())
-                .stream().forEach(
-                        rolItem -> {
-                            cbRoles.addItem(rolItem);
-                        }
-                );
+        comprobandoRol(usuario.getUser_name().strip()).stream().forEach(
+                rolItem -> {
+                    cbRoles.addItem(rolItem);
+                }
+        );
 
         //Se busca cual es el rol actual del usuario y se selecciona.
         for (int i = 0; i < cbRoles.getItemCount(); i++) {
@@ -1401,13 +1425,13 @@ public final class frmPrincipal extends javax.swing.JFrame {
         rol = (rol.equalsIgnoreCase("ADMINISTRADOR") ? "RDB$ADMIN" : rol);
 
         Resultado role = setRole(rol);
-        
-        if(!role.getEstado()){
+
+        if (!role.getEstado()) {
             return;
         }
-        
+
         usuario = getUsuarioActual();
-        
+
         cbRoles.setToolTipText("Rol actual: " + usuario.getRol());
     }//GEN-LAST:event_cbRolesPopupMenuWillBecomeInvisible
 
@@ -1426,12 +1450,14 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private void mnuSistemaGestorGastosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSistemaGestorGastosActionPerformed
         abrirFormulario(frmGestorGastos.getInstance());
     }//GEN-LAST:event_mnuSistemaGestorGastosActionPerformed
-    //Todo Metodo de JasperReport
+
+    //TODO Metodo de JasperReport
     private void imprimirReporte(Date fecha) {
         try {
             String miFile = "sur.softsurena.reportes.repSistemaDeBebida.jasper";
 
-            JasperReport masterReporte = (JasperReport) JRLoader.loadObjectFromFile(miFile);
+            JasperReport masterReporte
+                    = (JasperReport) JRLoader.loadObjectFromFile(miFile);
 
             Map parametros = new HashMap();
             parametros.put("fecha", fecha);
@@ -1444,7 +1470,11 @@ public final class frmPrincipal extends javax.swing.JFrame {
             miView.setVisible(true);
 
         } catch (JRException ex) {
-            LOG.log(Level.SEVERE, "Error al crear ventana de cliente.", ex);
+            LOG.log(
+                    Level.SEVERE,
+                    "Error al crear ventana de cliente.",
+                    ex
+            );
         }
     }
 
@@ -1453,9 +1483,12 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private void panelUsuario() {
         jsEstatus.setVisible(false);
         btnOcultarPanel.setVisible(false);
-        if (privilegio(Privilegio
+        if (privilegio(
+                Privilegio
                         .builder()
-                        .privilegio(Privilegio.PRIVILEGIO_EXECUTE)
+                        .privilegio(
+                                Privilegio.PRIVILEGIO_EXECUTE
+                        )
                         .nombre_relacion("PERM_PANEL_USUARIO")
                         .nombre_campo("^")
                         .build()
@@ -1472,9 +1505,9 @@ public final class frmPrincipal extends javax.swing.JFrame {
             Object[] rowData2 = new Object[columnas2.length];
 
             getTurnosActivos().forEach(turno -> {
-                rowData2[0] = "Ident. Turno: " + turno.getId() 
-                            + " Cajero: " + turno.getTurno_usuario() 
-                            + " Fecha inicio" + turno.getFecha_hora_inicio();
+                rowData2[0] = "Ident. Turno: " + turno.getId()
+                        + " Cajero: " + turno.getTurno_usuario()
+                        + " Fecha inicio" + turno.getFecha_hora_inicio();
 
                 modelo2.addRow(rowData2);
             });

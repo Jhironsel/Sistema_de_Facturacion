@@ -136,7 +136,7 @@ public class frmMovimientoEntradaSalida extends javax.swing.JInternalFrame {
                 });
     }
 
-    //TODO Metodos de jasperReport
+    //TODO Metodo de JasperReport
     private void reporte(String fecha) {
         try {
             JasperReport masterReporte = 

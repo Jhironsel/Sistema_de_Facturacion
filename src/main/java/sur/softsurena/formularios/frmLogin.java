@@ -1,6 +1,7 @@
 package sur.softsurena.formularios;
 
 import java.awt.Toolkit;
+import java.awt.event.FocusEvent;
 import java.awt.event.KeyEvent;
 import java.sql.Date;
 import java.util.Locale;
@@ -270,7 +271,6 @@ public final class frmLogin extends javax.swing.JFrame {
             return;
         }//Fin de validaciones de campos
 
-        LOG.fine("Cargar los valores de la conexion desde el properties");
         frmParametros p = new frmParametros();
 
         String dominio = "localhost", puerto = "3050";
@@ -297,33 +297,12 @@ public final class frmLogin extends javax.swing.JFrame {
                 dominio,
                 puerto);
 
-        Resultado<Object> resultado = Conexion.verificar();
+        Resultado resultado = Conexion.verificar();
 
-        switch (resultado.toString()) {
-            case Conexion.E_FECHA_INICIAL_INCORRECTA -> {
-                JOptionPane.showMessageDialog(this,
-                        "Error de configuracion de la fecha inicial del producto.",
-                        "",
-                        JOptionPane.ERROR_MESSAGE
-                );
-                txtClave.setText("");
-                txtUsuario.setText("");
-                txtUsuario.requestFocusInWindow();
-                return;
-            }
-            case Conexion.E_FECHA_ACTUAL_INCORRECTA -> {
-                JOptionPane.showMessageDialog(this,
-                        "Error de configuracion de la fecha actual del producto.",
-                        "",
-                        JOptionPane.ERROR_MESSAGE
-                );
-                txtClave.setText("");
-                txtUsuario.setText("");
-                txtUsuario.requestFocusInWindow();
-                return;
-            }
-            case Conexion.E_FECHA_VENCIMIENTO -> {
-                int num = JOptionPane.showConfirmDialog(this,
+        if (!resultado.getEstado()) {
+            if(resultado.getMensaje().equals(Conexion.E_FECHA_VENCIMIENTO)){
+                int num = JOptionPane.showConfirmDialog(
+                        this,
                         "Este equipo no esta Autorizado! \nDesea Registrar?",
                         "",
                         JOptionPane.YES_NO_OPTION,
@@ -334,29 +313,20 @@ public final class frmLogin extends javax.swing.JFrame {
                 }
                 return;
             }
-            case Conexion.JAVASQL_SQL_INVALID_AUTHORIZATION_SPEC_EXCEPTI -> {
-                JOptionPane.showMessageDialog(
-                        this,
-                        "Usuario y clave no validas.!",
-                        "",
-                        JOptionPane.ERROR_MESSAGE
-                );
-                txtClave.setText("");
-                txtUsuario.setText("");
-                txtUsuario.requestFocusInWindow();
-                return;
-            }
-            case Conexion.LIBRERIA_DEL_DRIVER_NO_ENCONTRADA -> {
-                JOptionPane.showMessageDialog(
-                        this,
-                        Conexion.LIBRERIA_DEL_DRIVER_NO_ENCONTRADA,
-                        "",
-                        JOptionPane.ERROR_MESSAGE
-                );
-                return;
-            }
+            
+            JOptionPane.showMessageDialog(
+                    this,
+                    resultado.getMensaje(),
+                    "",
+                    resultado.getIcono()
+            );
+            
+            txtClave.setText("");
+            txtUsuario.setText("");
+            txtUsuario.requestFocusInWindow();
+            return;
         }
-        LOG.fine("Conectando a los evento.");
+
         FirebirdEventos f = new FirebirdEventos();
 
         if (!f.registro(
@@ -412,6 +382,7 @@ public final class frmLogin extends javax.swing.JFrame {
         frmPrincipal principal = new frmPrincipal();
         principal.setVisible(true);
         principal.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        principal.requestFocusInWindow(FocusEvent.Cause.ROLLBACK);
 
         dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
@@ -497,14 +468,12 @@ public final class frmLogin extends javax.swing.JFrame {
 
 //        FlatLaf.registerCustomDefaultsSource( "sur.softsurena.themes" );
 //        FlatLightLaf.setup();
-        
         java.awt.EventQueue.invokeLater(() -> {
             frmLogin frmLogin = new frmLogin("es");
             frmLogin.setVisible(true);
             frmLogin.setLocationRelativeTo(null);
         });
-        
-        
+
         sistema = System.getProperty("os.name").strip();
     }
 

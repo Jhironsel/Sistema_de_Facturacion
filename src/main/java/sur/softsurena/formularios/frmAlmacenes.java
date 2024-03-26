@@ -5,10 +5,10 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import sur.softsurena.entidades.Almacen;
 import sur.softsurena.entidades.Privilegio;
-import sur.softsurena.utilidades.Resultado;
 import static sur.softsurena.metodos.M_Almacen.agregarAlmacen;
 import static sur.softsurena.metodos.M_Almacen.getAlmacenesList;
 import static sur.softsurena.metodos.M_Privilegio.privilegio;
+import sur.softsurena.utilidades.Resultado;
 import static sur.softsurena.utilidades.Utilidades.columnasCheckBox;
 import static sur.softsurena.utilidades.Utilidades.repararColumnaTable;
 
@@ -21,7 +21,9 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
         if (!privilegio(
                 Privilegio
                         .builder()
-                        .privilegio(Privilegio.PRIVILEGIO_SELECT)
+                        .privilegio(
+                                Privilegio.PRIVILEGIO_SELECT
+                        )
                         .nombre_relacion("V_ALMACENES")
                         .nombre_campo("^")
                         .build()
@@ -497,8 +499,10 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
         if (txtDetalleUbicacion.getText().isBlank()) {
             int resp = JOptionPane.showInternalConfirmDialog(
                     this,
-                    "Es importante agregar un detalle de la ubicacion del almacen."
-                    + "\nDesea continuar?",
+                    """
+                    Es importante agregar un detalle de la ubicacion del almacen.
+                    Desea continuar?
+                    """,
                     "",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.WARNING_MESSAGE
@@ -513,8 +517,10 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
         if (!rsEstado.isActivado()) {
             int resp = JOptionPane.showInternalConfirmDialog(
                     this,
-                    "Se esta creando un almacen de estado inactivo."
-                    + "\nDesea continuar?",
+                    """
+                    Se esta creando un almacen de estado inactivo.
+                    Desea continuar?
+                    """,
                     "",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.WARNING_MESSAGE
@@ -565,31 +571,37 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_labelIcon1MouseClicked
 
     private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
-        btnNuevo.setEnabled(privilegio(Privilegio
-                .builder()
-                .privilegio(Privilegio.PRIVILEGIO_EXECUTE)
-                .nombre_relacion("SP_INSERT_ALMACEN")
-                .nombre_campo("^")
-                .build()
-        )
+        btnNuevo.setEnabled(
+                privilegio(
+                        Privilegio
+                                .builder()
+                                .privilegio(Privilegio.PRIVILEGIO_EXECUTE)
+                                .nombre_relacion("SP_I_ALMACEN")
+                                .nombre_campo("^")
+                                .build()
+                )
         );
 
-        btnModificar.setEnabled(privilegio(Privilegio
-                .builder()
-                .privilegio(Privilegio.PRIVILEGIO_EXECUTE)
-                .nombre_relacion("SP_UPDATE_ALMACEN")
-                .nombre_campo("^")
-                .build()
-        )
+        btnModificar.setEnabled(
+                privilegio(
+                        Privilegio
+                                .builder()
+                                .privilegio(Privilegio.PRIVILEGIO_EXECUTE)
+                                .nombre_relacion("SP_U_ALMACEN")
+                                .nombre_campo("^")
+                                .build()
+                )
         );
 
-        btnBorrar.setEnabled(privilegio(Privilegio
-                .builder()
-                .privilegio(Privilegio.PRIVILEGIO_EXECUTE)
-                .nombre_relacion("SP_DELETE_ALMACEN")
-                .nombre_campo("^")
-                .build()
-        )
+        btnBorrar.setEnabled(
+                privilegio(
+                        Privilegio
+                                .builder()
+                                .privilegio(Privilegio.PRIVILEGIO_EXECUTE)
+                                .nombre_relacion("SP_D_ALMACEN")
+                                .nombre_campo("^")
+                                .build()
+                )
         );
     }//GEN-LAST:event_formInternalFrameActivated
 

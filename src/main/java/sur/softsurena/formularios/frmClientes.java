@@ -4,9 +4,11 @@ import com.toedter.calendar.JTextFieldDateEditor;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -29,13 +31,15 @@ import static sur.softsurena.metodos.M_Cliente.agregarClienteById;
 import static sur.softsurena.metodos.M_Cliente.borrarCliente;
 import static sur.softsurena.metodos.M_Cliente.getClientes;
 import static sur.softsurena.metodos.M_Cliente.modificarCliente;
+import static sur.softsurena.metodos.M_ContactoEmail.agregarContactosEmail;
 import static sur.softsurena.metodos.M_ContactoEmail.correo;
 import static sur.softsurena.metodos.M_ContactoEmail.generarCorreo;
 import static sur.softsurena.metodos.M_ContactoEmail.getCorreoByID;
+import static sur.softsurena.metodos.M_ContactoTel.agregarContactosTel;
 import static sur.softsurena.metodos.M_ContactoTel.generarTelMovil;
 import static sur.softsurena.metodos.M_ContactoTel.getTelefonoByID;
 import static sur.softsurena.metodos.M_ContactoTel.telefono;
-import static sur.softsurena.metodos.M_Direccion.agregarModificarDirecciones;
+import static sur.softsurena.metodos.M_Direccion.agregarDireccion;
 import static sur.softsurena.metodos.M_Direccion.getDireccionByID;
 import static sur.softsurena.metodos.M_Distrito_Municipal.getDistritosMunicipales;
 import static sur.softsurena.metodos.M_EstadoCivil.getEstadoCivilList;
@@ -75,6 +79,8 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
 
     private static Integer idCliente;
 
+    private static Object registro[];
+
     public static frmClientes getInstance() {
         /*
             Si un permiso a las vistas consultada anteriormente es negado, se 
@@ -100,6 +106,12 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
             throw new ExceptionInInitializerError(mensaje);
         }
         return NewSingletonHolder.INSTANCE;
+    }
+
+    private void btnDireccionEnable(boolean valor) {
+        btnEditarDireccion.setEnabled(valor);
+        btnBorrarDirrecion.setEnabled(valor);
+        txtDireccion.requestFocusInWindow();
     }
 
     private static class NewSingletonHolder {
@@ -186,7 +198,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
         jPanel7 = new javax.swing.JPanel();
         btnAgregarDirecciones = new RSMaterialComponent.RSButtonMaterialIconOne();
         btnEditarDireccion = new RSMaterialComponent.RSButtonMaterialIconOne();
-        btnEliminarDirrecion = new RSMaterialComponent.RSButtonMaterialIconOne();
+        btnBorrarDirrecion = new RSMaterialComponent.RSButtonMaterialIconOne();
         txtDireccion = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblDireccion = new rojerusan.RSTableMetro1(){
@@ -201,9 +213,11 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
         jPanel8 = new javax.swing.JPanel();
         txtTelelfonoMovil = new javax.swing.JFormattedTextField();
         btnAgregarTelefonoMovil = new RSMaterialComponent.RSButtonMaterialIconOne();
-        btnBorrarTelefonoMovil = new RSMaterialComponent.RSButtonMaterialIconOne();
-        jrbMovil = new javax.swing.JRadioButton();
+        btnBorrarTelefono = new RSMaterialComponent.RSButtonMaterialIconOne();
+        btnEditarTelefono = new RSMaterialComponent.RSButtonMaterialIconOne();
+        jPanel1 = new javax.swing.JPanel();
         jrbResidencial = new javax.swing.JRadioButton();
+        jrbMovil = new javax.swing.JRadioButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         tblTelefonos = new rojerusan.RSTableMetro1(){
             @Override
@@ -214,8 +228,9 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
         jpCorreos = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
         btnAgregarCorreo = new RSMaterialComponent.RSButtonMaterialIconOne();
-        btnEliminarCorreo = new RSMaterialComponent.RSButtonMaterialIconOne();
+        btnBorrarCorreo = new RSMaterialComponent.RSButtonMaterialIconOne();
         txtCorreo = new javax.swing.JTextField();
+        btnEditarCorreo = new RSMaterialComponent.RSButtonMaterialIconOne();
         jScrollPane4 = new javax.swing.JScrollPane();
         tblCorreos = new rojerusan.RSTableMetro1(){
             @Override
@@ -226,9 +241,9 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
         jlFechaCreacion = new javax.swing.JLabel();
         jpBotones = new javax.swing.JPanel();
         jpBotones2 = new javax.swing.JPanel();
-        btnNuevo = new RSMaterialComponent.RSButtonMaterialIconOne();
-        btnModificar = new RSMaterialComponent.RSButtonMaterialIconOne();
-        btnBorrar = new RSMaterialComponent.RSButtonMaterialIconOne();
+        btnNuevoCliente = new RSMaterialComponent.RSButtonMaterialIconOne();
+        btnEditarCliente = new RSMaterialComponent.RSButtonMaterialIconOne();
+        btnBorrarCliente = new RSMaterialComponent.RSButtonMaterialIconOne();
         btnBuscar = new RSMaterialComponent.RSButtonMaterialIconOne();
         btnGuardar = new RSMaterialComponent.RSButtonMaterialIconOne();
         btnCancelar = new RSMaterialComponent.RSButtonMaterialIconOne();
@@ -287,15 +302,20 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
 
         tblClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Cedula", "Persona", "Primer Nombre", "Segundo Nombre", "Apellidos", "Sexo", "Fecha Nacimiento", "Fecha de Ingreso", "Estado"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         tblClientes.setFont(new java.awt.Font("FreeMono", 1, 14)); // NOI18N
         tblClientes.setFontHead(new java.awt.Font("FreeMono", 1, 14)); // NOI18N
         tblClientes.setFontRowHover(new java.awt.Font("FreeMono", 1, 14)); // NOI18N
@@ -429,6 +449,15 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
         jcbSexo.setFont(new java.awt.Font("FreeMono", 1, 14)); // NOI18N
         jcbSexo.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 45, 223), 2, true), "Sexo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("FreeSans", 0, 12))); // NOI18N
         jcbSexo.setName("jcbSexo"); // NOI18N
+        jcbSexo.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                jcbSexoPopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+        });
 
         txtSNombre.setFont(new java.awt.Font("FreeMono", 1, 14)); // NOI18N
         txtSNombre.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 45, 223), 2, true), "Segundo nombre", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("FreeSans", 0, 12))); // NOI18N
@@ -599,7 +628,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
                         .addComponent(jcbEstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jcbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(dchFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(129, Short.MAX_VALUE))
+                .addContainerGap(153, Short.MAX_VALUE))
         );
 
         jpGeneralesLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jcbEstadoCivil, jcbPersona, jcbSexo});
@@ -687,17 +716,17 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
         });
         jPanel7.add(btnEditarDireccion);
 
-        btnEliminarDirrecion.setEnabled(false);
-        btnEliminarDirrecion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnEliminarDirrecion.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnEliminarDirrecion.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DELETE);
-        btnEliminarDirrecion.setName("btnEliminarDirrecion"); // NOI18N
-        btnEliminarDirrecion.addActionListener(new java.awt.event.ActionListener() {
+        btnBorrarDirrecion.setEnabled(false);
+        btnBorrarDirrecion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnBorrarDirrecion.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnBorrarDirrecion.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DELETE);
+        btnBorrarDirrecion.setName("btnBorrarDirrecion"); // NOI18N
+        btnBorrarDirrecion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarDirrecionActionPerformed(evt);
+                btnBorrarDirrecionActionPerformed(evt);
             }
         });
-        jPanel7.add(btnEliminarDirrecion);
+        jPanel7.add(btnBorrarDirrecion);
 
         txtDireccion.setFont(new java.awt.Font("FreeMono", 1, 14)); // NOI18N
         txtDireccion.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 45, 223), 2, true), "Dirección", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("FreeSans", 0, 12))); // NOI18N
@@ -734,14 +763,14 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
 
         tblDireccion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Provincia", "Municipio", "Distrito Municipal", "Fecha", "Estado", "Por defecto"
+                "Provincia", "Municipio", "Distrito Municipal", "Calle y No. Casa", "Fecha", "Estado", "Por defecto"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.Boolean.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.Boolean.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -786,7 +815,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
 
@@ -824,39 +853,53 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
             }
         });
 
-        btnBorrarTelefonoMovil.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DELETE);
-        btnBorrarTelefonoMovil.setName("btnBorrarTelefono"); // NOI18N
-        btnBorrarTelefonoMovil.addActionListener(new java.awt.event.ActionListener() {
+        btnBorrarTelefono.setEnabled(false);
+        btnBorrarTelefono.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DELETE);
+        btnBorrarTelefono.setName("btnBorrarTelefono"); // NOI18N
+        btnBorrarTelefono.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBorrarTelefonoMovilActionPerformed(evt);
+                btnBorrarTelefonoActionPerformed(evt);
             }
         });
+
+        btnEditarTelefono.setEnabled(false);
+        btnEditarTelefono.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.EDIT);
+        btnEditarTelefono.setName("btnAgregarDirecciones"); // NOI18N
+        btnEditarTelefono.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarTelefonoActionPerformed(evt);
+            }
+        });
+
+        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.PAGE_AXIS));
+
+        btnGMovilTelefono.add(jrbResidencial);
+        jrbResidencial.setText("Telefono");
+        jrbResidencial.setName("jrbTelefonoResidencial"); // NOI18N
+        jPanel1.add(jrbResidencial);
 
         btnGMovilTelefono.add(jrbMovil);
         jrbMovil.setSelected(true);
         jrbMovil.setText("Movil");
         jrbMovil.setName("jrbMovil"); // NOI18N
-
-        btnGMovilTelefono.add(jrbResidencial);
-        jrbResidencial.setText("Telefono");
-        jrbResidencial.setName("jrbTelefonoResidencial"); // NOI18N
+        jPanel1.add(jrbMovil);
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(3, 3, 3)
                 .addComponent(txtTelelfonoMovil, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jrbResidencial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jrbMovil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAgregarTelefonoMovil, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnBorrarTelefonoMovil, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(300, Short.MAX_VALUE))
+                .addComponent(btnEditarTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBorrarTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(254, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -865,33 +908,42 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtTelelfonoMovil)
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(jrbMovil)
-                        .addGap(0, 0, 0)
-                        .addComponent(jrbResidencial)
-                        .addGap(3, 3, 3))
-                    .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnAgregarTelefonoMovil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnBorrarTelefonoMovil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                            .addComponent(btnEditarTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(btnAgregarTelefonoMovil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnBorrarTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(3, 3, 3))
         );
 
         tblTelefonos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Numero", "Tipo", "Fecha", "Estado", "Por defecto"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.Boolean.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         tblTelefonos.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         tblTelefonos.setFont(new java.awt.Font("FreeMono", 1, 14)); // NOI18N
         tblTelefonos.setFontHead(new java.awt.Font("FreeMono", 1, 14)); // NOI18N
         tblTelefonos.setFontRowHover(new java.awt.Font("FreeMono", 1, 14)); // NOI18N
         tblTelefonos.setFontRowSelect(new java.awt.Font("FreeMono", 1, 14)); // NOI18N
+        tblTelefonos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblTelefonosMouseClicked(evt);
+            }
+        });
         jScrollPane5.setViewportView(tblTelefonos);
 
         javax.swing.GroupLayout jpTelefonosLayout = new javax.swing.GroupLayout(jpTelefonos);
@@ -907,10 +959,10 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
         jpTelefonosLayout.setVerticalGroup(
             jpTelefonosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpTelefonosLayout.createSequentialGroup()
-                .addGap(0, 0, 0)
+                .addContainerGap()
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -924,11 +976,12 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
             }
         });
 
-        btnEliminarCorreo.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DELETE);
-        btnEliminarCorreo.setName("btnBorrarCorreo"); // NOI18N
-        btnEliminarCorreo.addActionListener(new java.awt.event.ActionListener() {
+        btnBorrarCorreo.setEnabled(false);
+        btnBorrarCorreo.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DELETE);
+        btnBorrarCorreo.setName("btnBorrarCorreo"); // NOI18N
+        btnBorrarCorreo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarCorreoActionPerformed(evt);
+                btnBorrarCorreoActionPerformed(evt);
             }
         });
 
@@ -945,6 +998,15 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
             }
         });
 
+        btnEditarCorreo.setEnabled(false);
+        btnEditarCorreo.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.EDIT);
+        btnEditarCorreo.setName("btnAgregarDirecciones"); // NOI18N
+        btnEditarCorreo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarCorreoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
         jPanel12Layout.setHorizontalGroup(
@@ -953,42 +1015,51 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
                 .addContainerGap()
                 .addComponent(txtCorreo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAgregarCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAgregarCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEliminarCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnEditarCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBorrarCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
-                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel12Layout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addComponent(txtCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel12Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnAgregarCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnEliminarCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCorreo)
+                    .addComponent(btnBorrarCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAgregarCorreo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+                    .addComponent(btnEditarCorreo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
         tblCorreos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, "", null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Correo", "Fecha", "Estado", "Por defecto"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.Boolean.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         tblCorreos.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         tblCorreos.setFont(new java.awt.Font("FreeMono", 1, 14)); // NOI18N
         tblCorreos.setFontHead(new java.awt.Font("FreeMono", 1, 14)); // NOI18N
         tblCorreos.setFontRowHover(new java.awt.Font("FreeMono", 1, 14)); // NOI18N
         tblCorreos.setFontRowSelect(new java.awt.Font("FreeMono", 1, 14)); // NOI18N
+        tblCorreos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblCorreosMouseClicked(evt);
+            }
+        });
         jScrollPane4.setViewportView(tblCorreos);
 
         javax.swing.GroupLayout jpCorreosLayout = new javax.swing.GroupLayout(jpCorreos);
@@ -1007,7 +1078,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
                 .addGap(3, 3, 3)
                 .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
 
@@ -1086,38 +1157,38 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
         jpBotones2.setName("jpBotones2"); // NOI18N
         jpBotones2.setLayout(new java.awt.GridLayout(1, 0, 4, 0));
 
-        btnNuevo.setText("Nuevo");
-        btnNuevo.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD);
-        btnNuevo.setName("btnNuevo"); // NOI18N
-        btnNuevo.setRound(40);
-        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+        btnNuevoCliente.setText("Nuevo");
+        btnNuevoCliente.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD);
+        btnNuevoCliente.setName("btnNuevoCliente"); // NOI18N
+        btnNuevoCliente.setRound(40);
+        btnNuevoCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNuevoActionPerformed(evt);
+                btnNuevoClienteActionPerformed(evt);
             }
         });
-        jpBotones2.add(btnNuevo);
+        jpBotones2.add(btnNuevoCliente);
 
-        btnModificar.setText("Modificar");
-        btnModificar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MODE_EDIT);
-        btnModificar.setName("btnModificar"); // NOI18N
-        btnModificar.setRound(40);
-        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+        btnEditarCliente.setText("Modificar");
+        btnEditarCliente.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MODE_EDIT);
+        btnEditarCliente.setName("btnEditarCliente"); // NOI18N
+        btnEditarCliente.setRound(40);
+        btnEditarCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnModificarActionPerformed(evt);
+                btnEditarClienteActionPerformed(evt);
             }
         });
-        jpBotones2.add(btnModificar);
+        jpBotones2.add(btnEditarCliente);
 
-        btnBorrar.setText("Borrar");
-        btnBorrar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DELETE);
-        btnBorrar.setName("btnBorrar"); // NOI18N
-        btnBorrar.setRound(40);
-        btnBorrar.addActionListener(new java.awt.event.ActionListener() {
+        btnBorrarCliente.setText("Borrar");
+        btnBorrarCliente.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DELETE);
+        btnBorrarCliente.setName("btnBorrarCliente"); // NOI18N
+        btnBorrarCliente.setRound(40);
+        btnBorrarCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBorrarActionPerformed(evt);
+                btnBorrarClienteActionPerformed(evt);
             }
         });
-        jpBotones2.add(btnBorrar);
+        jpBotones2.add(btnBorrarCliente);
 
         btnBuscar.setText("Buscar");
         btnBuscar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.FIND_IN_PAGE);
@@ -1175,7 +1246,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
             .addGroup(jpGeneralLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jpBotones, javax.swing.GroupLayout.DEFAULT_SIZE, 820, Short.MAX_VALUE)
+                    .addComponent(jpBotones, javax.swing.GroupLayout.DEFAULT_SIZE, 834, Short.MAX_VALUE)
                     .addComponent(jtpPrincipal))
                 .addContainerGap())
         );
@@ -1209,12 +1280,13 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+    private void btnNuevoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoClienteActionPerformed
         v_nuevo = true;//Se va a ingresar un nuevo registro al sistema
         cambioBoton(true);
-    }//GEN-LAST:event_btnNuevoActionPerformed
+        limpiarTablasDirTelCorr();
+    }//GEN-LAST:event_btnNuevoClienteActionPerformed
 
-    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+    private void btnEditarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarClienteActionPerformed
         //Se valida que exista un campo seleccionado
         if (validarRegistro("modificar.")) {
             return;
@@ -1234,12 +1306,10 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
         mostrarRegistro(idCliente);
 
         //Se modifica el ancho de cada columna en todas las tablas siguiente.
-        repararColumnaTable(tblCorreos);
-        repararColumnaTable(tblDireccion);
-        repararColumnaTable(tblTelefonos);
-    }//GEN-LAST:event_btnModificarActionPerformed
+        
+    }//GEN-LAST:event_btnEditarClienteActionPerformed
 
-    private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
+    private void btnBorrarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarClienteActionPerformed
         //Validamos que está correcto en la tabla.
         //Si el metodo devuelve true devolvemos el proceso.
         if (validarRegistro("eliminar.")) {
@@ -1276,8 +1346,8 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
                 resultados.getIcono()
         );
 
-        repararColumnaTable(tblClientes);
-    }//GEN-LAST:event_btnBorrarActionPerformed
+        
+    }//GEN-LAST:event_btnBorrarClienteActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         txtCedula1.setValue(null);
@@ -1345,7 +1415,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
             int resp = JOptionPane.showInternalConfirmDialog(
                     this,
                     """
-                    Cedula no pasa la prueba de validacion.
+                    Cedula no pasa la prueba de validación.
                     Desea continuar?
                     """,
                     "",
@@ -1583,7 +1653,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
     }//GEN-LAST:event_btnHistorialClientesActionPerformed
 
     private void txtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaActionPerformed
-        jcbPersona.requestFocusInWindow();
+        btnCedulaValidad.requestFocusInWindow();
     }//GEN-LAST:event_txtCedulaActionPerformed
 
     private void txtCedulaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaKeyPressed
@@ -1604,6 +1674,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
 
     private void jcbPersonaPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jcbPersonaPopupMenuWillBecomeInvisible
         dchFechaNacimiento.requestFocusInWindow();
+        v_editor.requestFocusInWindow();
     }//GEN-LAST:event_jcbPersonaPopupMenuWillBecomeInvisible
 
     private void cbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEstadoActionPerformed
@@ -1628,8 +1699,9 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
     }//GEN-LAST:event_txtSNombreActionPerformed
 
     private void txtApellidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidosActionPerformed
-        dchFechaNacimiento.requestFocusInWindow();
-        v_editor.requestFocusInWindow();
+        jcbPersona.requestFocusInWindow();
+        jcbPersona.showPopup();
+
     }//GEN-LAST:event_txtApellidosActionPerformed
 
     private void jcbEstadoCivilPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jcbEstadoCivilPopupMenuWillBecomeInvisible
@@ -1717,31 +1789,39 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
             return;
         }
 
-        /*
-            Se preparan la provincia, municipio y el distrito municipal.
-         */
+        //Se preparan la provincia, municipio y el distrito municipal.
         Provincia provincia = (Provincia) jcbProvincias.getSelectedItem();
         Municipio municipio = (Municipio) jcbMunicipios.getSelectedItem();
         Distrito_municipal distritoMunicipal
                 = (Distrito_municipal) jcbDistritoMunicipal.getSelectedItem();
 
-        int resp = JOptionPane.showInternalConfirmDialog(
-                this,
-                """
+        Boolean por_defecto = true;
+        if (tblDireccion.getRowCount() > 0) {
+            //Se pregunta si la direccion es por defecto.
+            int resp = JOptionPane.showInternalConfirmDialog(
+                    this,
+                    """
                 
                 Es la dirección por defecto del cliente?
                 
                 """,
-                "",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE
-        );
+                    "",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE
+            );
+            por_defecto = resp == JOptionPane.YES_OPTION;
+        }
 
-        Boolean por_defecto = resp == JOptionPane.YES_OPTION;
+        Integer id_direccion = -1;
+
+        if (!v_nuevo && tblDireccion.getSelectedRow() >= 0) {
+            id_direccion = ((Direccion) tblDireccion.getValueAt(
+                    tblDireccion.getSelectedRow(), 3)).getId();
+        }
 
         Direccion direccion = Direccion
                 .builder()
-                .id(-1)
+                .id(id_direccion)
                 .id_persona(idCliente)
                 .provincia(provincia)
                 .municipio(municipio)
@@ -1749,71 +1829,66 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
                 .direccion(txtDireccion.getText())
                 .estado(Boolean.TRUE)
                 .por_defecto(por_defecto)
-                .accion('a')
+                .fecha(new java.sql.Date(Calendar.getInstance().getTimeInMillis()))
                 .build();
 
-        //Se guardan las direcciones en esta lista para ser enviada.
-        v_direccionesList.add(direccion);
-
         if (v_nuevo) {
-            Object registroDireccion[] = new Object[TITULOS_DIRECCION.length];
+            if (por_defecto) {
+                v_direccionesList = v_direccionesList
+                        .stream()
+                        .map(dir -> {
+                            return Direccion
+                                    .builder()
+                                    .id(dir.getId())
+                                    .id_persona(dir.getId_persona())
+                                    .provincia(dir.getProvincia())
+                                    .municipio(dir.getMunicipio())
+                                    .distrito_municipal(dir.getDistrito_municipal())
+                                    .direccion(dir.getDireccion())
+                                    .estado(dir.getEstado())
+                                    .por_defecto(Boolean.FALSE)
+                                    .fecha(new java.sql.Date(
+                                            Calendar.getInstance().getTimeInMillis())
+                                    )
+                                    .build();
+                        })
+                        .collect(Collectors.toList());
+            }
 
-            registroDireccion[0] = provincia;
-            registroDireccion[1] = municipio;
-            registroDireccion[2] = distritoMunicipal;
-            registroDireccion[3] = txtDireccion.getText();
-            registroDireccion[4] = "";
-            registroDireccion[5] = Boolean.TRUE;
-            registroDireccion[6] = por_defecto;
+            v_direccionesList.add(direccion);
 
-            /*
-            Se obtiene el modelo actual de la tabla de direcciones del cliente.
-             */
-            v_dtmDireccion = (DefaultTableModel) tblDireccion.getModel();
+            limpiarTablaDireccion();
+            registro = new Object[TITULOS_DIRECCION.length];
+            v_direccionesList.stream().forEach(dir -> {
+                registro[0] = dir.getProvincia();
+                registro[1] = dir.getMunicipio();
+                registro[2] = dir.getDistrito_municipal();
+                registro[3] = dir.getDireccion();
+                registro[4] = dir.getFecha();
+                registro[5] = dir.getEstado();
+                registro[6] = dir.getPor_defecto();
 
-            /*
-            Se agrega el nuevo registro al modelo.
-             */
-            v_dtmDireccion.addRow(registroDireccion);
-
-            /*
-            Modelo colocado en la tabla.
-             */
+                //Se agrega el nuevo registro al modelo.
+                v_dtmDireccion.addRow(registro);
+            });
             tblDireccion.setModel(v_dtmDireccion);
         } else {
-            agregarModificarDirecciones(
-                    ((Cliente) tblClientes.getValueAt(
-                            tblClientes.getSelectedRow(),
-                            0
-                    )).getId_persona(),
-                    v_direccionesList
-            );
-            v_direccionesList.clear();
+            agregarDireccion(direccion);
         }
 
-        //Colocamos los jcb en la posicion cero
-        jcbProvincias.setSelectedIndex(0);
-        jcbMunicipios.setSelectedIndex(0);
-        jcbDistritoMunicipal.setSelectedIndex(0);
+        LimpiarComboBoxProMuniDistr();
 
-        //Deshabilitamos los dos jcb por defecto.
-        jcbMunicipios.setEnabled(false);
-        jcbDistritoMunicipal.setEnabled(false);
-
-        //Limpiamos el campo de la direccion.
-        txtDireccion.setText("");
-
-        /*
-            Se reparan los anchos de la columnas de la tabla.
-         */
-        repararColumnaTable(tblDireccion);
+        
     }//GEN-LAST:event_btnAgregarDireccionesActionPerformed
 
-    private void btnEliminarDirrecionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarDirrecionActionPerformed
+    private void btnBorrarDirrecionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarDirrecionActionPerformed
         eliminarRegistroTabla(tblDireccion, v_dtmDireccion, v_direccionesList);
 
-        repararColumnaTable(tblDireccion);
-    }//GEN-LAST:event_btnEliminarDirrecionActionPerformed
+        
+        btnDireccionEnable(false);
+
+        LimpiarComboBoxProMuniDistr();
+    }//GEN-LAST:event_btnBorrarDirrecionActionPerformed
 
     private void txtDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDireccionActionPerformed
         btnAgregarDirecciones.doClick();
@@ -1842,12 +1917,11 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
         if (validarCampo(txtTelelfonoMovil)) {
             JOptionPane.showInternalMessageDialog(
                     this,
-                    "Debe digitar numero telefonico valido..",
+                    "Debe digitar numero telefonico valido!",
                     "",
                     JOptionPane.ERROR_MESSAGE
             );
-            txtTelelfonoMovil.setValue("");
-            txtTelelfonoMovil.requestFocusInWindow();
+            limpiarTxtTelefonoMovil();
             return;
         }
 
@@ -1855,38 +1929,100 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
         if (!telefono(txtTelelfonoMovil.getValue().toString())) {
             JOptionPane.showInternalMessageDialog(
                     this,
-                    "Debe digitar numero telefonico valido.",
+                    "Debe digitar numero telefonico valido!",
                     "",
                     JOptionPane.ERROR_MESSAGE
             );
-            txtTelelfonoMovil.setValue("");
+            limpiarTxtTelefonoMovil();
             return;
         }
+        Boolean por_defecto = true;
+        if (tblTelefonos.getRowCount() > 0) {
+            //Se pregunta si la direccion es por defecto.
+            int resp = JOptionPane.showInternalConfirmDialog(
+                    this,
+                    """
+                
+                Es el telefono por defecto del cliente?
+                
+                """,
+                    "",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE
+            );
+            por_defecto = resp == JOptionPane.YES_OPTION;
+        }
 
-        String telefono = txtTelelfonoMovil.getValue().toString();
-        String tipo = (jrbMovil.isSelected() ? "Movil" : "Telefono");
+        Integer id_telefono = -1;
 
-        //Array de Object para la tabla.
-        Object registroTel[] = new Object[TITULOS_TELEFONO.length];
-        registroTel[0] = telefono;
-        registroTel[1] = tipo;
+        if (!v_nuevo && tblTelefonos.getSelectedRow() >= 0) {
+            id_telefono = ((Direccion) tblTelefonos.getValueAt(
+                    tblTelefonos.getSelectedRow(),
+                    0)).getId();
+        }
 
-        //Objecto List para contactos telefonico.
-        v_contactosTelsList.add(ContactoTel.builder().
-                telefono(telefono).
-                tipo(tipo).build());
+        ContactoTel contactoTel = ContactoTel
+                .builder()
+                .id(id_telefono)
+                .id_persona(idCliente)
+                .telefono(txtTelelfonoMovil.getValue().toString())
+                .tipo((jrbMovil.isSelected() ? "Movil" : "Telefono"))
+                .fecha(new java.sql.Date(Calendar.getInstance().getTimeInMillis()))
+                .estado(Boolean.TRUE)
+                .por_defecto(por_defecto)
+                .build();
 
-        v_dtmTelefono.addRow(registroTel);
-        tblTelefonos.setModel(v_dtmTelefono);
+        if (v_nuevo) {
+            if (por_defecto) {
+                v_contactosTelsList = v_contactosTelsList
+                        .stream()
+                        .map(tel -> {
+                            return ContactoTel
+                                    .builder()
+                                    .id(tel.getId())
+                                    .id_persona(tel.getId_persona())
+                                    .telefono(tel.getTelefono())
+                                    .tipo(tel.getTipo())
+                                    .fecha(tel.getFecha())
+                                    .estado(tel.getEstado())
+                                    .por_defecto(Boolean.FALSE)
+                                    .build();
+                        })
+                        .collect(Collectors.toList());
+            }
 
-        txtTelelfonoMovil.setValue("");
-        txtTelelfonoMovil.requestFocusInWindow();
+            v_contactosTelsList.add(
+                    contactoTel
+            );
 
-        repararColumnaTable(tblTelefonos);
+            limpiarTablaTelefono();
+            registro = new Object[TITULOS_TELEFONO.length];
+            v_contactosTelsList.stream().forEach(telef -> {
+                registro[0] = telef.getTelefono();
+                registro[1] = telef.getTipo();
+                registro[2] = telef.getFecha();
+                registro[3] = telef.getEstado();
+                registro[4] = telef.getPor_defecto();
+                v_dtmTelefono.addRow(registro);
+            });
+            tblTelefonos.setModel(v_dtmTelefono);
+        } else {
+            agregarContactosTel(contactoTel);
+        }
+
+        limpiarTxtTelefonoMovil();
+
+        
     }//GEN-LAST:event_btnAgregarTelefonoMovilActionPerformed
 
-    private void btnBorrarTelefonoMovilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarTelefonoMovilActionPerformed
-        //TODO Esto hay que completarlo.
+    private void limpiarTxtTelefonoMovil() {
+        txtTelelfonoMovil.setValue("");
+        txtTelelfonoMovil.requestFocusInWindow();
+        jrbMovil.setSelected(true);
+    }
+
+    private void btnBorrarTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarTelefonoActionPerformed
+
         if (v_nuevo) {
 
         } else {
@@ -1895,13 +2031,13 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
 
         eliminarRegistroTabla(tblTelefonos, v_dtmTelefono, v_contactosTelsList);
 
-        repararColumnaTable(tblTelefonos);
-    }//GEN-LAST:event_btnBorrarTelefonoMovilActionPerformed
+        
+        btnBorrarTelefono.setEnabled(false);
+        btnTelefonoEnable(false);
+    }//GEN-LAST:event_btnBorrarTelefonoActionPerformed
 
     private void btnAgregarCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCorreoActionPerformed
-        /*
-            Validamos que el correo no esté vacio.
-         */
+        //Validamos que el correo no esté vacio.
         if (txtCorreo.getText().isBlank()) {
             JOptionPane.showInternalMessageDialog(
                     this,
@@ -1913,9 +2049,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
             return;
         }
 
-        /*
-        Verificamos que sea un correo valido.
-         */
+        //Verificamos que sea un correo valido.
         if (!correo(txtCorreo.getText())) {
             JOptionPane.showInternalMessageDialog(
                     this,
@@ -1926,40 +2060,86 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
             txtCorreo.requestFocusInWindow();
             return;
         }
-
-        if (v_nuevo) {
-            //TODO Llenamos el List de correo.
-            v_contactosCorreosList.add(ContactoEmail.
-                    builder().
-                    email(txtCorreo.getText()).
-                    build()
+        Boolean por_defecto = true;
+        if (tblCorreos.getRowCount() > 0) {
+            int resp = JOptionPane.showInternalConfirmDialog(
+                    this,
+                    """
+                        Es el correo por defecto del cliente?
+                    """,
+                    "",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE
             );
-        } else {
-            //TODO Necesitamos el Id del registro del correo.
-
+            por_defecto = resp == JOptionPane.YES_OPTION;
         }
 
-        /*
-        Creamos un objecto de tipo array para las columnas.
-        Dichas columnas son Correo y Fecha.
-         */
-        Object registroCorreo[] = {txtCorreo.getText()};
+        Integer id_correo = -1;
 
-        //Ingresamos el array al modelo
-        v_dtmCorreo.addRow(registroCorreo);
+        if (!v_nuevo && tblCorreos.getSelectedRow() >= 0) {
+            id_correo = ((ContactoEmail) tblCorreos.getValueAt(
+                    tblCorreos.getSelectedRow(), 0
+            )).getId();
+        }
 
-        //Y al modelo lo pasamos a la tabla para ser mostrado.
-        tblCorreos.setModel(v_dtmCorreo);
+        ContactoEmail contactoEmail
+                = ContactoEmail
+                        .builder()
+                        .id(id_correo)
+                        .id_persona(idCliente)
+                        .email(txtCorreo.getText())
+                        .estado(Boolean.TRUE)
+                        .fecha(
+                                new java.sql.Date(
+                                        Calendar.getInstance().getTimeInMillis()
+                                )
+                        )
+                        .por_defecto(por_defecto)
+                        .build();
 
-        //Limpiamos campos y solicitamos el focus.
+        if (v_nuevo) {
+            if (por_defecto) {
+                v_contactosCorreosList = v_contactosCorreosList
+                        .stream()
+                        .map(correo -> {
+                            return ContactoEmail
+                                    .builder()
+                                    .id(correo.getId())
+                                    .id_persona(correo.getId_persona())
+                                    .email(correo.getEmail())
+                                    .fecha(correo.getFecha())
+                                    .estado(correo.getEstado())
+                                    .por_defecto(Boolean.FALSE)
+                                    .build();
+                        })
+                        .collect(Collectors.toList());
+            }
+
+            limpiarTablaCorreo();
+
+            v_contactosCorreosList.add(contactoEmail);
+
+            registro = new Object[TITULOS_CORREO.length];
+
+            v_contactosCorreosList.stream().forEach(correo -> {
+                registro[0] = correo.getEmail();
+                registro[1] = correo.getFecha();
+                registro[2] = correo.getEstado();
+                registro[3] = correo.getPor_defecto();
+                v_dtmCorreo.addRow(registro);
+            });
+
+            tblCorreos.setModel(v_dtmCorreo);
+        } else {
+            agregarContactosEmail(contactoEmail);
+        }
+
         txtCorreo.setText("");
         txtCorreo.requestFocusInWindow();
-
-        //Reparamos la columnas de la tabla.
-        repararColumnaTable(tblCorreos);
     }//GEN-LAST:event_btnAgregarCorreoActionPerformed
 
-    private void btnEliminarCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarCorreoActionPerformed
+    private void btnBorrarCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarCorreoActionPerformed
+
         if (v_nuevo) {
 
         } else {
@@ -1967,10 +2147,25 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
         }
 
         eliminarRegistroTabla(tblCorreos, v_dtmCorreo, v_contactosCorreosList);
-        repararColumnaTable(tblCorreos);
-    }//GEN-LAST:event_btnEliminarCorreoActionPerformed
+        btnCorreoEnable(false);
+    }//GEN-LAST:event_btnBorrarCorreoActionPerformed
 
     private void btnCedulaValidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCedulaValidadActionPerformed
+//        if (txtCedula.getValue().toString().equals("000-0000000-0")) {
+//            JOptionPane.showInternalMessageDialog(
+//                    this,
+//                    """
+//                    Cedula GENERICA del sistema.
+//                    Modifique la cedula del cliente.
+//                    """,
+//                    "",
+//                    JOptionPane.ERROR_MESSAGE
+//            );
+//            txtCedula.setValue(null);
+//            txtCedula.requestFocusInWindow();
+//            return;
+//        }
+
         if (validarCampo(txtCedula)) {
             JOptionPane.showInternalMessageDialog(
                     this,
@@ -1997,6 +2192,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
                     "",
                     JOptionPane.INFORMATION_MESSAGE
             );
+            txtPNombre.requestFocusInWindow();
         } else {
             idCliente = clientes.get(0).getId_persona();
             if (v_nuevo) {
@@ -2075,19 +2271,19 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
 
         //Validando los botones por consultas. 
         //Permiso para el boton de nuevo
-        btnNuevo.setEnabled(
+        btnNuevoCliente.setEnabled(
                 privilegio(
                         Privilegio
                                 .builder()
                                 .privilegio(Privilegio.PRIVILEGIO_EXECUTE)
-                                .nombre_relacion("SP_INSERT_CLIENTE_SB")
+                                .nombre_relacion("SP_I_CLIENTE_SB")
                                 .nombre_campo("^")
                                 .build()
                 )
         );
 
         //Permiso para el boton de Borrar
-        btnBorrar.setEnabled(
+        btnBorrarCliente.setEnabled(
                 privilegio(
                         Privilegio
                                 .builder()
@@ -2099,7 +2295,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
         );
 
         //Permiso para el boton de Modificar
-        btnModificar.setEnabled(
+        btnEditarCliente.setEnabled(
                 privilegio(
                         Privilegio
                                 .builder()
@@ -2162,7 +2358,6 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
 
 //        int idRegistro = ((Direccion) tblDireccion.getValueAt(
 //                tblDireccion.getSelectedRow(), 3)).getId();
-
         for (int i = 0; i < jcbProvincias.getItemCount(); i++) {
             int provinciaCombo = ((Provincia) jcbProvincias.getItemAt(i)).getId();
             if (provinciaCombo == provinciaTbl) {
@@ -2189,19 +2384,26 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
 
         txtDireccion.setText(direccion);
 
-        btnEliminarDirrecion.setEnabled(false);
+        btnDireccionEnable(false);
+
     }//GEN-LAST:event_btnEditarDireccionActionPerformed
 
     private void jtpGeneralesDireccionContactosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtpGeneralesDireccionContactosKeyPressed
         if (evt.isControlDown()) {
             if (evt.getKeyCode() == KeyEvent.VK_1) {
-                jtpGeneralesDireccionContactos.setSelectedIndex(jtpGeneralesDireccionContactos.indexOfComponent(jpGenerales));
+                jtpGeneralesDireccionContactos.setSelectedIndex(
+                        jtpGeneralesDireccionContactos.indexOfComponent(jpGenerales)
+                );
             }
             if (evt.getKeyCode() == KeyEvent.VK_2) {
-                jtpGeneralesDireccionContactos.setSelectedIndex(jtpGeneralesDireccionContactos.indexOfComponent(jpDireccion));
+                jtpGeneralesDireccionContactos.setSelectedIndex(
+                        jtpGeneralesDireccionContactos.indexOfComponent(jpDireccion)
+                );
             }
             if (evt.getKeyCode() == KeyEvent.VK_3) {
-                jtpGeneralesDireccionContactos.setSelectedIndex(jtpGeneralesDireccionContactos.indexOfComponent(jpContactos));
+                jtpGeneralesDireccionContactos.setSelectedIndex(
+                        jtpGeneralesDireccionContactos.indexOfComponent(jpContactos)
+                );
             }
         }
     }//GEN-LAST:event_jtpGeneralesDireccionContactosKeyPressed
@@ -2277,98 +2479,32 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
     }//GEN-LAST:event_formInternalFrameActivated
 
     private void tblDireccionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDireccionMouseClicked
-        boolean valor = tblDireccion.getSelectedRow() >= 0;
-        btnEditarDireccion.setEnabled(valor);
-        btnEliminarDirrecion.setEnabled(valor);
+        btnDireccionEnable(true);
     }//GEN-LAST:event_tblDireccionMouseClicked
 
-    /**
-     * Metodo utilizado para llenar la tabla de cliente del sistema. Nota: Este
-     * evento Debe ser publico porque este es llamado desde los eventos de
-     * Firebird.
-     *
-     * @param id
-     * @param criterioBusqueda
-     *
-     * @return Devuelve la propiedades de un JTable para ser testeada.
-     */
-    public synchronized static JTable llenarTablaClientes(int id,
-            String criterioBusqueda) {
+    private void btnEditarTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarTelefonoActionPerformed
+        btnTelefonoEnable(false);
+    }//GEN-LAST:event_btnEditarTelefonoActionPerformed
 
-        if (Objects.isNull(criterioBusqueda)) {
-            criterioBusqueda = "";
+    private void btnEditarCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarCorreoActionPerformed
+        btnCorreoEnable(false);
+    }//GEN-LAST:event_btnEditarCorreoActionPerformed
+
+    private void tblTelefonosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTelefonosMouseClicked
+        btnTelefonoEnable(true);
+    }//GEN-LAST:event_tblTelefonosMouseClicked
+
+    private void tblCorreosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCorreosMouseClicked
+        btnCorreoEnable(true);
+    }//GEN-LAST:event_tblCorreosMouseClicked
+
+    private void jcbSexoPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jcbSexoPopupMenuWillBecomeInvisible
+        if (jcbSexo.getSelectedIndex() > 0) {
+            jtpGeneralesDireccionContactos.setSelectedIndex(
+                    jtpGeneralesDireccionContactos.indexOfComponent(jpDireccion)
+            );
         }
-
-        if (criterioBusqueda.equalsIgnoreCase("evento")) {
-            criterioBusqueda = frmClientes.criterioBusqueda;
-        }
-
-        final String titulos[] = {"Cedulas", "Persona", "Primer Nombre",
-            "Segundo Nombre", "Apellidos", "Sexo", "Fecha nacimiento",
-            "Fecha Ingreso", "Estado"
-        };
-
-        Object registro[] = new Object[titulos.length];
-
-        DefaultTableModel dtmClientes = new DefaultTableModel(null, titulos);
-
-        getClientes(
-                FiltroBusqueda
-                        .builder()
-                        .id(id)
-                        .criterioBusqueda(criterioBusqueda)
-                        .filas(Boolean.TRUE)
-                        .nCantidadFilas(
-                                Integer.valueOf(
-                                        jsCantidadFilas.getValue().toString()
-                                )
-                        )
-                        .nPaginaNro(
-                                Integer.valueOf(
-                                        jsPaginaNro.getValue().toString()
-                                )
-                        )
-                        .build()
-        ).stream().forEach(
-                cliente -> {
-                    registro[0] = Cliente
-                            .builder()
-                            .id_persona(cliente.getId_persona())
-                            .generales(cliente.getGenerales())
-                            .build();
-                    registro[1] = String.valueOf(
-                            cliente.getPersona()
-                    ).equalsIgnoreCase("j") ? "JURÍDICA" : "FÍSICA";
-                    registro[2] = cliente.getPnombre();
-                    registro[3] = cliente.getSnombre();
-                    registro[4] = cliente.getApellidos();
-                    registro[5] = String.valueOf(
-                            cliente.getSexo()
-                    ).equalsIgnoreCase("M") ? "MASCULINO" : "FEMENINO";
-                    registro[6] = formatDate(
-                            cliente.getFecha_nacimiento(),
-                            "dd/MM/yyyy"
-                    );
-                    registro[7] = formatDate(
-                            cliente.getFecha_ingreso(),
-                            "dd/MM/yyyy"
-                    );
-                    registro[8] = cliente.getEstado();
-
-                    dtmClientes.addRow(registro);
-                }
-        );
-
-        tblClientes.setModel(dtmClientes);
-
-        int[] indices = {8};
-        columnasCheckBox(tblClientes, indices);
-
-        repararColumnaTable(tblClientes);
-
-        tblClientes.setBackgoundHover(new java.awt.Color(102, 102, 255));
-        return tblClientes;
-    }
+    }//GEN-LAST:event_jcbSexoPopupMenuWillBecomeInvisible
 
     /**
      * Este metodo valida que: <br>
@@ -2425,6 +2561,252 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
     }
 
     /**
+     * Este metodo debe cambiar el comportamiento de la ventana al pulsar sobre
+     * nuevo o editar.<br>
+     *
+     * @param activo Este parametro es utilizado cuando se va a ingresar o
+     * modificar registros a la base de datos.<br><br>
+     *
+     * <b>Si su valor es verdadero:</b><br>
+     * 1) Los botones de nuevo, editar, borrar y buscar deben inhabilitarse.<br>
+     * 2) Los botones de guardar y cancelar pasan habilitarse.<br>
+     * <br>
+     * <b>Si su valor es falso:</b>
+     * Lo contrario de cuando su valor es verdadero. <br>
+     * 1) Los botones de nuevo, editar, borrar y buscar deben habilitarse. <br>
+     * 2) Los botones de guardar y cancelar pasan inhabilitarse.<br><br>
+     *
+     * Al presionar nuevo o editar debe cambiarse en la vista Clientes a
+     * Mantenimiento.<br>
+     * Este metodo se llama desde el boton nuevo y modificar con el valor del
+     * parametros true y desde cancelar con el valor del parametro false.
+     */
+    private void cambioBoton(boolean activo) {
+        /*
+            Aqui pasan los JScrollPane se alternan con el valor de activo,
+        true selecciona el mantenimiento y false selecciona los registros de 
+        clientes.
+         */
+        if (activo) {
+            jtpPrincipal.addTab("Mantenimiento", jspMantenimiento);
+            jtpPrincipal.setSelectedComponent(jspMantenimiento);
+            jtpPrincipal.setEnabledAt(jtpPrincipal.indexOfComponent(jspClientes), false);
+        } else {
+            jtpPrincipal.setSelectedComponent(jspClientes);
+            jtpPrincipal.remove(jspMantenimiento);
+            jtpPrincipal.setEnabledAt(jtpPrincipal.indexOfComponent(jspClientes), true);
+        }
+
+        /*
+            Seleccionamos las pestañas de direcciones por defecto.
+         */
+        jtpGeneralesDireccionContactos.setSelectedComponent(jpGenerales);
+
+        /*
+            Si el valor de activo es true, quiere decir que se va a insertar o 
+        modificar un registro. Por ende, los botones nuevo, modificar, borrar y 
+        buscar se deshabilitan.
+        
+            En caso contrario si el valor de activo es falso, los botones nuevo,
+        modificar, borrar y buscar se habilitan.
+         */
+        btnNuevoCliente.setEnabled(!activo);
+        btnEditarCliente.setEnabled(!activo);
+        btnBorrarCliente.setEnabled(!activo);
+        btnBuscar.setEnabled(!activo);
+
+        jlFechaCreacion.setVisible(!v_nuevo);
+
+        //Botones de guardar y cancelar
+        btnGuardar.setEnabled(activo);
+        btnCancelar.setEnabled(activo);
+
+        //txt Vaciar
+        txtPNombre.setText("");
+        txtSNombre.setText("");
+        txtApellidos.setText("");
+        txtCorreo.setText("");
+        txtTelelfonoMovil.setText("");
+
+        //Se setea la fecha actual en el campo.
+        dchFechaNacimiento.setDate(new Date());
+
+        cbEstado.setSelected(activo);
+        cbEstado.setText(activo ? "Activo" : "Inactivo");
+
+        if (jcbPersona.getItemCount() > 0) {
+            jcbPersona.setSelectedIndex(0);
+        }
+
+        if (jcbEstadoCivil.getItemCount() > 0) {
+            jcbEstadoCivil.setSelectedIndex(0);
+        }
+
+        if (jcbSexo.getItemCount() > 0) {
+            jcbSexo.setSelectedIndex(0);
+        }
+
+        LimpiarComboBoxProMuniDistr();
+
+        txtDireccion.setText("");
+
+        jrbMovil.setSelected(true);
+
+        if (v_nuevo) {
+            txtCedula.setText("");
+            txtCedula.requestFocusInWindow();
+        } else {
+            txtPNombre.requestFocusInWindow();
+        }
+        //nuevasTablasDirTelCor();
+    }
+
+    /**
+     * Este metodo permite resetear todas las tablas del modulo a cero
+     * registros.
+     */
+    private void limpiarTablasDirTelCorr() {
+        limpiarTablaDireccion();
+        limpiarTablaTelefono();
+        limpiarTablaCorreo();
+    }
+
+    private static void limpiarTablaCorreo() {
+        v_dtmCorreo = new DefaultTableModel(null, TITULOS_CORREO);
+        tblCorreos.setModel(v_dtmCorreo);
+        repararColumnaTable(tblCorreos);
+        columnasCheckBox(tblCorreos, new int[]{2, 3});
+    }
+
+    private static void limpiarTablaDireccion() {
+        v_dtmDireccion = new DefaultTableModel(null, TITULOS_DIRECCION);
+        tblDireccion.setModel(v_dtmDireccion);
+        repararColumnaTable(tblDireccion);
+        columnasCheckBox(tblDireccion, new int[]{5, 6});
+    }
+
+    private static void limpiarTablaTelefono() {
+        v_dtmTelefono = new DefaultTableModel(null, TITULOS_TELEFONO);
+        tblTelefonos.setModel(v_dtmTelefono);
+        repararColumnaTable(tblTelefonos);
+        columnasCheckBox(tblTelefonos, new int[]{3, 4});
+    }
+
+    private void limpiarListas() {
+        v_direccionesList.clear();
+        v_contactosTelsList.clear();
+        v_contactosCorreosList.clear();
+    }
+
+    private void btnCorreoEnable(boolean valor) {
+        btnEditarCorreo.setEnabled(valor);
+        btnBorrarCorreo.setEnabled(valor);
+        txtCorreo.requestFocusInWindow();
+    }
+
+    private void btnTelefonoEnable(boolean valor) {
+        btnEditarTelefono.setEnabled(valor);
+        btnBorrarTelefono.setEnabled(valor);
+        txtTelelfonoMovil.requestFocusInWindow();
+    }
+
+    private void LimpiarComboBoxProMuniDistr() {
+        jcbProvincias.setSelectedIndex(0);
+        jcbMunicipios.setSelectedIndex(0);
+        jcbDistritoMunicipal.setSelectedIndex(0);
+
+        jcbMunicipios.removeAllItems();
+        jcbDistritoMunicipal.removeAllItems();
+
+        //Deshabilitamos los dos jcb por defecto.
+        jcbMunicipios.setEnabled(false);
+        jcbDistritoMunicipal.setEnabled(false);
+
+        //Limpiamos el campo de la direccion.
+        txtDireccion.setText("");
+        txtDireccion.requestFocusInWindow();
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private RSMaterialComponent.RSButtonMaterialIconOne btnActualizarRegistrosCliente;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnAgregarCorreo;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnAgregarDirecciones;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnAgregarTelefonoMovil;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnBorrarCliente;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnBorrarCorreo;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnBorrarDirrecion;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnBorrarTelefono;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnBuscar;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnCancelar;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnCedulaValidad;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnEditarCliente;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnEditarCorreo;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnEditarDireccion;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnEditarTelefono;
+    private javax.swing.ButtonGroup btnGMovilTelefono;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnGuardar;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnHistorialClientes;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnImprimirInforme1;
+    private RSMaterialComponent.RSButtonMaterialIconOne btnNuevoCliente;
+    private javax.swing.JCheckBox cbEstado;
+    private com.toedter.calendar.JDateChooser dchFechaNacimiento;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private static RSMaterialComponent.RSComboBox jcbDistritoMunicipal;
+    private javax.swing.JComboBox jcbEstadoCivil;
+    private static RSMaterialComponent.RSComboBox jcbMunicipios;
+    private static javax.swing.JComboBox jcbPersona;
+    private static RSMaterialComponent.RSComboBox jcbProvincias;
+    private javax.swing.JComboBox jcbSexo;
+    private javax.swing.JLabel jlFechaCreacion;
+    private javax.swing.JPanel jpBotones;
+    private javax.swing.JPanel jpBotones2;
+    private javax.swing.JPanel jpClientes;
+    private javax.swing.JPanel jpContactos;
+    private javax.swing.JPanel jpCorreos;
+    private javax.swing.JPanel jpDireccion;
+    private javax.swing.JPanel jpGeneral;
+    private javax.swing.JPanel jpGenerales;
+    private javax.swing.JPanel jpMantenimiento;
+    private javax.swing.JPanel jpMantenimiento2;
+    private javax.swing.JPanel jpTelefonos;
+    private javax.swing.JRadioButton jrbMovil;
+    private javax.swing.JRadioButton jrbResidencial;
+    private static javax.swing.JSpinner jsCantidadFilas;
+    private static javax.swing.JSpinner jsPaginaNro;
+    private javax.swing.JScrollPane jspClientes;
+    private javax.swing.JScrollPane jspGeneral;
+    private javax.swing.JScrollPane jspMantenimiento;
+    private javax.swing.JTabbedPane jtpContactos;
+    private javax.swing.JTabbedPane jtpGeneralesDireccionContactos;
+    public static javax.swing.JTabbedPane jtpPrincipal;
+    private static rojerusan.RSTableMetro1 tblClientes;
+    private static rojerusan.RSTableMetro1 tblCorreos;
+    private static rojerusan.RSTableMetro1 tblDireccion;
+    private static rojerusan.RSTableMetro1 tblTelefonos;
+    private javax.swing.JTextField txtApellidos;
+    private javax.swing.JFormattedTextField txtCedula;
+    private javax.swing.JFormattedTextField txtCedula1;
+    private javax.swing.JTextField txtCorreo;
+    private javax.swing.JTextField txtDireccion;
+    private javax.swing.JTextField txtPNombre;
+    private javax.swing.JTextField txtSNombre;
+    private javax.swing.JFormattedTextField txtTelelfonoMovil;
+    // End of variables declaration//GEN-END:variables
+
+    /**
      * Es el metodo encargado de llenar el formulario del cliente cuando este se
      * va a modificar en la base de datos.<br>
      *
@@ -2433,7 +2815,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
      *
      * @param idCliente El identificador del cliente en la base de datos.
      */
-    private void mostrarRegistro(Integer idCliente) {
+    public boolean mostrarRegistro(Integer idCliente) {
         if (Objects.isNull(idCliente)) {
             idCliente = frmClientes.idCliente;
         }
@@ -2494,436 +2876,159 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
                 }
         );
 
-        limpiarTablasDirTelCor();
         limpiarListas();
-
-        updateTablaDirreciones(idCliente);
-        updateTablaTelefonos(idCliente);
-        updateTablaCorreos(idCliente);
+        llenarTablaDirreciones(idCliente);
+        llenarTablaTelefonos(idCliente);
+        llenarTablaCorreos(idCliente);
+        return true;
     }
 
-    public void updateTablaCorreos(Integer idCliente) {
+    /**
+     * Metodo utilizado para llenar la tabla de cliente del sistema. Nota: Este
+     * evento Debe ser publico porque este es llamado desde los eventos de
+     * Firebird.
+     *
+     * @param id
+     * @param criterioBusqueda
+     *
+     * @return Devuelve la propiedades de un JTable para ser testeada.
+     */
+    public synchronized static JTable llenarTablaClientes(int id,
+            String criterioBusqueda) {
+
+        if (Objects.isNull(criterioBusqueda)) {
+            criterioBusqueda = "";
+        }
+
+        if (criterioBusqueda.equalsIgnoreCase("evento")) {
+            criterioBusqueda = frmClientes.criterioBusqueda;
+        }
+
+        registro = new Object[TITULOS_CLIENTE.length];
+
+        DefaultTableModel dtmClientes = new DefaultTableModel(null, TITULOS_CLIENTE);
+
+        getClientes(
+                FiltroBusqueda
+                        .builder()
+                        .id(id)
+                        .criterioBusqueda(criterioBusqueda)
+                        .filas(Boolean.TRUE)
+                        .nCantidadFilas(
+                                Integer.parseInt(
+                                        jsCantidadFilas.getValue().toString()
+                                )
+                        )
+                        .nPaginaNro(
+                                Integer.parseInt(
+                                        jsPaginaNro.getValue().toString()
+                                )
+                        )
+                        .build()
+        ).stream().forEach(
+                cliente -> {
+                    registro[0] = Cliente
+                            .builder()
+                            .id_persona(cliente.getId_persona())
+                            .generales(cliente.getGenerales())
+                            .build();
+                    registro[1] = String.valueOf(
+                            cliente.getPersona()
+                    ).equalsIgnoreCase("j") ? "JURÍDICA" : "FÍSICA";
+                    registro[2] = cliente.getPnombre();
+                    registro[3] = cliente.getSnombre();
+                    registro[4] = cliente.getApellidos();
+                    registro[5] = String.valueOf(
+                            cliente.getSexo()
+                    ).equalsIgnoreCase("M") ? "MASCULINO" : "FEMENINO";
+                    registro[6] = formatDate(
+                            cliente.getFecha_nacimiento(),
+                            "dd/MM/yyyy"
+                    );
+                    registro[7] = formatDate(
+                            cliente.getFecha_ingreso(),
+                            "dd/MM/yyyy"
+                    );
+                    registro[8] = cliente.getEstado();
+
+                    dtmClientes.addRow(registro);
+                }
+        );
+
+        tblClientes.setModel(dtmClientes);
+        tblClientes.setBackgoundHover(new java.awt.Color(102, 102, 255));
+        return tblClientes;
+    }
+
+    public static synchronized JTable llenarTablaCorreos(Integer idCliente) {
         if (Objects.isNull(idCliente)) {
             idCliente = frmClientes.idCliente;
         }
-        Object registroCorreo[] = new Object[TITULOS_CORREO.length];
-        v_dtmCorreo = new DefaultTableModel(null, TITULOS_CORREO);
-        tblCorreos.setModel(v_dtmCorreo);
+        registro = new Object[TITULOS_CORREO.length];
+        limpiarTablaCorreo();
         getCorreoByID(idCliente).stream().forEach(
                 p_correo -> {
-                    registroCorreo[0] = p_correo;
-                    registroCorreo[1] = p_correo.getFecha();
+                    registro[0] = p_correo;
+                    registro[1] = p_correo.getFecha();
+                    registro[2] = p_correo.getEstado();
+                    registro[3] = p_correo.getPor_defecto();
 
                     v_contactosCorreosList.add(p_correo);
 
-                    v_dtmCorreo.addRow(registroCorreo);
+                    v_dtmCorreo.addRow(registro);
                 }
         );
         tblCorreos.setModel(v_dtmCorreo);
+        return tblCorreos;
     }
 
-    public void updateTablaTelefonos(Integer idCliente) {
+    public static synchronized JTable llenarTablaTelefonos(Integer idCliente) {
         if (Objects.isNull(idCliente)) {
             idCliente = frmClientes.idCliente;
         }
-        Object registroTel[] = new Object[TITULOS_TELEFONO.length];
-        v_dtmTelefono = new DefaultTableModel(null, TITULOS_TELEFONO);
-        tblTelefonos.setModel(v_dtmTelefono);
-        getTelefonoByID(idCliente).stream().forEach(
-                p_telefono -> {
-                    registroTel[0] = p_telefono;
-                    registroTel[1] = p_telefono.getTipo();
-                    registroTel[2] = p_telefono.getFecha();
+        registro = new Object[TITULOS_TELEFONO.length];
+        limpiarTablaTelefono();
+        getTelefonoByID(idCliente).stream().forEach( p_telefono -> {
+                    registro[0] = p_telefono;
+                    registro[1] = p_telefono.getTipo();
+                    registro[2] = p_telefono.getFecha();
+                    registro[3] = p_telefono.getEstado();
+                    registro[4] = p_telefono.getPor_defecto();
 
                     v_contactosTelsList.add(p_telefono);
 
-                    v_dtmTelefono.addRow(registroTel);
+                    v_dtmTelefono.addRow(registro);
                 }
         );
         tblTelefonos.setModel(v_dtmTelefono);
+        return tblTelefonos;
     }
 
-    public static void updateTablaDirreciones(Integer idCliente) {
+    public static synchronized JTable llenarTablaDirreciones(Integer idCliente) {
         if (Objects.isNull(idCliente)) {
             idCliente = frmClientes.idCliente;
         }
-        Object registroDireccion[] = new Object[TITULOS_DIRECCION.length];
-        v_dtmDireccion = new DefaultTableModel(null, TITULOS_DIRECCION);
-        tblDireccion.setModel(v_dtmDireccion);
+        registro = new Object[TITULOS_DIRECCION.length];
+        limpiarTablaDireccion();
         getDireccionByID(idCliente).stream().forEach(
                 p_direccione -> {
-
-                    registroDireccion[0] = p_direccione.getProvincia();
-                    registroDireccion[1] = p_direccione.getMunicipio();
-                    registroDireccion[2] = p_direccione.getDistrito_municipal();
-                    registroDireccion[3] = Direccion
+                    registro[0] = p_direccione.getProvincia();
+                    registro[1] = p_direccione.getMunicipio();
+                    registro[2] = p_direccione.getDistrito_municipal();
+                    registro[3] = Direccion
                             .builder()
                             .id(p_direccione.getId())
+                            .id_persona(p_direccione.getId_persona())
                             .direccion(p_direccione.getDireccion())
                             .build();
-                    registroDireccion[4] = p_direccione.getFecha();
-                    registroDireccion[5] = p_direccione.getEstado();
-                    registroDireccion[6] = p_direccione.getPor_defecto();
+                    registro[4] = p_direccione.getFecha();
+                    registro[5] = p_direccione.getEstado();
+                    registro[6] = p_direccione.getPor_defecto();
                     v_direccionesList.add(p_direccione);
-                    v_dtmDireccion.addRow(registroDireccion);
+                    v_dtmDireccion.addRow(registro);
                 }
         );
         tblDireccion.setModel(v_dtmDireccion);
-        int[] columnas = {5, 6};
-        columnasCheckBox(tblDireccion, columnas);
+        return tblDireccion;
     }
-
-    /**
-     * Este metodo debe cambiar el comportamiento de la ventana al pulsar sobre
-     * nuevo o editar.<br>
-     *
-     * @param activo Este parametro es utilizado cuando se va a ingresar o
-     * modificar registros a la base de datos.<br><br>
-     *
-     * <b>Si su valor es verdadero:</b><br>
-     * 1) Los botones de nuevo, editar, borrar y buscar deben inhabilitarse.<br>
-     * 2) Los botones de guardar y cancelar pasan habilitarse.<br>
-     * <br>
-     * <b>Si su valor es falso:</b>
-     * Lo contrario de cuando su valor es verdadero. <br>
-     * 1) Los botones de nuevo, editar, borrar y buscar deben habilitarse. <br>
-     * 2) Los botones de guardar y cancelar pasan inhabilitarse.<br><br>
-     *
-     * Al presionar nuevo o editar debe cambiarse en la vista Clientes a
-     * Mantenimiento.<br>
-     * Este metodo se llama desde el boton nuevo y modificar con el valor del
-     * parametros true y desde cancelar con el valor del parametro false.
-     */
-    private void cambioBoton(boolean activo) {
-        /*
-            Aqui pasan los JScrollPane se alternan con el valor de activo,
-        true selecciona el mantenimiento y false selecciona los registros de 
-        clientes.
-         */
-        if (activo) {
-            jtpPrincipal.addTab("Mantenimiento", jspMantenimiento);
-            jtpPrincipal.setSelectedComponent(jspMantenimiento);
-            jtpPrincipal.setEnabledAt(jtpPrincipal.indexOfComponent(jspClientes), false);
-        } else {
-            jtpPrincipal.setSelectedComponent(jspClientes);
-            jtpPrincipal.remove(jspMantenimiento);
-            jtpPrincipal.setEnabledAt(jtpPrincipal.indexOfComponent(jspClientes), true);
-        }
-
-        /*
-            Seleccionamos las pestañas de direcciones por defecto.
-         */
-        jtpGeneralesDireccionContactos.setSelectedComponent(jpGenerales);
-
-        /*
-            Si el valor de activo es true, quiere decir que se va a insertar o 
-        modificar un registro. Por ende, los botones nuevo, modificar, borrar y 
-        buscar se deshabilitan.
-        
-            En caso contrario si el valor de activo es falso, los botones nuevo,
-        modificar, borrar y buscar se habilitan.
-         */
-        btnNuevo.setEnabled(!activo);
-        btnModificar.setEnabled(!activo);
-        btnBorrar.setEnabled(!activo);
-        btnBuscar.setEnabled(!activo);
-
-        jlFechaCreacion.setVisible(!v_nuevo);
-
-        //Botones de guardar y cancelar
-        btnGuardar.setEnabled(activo);
-        btnCancelar.setEnabled(activo);
-
-        //txt Vaciar
-        txtPNombre.setText("");
-        txtSNombre.setText("");
-        txtApellidos.setText("");
-        txtCorreo.setText("");
-        txtTelelfonoMovil.setText("");
-
-        //Se setea la fecha actual en el campo.
-        dchFechaNacimiento.setDate(new Date());
-
-        cbEstado.setSelected(activo);
-        cbEstado.setText(activo ? "Activo" : "Inactivo");
-
-        if (jcbPersona.getItemCount() > 0) {
-            jcbPersona.setSelectedIndex(0);
-        }
-
-        if (jcbEstadoCivil.getItemCount() > 0) {
-            jcbEstadoCivil.setSelectedIndex(0);
-        }
-
-        if (jcbSexo.getItemCount() > 0) {
-            jcbSexo.setSelectedIndex(0);
-        }
-
-        if (jcbProvincias.getItemCount() > 0) {
-            jcbProvincias.setSelectedIndex(0);
-        }
-
-        if (jcbMunicipios.getItemCount() > 0) {
-            jcbMunicipios.setSelectedIndex(0);
-        }
-
-        if (jcbDistritoMunicipal.getItemCount() > 0) {
-            jcbDistritoMunicipal.setSelectedIndex(0);
-        }
-
-        txtDireccion.setText("");
-
-        jrbMovil.setSelected(true);
-
-        if (v_nuevo) {
-            txtCedula.setText("");
-            txtCedula.requestFocusInWindow();
-        } else {
-            txtPNombre.requestFocusInWindow();
-        }
-        //nuevasTablasDirTelCor();
-    }
-
-    /**
-     * Este metodo permite resetear todas las tablas del modulo a cero
-     * registros.
-     *
-     * Se llama desde el constructor, y desde el metodo cambioBoton.
-     */
-    private void limpiarTablasDirTelCor() {
-        v_dtmTelefono = new DefaultTableModel(null, TITULOS_TELEFONO);
-        tblTelefonos.setModel(v_dtmTelefono);
-
-        v_dtmDireccion = new DefaultTableModel(null, TITULOS_DIRECCION);
-        tblDireccion.setModel(v_dtmDireccion);
-
-        v_dtmCorreo = new DefaultTableModel(null, TITULOS_CORREO);
-        tblCorreos.setModel(v_dtmCorreo);
-    }
-
-    /**
-     * Metodo que permite limpiar las lista de direcciones, contactos de
-     * telefono y correos.
-     */
-    private void limpiarListas() {
-        v_direccionesList.clear();
-        v_contactosTelsList.clear();
-        v_contactosCorreosList.clear();
-    }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private RSMaterialComponent.RSButtonMaterialIconOne btnActualizarRegistrosCliente;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnAgregarCorreo;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnAgregarDirecciones;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnAgregarTelefonoMovil;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnBorrar;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnBorrarTelefonoMovil;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnBuscar;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnCancelar;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnCedulaValidad;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnEditarDireccion;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnEliminarCorreo;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnEliminarDirrecion;
-    private javax.swing.ButtonGroup btnGMovilTelefono;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnGuardar;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnHistorialClientes;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnImprimirInforme1;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnModificar;
-    private RSMaterialComponent.RSButtonMaterialIconOne btnNuevo;
-    private javax.swing.JCheckBox cbEstado;
-    private com.toedter.calendar.JDateChooser dchFechaNacimiento;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel16;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
-    private static RSMaterialComponent.RSComboBox jcbDistritoMunicipal;
-    private javax.swing.JComboBox jcbEstadoCivil;
-    private static RSMaterialComponent.RSComboBox jcbMunicipios;
-    private static javax.swing.JComboBox jcbPersona;
-    private static RSMaterialComponent.RSComboBox jcbProvincias;
-    private javax.swing.JComboBox jcbSexo;
-    private javax.swing.JLabel jlFechaCreacion;
-    private javax.swing.JPanel jpBotones;
-    private javax.swing.JPanel jpBotones2;
-    private javax.swing.JPanel jpClientes;
-    private javax.swing.JPanel jpContactos;
-    private javax.swing.JPanel jpCorreos;
-    private javax.swing.JPanel jpDireccion;
-    private javax.swing.JPanel jpGeneral;
-    private javax.swing.JPanel jpGenerales;
-    private javax.swing.JPanel jpMantenimiento;
-    private javax.swing.JPanel jpMantenimiento2;
-    private javax.swing.JPanel jpTelefonos;
-    private javax.swing.JRadioButton jrbMovil;
-    private javax.swing.JRadioButton jrbResidencial;
-    private static javax.swing.JSpinner jsCantidadFilas;
-    private static javax.swing.JSpinner jsPaginaNro;
-    private javax.swing.JScrollPane jspClientes;
-    private javax.swing.JScrollPane jspGeneral;
-    private javax.swing.JScrollPane jspMantenimiento;
-    private javax.swing.JTabbedPane jtpContactos;
-    private javax.swing.JTabbedPane jtpGeneralesDireccionContactos;
-    public static javax.swing.JTabbedPane jtpPrincipal;
-    private static rojerusan.RSTableMetro1 tblClientes;
-    private static rojerusan.RSTableMetro1 tblCorreos;
-    private static rojerusan.RSTableMetro1 tblDireccion;
-    private static rojerusan.RSTableMetro1 tblTelefonos;
-    private javax.swing.JTextField txtApellidos;
-    private javax.swing.JFormattedTextField txtCedula;
-    private javax.swing.JFormattedTextField txtCedula1;
-    private javax.swing.JTextField txtCorreo;
-    private javax.swing.JTextField txtDireccion;
-    private javax.swing.JTextField txtPNombre;
-    private javax.swing.JTextField txtSNombre;
-    private javax.swing.JFormattedTextField txtTelelfonoMovil;
-    // End of variables declaration//GEN-END:variables
 }
-
-/**
- * El <b>btnNuevo</b> de cumplir lo siguiente:<br>
- * 1) Debe cambiar el valor de v_nuevo a true; X<br>
- * 2) Debe cambiar el TabPane de Cliente a Mantenimiento y presentar el <br>
- * formulario limpio. X<br>
- * 3) Debe deshabilitar los botones de nuevo, modificar borrar y buscar. X<br>
- * 4) Debe habilitar los botones de guardar y cancelar. X<br>
- * 5) Debe siempre limpiar las tablas de formulario de registro. X<br>
- * 6) Debe siempre limpiar los comboBox de provincia, municipio y distritos <br>
- * municipal. X<br>
- * 7) Debe siempre limpiar los comboBox de Estado civil, sexo y Tipo persona.
- * X<br>
- * 8) <br>
- *
- *
- * El <b>btnModificar</b> debe cumplir lo siguiente:<br>
- * 1) Debe ejecutarse el metodo validarRegistro(), si este devuelve TRUE<br>
- * Debe devolverse el flojo de control. X<br>
- * 2) Debe cambiar el valor de v_nuevo a false; X<br>
- * 3) Debe validar que un registros este seleccionado. X<br>
- * 4) Debe cambiar el TabPane de Clientes a Mantenimiento. <br>
- * 5) Presentar el formulario de registros con los datos de registros <br>
- * seleccionado a modificar. X<br>
- * 6) Debe habilitar los botones de guardar y cancelar. X<br>
- * 7) Debe de ajustarse el ancho de las columnas de las tablas como Correo,<br>
- * Direcciones y Telefono.
- *
- *
- * El <b>btnBorrar</b> debe cumplir lo siguiente:<br>
- * 1) Debe utilizar el metodo validarRegistro(). <br>
- * 2) Debe mostrar un cuadro de dialogo que diga <br>
- * ¿Esta Seguro de Eliminar Registro del Cliente?<br>
- * y mostrar la opciones de Si o No.<br>
- * 3) Si selecciona que NO debe devolver el flujo de control. <br>
- * 4) En caso contrario se procede a obtener el idCliente<br>
- * del registro de la tabla tblClientes.<br>
- * 5) Se manda a llamar el metodo borrarCliente(idCliente) y se <br>
- * obtiene un objecto de la clase Resultados la cual con el <br>
- * metodo getMensaje() obtenemos como resultado de la operacion <br>
- * un mensaje del metodo. 6) Evaluamos el resultado del mensaje con la variable
- * estatica de la <br>
- * clase Cliente CLIENTE_BORRADO_CORRECTAMENTE. 7) Mostramos el resultado de la
- * operacion en un JOpcionPane 8) Reperamos el ancho de las columnas de la tabla
- * tblClientes.
- *
- *
- *
- * El <b>btnBuscar</b> debe cumplir lo siguiente:<br>
- * 1) Debe iniciarlizar la variable v_hilo, para cuando el<br>
- * JOpcionPane se muestre gane el focus el componente.<br>
- * 2) El campo Cedula debe limpiarse.<br>
- * 3) Debe mostrarse la ventana pidiendo que digite la <br>
- * cedula a buscar.<br>
- * 4) Se interrumpe el hilo de ejecucion del paso 1. X<br>
- * 5) Si la opcion es no, se cancela el proceso. X<br>
- * 6) Si la opcion es si, se valida que se halla digitado<br>
- * una cedula completa.<br>
- * 7) En caso de que no es una cedula completa se muestra<br>
- * un mensaje de error.<br>
- * 8) Si la cedula es correcta se manda a consultar la cedula<br>
- * digitada.<br>
- * 9) En caso de no encontrarla mostrar el mensaje que diga: <br>
- * "El Cliente No Existe!" 10) Si
- *
- *
- * El <b>btnGuardar</b> debe cumplir lo siguiente:<br>
- * 1) Validamos que el campo de la cedula sea correcto. X<br>
- * 2) Mostramos mensaje de error si el campo primer nombre está en blanco. X<br>
- * 3) Mostramos mensaje de error si el campo de apellidos está en blanco. X<br>
- * 4) Mostramos mensaje de error si el campo de fecha es nulo. X<br>
- * 5) Mostramos mensaje de error si la fecha del campo fecha nacimiento está
- * <br>
- * por encima de la fecha actual. X<br>
- * 6) Nos aseguramos que la tabla de direcciones contenga por lo menos <br>
- * un registro. 7) Nos aseguramos que exista una forma de contacto con el
- * cliente.<br>
- * 8) Investigamos si existe un identificador o Id en la base de datos, <br>
- * Relacionado con la cedula suministrada.<br>
- * 9) Vamos a validar por caso: <br>
- * Si es Nuevo:<br>
- * 1) Y el identificador es diferente de -1 entonces existe un registro <br>
- * previo del cliente en la base de datos.<br>
- * Si es Modificar:<br>
- * 2) Y el identificador es igual a -1 entonces no existe un usuario <br>
- * con dicha cedula, lo que implica es que el cliente va a modificar su<br>
- * cedula anterior.<br>
- *
- *
- * El <b>btnCancelar</b> debe cumplir lo siguiente: <br>
- * 1) Debe de eliminar el formulario de mantenimiento. X <br>
- * 2) Debe solo prensentar el formulario de registros de los clientes. X <br>
- *
- *
- *
- *
- * El <b>btnAgregarCorreo</b> debe cumplir lo siguiente:<br>
- * 1) Debe validar que sea un correo valido. X<br>
- * 2) <br>
- *
- *
- *
- * El <b>btnAgregarDirecciones</b> debe cumplir lo siguiente: <br>
- * 1) Valida que se haya seleccionado una pronvincia. X<br>
- * 2) Valida que se haya seleccionado un municipio. X<br>
- * 3) Se valida que se haya digitado una dirección. X<br>
- * 4) Se obtiene el identificador del usuario si se va <br>
- * a modificar el registro. En caso contrario se obtiene -1.<br>
- * 5) Se obtienen las claves primarias de provincia, municipio y <br>
- * distritos municipales de los comboBox de estos. 6) Se prepara el objecto
- * direccion para ser agregado a la variable<br>
- * de campo global v_direccionesList. 7) Se prepara un arreglo de objecto
- * llamado registroDirecciones el <br>
- * cual servira para agregar la direccion completa a la BD.<br>
- * 8) Se obtiene el modelo de la tabla de direcciones de la variable <br>
- * tblDireccion con el metodo getModel().<br>
- * 9) Se agregar el registro de la variable registroDireccion a la variable<br>
- * de campo v_dtmDireccion.<br>
- * 10) Y se setea el modelo a la tabla de direcciones tblDireccion.<br>
- * 11) Se colocan los jComboBox en el indice 0 de Provincia, Municipio y <br>
- * Distrito Municipal. 12) Los jComboBox de Municipio y Distritos Municipal se
- * deshabilitan. 13) El campo direccion se blanquea. 14) Se Reparan el ancho de
- * las columnas.
- *
- *
- * El <b>btn</b>
- *
- *
- *
- * Comportamiento a reparar siguiente desarrollo:
- *
- * 1) La tabla de registros de los clientes debe ser paginada y solo puede
- * cargar de 15 a 20 registros a la vez.
- *
- *
- *
- *
- * Notas:
- *
- */

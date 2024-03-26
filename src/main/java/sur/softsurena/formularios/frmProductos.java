@@ -48,11 +48,11 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
         lanza una excepcion y la venta no se iniciará.
          */
         if (!privilegio(Privilegio
-                        .builder()
-                        .privilegio(Privilegio.PRIVILEGIO_SELECT)
-                        .nombre_relacion("GET_PRODUCTOS")
-                        .nombre_campo("^")
-                        .build()
+                .builder()
+                .privilegio(Privilegio.PRIVILEGIO_SELECT)
+                .nombre_relacion("GET_PRODUCTOS")
+                .nombre_campo("^")
+                .build()
         )) {
             final String mensaje = "No cuenta con permisos para ver la información de este módulo.";
             JOptionPane.showInternalMessageDialog(
@@ -1018,9 +1018,9 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
                     .builder()
                     .id(id)
                     .categoria(Categoria
-                                    .builder()
-                                    .id_categoria(((Categoria) cbCategoria.getSelectedItem()).getId_categoria())
-                                    .build()
+                            .builder()
+                            .id_categoria(((Categoria) cbCategoria.getSelectedItem()).getId_categoria())
+                            .build()
                     )
                     .codigo(txtCodigoBarra.getText().strip())
                     .descripcion(txtDescripcion.getText().strip())
@@ -1121,7 +1121,7 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
             );
             return;
         }
-        //TODO llevar esto a un metodo de jasperreport
+        //TODO Metodo de JasperReport
         try {
             String miFile = System.getProperty("user.dir")
                     + "/Reportes/Productos.jasper";
@@ -1135,10 +1135,14 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
 
             JasperViewer miView = new JasperViewer(jp, false);
             miView.setTitle("Lista de productos del sistema actual...");
-            miView.setLocationRelativeTo(this);//TODO En varias parte del proyecto es colocado esto. TESTEARLO.
+            miView.setLocationRelativeTo(this);
             miView.setVisible(true);
         } catch (JRException ex) {
-            LOG.log(Level.SEVERE, ex.getMessage(), ex);
+            LOG.log(
+                    Level.SEVERE,
+                    ex.getMessage(),
+                    ex
+            );
         }
     }//GEN-LAST:event_btnImprimirListaActionPerformed
 
@@ -1183,27 +1187,39 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
         reOrdenar();
         updateCategoria();
 
-        btnNuevo.setEnabled(privilegio(Privilegio
+        btnNuevo.setEnabled(
+                privilegio(
+                        Privilegio
                                 .builder()
-                                .privilegio(Privilegio.PRIVILEGIO_EXECUTE)
+                                .privilegio(
+                                        Privilegio.PRIVILEGIO_EXECUTE
+                                )
                                 .nombre_relacion("SP_INSERT_PRODUCTO")
                                 .nombre_campo("^")
                                 .build()
                 )
         );
 
-        btnModificar.setEnabled(privilegio(Privilegio
+        btnModificar.setEnabled(
+                privilegio(
+                        Privilegio
                                 .builder()
-                                .privilegio(Privilegio.PRIVILEGIO_EXECUTE)
+                                .privilegio(
+                                        Privilegio.PRIVILEGIO_EXECUTE
+                                )
                                 .nombre_relacion("SP_UPDATE_PRODUCTO")
                                 .nombre_campo("^")
                                 .build()
                 )
         );
 
-        btnBorrar.setEnabled(privilegio(Privilegio
+        btnBorrar.setEnabled(
+                privilegio(
+                        Privilegio
                                 .builder()
-                                .privilegio(Privilegio.PRIVILEGIO_EXECUTE)
+                                .privilegio(
+                                        Privilegio.PRIVILEGIO_EXECUTE
+                                )
                                 .nombre_relacion("SP_DELETE_PRODUCTO")
                                 .nombre_campo("^")
                                 .build()
@@ -1536,22 +1552,22 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
         //Agregar primer elemento con id negativo
         //Lo agregamos al comboBox.
         cbCategoria.addItem(Categoria
-                        .builder()
-                        .id_categoria(-1)
-                        .descripcion("Seleccione categoria")
-                        .build()
+                .builder()
+                .id_categoria(-1)
+                .descripcion("Seleccione categoria")
+                .build()
         );
-        
+
         getCategorias(true, false).stream().forEach(categoria -> {
             cbCategoria.addItem(Categoria
-                            .builder()
-                            .id_categoria(categoria.getId_categoria())
-                            .descripcion(categoria.getDescripcion())
-                            .fecha_creacion(categoria.getFecha_creacion())
-                            .build()
+                    .builder()
+                    .id_categoria(categoria.getId_categoria())
+                    .descripcion(categoria.getDescripcion())
+                    .fecha_creacion(categoria.getFecha_creacion())
+                    .build()
             );
         });
-        
+
         if (cbCategoria.getItemCount() < 2) {
             btnModificar.setEnabled(false);
             String toolTip = btnModificar.getToolTipText();
