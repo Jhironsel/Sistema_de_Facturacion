@@ -1194,7 +1194,7 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
                                 .privilegio(
                                         Privilegio.PRIVILEGIO_EXECUTE
                                 )
-                                .nombre_relacion("SP_INSERT_PRODUCTO")
+                                .nombre_relacion("SP_I_PRODUCTO")
                                 .nombre_campo("^")
                                 .build()
                 )
@@ -1207,7 +1207,7 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
                                 .privilegio(
                                         Privilegio.PRIVILEGIO_EXECUTE
                                 )
-                                .nombre_relacion("SP_UPDATE_PRODUCTO")
+                                .nombre_relacion("SP_U_PRODUCTO")
                                 .nombre_campo("^")
                                 .build()
                 )
@@ -1220,7 +1220,7 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
                                 .privilegio(
                                         Privilegio.PRIVILEGIO_EXECUTE
                                 )
-                                .nombre_relacion("SP_DELETE_PRODUCTO")
+                                .nombre_relacion("SP_D_PRODUCTO")
                                 .nombre_campo("^")
                                 .build()
                 )

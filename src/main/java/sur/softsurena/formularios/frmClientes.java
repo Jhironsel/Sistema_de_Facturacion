@@ -2288,7 +2288,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
                         Privilegio
                                 .builder()
                                 .privilegio(Privilegio.PRIVILEGIO_EXECUTE)
-                                .nombre_relacion("SP_DELETE_CLIENTE_SB")
+                                .nombre_relacion("SP_D_CLIENTE_SB")
                                 .nombre_campo("^")
                                 .build()
                 )
@@ -2300,7 +2300,7 @@ public class frmClientes extends javax.swing.JInternalFrame implements ICliente 
                         Privilegio
                                 .builder()
                                 .privilegio(Privilegio.PRIVILEGIO_EXECUTE)
-                                .nombre_relacion("SP_UPDATE_CLIENTE_SB")
+                                .nombre_relacion("SP_U_CLIENTE_SB")
                                 .nombre_campo("^")
                                 .build()
                 )

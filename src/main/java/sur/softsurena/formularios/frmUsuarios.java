@@ -739,13 +739,13 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
                 return;
             }
 
-            Resultado resultados = borrarUsuario(usuario.strip());
+            Resultado resultado = borrarUsuario(usuario.strip());
 
             JOptionPane.showInternalMessageDialog(
                     this,
-                    resultados,
+                    resultado,
                     "",
-                    resultados.getIcono()
+                    resultado.getIcono()
             );
 
         } else {
