@@ -375,7 +375,9 @@ public class frmEntradaProducto extends javax.swing.JDialog {
         List<Producto> productos = getProductos(
                 FiltroBusqueda
                         .builder()
-                        .criterioBusqueda(txtCodigoProducto.getText().strip())
+                        .criterioBusqueda(
+                                txtCodigoProducto.getText().strip()
+                        )
                         .build()
         );
 
