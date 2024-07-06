@@ -2,6 +2,7 @@ package sur.softsurena.formularios;
 
 import java.util.Objects;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -12,7 +13,6 @@ import static sur.softsurena.metodos.M_Permiso.getPermisosDisponibles;
 import static sur.softsurena.metodos.M_Permiso.quitarPermisoAdminRole;
 import static sur.softsurena.metodos.M_Role.asignarRol;
 import static sur.softsurena.metodos.M_Role.asignarRolUsuario;
-import static sur.softsurena.metodos.M_Role.comprobandoRol;
 import static sur.softsurena.metodos.M_Role.comprobandoRolesDisponibles;
 import static sur.softsurena.metodos.M_Role.createRole;
 import static sur.softsurena.metodos.M_Role.dropRole;
@@ -83,6 +83,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         jScrollPane12 = new javax.swing.JScrollPane();
         txtDescripcion1 = new javax.swing.JTextPane();
 
+        setBorder(javax.swing.BorderFactory.createMatteBorder(25, 10, 10, 10, new java.awt.Color(37, 45, 223)));
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
@@ -205,14 +206,14 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             jpMantUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpMantUsuariosLayout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 953, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 944, Short.MAX_VALUE)
                 .addGap(6, 6, 6))
         );
         jpMantUsuariosLayout.setVerticalGroup(
             jpMantUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpMantUsuariosLayout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addComponent(jScrollPane4)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE)
                 .addGap(6, 6, 6))
         );
 
@@ -352,7 +353,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
                     .addComponent(jScrollPane11)
                     .addGroup(jpMantRolesLayout.createSequentialGroup()
                         .addGroup(jpMantRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
+                            .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
                             .addComponent(btnBorrarPermiso, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jpMantRolesLayout.createSequentialGroup()
                                 .addComponent(btnQuitarAgregarPermisoAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -363,7 +364,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
                                 .addComponent(btnAsignarPermiso, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jpMantRolesLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)))))
+                                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)))))
                 .addGap(6, 6, 6))
         );
         jpMantRolesLayout.setVerticalGroup(
@@ -371,7 +372,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             .addGroup(jpMantRolesLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(jpMantRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)
                     .addGroup(jpMantRolesLayout.createSequentialGroup()
                         .addGroup(jpMantRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
@@ -524,7 +525,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
                 .addGroup(jpDefRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpDefRolesLayout.createSequentialGroup()
                         .addGroup(jpDefRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
                             .addGroup(jpDefRolesLayout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(btnQuitarPermisoAdministrativoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -532,7 +533,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
                                 .addComponent(btnQuitarRolUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addGroup(jpDefRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
                             .addGroup(jpDefRolesLayout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(btnAsignarRol, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -544,7 +545,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             .addGroup(jpDefRolesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jpDefRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
                     .addGroup(jpDefRolesLayout.createSequentialGroup()
                         .addGroup(jpDefRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
@@ -573,7 +574,8 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jtpPrivilegios)
                 .addGap(0, 0, 0)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
 
         pack();
@@ -750,7 +752,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
 
         } else {
             //TODO Trabajo
-            
+
         }
 
 
@@ -952,8 +954,10 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tblRolesMouseClicked
 
     private void tblListadoUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblListadoUsuariosMouseClicked
-        String usuario = tblListadoUsuarios.getValueAt(tblListadoUsuarios.getSelectedRow(), 0).toString();
-        llenarTblRolesUsuarios(usuario);
+        String usuario = tblListadoUsuarios.getValueAt(
+                tblListadoUsuarios.getSelectedRow(),
+                0
+        ).toString();
         llenarTblRolesDisponibles(usuario);
     }//GEN-LAST:event_tblListadoUsuariosMouseClicked
 
@@ -988,7 +992,9 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
                 tblRoles.getSelectedRow(), 0).toString();
         //Obtenemos el permisos a establecer al rol.
         String procedimiento = tblPermisosAsignados.getValueAt(
-                tblPermisosAsignados.getSelectedRow(), 0).toString();
+                tblPermisosAsignados.getSelectedRow(),
+                0
+        ).toString();
 
         //Si es al rol de adminstrador cambiamos el nombre de la variable. 
         if (rol.equalsIgnoreCase("ADMINISTRADOR")) {
@@ -1125,7 +1131,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
      * Metodo que entraga el listado de los usuarios del sistema.
      *
      */
-    public static void llenarTablaUsuarios() {
+    public static JTable llenarTablaUsuarios() {
         tblUsuarios.removeAll();
         String titulos[] = {"Nombre usuario", "Primer Nombre",
             "Segundo Nombre", "Apellidos", "Administrador", "Estado"};
@@ -1148,20 +1154,24 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             }
         };
 
-        getUsuarios().stream().forEach(usuario -> {
-            registro[0] = usuario;
-            registro[1] = usuario.getPnombre();
-            registro[2] = usuario.getSnombre();
-            registro[3] = usuario.getApellidos();
-            registro[4] = usuario.getAdministrador();
-            registro[5] = usuario.getEstado();
-            miTabla.addRow(registro);
-        });
+        getUsuarios().stream().forEach(
+                usuario -> {
+                    registro[0] = usuario;
+                    registro[1] = usuario.getPnombre();
+                    registro[2] = usuario.getSnombre();
+                    registro[3] = usuario.getApellidos();
+                    registro[4] = usuario.getAdministrador();
+                    registro[5] = usuario.getEstado();
+                    miTabla.addRow(registro);
+                }
+        );
 
         tblUsuarios.setModel(miTabla);
 
         repararColumnaTable(tblUsuarios);
         columnasCheckBox(tblUsuarios, new int[]{4, 5});
+
+        return tblUsuarios;
     }
 
     /**
@@ -1178,11 +1188,13 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             }
         };
 
-        getRoles().stream().forEach(rol -> {
-            registro[0] = rol.getRoleName().strip().equalsIgnoreCase("RDB$ADMIN")
+        getRoles().stream().forEach(
+                rol -> {
+                    registro[0] = rol.getRoleName().strip().equalsIgnoreCase("RDB$ADMIN")
                     ? "ADMINISTRADOR" : rol.getRoleName().strip();
-            miTabla.addRow(registro);
-        });
+                    miTabla.addRow(registro);
+                }
+        );
 
         DefaultTableCellRenderer tcr = new DefaultTableCellHeaderRenderer() {
 
@@ -1210,11 +1222,13 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             }
         };
 
-        getPermisosAsignados(rolee).stream().forEach(rol -> {
-            registro[0] = rol;
-            registro[1] = (rol.getOpcionPermiso() != 0);
-            miTabla.addRow(registro);
-        });
+        getPermisosAsignados(rolee).stream().forEach(
+                rol -> {
+                    registro[0] = rol;
+                    registro[1] = (rol.getOpcionPermiso() != 0);
+                    miTabla.addRow(registro);
+                }
+        );
 
         tblPermisosAsignados.setModel(miTabla);
 
@@ -1265,10 +1279,12 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             }
         };
 
-        getNombresUsuarios().stream().forEach(usuario -> {
-            registro[0] = usuario.getUser_name().strip();
-            miTabla.addRow(registro);
-        });
+        getNombresUsuarios().stream().forEach(
+                usuario -> {
+                    registro[0] = usuario.getUser_name().strip();
+                    miTabla.addRow(registro);
+                }
+        );
 
         tblListadoUsuarios.setModel(miTabla);
 
@@ -1276,34 +1292,36 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
     }
 
     /**
+     * Metodo descontinuado, en su lugar llenarTblRolesDisponibles.
      *
      * @param userName
      */
-    private void llenarTblRolesUsuarios(String userName) {
-        tblRolesUsuario.removeAll();
-        String[] titulos = {"Roles del usuarios", "Con administración"};
-        Object[] registro = new Object[titulos.length];
-        DefaultTableModel miTabla = new DefaultTableModel(null, titulos) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-
-        comprobandoRol(userName).stream().forEach(rol -> {
-            registro[0] = rol;
-            registro[1] = rol.getOpcionPermiso() != 0;
-            miTabla.addRow(registro);
-        });
-
-        tblRolesUsuario.setModel(miTabla);
-
-        int[] indices = {1};
-        columnasCheckBox(tblRolesUsuario, indices);
-
-        repararColumnaTable(tblRolesUsuario);
-    }
-
+//    private void llenarTblRolesUsuarios(String userName) {
+//        tblRolesUsuario.removeAll();
+//        String[] titulos = {"Roles del usuarios", "Con administración"};
+//        Object[] registro = new Object[titulos.length];
+//        DefaultTableModel miTabla = new DefaultTableModel(null, titulos) {
+//            @Override
+//            public boolean isCellEditable(int row, int column) {
+//                return false;
+//            }
+//        };
+//
+//        comprobandoRol(userName).stream().forEach(
+//                rol -> {
+//                    registro[0] = rol;
+//                    registro[1] = rol.getOpcionPermiso() != 0;
+//                    miTabla.addRow(registro);
+//                }
+//        );
+//
+//        tblRolesUsuario.setModel(miTabla);
+//
+//        int[] indices = {1};
+//        columnasCheckBox(tblRolesUsuario, indices);
+//
+//        repararColumnaTable(tblRolesUsuario);
+//    }
     /**
      *
      * @param userName
@@ -1319,14 +1337,43 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             }
         };
 
-        comprobandoRolesDisponibles(userName).stream().forEach(rol -> {
-            registro[0] = rol;
-            miTabla.addRow(registro);
-        });
+        comprobandoRolesDisponibles(userName, false).stream().forEach(
+                rol -> {
+                    registro[0] = rol;
+                    miTabla.addRow(registro);
+                }
+        );
 
         tblRolesDisponibles.setModel(miTabla);
 
         repararColumnaTable(tblRolesDisponibles);
+
+        //----------------------------------------------------------------------
+        tblRolesUsuario.removeAll();
+        String[] titulos2 = {"Roles del usuarios", "Con administración"};
+        Object[] registro2 = new Object[titulos2.length];
+        DefaultTableModel miTabla2 = new DefaultTableModel(null, titulos2) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        comprobandoRolesDisponibles(userName, true).stream().forEach(
+                rol -> {
+                    registro2[0] = rol;
+                    registro2[1] = rol.getOpcionPermiso() != 0;
+
+                    miTabla2.addRow(registro2);
+                }
+        );
+
+        tblRolesUsuario.setModel(miTabla2);
+
+        int[] indices = {1};
+        columnasCheckBox(tblRolesUsuario, indices);
+
+        repararColumnaTable(tblRolesUsuario);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

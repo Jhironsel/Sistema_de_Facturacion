@@ -45,18 +45,18 @@ public class FirebirdEventos extends FBEventManager {
             //Evento para personas clientes.************************************
             addEventListener("EVENT_CLIENTE", (DatabaseEvent event) -> {
                 LOG.log(
-                        Level.INFO, 
-                        "Event [{0}] occured {1} time(s)", 
+                        Level.INFO,
+                        "Event [{0}] occured {1} time(s)",
                         new Object[]{event.getEventName(), event.getEventCount()}
                 );
-                llenarTablaClientes(-1, "evento");
+                llenarTablaClientes(-1, "");
             });
 
             //Eventos de usuario.***********************************************
             addEventListener("EVENT_USUARIO", (DatabaseEvent event) -> {
                 LOG.log(
-                        Level.INFO, 
-                        "Event [{0}] occured {1} time(s)", 
+                        Level.INFO,
+                        "Event [{0}] occured {1} time(s)",
                         new Object[]{event.getEventName(), event.getEventCount()}
                 );
                 llenarTablaUsuarios();
@@ -65,8 +65,8 @@ public class FirebirdEventos extends FBEventManager {
             //Evento de Direccion de cliente.***********************************
             addEventListener("EVENT_DIRECCION", (DatabaseEvent event) -> {
                 LOG.log(
-                        Level.INFO, 
-                        "Event [{0}] occured {1} time(s)", 
+                        Level.INFO,
+                        "Event [{0}] occured {1} time(s)",
                         new Object[]{event.getEventName(), event.getEventCount()}
                 );
                 llenarTablaDirreciones(null);
@@ -75,8 +75,8 @@ public class FirebirdEventos extends FBEventManager {
             //Evento de Telefono de cliente.************************************
             addEventListener("EVENT_TELEFONO", (DatabaseEvent event) -> {
                 LOG.log(
-                        Level.INFO, 
-                        "Event [{0}] occured {1} time(s)", 
+                        Level.INFO,
+                        "Event [{0}] occured {1} time(s)",
                         new Object[]{event.getEventName(), event.getEventCount()}
                 );
                 llenarTablaTelefonos(null);
@@ -85,8 +85,8 @@ public class FirebirdEventos extends FBEventManager {
             //Evento de Correo de cliente.**************************************
             addEventListener("EVENT_CORREO", (DatabaseEvent event) -> {
                 LOG.log(
-                        Level.INFO, 
-                        "Event [{0}] occured {1} time(s)", 
+                        Level.INFO,
+                        "Event [{0}] occured {1} time(s)",
                         new Object[]{event.getEventName(), event.getEventCount()}
                 );
                 llenarTablaCorreos(null);

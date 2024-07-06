@@ -102,7 +102,6 @@
   </NonVisualComponents>
   <Properties>
     <Property name="closable" type="boolean" value="true"/>
-    <Property name="defaultCloseOperation" type="int" value="0"/>
     <Property name="iconifiable" type="boolean" value="true"/>
     <Property name="maximizable" type="boolean" value="true"/>
     <Property name="resizable" type="boolean" value="true"/>
@@ -137,7 +136,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jScrollPane3" pref="1272" max="32767" attributes="0"/>
+          <Component id="jScrollPane3" pref="1267" max="32767" attributes="0"/>
           <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
@@ -146,7 +145,7 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="jScrollPane3" pref="459" max="32767" attributes="0"/>
+              <Component id="jScrollPane3" pref="524" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -195,7 +194,7 @@
             <Property name="verticalGap" type="int" value="3"/>
           </Layout>
           <SubComponents>
-            <Component class="newscomponents.RSButtonGradientIcon_new" name="btnEspera">
+            <Component class="newscomponents.RSButtonGradientIcon_new" name="btnPonerTemporal">
               <Properties>
                 <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;center&gt;Getion&lt;br&gt;Temporal F5&lt;/center&gt;&lt;/html&gt;"/>
                 <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&lt;center&gt;Temporal&lt;br&gt;F5&lt;/center&gt;&lt;/html&gt;"/>
@@ -212,10 +211,10 @@
                 <Property name="verticalTextPosition" type="int" value="3"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEsperaActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPonerTemporalActionPerformed"/>
               </Events>
             </Component>
-            <Component class="newscomponents.RSButtonGradientIcon_new" name="btnBuscarEspera">
+            <Component class="newscomponents.RSButtonGradientIcon_new" name="btnBuscarTemporal">
               <Properties>
                 <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;center&gt;Buscar&lt;br&gt;Temporal F6&lt;/center&gt;&lt;/html&gt;"/>
                 <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&lt;center&gt;Temporal&lt;br&gt;F6&lt;/center&gt;&lt;/html&gt;"/>
@@ -232,7 +231,7 @@
                 <Property name="verticalTextPosition" type="int" value="3"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarEsperaActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarTemporalActionPerformed"/>
               </Events>
             </Component>
             <Component class="newscomponents.RSButtonGradientIcon_new" name="btnGastos">
@@ -955,7 +954,7 @@
                       <Group type="102" attributes="0">
                           <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jpBusqueda" pref="797" max="32767" attributes="0"/>
+                              <Component id="jpBusqueda" pref="798" max="32767" attributes="0"/>
                               <Component id="jpCategoria" max="32767" attributes="0"/>
                               <Component id="jScrollPane4" max="32767" attributes="0"/>
                           </Group>
@@ -971,7 +970,7 @@
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Component id="jpBusqueda" min="-2" pref="78" max="-2" attributes="0"/>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
-                          <Component id="jScrollPane4" pref="229" max="32767" attributes="0"/>
+                          <Component id="jScrollPane4" pref="294" max="32767" attributes="0"/>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>

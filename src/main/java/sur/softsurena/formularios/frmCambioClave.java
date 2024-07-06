@@ -13,7 +13,7 @@ public class frmCambioClave extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         Imagenes icon = new Imagenes("Panel de Control 128 x 128.png");
-        jlFoto.setIcon(icon.getICono());
+        jlFoto.setIcon(icon.getIcono());
     }
 
     @SuppressWarnings("unchecked")

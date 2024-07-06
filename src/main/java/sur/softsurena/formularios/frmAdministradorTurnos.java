@@ -1,6 +1,7 @@
 package sur.softsurena.formularios;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import rojerusan.RSComboBox;
 import sur.softsurena.entidades.Almacen;
@@ -23,18 +24,13 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
     public static frmAdministradorTurnos getInstance() {
         return NewSingletonHolder.INSTANCE;
     }
-    
+
     private static class NewSingletonHolder {
 
         private static final frmAdministradorTurnos INSTANCE = new frmAdministradorTurnos();
     }
-    
-    private frmAdministradorTurnos() {
-        /*
-            Validar si el usuario es un usuario autorizado para manejar este 
-        formulario.
-         */
 
+    private frmAdministradorTurnos() {
         initComponents();
     }
 
@@ -520,8 +516,7 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
 //
 //        miHilo.start();
 //    }
-    private void crearReporte(String userName) {
-        //Columnas de la tabla....
+    public static JTable crearReporte(String userName) {
         String[] columnas2 = {"ID Turno", "Fecha de inicio", "Fecha final",
             "Monto Facturado", "Monto Devuelto", "Monto efectivo",
             "Monto acredito"};
@@ -535,20 +530,25 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
 
         var rowData2 = new Object[columnas2.length];
 
-        getTurnosByUserName(userName).stream().forEach(turnos -> {
-            rowData2[0] = turnos.getId();
-            rowData2[1] = turnos.getFecha_hora_inicio();
-            rowData2[2] = turnos.getFecha_hora_final();
-            rowData2[3] = turnos.getMonto_facturado();
-            rowData2[4] = turnos.getMonto_devuelto();
-            rowData2[5] = turnos.getMonto_efectivo();
-            rowData2[6] = turnos.getMonto_credito();
-            modelo2.addRow(rowData2);
-        });
+        getTurnosByUserName(userName).stream().forEach(
+                turnos -> {
+                    rowData2[0] = turnos.getId();
+                    rowData2[1] = turnos.getFecha_hora_inicio();
+                    rowData2[2] = turnos.getFecha_hora_final();
+                    rowData2[3] = turnos.getMonto_facturado();
+                    rowData2[4] = turnos.getMonto_devuelto();
+                    rowData2[5] = turnos.getMonto_efectivo();
+                    rowData2[6] = turnos.getMonto_credito();
+                    
+                    modelo2.addRow(rowData2);
+                }
+        );
 
         tblReporteTurnos.setModel(modelo2);
 
         Utilidades.repararColumnaTable(tblReporteTurnos);
+
+        return tblReporteTurnos;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -566,7 +566,7 @@ public class frmAdministradorTurnos extends javax.swing.JInternalFrame {
     private rojeru_san.rspanel.RSPanelGradiente rSPanelGradiente1;
     private rojeru_san.rspanel.RSPanelGradiente rSPanelGradiente2;
     private RSMaterialComponent.RSTableMetro tblCajerosDisponible;
-    private RSMaterialComponent.RSTableMetro tblReporteTurnos;
+    private static RSMaterialComponent.RSTableMetro tblReporteTurnos;
     private RSMaterialComponent.RSTableMetro tblTurnosActivos;
     // End of variables declaration//GEN-END:variables
 }

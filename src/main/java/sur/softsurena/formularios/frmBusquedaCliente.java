@@ -1,11 +1,9 @@
 package sur.softsurena.formularios;
 
-import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import sur.softsurena.entidades.Cliente;
-import static sur.softsurena.metodos.M_Cliente.getClientes;
-import sur.softsurena.utilidades.FiltroBusqueda;
+import sur.softsurena.metodos.M_Persona;
 
 public class frmBusquedaCliente extends javax.swing.JDialog {
 
@@ -132,16 +130,16 @@ public class frmBusquedaCliente extends javax.swing.JDialog {
     }//GEN-LAST:event_formWindowOpened
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        
+
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        if(tblTabla.getSelectedRow() == -1){
+        if (tblTabla.getSelectedRow() == -1) {
             dispose();
             return;
         }
-        
+
         cliente = (Cliente) tblTabla.getValueAt(tblTabla.getSelectedRow(), 0);
         dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
@@ -158,21 +156,22 @@ public class frmBusquedaCliente extends javax.swing.JDialog {
     private void llenarTabla() {
         String titulos[] = {"Lista de Clientes"};
         miTabla = new DefaultTableModel(null, titulos);
-
-        List<Cliente> clientesList = getClientes(
-                FiltroBusqueda.
-                        builder().
-                        criterioBusqueda(txtCriterio.getText().strip()).
-                        build()
-        );
-
+        //TODO CREAR un lista especiales de clientes en M_Clientes.
+//        List<Cliente> clientesList = getClientes(
+//                FiltroBusqueda.
+//                        builder().
+//                        criterioBusqueda(txtCriterio.getText().strip()).
+//                        build()
+//        );
         Object registro[] = new Object[1];
 
-        clientesList.stream().forEach(clienteList -> {
-            registro[0] = clienteList;
+        M_Persona.getListEntidad().stream().forEach(
+                clienteList -> {
+                    registro[0] = clienteList;
 
-            miTabla.addRow(registro);
-        });
+                    miTabla.addRow(registro);
+                }
+        );
 
         tblTabla.setModel(miTabla);
     }

@@ -5,17 +5,14 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import lombok.Getter;
-import lombok.Setter;
 import sur.softsurena.entidades.Gasto;
-import sur.softsurena.utilidades.Resultado;
 import sur.softsurena.hilos.hiloImpresionFactura;
 import static sur.softsurena.metodos.M_Gasto.agregarGastosPorTurno;
+import sur.softsurena.utilidades.Resultado;
 
-@Getter
-@Setter
 public class frmGasto extends java.awt.Dialog {
 
+    //TODO Iniciarlizar estas variables en el constructor.
     private int idTurno;
     private String usuario;
 
@@ -234,7 +231,7 @@ public class frmGasto extends java.awt.Dialog {
 
         Resultado resultado = agregarGastosPorTurno(Gasto
                         .builder()
-                        .id_turno(getIdTurno())
+//                        .id_turno(getIdTurno())
                         .descripcion(descripcion)
                         .monto(monto)
                         .build()
@@ -250,8 +247,8 @@ public class frmGasto extends java.awt.Dialog {
         //Constancia de Gasto a imprimir
         Map parametros = new HashMap();
 
-        parametros.put("idTurno", getIdTurno());
-        parametros.put("idCajero", getUsuario());
+//        parametros.put("idTurno", getIdTurno());
+//        parametros.put("idCajero", getUsuario());
 
         new hiloImpresionFactura(
                 true, //Mostrar Reporte

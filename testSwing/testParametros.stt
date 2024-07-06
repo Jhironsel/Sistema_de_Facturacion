@@ -10,7 +10,7 @@
   <testActions>
     <xy.ui.testing.action.CallMainMethodAction>
       <arguments/>
-      <checkThrownExceptionAfterSeconds>2</checkThrownExceptionAfterSeconds>
+      <checkThrownExceptionAfterSeconds class="null"/>
       <className>sur.softsurena.formularios.frmLogin</className>
       <disabled>false</disabled>
     </xy.ui.testing.action.CallMainMethodAction>
@@ -180,7 +180,7 @@
       </componentFinder>
       <disabled>false</disabled>
       <propertyName>Text</propertyName>
-      <propertyValueExpected>/home/jhironsel/BaseDatos/BaseDeDatos4.fdb</propertyValueExpected>
+      <propertyValueExpected>SoftSurena.db</propertyValueExpected>
       <regularExpressionExpected>false</regularExpressionExpected>
     </xy.ui.testing.action.component.property.CheckComponentPropertyAction>
     <xy.ui.testing.action.component.FocusAction>

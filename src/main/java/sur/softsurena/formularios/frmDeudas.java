@@ -17,11 +17,10 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import sur.softsurena.entidades.Deuda;
-import static sur.softsurena.metodos.M_Cliente.getClientes;
 import static sur.softsurena.metodos.M_Deuda.insertDeudas;
 import static sur.softsurena.metodos.M_Deuda.modificarDeuda;
+import sur.softsurena.metodos.M_Generales;
 import sur.softsurena.utilidades.DefaultTableCellHeaderRenderer;
-import sur.softsurena.utilidades.FiltroBusqueda;
 import sur.softsurena.utilidades.Utilidades;
 import static sur.softsurena.utilidades.Utilidades.LOG;
 
@@ -615,12 +614,8 @@ public class frmDeudas extends javax.swing.JInternalFrame {
         /*
             Validamos si el cliente existe en la base de datos.
          */
-        Integer idCliente = getClientes(
-                FiltroBusqueda
-                        .builder()
-                        .criterioBusqueda(cedula)
-                        .build()
-        ).get(0).getId_persona();
+        Integer idCliente
+                = M_Generales.getEntidadByCedula(cedula).getId_persona();
 
         if (idCliente != -1) {
 
@@ -1240,17 +1235,20 @@ public class frmDeudas extends javax.swing.JInternalFrame {
 
         List<Deuda> deudasList = new ArrayList<>();
 
-        deudasList.stream().forEach(x -> {
-            registro[0] = x.getGenerales().getCedula();
-            registro[1] = x.getPnombre();
-            registro[2] = x.getSnombre();
-            registro[3] = x.getApellidos();
-            registro[4] = x.getConcepto();
-            registro[5] = x.getMonto();
-            registro[6] = x.getFecha();
-            registro[7] = x.getEstado();
-            miTabla.addRow(registro);
-        });
+        //TODO Buscar la cedula del cliente.
+        deudasList.stream().forEach(
+                x -> {
+                    registro[0] = "Buscar la cedula";
+                    registro[1] = x.getPnombre();
+                    registro[2] = x.getSnombre();
+                    registro[3] = x.getApellidos();
+                    registro[4] = x.getConcepto();
+                    registro[5] = x.getMonto();
+                    registro[6] = x.getFecha();
+                    registro[7] = x.getEstado();
+                    miTabla.addRow(registro);
+                }
+        );
 
         tblClientes.setModel(miTabla);
 

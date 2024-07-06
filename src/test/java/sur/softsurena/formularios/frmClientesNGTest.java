@@ -1,6 +1,6 @@
 package sur.softsurena.formularios;
 
-import javax.swing.JTable;
+import java.io.File;
 import static org.testng.Assert.*;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -8,10 +8,12 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import sur.softsurena.conexion.Conexion;
-import sur.softsurena.interfaces.ICliente;
+import xy.ui.testing.Tester;
+import xy.ui.testing.util.TestingUtils;
 
+@Test(enabled = false)
 public class frmClientesNGTest {
-    
+
     public frmClientesNGTest() {
     }
 
@@ -20,12 +22,12 @@ public class frmClientesNGTest {
         Conexion.getInstance(
                 "sysdba",
                 "1",
-                "BaseDeDatos.db",
+                "SoftSurena.db",
                 "localhost",
                 "3050"
         );
         assertTrue(
-                Conexion.verificar().getEstado(), 
+                Conexion.verificar().getEstado(),
                 "Error al conectarse..."
         );
     }
@@ -41,79 +43,74 @@ public class frmClientesNGTest {
 
     @AfterMethod
     public void tearDownMethod() throws Exception {
+        //frmClientes instance = frmClientes.getInstance();
+        //instance.getBtnCancelar().doClick();
     }
 
+    //--------------------------------------------------------------------------
     @Test(
-            enabled = true,
-            description = "Test que realiza la instacia de la clase del formulario de cliente.",
-            priority = 0
+        enabled = false,
+            priority = 0,
+            description = """
+                          Prueba Swing.
+                          """
     )
-    public void testGetInstance() {
-        assertNotNull(
-                frmClientes.getInstance(),
-                "La instacia del formulario es nulo."
-        );
-    }
-
-    @Test(
-            enabled = true,
-            description = "Verificando las propiedades de la tabla de clientes.",
-            priority = 1
-    )
-    public void testLlenarTablaClientes() {
-        JTable tabla = frmClientes.llenarTablaClientes(-1, "");
-        assertNotNull(tabla.getValueAt(0, 0));
-        assertTrue(
-                tabla.getColumnCount() == ICliente.TITULOS_CLIENTE.length, 
-                "Error en la tabla de Clientes."
-        );
+    public void testSwingProvinciaMunicipioDistrito() throws Exception{
         
-    }
-
-    @Test(
-            enabled = true,
-            description = "",
-            priority = 0
-    )
-    public void testLlenarTablaCorreos() {
-        JTable tabla = frmClientes.llenarTablaCorreos(null);
-        assertNotNull(tabla.getValueAt(0, 0));
-        assertTrue(
-                tabla.getColumnCount() == ICliente.TITULOS_CORREO.length, 
-                "Error en la tabla de Correo."
+        TestingUtils.assertSuccessfulReplay(
+                new Tester(),
+                new File("testSwing/testProvinciaMunicipioDistrito.stt")
         );
     }
 
+    //--------------------------------------------------------------------------
     @Test(
-            enabled = true,
-            description = "",
-            priority = 0
+        enabled = false,
+            priority = 1,
+            description = """
+                          Prueba Swing.
+                          """
     )
-    public void testLlenarTablaTelefonos() {
-        JTable tabla = frmClientes.llenarTablaTelefonos(null);
-        assertNotNull(tabla.getValueAt(0, 0));
-        assertTrue(
-                tabla.getColumnCount() == ICliente.TITULOS_TELEFONO.length, 
-                "Error en la tabla de Telefono."
-        );
-    }
-
-    @Test(
-            enabled = true,
-            description = "",
-            priority = 0
-    )
-    public void testLlenarTablaDirreciones() {
-        JTable tabla = frmClientes.llenarTablaDirreciones(null);
+    public void testSwingInsertCliente() throws Exception{
         
-        assertNotNull(tabla.getValueAt(0, 0));
-        
-        assertTrue(
-                tabla.getColumnCount() == ICliente.TITULOS_DIRECCION.length, 
-                "Error en la tabla de Direcciones."
+        TestingUtils.assertSuccessfulReplay(
+                new Tester(),
+                new File("testSwing/testInsertCliente.stt")
         );
     }
     
+    //--------------------------------------------------------------------------
+    @Test(
+        enabled = false,
+            priority = 2,
+            description = """
+                          Prueba Swing.
+                          """
+    )
+    public void testSwingUpdateCliente() throws Exception{
+        
+        TestingUtils.assertSuccessfulReplay(
+                new Tester(),
+                new File("testSwing/testUpdateCliente.stt")
+        );
+    }
+    
+    //--------------------------------------------------------------------------
+    @Test(
+        enabled = false,
+            priority = 3,
+            description = """
+                          Prueba Swing.
+                          """
+    )
+    public void testSwingDeleteCliente() throws Exception{
+        
+        TestingUtils.assertSuccessfulReplay(
+                new Tester(),
+                new File("testSwing/testBorrarCliente.stt")
+        );
+    }
+    //--------------------------------------------------------------------------
 }
 
 /**

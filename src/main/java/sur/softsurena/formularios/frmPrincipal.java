@@ -2,13 +2,16 @@ package sur.softsurena.formularios;
 
 import java.awt.Toolkit;
 import java.beans.PropertyVetoException;
+import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.logging.Handler;
 import java.util.logging.Level;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTable;
@@ -34,28 +37,31 @@ import sur.softsurena.metodos.Imagenes;
 import static sur.softsurena.metodos.M_E_S_SYS.getLogo;
 import static sur.softsurena.metodos.M_E_S_SYS.insertLogo;
 import static sur.softsurena.metodos.M_Privilegio.privilegio;
-import static sur.softsurena.metodos.M_Role.comprobandoRol;
+import static sur.softsurena.metodos.M_Role.comprobandoRolesDisponibles;
 import static sur.softsurena.metodos.M_Role.setRole;
 import static sur.softsurena.metodos.M_Turno.getTurnosActivos;
 import static sur.softsurena.metodos.M_Turno.usuarioTurnoActivo;
 import static sur.softsurena.metodos.M_Usuario.getUsuarioActual;
 import sur.softsurena.utilidades.DesktopConFondo;
 import sur.softsurena.utilidades.Resultado;
+import sur.softsurena.utilidades.Utilidades;
 import static sur.softsurena.utilidades.Utilidades.LOG;
 import static sur.softsurena.utilidades.Utilidades.centralizar;
 import static sur.softsurena.utilidades.Utilidades.imagenDecode64;
 
 public final class frmPrincipal extends javax.swing.JFrame {
 
-    private static Imagenes icono;
-
     //Formularios Modales
     private static frmFechaReporte fechaReporte;
     private static Usuario usuario;
+    
+    
+
+    public JMenuItem getMnuMantenimientoClientes() {
+        return mnuMantenimientoClientes;
+    }
 
     public frmPrincipal() {
-        //Objeto utilizado para cargar icono de la aplicacion.
-        icono = new Imagenes();
 
         //Obteniendo el usuario actual.
         usuario = getUsuarioActual();
@@ -68,7 +74,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
                         Privilegio
                                 .builder()
                                 .privilegio(Privilegio.PRIVILEGIO_SELECT)
-                                .nombre_relacion("GET_CLIENTES_SB")
+                                .nombre_relacion("GET_PERSONA_CLIENTES")
                                 .nombre_campo("^")
                                 .build()
                 )
@@ -226,7 +232,10 @@ public final class frmPrincipal extends javax.swing.JFrame {
         );
 
         //Se carga los roles del usuario en el comboBox.
-        comprobandoRol(usuario.getUser_name().strip()).stream().forEach(
+        comprobandoRolesDisponibles(
+                usuario.getUser_name().strip(),
+                false
+        ).stream().forEach(
                 rolItem -> {
                     cbRoles.addItem(rolItem);
                 }
@@ -533,7 +542,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
             }
         });
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ventana principal del sistema");
         setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png"));
         setMinimumSize(new java.awt.Dimension(640, 480));
@@ -838,6 +847,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         dpnEscritorio.setAutoscrolls(true);
         dpnEscritorio.setComponentPopupMenu(jPopupMenu1);
         dpnEscritorio.setDoubleBuffered(true);
+        dpnEscritorio.setName("dpnEscritorio"); // NOI18N
         dpnEscritorio.setOpaque(false);
         dpnEscritorio.setPreferredSize(new java.awt.Dimension(510, 531));
         jScrollPane4.setViewportView(dpnEscritorio);
@@ -1105,6 +1115,9 @@ public final class frmPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        
+        Utilidades.limpiarDiretorio("Logs/");
+        
         if (mnuOpcionesSalir.isEnabled()) {
             mnuOpcionesCambioUsuarioActionPerformed(null);
         } else {
@@ -1331,9 +1344,9 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jsEstatus.setVisible(!jsEstatus.isVisible());
 
         if (jsEstatus.isVisible()) {
-            btnOcultarPanel.setIcon(icono.getIcono("Flecha Izquierda 32 x 32.png"));
+            btnOcultarPanel.setIcon(new Imagenes("Flecha Izquierda 32 x 32.png").getIcono());
         } else {
-            btnOcultarPanel.setIcon(icono.getIcono("Flecha Derecha 32 x 32.png"));
+            btnOcultarPanel.setIcon(new Imagenes("Flecha Derecha 32 x 32.png").getIcono());
         }
 
         pack();
@@ -1366,6 +1379,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuOpcionesCambioUsuarioActionPerformed
 
     private void mnuOpcionesSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuOpcionesSalirActionPerformed
+        Utilidades.limpiarDiretorio("Logs/");
         System.exit(0);
     }//GEN-LAST:event_mnuOpcionesSalirActionPerformed
 
@@ -1549,13 +1563,23 @@ public final class frmPrincipal extends javax.swing.JFrame {
             formulario.setMaximum(false);
             formulario.setMaximum(true);
         } catch (PropertyVetoException ex) {
-            LOG.log(Level.SEVERE, "Error al crear ventana de cliente.", ex);
+            LOG.log(
+                    Level.SEVERE, 
+                    "Error al crear ventana de cliente.",
+                    ex
+            );
         }
 
         formulario.setVisible(true);
 
         System.gc();
     }
+
+    public static frmFechaReporte getFechaReporte() {
+        return fechaReporte;
+    }
+
+    
 
     protected static void abrirFormularioCentralizado(@NonNull JInternalFrame formulario) {
         if (!dpnEscritorio.isAncestorOf(formulario)) {
@@ -1572,61 +1596,59 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
     private void cargarIconos() {
         //Iconos de menus de opciones.
-        mnuAyuda.setIcon(icono.getIcono("Ayuda 32 x 32.png"));
+        mnuAyuda.setIcon(new Imagenes("Ayuda 32 x 32.png").getIcono());
 
         //Menu Opciones 
-        mnuOpciones.setIcon(icono.getIcono("Opcion 32 x 32.png"));
-        mnuOpcionesCambioClave.setIcon(icono.getIcono("Cambiar Contraseña 32 x 32.png"));
-        mnuOpcionesCambioUsuario.setIcon(icono.getIcono("Cambio de Usuario 32 x 32.png"));
-        mnuOpcionesSalir.setIcon(icono.getIcono("Salir 32 x 32.png"));
+        mnuOpciones.setIcon(new Imagenes("Opcion 32 x 32.png").getIcono());
+        mnuOpcionesCambioClave.setIcon(new Imagenes("Cambiar Contraseña 32 x 32.png").getIcono());
+        mnuOpcionesCambioUsuario.setIcon(new Imagenes("Cambio de Usuario 32 x 32.png").getIcono());
+        mnuOpcionesSalir.setIcon(new Imagenes("Salir 32 x 32.png").getIcono());
 
         //Menu Mantenimiento
-        mnuMantenimiento.setIcon(icono.getIcono("Archivos 32 x 32.png"));
-        mnuMantenimientoClientes.setIcon(icono.getIcono("Clientes 32 x 32.png"));
-        mnuMantenimientoProductos.setIcon(icono.getIcono("Productos 32 x 32.png"));
-        mnuMantenimientoUsuarios.setIcon(icono.getIcono("Privilegios 32 x 32.png"));
-        mnuMantenimientoProveedores.setIcon(icono.getIcono("Proveedor 32 x 34.png"));
-        mnuMantenimientoAlmacenes.setIcon(icono.getIcono("Almacen 32 x 32.png"));
+        mnuMantenimiento.setIcon(new Imagenes("Archivos 32 x 32.png").getIcono());
+        mnuMantenimientoClientes.setIcon(new Imagenes("Clientes 32 x 32.png").getIcono());
+        mnuMantenimientoProductos.setIcon(new Imagenes("Productos 32 x 32.png").getIcono());
+        mnuMantenimientoUsuarios.setIcon(new Imagenes("Privilegios 32 x 32.png").getIcono());
+        mnuMantenimientoProveedores.setIcon(new Imagenes("Proveedor 32 x 34.png").getIcono());
+        mnuMantenimientoAlmacenes.setIcon(new Imagenes("Almacen 32 x 32.png").getIcono());
 
         //Sistema 
         //TODO En esta parte se debe indentificar que sistema se esta ejecutando y aplicar icono.
-        mnuSistemas.setIcon(icono.getIcono("Linux 32 x 32.png"));
-        mnuSistemaNomina.setIcon(icono.getIcono("Nomina 32 x 32.png"));
+        mnuSistemas.setIcon(new Imagenes("Linux 32 x 32.png").getIcono());
+        mnuSistemaNomina.setIcon(new Imagenes("Nomina 32 x 32.png").getIcono());
 
         //Menu Movimiento
-        mnuMovimientos.setIcon(icono.getIcono("Movimiento 32 x 32.png"));
-        mnuMovimientosNuevaFactura.setIcon(icono.getIcono("Factura 32 x 32.png"));
-        mnuMovimientosReporteFactura.setIcon(icono.getIcono("Reportar Factura 32 x 32.png"));
-        mnuMovimientosInventario.setIcon(icono.getIcono("Inventario 32 x 32.png"));
-        mnuMovimientosAbrirTurno.setIcon(icono.getIcono("Turno 32 x 32.png"));
-        mnuMovimientosDeudas.setIcon(icono.getIcono("Money 32 x 32.png"));
+        mnuMovimientos.setIcon(new Imagenes("Movimiento 32 x 32.png").getIcono());
+        mnuMovimientosNuevaFactura.setIcon(new Imagenes("Factura 32 x 32.png").getIcono());
+        mnuMovimientosReporteFactura.setIcon(new Imagenes("Reportar Factura 32 x 32.png").getIcono());
+        mnuMovimientosInventario.setIcon(new Imagenes("Inventario 32 x 32.png").getIcono());
+        mnuMovimientosAbrirTurno.setIcon(new Imagenes("Turno 32 x 32.png").getIcono());
+        mnuMovimientosDeudas.setIcon(new Imagenes("Money 32 x 32.png").getIcono());
 
         //Iconos de subMenus
-        jmMantenimientos.setIcon(icono.getIcono("Archivos 32 x 32.png"));
-//        Archivos.setIcon(icono.getIcono("Archivos 32 x 32.png"));
-//        Archivos.setIcon(icono.getIcono("Archivos 32 x 32.png"));
+        jmMantenimientos.setIcon(new Imagenes("Archivos 32 x 32.png").getIcono());
 
-        jmClientes.setIcon(icono.getIcono("Clientes 32 x 32.png"));
-        jmProductos.setIcon(icono.getIcono("Productos 32 x 32.png"));
-        jmCambioClave.setIcon(icono.getIcono("Cambiar Contraseña 32 x 32.png"));
-        jmCambioUsuario.setIcon(icono.getIcono("Cambio de Usuario 32 x 32.png"));
-        jmSalir.setIcon(icono.getIcono("Salir 32 x 32.png"));
+        jmClientes.setIcon(new Imagenes("Clientes 32 x 32.png").getIcono());
+        jmProductos.setIcon(new Imagenes("Productos 32 x 32.png").getIcono());
+        jmCambioClave.setIcon(new Imagenes("Cambiar Contraseña 32 x 32.png").getIcono());
+        jmCambioUsuario.setIcon(new Imagenes("Cambio de Usuario 32 x 32.png").getIcono());
+        jmSalir.setIcon(new Imagenes("Salir 32 x 32.png").getIcono());
 
         //Barra lateral izquierda
-        jlMovimientoES.setIcon(icono.getIcono("Movimiento 32 x 32.png"));
-        jlGetIP.setIcon(icono.getIcono("Ip 32 x 32.png"));
-        jlGrafica.setIcon(icono.getIcono("Grafico 32 x 32.png"));
-        jlRespaldar.setIcon(icono.getIcono("RespaldarBD 32 x 32.png"));
-        jlRestauracion.setIcon(icono.getIcono("RestaurarBD 32 x 32.png"));
-        jlRestaurar.setIcon(icono.getIcono("RestaurarBD 32 x 32.png"));
+        jlMovimientoES.setIcon(new Imagenes("Movimiento 32 x 32.png").getIcono());
+        jlGetIP.setIcon(new Imagenes("Ip 32 x 32.png").getIcono());
+        jlGrafica.setIcon(new Imagenes("Grafico 32 x 32.png").getIcono());
+        jlRespaldar.setIcon(new Imagenes("RespaldarBD 32 x 32.png").getIcono());
+        jlRestauracion.setIcon(new Imagenes("RestaurarBD 32 x 32.png").getIcono());
+        jlRestaurar.setIcon(new Imagenes("RestaurarBD 32 x 32.png").getIcono());
 
         //
-        jlLogoEmpresa.setIcon(icono.getIcono("NoImageTransp 96 x 96.png"));
+        jlLogoEmpresa.setIcon(new Imagenes("NoImageTransp 96 x 96.png").getIcono());
 
-        btnEstablecerEncabezado.setIcon(icono.getIcono("Factura 32 x 32.png"));
-        btnSeleccionarImpresora.setIcon(icono.getIcono("Impresora 32 x 32.png"));
+        btnEstablecerEncabezado.setIcon(new Imagenes("Factura 32 x 32.png").getIcono());
+        btnSeleccionarImpresora.setIcon(new Imagenes("Impresora 32 x 32.png").getIcono());
 
-        btnOcultarPanel.setIcon(icono.getIcono("Flecha Izquierda 32 x 32.png"));
+        btnOcultarPanel.setIcon(new Imagenes("Flecha Izquierda 32 x 32.png").getIcono());
     }
 
     private void cargarLogo() {

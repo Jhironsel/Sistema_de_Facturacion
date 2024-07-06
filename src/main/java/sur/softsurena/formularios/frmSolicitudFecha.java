@@ -42,7 +42,7 @@ public class frmSolicitudFecha extends javax.swing.JDialog {
         btnCancelar = new RSMaterialComponent.RSButtonMaterialIconOne();
         btnCancelar1 = new RSMaterialComponent.RSButtonMaterialIconOne();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Filtrando Busquedas");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {

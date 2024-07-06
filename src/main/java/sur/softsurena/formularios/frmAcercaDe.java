@@ -1,22 +1,25 @@
 package sur.softsurena.formularios;
 
 import java.awt.Color;
-import java.awt.Desktop;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.logging.Level;
+import javax.swing.JLabel;
 import sur.softsurena.metodos.Imagenes;
-import static sur.softsurena.utilidades.Utilidades.LOG;
+import static sur.softsurena.utilidades.Utilidades.abrirURL;
 
 public class frmAcercaDe extends javax.swing.JDialog {
+
+    public JLabel getJlDesarrollador() {
+        return jlDesarrollador;
+    }
+
+    public JLabel getJlLogo() {
+        return jlLogo;
+    }
 
     public frmAcercaDe(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        cargarIconos();
-        
+        jlDesarrollador.setIcon(new Imagenes("Jhironsel 252 x 252.jpg").getIcono());
+        jlLogo.setIcon(new Imagenes("SoftSurena 800 x 550.gif").getIcono(731, 380));
     }
 
     @SuppressWarnings("unchecked")
@@ -29,6 +32,9 @@ public class frmAcercaDe extends javax.swing.JDialog {
         jlDesarrollador = new javax.swing.JLabel();
         jTextArea1 = new javax.swing.JTextArea();
         jlLogo = new javax.swing.JLabel();
+        rSButtonMaterialIconOne1 = new RSMaterialComponent.RSButtonMaterialIconOne();
+        rSButtonMaterialIconOne2 = new RSMaterialComponent.RSButtonMaterialIconOne();
+        rSButtonMaterialIconOne3 = new RSMaterialComponent.RSButtonMaterialIconOne();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(602, 309));
@@ -62,10 +68,32 @@ public class frmAcercaDe extends javax.swing.JDialog {
         jTextArea1.setText("Es un Sistema de Facturación para que su negocio este vanguardista con un sistema confiable.\n\nCreado por Lic. Jhironsel Diaz A.\n\nEstamos Para Ayudarle en la Solución de su Empresa, en su sistema de Facturación.\n\nContactos al 829-866-1203 y 829-297-2015, Whatsapp en ambos.\n \nCorreos Jhironsel@hotmail.com ; Jhironseld@Gmail.com.");
         jTextArea1.setWrapStyleWord(true);
         jTextArea1.setDoubleBuffered(true);
+        jTextArea1.setOpaque(false);
 
         jlLogo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jlLogoMouseClicked(evt);
+            }
+        });
+
+        rSButtonMaterialIconOne1.setText("FaceBook");
+        rSButtonMaterialIconOne1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonMaterialIconOne1ActionPerformed(evt);
+            }
+        });
+
+        rSButtonMaterialIconOne2.setText("Instagran");
+        rSButtonMaterialIconOne2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonMaterialIconOne2ActionPerformed(evt);
+            }
+        });
+
+        rSButtonMaterialIconOne3.setText("GitHub");
+        rSButtonMaterialIconOne3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonMaterialIconOne3ActionPerformed(evt);
             }
         });
 
@@ -74,25 +102,40 @@ public class frmAcercaDe extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jlDesarrollador, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jlDesarrollador, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rSButtonMaterialIconOne1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(rSButtonMaterialIconOne2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(rSButtonMaterialIconOne3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jTextArea1)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jlLogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
+                    .addComponent(jlLogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextArea1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jlDesarrollador, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextArea1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jlLogo, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlLogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(rSButtonMaterialIconOne1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rSButtonMaterialIconOne2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rSButtonMaterialIconOne3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 248, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addComponent(jlDesarrollador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jScrollPane1.setViewportView(jPanel1);
@@ -101,11 +144,15 @@ public class frmAcercaDe extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1009, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 648, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -120,17 +167,21 @@ public class frmAcercaDe extends javax.swing.JDialog {
     }//GEN-LAST:event_jLabel1MouseExited
 
     private void jlLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlLogoMouseClicked
-        try {
-            URL url = new URL("https://www.facebook.com/jhironsel");
-            try {
-                Desktop.getDesktop().browse(url.toURI());
-            } catch (URISyntaxException | IOException ex) {
-                LOG.getLogger(frmAcercaDe.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } catch (MalformedURLException e1) {
-            LOG.log(Level.SEVERE, "Error al dirigirse a facebook.", e1);
-        }
+
     }//GEN-LAST:event_jlLogoMouseClicked
+
+    private void rSButtonMaterialIconOne1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonMaterialIconOne1ActionPerformed
+        abrirURL("https://www.facebook.com/jhironsel");
+    }//GEN-LAST:event_rSButtonMaterialIconOne1ActionPerformed
+
+    private void rSButtonMaterialIconOne2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonMaterialIconOne2ActionPerformed
+        abrirURL("https://www.instagram.com/jhironsel");
+    }//GEN-LAST:event_rSButtonMaterialIconOne2ActionPerformed
+
+    private void rSButtonMaterialIconOne3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonMaterialIconOne3ActionPerformed
+        abrirURL("https://github.com/Jhironsel");
+    }//GEN-LAST:event_rSButtonMaterialIconOne3ActionPerformed
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -139,11 +190,8 @@ public class frmAcercaDe extends javax.swing.JDialog {
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel jlDesarrollador;
     private javax.swing.JLabel jlLogo;
+    private RSMaterialComponent.RSButtonMaterialIconOne rSButtonMaterialIconOne1;
+    private RSMaterialComponent.RSButtonMaterialIconOne rSButtonMaterialIconOne2;
+    private RSMaterialComponent.RSButtonMaterialIconOne rSButtonMaterialIconOne3;
     // End of variables declaration//GEN-END:variables
-
-    private void cargarIconos() {
-        Imagenes img = new Imagenes();
-        jlDesarrollador.setIcon(img.getIcono("Jhironsel 252 x 252.jpg"));
-        jlLogo.setIcon(img.getIcono("SoftSurena 800 x 113.gif"));
-    }
 }

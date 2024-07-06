@@ -9,9 +9,9 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import sur.softsurena.entidades.Temporal;
+import sur.softsurena.entidades.Factura;
 import sur.softsurena.hilos.hiloImpresionFactura;
-import static sur.softsurena.metodos.M_Temporal.getTemporales;
+import static sur.softsurena.metodos.M_Factura.getTemporales;
 import sur.softsurena.utilidades.DefaultTableCellHeaderRenderer;
 
 public final class frmBuscarTemporal extends java.awt.Dialog {
@@ -114,7 +114,7 @@ public final class frmBuscarTemporal extends java.awt.Dialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnImprimirCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 398, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
                 .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -139,8 +139,7 @@ public final class frmBuscarTemporal extends java.awt.Dialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -162,7 +161,7 @@ public final class frmBuscarTemporal extends java.awt.Dialog {
         //Debe haber una factura selecciona
         if (tblDetalle.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(
-                    this, 
+                    this,
                     "No ha seleccionado Factura",
                     "",
                     JOptionPane.ERROR_MESSAGE
@@ -197,7 +196,7 @@ public final class frmBuscarTemporal extends java.awt.Dialog {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         if (tblDetalle.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(
-                    this, 
+                    this,
                     "Debe selecionar una Factura...",
                     "",
                     JOptionPane.ERROR_MESSAGE
@@ -217,26 +216,27 @@ public final class frmBuscarTemporal extends java.awt.Dialog {
             "Cajero", "Monto"};
         miTabla = new DefaultTableModel(null, titulos);
         //Consulta a la base de datos que trae los registros
-        List<Temporal> temporalesList = getTemporales();
+        List<Factura> temporalesList = getTemporales();
         //Objecto utlizado en la construción de la tabla.
         Object registro[] = new Object[6];
-        
-        temporalesList.stream().forEach(temporal -> {
-            registro[0] = temporal.getId();
-            
-            if (temporal.getId_persona() == 0) {
-                registro[1] = temporal.getNombreTemporal();
-            } else {
-                registro[1] = temporal.toString();
-            }
-            
-            registro[2] = temporal.getFecha_ingreso();
-            registro[3] = temporal.getHeaderFactura().getUserName();
-            
-            
-            miTabla.addRow(registro);//Se van insertando los registros.
-            
-        });
+
+        temporalesList.stream().forEach(
+                temporal -> {
+                    registro[0] = temporal.getId();
+
+                    if (temporal.getHeaderFactura().getId_persona() == 0) {
+                        registro[1] = temporal.getHeaderFactura().getNombreTemporal();
+                    } else {
+                        registro[1] = temporal.toString();
+                    }
+
+                    registro[2] = temporal.getHeaderFactura().getFecha_ingreso();
+                    registro[3] = temporal.getHeaderFactura().getUserName();
+
+                    miTabla.addRow(registro);//Se van insertando los registros.
+
+                }
+        );
         //Se agrega el modelo a la tabla.
         tblDetalle.setModel(miTabla);
         //Para Alinear el Texto de la Table a la Derecha...

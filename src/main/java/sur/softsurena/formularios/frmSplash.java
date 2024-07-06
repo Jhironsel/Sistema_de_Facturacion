@@ -6,40 +6,10 @@ import sur.softsurena.swingWorker.Trabajo;
 public class frmSplash extends javax.swing.JFrame {
 
     private final Trabajo miTrabajo;
-    private int perfil;
-    private String usuario, clave;
 
-    public final String getUsuario() {
-        return usuario;
-    }
-
-    public final void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
-
-    public final int getPerfil() {
-        return perfil;
-    }
-
-    public final void setPerfil(int perfil) {
-        this.perfil = perfil;
-    }
-
-    public final String getClave() {
-        return clave;
-    }
-
-    public final void setClave(String clave) {
-        this.clave = clave;
-    }
-
-    public frmSplash(int perfil, String usuario, String clave, frmLogin login) {
+    public frmSplash() {
         initComponents();
-        setPerfil(perfil);
-        setUsuario(usuario);
-        setClave(clave);
-        miTrabajo = new Trabajo(getPerfil(),
-                getUsuario(), getClave(), login);
+        miTrabajo = new Trabajo();
         miTrabajo.execute();
     }
 

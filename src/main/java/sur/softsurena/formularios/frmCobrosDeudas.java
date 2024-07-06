@@ -437,6 +437,7 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
             return;
         }
 
+        //TODO Trabajos
 //        PagoDeuda(
 //                Utilidades.objectToInt(tblDeudas.getValueAt(tblDeudas.getSelectedRow(), 0)),
 //                getIdTurno(), 
@@ -461,13 +462,13 @@ public class frmCobrosDeudas extends javax.swing.JDialog {
         if (cliente == null) {
             return;
         }
-
-        for (int i = 0; i < cmbCliente.getItemCount(); i++) {
-            if (((Cliente) cmbCliente.getItemAt(i)).getGenerales().getCedula().equals(cliente.getGenerales().getCedula())) {
-                cmbCliente.setSelectedIndex(i);
-                return;
-            }
-        }
+        //TODO Trabajos.
+//        for (int i = 0; i < cmbCliente.getItemCount(); i++) {
+//            if (((Cliente) cmbCliente.getItemAt(i)).getGenerales().getCedula().equals(cliente.getGenerales().getCedula())) {
+//                cmbCliente.setSelectedIndex(i);
+//                return;
+//            }
+//        }
     }//GEN-LAST:event_btnBuscarClienteActionPerformed
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         dispose();

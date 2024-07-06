@@ -1,5 +1,6 @@
 package sur.softsurena.formularios;
 
+import RSMaterialComponent.RSButtonMaterialIconOne;
 import java.awt.Toolkit;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyEvent;
@@ -9,12 +10,15 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import sur.softsurena.FirebirdEventos.FirebirdEventos;
 import sur.softsurena.conexion.Conexion;
 import sur.softsurena.metodos.Imagenes;
 import static sur.softsurena.metodos.M_BaseDeDatos.periodoMaquina;
 import static sur.softsurena.metodos.M_BaseDeDatos.setLicencia;
 import sur.softsurena.utilidades.Resultado;
+import sur.softsurena.utilidades.Utilidades;
 import static sur.softsurena.utilidades.Utilidades.LOG;
 
 public final class frmLogin extends javax.swing.JFrame {
@@ -24,6 +28,20 @@ public final class frmLogin extends javax.swing.JFrame {
 
     private static String sistema;
     private static String idMaquina;
+
+    public RSButtonMaterialIconOne getBtnAceptar() {
+        return btnAceptar;
+    }
+
+    public JPasswordField getTxtClave() {
+        return txtClave;
+    }
+
+    public JTextField getTxtUsuario() {
+        return txtUsuario;
+    }
+    
+    
 
     public frmLogin(String language) {
         bundle = ResourceBundle.getBundle("sur.softsurena.idioma.mensaje", new Locale(language));
@@ -143,7 +161,7 @@ public final class frmLogin extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(labelIcon2, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+            .addComponent(labelIcon2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(txtClave)
         );
 
@@ -300,7 +318,7 @@ public final class frmLogin extends javax.swing.JFrame {
         Resultado resultado = Conexion.verificar();
 
         if (!resultado.getEstado()) {
-            if(resultado.getMensaje().equals(Conexion.E_FECHA_VENCIMIENTO)){
+            if (resultado.getMensaje().equals(Conexion.E_FECHA_VENCIMIENTO)) {
                 int num = JOptionPane.showConfirmDialog(
                         this,
                         "Este equipo no esta Autorizado! \nDesea Registrar?",
@@ -313,14 +331,14 @@ public final class frmLogin extends javax.swing.JFrame {
                 }
                 return;
             }
-            
+
             JOptionPane.showMessageDialog(
                     this,
                     resultado.getMensaje(),
                     "",
                     resultado.getIcono()
             );
-            
+
             txtClave.setText("");
             txtUsuario.setText("");
             txtUsuario.requestFocusInWindow();
@@ -388,6 +406,7 @@ public final class frmLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        Utilidades.limpiarDiretorio("Logs/");
         System.exit(0);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -434,10 +453,12 @@ public final class frmLogin extends javax.swing.JFrame {
 
 //        String claveServidor = new String(miRegistros.txtClaveServidor.getPassword());
         //Conexion.getInstance("None", "SYSDBA", claveServidor, "", "", "");
-        if (setLicencia(new Date(miRegistros.dchFecha.getDate().getTime()),
+        if (setLicencia(
+                new Date(miRegistros.dchFecha.getDate().getTime()),
                 miRegistros.txtIdMaquina.getText().trim(),
                 new String(miRegistros.txtClave1.getPassword()).trim(),
-                new String(miRegistros.txtClave2.getPassword()).trim())) {
+                new String(miRegistros.txtClave2.getPassword()).trim()
+        )) {
             JOptionPane.showMessageDialog(
                     this,
                     "Maquina Registradas",
@@ -478,16 +499,8 @@ public final class frmLogin extends javax.swing.JFrame {
     }
 
     private void cargarIconos() {
-        Imagenes imagen = new Imagenes();
-        jlLogoSistema.setIcon(imagen.getIcono("Panel de Control 128 x 128.png"));
-        lamina.setImagen(imagen.getIcono("FondoLogin 626 x 386.jpg"));
-    }
-
-    public Boolean testClase() {
-        txtUsuario.setText("sysdba");
-        txtClave.setText("1");
-        btnAceptarActionPerformed(null);
-        return true;
+        jlLogoSistema.setIcon(new Imagenes("Panel de Control 128 x 128.png").getIcono());
+        lamina.setImagen(new Imagenes("FondoLogin 626 x 386.jpg").getIcono());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

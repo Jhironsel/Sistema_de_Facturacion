@@ -12,8 +12,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import sur.softsurena.entidades.Cliente;
 import sur.softsurena.hilos.hiloImpresionFactura;
-import static sur.softsurena.metodos.M_Cliente.getClientes;
-import sur.softsurena.utilidades.FiltroBusqueda;
+import sur.softsurena.metodos.M_Persona;
 import sur.softsurena.utilidades.Utilidades;
 import static sur.softsurena.utilidades.Utilidades.LOG;
 
@@ -387,12 +386,14 @@ public class frmCobrosClientes extends javax.swing.JDialog {
                         .build()
         );
 
-        getClientes(
-                FiltroBusqueda
-                        .builder()
-                        .estado(true)
-                        .build()
-        ).stream().forEach(
+        //TODO Crear una lista de cliente especialmente.
+//        getClientes(
+//                FiltroBusqueda
+//                        .builder()
+//                        .estado(true)
+//                        .build()
+//        )
+        M_Persona.getListEntidad().stream().forEach(
                 cliente -> cmbCliente.addItem(cliente)
         );
     }//GEN-LAST:event_formWindowOpened
@@ -520,12 +521,12 @@ public class frmCobrosClientes extends javax.swing.JDialog {
             return;
         }
 
-        for (int i = 0; i < cmbCliente.getItemCount(); i++) {
-            if (((Cliente) cmbCliente.getItemAt(i)).getGenerales().getCedula().equals(cliente.getGenerales().getCedula())) {
-                cmbCliente.setSelectedIndex(i);
-                return;
-            }
-        }
+//        for (int i = 0; i < cmbCliente.getItemCount(); i++) {
+//            if (((Cliente) cmbCliente.getItemAt(i)).getGenerales().getCedula().equals(cliente.getGenerales().getCedula())) {
+//                cmbCliente.setSelectedIndex(i);
+//                return;
+//            }
+//        }
     }//GEN-LAST:event_btnBuscarClienteActionPerformed
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         dispose();

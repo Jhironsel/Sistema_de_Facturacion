@@ -129,6 +129,7 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
         btnEntradaSalidaProducto = new RSMaterialComponent.RSButtonMaterialIconOne();
         jlOpcionesMostrar = new RSMaterialComponent.RSLabelIcon();
 
+        setBorder(javax.swing.BorderFactory.createMatteBorder(25, 10, 10, 10, new java.awt.Color(37, 45, 223)));
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
@@ -295,7 +296,7 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
                 .addContainerGap()
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                        .addGap(0, 245, Short.MAX_VALUE)
+                        .addGap(0, 301, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addGap(5, 5, 5)
                         .addComponent(jsCantidadFilas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -319,7 +320,7 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
                     .addComponent(jLabel2)
                     .addComponent(jsPaginaNro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 507, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnActualizarLista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -545,11 +546,11 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
         jpESProductos.setLayout(jpESProductosLayout);
         jpESProductosLayout.setHorizontalGroup(
             jpESProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 703, Short.MAX_VALUE)
+            .addGap(0, 694, Short.MAX_VALUE)
         );
         jpESProductosLayout.setVerticalGroup(
             jpESProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 621, Short.MAX_VALUE)
+            .addGap(0, 644, Short.MAX_VALUE)
         );
 
         jtpPrincipal.addTab("E/S Productos", jpESProductos);
@@ -558,11 +559,11 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
         jpESHistorial.setLayout(jpESHistorialLayout);
         jpESHistorialLayout.setHorizontalGroup(
             jpESHistorialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 703, Short.MAX_VALUE)
+            .addGap(0, 694, Short.MAX_VALUE)
         );
         jpESHistorialLayout.setVerticalGroup(
             jpESHistorialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 621, Short.MAX_VALUE)
+            .addGap(0, 644, Short.MAX_VALUE)
         );
 
         jtpPrincipal.addTab("E/S Historial", jpESHistorial);
@@ -703,7 +704,7 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jlOpcionesMostrar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
@@ -1385,7 +1386,7 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
      *
      * @param criterioBusqueda
      */
-    public static void llenarTablaProductos(String criterioBusqueda) {
+    public static JTable llenarTablaProductos(String criterioBusqueda) {
 
         if (Objects.isNull(criterioBusqueda)) {
             criterioBusqueda = "";
@@ -1438,6 +1439,8 @@ public class frmProductos extends javax.swing.JInternalFrame implements IProduct
         int[] indices = {4};
 
         columnasCheckBox(tblProducto, indices);
+        
+        return tblProducto;
     }
 
     /**

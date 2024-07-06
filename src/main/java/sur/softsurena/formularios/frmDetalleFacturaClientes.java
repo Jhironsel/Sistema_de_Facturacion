@@ -3,7 +3,6 @@ package sur.softsurena.formularios;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import javax.swing.JOptionPane;
@@ -12,11 +11,8 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import sur.softsurena.entidades.Cliente;
 import sur.softsurena.hilos.hiloImpresionFactura;
-import static sur.softsurena.metodos.M_Cliente.getClientes;
 import sur.softsurena.utilidades.DefaultTableCellHeaderRenderer;
-import sur.softsurena.utilidades.FiltroBusqueda;
 import sur.softsurena.utilidades.Utilidades;
 import static sur.softsurena.utilidades.Utilidades.LOG;
 
@@ -416,24 +412,23 @@ public class frmDetalleFacturaClientes extends javax.swing.JInternalFrame {
 
         miTabla = new DefaultTableModel(null, titulos);
         
-        //ID,CRITERIO,PAG,REG
-        //-1, "^",1, 50
         
-        List<Cliente> clientesList = getClientes(
-                FiltroBusqueda.
-                        builder().
-                        filas(false).
-                        criterioBusqueda(txtCriterio.getText().strip()).
-                        build()
-        
-        );
-
-
-        clientesList.forEach(c ->{
-            registro[0] = c;
-            registro[1] = c.getGenerales().getCedula();
-            miTabla.addRow(registro);
-        });
+        //TODO Trabajos
+//        List<Cliente> clientesList = getClientes(
+//                FiltroBusqueda.
+//                        builder().
+//                        filas(false).
+//                        criterioBusqueda(txtCriterio.getText().strip()).
+//                        build()
+//        
+//        );
+//
+//
+//        clientesList.forEach(c ->{
+//            registro[0] = c;
+//            registro[1] = c.getGenerales().getCedula();
+//            miTabla.addRow(registro);
+//        });
         
         tblClientes.setModel(miTabla);
 

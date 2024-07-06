@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,11 +14,9 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.math.BigDecimal;
 import java.net.URISyntaxException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +36,6 @@ import sur.softsurena.entidades.Categoria;
 import sur.softsurena.entidades.Cliente;
 import sur.softsurena.entidades.D_Factura;
 import sur.softsurena.entidades.Factura;
-import sur.softsurena.entidades.HeaderFactura;
 import sur.softsurena.entidades.Turno;
 import sur.softsurena.entidades.Usuario;
 import static sur.softsurena.formularios.frmPrincipal.mnuMovimientosNuevaFactura;
@@ -47,16 +43,11 @@ import sur.softsurena.hilos.hiloImpresionFactura;
 import sur.softsurena.metodos.Imagenes;
 import static sur.softsurena.metodos.M_Categoria.getCategoriaActivas;
 import static sur.softsurena.metodos.M_Categoria.getCategorias;
-import static sur.softsurena.metodos.M_Cliente.getClientes;
-import static sur.softsurena.metodos.M_D_Factura.agregarDetalleFactura;
-import static sur.softsurena.metodos.M_Factura.agregarFacturaNombre;
-import static sur.softsurena.metodos.M_Factura.modificarFactura;
 import static sur.softsurena.metodos.M_Producto.existeProducto;
 import static sur.softsurena.metodos.M_Producto.getProductosByCategoria;
 import static sur.softsurena.metodos.M_Turno.turnosActivoByUsuario;
 import static sur.softsurena.metodos.M_Usuario.getUsuarioActual;
 import sur.softsurena.utilidades.DefaultTableCellHeaderRenderer;
-import sur.softsurena.utilidades.FiltroBusqueda;
 import sur.softsurena.utilidades.Resultado;
 import sur.softsurena.utilidades.Utilidades;
 import static sur.softsurena.utilidades.Utilidades.LOG;
@@ -70,12 +61,12 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
 
     private String nombreCliente = "";
 
-    private final String titulos[] = {"Cantidad", "Descripcion", "Montos"};
-
     private JButton btn, boton;
 
-    private Factura facturas;
+    private Factura factura;
 
+    private final String titulos[] = {"Cantidad", "Descripcion", "Montos"};
+    
     private DefaultTableModel miTabla = new DefaultTableModel(null, titulos);
 
     private final Object[] registro = new Object[3];
@@ -86,7 +77,6 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
 
     private List<D_Factura> detalleFacturaList;
 
-    private static Imagenes icono;
     private static Turno turno;
 
     private Properties getPropiedad() {
@@ -98,13 +88,23 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
         try (InputStream is = new FileInputStream(file);) {
             getPropiedad().load(is);
         } catch (FileNotFoundException ex) {
-            LOG.log(Level.SEVERE, ARCHIVO_PRO_FACTURASPROP_NO_HA_SIDO_ENCONT, ex);
+            LOG.log(
+                    Level.SEVERE, 
+                    ARCHIVO_PRO_FACTURASPROP_NO_HA_SIDO_ENCONT, 
+                    ex
+            );
         } catch (IOException ex) {
-            LOG.log(Level.SEVERE, ERROR_AL_CARGAR_EL_ARCHIVOS_DE_PROPIEDADE, ex);
+            LOG.log(
+                    Level.SEVERE, 
+                    ERROR_AL_CARGAR_EL_ARCHIVOS_DE_PROPIEDADE, 
+                    ex
+            );
         }
     }
-    public static final String ERROR_AL_CARGAR_EL_ARCHIVOS_DE_PROPIEDADE = "Error al cargar el archivos de propiedades proFacturas.prop";
-    public static final String ARCHIVO_PRO_FACTURASPROP_NO_HA_SIDO_ENCONT = "Archivo proFacturas.prop no ha sido encontrado.";
+    public static final String ERROR_AL_CARGAR_EL_ARCHIVOS_DE_PROPIEDADE 
+            = "Error al cargar el archivos de propiedades proFacturas.prop";
+    public static final String ARCHIVO_PRO_FACTURASPROP_NO_HA_SIDO_ENCONT 
+            = "Archivo proFacturas.prop no ha sido encontrado.";
 
     public Integer getIdCliente() {
         return idCliente;
@@ -123,7 +123,6 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
     }
 
     private frmFacturas() {
-        icono = new Imagenes();
         initComponents();
 
         usuario = getUsuarioActual();
@@ -140,15 +139,15 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
         btnGrupoPago.add(rbtContado);
         btnGrupoPago.add(rbtCredito);
 
-        Utilidades.clickOnKey(btnEspera, "temporar", KeyEvent.VK_F5);
-        Utilidades.clickOnKey(btnBuscarEspera, "temporarBuscar", KeyEvent.VK_F6);
+        Utilidades.clickOnKey(btnPonerTemporal, "temporar", KeyEvent.VK_F5);
+        Utilidades.clickOnKey(btnBuscarTemporal, "temporarBuscar", KeyEvent.VK_F6);
         Utilidades.clickOnKey(btnGastos, "gastos", KeyEvent.VK_F7);
         Utilidades.clickOnKey(btnPagoDeuda, "pagoDeuda", KeyEvent.VK_F8);
         Utilidades.clickOnKey(btnImpresionUltima, "impresionUltima", KeyEvent.VK_F9);
         Utilidades.clickOnKey(btnGrabar, "factura", KeyEvent.VK_F10);
         Utilidades.clickOnKey(btnLimpiarF12, "cancelar", KeyEvent.VK_F12);
 
-        jlAlmacen.setIcon(icono.getIcono("Almacen 32 x 32.png"));
+        jlAlmacen.setIcon(new Imagenes("Almacen 32 x 32.png").getIcono());
 
         categoriaR();
 
@@ -170,8 +169,8 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
         jlAlmacen = new rojeru_san.rslabel.RSLabelAnimated();
         jPanel2 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        btnEspera = new newscomponents.RSButtonGradientIcon_new();
-        btnBuscarEspera = new newscomponents.RSButtonGradientIcon_new();
+        btnPonerTemporal = new newscomponents.RSButtonGradientIcon_new();
+        btnBuscarTemporal = new newscomponents.RSButtonGradientIcon_new();
         btnGastos = new newscomponents.RSButtonGradientIcon_new();
         btnPagoDeuda = new newscomponents.RSButtonGradientIcon_new();
         btnImpresionUltima = new newscomponents.RSButtonGradientIcon_new();
@@ -263,7 +262,6 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
         jpInfoFactura.add(jlAlmacen);
 
         setClosable(true);
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
@@ -298,37 +296,37 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
         jPanel5.setMinimumSize(new java.awt.Dimension(250, 68));
         jPanel5.setLayout(new java.awt.GridLayout(1, 7, 3, 3));
 
-        btnEspera.setText("<html><center>Getion<br>Temporal F5</center></html>");
-        btnEspera.setToolTipText("<html><center>Temporal<br>F5</center></html>");
-        btnEspera.setGradiente(newscomponents.RSButtonGradientIcon_new.Gradiente.HORIZONTAL);
-        btnEspera.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnEspera.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.HOURGLASS_FULL);
-        btnEspera.setName("btnTemporal"); // NOI18N
-        btnEspera.setRound(30);
-        btnEspera.setSizeIcon(40.0F);
-        btnEspera.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnEspera.addActionListener(new java.awt.event.ActionListener() {
+        btnPonerTemporal.setText("<html><center>Getion<br>Temporal F5</center></html>");
+        btnPonerTemporal.setToolTipText("<html><center>Temporal<br>F5</center></html>");
+        btnPonerTemporal.setGradiente(newscomponents.RSButtonGradientIcon_new.Gradiente.HORIZONTAL);
+        btnPonerTemporal.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnPonerTemporal.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.HOURGLASS_FULL);
+        btnPonerTemporal.setName("btnTemporal"); // NOI18N
+        btnPonerTemporal.setRound(30);
+        btnPonerTemporal.setSizeIcon(40.0F);
+        btnPonerTemporal.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnPonerTemporal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEsperaActionPerformed(evt);
+                btnPonerTemporalActionPerformed(evt);
             }
         });
-        jPanel5.add(btnEspera);
+        jPanel5.add(btnPonerTemporal);
 
-        btnBuscarEspera.setText("<html><center>Buscar<br>Temporal F6</center></html>");
-        btnBuscarEspera.setToolTipText("<html><center>Temporal<br>F6</center></html>");
-        btnBuscarEspera.setGradiente(newscomponents.RSButtonGradientIcon_new.Gradiente.HORIZONTAL);
-        btnBuscarEspera.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnBuscarEspera.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
-        btnBuscarEspera.setName("btnTemporal"); // NOI18N
-        btnBuscarEspera.setRound(30);
-        btnBuscarEspera.setSizeIcon(40.0F);
-        btnBuscarEspera.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnBuscarEspera.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscarTemporal.setText("<html><center>Buscar<br>Temporal F6</center></html>");
+        btnBuscarTemporal.setToolTipText("<html><center>Temporal<br>F6</center></html>");
+        btnBuscarTemporal.setGradiente(newscomponents.RSButtonGradientIcon_new.Gradiente.HORIZONTAL);
+        btnBuscarTemporal.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnBuscarTemporal.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
+        btnBuscarTemporal.setName("btnTemporal"); // NOI18N
+        btnBuscarTemporal.setRound(30);
+        btnBuscarTemporal.setSizeIcon(40.0F);
+        btnBuscarTemporal.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnBuscarTemporal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarEsperaActionPerformed(evt);
+                btnBuscarTemporalActionPerformed(evt);
             }
         });
-        jPanel5.add(btnBuscarEspera);
+        jPanel5.add(btnBuscarTemporal);
 
         btnGastos.setText("<html><center>Gestion<br>Gastos F7</center></html>");
         btnGastos.setToolTipText("<html><center>Gasto<br>F7</center></html>");
@@ -716,7 +714,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jpBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, 797, Short.MAX_VALUE)
+                    .addComponent(jpBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, 798, Short.MAX_VALUE)
                     .addComponent(jpCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane4))
                 .addGap(0, 0, 0))
@@ -729,7 +727,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jpBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -757,7 +755,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1272, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1267, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -765,7 +763,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE))
         );
 
         pack();
@@ -909,7 +907,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
             boolean dime = true;
             for (int i = 0; i < num; i++) {
                 //TODO Esto no tiene sentido.
-                if (facturas.getId().equals(txtCriterio.getText().trim())) {
+                if (factura.getId().equals(txtCriterio.getText().trim())) {
                     tblDetalle.setRowSelectionInterval(i, i);
                     dime = false;
                     txtCriterio.setText("");
@@ -945,6 +943,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
             cmbCliente.setSelectedIndex(0);
         }
     }//GEN-LAST:event_rbtCreditoActionPerformed
+
     private void rbtContadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtContadoActionPerformed
 
         if (evt == null) {
@@ -960,56 +959,6 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
         JlCantidad1.setText("Limt Cred.:$0.00");
         JlCantidad2.setText("Deud Actu.:$0.00");
     }//GEN-LAST:event_rbtContadoActionPerformed
-
-    private void opcion1() {
-        int rta = JOptionPane.showInternalConfirmDialog(
-                this,
-                "¿Esta Seguro de Borrar el detalle de la Factura?",
-                "",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE
-        );
-
-        if (rta == JOptionPane.NO_OPTION) {
-            return;
-        }
-        nueva();
-    }
-
-    private void opcion2() {
-        if (facturas.getHeaderFactura().getEstado() == 'T') {
-            JOptionPane.showInternalMessageDialog(
-                    this,
-                    "Es una factura temporal no se permite eliminar",
-                    "",
-                    JOptionPane.ERROR_MESSAGE
-            );
-            return;
-        }
-
-        try {
-            DefaultTableModel modelo = (DefaultTableModel) tblDetalle.getModel();
-            int fila = tblDetalle.getSelectedRow();
-            if (fila == -1) {
-                JOptionPane.showInternalMessageDialog(
-                        this,
-                        "Debe seleccionar un articulo del detalle factura",
-                        "",
-                        JOptionPane.ERROR_MESSAGE
-                );
-                return;
-            }
-
-            facturas.getDetalleFactura().remove(fila);
-
-            modelo.removeRow(fila);
-
-            totales();
-
-        } catch (HeadlessException ex) {
-            LOG.log(Level.SEVERE, "Error al remover articulo.", ex);
-        }
-    }
 
     private void cbTodosProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTodosProductosActionPerformed
         jpProductos = new javax.swing.JPanel();
@@ -1108,7 +1057,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
         }
     }//GEN-LAST:event_cmbClienteItemStateChanged
 
-    private void btnEsperaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsperaActionPerformed
+    private void btnPonerTemporalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPonerTemporalActionPerformed
         if (tblDetalle.getRowCount() == 0) {
             JOptionPane.showInternalMessageDialog(
                     this,
@@ -1119,7 +1068,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
             return;
         }
 
-        if (facturas.getDetalleFactura().get(0) == null) {
+        if (factura.getDetalleFactura().get(0) == null) {
             JOptionPane.showInternalMessageDialog(
                     this,
                     "Ha ocurrido un error de factura realice de nuevo...",
@@ -1129,7 +1078,6 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
             return;
         }
 
-        //TODO Se necesita analisis en este parte. 
         if (cmbCliente.getSelectedIndex() > 0) {
             nombreCliente = ((Cliente) cmbCliente.getSelectedItem()).toString();
         } else {
@@ -1153,9 +1101,10 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
                     return;
                 }
             }
+            
         }
 
-        frmTemporal miTemporal = new frmTemporal(
+        frmPonerTemporal miTemporal = new frmPonerTemporal(
                 null,
                 true
         );
@@ -1176,9 +1125,9 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
 //        if (miTemporal.isAceptar()) {
 //            nueva();
 //        }
-    }//GEN-LAST:event_btnEsperaActionPerformed
+    }//GEN-LAST:event_btnPonerTemporalActionPerformed
 
-    private void btnBuscarEsperaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarEsperaActionPerformed
+    private void btnBuscarTemporalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarTemporalActionPerformed
         frmBuscarTemporal miTempo = new frmBuscarTemporal(null, true);
         miTempo.setLocationRelativeTo(null);
         miTempo.setVisible(true);
@@ -1234,7 +1183,11 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
                     tblDetalle.setRowSelectionInterval(rs.getInt("idLinea") - 1, rs.getInt("idLinea") - 1);
                 }
             } catch (SQLException ex) {
-                LOG.log(Level.SEVERE, "Error al leer los detalles de la factura.", ex);
+                LOG.log(
+                        Level.SEVERE, 
+                        "Error al leer los detalles de la factura.", 
+                        ex
+                );
             }
 
             precio();//Precio porque acaba de ser creada
@@ -1261,7 +1214,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
                 }
             }
         }
-    }//GEN-LAST:event_btnBuscarEsperaActionPerformed
+    }//GEN-LAST:event_btnBuscarTemporalActionPerformed
 
     private void btnGastosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGastosActionPerformed
         int resp = JOptionPane.showInternalOptionDialog(
@@ -1285,8 +1238,6 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
             }
 
             frmGasto miGasto = new frmGasto(null, true);
-            miGasto.setIdTurno(turno.getId());
-            miGasto.setUsuario(usuario.getUser_name());
             miGasto.setLocationRelativeTo(null);
             miGasto.setVisible(true);
 
@@ -1416,79 +1367,81 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
         //Adicionamos un consecutivo a la Factura oh numero d Factura proxima
         char estado = rbtCredito.isSelected() ? 'c' : 'p';
 
-        if (facturas.getHeaderFactura().getEstado() == 'T') {
-            //Preparar Factura Temporal
-            HeaderFactura hf = HeaderFactura.builder().
-                    estado(estado).build();
-
-            Factura f = Factura.builder().id(idFactura).headerFactura(hf).build();
-
-            if (!modificarFactura(f)) {
-                JOptionPane.showInternalMessageDialog(
-                        this,
-                        "Ocurrio un error factura Temporal",
-                        "",
-                        JOptionPane.ERROR_MESSAGE
-                );
-                return;
-            } else {
-                for (int i = 1; i <= facturas.getDetalleFactura().size(); i++) {
-//                    if (!agregarOrInsertarDetalleFactura(
-//                            facturas.getId(),
-//                            i,
-//                            facturas.getDetalleFactura().get(i).getIdProducto(),
-//                            facturas.getDetalleFactura().get(i).getPrecio(),
-//                            facturas.getDetalleFactura().get(i).getCantidad())) {
+//        if (factura.getHeaderFactura().getEstado() == 'T') {
+//            //Preparar Factura Temporal
+//            HeaderFactura hf = HeaderFactura.builder().
+//                    estado(estado).build();
 //
-//                        borrarFactura(idFactura);
+//            Factura f = Factura.builder().id(idFactura).headerFactura(hf).build();
 //
+//            if (!modificarFactura(f)) {
+//                JOptionPane.showInternalMessageDialog(
+//                        this,
+//                        "Ocurrio un error factura Temporal",
+//                        "",
+//                        JOptionPane.ERROR_MESSAGE
+//                );
+//                return;
+//            } else {
+//                for (int i = 1; i <= factura.getDetalleFactura().size(); i++) {
+////                    if (!agregarOrInsertarDetalleFactura(
+////                            facturas.getId(),
+////                            i,
+////                            facturas.getDetalleFactura().get(i).getIdProducto(),
+////                            facturas.getDetalleFactura().get(i).getPrecio(),
+////                            facturas.getDetalleFactura().get(i).getCantidad())) {
+////
+////                        borrarFactura(idFactura);
+////
+////                        JOptionPane.showInternalMessageDialog(
+////                              this,
+////                              "Ocurrio un error Temporal Detallle"
+////                        );
+////                        return;
+////                    }
+//                }
+//            }
+//        } else {
+//
+//            HeaderFactura hf = HeaderFactura
+//                    .builder()
+//                    .id_persona(((Cliente) cmbCliente.getSelectedItem()).getId_persona())
+//                    .idTurno(turno.getId())
+//                    .efectivo(new BigDecimal(miEfe.txtEfectivo.getValue().toString()))
+//                    //.cambio(new BigDecimal(miEfe.txtDevuelta.getValue().toString()))
+//                    //.credito(rbtCredito.isSelected())
+//                    .build();
+//
+//            D_Factura objDF = null;
+//
+//            detalleFacturaList = new ArrayList<D_Factura>();
+//
+//            detalleFacturaList.add(objDF);
+//
+//            Factura factura = Factura.builder().
+//                    id(idFactura).headerFactura(hf).detalleFactura(detalleFacturaList).build();
+//
+//            if (agregarFacturaNombre(factura) < 1) {
+//                JOptionPane.showInternalMessageDialog(
+//                        this,
+//                        "Esta compra no se ha registrado...",
+//                        "",
+//                        JOptionPane.ERROR_MESSAGE
+//                );
+//            } else {
+//                for (int i = 0; i < factura.getDetalleFactura().size(); i++) {
+//                    if (agregarDetalleFactura(factura) < 1) {
 //                        JOptionPane.showInternalMessageDialog(
-//                              this,
-//                              "Ocurrio un error Temporal Detallle"
+//                                this,
+//                                "Esta compra no se ha registrado...",
+//                                "",
+//                                JOptionPane.ERROR_MESSAGE
 //                        );
 //                        return;
 //                    }
-                }
-            }
-        } else {
-
-            HeaderFactura hf = HeaderFactura.builder().
-                    idCliente(((Cliente) cmbCliente.getSelectedItem()).getId_persona()).
-                    idTurno(turno.getId()).
-                    efectivo(new BigDecimal(miEfe.txtEfectivo.getValue().toString())).
-                    cambio(new BigDecimal(miEfe.txtDevuelta.getValue().toString())).
-                    credito(rbtCredito.isSelected()).build();
-
-            D_Factura objDF = null;
-
-            detalleFacturaList = new ArrayList<D_Factura>();
-
-            detalleFacturaList.add(objDF);
-
-            Factura factura = Factura.builder().
-                    id(idFactura).headerFactura(hf).detalleFactura(detalleFacturaList).build();
-
-            if (agregarFacturaNombre(factura) < 1) {
-                JOptionPane.showInternalMessageDialog(
-                        this,
-                        "Esta compra no se ha registrado...",
-                        "",
-                        JOptionPane.ERROR_MESSAGE
-                );
-            } else {
-                for (int i = 0; i < facturas.getDetalleFactura().size(); i++) {
-                    if (agregarDetalleFactura(factura) < 1) {
-                        JOptionPane.showInternalMessageDialog(
-                                this,
-                                "Esta compra no se ha registrado...",
-                                "",
-                                JOptionPane.ERROR_MESSAGE
-                        );
-                        return;
-                    }
-                }
-            }
-        }
+//                }
+//            }
+//        }
 
 //        txtIdFactura.setText("" + getNumFac(getIdUsuario(), getTurno()));
         Map parametros = new HashMap();
@@ -1506,7 +1459,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
         totales();
 
         rbtContado.doClick();
-        facturas.getDetalleFactura().clear();
+        factura.getDetalleFactura().clear();
         nombreCliente = "";
     }//GEN-LAST:event_btnGrabarActionPerformed
 
@@ -1784,7 +1737,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
             ImageIcon imagen = Utilidades.imagenDecode64(categoria.getImage_texto(), 64, 64);
 
             if (imagen.getIconHeight() == -1) {
-                imagen = new Imagenes().getIcono("NoImageTransp 96 x 96.png");
+                imagen = new Imagenes("NoImageTransp 96 x 96.png").getIcono();
             }
 
             Icon icon = new ImageIcon(
@@ -1883,16 +1836,17 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
         cmbCliente.removeAllItems();
         cmbCliente.repaint();
 
-        List<Cliente> clientesList = getClientes(
-                FiltroBusqueda
-                        .builder()
-                        .estado(true)
-                        .build()
-        );
-
-        clientesList.stream().forEach(cliente -> {
-            cmbCliente.addItem(cliente);
-        });
+        //TODO traer solo cliente.
+//        List<Cliente> clientesList = getClientes(
+//                FiltroBusqueda
+//                        .builder()
+//                        .estado(true)
+//                        .build()
+//        );
+//
+//        clientesList.stream().forEach(cliente -> {
+//            cmbCliente.addItem(cliente);
+//        });
 
         if (cmbCliente.getItemCount() > 0) {
             cmbCliente.setSelectedIndex(0);
@@ -1923,7 +1877,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
     private void nueva() {
         mnuMovimientosNuevaFactura.doClick();
         nombreCliente = "";
-        facturas.getDetalleFactura().clear();
+        factura.getDetalleFactura().clear();
     }
 
     private void precio() {
@@ -1937,7 +1891,7 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
             txtPrecio.setValue(0.0);
             return;
         }
-        txtPrecio.setValue(facturas.getDetalleFactura().get(cell).getPrecio());
+        txtPrecio.setValue(factura.getDetalleFactura().get(cell).getPrecio());
     }
 
 
@@ -1945,14 +1899,14 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
     private javax.swing.JLabel JlCantidad1;
     private javax.swing.JLabel JlCantidad2;
     private newscomponents.RSButtonGradientIcon_new btnBuscarCliente;
-    private newscomponents.RSButtonGradientIcon_new btnBuscarEspera;
-    private newscomponents.RSButtonGradientIcon_new btnEspera;
+    private newscomponents.RSButtonGradientIcon_new btnBuscarTemporal;
     private newscomponents.RSButtonGradientIcon_new btnGastos;
     private newscomponents.RSButtonGradientIcon_new btnGrabar;
     private javax.swing.ButtonGroup btnGrupoPago;
     private newscomponents.RSButtonGradientIcon_new btnImpresionUltima;
     private newscomponents.RSButtonGradientIcon_new btnLimpiarF12;
     private newscomponents.RSButtonGradientIcon_new btnPagoDeuda;
+    private newscomponents.RSButtonGradientIcon_new btnPonerTemporal;
     private javax.swing.JComboBox<String> cbCriterio;
     private javax.swing.JCheckBox cbPrevista;
     private javax.swing.JCheckBox cbTodos;
@@ -2052,5 +2006,55 @@ public final class frmFacturas extends javax.swing.JInternalFrame implements Act
                 cantidadDecimal(cantidad).
                 estado(bandera)
                 .build();
+    }
+    
+    private void opcion1() {
+        int rta = JOptionPane.showInternalConfirmDialog(
+                this,
+                "¿Esta Seguro de Borrar el detalle de la Factura?",
+                "",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (rta == JOptionPane.NO_OPTION) {
+            return;
+        }
+        nueva();
+    }
+
+    private void opcion2() {
+//        if (factura.getHeaderFactura().getEstado() == 'T') {
+//            JOptionPane.showInternalMessageDialog(
+//                    this,
+//                    "Es una factura temporal no se permite eliminar",
+//                    "",
+//                    JOptionPane.ERROR_MESSAGE
+//            );
+//            return;
+//        }
+//
+//        try {
+//            DefaultTableModel modelo = (DefaultTableModel) tblDetalle.getModel();
+//            int fila = tblDetalle.getSelectedRow();
+//            if (fila == -1) {
+//                JOptionPane.showInternalMessageDialog(
+//                        this,
+//                        "Debe seleccionar un articulo del detalle factura",
+//                        "",
+//                        JOptionPane.ERROR_MESSAGE
+//                );
+//                return;
+//            }
+//
+//            factura.getDetalleFactura().remove(fila);
+//
+//            modelo.removeRow(fila);
+//
+//            totales();
+//
+//        } catch (HeadlessException ex) {
+//            LOG.log(Level.SEVERE, "Error al remover articulo.", ex);
+//        }
     }
 }

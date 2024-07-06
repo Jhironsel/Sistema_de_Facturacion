@@ -37,8 +37,10 @@
   </NonVisualComponents>
   <Properties>
     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-      <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
-        <EmptyBorder/>
+      <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
+        <MatteColorBorder bottom="10" left="10" right="10" top="25">
+          <Color PropertyName="color" blue="df" green="2d" red="25" type="rgb"/>
+        </MatteColorBorder>
       </Border>
     </Property>
     <Property name="closable" type="boolean" value="true"/>
@@ -72,7 +74,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="jspGeneral" max="32767" attributes="0"/>
+              <Component id="jspGeneral" pref="836" max="32767" attributes="0"/>
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -80,7 +82,7 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="jspGeneral" max="32767" attributes="0"/>
+              <Component id="jspGeneral" pref="651" max="32767" attributes="0"/>
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -105,7 +107,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jpBotones" pref="834" max="32767" attributes="0"/>
+                          <Component id="jpBotones" pref="836" max="32767" attributes="0"/>
                           <Component id="jtpPrincipal" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -116,7 +118,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="jtpPrincipal" max="32767" attributes="0"/>
+                      <Component id="jtpPrincipal" pref="542" max="32767" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="jpBotones" min="-2" pref="81" max="-2" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -136,6 +138,7 @@
                 </Property>
               </Properties>
               <AuxValues>
+                <AuxValue name="JavaCodeGenerator_DeclarationPre" type="java.lang.String" value="@Getter"/>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
               </AuxValues>
 
@@ -159,6 +162,9 @@
                       <Properties>
                         <Property name="name" type="java.lang.String" value="jpClientes" noResource="true"/>
                       </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_DeclarationPre" type="java.lang.String" value="@Getter"/>
+                      </AuxValues>
 
                       <Layout>
                         <DimensionLayout dim="0">
@@ -178,7 +184,7 @@
                                       <Group type="102" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="jScrollPane6" max="32767" attributes="0"/>
-                                              <Component id="jScrollPane2" pref="802" max="32767" attributes="0"/>
+                                              <Component id="jScrollPane2" pref="804" max="32767" attributes="0"/>
                                           </Group>
                                           <EmptySpace min="-2" max="-2" attributes="0"/>
                                       </Group>
@@ -198,7 +204,7 @@
                                       </Group>
                                   </Group>
                                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                                  <Component id="jScrollPane6" pref="396" max="32767" attributes="0"/>
+                                  <Component id="jScrollPane6" pref="398" max="32767" attributes="0"/>
                                   <EmptySpace min="-2" max="-2" attributes="0"/>
                                   <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -478,6 +484,9 @@
                               <Events>
                                 <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtpGeneralesDireccionContactosKeyPressed"/>
                               </Events>
+                              <AuxValues>
+                                <AuxValue name="JavaCodeGenerator_DeclarationPre" type="java.lang.String" value="@Getter"/>
+                              </AuxValues>
 
                               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
                               <SubComponents>
@@ -584,6 +593,7 @@
                                         <EventHandler event="popupMenuWillBecomeInvisible" listener="javax.swing.event.PopupMenuListener" parameters="javax.swing.event.PopupMenuEvent" handler="jcbSexoPopupMenuWillBecomeInvisible"/>
                                       </Events>
                                       <AuxValues>
+                                        <AuxValue name="JavaCodeGenerator_DeclarationPre" type="java.lang.String" value="@Getter"/>
                                         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
                                       </AuxValues>
                                     </Component>
@@ -617,6 +627,9 @@
                                       <Events>
                                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtSNombreActionPerformed"/>
                                       </Events>
+                                      <AuxValues>
+                                        <AuxValue name="JavaCodeGenerator_DeclarationPre" type="java.lang.String" value="@Getter"/>
+                                      </AuxValues>
                                     </Component>
                                     <Component class="javax.swing.JComboBox" name="jcbPersona">
                                       <Properties>
@@ -644,8 +657,8 @@
                                         <EventHandler event="popupMenuWillBecomeInvisible" listener="javax.swing.event.PopupMenuListener" parameters="javax.swing.event.PopupMenuEvent" handler="jcbPersonaPopupMenuWillBecomeInvisible"/>
                                       </Events>
                                       <AuxValues>
+                                        <AuxValue name="JavaCodeGenerator_DeclarationPre" type="java.lang.String" value="@Getter"/>
                                         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
-                                        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
                                       </AuxValues>
                                     </Component>
                                     <Component class="javax.swing.JCheckBox" name="cbEstado">
@@ -713,6 +726,7 @@
                                         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCedulaKeyPressed"/>
                                       </Events>
                                       <AuxValues>
+                                        <AuxValue name="JavaCodeGenerator_DeclarationPre" type="java.lang.String" value="@Getter"/>
                                         <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="frmClientes_txtCedula"/>
                                       </AuxValues>
                                     </Component>
@@ -723,6 +737,9 @@
                                         </Property>
                                         <Property name="name" type="java.lang.String" value="jdcFechaNacimiento" noResource="true"/>
                                       </Properties>
+                                      <AuxValues>
+                                        <AuxValue name="JavaCodeGenerator_DeclarationPre" type="java.lang.String" value="@Getter"/>
+                                      </AuxValues>
                                     </Component>
                                     <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnCedulaValidad">
                                       <Properties>
@@ -740,6 +757,9 @@
                                       <Events>
                                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCedulaValidadActionPerformed"/>
                                       </Events>
+                                      <AuxValues>
+                                        <AuxValue name="JavaCodeGenerator_DeclarationPre" type="java.lang.String" value="@Getter"/>
+                                      </AuxValues>
                                     </Component>
                                     <Component class="javax.swing.JTextField" name="txtApellidos">
                                       <Properties>
@@ -772,6 +792,9 @@
                                       <Events>
                                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtApellidosActionPerformed"/>
                                       </Events>
+                                      <AuxValues>
+                                        <AuxValue name="JavaCodeGenerator_DeclarationPre" type="java.lang.String" value="@Getter"/>
+                                      </AuxValues>
                                     </Component>
                                     <Component class="javax.swing.JComboBox" name="jcbEstadoCivil">
                                       <Properties>
@@ -799,6 +822,7 @@
                                         <EventHandler event="popupMenuWillBecomeInvisible" listener="javax.swing.event.PopupMenuListener" parameters="javax.swing.event.PopupMenuEvent" handler="jcbEstadoCivilPopupMenuWillBecomeInvisible"/>
                                       </Events>
                                       <AuxValues>
+                                        <AuxValue name="JavaCodeGenerator_DeclarationPre" type="java.lang.String" value="@Getter"/>
                                         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
                                       </AuxValues>
                                     </Component>
@@ -832,6 +856,9 @@
                                       <Events>
                                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPNombreActionPerformed"/>
                                       </Events>
+                                      <AuxValues>
+                                        <AuxValue name="JavaCodeGenerator_DeclarationPre" type="java.lang.String" value="@Getter"/>
+                                      </AuxValues>
                                     </Component>
                                   </SubComponents>
                                 </Container>
@@ -840,6 +867,9 @@
                                     <Property name="toolTipText" type="java.lang.String" value="Acceso con Control + 2"/>
                                     <Property name="name" type="java.lang.String" value="jpDireccion" noResource="true"/>
                                   </Properties>
+                                  <AuxValues>
+                                    <AuxValue name="JavaCodeGenerator_DeclarationPre" type="java.lang.String" value="@Getter"/>
+                                  </AuxValues>
                                   <Constraints>
                                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                                       <JTabbedPaneConstraints tabName="Direcci&#xf3;n">
@@ -913,8 +943,8 @@
                                             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jcbProvinciasKeyPressed"/>
                                           </Events>
                                           <AuxValues>
+                                            <AuxValue name="JavaCodeGenerator_DeclarationPre" type="java.lang.String" value="@Getter"/>
                                             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
-                                            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
                                           </AuxValues>
                                         </Component>
                                         <Component class="RSMaterialComponent.RSComboBox" name="jcbMunicipios">
@@ -939,7 +969,7 @@
                                             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jcbMunicipiosKeyPressed"/>
                                           </Events>
                                           <AuxValues>
-                                            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
+                                            <AuxValue name="JavaCodeGenerator_DeclarationPre" type="java.lang.String" value="@Getter"/>
                                           </AuxValues>
                                         </Component>
                                         <Component class="RSMaterialComponent.RSComboBox" name="jcbDistritoMunicipal">
@@ -964,7 +994,7 @@
                                             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jcbDistritoMunicipalKeyPressed"/>
                                           </Events>
                                           <AuxValues>
-                                            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
+                                            <AuxValue name="JavaCodeGenerator_DeclarationPre" type="java.lang.String" value="@Getter"/>
                                           </AuxValues>
                                         </Component>
                                       </SubComponents>
@@ -1017,6 +1047,9 @@
                                               <Events>
                                                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarDireccionesActionPerformed"/>
                                               </Events>
+                                              <AuxValues>
+                                                <AuxValue name="JavaCodeGenerator_DeclarationPre" type="java.lang.String" value="@Getter"/>
+                                              </AuxValues>
                                             </Component>
                                             <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnEditarDireccion">
                                               <Properties>
@@ -1076,6 +1109,9 @@
                                           <Events>
                                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtDireccionActionPerformed"/>
                                           </Events>
+                                          <AuxValues>
+                                            <AuxValue name="JavaCodeGenerator_DeclarationPre" type="java.lang.String" value="@Getter"/>
+                                          </AuxValues>
                                         </Component>
                                       </SubComponents>
                                     </Container>
@@ -1132,6 +1168,9 @@
                                     <Property name="toolTipText" type="java.lang.String" value="Acceso con Control + 3"/>
                                     <Property name="name" type="java.lang.String" value="jpContactos" noResource="true"/>
                                   </Properties>
+                                  <AuxValues>
+                                    <AuxValue name="JavaCodeGenerator_DeclarationPre" type="java.lang.String" value="@Getter"/>
+                                  </AuxValues>
                                   <Constraints>
                                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                                       <JTabbedPaneConstraints tabName="Contactos">
@@ -1165,6 +1204,9 @@
                                       <Properties>
                                         <Property name="name" type="java.lang.String" value="telefonoCorreos" noResource="true"/>
                                       </Properties>
+                                      <AuxValues>
+                                        <AuxValue name="JavaCodeGenerator_DeclarationPre" type="java.lang.String" value="@Getter"/>
+                                      </AuxValues>
 
                                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
                                       <SubComponents>
@@ -1270,6 +1312,9 @@
                                                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtTelelfonoMovilActionPerformed"/>
                                                     <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtTelelfonoMovilKeyPressed"/>
                                                   </Events>
+                                                  <AuxValues>
+                                                    <AuxValue name="JavaCodeGenerator_DeclarationPre" type="java.lang.String" value="@Getter"/>
+                                                  </AuxValues>
                                                 </Component>
                                                 <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnAgregarTelefonoMovil">
                                                   <Properties>
@@ -1281,6 +1326,9 @@
                                                   <Events>
                                                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarTelefonoMovilActionPerformed"/>
                                                   </Events>
+                                                  <AuxValues>
+                                                    <AuxValue name="JavaCodeGenerator_DeclarationPre" type="java.lang.String" value="@Getter"/>
+                                                  </AuxValues>
                                                 </Component>
                                                 <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnBorrarTelefono">
                                                   <Properties>
@@ -1320,6 +1368,9 @@
                                                         <Property name="text" type="java.lang.String" value="Telefono"/>
                                                         <Property name="name" type="java.lang.String" value="jrbTelefonoResidencial" noResource="true"/>
                                                       </Properties>
+                                                      <AuxValues>
+                                                        <AuxValue name="JavaCodeGenerator_DeclarationPre" type="java.lang.String" value="@Getter"/>
+                                                      </AuxValues>
                                                     </Component>
                                                     <Component class="javax.swing.JRadioButton" name="jrbMovil">
                                                       <Properties>
@@ -1330,6 +1381,9 @@
                                                         <Property name="text" type="java.lang.String" value="Movil"/>
                                                         <Property name="name" type="java.lang.String" value="jrbMovil" noResource="true"/>
                                                       </Properties>
+                                                      <AuxValues>
+                                                        <AuxValue name="JavaCodeGenerator_DeclarationPre" type="java.lang.String" value="@Getter"/>
+                                                      </AuxValues>
                                                     </Component>
                                                   </SubComponents>
                                                 </Container>
@@ -1380,6 +1434,9 @@
                                           </SubComponents>
                                         </Container>
                                         <Container class="javax.swing.JPanel" name="jpCorreos">
+                                          <AuxValues>
+                                            <AuxValue name="JavaCodeGenerator_DeclarationPre" type="java.lang.String" value="@Getter"/>
+                                          </AuxValues>
                                           <Constraints>
                                             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                                               <JTabbedPaneConstraints tabName="Correos">
@@ -1456,6 +1513,9 @@
                                                   <Events>
                                                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarCorreoActionPerformed"/>
                                                   </Events>
+                                                  <AuxValues>
+                                                    <AuxValue name="JavaCodeGenerator_DeclarationPre" type="java.lang.String" value="@Getter"/>
+                                                  </AuxValues>
                                                 </Component>
                                                 <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnBorrarCorreo">
                                                   <Properties>
@@ -1488,6 +1548,9 @@
                                                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCorreoActionPerformed"/>
                                                     <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCorreoKeyPressed"/>
                                                   </Events>
+                                                  <AuxValues>
+                                                    <AuxValue name="JavaCodeGenerator_DeclarationPre" type="java.lang.String" value="@Getter"/>
+                                                  </AuxValues>
                                                 </Component>
                                                 <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnEditarCorreo">
                                                   <Properties>
@@ -1634,6 +1697,9 @@
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNuevoClienteActionPerformed"/>
                       </Events>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_DeclarationPre" type="java.lang.String" value="@Getter"/>
+                      </AuxValues>
                     </Component>
                     <Component class="RSMaterialComponent.RSButtonMaterialIconOne" name="btnEditarCliente">
                       <Properties>

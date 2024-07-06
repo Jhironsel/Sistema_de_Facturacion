@@ -2,7 +2,6 @@ package sur.softsurena.formularios;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
-import newscomponents.RSDateChooser;
 import sur.softsurena.utilidades.Utilidades;
 
 public class frmFechaReporte extends java.awt.Dialog {

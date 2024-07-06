@@ -7,7 +7,7 @@ import javax.swing.table.DefaultTableModel;
 import sur.softsurena.entidades.Role;
 import sur.softsurena.entidades.Usuario;
 import static sur.softsurena.metodos.M_Etiqueta.getEtiquetasUsuario;
-import static sur.softsurena.metodos.M_Role.comprobandoRol;
+import static sur.softsurena.metodos.M_Role.comprobandoRolesDisponibles;
 import static sur.softsurena.metodos.M_Role.getRoles;
 import static sur.softsurena.metodos.M_Usuario.agregarUsuario;
 import static sur.softsurena.metodos.M_Usuario.existeUsuarioByUserName;
@@ -85,13 +85,16 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
 
         tblRoles.removeAll();
 
-        comprobandoRol(usuario.getUser_name()).stream().
-                forEach(rol -> {
-                    registro2[0] = rol.getRoleName();
-                    registro2[1] = rol.getDescripcion();
+        //TODO Analizar si este flat booleana es correcta.
+        comprobandoRolesDisponibles(usuario.getUser_name(), true).stream()
+                .forEach(
+                        rol -> {
+                            registro2[0] = rol.getRoleName();
+                            registro2[1] = rol.getDescripcion();
 
-                    dtmRoles.addRow(registro2);
-                });
+                            dtmRoles.addRow(registro2);
+                        }
+                );
 
         tblRoles.setModel(dtmRoles);
 
@@ -838,7 +841,7 @@ public class frmUsuariosAgregar extends javax.swing.JDialog {
         tblRoles.setModel(miTabla);
 
         repararColumnaTable(tblRoles);
-        columnasCheckBox(tblRoles, new int[] {1});
+        columnasCheckBox(tblRoles, new int[]{1});
     }//GEN-LAST:event_btnAgregarRolActionPerformed
 
     private void btnBorrarRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarRolActionPerformed

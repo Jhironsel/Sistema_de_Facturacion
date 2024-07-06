@@ -4,9 +4,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import sur.softsurena.entidades.Cliente;
 import sur.softsurena.entidades.Factura;
-import static sur.softsurena.metodos.M_Cliente.getClientes;
 import static sur.softsurena.metodos.M_Factura.getFacturas;
-import sur.softsurena.utilidades.FiltroBusqueda;
 import sur.softsurena.utilidades.Utilidades;
 
 public class frmReporteFacturas extends javax.swing.JInternalFrame
@@ -206,14 +204,16 @@ public class frmReporteFacturas extends javax.swing.JInternalFrame
 
         cmbCliente.addItem(cli);
 
-        getClientes(
-                FiltroBusqueda
-                        .builder()
-                        .estado(true)
-                        .build()
-        ).stream().forEach(cliente -> {
-            cmbCliente.addItem(cliente);
-        });
+        //TODO Traer solo clientes.
+        
+//        getClientes(
+//                FiltroBusqueda
+//                        .builder()
+//                        .estado(true)
+//                        .build()
+//        ).stream().forEach(cliente -> {
+//            cmbCliente.addItem(cliente);
+//        });
 
         //Cargamos Facturas
         Factura fac = 

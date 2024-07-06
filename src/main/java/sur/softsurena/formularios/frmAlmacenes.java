@@ -2,6 +2,7 @@ package sur.softsurena.formularios;
 
 import java.util.Objects;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import sur.softsurena.entidades.Almacen;
 import sur.softsurena.entidades.Privilegio;
@@ -9,6 +10,7 @@ import static sur.softsurena.metodos.M_Almacen.agregarAlmacen;
 import static sur.softsurena.metodos.M_Almacen.getAlmacenesList;
 import static sur.softsurena.metodos.M_Privilegio.privilegio;
 import sur.softsurena.utilidades.Resultado;
+import static sur.softsurena.utilidades.Utilidades.LOG;
 import static sur.softsurena.utilidades.Utilidades.columnasCheckBox;
 import static sur.softsurena.utilidades.Utilidades.repararColumnaTable;
 
@@ -82,6 +84,7 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
         rSLabelAnimated1 = new rojeru_san.rslabel.RSLabelAnimated();
         labelIcon1 = new necesario.LabelIcon();
 
+        setBorder(javax.swing.BorderFactory.createMatteBorder(25, 10, 10, 10, new java.awt.Color(37, 45, 223)));
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
@@ -228,14 +231,14 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
             jpAlmacenesTblLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpAlmacenesTblLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 826, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 829, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jpAlmacenesTblLayout.setVerticalGroup(
             jpAlmacenesTblLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpAlmacenesTblLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -269,7 +272,7 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
                 .addGroup(rSPanelShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2)
                     .addGroup(rSPanelShadow1Layout.createSequentialGroup()
-                        .addComponent(txtNombreAlmacen, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
+                        .addComponent(txtNombreAlmacen, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(rsEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -329,11 +332,11 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
         RSPGMantenimientoLayout.setVerticalGroup(
             RSPGMantenimientoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(RSPGMantenimientoLayout.createSequentialGroup()
-                .addContainerGap(31, Short.MAX_VALUE)
+                .addContainerGap(36, Short.MAX_VALUE)
                 .addGroup(RSPGMantenimientoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rSPanelShadow1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rSPanelShadow2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         jtpPrincipal.addTab("Mantenimiento", RSPGMantenimiento);
@@ -356,28 +359,28 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(6, 6, 6)
+                .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jpBotones, javax.swing.GroupLayout.DEFAULT_SIZE, 860, Short.MAX_VALUE)
-                    .addComponent(jtpPrincipal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 860, Short.MAX_VALUE)
+                    .addComponent(jpBotones, javax.swing.GroupLayout.DEFAULT_SIZE, 863, Short.MAX_VALUE)
+                    .addComponent(jtpPrincipal, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(labelIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(0, 0, 0)
                         .addComponent(rSLabelAnimated1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(6, 6, 6))
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(6, 6, 6)
+                .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(rSLabelAnimated1, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
                     .addComponent(labelIcon1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jtpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
+                .addComponent(jtpPrincipal)
+                .addGap(0, 0, 0)
                 .addComponent(jpBotones, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6))
+                .addGap(0, 0, 0))
         );
 
         pack();
@@ -532,7 +535,13 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
             }
         }
 
-        Resultado resultado = null;
+        Resultado resultado = Resultado
+                    .builder()
+                    .id(-1)
+                    .mensaje("Este proceso esta en desarrollo. ")
+                    .icono(JOptionPane.ERROR_MESSAGE)
+                    .estado(Boolean.FALSE)
+                    .build();
 
         if (v_nuevo) {
             resultado = agregarAlmacen(Almacen.
@@ -544,6 +553,10 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
             );
         } else {
             //TODO Crear proceso para modificar almacen.
+        }
+        
+        if(!resultado.getEstado()){
+            LOG.severe("Este PROCESO no esta terminado.");
         }
 
         JOptionPane.showInternalMessageDialog(
@@ -706,17 +719,17 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
 
     /**
      *
+     * @param id
      * @param criterioBusqueda
+     * @return
      */
-    public synchronized static void llenarTabla(int id, String criterioBusqueda) {
+    public synchronized static JTable llenarTabla(int id, String criterioBusqueda) {
 
         final String titulos[] = {"Nombre", "Ubicacion", "Estado"};
 
         if (criterioBusqueda.equalsIgnoreCase("evento")) {
             //criterioBusqueda = frmClientes.criterioBusqueda;
         }
-
-        Object registro[] = new Object[titulos.length];
 
         DefaultTableModel dtm = new DefaultTableModel(null, titulos) {
             @Override
@@ -734,12 +747,15 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
             }
         };
 
-        getAlmacenesList(id, criterioBusqueda).stream().forEach(almacen -> {
-            registro[0] = almacen;
-            registro[1] = almacen.getUbicacion();
-            registro[2] = almacen.getEstado();
-            dtm.addRow(registro);
-        });
+        Object registro[] = new Object[titulos.length];
+        getAlmacenesList(id, criterioBusqueda).stream().forEach(
+                almacen -> {
+                    registro[0] = almacen;
+                    registro[1] = almacen.getUbicacion();
+                    registro[2] = almacen.getEstado();
+                    dtm.addRow(registro);
+                }
+        );
 
         tblAlmacenes.removeAll();
 
@@ -752,5 +768,7 @@ public class frmAlmacenes extends javax.swing.JInternalFrame {
         repararColumnaTable(tblAlmacenes);
 
         tblAlmacenes.setBackgoundHover(new java.awt.Color(102, 102, 255));
+
+        return tblAlmacenes;
     }
 }

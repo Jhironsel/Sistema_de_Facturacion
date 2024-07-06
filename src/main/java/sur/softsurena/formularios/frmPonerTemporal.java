@@ -9,12 +9,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import sur.softsurena.entidades.Factura;
 import sur.softsurena.entidades.HeaderFactura;
-import static sur.softsurena.metodos.M_D_Factura.agregarDetalleFactura;
 import static sur.softsurena.metodos.M_Factura.agregarFacturaNombre;
-import static sur.softsurena.metodos.M_Factura.borrarFactura;
 import sur.softsurena.utilidades.DefaultTableCellHeaderRenderer;
 
-public class frmTemporal extends java.awt.Dialog {
+public class frmPonerTemporal extends java.awt.Dialog {
 
     private String nombreCliente, userName;
     private Integer idFactura, idCliente, idTurno;
@@ -22,7 +20,7 @@ public class frmTemporal extends java.awt.Dialog {
     private Factura facturas;
     private final DefaultTableCellRenderer tcr;
 
-    public frmTemporal(java.awt.Frame parent, boolean modal) {
+    public frmPonerTemporal(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         
         initComponents();
@@ -33,7 +31,6 @@ public class frmTemporal extends java.awt.Dialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        txtTotalCantidad = new RSMaterialComponent.RSTextFieldIconOne();
         txtTotalValor = new RSMaterialComponent.RSTextFieldIconOne();
         txtCliente = new RSMaterialComponent.RSTextFieldMaterialIcon();
         btnGrabar = new RSMaterialComponent.RSButtonMaterialIconOne();
@@ -51,8 +48,6 @@ public class frmTemporal extends java.awt.Dialog {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalles de la Factura"));
 
-        txtTotalCantidad.setPlaceholder("");
-
         txtTotalValor.setPlaceholder("");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -60,17 +55,13 @@ public class frmTemporal extends java.awt.Dialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(txtTotalCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(361, Short.MAX_VALUE)
                 .addComponent(txtTotalValor, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTotalCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTotalValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(txtTotalValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
 
@@ -148,16 +139,16 @@ public class frmTemporal extends java.awt.Dialog {
 
     private void btnGrabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrabarActionPerformed
         HeaderFactura hf = HeaderFactura.builder().
-                idCliente(idCliente).
+                id_persona(idCliente).
                 idTurno(idTurno).
-                estado('t').
+                estadoFactura('t').
                 userName(userName)//.
                 //nombreTemp(nombreCliente)
                 .build();
                 
         Factura f = Factura.builder().id(idFactura).headerFactura(hf).build();
         
-        if (agregarFacturaNombre(f) < 1) {
+        if (agregarFacturaNombre(f).getId() < 1) {
             JOptionPane.showMessageDialog(
                     this, 
                     "Esta compra no se ha registrado...",
@@ -168,20 +159,22 @@ public class frmTemporal extends java.awt.Dialog {
         } else {
             for (int i = 0; i < facturas.getDetalleFactura().size(); i++) {
                 
-                if (agregarDetalleFactura(f) < -1) {
-                    borrarFactura(idFactura);
-                    JOptionPane.showMessageDialog(
-                            this, 
-                            "Esta compra no se ha registrado...",
-                            "",
-                            JOptionPane.ERROR_MESSAGE
-                    );
-                    return;
-                }
+//                if (agregarDetalleFactura(f) == -1) {
+//                    borrarFactura(idFactura);
+//                    JOptionPane.showMessageDialog(
+//                            this, 
+//                            "Esta compra no se ha registrado...",
+//                            "",
+//                            JOptionPane.ERROR_MESSAGE
+//                    );
+//                    return;
+//                }
             }
         }
         setVisible(false);
     }//GEN-LAST:event_btnGrabarActionPerformed
+
+    //--------------------------------------------------------------------------
     public void repararRegistro2() {
         TableColumn miTableColumn;
         int[] columWidth = {80, 200, 15};
@@ -197,17 +190,15 @@ public class frmTemporal extends java.awt.Dialog {
         tblDetalle.getColumnModel().getColumn(2).setCellRenderer(tcr);
     }
 
+    //--------------------------------------------------------------------------
     private void totales() {
         int num = tblDetalle.getRowCount();
-        BigDecimal sumCan = BigDecimal.ZERO;
         BigDecimal sumVal = BigDecimal.ZERO;
         
         for (int i = 0; i < num; i++) {
-            sumCan = sumCan.add(new BigDecimal(tblDetalle.getValueAt(i, 0).toString()));
             sumVal = sumVal.add(new BigDecimal(tblDetalle.getValueAt(i, 2).toString()));
         }
         
-        txtTotalCantidad.setText("" + sumCan);
         txtTotalValor.setText("RD$" + sumVal);
     }
     
@@ -218,7 +209,6 @@ public class frmTemporal extends java.awt.Dialog {
     private javax.swing.JScrollPane jScrollPane2;
     private rojeru_san.complementos.TableMetro tblDetalle;
     private RSMaterialComponent.RSTextFieldMaterialIcon txtCliente;
-    private RSMaterialComponent.RSTextFieldIconOne txtTotalCantidad;
     private RSMaterialComponent.RSTextFieldIconOne txtTotalValor;
     // End of variables declaration//GEN-END:variables
 }
